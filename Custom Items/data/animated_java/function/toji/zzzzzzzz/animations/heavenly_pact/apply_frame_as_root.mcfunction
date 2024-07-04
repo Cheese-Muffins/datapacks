@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..25 run function animated_java:toji/zzzzzzzz/animations/heavenly_pact/tree/branch_0_25

@@ -1,0 +1,1 @@
+function animated_java:cutscenes/zzzzzzzz/animations/assasinate/tick_animation

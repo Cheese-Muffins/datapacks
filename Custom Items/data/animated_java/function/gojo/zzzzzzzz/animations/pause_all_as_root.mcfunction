@@ -1,0 +1,7 @@
+function animated_java:gojo/zzzzzzzz/animations/reversed_cursed_technique/pause_as_root
+function animated_java:gojo/zzzzzzzz/animations/lapis_blue/pause_as_root
+function animated_java:gojo/zzzzzzzz/animations/reversal_red/pause_as_root
+function animated_java:gojo/zzzzzzzz/animations/honored/pause_as_root
+function animated_java:gojo/zzzzzzzz/animations/infinity/pause_as_root
+function animated_java:gojo/zzzzzzzz/animations/hollow_purple/pause_as_root
+function animated_java:gojo/zzzzzzzz/animations/domain_expansion/pause_as_root

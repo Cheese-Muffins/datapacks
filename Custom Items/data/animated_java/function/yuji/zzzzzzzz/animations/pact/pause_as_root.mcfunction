@@ -1,0 +1,1 @@
+tag @s remove aj.yuji.animation.pact

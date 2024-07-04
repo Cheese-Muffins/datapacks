@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:yuji/zzzzzzzz/animations/divergent_fist/tree/leaf_22_as_bone

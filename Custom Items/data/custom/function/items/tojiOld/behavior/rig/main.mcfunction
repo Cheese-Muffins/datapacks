@@ -1,0 +1,1 @@
+execute unless entity @p[distance=..10,tag=YujiUser] unless entity @p[tag=YujiUser,tag=!customDetatch] run function custom:items/yuji/rig/despawn

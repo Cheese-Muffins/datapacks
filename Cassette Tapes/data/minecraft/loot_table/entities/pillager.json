@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:carrot_on_a_stick",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{CustomModelData:121,display:{Name:'[{\"text\":\"Scars\",\"italic\":false,\"color\":\"red\"}]'}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1000,
+          "name": "minecraft:air"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "minecraft:entities/pillager"
+}

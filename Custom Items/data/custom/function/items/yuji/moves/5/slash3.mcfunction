@@ -1,0 +1,1 @@
+execute as @n[tag=yujiSlashTarget] at @s run function custom:items/yuji/moves/5/slash

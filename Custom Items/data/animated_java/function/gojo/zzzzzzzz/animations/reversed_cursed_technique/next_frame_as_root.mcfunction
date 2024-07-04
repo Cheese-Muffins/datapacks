@@ -1,0 +1,1 @@
+function animated_java:gojo/zzzzzzzz/animations/reversed_cursed_technique/tick_animation

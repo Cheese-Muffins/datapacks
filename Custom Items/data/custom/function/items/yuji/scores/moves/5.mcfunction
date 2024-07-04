@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove5Cooldown 1
+execute if score @s customMove5Cooldown matches 810..900 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C00"
+execute if score @s customMove5Cooldown matches 720..810 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C01"
+execute if score @s customMove5Cooldown matches 630..720 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C02"
+execute if score @s customMove5Cooldown matches 540..630 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C03"
+execute if score @s customMove5Cooldown matches 450..540 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C04"
+execute if score @s customMove5Cooldown matches 360..450 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C05"
+execute if score @s customMove5Cooldown matches 270..360 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C06"
+execute if score @s customMove5Cooldown matches 180..270 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C07"
+execute if score @s customMove5Cooldown matches 90..180 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C08"
+execute if score @s customMove5Cooldown matches 1..90 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C09"
+execute if score @s customMove5Cooldown matches 0 run data modify storage minecraft:custom yuji.ui.m5 set value "u3C10"

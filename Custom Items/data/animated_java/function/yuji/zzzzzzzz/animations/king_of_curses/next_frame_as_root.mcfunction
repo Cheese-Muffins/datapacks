@@ -1,0 +1,1 @@
+function animated_java:yuji/zzzzzzzz/animations/king_of_curses/tick_animation

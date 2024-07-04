@@ -1,0 +1,2 @@
+tellraw @s ["",{"text":"Toji Fushiguro","color":"gold"},{"text":"\n"},{"text":"You must ","color":"gray"},{"text":"Mark","color":"red"},{"text":" an entity by ","color":"gray"},{"text":"attacking","underlined":true,"color":"gray"},{"text":" it to use ","color":"gray"},{"text":"Sneak Attack ","color":"blue"}]
+playsound minecraft:entity.villager.no voice @s ~ ~ ~ 100000000

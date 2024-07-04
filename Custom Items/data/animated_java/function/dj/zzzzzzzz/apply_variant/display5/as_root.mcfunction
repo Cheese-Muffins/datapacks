@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:dj/zzzzzzzz/apply_variant/display5/as_bone

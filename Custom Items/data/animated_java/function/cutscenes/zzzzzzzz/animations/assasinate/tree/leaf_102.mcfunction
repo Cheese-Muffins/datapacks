@@ -1,0 +1,2 @@
+execute on passengers run function animated_java:cutscenes/zzzzzzzz/animations/assasinate/tree/leaf_102_as_bone
+function animated_java:cutscenes/zzzzzzzz/apply_variant/sword2/as_root

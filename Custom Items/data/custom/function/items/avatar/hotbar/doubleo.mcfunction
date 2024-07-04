@@ -1,0 +1,4 @@
+$execute if score @s customHotBarSelected matches 1 if score @s customMove1Cooldown matches 200.. run data modify storage minecraft:custom avatar.ui.m1T set value "0$(m1T)"
+$execute if score @s customHotBarSelected matches 2 if score @s customMove2Cooldown matches 200.. run data modify storage minecraft:custom avatar.ui.m2T set value "0$(m2T)"
+$execute if score @s customHotBarSelected matches 3 if score @s customMove3Cooldown matches 200.. run data modify storage minecraft:custom avatar.ui.m3T set value "0$(m3T)"
+$execute if score @s customHotBarSelected matches 4 if score @s customMove4Cooldown matches 200.. run data modify storage minecraft:custom avatar.ui.m4T set value "0$(m4T)"

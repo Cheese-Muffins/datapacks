@@ -1,0 +1,2 @@
+execute as @s[tag=ShrinkRayUser] run function custom:lock/return {name:"Shrink Ray",color:"dark_green",cmd:"1000"}
+execute as @s[tag=GojoUser] run function custom:lock/return {name:"Gojo Satoru",color:"red",cmd:"1012",m1:"Reverse Cursed Technique",m2:"Reversal Red",m3:"Lapis Blue"}

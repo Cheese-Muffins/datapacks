@@ -1,0 +1,4 @@
+item replace entity @s hotbar.8 with carrot_on_a_stick{display:{Name:'{"text":"Gojo Satoru","color":"red","italic":false}',Lore:['{"text":"Description: Click to toggle the appearance of Gojo Satoru","color":"gray","italic":false}','{"text":"Passive: Falling beneath 2 hearts has a 10% chance of achieving the \'Honored\' status","color":"gray","italic":false}','{"text":"Server Exclusive","color":"gold","italic":false,"underlined":true}']},HideFlags:4,Unbreakable:1b,CustomModelData:1012,CustomItem:1b} 1
+kill @e[type=item,nbt={Item:{id:"minecraft:carrot_on_a_stick",Count:1b,tag:{CustomItem:1b}}}]
+tellraw @s ["",{"text":"Gojo Satoru","color":"gold"},{"text":"\n"},{"text":"This item is ","color":"gray"},{"text":"LOCKED ","color":"red"},{"text":"to your inventory and ","color":"gray"},{"text":"dropping ","color":"red"},{"text":"it will return a new copy to you.","color":"gray"}]
+playsound minecraft:entity.villager.no player @s ~ ~ ~ 100

@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Tanjiro No Uta",duration:"6560",artist:"Nami Nakagawa",obtainment:"Requirement: Stay submerged in lava for 3 minutes, without Fire Resistance",color:"dark_red",id:"47"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

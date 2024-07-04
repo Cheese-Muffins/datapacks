@@ -1,0 +1,3 @@
+execute if score @s aj.yuji.animation.king_of_curses.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:yuji/zzzzzzzz/animations/king_of_curses/end_loop
+execute if score @s aj.yuji.animation.king_of_curses.loop_mode = $aj.loop_mode.once aj.i run function animated_java:yuji/animations/king_of_curses/stop
+execute if score @s aj.yuji.animation.king_of_curses.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:yuji/animations/king_of_curses/pause

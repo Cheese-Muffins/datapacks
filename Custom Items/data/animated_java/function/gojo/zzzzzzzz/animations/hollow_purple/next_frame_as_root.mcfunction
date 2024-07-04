@@ -1,0 +1,1 @@
+function animated_java:gojo/zzzzzzzz/animations/hollow_purple/tick_animation

@@ -1,0 +1,2 @@
+execute if entity @e[tag=yujiMarked,sort=nearest,limit=1] if score @s customHealth matches 10.. run function custom:items/yuji/interaction/moves/3/pass
+execute unless entity @s[tag=customAnim] run function custom:items/yuji/interaction/moves/3/fail

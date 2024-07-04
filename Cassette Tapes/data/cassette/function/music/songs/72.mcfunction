@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Paradise",duration:"5100",artist:"Coldplay",obtainment:"Requirement: Visit the lowest point in the overworld. Beneath the Bedrock",color:"blue",id:"72"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

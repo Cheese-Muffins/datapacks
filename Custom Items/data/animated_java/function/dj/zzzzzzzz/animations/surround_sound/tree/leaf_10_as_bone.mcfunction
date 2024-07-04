@@ -1,0 +1,10 @@
+execute if entity @s[tag=aj.dj.locator_origin.4] at @s on origin run tp @s ^-0.74728 ^3.85938 ^0.51269 ~-124.45312 ~0
+execute if entity @s[tag=aj.dj.bone.n1] run data modify entity @s {} merge value {transformation:[0.5657318107836135f,0f,-0.8245893027850252f,0.24479994926430435f,0f,1f,0f,3.125f,0.8245893027850252f,0f,0.5657318107836135f,-0.16795163132638524f,0f,0f,0f,1f],start_interpolation:0}
+execute if entity @s[tag=aj.dj.locator_origin.3] at @s on origin run tp @s ^0.74728 ^3.34237 ^-0.51269 ~55.54688 ~0
+execute if entity @s[tag=aj.dj.bone.n3] run data modify entity @s {} merge value {transformation:[-0.5657318107836136f,0f,0.8245893027850251f,-0.24479994926430435f,0f,1f,0f,2.6079999999999988f,-0.8245893027850251f,0f,-0.5657318107836136f,0.16795163132638524f,0f,0f,0f,1f],start_interpolation:0}
+execute if entity @s[tag=aj.dj.locator_origin.2] at @s on origin run tp @s ^-0.51269 ^2.57838 ^-0.74728 ~-34.45312 ~0
+execute if entity @s[tag=aj.dj.bone.n2] run data modify entity @s {} merge value {transformation:[-0.8245893027850251f,0f,-0.5657318107836137f,0.16795163132638524f,0f,1f,0f,1.8440000000000003f,0.5657318107836137f,0f,-0.8245893027850251f,0.24479994926430435f,0f,0f,0f,1f],start_interpolation:0}
+execute if entity @s[tag=aj.dj.locator_origin.1] at @s on origin run tp @s ^0.51269 ^1.73537 ^0.74728 ~145.54688 ~0
+execute if entity @s[tag=aj.dj.bone.n4] run data modify entity @s {} merge value {transformation:[0.8245893027850253f,0f,0.5657318107836132f,-0.16795163132638524f,0f,1f,0f,1.0009999999999994f,-0.5657318107836132f,0f,0.8245893027850253f,-0.24479994926430435f,0f,0f,0f,1f],start_interpolation:0}
+execute if entity @s[tag=aj.dj.locator_origin.display] at @s on origin run tp @s ^0 ^2.4375 ^0 ~145.54688 ~0
+execute if entity @s[tag=aj.dj.bone.display] run data modify entity @s {} merge value {transformation:[0.8245893027850253f,0f,0.5657318107836132f,0f,0f,1f,0f,2.4375f,-0.5657318107836132f,0f,0.8245893027850253f,0f,0f,0f,0f,1f],start_interpolation:0}

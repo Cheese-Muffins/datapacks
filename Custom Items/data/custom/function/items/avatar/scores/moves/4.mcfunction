@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove4Cooldown 1
+execute if score @s customMove4Cooldown matches 630..700 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D00"
+execute if score @s customMove4Cooldown matches 560..630 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D01"
+execute if score @s customMove4Cooldown matches 490..560 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D02"
+execute if score @s customMove4Cooldown matches 420..490 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D03"
+execute if score @s customMove4Cooldown matches 350..420 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D04"
+execute if score @s customMove4Cooldown matches 280..350 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D05"
+execute if score @s customMove4Cooldown matches 210..280 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D06"
+execute if score @s customMove4Cooldown matches 140..210 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D07"
+execute if score @s customMove4Cooldown matches 70..140 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D08"
+execute if score @s customMove4Cooldown matches 1..70 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D09"
+execute if score @s customMove4Cooldown matches 0 run data modify storage minecraft:custom avatar.ui.m4 set value "u2D10"

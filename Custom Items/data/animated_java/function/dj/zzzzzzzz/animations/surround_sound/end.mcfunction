@@ -1,0 +1,3 @@
+execute if score @s aj.dj.animation.surround_sound.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:dj/zzzzzzzz/animations/surround_sound/end_loop
+execute if score @s aj.dj.animation.surround_sound.loop_mode = $aj.loop_mode.once aj.i run function animated_java:dj/animations/surround_sound/stop
+execute if score @s aj.dj.animation.surround_sound.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:dj/animations/surround_sound/pause

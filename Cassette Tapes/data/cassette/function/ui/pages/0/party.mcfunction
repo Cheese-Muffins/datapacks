@@ -1,0 +1,2 @@
+playsound minecraft:block.glass.break record @s ~ ~ ~
+tellraw @s ["",{"text":"Cassette System","color":"gold"},{"text":"\n"},{"text":"You ","color":"gray"},{"text":"cannot","color":"red"},{"text":" use this feature whilst in a ","color":"gray"},{"text":"Listening Party!","color":"red"}]

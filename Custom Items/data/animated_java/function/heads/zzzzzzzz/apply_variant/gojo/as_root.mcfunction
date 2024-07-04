@@ -1,0 +1,1 @@
+function animated_java:heads/zzzzzzzz/apply_variant/gojo/as_bone

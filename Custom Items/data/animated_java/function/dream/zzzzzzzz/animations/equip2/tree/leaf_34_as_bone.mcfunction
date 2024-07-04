@@ -1,0 +1,1 @@
+execute if entity @s[tag=aj.dream.camera_origin.camera] at @s on origin run tp @s ^0.40625 ^0.13 ^2.07813 ~161.79161 ~10.08653

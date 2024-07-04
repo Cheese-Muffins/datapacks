@@ -1,0 +1,1 @@
+function animated_java:gojo/zzzzzzzz/animations/infinity/tick_animation

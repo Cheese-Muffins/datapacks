@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"You Give Angels A Bad Name: An Evangelion/Bon Jovi Mashup",duration:"1820",artist:"Raegius",obtainment:"Complete the Advancement: Serious Dedication",color:"aqua",id:"71"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

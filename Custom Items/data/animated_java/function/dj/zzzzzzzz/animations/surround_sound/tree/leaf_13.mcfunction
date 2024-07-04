@@ -1,0 +1,2 @@
+execute on passengers run function animated_java:dj/zzzzzzzz/animations/surround_sound/tree/leaf_13_as_bone
+execute unless entity @s[tag=aj.dj.disable_command_keyframes] at @s run function animated_java:dj/zzzzzzzz/animations/surround_sound/tree/leaf_13_effects_0

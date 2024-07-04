@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove4Cooldown 1
+execute if score @s customMove4Cooldown matches 360..400 run data modify storage minecraft:custom dj.ui.m4 set value "uEA00"
+execute if score @s customMove4Cooldown matches 320..360 run data modify storage minecraft:custom dj.ui.m4 set value "uEA01"
+execute if score @s customMove4Cooldown matches 280..320 run data modify storage minecraft:custom dj.ui.m4 set value "uEA02"
+execute if score @s customMove4Cooldown matches 240..280 run data modify storage minecraft:custom dj.ui.m4 set value "uEA03"
+execute if score @s customMove4Cooldown matches 200..240 run data modify storage minecraft:custom dj.ui.m4 set value "uEA04"
+execute if score @s customMove4Cooldown matches 160..200 run data modify storage minecraft:custom dj.ui.m4 set value "uEA05"
+execute if score @s customMove4Cooldown matches 120..160 run data modify storage minecraft:custom dj.ui.m4 set value "uEA06"
+execute if score @s customMove4Cooldown matches 80..120 run data modify storage minecraft:custom dj.ui.m4 set value "uEA07"
+execute if score @s customMove4Cooldown matches 40..80 run data modify storage minecraft:custom dj.ui.m4 set value "uEA08"
+execute if score @s customMove4Cooldown matches 1..40 run data modify storage minecraft:custom dj.ui.m4 set value "uEA09"
+execute if score @s customMove4Cooldown matches 0 run data modify storage minecraft:custom dj.ui.m4 set value "uEA10"

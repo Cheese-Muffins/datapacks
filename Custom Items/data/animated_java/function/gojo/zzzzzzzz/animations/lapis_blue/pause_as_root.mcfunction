@@ -1,0 +1,1 @@
+tag @s remove aj.gojo.animation.lapis_blue

@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..34 run function animated_java:gojo/zzzzzzzz/animations/reversed_cursed_technique/tree/branch_0_34

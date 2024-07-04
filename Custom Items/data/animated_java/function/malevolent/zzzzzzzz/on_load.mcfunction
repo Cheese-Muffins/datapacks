@@ -1,0 +1,2 @@
+scoreboard players set @s aj.malevolent.rig_loaded 1
+execute unless score @s aj.malevolent.export_version = aj.malevolent.export_version aj.i at @s run function animated_java:malevolent/zzzzzzzz/mark_outdated_rig

@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..22 run function animated_java:dj/zzzzzzzz/animations/sound_waves/tree/branch_0_22

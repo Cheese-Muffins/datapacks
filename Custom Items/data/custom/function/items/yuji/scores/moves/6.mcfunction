@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove6Cooldown 1
+execute if score @s customMove6Cooldown matches 3240..3600 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C00"
+execute if score @s customMove6Cooldown matches 2880..3240 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C01"
+execute if score @s customMove6Cooldown matches 2520..2880 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C02"
+execute if score @s customMove6Cooldown matches 2160..2520 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C03"
+execute if score @s customMove6Cooldown matches 1800..2160 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C04"
+execute if score @s customMove6Cooldown matches 1440..1800 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C05"
+execute if score @s customMove6Cooldown matches 1080..1440 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C06"
+execute if score @s customMove6Cooldown matches 720..1080 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C07"
+execute if score @s customMove6Cooldown matches 360..720 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C08"
+execute if score @s customMove6Cooldown matches 1..360 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C09"
+execute if score @s customMove6Cooldown matches 0 run data modify storage minecraft:custom yuji.ui.m6 set value "u3C10"

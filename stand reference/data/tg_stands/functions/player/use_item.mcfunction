@@ -1,0 +1,2 @@
+execute if entity @s[nbt={SelectedItem:{tag:{Tags:["stand_arrow"]}}}] unless score @s tg_stands.stand.id matches 1.. run function tg_stands:player/use_item/stand_arrow
+execute if entity @s[nbt={SelectedItem:{tag:{Tags:["stand_disc"]}}},scores={tg_stands.stand.id=1..}] run function tg_stands:player/use_item/stand_disc

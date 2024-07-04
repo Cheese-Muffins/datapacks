@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Everybody Talks",duration:"3900",artist:"Neon Trees",obtainment:"Can be found inside of Ancient City Chests",color:"dark_red",id:"9"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

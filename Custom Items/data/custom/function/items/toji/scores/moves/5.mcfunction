@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove5Cooldown 1
+execute if score @s customMove5Cooldown matches 1531..1700 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C00"
+execute if score @s customMove5Cooldown matches 1361..1530 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C01"
+execute if score @s customMove5Cooldown matches 1191..1360 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C02"
+execute if score @s customMove5Cooldown matches 1021..1190 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C03"
+execute if score @s customMove5Cooldown matches 851..1020 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C04"
+execute if score @s customMove5Cooldown matches 681..850 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C05"
+execute if score @s customMove5Cooldown matches 511..680 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C06"
+execute if score @s customMove5Cooldown matches 341..510 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C07"
+execute if score @s customMove5Cooldown matches 171..340 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C08"
+execute if score @s customMove5Cooldown matches 1..170 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C09"
+execute if score @s customMove5Cooldown matches 0 run data modify storage minecraft:custom gojo.ui.m5 set value "u3C10"

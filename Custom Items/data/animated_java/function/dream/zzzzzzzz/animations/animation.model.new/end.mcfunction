@@ -1,0 +1,3 @@
+execute if score @s aj.dream.animation.animation.model.new.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:dream/zzzzzzzz/animations/animation.model.new/end_loop
+execute if score @s aj.dream.animation.animation.model.new.loop_mode = $aj.loop_mode.once aj.i run function animated_java:dream/animations/animation.model.new/stop
+execute if score @s aj.dream.animation.animation.model.new.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:dream/animations/animation.model.new/pause

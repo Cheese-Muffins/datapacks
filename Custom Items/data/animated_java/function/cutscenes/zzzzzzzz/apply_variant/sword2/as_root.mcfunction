@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:cutscenes/zzzzzzzz/apply_variant/sword2/as_bone

@@ -1,0 +1,1 @@
+tag @s remove aj.dj.animation.sound_waves

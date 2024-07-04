@@ -1,0 +1,11 @@
+{
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "type": "minecraft:player",
+    "nbt": "{Tags:[\"tg_stands.instasneak\"]}",
+    "flags": {
+      "is_sneaking": true
+    }
+  }
+}

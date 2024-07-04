@@ -1,0 +1,2 @@
+execute on passengers run function animated_java:projectiles/zzzzzzzz/animations/firecube/tree/leaf_0_as_bone
+function animated_java:projectiles/zzzzzzzz/apply_variant/lavacube/as_root

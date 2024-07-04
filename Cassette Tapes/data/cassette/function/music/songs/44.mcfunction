@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"The Only Thing They Fear Is You",duration:"8220",artist:"Doom Eternal OST",obtainment:"Drops from: The Warden (33%)",color:"red",id:"44"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

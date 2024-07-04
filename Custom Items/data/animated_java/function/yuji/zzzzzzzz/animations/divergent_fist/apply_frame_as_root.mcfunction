@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..53 run function animated_java:yuji/zzzzzzzz/animations/divergent_fist/tree/branch_0_53

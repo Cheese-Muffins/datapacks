@@ -1,0 +1,3 @@
+function animated_java:dream/zzzzzzzz/animations/animation.model.new/pause_as_root
+function animated_java:dream/zzzzzzzz/animations/equip/pause_as_root
+function animated_java:dream/zzzzzzzz/animations/equip2/pause_as_root

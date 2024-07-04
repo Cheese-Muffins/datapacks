@@ -1,0 +1,5 @@
+execute unless entity @s[tag=Berserk] run function custom:items/toji/interaction/lock/default
+execute if entity @s[tag=Berserk] run function custom:items/toji/interaction/lock/berserk
+execute unless entity @s[tag=Berserk] run tellraw @s ["",{"text":"Toji Fushiguro","color":"gold"},{"text":"\n"},{"text":"This item is ","color":"gray"},{"text":"LOCKED ","color":"red"},{"text":"to your inventory and ","color":"gray"},{"text":"dropping ","color":"red"},{"text":"it will return a new copy to you.","color":"gray"}]
+execute if entity @s[tag=Berserk] run tellraw @s ["",{"text":"Toji Fushiguro","color":"gold"},{"text":"\n"},{"text":"This item is ","color":"gray"},{"text":"LOCKED ","color":"red"},{"text":"to your inventory and ","color":"gray"},{"text":"dropping ","color":"red"},{"text":"it will return a new copy to you.","color":"gray"}]
+playsound minecraft:entity.villager.no player @s ~ ~ ~ 100

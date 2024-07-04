@@ -1,0 +1,2 @@
+function animated_java:malevolent/zzzzzzzz/animations/grow/pause_as_root
+function animated_java:malevolent/zzzzzzzz/animations/disappear/pause_as_root

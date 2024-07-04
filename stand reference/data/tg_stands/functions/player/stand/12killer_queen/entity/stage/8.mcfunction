@@ -1,0 +1,2 @@
+tp @s ^0.7 ^0.8 ^1 ~40 0
+execute if score @s tg_stands.stand.stage_timer matches 15 as @e[tag=tg_stands,tag=stand_ability,tag=12,tag=ability4] if score @s tg_stands.id = #search tg_stands.id run function tg_stands:player/stand/12killer_queen/ability/4appear

@@ -1,0 +1,9 @@
+execute unless entity @a[tag=ListeningParty_1Host] as @a[tag=ListeningParty_1Member] at @s run say host left p1
+execute unless entity @a[tag=ListeningParty_2Host] as @a[tag=ListeningParty_2Member] at @s run say host left p2
+execute unless entity @a[tag=ListeningParty_3Host] as @a[tag=ListeningParty_3Member] at @s run say host left p3
+execute unless entity @a[tag=ListeningParty_4Host] as @a[tag=ListeningParty_4Member] at @s run say host left p4
+execute unless entity @a[tag=ListeningParty_5Host] as @a[tag=ListeningParty_5Member] at @s run say host left p5
+execute unless entity @a[tag=ListeningParty_6Host] as @a[tag=ListeningParty_6Member] at @s run say host left p6
+execute unless entity @a[tag=ListeningParty_7Host] as @a[tag=ListeningParty_7Member] at @s run say host left p7
+execute unless entity @a[tag=ListeningParty_8Host] as @a[tag=ListeningParty_8Member] at @s run say host left p8
+execute unless entity @a[tag=ListeningParty_9Host] as @a[tag=ListeningParty_9Member] at @s run say host left p9

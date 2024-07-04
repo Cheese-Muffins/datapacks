@@ -1,0 +1,2 @@
+tp @s ^0.8 ^1.1 ^0.8 ~40 0
+execute if score @s tg_stands.stand.stage_timer matches 6 as @a[tag=tg_stands.user_filter] at @s anchored eyes positioned ^ ^ ^0.1 run function tg_stands:player/stand/12killer_queen/ability/2summon

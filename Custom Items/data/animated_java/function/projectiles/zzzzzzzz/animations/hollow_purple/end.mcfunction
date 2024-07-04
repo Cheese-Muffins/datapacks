@@ -1,0 +1,3 @@
+execute if score @s aj.projectiles.animation.hollow_purple.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:projectiles/zzzzzzzz/animations/hollow_purple/end_loop
+execute if score @s aj.projectiles.animation.hollow_purple.loop_mode = $aj.loop_mode.once aj.i run function animated_java:projectiles/animations/hollow_purple/stop
+execute if score @s aj.projectiles.animation.hollow_purple.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:projectiles/animations/hollow_purple/pause

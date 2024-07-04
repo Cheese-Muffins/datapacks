@@ -1,0 +1,1 @@
+execute if entity @s[tag=aj.projectiles.bone.orb] run data modify entity @s {} merge value {transformation:[-2.975303524808395f,5.975214969795039f,1.2246467991473532e-16f,0f,5.975214969795039f,2.975303524808395f,0f,0.5f,-3.643695938148439e-16f,7.317527886976843e-16f,-1f,0f,0f,0f,0f,1f],start_interpolation:0}

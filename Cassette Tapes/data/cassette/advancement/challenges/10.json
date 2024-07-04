@@ -1,0 +1,23 @@
+{
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "player": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type": "minecraft:player"
+              }
+            }
+          ],
+          "recipe_id": "minecraft:writable_book"
+        }
+      }
+    },
+    "rewards": {
+      "function": "cassette:music/collect/advancement"
+    }
+  }
+  

@@ -1,0 +1,2 @@
+execute on passengers run function animated_java:gojo/zzzzzzzz/animations/domain_expansion/tree/leaf_0_as_bone
+function animated_java:gojo/zzzzzzzz/apply_variant/noblindfold/as_root

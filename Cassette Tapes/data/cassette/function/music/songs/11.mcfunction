@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Club 57",duration:"5920",artist:"Bastille",obtainment:"Can be found inside of Stronghold Library Chests",color:"gold",id:"11"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

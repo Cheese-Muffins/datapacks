@@ -1,0 +1,7 @@
+function animated_java:yuji/zzzzzzzz/animations/natural_talent/pause_as_root
+function animated_java:yuji/zzzzzzzz/animations/divergent_fist/pause_as_root
+function animated_java:yuji/zzzzzzzz/animations/pact/pause_as_root
+function animated_java:yuji/zzzzzzzz/animations/sukuna/pause_as_root
+function animated_java:yuji/zzzzzzzz/animations/king_of_curses/pause_as_root
+function animated_java:yuji/zzzzzzzz/animations/slash/pause_as_root
+function animated_java:yuji/zzzzzzzz/animations/malevolent_kitchen/pause_as_root

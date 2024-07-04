@@ -1,0 +1,3 @@
+scoreboard players set @s aj.toji.animation.flex.local_anim_time 0
+scoreboard players set @s aj.anim_time 0
+function animated_java:toji/zzzzzzzz/animations/flex/tree/leaf_0

@@ -1,0 +1,1 @@
+function animated_java:toji/zzzzzzzz/animations/arsenal_swap/tick_animation

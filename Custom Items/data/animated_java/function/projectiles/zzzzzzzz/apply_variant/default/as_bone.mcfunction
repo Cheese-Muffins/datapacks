@@ -1,0 +1,3 @@
+execute if entity @s[tag=aj.projectiles.bone.orb] run data modify entity @s item.components.minecraft:custom_model_data set value 167
+execute if entity @s[tag=aj.projectiles.bone.explosion] run data modify entity @s item.components.minecraft:custom_model_data set value 168
+execute if entity @s[tag=aj.projectiles.bone.lavacube] run data modify entity @s item.components.minecraft:custom_model_data set value 169

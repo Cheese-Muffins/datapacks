@@ -1,0 +1,1 @@
+function animated_java:dream/zzzzzzzz/animations/equip/tick_animation

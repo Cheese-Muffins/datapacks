@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..75 run function animated_java:yuji/zzzzzzzz/animations/pact/tree/branch_0_75

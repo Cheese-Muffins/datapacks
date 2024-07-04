@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"The Spectre",duration:"3860",artist:"Alan Walker",obtainment:"Requirement: Be nearby an Allay and a Cat whilst being in a Mushroom Island biome.",color:"red",id:"94"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

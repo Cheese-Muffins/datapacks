@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:projectiles/zzzzzzzz/apply_variant/explosion_purple/as_bone

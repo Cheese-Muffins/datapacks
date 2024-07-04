@@ -1,0 +1,1 @@
+execute if entity @s[tag=InfiniteVoided] run function custom:items/gojo/moves/hit/infinite/apply

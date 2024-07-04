@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..84 run function animated_java:toji/zzzzzzzz/animations/sneak_attack/tree/branch_0_84

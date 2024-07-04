@@ -1,0 +1,11 @@
+$execute if score @s cassette3 matches 1 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#FF0000"}
+$execute if score @s cassette3 matches 6 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#FF8000"}
+$execute if score @s cassette3 matches 11 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#FFFF00"}
+$execute if score @s cassette3 matches 16 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#80FF00"}
+$execute if score @s cassette3 matches 21 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#00FF00"}
+$execute if score @s cassette3 matches 26 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#00FF80"}
+$execute if score @s cassette3 matches 31 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#00FFFF"}
+$execute if score @s cassette3 matches 36 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#0080FF"}
+$execute if score @s cassette3 matches 41 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#0000FF"}
+$execute if score @s cassette3 matches 46 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#8000FF"}
+$execute if score @s cassette3 matches 51 run title @s actionbar {"text":"Now Playing: $(name) - $(artist)","color":"#FF00FF"}

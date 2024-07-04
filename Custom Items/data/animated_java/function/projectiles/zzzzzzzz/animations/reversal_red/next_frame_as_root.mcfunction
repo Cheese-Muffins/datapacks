@@ -1,0 +1,1 @@
+function animated_java:projectiles/zzzzzzzz/animations/reversal_red/tick_animation

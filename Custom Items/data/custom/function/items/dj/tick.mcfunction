@@ -1,0 +1,4 @@
+execute if score @s customToggle matches 1 run function custom:items/dj/active
+execute if entity @s[nbt=!{Inventory:[{components:{"minecraft:custom_data":{CustomItem:1b}},Slot:8b}]}] run function custom:items/dj/lock/item
+
+execute unless entity @s[scores={customMove1Cooldown=0,customMove2Cooldown=0,customMove3Cooldown=0,customMove4Cooldown=0,customMove5Cooldown=0,customMove6Cooldown=0,customMeterTimer=0,customAwakenedCooldown=0,customEffectDuration=0,customToggleDelay=0,customavatarNotes=0,customMoveSpamDelay=0,customavatarConverted=0,customAttack=0,customDelay2=0,customDelay3=0,customToggle=1..}] run function custom:items/dj/scores/main

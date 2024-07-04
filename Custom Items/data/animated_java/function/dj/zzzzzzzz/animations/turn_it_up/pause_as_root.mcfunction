@@ -1,0 +1,1 @@
+tag @s remove aj.dj.animation.turn_it_up

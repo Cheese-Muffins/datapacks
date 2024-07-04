@@ -1,0 +1,1 @@
+$execute if entity @s[advancements={cassette:75=true}] unless entity @s[tag=$(value)v] run function cassette:music/songs/vanilla/songs/$(value)

@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Locked Out Of Heaven",duration:"4660",artist:"Bruno Mars",obtainment:"Requirement: Fly 1000 blocks into the sky",color:"yellow",id:"23"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

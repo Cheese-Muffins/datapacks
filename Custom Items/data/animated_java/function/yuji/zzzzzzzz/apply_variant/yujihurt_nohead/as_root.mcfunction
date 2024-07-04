@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:yuji/zzzzzzzz/apply_variant/yujihurt_nohead/as_bone

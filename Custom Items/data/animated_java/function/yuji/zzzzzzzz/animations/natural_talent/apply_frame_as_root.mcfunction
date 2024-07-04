@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..52 run function animated_java:yuji/zzzzzzzz/animations/natural_talent/tree/branch_0_52

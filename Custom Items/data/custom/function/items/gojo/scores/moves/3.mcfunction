@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove3Cooldown 1
+execute if score @s customMove3Cooldown matches 451..500 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA00"
+execute if score @s customMove3Cooldown matches 401..450 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA01"
+execute if score @s customMove3Cooldown matches 351..400 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA02"
+execute if score @s customMove3Cooldown matches 301..350 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA03"
+execute if score @s customMove3Cooldown matches 251..300 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA04"
+execute if score @s customMove3Cooldown matches 201..250 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA05"
+execute if score @s customMove3Cooldown matches 151..200 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA06"
+execute if score @s customMove3Cooldown matches 101..150 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA07"
+execute if score @s customMove3Cooldown matches 51..100 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA08"
+execute if score @s customMove3Cooldown matches 1..50 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA09"
+execute if score @s customMove3Cooldown matches 0 run data modify storage minecraft:custom gojo.ui.m3 set value "uEA10"

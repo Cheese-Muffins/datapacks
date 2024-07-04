@@ -1,0 +1,1 @@
+tag @s remove aj.projectiles.animation.hollow_purple

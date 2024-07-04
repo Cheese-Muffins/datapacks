@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Better Call Saul Theme",duration:"3960",artist:"Little Barrie",obtainment:"Eliminate: 10 Baby Villagers",color:"yellow",id:"46"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

@@ -1,0 +1,21 @@
+{
+    "display": {
+      "icon": {
+        "item": "minecraft:structure_void",
+        "nbt": "{CustomModelData:637106}"
+      },
+      "title": "Filthy Rich",
+      "description": "Obtain a Stand from The JOJOLands",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "parent": "tg_stands:part/8",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:impossible",
+        "conditions": {}
+      }
+    }
+  }
+  

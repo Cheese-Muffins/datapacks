@@ -1,0 +1,1 @@
+execute if entity @s[tag=aj.malevolent.bone.malevolent_shrine] run data modify entity @s item.components.minecraft:custom_model_data set value 296

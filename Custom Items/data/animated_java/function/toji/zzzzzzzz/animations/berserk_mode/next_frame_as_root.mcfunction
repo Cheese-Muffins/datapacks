@@ -1,0 +1,1 @@
+function animated_java:toji/zzzzzzzz/animations/berserk_mode/tick_animation

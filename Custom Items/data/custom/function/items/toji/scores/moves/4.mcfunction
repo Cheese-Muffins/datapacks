@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove4Cooldown 1
+execute if score @s customMove4Cooldown matches 307..340 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C00"
+execute if score @s customMove4Cooldown matches 273..306 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C01"
+execute if score @s customMove4Cooldown matches 239..272 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C02"
+execute if score @s customMove4Cooldown matches 205..238 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C03"
+execute if score @s customMove4Cooldown matches 171..204 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C04"
+execute if score @s customMove4Cooldown matches 137..170 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C05"
+execute if score @s customMove4Cooldown matches 103..136 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C06"
+execute if score @s customMove4Cooldown matches 69..102 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C07"
+execute if score @s customMove4Cooldown matches 35..68 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C08"
+execute if score @s customMove4Cooldown matches 1..34 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C09"
+execute if score @s customMove4Cooldown matches 0 run data modify storage minecraft:custom gojo.ui.m4 set value "u3C10"

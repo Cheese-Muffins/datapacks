@@ -1,0 +1,1 @@
+execute if entity @s[tag=aj.malevolent.bone.malevolent_shrine] run data modify entity @s {} merge value {transformation:[-8.91631645452221f,-0.07902738298160374f,1.0919767292397231e-15f,0f,-0.07902738298160374f,8.91631645452221f,0f,-12.332467634392438f,-1.09193384062155e-15f,-9.678063161341303e-18f,-8.916666666666666f,0f,0f,0f,0f,1f],start_interpolation:0}

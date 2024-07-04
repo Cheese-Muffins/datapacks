@@ -1,0 +1,1 @@
+function animated_java:cutscenes/zzzzzzzz/animations/assasinate/pause_as_root

@@ -1,0 +1,1 @@
+function animated_java:yuji/zzzzzzzz/animations/sukuna/tick_animation

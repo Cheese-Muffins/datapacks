@@ -1,0 +1,1 @@
+tag @s remove aj.toji.animation.sneak_attack

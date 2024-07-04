@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..155 run function animated_java:gojo/zzzzzzzz/animations/domain_expansion/tree/branch_0_155

@@ -1,0 +1,1 @@
+tag @s remove aj.gojo.animation.reversed_cursed_technique

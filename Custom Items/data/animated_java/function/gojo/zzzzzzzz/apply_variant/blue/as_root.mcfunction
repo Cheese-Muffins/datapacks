@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:gojo/zzzzzzzz/apply_variant/blue/as_bone

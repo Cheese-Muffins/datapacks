@@ -1,0 +1,3 @@
+execute if score @s aj.projectiles.animation.firecube.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:projectiles/zzzzzzzz/animations/firecube/end_loop
+execute if score @s aj.projectiles.animation.firecube.loop_mode = $aj.loop_mode.once aj.i run function animated_java:projectiles/animations/firecube/stop
+execute if score @s aj.projectiles.animation.firecube.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:projectiles/animations/firecube/pause

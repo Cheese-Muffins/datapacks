@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:cutscenes/zzzzzzzz/apply_variant/user_shown/as_bone

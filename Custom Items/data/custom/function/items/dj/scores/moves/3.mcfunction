@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove3Cooldown 1
+execute if score @s customMove3Cooldown matches 630..700 run data modify storage minecraft:custom dj.ui.m3 set value "uEA00"
+execute if score @s customMove3Cooldown matches 560..630 run data modify storage minecraft:custom dj.ui.m3 set value "uEA01"
+execute if score @s customMove3Cooldown matches 490..560 run data modify storage minecraft:custom dj.ui.m3 set value "uEA02"
+execute if score @s customMove3Cooldown matches 420..490 run data modify storage minecraft:custom dj.ui.m3 set value "uEA03"
+execute if score @s customMove3Cooldown matches 350..420 run data modify storage minecraft:custom dj.ui.m3 set value "uEA04"
+execute if score @s customMove3Cooldown matches 280..350 run data modify storage minecraft:custom dj.ui.m3 set value "uEA05"
+execute if score @s customMove3Cooldown matches 210..280 run data modify storage minecraft:custom dj.ui.m3 set value "uEA06"
+execute if score @s customMove3Cooldown matches 140..210 run data modify storage minecraft:custom dj.ui.m3 set value "uEA07"
+execute if score @s customMove3Cooldown matches 70..140 run data modify storage minecraft:custom dj.ui.m3 set value "uEA08"
+execute if score @s customMove3Cooldown matches 1..70 run data modify storage minecraft:custom dj.ui.m3 set value "uEA09"
+execute if score @s customMove3Cooldown matches 0 run data modify storage minecraft:custom dj.ui.m3 set value "uEA10"

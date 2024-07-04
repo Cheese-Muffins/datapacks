@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..230 run function animated_java:cutscenes/zzzzzzzz/animations/assasinate/tree/branch_0_230

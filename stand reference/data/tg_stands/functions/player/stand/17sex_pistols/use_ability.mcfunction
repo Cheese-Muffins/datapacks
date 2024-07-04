@@ -1,0 +1,4 @@
+execute if entity @s[scores={tg_stands.stand.slot=1,tg_stands.stand.cd=0,tg_stands.stand.ammo=..5}] at @s run function tg_stands:player/stand/17sex_pistols/ability/1
+execute if entity @s[scores={tg_stands.stand.slot=2,tg_stands.stand.cd=0,tg_stands.stand.ammo=1..}] at @s run function tg_stands:player/stand/17sex_pistols/ability/2
+execute if entity @s[scores={tg_stands.stand.slot=3,tg_stands.stand.cd=0}] if entity @e[tag=tg_stands,tag=stand_ability,tag=17,tag=ability2,distance=..101] if entity @e[type=#tg_stands:targetable,distance=..101,tag=!tg_stands.user_filter] run function tg_stands:player/stand/17sex_pistols/ability/3
+execute if entity @s[scores={tg_stands.stand.slot=4,tg_stands.stand.cd=0,tg_stands.stand.ammo=3..}] at @s run function tg_stands:player/stand/17sex_pistols/ability/4

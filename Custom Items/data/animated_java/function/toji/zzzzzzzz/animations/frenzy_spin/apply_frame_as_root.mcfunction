@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..55 run function animated_java:toji/zzzzzzzz/animations/frenzy_spin/tree/branch_0_55

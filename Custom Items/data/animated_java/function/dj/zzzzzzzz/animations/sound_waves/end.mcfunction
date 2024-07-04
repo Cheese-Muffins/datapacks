@@ -1,0 +1,3 @@
+execute if score @s aj.dj.animation.sound_waves.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:dj/zzzzzzzz/animations/sound_waves/end_loop
+execute if score @s aj.dj.animation.sound_waves.loop_mode = $aj.loop_mode.once aj.i run function animated_java:dj/animations/sound_waves/stop
+execute if score @s aj.dj.animation.sound_waves.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:dj/animations/sound_waves/pause

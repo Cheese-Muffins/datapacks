@@ -1,0 +1,21 @@
+{
+    "display": {
+      "icon": {
+        "item": "minecraft:structure_void",
+        "nbt": "{CustomModelData:637004}"
+      },
+      "title": "JoJo-Verse Staff",
+      "description": "Be part of the JoJo-Verse Staff Team",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "parent": "tg_stands:patreon",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:impossible",
+        "conditions": {}
+      }
+    }
+  }
+  

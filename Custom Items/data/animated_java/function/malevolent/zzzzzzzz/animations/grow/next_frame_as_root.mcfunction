@@ -1,0 +1,1 @@
+function animated_java:malevolent/zzzzzzzz/animations/grow/tick_animation

@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:structure_void",
+      "nbt": "{CustomModelData:637000}"
+    },
+    "title": "TG's Stands",
+    "description": ["",{"text":"JoJo Data Pack made by","color":"green"},{"text":" IvanTG","color":"yellow"}],
+    "background": "tg_stands:textures/advancements/background.png",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "rewards": {
+    "function": "tg_stands:new_player"
+  }
+}

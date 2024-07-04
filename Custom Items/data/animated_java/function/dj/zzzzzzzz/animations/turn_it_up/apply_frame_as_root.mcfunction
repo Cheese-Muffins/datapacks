@@ -1,0 +1,1 @@
+execute if score @s aj.anim_time matches 0..23 run function animated_java:dj/zzzzzzzz/animations/turn_it_up/tree/branch_0_23

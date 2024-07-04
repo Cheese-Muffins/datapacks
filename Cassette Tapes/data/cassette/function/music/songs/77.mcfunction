@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Under the Tree",duration:"5400",artist:"SiM",obtainment:"Stand underneath an oak tree during rainy weather, while looking at another player with a spyglass",color:"red",id:"77"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

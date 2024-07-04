@@ -1,0 +1,1 @@
+tag @a[tag=TojiUser,sort=nearest,limit=1,tag=tojiArsenal] remove tojiArsenal

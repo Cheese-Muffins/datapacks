@@ -1,0 +1,1 @@
+execute if entity @s[tag=aj.dream.root] run function animated_java:dream/zzzzzzzz/tick_as_root

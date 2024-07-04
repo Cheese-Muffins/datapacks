@@ -1,0 +1,21 @@
+{
+    "display": {
+      "icon": {
+        "item": "minecraft:structure_void",
+        "nbt": "{CustomModelData:637101}"
+      },
+      "title": "Crazy & Noisy",
+      "description": "Obtain a Stand from Diamond is Unbreakable",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+    },
+    "parent": "tg_stands:part/3",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:impossible",
+        "conditions": {}
+      }
+    }
+  }
+  

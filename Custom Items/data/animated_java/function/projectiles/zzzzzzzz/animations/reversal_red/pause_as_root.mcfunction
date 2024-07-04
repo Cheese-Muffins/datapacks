@@ -1,0 +1,1 @@
+tag @s remove aj.projectiles.animation.reversal_red

@@ -1,0 +1,1 @@
+execute if entity @s[tag=aj.yuji.root] run function animated_java:yuji/zzzzzzzz/tick_as_root

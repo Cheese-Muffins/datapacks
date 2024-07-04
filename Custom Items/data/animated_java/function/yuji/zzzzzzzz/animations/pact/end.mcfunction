@@ -1,0 +1,3 @@
+execute if score @s aj.yuji.animation.pact.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:yuji/zzzzzzzz/animations/pact/end_loop
+execute if score @s aj.yuji.animation.pact.loop_mode = $aj.loop_mode.once aj.i run function animated_java:yuji/animations/pact/stop
+execute if score @s aj.yuji.animation.pact.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:yuji/animations/pact/pause

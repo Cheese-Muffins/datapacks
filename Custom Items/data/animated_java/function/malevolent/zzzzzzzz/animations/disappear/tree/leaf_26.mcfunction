@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:malevolent/zzzzzzzz/animations/disappear/tree/leaf_26_as_bone

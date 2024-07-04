@@ -1,0 +1,4 @@
+summon minecraft:item_display ~ ~ ~ {teleport_duration:2b,Tags:["aj.cutscenes.locator","aj.cutscenes.locator.head2","aj.new"],CustomName:"[{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"AJ\",\"color\":\"aqua\"},\"] \",[\"\",{\"text\":\"cutscenes\",\"color\":\"light_purple\"},\".\",{\"text\":\"locatorEntity\",\"color\":\"white\"},\"[\",{\"text\":\"head2\",\"color\":\"yellow\"},\"]\"]]"}
+execute as @e[type=minecraft:item_display,tag=aj.cutscenes.locator.head2,tag=aj.new,limit=1,distance=..1] run function animated_java:cutscenes/zzzzzzzz/summon/locator_head2/as_entity
+data modify entity @s Owner set from storage animated_java Owner
+data remove storage animated_java Owner

@@ -1,0 +1,5 @@
+execute unless entity @s[tag=Sukuna] run function custom:items/yuji/interaction/lock/default
+execute if entity @s[tag=Sukuna] run function custom:items/yuji/interaction/lock/sukuna
+execute unless entity @s[tag=Sukuna] run tellraw @s ["",{"text":"Yuji Itadori","color":"gold"},{"text":"\n"},{"text":"This item is ","color":"gray"},{"text":"LOCKED ","color":"red"},{"text":"to your inventory and ","color":"gray"},{"text":"dropping ","color":"red"},{"text":"it will return a new copy to you.","color":"gray"}]
+execute if entity @s[tag=Sukuna] run tellraw @s ["",{"text":"Ryomen Sukuna","color":"gold"},{"text":"\n"},{"text":"This item is ","color":"gray"},{"text":"LOCKED ","color":"red"},{"text":"to your inventory and ","color":"gray"},{"text":"dropping ","color":"red"},{"text":"it will return a new copy to you.","color":"gray"}]
+playsound minecraft:entity.villager.no player @s ~ ~ ~ 100

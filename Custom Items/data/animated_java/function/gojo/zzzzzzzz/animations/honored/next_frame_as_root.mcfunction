@@ -1,0 +1,1 @@
+function animated_java:gojo/zzzzzzzz/animations/honored/tick_animation

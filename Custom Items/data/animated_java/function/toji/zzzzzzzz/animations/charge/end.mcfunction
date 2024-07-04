@@ -1,0 +1,3 @@
+execute if score @s aj.toji.animation.charge.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:toji/zzzzzzzz/animations/charge/end_loop
+execute if score @s aj.toji.animation.charge.loop_mode = $aj.loop_mode.once aj.i run function animated_java:toji/animations/charge/stop
+execute if score @s aj.toji.animation.charge.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:toji/animations/charge/pause

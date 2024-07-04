@@ -1,0 +1,11 @@
+execute if entity @s[tag=aj.dream.bone.torso] run data modify entity @s item.tag.CustomModelData set value 91
+execute if entity @s[tag=aj.dream.bone.bone9] run data modify entity @s item.tag.CustomModelData set value 92
+execute if entity @s[tag=aj.dream.bone.bone8] run data modify entity @s item.tag.CustomModelData set value 93
+execute if entity @s[tag=aj.dream.bone.mask] run data modify entity @s item.tag.CustomModelData set value 94
+execute if entity @s[tag=aj.dream.bone.head] run data modify entity @s item.tag.CustomModelData set value 95
+execute if entity @s[tag=aj.dream.bone.bone14] run data modify entity @s item.tag.CustomModelData set value 96
+execute if entity @s[tag=aj.dream.bone.bone15] run data modify entity @s item.tag.CustomModelData set value 97
+execute if entity @s[tag=aj.dream.bone.bone13] run data modify entity @s item.tag.CustomModelData set value 98
+execute if entity @s[tag=aj.dream.bone.bone12] run data modify entity @s item.tag.CustomModelData set value 99
+execute if entity @s[tag=aj.dream.bone.bone10] run data modify entity @s item.tag.CustomModelData set value 100
+execute if entity @s[tag=aj.dream.bone.bone11] run data modify entity @s item.tag.CustomModelData set value 101

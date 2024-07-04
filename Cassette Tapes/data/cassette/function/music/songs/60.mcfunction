@@ -1,0 +1,2 @@
+$data merge storage minecraft:$(storage) {$(path):{name:"Crab Rave",duration:"3220",artist:"Noise Storm",obtainment:"Requirement: Sift through Sand with a Brush (3% Chance in Trail Ruins)",color:"dark_red",id:"60"}}$(eparen)
+$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

@@ -1,0 +1,4 @@
+summon minecraft:armor_stand ~ ~ ~ {Tags:["aj.cutscenes.camera","aj.cutscenes.camera.camera","aj.new"],CustomName:"[{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"AJ\",\"color\":\"aqua\"},\"] \",[\"\",{\"text\":\"cutscenes\",\"color\":\"light_purple\"},\".\",{\"text\":\"cameraEntity\",\"color\":\"white\"},\"[\",{\"text\":\"camera\",\"color\":\"yellow\"},\"]\"]]"}
+execute as @e[type=minecraft:armor_stand,tag=aj.cutscenes.camera.camera,tag=aj.new,limit=1,distance=..1] run function animated_java:cutscenes/zzzzzzzz/summon/camera_camera/as_entity
+data modify entity @s Owner set from storage animated_java Owner
+data remove storage animated_java Owner

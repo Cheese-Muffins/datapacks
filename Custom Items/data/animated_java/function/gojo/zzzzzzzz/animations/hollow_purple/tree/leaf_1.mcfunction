@@ -1,0 +1,1 @@
+execute on passengers run function animated_java:gojo/zzzzzzzz/animations/hollow_purple/tree/leaf_1_as_bone

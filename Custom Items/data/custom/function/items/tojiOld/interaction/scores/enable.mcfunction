@@ -1,0 +1,13 @@
+scoreboard players set @s customMove1Cooldown 0
+scoreboard players set @s customMove2Cooldown 0
+scoreboard players set @s customMove3Cooldown 0
+scoreboard players set @s customMove4Cooldown 0
+scoreboard players set @s customMove5Cooldown 0
+scoreboard players set @s customMove6Cooldown 0
+scoreboard players set @s customMove7Cooldown 0
+scoreboard players set @s customMove8Cooldown 0
+scoreboard players set @s customMeterTimer 0
+scoreboard players set @s customAwakenedCooldown 0
+scoreboard players set @s customEffectDuration 0
+scoreboard players set @s customToggleDelay 0
+scoreboard players set @s customToggle 2
