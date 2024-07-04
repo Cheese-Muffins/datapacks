@@ -44,6 +44,42 @@
                 }
               }
             ]
+          },
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:carrot_on_a_stick",
+            "weight": 1,
+            "functions": [
+              {
+                "function": "minecraft:set_custom_data",
+                "tag": "{cassette:redeem}"
+              },
+              {
+                "function": "minecraft:set_custom_model_data",
+                "value": 126
+              },
+              {
+                "function": "minecraft:set_lore",
+                "lore": [
+                  [
+                    {
+                      "text": "By: Throttle",
+                      "color": "gray",
+                      "italic": false
+                    }
+                  ]
+                ],
+                "mode": "replace_section"
+              },
+              {
+                "function": "minecraft:set_name",
+                "name": {
+                  "text": "Cities",
+                  "color": "blue",
+                  "italic": false
+                }
+              }
+            ]
           }
         ]
       },

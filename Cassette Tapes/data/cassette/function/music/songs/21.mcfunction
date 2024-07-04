@@ -1,2 +1,2 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"Blackhole Sun",duration:"6360",artist:"Soundgarden",obtainment:"Requirement: Craft a Book and Quill",color:"gold",id:"21"}}$(eparen)
+$data merge storage minecraft:$(storage) {$(path):{name:"Blackhole Sun",duration:"6360",artist:"Soundgarden",obtainment:"Craft a Broken Clock",color:"gold",id:"21"}}$(eparen)
 $execute if entity @s[type=minecraft:player] run tag @s add $(tag)

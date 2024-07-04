@@ -38,6 +38,7 @@ scoreboard objectives add cassette_y dummy
 scoreboard objectives add cassette_z dummy
 scoreboard objectives add cassette_connected minecraft.custom:minecraft.play_time
 scoreboard objectives add cassette_obsidian minecraft.mined:minecraft.obsidian
+scoreboard objectives add cassette_damagetaken minecraft.custom:minecraft.damage_taken
 scoreboard objectives add cassette5 dummy
 scoreboard objectives add cassette_redeemCMD dummy
 
