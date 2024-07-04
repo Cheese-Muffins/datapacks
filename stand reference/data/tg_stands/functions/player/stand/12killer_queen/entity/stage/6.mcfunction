@@ -1,5 +1,0 @@
-tp @s ^1 ^1.1 ^1 ~20 0
-execute if score @s tg_stands.stand.stage_timer matches 17 run playsound tg_stands:stand.12killer_queen.moveset.trigger player @a ~ ~ ~ 1 1 0.01
-execute if score @s tg_stands.stand.stage_timer matches 10 as @e[tag=tg_stands,tag=stand_ability,tag=12,tag=ability2] if score @s tg_stands.id = #search tg_stands.id at @s run function tg_stands:player/stand/12killer_queen/ability/2trigger
-execute as @e[tag=tg_stands,tag=stand_ability,tag=12,tag=ability3] if score @s tg_stands.id = #search tg_stands.id run scoreboard players remove @s tg_stands.stand.stage_timer 1
-execute if score @s tg_stands.stand.stage_timer matches 10 as @e[tag=tg_stands,tag=stand_ability,tag=12,tag=ability3] if score @s tg_stands.id = #search tg_stands.id at @s run function tg_stands:player/stand/12killer_queen/ability/2trigger

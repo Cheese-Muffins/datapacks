@@ -1,1 +1,0 @@
-give @s minecraft:warped_fungus_on_a_stick{CustomModelData:63002,Unbreakable:1,HideFlags:127,Tags:["tg_stands","item","stand_disc"],display:{Name:'[{"text":"Stand Disc","italic":false,"color":"yellow"}]'}} 1
