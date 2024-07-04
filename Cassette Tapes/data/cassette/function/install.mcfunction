@@ -21,6 +21,7 @@ setblock 0 -64 0 yellow_shulker_box
 setblock 0 -63 0 blue_shulker_box
 
 scoreboard objectives add cassette_obtain dummy
+scoreboard objectives add cassette_wardenkill dummy
 scoreboard objectives add cassette_elderkill dummy
 scoreboard objectives add cassette_monsterkills dummy
 scoreboard objectives add cassette_run minecraft.custom:minecraft.sprint_one_cm

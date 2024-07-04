@@ -1,0 +1,3 @@
+execute unless entity @s[nbt={Inventory:[{Slot:103b}]}] unless entity @s[nbt={Inventory:[{Slot:102b}]}] unless entity @s[nbt={Inventory:[{Slot:101b}]}] unless entity @s[nbt={Inventory:[{Slot:100b}]}] if entity @s[tag=!C29] run function cassette:music/songs/29 {storage:"cassette",path:"collect",tag:"C29",eparen:""}
+execute unless entity @s[nbt={Inventory:[{Slot:103b}]}] unless entity @s[nbt={Inventory:[{Slot:102b}]}] unless entity @s[nbt={Inventory:[{Slot:101b}]}] unless entity @s[nbt={Inventory:[{Slot:100b}]}] run function cassette:music/collect/grant with storage minecraft:cassette collect
+advancement revoke @s only cassette:challenges/asyouare
