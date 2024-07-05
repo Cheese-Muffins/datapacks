@@ -31,7 +31,6 @@ scoreboard players set divide cassette_movement 100
 scoreboard objectives add cassette_fish minecraft.custom:minecraft.fish_caught
 scoreboard objectives add cassette_water dummy
 scoreboard objectives add cassette_lava dummy
-scoreboard objectives add cassette_phantom minecraft.killed:minecraft.phantom
 scoreboard objectives add cassette_jump minecraft.custom:minecraft.jump
 scoreboard objectives add cassette_sneak minecraft.custom:minecraft.sneak_time
 scoreboard objectives add cassette_x dummy
@@ -40,6 +39,8 @@ scoreboard objectives add cassette_z dummy
 scoreboard objectives add cassette_connected minecraft.custom:minecraft.play_time
 scoreboard objectives add cassette_obsidian minecraft.mined:minecraft.obsidian
 scoreboard objectives add cassette_damagetaken minecraft.custom:minecraft.damage_taken
+scoreboard objectives add cassette_villagerkill dummy
+scoreboard objectives add cassette_phantomkills dummy
 scoreboard objectives add cassette5 dummy
 scoreboard objectives add cassette_redeemCMD dummy
 

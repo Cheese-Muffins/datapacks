@@ -1,2 +1,2 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"What You Gonna Do?",duration:"2860",artist:"Bastille",obtainment:"Discover: in Trial Chambers",color:"light_purple",id:"52"}}$(eparen)
+$data merge storage minecraft:$(storage) {$(path):{name:"What You Gonna Do?",duration:"2860",artist:"Bastille",obtainment:"Found in Regular Trial Chambers",color:"light_purple",id:"52"}}$(eparen)
 $execute if entity @s[type=minecraft:player] run tag @s add $(tag)

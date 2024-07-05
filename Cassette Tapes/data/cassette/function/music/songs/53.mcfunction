@@ -1,2 +1,2 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"Never Gonna Give You Up",duration:"4280",artist:"Rick Astley",obtainment:"Requirement: Stand on top of a Lightning Rod during a Thunderstorm and get struck by lightning",color:"gray",id:"53"}}$(eparen)
+$data merge storage minecraft:$(storage) {$(path):{name:"Never Gonna Give You Up",duration:"4280",artist:"Rick Astley",obtainment:"Stand at a height of 255 whilst holding a Blue Axolotl and being nearby a Creeper named Rick. Must be Thundering",color:"gray",id:"53"}}$(eparen)
 $execute if entity @s[type=minecraft:player] run tag @s add $(tag)
