@@ -42,7 +42,11 @@ scoreboard objectives add cassette_damagetaken minecraft.custom:minecraft.damage
 scoreboard objectives add cassette_villagerkill dummy
 scoreboard objectives add cassette_phantomkills dummy
 scoreboard objectives add cassette5 dummy
+scoreboard objectives add cassette_boat minecraft.custom:minecraft.boat_one_cm
 scoreboard objectives add cassette_redeemCMD dummy
+scoreboard objectives add cassette_turtle dummy
+scoreboard objectives add cassette_boat dummy
+scoreboard objectives add cassette_sniffer dummy
 
 scoreboard objectives add ui dummy
 scoreboard players set #1 ui 1

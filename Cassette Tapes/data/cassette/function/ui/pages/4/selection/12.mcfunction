@@ -1,5 +1,5 @@
 execute store result score S14C cassette_collection run data get storage minecraft:ui data.collection.c14
-execute if score S14C cassette_collection matches 77 run tag @s add VBtoggler
+execute if score S14C cassette_collection matches 77 if entity @p[advancements={cassette:75=true}] run tag @s add VBtoggler
 
 execute if entity @s[tag=VBtoggler] at @s run playsound minecraft:item.book.page_turn record @p ~ ~ ~
 execute if entity @s[tag=VBtoggler] run scoreboard players set @s ui.page 5

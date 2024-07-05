@@ -11,6 +11,11 @@ execute if score @s cassette_jump matches 1000.. unless entity @s[tag=C50] run f
 execute at @s if score @s cassette_y matches 255 if entity @e[type=minecraft:creeper,distance=..7,name=Rick] if entity @s[nbt={SelectedItem:{id:"minecraft:axolotl_bucket",count:1,components:{"minecraft:bucket_entity_data":{Variant:4}}}}] if predicate cassette:never unless entity @s[tag=C53] run function cassette:music/collect/pass {id:"53"}
 execute if score @s cassette_connected matches 576000.. unless entity @s[tag=C58] run function cassette:music/collect/pass {id:"58"}
 execute if entity @s[nbt={SelectedItem:{id:"minecraft:axolotl_bucket",count:1,components:{"minecraft:bucket_entity_data":{Variant:4}}}}] unless entity @s[tag=C63] run function cassette:music/collect/pass {id:"63"}
+execute if score @s cassette_boat matches 250000.. unless entity @s[tag=C68] run function cassette:music/collect/pass {id:"68"}
+execute if score @s cassette_y matches ..-64 if predicate cassette:paradise unless entity @s[tag=C72] run function cassette:music/collect/pass {id:"72"}
+execute if score @s cassette_obsidian matches 100.. unless entity @s[tag=C73] run function cassette:music/collect/pass {id:"73"}
+execute if score @s cassette_turtle matches 8.. if score @s cassette_boat matches 8.. if score @s cassette_sniffer matches 2.. unless entity @s[tag=C74] run function cassette:music/collect/pass {id:"74"}
+
 
 execute if entity @s[tag=songPass] run function cassette:music/collect/grant with storage minecraft:cassette collect
 
@@ -29,5 +34,12 @@ execute if score @s cassette_z matches ..-10000 run tag @s add homelandD
 
 execute at @s if block ~ ~1 ~ minecraft:lava run scoreboard players add @s cassette_lava 20
 execute at @s unless block ~ ~1 ~ minecraft:lava run scoreboard players reset @s cassette_lava
+
+scoreboard players reset @s cassette_turtle
+scoreboard players reset @s cassette_boat
+scoreboard players reset @s cassette_sniffer
+execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:turtle,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_turtle 1
+execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:boat,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_boat 1
+execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:sniffer,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_sniffer 1
 
 scoreboard players reset @s cassette_obtain

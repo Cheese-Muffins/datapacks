@@ -25,6 +25,14 @@ execute if entity @s[advancements={minecraft:nether/return_to_sender=true}] if e
 execute if entity @s[advancements={minecraft:nether/distract_piglin=true}] if entity @s[tag=!C59] run function cassette:music/songs/59 {storage:"cassette",path:"collect",tag:"C59",eparen:""}
 execute if entity @s[advancements={minecraft:husbandry/repair_wolf_armor=true}] if entity @s[tag=!C61] run function cassette:music/songs/61 {storage:"cassette",path:"collect",tag:"C61",eparen:""}
 execute if entity @s[advancements={minecraft:husbandry/kill_axolotl_target=true}] if entity @s[tag=!C62] run function cassette:music/songs/62 {storage:"cassette",path:"collect",tag:"C62",eparen:""}
+execute if entity @s[advancements={cassette:challenges/baby=true}] if entity @s[tag=!C64] run function cassette:music/songs/64 {storage:"cassette",path:"collect",tag:"C64",eparen:""}
+execute if entity @s[advancements={minecraft:nether/netherite_armor=true}] if entity @s[tag=!C65] run function cassette:music/songs/65 {storage:"cassette",path:"collect",tag:"C65",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/kill_all_mobs=true}] if entity @s[tag=!C66] run function cassette:music/songs/66 {storage:"cassette",path:"collect",tag:"C66",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/trade=true}] if entity @s[tag=!C67] run function cassette:music/songs/67 {storage:"cassette",path:"collect",tag:"C67",eparen:""}
+execute if entity @s[advancements={cassette:challenges/fnaf=true}] if entity @s[tag=!C69] run function cassette:music/songs/69 {storage:"cassette",path:"collect",tag:"C69",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/sniper_duel=true}] if entity @s[tag=!C70] run function cassette:music/songs/70 {storage:"cassette",path:"collect",tag:"C70",eparen:""}
+execute if entity @s[advancements={minecraft:husbandry/obtain_netherite_hoe=true}] if entity @s[tag=!C71] run function cassette:music/songs/71 {storage:"cassette",path:"collect",tag:"C71",eparen:""}
+execute if entity @s[advancements={minecraft:husbandry/balanced_diet=true}] if entity @s[tag=!C75] run function cassette:music/songs/75 {storage:"cassette",path:"collect",tag:"C75",eparen:""}
 
 
 
