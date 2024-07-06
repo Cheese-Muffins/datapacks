@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:carrot_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 3
+      }
+    },
+    "title": "Ruler of Time",
+    "description": "Craft a Broken Clock",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "server:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "consumables:classic"
+      }
+    }
+  },
+  "rewards": {
+    "experience": 500
+  }
+}

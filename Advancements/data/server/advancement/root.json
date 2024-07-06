@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:command_block"
+    },
+    "title": "1.21 Expansion",
+    "description": "Welcome to the server!",
+    "background": "minecraft:textures/gui/advancements/backgrounds/server.png",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "consumables:classic",
+      "consumables:red",
+      "consumables:blue"
+    ]
+  }
+}

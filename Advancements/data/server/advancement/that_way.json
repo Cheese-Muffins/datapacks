@@ -1,0 +1,32 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:carrot_on_a_stick",
+        "components": {
+          "minecraft:custom_model_data": 176
+        }
+      },
+      "title": "I Want It That Way",
+      "description": "Collect the Cassette: I Want It That Way",
+      "frame": "challenge",
+      "show_toast": true,
+      "announce_to_chat": true
+    },
+    "parent": "server:mask",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:carrot_on_a_stick",
+              "components": {
+                "minecraft:custom_model_data": 176
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  

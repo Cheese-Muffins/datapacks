@@ -1,0 +1,32 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:carrot_on_a_stick",
+        "components": {
+          "minecraft:custom_model_data": 2
+        }
+      },
+      "title": "What Are You?",
+      "description": "Discover a Mysterious Wand found in Bastions",
+      "frame": "goal",
+      "show_toast": true,
+      "announce_to_chat": true
+    },
+    "parent": "server:root",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:carrot_on_a_stick",
+              "components": {
+                "minecraft:custom_model_data": 2
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  

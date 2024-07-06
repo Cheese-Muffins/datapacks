@@ -1,0 +1,32 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:carrot_on_a_stick",
+        "components": {
+          "minecraft:custom_model_data": 100
+        }
+      },
+      "title": "Turn it Up!",
+      "description": "Collect a Cassette Player as a rare drop from Creepers",
+      "frame": "goal",
+      "show_toast": true,
+      "announce_to_chat": true
+    },
+    "parent": "server:root",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:carrot_on_a_stick",
+              "components": {
+                "minecraft:custom_data": "{ui:1b}"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  
