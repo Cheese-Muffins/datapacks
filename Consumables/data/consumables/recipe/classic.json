@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "id": "minecraft:honey_bottle",
+    "components": {
+      "minecraft:custom_model_data": 1,
+      "custom_name": "{\"text\":\"Mountain Dew\",\"color\":\"green\",\"italic\":false}",
+      "minecraft:food": {
+        "nutrition": 0,
+        "saturation": 2,
+        "can_always_eat": true,
+        "eat_seconds": 1.5,
+        "using_converts_to": {
+          "id": "minecraft:glass_bottle"
+        },
+        "effects": [
+          {
+            "effect": {
+              "id": "minecraft:glowing",
+              "amplifier": 0,
+              "duration": 240,
+              "show_particles": true,
+              "show_icon": true
+            }
+          },
+          {
+            "effect": {
+              "id": "minecraft:speed",
+              "amplifier": 2,
+              "duration": 660,
+              "show_particles": true,
+              "show_icon": true
+            }
+          },
+          {
+            "effect": {
+              "id": "minecraft:hunger",
+              "amplifier": 1,
+              "duration": 480,
+              "show_particles": true,
+              "show_icon": true
+            }
+          }
+        ]
+      }
+    }
+  }
+}
