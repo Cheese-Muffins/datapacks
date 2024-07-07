@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#%#",
+    "^$^",
+    "#%#"
+  ],
+  "key": {
+    "$": {
+      "item": "minecraft:glass_bottle"
+    },
+    "#": {
+      "item": "minecraft:coal"
+    },
+    "%": {
+      "item": "minecraft:ender_eye"
+    },
+    "^": {
+      "item": "minecraft:coal_block"
+    }
+  },
+  "result": {
+    "id": "minecraft:honey_bottle",
+    "components": {
+      "minecraft:custom_model_data": 4,
+      "custom_name": "{\"text\":\"Decoy Potion\",\"italic\":false}",
+      "minecraft:food": {
+        "nutrition": 0,
+        "saturation": 0,
+        "can_always_eat": true,
+        "eat_seconds": 1.5,
+        "using_converts_to": {
+          "id": "minecraft:glass_bottle"
+        }
+      },
+      "minecraft:enchantment_glint_override": true,
+      "minecraft:max_stack_size": 1,
+      "minecraft:custom_data": "{custom:consumable}"
+    }
+  }
+}
