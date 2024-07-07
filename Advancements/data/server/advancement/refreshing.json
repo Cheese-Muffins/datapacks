@@ -7,7 +7,7 @@
         }
       },
       "title": "Refreshing!",
-      "description": "Consume any of the 3 Mountain Dews",
+      "description": "Consume any of the 3 Mountain Dew flavors",
       "frame": "task",
       "show_toast": true,
       "announce_to_chat": true

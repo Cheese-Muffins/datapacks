@@ -1,0 +1,45 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "pattern": [
+      "#$#",
+      "*%*",
+      "#@#"
+    ],
+    "key": {
+      "%": {
+        "item": "minecraft:totem_of_undying"
+      },
+      "$": {
+        "item": "minecraft:netherite_scrap"
+      },
+      "@": {
+        "item": "minecraft:ender_eye"
+      },
+      "#": {
+        "item": "minecraft:chorus_fruit"
+      },
+      "*": {
+        "item": "minecraft:shulker_shell"
+      }
+    },
+    "result": {
+      "id": "minecraft:light_blue_dye",
+      "components": {
+        "minecraft:custom_model_data": 3,
+        "custom_name": "{\"text\":\"Recall Totem\",\"color\":\"blue\",\"italic\":false}",
+        "minecraft:lore": [
+          "{\"text\":\"Click on a Lodestone to mark a recall point\",\"color\":\"gray\",\"italic\":false}"
+        ],
+        "minecraft:custom_data": "{custom:totem}",
+        "minecraft:food": {
+          "nutrition": 0,
+          "saturation": 0,
+          "can_always_eat": true,
+          "eat_seconds": 99999999
+        },
+        "minecraft:max_stack_size": 1
+      }
+    }
+  }
+  

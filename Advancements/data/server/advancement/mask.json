@@ -8,7 +8,7 @@
       },
       "title": "Normal Pills",
       "description": "Collect the Cassette: The Mask",
-      "frame": "challenge",
+      "frame": "goal",
       "show_toast": true,
       "announce_to_chat": true
     },
