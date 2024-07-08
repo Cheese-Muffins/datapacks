@@ -1,0 +1,1 @@
+execute as @a[nbt={Inventory:[{Slot:100b,components:{"minecraft:enchantments":{levels:{"minecraft:lava_wading":1}}}}]}] at @s run function enchantments:wading/tick

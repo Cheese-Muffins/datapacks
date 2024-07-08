@@ -1,0 +1,2 @@
+execute positioned ~ ~-1 ~ if block ~ ~ ~ lava run function enchantments:wading/wade
+execute as @e[type=minecraft:item_frame,tag=lava] at @s unless entity @p[distance=0..1,predicate=!enchantments:sneak] run function enchantments:wading/kill
