@@ -1,3 +1,4 @@
-scoreboard players add @s shrinkTick 1
-particle dust 0.36 0.74 0.38 1 ~ ~.5 ~ 1 1 1 100 1 force @a
-execute if score @s shrinkTick matches 600.. run function custom:items/shrinkray/shrink/reset
+scoreboard players add @s customShrinkTick 1
+execute if entity @s[tag=shrinkSmall] run particle dust{color:[0.361,0.741,0.380],scale:1} ~ ~ ~ 0.25 0.25 0.25 100 1 force @a
+execute if entity @s[tag=shrinkGrow] run particle dust{color:[0.361,0.741,0.380],scale:1} ~ ~1 ~ 1 1 1 100 1 force @a
+execute if score @s customShrinkTick matches 600.. run function custom:items/shrinkray/timer/reset

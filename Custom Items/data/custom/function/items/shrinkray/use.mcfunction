@@ -1,2 +1,2 @@
-execute if predicate custom:sneak run function custom:items/shrinkray/self/toggle
-execute unless predicate custom:sneak run function custom:items/shrinkray/raycast/use
+execute if score @s customMoveSpamDelay matches 0 if score @s customHotBarSelected matches 1 run function custom:items/shrinkray/shrink/root
+execute if score @s customMoveSpamDelay matches 0 if score @s customHotBarSelected matches 2 run function custom:items/shrinkray/grow/root
