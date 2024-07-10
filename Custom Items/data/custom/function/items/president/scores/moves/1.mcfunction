@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove1Cooldown 1
+execute if score @s customMove1Cooldown matches 271..300 run data modify storage minecraft:custom president.ui.m1 set value "uEA00"
+execute if score @s customMove1Cooldown matches 241..270 run data modify storage minecraft:custom president.ui.m1 set value "uEA01"
+execute if score @s customMove1Cooldown matches 211..240 run data modify storage minecraft:custom president.ui.m1 set value "uEA02"
+execute if score @s customMove1Cooldown matches 181..210 run data modify storage minecraft:custom president.ui.m1 set value "uEA03"
+execute if score @s customMove1Cooldown matches 151..180 run data modify storage minecraft:custom president.ui.m1 set value "uEA04"
+execute if score @s customMove1Cooldown matches 121..150 run data modify storage minecraft:custom president.ui.m1 set value "uEA05"
+execute if score @s customMove1Cooldown matches 91..120 run data modify storage minecraft:custom president.ui.m1 set value "uEA06"
+execute if score @s customMove1Cooldown matches 61..90 run data modify storage minecraft:custom president.ui.m1 set value "uEA07"
+execute if score @s customMove1Cooldown matches 31..60 run data modify storage minecraft:custom president.ui.m1 set value "uEA08"
+execute if score @s customMove1Cooldown matches 1..30 run data modify storage minecraft:custom president.ui.m1 set value "uEA09"
+execute if score @s customMove1Cooldown matches 0 run data modify storage minecraft:custom president.ui.m1 set value "uEA10"

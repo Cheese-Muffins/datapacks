@@ -4,6 +4,8 @@ scoreboard players reset @a[scores={customClick=1..}] customClick
 
 execute as @a[tag=CustomItemHolder] run function custom:tick/list
 
+execute as @a[scores={president_kidnaptimer=1..}] run function custom:items/president/scores/kidnapped
+
 #execute as @e[tag=shrinked] run function shrinkray:timer/main
 
 #execute as @e[tag=aj.gojo.root] at @s run function custom:items/gojo/rig/main

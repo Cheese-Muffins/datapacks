@@ -1,14 +1,14 @@
 data remove entity @s Items
 
-item replace entity @s container.1 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.2 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.3 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.10 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.11 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.12 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.19 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.20 with minecraft:gunpowder[minecraft:custom_model_data=1]
-item replace entity @s container.21 with minecraft:gunpowder[minecraft:custom_model_data=1]
+item replace entity @s container.1 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.2 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.3 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.10 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.11 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.12 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.19 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.20 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
+item replace entity @s container.21 with minecraft:gunpowder[minecraft:custom_model_data=1,custom_data={ui:{null:1b}}]
 
 item replace block 0 -63 0 container.1 with glass 1
 item replace block 0 -63 0 container.2 with glass 1

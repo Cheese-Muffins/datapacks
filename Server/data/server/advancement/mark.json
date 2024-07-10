@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:light_blue_dye",
+      "components": {
+        "minecraft:custom_model_data": 3
+      }
+    },
+    "title": "Wake Up",
+    "description": "Click on a Lodestone with a Recall Totem to activate it",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "server:weather",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

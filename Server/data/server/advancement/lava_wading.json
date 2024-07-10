@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book",
+      "components": {
+        "minecraft:enchantments": {
+          "minecraft:lava_wading": 1
+        }
+      }
+    },
+    "title": "Cold Feet",
+    "description": "Obtain a book of Lava Wading from a Treasure Bastion",
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "server:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:enchanted_book",
+            "components": {
+              "minecraft:enchantments": {
+                "minecraft:lava_wading": 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

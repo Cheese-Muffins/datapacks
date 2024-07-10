@@ -1,7 +1,7 @@
 scoreboard players set @s customShrinkTick 0
 tag @s add shrinkHit
+tag @s remove shrinkGrow
 tag @s add shrinkSmall
-tag @s add shrinkGrow
 attribute @s minecraft:generic.scale base set 0.25
 execute if entity @s[type=minecraft:creeper] run data merge entity @s {ExplosionRadius:1b}
 execute if entity @s[type=minecraft:player] run function custom:items/shrinkray/shrink/raycast/player

@@ -25,4 +25,6 @@ execute if items block 0 -63 0 container.20 minecraft:player_head run function c
 execute if items block 0 -63 0 container.21 minecraft:player_head run data modify storage minecraft:ui data.party.9.host set string block 0 -63 0 Items[8].components."minecraft:profile".name
 execute if items block 0 -63 0 container.21 minecraft:player_head run function cassette:ui/pages/8/place with storage minecraft:ui data.party.9
 
+#execute if entity @p[tag=ListeningParty_Joined] run function cassette:ui/pages/8/display
+
 data remove block 0 -63 0 Items

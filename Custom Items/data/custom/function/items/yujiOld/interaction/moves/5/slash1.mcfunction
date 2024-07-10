@@ -1,1 +1,0 @@
-execute as @e[tag=yujiSlashTarget,sort=nearest,limit=1] at @s run function custom:items/yuji/interaction/moves/5/slash

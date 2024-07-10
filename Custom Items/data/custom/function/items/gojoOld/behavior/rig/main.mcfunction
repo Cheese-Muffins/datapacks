@@ -1,1 +1,0 @@
-execute unless entity @p[distance=..10,tag=GojoUser] run function custom:items/gojo/rig/despawn

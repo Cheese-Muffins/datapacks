@@ -1,0 +1,3 @@
+tellraw @s ["",{"text":"Decoy Potion","color":"gold"},{"text":"\n"},{"text":"You ","color":"gray"},{"text":"already ","color":"red"},{"text":"have this effect active, wait for it to ","color":"gray"},{"text":"end","color":"red"},{"text":" first.","color":"gray"}]
+clear @s glass_bottle 1
+give @s honey_bottle[max_stack_size=1,item_name='{"italic":false,"text":"Decoy Potion"}',custom_model_data=4,custom_data={custom:consumable},enchantment_glint_override=true] 1

@@ -1,2 +1,0 @@
-execute if entity @e[tag=tojiMarked,sort=nearest,limit=1] if score @s customHealth matches 10.. run function custom:items/toji/interaction/moves/4/pass
-execute unless entity @s[tag=customAnim] run function custom:items/toji/interaction/moves/4/fail

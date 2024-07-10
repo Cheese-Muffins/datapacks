@@ -51,6 +51,11 @@ scoreboard objectives add customHealthFetch dummy
 scoreboard players set #divide customHealthFetch 5
 scoreboard objectives add beam dummy
 scoreboard objectives add customShrinkTick dummy
+scoreboard objectives add president_x dummy
+scoreboard objectives add president_y dummy
+scoreboard objectives add president_z dummy
+scoreboard objectives add president_dimension dummy
+scoreboard objectives add president_kidnaptimer dummy
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"

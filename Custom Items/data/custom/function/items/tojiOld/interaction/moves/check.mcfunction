@@ -1,2 +1,0 @@
-$execute if score @s customMove$(number)Cooldown matches 1.. run function custom:items/toji/interaction/moves/fail {number:"$(number)",name:"$(name)"}
-$execute unless score @s customMove$(number)Cooldown matches 1.. run function custom:items/toji/interaction/moves/$(number)/core

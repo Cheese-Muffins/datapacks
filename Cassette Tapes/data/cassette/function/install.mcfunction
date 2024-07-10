@@ -20,6 +20,7 @@ forceload add 0 0
 setblock 0 -64 0 yellow_shulker_box
 setblock 0 -63 0 blue_shulker_box
 
+scoreboard objectives add cassette_selected dummy
 scoreboard objectives add cassette_obtain dummy
 scoreboard objectives add cassette_wardenkill dummy
 scoreboard objectives add cassette_elderkill dummy
