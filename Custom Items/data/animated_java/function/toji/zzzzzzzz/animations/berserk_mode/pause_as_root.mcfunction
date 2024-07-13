@@ -1,1 +1,0 @@
-tag @s remove aj.toji.animation.berserk_mode

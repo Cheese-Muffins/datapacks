@@ -55,7 +55,16 @@ scoreboard objectives add president_x dummy
 scoreboard objectives add president_y dummy
 scoreboard objectives add president_z dummy
 scoreboard objectives add president_dimension dummy
+scoreboard objectives add president_dimensionBAN dummy
 scoreboard objectives add president_kidnaptimer dummy
+scoreboard objectives add customRandomPassiveValue dummy
+scoreboard objectives add customRandomValue dummy
+scoreboard objectives add customRandomValueSpecial dummy
+scoreboard objectives add customRandomMaxRecursion dummy
+scoreboard objectives add customRandomX dummy
+scoreboard objectives add customRandomY dummy
+scoreboard objectives add customRandomZ dummy
+scoreboard objectives add customRandomSlot dummy
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"

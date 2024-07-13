@@ -1,2 +1,0 @@
-execute on passengers run function animated_java:toji/zzzzzzzz/animations/charge/tree/leaf_89_as_bone
-execute unless entity @s[tag=aj.toji.disable_command_keyframes] at @s run execute as @p[tag=TojiUser] run function custom:items/toji/moves/reset

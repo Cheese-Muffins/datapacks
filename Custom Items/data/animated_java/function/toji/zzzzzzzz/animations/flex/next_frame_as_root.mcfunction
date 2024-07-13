@@ -1,1 +1,0 @@
-function animated_java:toji/zzzzzzzz/animations/flex/tick_animation

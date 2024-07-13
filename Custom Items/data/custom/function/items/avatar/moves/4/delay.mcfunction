@@ -3,4 +3,5 @@ execute as @e[tag=aj.projectiles.root,tag=aj.projectiles.animation.firecube,sort
 execute at @n[tag=aj.projectiles.root,tag=aj.projectiles.animation.firecube] if entity @n[type=!#custom:not_mob,tag=!AvatarUser,distance=..2] run function custom:items/avatar/moves/4/explode
 execute at @n[tag=aj.projectiles.root,tag=aj.projectiles.animation.firecube] unless block ~ ~ ~ air run function custom:items/avatar/moves/4/explode
 execute if score @s customDelay4 matches 1 at @e[tag=aj.projectiles.root,tag=aj.projectiles.animation.firecube,sort=nearest,limit=1] run function custom:items/avatar/moves/4/explode
+execute if score @s customDelay4 matches 1 if entity @s[tag=RandomUser] run tag @s remove AvatarUser
 scoreboard players remove @s customDelay4 1

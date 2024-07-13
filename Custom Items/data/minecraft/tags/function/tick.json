@@ -1,6 +1,1 @@
-{
-	"values": [
-		"custom:loop",
-		"animated_java:tick"
-	]
-}
+{"values":["animated_java:global/on_tick","custom:loop","animated_java:tick"]}

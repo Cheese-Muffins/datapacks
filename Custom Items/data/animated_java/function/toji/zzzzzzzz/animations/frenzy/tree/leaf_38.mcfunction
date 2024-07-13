@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:toji/zzzzzzzz/animations/frenzy/tree/leaf_38_as_bone

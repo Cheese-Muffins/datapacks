@@ -1,0 +1,1 @@
+$tellraw @s ["",{"text":"Mr. Random","color":"gold"},{"text":"\n"},{"text":"Rolled Passive: ","color":"gray"},{"text":"$(title)","color":"$(color)","hoverEvent":{"action":"show_text","value":[{"text":"$(hover)","color":"$(color)"}]}}]

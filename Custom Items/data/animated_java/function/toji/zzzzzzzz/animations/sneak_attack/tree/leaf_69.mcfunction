@@ -1,2 +1,0 @@
-execute on passengers run function animated_java:toji/zzzzzzzz/animations/sneak_attack/tree/leaf_69_as_bone
-execute unless entity @s[tag=aj.toji.disable_command_keyframes] at @s run execute at @e[tag=tojiMarked,sort=nearest,limit=1] as @e[type=!#custom:not_mob,distance=..8] run function custom:items/toji/interaction/moves/4/damage

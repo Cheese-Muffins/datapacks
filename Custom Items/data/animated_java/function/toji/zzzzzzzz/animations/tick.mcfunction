@@ -1,9 +1,0 @@
-execute if entity @s[tag=aj.toji.animation.flex] run function animated_java:toji/zzzzzzzz/animations/flex/tick
-execute if entity @s[tag=aj.toji.animation.arsenal_swap] run function animated_java:toji/zzzzzzzz/animations/arsenal_swap/tick
-execute if entity @s[tag=aj.toji.animation.charge] run function animated_java:toji/zzzzzzzz/animations/charge/tick
-execute if entity @s[tag=aj.toji.animation.sneak_attack] run function animated_java:toji/zzzzzzzz/animations/sneak_attack/tick
-execute if entity @s[tag=aj.toji.animation.berserk_mode] run function animated_java:toji/zzzzzzzz/animations/berserk_mode/tick
-execute if entity @s[tag=aj.toji.animation.heavenly_pact] run function animated_java:toji/zzzzzzzz/animations/heavenly_pact/tick
-execute if entity @s[tag=aj.toji.animation.overpower] run function animated_java:toji/zzzzzzzz/animations/overpower/tick
-execute if entity @s[tag=aj.toji.animation.frenzy_spin] run function animated_java:toji/zzzzzzzz/animations/frenzy_spin/tick
-execute if entity @s[tag=aj.toji.animation.frenzy] run function animated_java:toji/zzzzzzzz/animations/frenzy/tick

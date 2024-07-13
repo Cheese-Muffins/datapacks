@@ -1,1 +1,0 @@
-function animated_java:toji/zzzzzzzz/animations/heavenly_pact/tick_animation

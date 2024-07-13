@@ -1,1 +1,0 @@
-execute if entity @s[tag=aj.toji.root] run function animated_java:toji/zzzzzzzz/tick_as_root

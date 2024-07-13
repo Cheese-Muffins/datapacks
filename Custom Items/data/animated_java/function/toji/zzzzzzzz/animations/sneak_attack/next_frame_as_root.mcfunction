@@ -1,1 +1,0 @@
-function animated_java:toji/zzzzzzzz/animations/sneak_attack/tick_animation

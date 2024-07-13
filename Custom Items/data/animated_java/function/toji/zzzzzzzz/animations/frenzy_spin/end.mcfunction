@@ -1,3 +1,0 @@
-execute if score @s aj.toji.animation.frenzy_spin.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:toji/zzzzzzzz/animations/frenzy_spin/end_loop
-execute if score @s aj.toji.animation.frenzy_spin.loop_mode = $aj.loop_mode.once aj.i run function animated_java:toji/animations/frenzy_spin/stop
-execute if score @s aj.toji.animation.frenzy_spin.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:toji/animations/frenzy_spin/pause

@@ -1,0 +1,5 @@
+execute store result score @s customRandomValueSpecial run random roll 1..4
+execute if data entity @s Inventory[{Slot:103b}].components."minecraft:enchantments" if score @s customRandomValueSpecial matches 1 run function custom:items/random/roll/grindstone/armor {slotName:"head",slotNumber:"3"}
+execute if data entity @s Inventory[{Slot:102b}].components."minecraft:enchantments" if score @s customRandomValueSpecial matches 2 run function custom:items/random/roll/grindstone/armor {slotName:"chest",slotNumber:"2"}
+execute if data entity @s Inventory[{Slot:101b}].components."minecraft:enchantments" if score @s customRandomValueSpecial matches 3 run function custom:items/random/roll/grindstone/armor {slotName:"legs",slotNumber:"1"}
+execute if data entity @s Inventory[{Slot:100b}].components."minecraft:enchantments" if score @s customRandomValueSpecial matches 4 run function custom:items/random/roll/grindstone/armor {slotName:"feet",slotNumber:"0"}

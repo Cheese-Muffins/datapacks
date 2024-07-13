@@ -1,1 +1,0 @@
-function animated_java:toji/zzzzzzzz/animations/frenzy/tick_animation

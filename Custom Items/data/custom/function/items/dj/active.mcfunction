@@ -7,4 +7,6 @@ function custom:items/dj/lock/display with storage minecraft:custom dj.ui
 
 execute as @e[tag=aj.dj.root,sort=nearest,limit=1] run function custom:items/dj/model/root
 
+execute at @s run tp @n[type=minecraft:item_display,tag=aj.dj.root] ~ ~ ~
+
 execute if score @s customAttack matches 1.. unless entity @s[tag=customAnim] unless score @s customDJConverted matches 1.. run function custom:items/dj/passive/add

@@ -4,6 +4,9 @@ scoreboard players set @s customMove3Cooldown 0
 scoreboard players set @s customMove4Cooldown 0
 scoreboard players set @s customMove5Cooldown 0
 scoreboard players set @s customMove6Cooldown 0
+scoreboard players set @s customMove7Cooldown 0
+scoreboard players set @s customMove8Cooldown 0
+scoreboard players set @s customFailReturn 0
 scoreboard players set @s customParticleDelay 0
 scoreboard players set @s customToggleDelay 0
 scoreboard players set @s customToggle 2

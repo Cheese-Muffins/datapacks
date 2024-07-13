@@ -6,4 +6,5 @@ execute if score @s customDelay3 matches 12 at @e[type=minecraft:marker,sort=nea
 execute if score @s customDelay3 matches 8 at @e[type=minecraft:marker,sort=nearest,limit=1,tag=customAvatarM3] run fill ~-3 ~1 ~-3 ~3 ~1 ~3 air destroy
 execute if score @s customDelay3 matches 4 at @e[type=minecraft:marker,sort=nearest,limit=1,tag=customAvatarM3] run fill ~-3 ~ ~-3 ~3 ~ ~3 air destroy
 execute if score @s customDelay3 matches 1 run kill @e[type=minecraft:marker,sort=nearest,limit=1,tag=customAvatarM3]
+execute if score @s customDelay3 matches 1 if entity @s[tag=RandomUser] run tag @s remove AvatarUser
 scoreboard players remove @s customDelay3 1

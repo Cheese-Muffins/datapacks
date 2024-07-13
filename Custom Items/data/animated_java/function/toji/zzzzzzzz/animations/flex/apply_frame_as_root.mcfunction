@@ -1,1 +1,0 @@
-execute if score @s aj.anim_time matches 0..45 run function animated_java:toji/zzzzzzzz/animations/flex/tree/branch_0_45

@@ -1,2 +1,0 @@
-execute if entity @s[tag=aj.toji.locator_origin.head] at @s on origin run tp @s ^0 ^32.75 ^0 ~-180 ~0
-execute if entity @s[tag=aj.toji.locator_origin.mount] at @s on origin run tp @s ^0 ^32.5 ^0 ~-180 ~0

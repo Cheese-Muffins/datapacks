@@ -1,1 +1,0 @@
-function animated_java:toji/zzzzzzzz/animations/charge/tick_animation

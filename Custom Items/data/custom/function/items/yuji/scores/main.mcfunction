@@ -10,3 +10,4 @@ execute if score @s customParticleDelay matches 1.. run scoreboard players remov
 # SPECIAL TO THIS ITEM #
 
 execute if score @s customAwakening matches 1.. run function custom:items/yuji/scores/awakening
+execute if score @s customAwakenedCooldown matches 1.. run scoreboard players remove @s customAwakenedCooldown 1

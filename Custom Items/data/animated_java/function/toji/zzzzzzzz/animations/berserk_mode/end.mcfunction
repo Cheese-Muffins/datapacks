@@ -1,3 +1,0 @@
-execute if score @s aj.toji.animation.berserk_mode.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:toji/zzzzzzzz/animations/berserk_mode/end_loop
-execute if score @s aj.toji.animation.berserk_mode.loop_mode = $aj.loop_mode.once aj.i run function animated_java:toji/animations/berserk_mode/stop
-execute if score @s aj.toji.animation.berserk_mode.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:toji/animations/berserk_mode/pause

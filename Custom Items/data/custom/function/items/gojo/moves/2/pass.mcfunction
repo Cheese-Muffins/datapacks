@@ -1,6 +1,6 @@
 function custom:items/gojo/moves/rigsetup
 execute as @n[tag=aj.gojo.root] run function animated_java:gojo/animations/lapis_blue/play
-scoreboard players set @s customMove2Cooldown 400
+execute unless entity @s[tag=RandomUser] run scoreboard players set @s customMove2Cooldown 400
 scoreboard players set @s customMoveSpamDelay 10
 
 attribute @s minecraft:generic.movement_speed base set 0.025

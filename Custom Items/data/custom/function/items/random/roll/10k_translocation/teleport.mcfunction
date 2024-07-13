@@ -1,0 +1,2 @@
+$execute positioned over world_surface run tp @s $(x_random) ~ $(z_random)
+data merge storage minecraft:custom {random:{roll:{title:"(10K) Player Translocation",hover:"The user will be teleported to a random location within a 10k block radius",color:"red"}}}

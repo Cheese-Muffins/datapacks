@@ -1,2 +1,0 @@
-execute on passengers run function animated_java:toji/zzzzzzzz/animations/frenzy_spin/tree/leaf_15_as_bone
-function animated_java:toji/zzzzzzzz/apply_variant/chains_and_swords/as_root

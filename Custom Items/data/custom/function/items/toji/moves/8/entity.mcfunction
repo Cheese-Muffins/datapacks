@@ -1,0 +1,1 @@
+execute at @s as @n[type=!#custom:not_mob,tag=tojiAssasinateTarget] run kill @s
