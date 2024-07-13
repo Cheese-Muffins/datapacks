@@ -1,1 +1,0 @@
-function animated_java:gojo/zzzzzzzz/animations/domain_expansion/tick_animation

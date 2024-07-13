@@ -1,3 +1,0 @@
-execute if score @s aj.gojo.animation.reversal_red.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:gojo/zzzzzzzz/animations/reversal_red/end_loop
-execute if score @s aj.gojo.animation.reversal_red.loop_mode = $aj.loop_mode.once aj.i run function animated_java:gojo/animations/reversal_red/stop
-execute if score @s aj.gojo.animation.reversal_red.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:gojo/animations/reversal_red/pause

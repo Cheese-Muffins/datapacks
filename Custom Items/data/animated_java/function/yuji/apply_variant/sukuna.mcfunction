@@ -1,2 +1,0 @@
-execute if entity @s[tag=aj.yuji.root] run function animated_java:yuji/zzzzzzzz/apply_variant/sukuna/as_root
-execute if entity @s[tag=!aj.yuji.root] run tellraw @a ["",{"text":"["},{"text":"Animated Java","color":"aqua"},{"text":"] "},{"text":"ERROR ☠","color":"red"},{"text":" > ","color":"gray"},[{"text":"The function","color":"yellow"},{"text":" animated_java:yuji/apply_variant/sukuna ","color":"blue"},{"text":"must be run"},{"text":" as ","color":"red"},{"text":"the root entity!"}]]

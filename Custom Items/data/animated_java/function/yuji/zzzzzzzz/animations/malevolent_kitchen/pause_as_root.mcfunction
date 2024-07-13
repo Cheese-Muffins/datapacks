@@ -1,1 +1,0 @@
-tag @s remove aj.yuji.animation.malevolent_kitchen

@@ -1,3 +1,0 @@
-execute if score @s aj.yuji.animation.sukuna.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:yuji/zzzzzzzz/animations/sukuna/end_loop
-execute if score @s aj.yuji.animation.sukuna.loop_mode = $aj.loop_mode.once aj.i run function animated_java:yuji/animations/sukuna/stop
-execute if score @s aj.yuji.animation.sukuna.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:yuji/animations/sukuna/pause

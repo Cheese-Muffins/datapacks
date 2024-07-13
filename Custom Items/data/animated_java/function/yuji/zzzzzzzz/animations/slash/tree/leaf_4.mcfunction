@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:yuji/zzzzzzzz/animations/slash/tree/leaf_4_as_bone

@@ -3,7 +3,13 @@ scoreboard objectives add aj.i dummy
 scoreboard objectives add aj.id dummy
 scoreboard objectives add aj.is_rig_loaded dummy
 scoreboard objectives add aj.tween_duration dummy
-scoreboard objectives add aj.assasinate.frame dummy
+scoreboard objectives add aj.reversed_cursed_technique.frame dummy
+scoreboard objectives add aj.lapis_blue.frame dummy
+scoreboard objectives add aj.reversal_red.frame dummy
+scoreboard objectives add aj.honored.frame dummy
+scoreboard objectives add aj.infinity.frame dummy
+scoreboard objectives add aj.hollow_purple.frame dummy
+scoreboard objectives add aj.domain_expansion.frame dummy
 scoreboard players add aj.last_id aj.id 0
 data modify storage aj:temp args set value {}
 scoreboard players reset * aj.is_rig_loaded

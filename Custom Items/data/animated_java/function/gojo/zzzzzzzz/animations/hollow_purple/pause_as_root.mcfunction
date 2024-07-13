@@ -1,1 +1,0 @@
-tag @s remove aj.gojo.animation.hollow_purple

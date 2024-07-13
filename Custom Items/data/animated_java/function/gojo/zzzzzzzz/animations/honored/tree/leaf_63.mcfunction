@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:gojo/zzzzzzzz/animations/honored/tree/leaf_63_as_bone

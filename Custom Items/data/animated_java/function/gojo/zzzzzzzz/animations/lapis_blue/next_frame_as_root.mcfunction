@@ -1,1 +1,0 @@
-function animated_java:gojo/zzzzzzzz/animations/lapis_blue/tick_animation

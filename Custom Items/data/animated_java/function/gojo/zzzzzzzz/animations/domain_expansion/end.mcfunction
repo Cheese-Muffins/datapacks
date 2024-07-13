@@ -1,3 +1,0 @@
-execute if score @s aj.gojo.animation.domain_expansion.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:gojo/zzzzzzzz/animations/domain_expansion/end_loop
-execute if score @s aj.gojo.animation.domain_expansion.loop_mode = $aj.loop_mode.once aj.i run function animated_java:gojo/animations/domain_expansion/stop
-execute if score @s aj.gojo.animation.domain_expansion.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:gojo/animations/domain_expansion/pause

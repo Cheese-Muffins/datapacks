@@ -1,1 +1,0 @@
-function animated_java:yuji/zzzzzzzz/animations/malevolent_kitchen/tick_animation

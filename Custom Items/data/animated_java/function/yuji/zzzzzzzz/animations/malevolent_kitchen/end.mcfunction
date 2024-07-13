@@ -1,3 +1,0 @@
-execute if score @s aj.yuji.animation.malevolent_kitchen.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:yuji/zzzzzzzz/animations/malevolent_kitchen/end_loop
-execute if score @s aj.yuji.animation.malevolent_kitchen.loop_mode = $aj.loop_mode.once aj.i run function animated_java:yuji/animations/malevolent_kitchen/stop
-execute if score @s aj.yuji.animation.malevolent_kitchen.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:yuji/animations/malevolent_kitchen/pause

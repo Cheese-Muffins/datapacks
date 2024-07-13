@@ -1,1 +1,0 @@
-function animated_java:gojo/zzzzzzzz/animations/reversal_red/tick_animation

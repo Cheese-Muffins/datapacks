@@ -1,3 +1,0 @@
-execute if score @s aj.yuji.animation.natural_talent.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:yuji/zzzzzzzz/animations/natural_talent/end_loop
-execute if score @s aj.yuji.animation.natural_talent.loop_mode = $aj.loop_mode.once aj.i run function animated_java:yuji/animations/natural_talent/stop
-execute if score @s aj.yuji.animation.natural_talent.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:yuji/animations/natural_talent/pause

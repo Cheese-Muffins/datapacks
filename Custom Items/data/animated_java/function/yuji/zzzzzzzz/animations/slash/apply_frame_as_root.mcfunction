@@ -1,1 +1,0 @@
-execute if score @s aj.anim_time matches 0..23 run function animated_java:yuji/zzzzzzzz/animations/slash/tree/branch_0_23

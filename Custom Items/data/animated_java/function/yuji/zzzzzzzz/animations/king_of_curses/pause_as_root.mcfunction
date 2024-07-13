@@ -1,1 +1,0 @@
-tag @s remove aj.yuji.animation.king_of_curses

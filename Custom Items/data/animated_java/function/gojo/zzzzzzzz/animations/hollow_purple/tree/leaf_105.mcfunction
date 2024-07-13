@@ -1,2 +1,0 @@
-execute on passengers run function animated_java:gojo/zzzzzzzz/animations/hollow_purple/tree/leaf_105_as_bone
-execute unless entity @s[tag=aj.gojo.disable_command_keyframes] at @s run execute as @p[tag=GojoUser] run function custom:items/gojo/moves/5/control

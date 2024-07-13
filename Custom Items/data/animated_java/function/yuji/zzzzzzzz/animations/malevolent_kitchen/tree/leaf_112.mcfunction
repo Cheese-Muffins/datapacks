@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:yuji/zzzzzzzz/animations/malevolent_kitchen/tree/leaf_112_as_bone

@@ -1,1 +1,0 @@
-function animated_java:yuji/zzzzzzzz/animations/slash/tick_animation
