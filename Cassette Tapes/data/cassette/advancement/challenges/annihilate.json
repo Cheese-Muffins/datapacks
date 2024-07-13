@@ -4,13 +4,13 @@
         "trigger": "minecraft:player_killed_entity",
         "conditions": {
           "entity": {
-            "type": "#cassette:monsters"
+            "type": "minecraft:wither"
           }
         }
       }
     },
     "rewards": {
-      "function": "cassette:music/collect/kills_hostile"
+      "function": "cassette:music/collect/core"
     }
   }
   

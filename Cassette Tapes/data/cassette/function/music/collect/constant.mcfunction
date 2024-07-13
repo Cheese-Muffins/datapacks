@@ -18,6 +18,10 @@ execute if score @s cassette_turtle matches 8.. if score @s cassette_boat matche
 execute if block ~ ~2 ~ minecraft:oak_leaves if predicate cassette:tree if entity @s[advancements={cassette:requirement/tree=true}] unless entity @s[tag=C77] run function cassette:music/collect/pass {id:"77"}
 execute if entity @s[tag=lavaWaded] unless entity @s[tag=C78] run function cassette:music/collect/pass {id:"78"}
 execute if score @s cassette_horse matches 100000.. unless entity @s[tag=C81] run function cassette:music/collect/pass {id:"81"}
+execute at @s if entity @n[type=minecraft:allay,distance=..7] if entity @n[type=minecraft:cat,distance=..7] if biome ~ ~ ~ minecraft:mushroom_fields unless entity @s[tag=C94] run function cassette:music/collect/pass {id:"94"}
+execute at @s if biome ~ ~ ~ minecraft:beach unless entity @s[tag=C96] run function cassette:music/collect/pass {id:"96"}
+execute at @s if entity @n[type=minecraft:frog,distance=..7] unless entity @s[tag=C104] run function cassette:music/collect/pass {id:"104"}
+
 
 execute if entity @s[tag=songPass] run function cassette:music/collect/grant with storage minecraft:cassette collect
 

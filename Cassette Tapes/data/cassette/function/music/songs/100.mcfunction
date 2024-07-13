@@ -1,2 +1,2 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"Everytime We Touch",duration:"3980",artist:"Cascada",obtainment:"Complete the Advancement: Sticky Situation",id:"100"}}$(eparen)
+$data merge storage minecraft:$(storage) {$(path):{name:"Everytime We Touch",duration:"3980",artist:"Cascada",obtainment:"Complete the Advancement: Sticky Situation",color:"dark_purple",id:"100"}}$(eparen)
 $execute if entity @s[type=minecraft:player] run tag @s add $(tag)

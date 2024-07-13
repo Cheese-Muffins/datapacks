@@ -38,6 +38,20 @@ execute if entity @s[advancements={minecraft:husbandry/obtain_sniffer_egg=true}]
 execute if entity @s[advancements={minecraft:adventure/lighten_up=true}] if entity @s[tag=!C82] run function cassette:music/songs/82 {storage:"cassette",path:"collect",tag:"C82",eparen:""}
 execute if entity @s[advancements={cassette:challenges/future=true}] if entity @s[tag=!C83] run function cassette:music/songs/83 {storage:"cassette",path:"collect",tag:"C83",eparen:""}
 execute if entity @s[advancements={minecraft:adventure/voluntary_exile=true}] if entity @s[tag=!C84] run function cassette:music/songs/84 {storage:"cassette",path:"collect",tag:"C84",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/minecraft_trials_edition=true}] if entity @s[tag=!C85] run function cassette:music/songs/85 {storage:"cassette",path:"collect",tag:"C85",eparen:""}
+execute if entity @s[advancements={cassette:challenges/grief=true}] if entity @s[tag=!C86] run function cassette:music/songs/86 {storage:"cassette",path:"collect",tag:"C86",eparen:""}
+execute if entity @s[advancements={cassette:challenges/slow=true}] if entity @s[tag=!C87] run function cassette:music/songs/87 {storage:"cassette",path:"collect",tag:"C87",eparen:""}
+execute if entity @s[advancements={cassette:challenges/night=true}] if entity @s[tag=!C88] run function cassette:music/songs/88 {storage:"cassette",path:"collect",tag:"C88",eparen:""}
+execute if entity @s[advancements={cassette:challenges/sunflower=true}] if entity @s[tag=!C89] run function cassette:music/songs/89 {storage:"cassette",path:"collect",tag:"C89",eparen:""}
+execute if entity @s[advancements={cassette:challenges/broken=true}] if entity @s[tag=!C92] run function cassette:music/songs/92 {storage:"cassette",path:"collect",tag:"C92",eparen:""}
+execute if entity @s[advancements={minecraft:husbandry/breed_an_animal=true}] if entity @s[tag=!C95] run function cassette:music/songs/95 {storage:"cassette",path:"collect",tag:"C95",eparen:""}
+execute if entity @s[advancements={minecraft:nether/find_bastion=true}] if entity @s[tag=!C97] run function cassette:music/songs/97 {storage:"cassette",path:"collect",tag:"C97",eparen:""}
+execute if entity @s[advancements={minecraft:story/upgrade_tools=true}] if entity @s[tag=!C98] run function cassette:music/songs/98 {storage:"cassette",path:"collect",tag:"C98",eparen:""}
+execute if entity @s[advancements={minecraft:nether/create_full_beacon=true}] if entity @s[tag=!C99] run function cassette:music/songs/99 {storage:"cassette",path:"collect",tag:"C99",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/honey_block_slide=true}] if entity @s[tag=!C100] run function cassette:music/songs/100 {storage:"cassette",path:"collect",tag:"C100",eparen:""}
+execute if entity @s[advancements={minecraft:end/elytra=true}] if entity @s[tag=!C101] run function cassette:music/songs/101 {storage:"cassette",path:"collect",tag:"C101",eparen:""}
+execute if entity @s[advancements={cassette:challenges/annihilate=true}] if entity @s[tag=!C102] run function cassette:music/songs/102 {storage:"cassette",path:"collect",tag:"C102",eparen:""}
+execute if entity @s[advancements={cassette:challenges/ocean=true}] if entity @s[tag=!C103] run function cassette:music/songs/103 {storage:"cassette",path:"collect",tag:"C103",eparen:""}
 
 
 

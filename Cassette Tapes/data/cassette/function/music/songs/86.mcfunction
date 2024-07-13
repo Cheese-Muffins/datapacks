@@ -1,2 +1,2 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"Good Grief",duration:"4200",artist:"Bastille",obtainment:"Force a Creeper to blow up with Flint and Steel",id:"86"}}$(eparen)
+$data merge storage minecraft:$(storage) {$(path):{name:"Good Grief",duration:"4200",artist:"Bastille",obtainment:"Force a Creeper to blow up with Flint and Steel",color:"green",id:"86"}}$(eparen)
 $execute if entity @s[type=minecraft:player] run tag @s add $(tag)
