@@ -15,7 +15,9 @@ execute if score @s cassette_boat matches 250000.. unless entity @s[tag=C68] run
 execute if score @s cassette_y matches ..-64 if predicate cassette:paradise unless entity @s[tag=C72] run function cassette:music/collect/pass {id:"72"}
 execute if score @s cassette_obsidian matches 100.. unless entity @s[tag=C73] run function cassette:music/collect/pass {id:"73"}
 execute if score @s cassette_turtle matches 8.. if score @s cassette_boat matches 8.. if score @s cassette_sniffer matches 2.. unless entity @s[tag=C74] run function cassette:music/collect/pass {id:"74"}
-
+execute if block ~ ~2 ~ minecraft:oak_leaves if predicate cassette:tree if entity @s[advancements={cassette:requirement/tree=true}] unless entity @s[tag=C77] run function cassette:music/collect/pass {id:"77"}
+execute if entity @s[tag=lavaWaded] unless entity @s[tag=C78] run function cassette:music/collect/pass {id:"78"}
+execute if score @s cassette_horse matches 100000.. unless entity @s[tag=C81] run function cassette:music/collect/pass {id:"81"}
 
 execute if entity @s[tag=songPass] run function cassette:music/collect/grant with storage minecraft:cassette collect
 
@@ -41,5 +43,7 @@ scoreboard players reset @s cassette_sniffer
 execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:turtle,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_turtle 1
 execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:boat,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_boat 1
 execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:sniffer,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_sniffer 1
+
+advancement revoke @s[advancements={cassette:requirement/tree=true}] only cassette:requirement/tree
 
 scoreboard players reset @s cassette_obtain

@@ -33,6 +33,11 @@ execute if entity @s[advancements={cassette:challenges/fnaf=true}] if entity @s[
 execute if entity @s[advancements={minecraft:adventure/sniper_duel=true}] if entity @s[tag=!C70] run function cassette:music/songs/70 {storage:"cassette",path:"collect",tag:"C70",eparen:""}
 execute if entity @s[advancements={minecraft:husbandry/obtain_netherite_hoe=true}] if entity @s[tag=!C71] run function cassette:music/songs/71 {storage:"cassette",path:"collect",tag:"C71",eparen:""}
 execute if entity @s[advancements={minecraft:husbandry/balanced_diet=true}] if entity @s[tag=!C75] run function cassette:music/songs/75 {storage:"cassette",path:"collect",tag:"C75",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/summon_iron_golem=true}] if entity @s[tag=!C79] run function cassette:music/songs/79 {storage:"cassette",path:"collect",tag:"C79",eparen:""}
+execute if entity @s[advancements={minecraft:husbandry/obtain_sniffer_egg=true}] if entity @s[tag=!C80] run function cassette:music/songs/80 {storage:"cassette",path:"collect",tag:"C80",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/lighten_up=true}] if entity @s[tag=!C82] run function cassette:music/songs/82 {storage:"cassette",path:"collect",tag:"C82",eparen:""}
+execute if entity @s[advancements={cassette:challenges/future=true}] if entity @s[tag=!C83] run function cassette:music/songs/83 {storage:"cassette",path:"collect",tag:"C83",eparen:""}
+execute if entity @s[advancements={minecraft:adventure/voluntary_exile=true}] if entity @s[tag=!C84] run function cassette:music/songs/84 {storage:"cassette",path:"collect",tag:"C84",eparen:""}
 
 
 
