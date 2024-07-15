@@ -1,2 +1,3 @@
-effect give @s minecraft:resistance 6 255 true
-effect give @s minecraft:weakness 6 0 true
+tp @s 0 100 0
+tag @s add tempGojoTP
+schedule function custom:items/gojo/moves/4/schedule 1t

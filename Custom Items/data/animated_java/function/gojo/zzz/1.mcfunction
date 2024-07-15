@@ -13,9 +13,9 @@ data modify entity @s data.locators.blue.uuid set from storage aj:uuid main.out
 summon minecraft:marker ~ ~ ~ {Tags:['aj.new', 'aj.locator', 'aj.gojo.locator', 'aj.gojo.locator.red']}
 execute as @e[type=minecraft:marker,tag=aj.new,tag=aj.locator,limit=1,distance=..0.01] run function animated_java:gojo/zzz/5
 data modify entity @s data.locators.red.uuid set from storage aj:uuid main.out
-summon item_display ~ ~ ~ {Tags:['aj.new', 'aj.camera', 'aj.gojo.camera', 'aj.gojo.camera.camera'], teleport_duration: 2}
-execute as @e[type=item_display,tag=aj.new,tag=aj.camera,limit=1,distance=..0.01] run function animated_java:gojo/zzz/6
-data modify entity @s data.cameras.camera.uuid set from storage aj:uuid main.out
+summon minecraft:item_display ~ ~ ~ {Tags:['aj.new', 'aj.locator', 'aj.gojo.locator', 'aj.gojo.locator.locator']}
+execute as @e[type=minecraft:item_display,tag=aj.new,tag=aj.locator,limit=1,distance=..0.01] run function animated_java:gojo/zzz/6
+data modify entity @s data.locators.locator.uuid set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.gojo.bone.torso] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
 data modify entity @s data.bones.bone_torso set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.gojo.bone.bottom2] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s

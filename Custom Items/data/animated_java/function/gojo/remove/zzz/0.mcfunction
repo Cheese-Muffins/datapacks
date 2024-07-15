@@ -3,3 +3,4 @@ function animated_java:gojo/remove/zzz/kill with entity @s data.locators.head
 function animated_java:gojo/remove/zzz/kill with entity @s data.locators.purple
 function animated_java:gojo/remove/zzz/kill with entity @s data.locators.blue
 function animated_java:gojo/remove/zzz/kill with entity @s data.locators.red
+function animated_java:gojo/remove/zzz/kill with entity @s data.locators.locator

@@ -42,7 +42,6 @@ execute at @s if block ~ ~1 ~ minecraft:lava run scoreboard players add @s casse
 execute at @s unless block ~ ~1 ~ minecraft:lava run scoreboard players reset @s cassette_lava
 
 scoreboard players reset @s cassette_turtle
-scoreboard players reset @s cassette_boat
 scoreboard players reset @s cassette_sniffer
 execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:turtle,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_turtle 1
 execute if entity @s[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] at @s as @e[type=minecraft:boat,distance=..15] run scoreboard players add @p[nbt={SelectedItem:{id:"minecraft:nether_star",count:1}}] cassette_boat 1

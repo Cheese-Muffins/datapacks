@@ -9,3 +9,5 @@ data modify storage aj:temp uuid set from entity @s data.locators.blue.uuid
 function animated_java:gojo/zzz/execute with storage aj:temp
 data modify storage aj:temp uuid set from entity @s data.locators.red.uuid
 function animated_java:gojo/zzz/execute with storage aj:temp
+data modify storage aj:temp uuid set from entity @s data.locators.locator.uuid
+function animated_java:gojo/zzz/execute with storage aj:temp

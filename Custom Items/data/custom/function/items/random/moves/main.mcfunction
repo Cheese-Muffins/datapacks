@@ -1,3 +1,3 @@
 execute if score @s customHotBarSelected matches 1 unless score @s customMoveSpamDelay matches 1.. run function custom:items/random/moves/1/core
-execute if score @s customHotBarSelected matches 2 unless score @s customMoveSpamDelay matches 1.. run function custom:items/random/moves/2/core
+#execute if score @s customHotBarSelected matches 2 unless score @s customMoveSpamDelay matches 1.. run function custom:items/random/moves/2/core
 execute if score @s customHotBarSelected matches 3 unless score @s customMoveSpamDelay matches 1.. run function custom:items/random/moves/3/core

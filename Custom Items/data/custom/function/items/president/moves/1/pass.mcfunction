@@ -1,5 +1,5 @@
 advancement revoke @s only custom:president_hit
-scoreboard players set @s customDelay1 40
+scoreboard players set @s customDelay1 100
 scoreboard players set @s customMove1Cooldown 360
 scoreboard players set @s customMoveSpamDelay 10
 

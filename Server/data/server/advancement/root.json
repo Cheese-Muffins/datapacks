@@ -18,7 +18,11 @@
     "recipes": [
       "consumables:classic",
       "consumables:red",
-      "consumables:blue"
+      "consumables:blue",
+      "consumables:decoy",
+      "totem:rain_totem",
+      "totem:storm_totem",
+      "totem:recall_totem"
     ]
   }
 }

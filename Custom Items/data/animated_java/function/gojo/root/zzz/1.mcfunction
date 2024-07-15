@@ -3,4 +3,4 @@ function animated_java:gojo/root/zzz/2 with entity @s data.locators.head
 function animated_java:gojo/root/zzz/4 with entity @s data.locators.purple
 function animated_java:gojo/root/zzz/6 with entity @s data.locators.blue
 function animated_java:gojo/root/zzz/8 with entity @s data.locators.red
-function animated_java:gojo/root/zzz/10 with entity @s data.cameras.camera
+function animated_java:gojo/root/zzz/10 with entity @s data.locators.locator

@@ -1,2 +1,0 @@
-execute if score @s customHealth < @s customHealthFetch run function custom:items/yuji/awakening/math
-execute if score @s customHealth > @s customHealthFetch run scoreboard players operation @s customHealthFetch = @s customHealth

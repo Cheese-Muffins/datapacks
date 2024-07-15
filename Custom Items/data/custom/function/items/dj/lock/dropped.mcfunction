@@ -1,0 +1,3 @@
+kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{moveTrigger:1b}}}},distance=..3]
+tellraw @a ["",{"text":"DJ","color":"gold"},{"text":"\n"},{"text":"You ","color":"gray"},{"text":"CANNOT drop ","color":"red"},{"text":"an item whilst ","color":"gray"},{"text":"attempting ","color":"red"},{"text":"to cast a move","color":"gray"}]
+playsound minecraft:entity.villager.no player @s ~ ~ ~ 1000000

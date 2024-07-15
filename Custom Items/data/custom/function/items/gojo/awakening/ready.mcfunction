@@ -1,1 +1,2 @@
+tellraw @s ["",{"text":"Gojo Satoru","color":"gold"},{"text":"\n"},{"text":"Awakening ","color":"blue"},{"text":"is ","color":"gray"},{"text":"ready ","color":"blue"},{"text":"to be activated","color":"gray"}]
 playsound minecraft:entity.villager.yes player @s ~ ~ ~ 1000000

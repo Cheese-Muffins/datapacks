@@ -1,5 +1,5 @@
 attribute @s minecraft:generic.scale base set 0.25
-attribute @s minecraft:generic.movement_speed base set 0.08000000149011612
+attribute @s minecraft:generic.movement_speed base set 0.13000000149011612
 attribute @s minecraft:generic.step_height base set 0.25
 attribute @s minecraft:generic.max_health base set 16
 attribute @s minecraft:generic.jump_strength base set 0.32
