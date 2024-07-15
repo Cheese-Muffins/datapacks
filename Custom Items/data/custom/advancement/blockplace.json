@@ -1,0 +1,16 @@
+{
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:placed_block",
+        "conditions": {
+          "player": {
+            "nbt": "{SelectedItem:{components:{\"minecraft:custom_data\":{moveTrigger:1b}}}}"
+          }
+        }
+      }
+    },
+    "rewards": {
+      "function": "custom:errors/block_place/main"
+    }
+  }
+  
