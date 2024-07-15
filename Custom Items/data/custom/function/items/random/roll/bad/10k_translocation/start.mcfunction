@@ -20,4 +20,4 @@ scoreboard players operation .min customRandomZ = @s customRandomZ
 scoreboard players remove .min customRandomZ 10000
 execute store result storage minecraft:custom random.roll.10k_trans.z_min int 1 run scoreboard players get .min customRandomZ
 
-function custom:items/random/roll/10k_translocation/random with storage custom random.roll.10k_trans
+function custom:items/random/roll/bad/10k_translocation/random with storage custom random.roll.10k_trans
