@@ -1,0 +1,1 @@
+execute as @p[tag=BillyUser] at @s run kill @n[type=minecraft:armor_stand,tag=customSnareTrigger]

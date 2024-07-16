@@ -1,0 +1,2 @@
+execute if entity @s[type=minecraft:player] run damage @s 5 minecraft:generic_kill by @p[tag=BillyUser]
+execute if entity @s[type=!minecraft:player] run damage @s 23 minecraft:generic_kill by @p[tag=BillyUser]

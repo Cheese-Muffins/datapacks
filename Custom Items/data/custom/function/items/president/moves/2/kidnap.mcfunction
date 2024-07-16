@@ -5,6 +5,7 @@ execute store result score @s president_x run data get entity @s Pos[0]
 execute store result score @s president_y run data get entity @s Pos[1]
 execute store result score @s president_z run data get entity @s Pos[2]
 scoreboard players set @s president_kidnaptimer 600
+scoreboard players set @s president_dimensionBAN 1
 tag @s add presidentKidnapped
 gamemode adventure @s
 tp @s @e[type=minecraft:armor_stand,sort=nearest,limit=1,tag=PresidentWarp]

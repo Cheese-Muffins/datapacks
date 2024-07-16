@@ -8,16 +8,16 @@ execute unless data storage ui container[{Slot:15b}] run scoreboard players set 
 ## pick a page to go to
 
 
-$execute if score .button ui matches 1 as @p unless entity @s[tag=p1_$(value)] run function cassette:ui/pages/7/on {plt:"1"}
-$execute if score .button ui matches 1 as @p if entity @s[tag=p1_$(value)] unless entity @s[tag=cassetteON] run function cassette:ui/pages/7/off {plt:"1"}
-execute if score .button ui matches 1 run tag @p[tag=cassetteON] remove cassetteON
+$execute if score .button ui matches 1 at @s as @p unless entity @s[tag=p1_$(value)] run function cassette:ui/pages/7/on {plt:"1"}
+$execute if score .button ui matches 1 at @s as @p if entity @s[tag=p1_$(value)] unless entity @s[tag=cassetteON] run function cassette:ui/pages/7/off {plt:"1"}
+execute if score .button ui matches 1 at @s run tag @p[tag=cassetteON] remove cassetteON
 
 execute if score .button ui matches 2 at @s as @p run playsound minecraft:item.book.page_turn record @s ~ ~ ~
 execute if score .button ui matches 2 run scoreboard players set @s ui.page 6
 
-$execute if score .button ui matches 3 as @p unless entity @s[tag=p2_$(value)] run function cassette:ui/pages/7/on {plt:"2"}
-$execute if score .button ui matches 3 as @p if entity @s[tag=p2_$(value)] unless entity @s[tag=cassetteON] run function cassette:ui/pages/7/off {plt:"2"}
-execute if score .button ui matches 3 run tag @p[tag=cassetteON] remove cassetteON
+$execute if score .button ui matches 3 at @s as @p unless entity @s[tag=p2_$(value)] run function cassette:ui/pages/7/on {plt:"2"}
+$execute if score .button ui matches 3 at @s as @p if entity @s[tag=p2_$(value)] unless entity @s[tag=cassetteON] run function cassette:ui/pages/7/off {plt:"2"}
+execute if score .button ui matches 3 at @s run tag @p[tag=cassetteON] remove cassetteON
 
 
 #execute if score .button ui matches 1..3 at @s as @p run playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~

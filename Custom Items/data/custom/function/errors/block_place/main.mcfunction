@@ -5,4 +5,5 @@ execute if entity @s[tag=GojoUser] run function custom:errors/block_place/user {
 execute if entity @s[tag=TojiUser] run function custom:errors/block_place/user {name:"Toji Fushiguro"}
 execute if entity @s[tag=PresidentUser] run function custom:errors/block_place/user {name:"Mr. President"}
 execute if entity @s[tag=RandomUser] run function custom:errors/block_place/user {name:"Mr. Random"}
+execute if entity @s[tag=BillyUser] run function custom:errors/block_place/user {name:"Billy Demetrius Demarcus Bartholomew James the Third"}
 advancement revoke @s only custom:blockplace

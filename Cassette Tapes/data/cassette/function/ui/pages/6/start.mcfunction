@@ -8,9 +8,9 @@ data remove storage ui return[{ui:{null:1b}}]
 execute positioned 0 -64 0 run function cassette:ui/return/start
 
 $function cassette:music/songs/$(value) {storage:"ui",path:"data:{collection",eparen:"}",tag:"selected"}
-scoreboard players operation @p cassette_cmd = @p cassette_selected
-scoreboard players add @p cassette_cmd 2
-execute store result storage minecraft:ui data.collection.cmd int 1 run scoreboard players get @p cassette_cmd
+execute at @s run scoreboard players operation @p cassette_cmd = @p cassette_selected
+execute at @s run scoreboard players add @p cassette_cmd 2
+execute at @s store result storage minecraft:ui data.collection.cmd int 1 run scoreboard players get @p cassette_cmd
 
 ## process what happened here
 execute if score .page_change ui matches 0 run function cassette:ui/pages/6/buttons

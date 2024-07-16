@@ -1,0 +1,1 @@
+execute as @e[type=minecraft:armor_stand,tag=customSnareTrigger] at @s run function custom:items/billy/moves/3/timer

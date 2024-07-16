@@ -1,0 +1,3 @@
+execute unless entity @p[nbt={active_effects:[{id:"minecraft:speed",amplifier:2b}]}] unless entity @p[nbt={active_effects:[{id:"minecraft:jump_boost",amplifier:2b}]}] unless entity @s[tag=billyPassive] run function custom:items/billy/passive/setup
+execute if score @s customParticleDelay matches 0 run scoreboard players set @s customParticleDelay 6
+execute if score @s customParticleDelay matches 6 at @s run particle minecraft:snowflake ~ ~1.5 ~ 0.4 0.75 0.4 0 3 force @a

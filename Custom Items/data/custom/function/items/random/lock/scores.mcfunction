@@ -20,4 +20,4 @@ execute unless entity @s[nbt={SelectedItem:{components:{"minecraft:custom_data":
 item modify entity @s weapon {"function":"minecraft:set_components","components":{"minecraft:custom_data":{moveTrigger:1b},"minecraft:food":{nutrition:0,saturation:0,eat_seconds:999999,can_always_eat:true}}}
 
 execute unless data entity @s SelectedItem run kill @e[type=item,nbt={Item:{id:"minecraft:phantom_membrane",count:1,components:{"minecraft:custom_data":{moveTrigger:1b}}}}]
-execute unless data entity @s SelectedItem run item replace entity @p[tag=RandomUser] weapon.mainhand with phantom_membrane[max_stack_size=1,item_name='{"text":" "}',hide_tooltip={},custom_model_data=1,custom_data={moveTrigger:1b},food={nutrition:0,saturation:0,eat_seconds:999999,can_always_eat:true}] 1
+execute unless data entity @s SelectedItem run item replace entity @s weapon.mainhand with phantom_membrane[max_stack_size=1,item_name='{"text":" "}',hide_tooltip={},custom_model_data=1,custom_data={moveTrigger:1b},food={nutrition:0,saturation:0,eat_seconds:999999,can_always_eat:true}] 1
