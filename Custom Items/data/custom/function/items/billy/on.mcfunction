@@ -1,4 +1,4 @@
-particle minecraft:trial_omen ~ ~1 ~ 0.75 0.75 0.75 1 10 force @a
-playsound minecraft:block.amethyst_block.place player @s ~ ~ ~
+particle minecraft:snowflake ~ ~1 ~ 0.75 0.75 0.75 0.5 30 force @a
+playsound minecraft:block.snow.fall player @a ~ ~ ~ 2
 
 scoreboard players set @s customToggleDelay 10

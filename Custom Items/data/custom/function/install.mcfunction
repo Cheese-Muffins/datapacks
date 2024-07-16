@@ -67,6 +67,7 @@ scoreboard objectives add customRandomZ dummy
 scoreboard objectives add customRandomSlot dummy
 scoreboard objectives add customRandomLuck dummy
 scoreboard objectives add customTimer dummy
+scoreboard objectives add customDimension dummy
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"
