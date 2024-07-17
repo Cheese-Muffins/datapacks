@@ -52,6 +52,8 @@ execute if entity @a[tag=ListeningParty_9Host] run function cassette:ui/pages/8/
 
 #item replace entity @s container.21 with gunpowder[custom_name='{"color":"green","italic":false,"text":"Party 9"}',lore=['[{"color":"gray","italic":false,"text":"Host: "},{"color":"red","italic":false,"text":"None"}]','{"color":"gray","italic":false,"text":"Click to host a Listening Party!"}'],custom_model_data=300,custom_data={ui:{null:1b}}] 1
 
+execute at @s unless entity @p[tag=ListeningParty_Joined,distance=..2] run item replace entity @s container.14 with gunpowder[custom_name='{"color":"red","italic":false,"text":"Not in a Party!"}',lore=['[{"color":"gray","italic":false,"text":"Click on an empty party to host, or create your own!"}]'],custom_model_data=400,custom_data={ui:{null:1b}}] 1
+execute at @s if entity @p[tag=ListeningParty_Joined,distance=..2] run function cassette:ui/pages/8/stats
 
 item replace entity @s container.5 with gunpowder[custom_name='{"text":"Home","color":"gold","italic":false}',lore=['{"text":"Return back to the main menu","color":"gray","italic":false}'],custom_model_data=1,custom_data={ui:{null:1b}}]
 

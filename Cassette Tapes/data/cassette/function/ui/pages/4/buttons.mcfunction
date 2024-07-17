@@ -31,32 +31,32 @@ execute unless data storage ui container[{Slot:23b}] run scoreboard players set 
 execute unless data storage ui container[{Slot:24b}] run scoreboard players set .button ui 22
 execute unless data storage ui container[{Slot:25b}] run scoreboard players set .button ui 23
 
-execute if score .button ui matches 1 run function cassette:ui/pages/4/selection/1
-execute if score .button ui matches 2 run function cassette:ui/pages/4/selection/2
-execute if score .button ui matches 3 run function cassette:ui/pages/4/selection/3
-execute if score .button ui matches 4 run function cassette:ui/pages/4/selection/4
-execute if score .button ui matches 5 run function cassette:ui/pages/4/selection/5
-execute if score .button ui matches 6 run function cassette:ui/pages/4/selection/6
-execute if score .button ui matches 7 run function cassette:ui/pages/4/selection/7
+execute if score .button ui matches 1 at @s run function cassette:ui/pages/4/selection/1
+execute if score .button ui matches 2 at @s run function cassette:ui/pages/4/selection/2
+execute if score .button ui matches 3 at @s run function cassette:ui/pages/4/selection/3
+execute if score .button ui matches 4 at @s run function cassette:ui/pages/4/selection/4
+execute if score .button ui matches 5 at @s run function cassette:ui/pages/4/selection/5
+execute if score .button ui matches 6 at @s run function cassette:ui/pages/4/selection/6
+execute if score .button ui matches 7 at @s run function cassette:ui/pages/4/selection/7
 execute if score .button ui matches 8 at @s run playsound minecraft:item.book.page_turn record @p ~ ~ ~
 execute if score .button ui matches 8 if score @s cassette_collection matches 1 run scoreboard players set @s ui.page 0
 execute if score .button ui matches 8 unless score @s cassette_collection matches 1 run scoreboard players remove @s cassette_collection 1
-execute if score .button ui matches 9 run function cassette:ui/pages/4/selection/8
-execute if score .button ui matches 10 run function cassette:ui/pages/4/selection/9
-execute if score .button ui matches 11 run function cassette:ui/pages/4/selection/10
-execute if score .button ui matches 12 run function cassette:ui/pages/4/selection/11
-execute if score .button ui matches 13 run function cassette:ui/pages/4/selection/12
-execute if score .button ui matches 14 run function cassette:ui/pages/4/selection/13
-execute if score .button ui matches 15 run function cassette:ui/pages/4/selection/14
+execute if score .button ui matches 9 at @s run function cassette:ui/pages/4/selection/8
+execute if score .button ui matches 10 at @s run function cassette:ui/pages/4/selection/9
+execute if score .button ui matches 11 at @s run function cassette:ui/pages/4/selection/10
+execute if score .button ui matches 12 at @s run function cassette:ui/pages/4/selection/11
+execute if score .button ui matches 13 at @s run function cassette:ui/pages/4/selection/12
+execute if score .button ui matches 14 at @s run function cassette:ui/pages/4/selection/13
+execute if score .button ui matches 15 at @s run function cassette:ui/pages/4/selection/14
 execute if score .button ui matches 16 unless score @s cassette_collection matches 6.. at @s run playsound minecraft:item.book.page_turn record @p ~ ~ ~
 execute if score .button ui matches 16 unless score @s cassette_collection matches 6.. run scoreboard players add @s cassette_collection 1
-execute if score .button ui matches 17 run function cassette:ui/pages/4/selection/15
-execute if score .button ui matches 18 run function cassette:ui/pages/4/selection/16
-execute if score .button ui matches 19 run function cassette:ui/pages/4/selection/17
-execute if score .button ui matches 20 run function cassette:ui/pages/4/selection/18
-execute if score .button ui matches 21 run function cassette:ui/pages/4/selection/19
-execute if score .button ui matches 22 run function cassette:ui/pages/4/selection/20
-execute if score .button ui matches 23 run function cassette:ui/pages/4/selection/21
+execute if score .button ui matches 17 at @s run function cassette:ui/pages/4/selection/15
+execute if score .button ui matches 18 at @s run function cassette:ui/pages/4/selection/16
+execute if score .button ui matches 19 at @s run function cassette:ui/pages/4/selection/17
+execute if score .button ui matches 20 at @s run function cassette:ui/pages/4/selection/18
+execute if score .button ui matches 21 at @s run function cassette:ui/pages/4/selection/19
+execute if score .button ui matches 22 at @s run function cassette:ui/pages/4/selection/20
+execute if score .button ui matches 23 at @s run function cassette:ui/pages/4/selection/21
 
 scoreboard players operation #pFoward cassette_collection = @s cassette_collection
 scoreboard players add #pFoward cassette_collection 1

@@ -1,4 +1,4 @@
-execute store result score @s customRandomValue run random roll 1..18
+execute store result score @s customRandomValue run random value 1..18
 execute if score @s customRandomValue matches 1..2 run function custom:items/random/roll/bad/xp_reset
 execute if score @s customRandomValue matches 3..6 run function custom:items/random/roll/bad/burrow
 execute if score @s customRandomValue matches 7..9 run function custom:items/random/roll/bad/grindstone/path

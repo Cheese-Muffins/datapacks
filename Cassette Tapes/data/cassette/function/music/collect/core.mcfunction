@@ -8,6 +8,7 @@ execute if entity @s[advancements={minecraft:adventure/hero_of_the_village=true}
 execute if entity @s[advancements={minecraft:adventure/trim_with_all_exclusive_armor_patterns=true}] if entity @s[tag=!C15] run function cassette:music/songs/15 {storage:"cassette",path:"collect",tag:"C15",eparen:""}
 execute if entity @s[advancements={minecraft:adventure/spyglass_at_dragon=true}] if entity @s[tag=!C16] run function cassette:music/songs/16 {storage:"cassette",path:"collect",tag:"C16",eparen:""}
 execute if entity @s[advancements={minecraft:adventure/sleep_in_bed=true}] if entity @s[tag=!C20] run function cassette:music/songs/20 {storage:"cassette",path:"collect",tag:"C20",eparen:""}
+execute if entity @s[advancements={cassette:challenges/blackhole=true}] if entity @s[tag=!C21] run function cassette:music/songs/21 {storage:"cassette",path:"collect",tag:"C21",eparen:""}
 execute if entity @s[advancements={minecraft:story/cure_zombie_villager=true}] if entity @s[tag=!C24] run function cassette:music/songs/24 {storage:"cassette",path:"collect",tag:"C24",eparen:""}
 execute if entity @s[advancements={minecraft:adventure/adventuring_time=true}] if entity @s[tag=!C28] run function cassette:music/songs/28 {storage:"cassette",path:"collect",tag:"C28",eparen:""}
 execute if entity @s[advancements={minecraft:adventure/totem_of_undying=true}] if entity @s[tag=!C31] run function cassette:music/songs/31 {storage:"cassette",path:"collect",tag:"C31",eparen:""}

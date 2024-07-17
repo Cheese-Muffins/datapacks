@@ -1,4 +1,4 @@
-execute store result score @s customRandomValue run random roll 1..67
+execute store result score @s customRandomValue run random value 1..67
 execute if score @s customRandomValue matches 1..3 run function custom:items/random/roll/misc/move_sync {path:"president/moves/1/pass",name:"Self Kidnap",hover:"Sends the user into the Pocket Dimension",color:"green",item:"President"}
 execute if score @s customRandomValue matches 4..7 run function custom:items/random/roll/misc/move_sync {path:"president/moves/2/pass",name:"Kidnap",hover:"Launches a key that kidnaps players in its path",color:"green",item:"President"}
 execute if score @s customRandomValue matches 8..12 run function custom:items/random/roll/misc/move_sync {path:"gojo/moves/1/pass",name:"Reverse Cursed Technique",hover:"Buffs the user!",color:"green",item:"Gojo"}

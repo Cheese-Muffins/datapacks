@@ -24,24 +24,24 @@ execute unless data storage ui container[{Slot:23b}] run scoreboard players set 
 execute unless data storage ui container[{Slot:24b}] run scoreboard players set .button ui 15
 
 
-execute if score .button ui matches 1 as @p at @s run function cassette:ui/pages/5/selection/1
-execute if score .button ui matches 2 as @p at @s run function cassette:ui/pages/5/selection/2
-execute if score .button ui matches 3 as @p at @s run function cassette:ui/pages/5/selection/3
-execute if score .button ui matches 4 as @p at @s run function cassette:ui/pages/5/selection/4
-execute if score .button ui matches 5 as @p at @s run function cassette:ui/pages/5/selection/5
-execute if score .button ui matches 6 as @p at @s run function cassette:ui/pages/5/selection/6
-execute if score .button ui matches 7 as @p at @s run function cassette:ui/pages/5/selection/7
+execute if score .button ui matches 1 at @s as @p run function cassette:ui/pages/5/selection/1
+execute if score .button ui matches 2 at @s as @p run function cassette:ui/pages/5/selection/2
+execute if score .button ui matches 3 at @s as @p run function cassette:ui/pages/5/selection/3
+execute if score .button ui matches 4 at @s as @p run function cassette:ui/pages/5/selection/4
+execute if score .button ui matches 5 at @s as @p run function cassette:ui/pages/5/selection/5
+execute if score .button ui matches 6 at @s as @p run function cassette:ui/pages/5/selection/6
+execute if score .button ui matches 7 at @s as @p run function cassette:ui/pages/5/selection/7
 
 execute if score .button ui matches 8 run playsound minecraft:item.book.page_turn record @s ~ ~ ~
 execute if score .button ui matches 8 run scoreboard players set @s ui.page 4
 
-execute if score .button ui matches 9 as @p at @s run function cassette:ui/pages/5/selection/8
-execute if score .button ui matches 10 as @p at @s run function cassette:ui/pages/5/selection/9
-execute if score .button ui matches 11 as @p at @s run function cassette:ui/pages/5/selection/10
-execute if score .button ui matches 12 as @p at @s run function cassette:ui/pages/5/selection/11
-execute if score .button ui matches 13 as @p at @s run function cassette:ui/pages/5/selection/12
-execute if score .button ui matches 14 as @p at @s run function cassette:ui/pages/5/selection/13
-execute if score .button ui matches 15 as @p at @s run function cassette:ui/pages/5/selection/14
+execute if score .button ui matches 9 at @s as @p run function cassette:ui/pages/5/selection/8
+execute if score .button ui matches 10 at @s as @p run function cassette:ui/pages/5/selection/9
+execute if score .button ui matches 11 at @s as @p run function cassette:ui/pages/5/selection/10
+execute if score .button ui matches 12 at @s as @p run function cassette:ui/pages/5/selection/11
+execute if score .button ui matches 13 at @s as @p run function cassette:ui/pages/5/selection/12
+execute if score .button ui matches 14 at @s as @p run function cassette:ui/pages/5/selection/13
+execute if score .button ui matches 15 at @s as @p run function cassette:ui/pages/5/selection/14
 
 execute unless score @s ui.page matches 5 run scoreboard players set .page_change ui 1
 execute unless score @s ui.page matches 5 run function cassette:ui/refresh

@@ -2,6 +2,16 @@ tag @s remove ListeningParty_Joined
 tag @s remove ListeningParty_Host
 tag @s remove ListeningParty_Member
 
+tag @s remove ListeningParty_1
+tag @s remove ListeningParty_2
+tag @s remove ListeningParty_3
+tag @s remove ListeningParty_4
+tag @s remove ListeningParty_5
+tag @s remove ListeningParty_6
+tag @s remove ListeningParty_7
+tag @s remove ListeningParty_8
+tag @s remove ListeningParty_9
+
 tag @s remove ListeningParty_1Host
 tag @s remove ListeningParty_2Host
 tag @s remove ListeningParty_3Host
