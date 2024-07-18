@@ -68,6 +68,8 @@ scoreboard objectives add customRandomSlot dummy
 scoreboard objectives add customRandomLuck dummy
 scoreboard objectives add customTimer dummy
 scoreboard objectives add customDimension dummy
+scoreboard objectives add customOnVehicle dummy
+scoreboard objectives add customPresidentDeath deathCount
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"
@@ -93,3 +95,5 @@ bossbar set minecraft:sukuna style notched_10
 scoreboard objectives add custom_particle.despawn dummy
 scoreboard objectives add custom_particle.display dummy
 scoreboard objectives add custom_particle.spread.pos dummy
+
+function custom:loop_1s

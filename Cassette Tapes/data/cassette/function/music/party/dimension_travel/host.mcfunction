@@ -1,0 +1,3 @@
+$stopsound @a[tag=ListeningParty_$(party)Member] record
+$tellraw @s ["",{"text":"Listening Party #$(party)","color":"gold"},{"text":"\n"},{"text":"The ","color":"gray"},{"text":"host ","color":"red"},{"text":"of this party has ","color":"gray"},{"text":"entered another dimension,","color":"red"},{"text":" searching for ","color":"gray"},{"text":"another song...","color":"red"}]
+playsound minecraft:block.anvil.land record @s ~ ~ ~ 0.25

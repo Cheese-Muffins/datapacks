@@ -7,4 +7,7 @@ execute unless score @n[type=minecraft:armor_stand,tag=customSnareTrigger,distan
 kill @e[type=minecraft:item_display,tag=aj.billy.camera.camera]
 execute as @n[tag=aj.billy.root] run function animated_java:billy/remove/this
 
+execute if score @s customRandomValue matches 68 if entity @s[tag=RandomUser] run tag @s remove BillyUser
+execute if score @s customRandomValue matches 70 if entity @s[tag=RandomUser] run tag @s remove BillyUser
+
 tag @s remove customAnim

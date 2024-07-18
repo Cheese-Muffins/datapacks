@@ -5,5 +5,5 @@ execute unless entity @s[tag=RandomUser] at @s if entity @e[type=item,nbt={Item:
 
 execute unless entity @s[tag=RandomUser] run function custom:items/gojo/lock/display with storage minecraft:custom gojo.ui
 
-execute unless entity @s[tag=RandomUser] unless entity @s[tag=Honored] run function custom:items/gojo/passive/normal
-execute unless entity @s[tag=RandomUser] if entity @s[tag=Honored] run function custom:items/gojo/passive/honored
+execute unless entity @s[tag=RandomUser] unless entity @s[tag=Honored] run function custom:items/gojo/passive/normal/main
+execute unless entity @s[tag=RandomUser] if entity @s[tag=Honored] run function custom:items/gojo/passive/honored/main

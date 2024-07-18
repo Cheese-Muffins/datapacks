@@ -12,4 +12,4 @@ $data merge entity $(bone_frontrightleg2) { transformation: [-1f,0f,1.2246467991
 $data merge entity $(bone_bottom) { transformation: [-1f,0f,1.2246467991473532e-16f,0.21874999999999994f,0f,1f,0f,0.3125f,-1.2246467991473532e-16f,0f,-1f,0.3125f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 $data merge entity $(bone_frontleftleg) { transformation: [-1f,0f,1.2246467991473532e-16f,0.21874999999999994f,0f,1f,0f,0.5f,-1.2246467991473532e-16f,0f,-1f,0.3125f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:billy/animations/phase/zzz/frames/zzz/0
-data modify entity @s data merge value {"locators":{},"cameras":{"camera":{"posx":-1.5308084989341916e-16,"posy":1.65625,"posz":1.25,"rotx":0,"roty":0}}}
+data modify entity @s data merge value {"locators":{"mount":{"posx":-1.1481063742006435e-16,"posy":1.0625,"posz":0.9375,"rotx":0,"roty":0}},"cameras":{}}

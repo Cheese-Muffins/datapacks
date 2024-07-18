@@ -1,6 +1,5 @@
 {
   "description": "Lava Wading",
-  "exclusive_set": "#minecraft:exclusive_set/boots",
   "supported_items": "#minecraft:enchantable/foot_armor",
   "weight": 1,
   "max_level": 1,

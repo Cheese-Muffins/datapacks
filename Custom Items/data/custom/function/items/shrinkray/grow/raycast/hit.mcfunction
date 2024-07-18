@@ -1,4 +1,4 @@
-scoreboard players set @s customShrinkTick 0
+scoreboard players set @s customShrinkTick 30
 tag @s add shrinkHit
 tag @s remove shrinkSmall
 tag @s add shrinkGrow

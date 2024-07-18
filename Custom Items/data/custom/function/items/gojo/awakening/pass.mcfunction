@@ -3,5 +3,7 @@ tellraw @s ["",{"text":"Gojo Satoru","color":"gold"},{"text":"\n"},{"text":"Awak
 scoreboard players set @s customAwakenedCooldown 18000
 execute as @n[tag=aj.gojo.root] run function animated_java:gojo/animations/honored/play
 gamemode spectator @s
+tag @s remove gojoPassive
+tag @s add gojoHonoredPassive
 spectate @e[tag=aj.gojo.camera.camera,sort=nearest,limit=1]
 tag @s add customSpectate

@@ -17,7 +17,7 @@
     "requirement": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "consumables:classic"
+        "recipe_id": "interactables:broken_clock"
       }
     }
   },

@@ -6,6 +6,5 @@ execute unless entity @s[tag=RandomUser] at @s if entity @e[type=item,nbt={Item:
 
 execute unless entity @s[tag=RandomUser] run function custom:items/toji/lock/display with storage minecraft:custom toji.ui
 
-execute unless entity @s[tag=RandomUser] if score @s customParticleDelay matches 0 run scoreboard players set @s customParticleDelay 5
-execute unless entity @s[tag=RandomUser] unless entity @s[tag=Honored] run function custom:items/toji/passive/normal
-execute unless entity @s[tag=RandomUser] if entity @s[tag=Honored] run function custom:items/toji/passive/honored
+execute unless entity @s[tag=RandomUser] unless entity @s[tag=Berserk] run function custom:items/toji/passive/normal/main
+execute unless entity @s[tag=RandomUser] if entity @s[tag=Berserk] run function custom:items/toji/passive/berserk/main

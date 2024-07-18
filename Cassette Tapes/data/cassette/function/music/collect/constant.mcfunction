@@ -38,8 +38,8 @@ execute if score @s cassette_x matches ..-10000 run tag @s add homelandD
 execute if score @s cassette_z matches 10000.. run tag @s add homelandD
 execute if score @s cassette_z matches ..-10000 run tag @s add homelandD
 
-execute at @s if block ~ ~1 ~ minecraft:lava run scoreboard players add @s cassette_lava 20
-execute at @s unless block ~ ~1 ~ minecraft:lava run scoreboard players reset @s cassette_lava
+execute at @s if block ~ ~1 ~ minecraft:lava unless entity @s[nbt={active_effects:[{id:"minecraft:fire_resistance"}]}] run scoreboard players add @s cassette_lava 20
+execute at @s unless block ~ ~1 ~ minecraft:lava if entity @s[nbt={active_effects:[{id:"minecraft:fire_resistance"}]}] run scoreboard players reset @s cassette_lava
 
 scoreboard players reset @s cassette_turtle
 scoreboard players reset @s cassette_sniffer

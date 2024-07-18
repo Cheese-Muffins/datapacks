@@ -5,8 +5,10 @@ scoreboard objectives add cassette4 dummy
 scoreboard objectives add cassette_id dummy
 scoreboard objectives add cassette_cmd dummy
 scoreboard objectives add shuffle minecraft.custom:minecraft.sneak_time
-scoreboard objectives add cassettte_leave dummy
+scoreboard objectives add cassette_leave dummy
+scoreboard objectives add cassette_disconnect minecraft.custom:minecraft.leave_game
 scoreboard objectives add cassettte_obtain dummy
+scoreboard objectives add cassette_dimension dummy
 
 scoreboard objectives add musicui dummy
 scoreboard players set #1 musicui 1
@@ -50,6 +52,7 @@ scoreboard objectives add cassette_redeemCMD dummy
 scoreboard objectives add cassette_turtle dummy
 scoreboard objectives add cassette_boat dummy
 scoreboard objectives add cassette_sniffer dummy
+scoreboard objectives add cassette_total dummy
 
 scoreboard objectives add ui dummy
 scoreboard players set #1 ui 1
@@ -69,3 +72,5 @@ scoreboard objectives add cassette_playlist1_id dummy
 
 forceload add 0 0
 setblock 0 -64 0 yellow_shulker_box
+
+function cassette:loop_1s

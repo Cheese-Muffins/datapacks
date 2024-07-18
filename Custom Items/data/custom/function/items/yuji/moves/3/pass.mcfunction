@@ -1,6 +1,7 @@
 damage @s 8 minecraft:generic by @s
 function custom:items/yuji/moves/rigsetup
 execute as @n[tag=aj.yuji.root] run function animated_java:yuji/animations/pact/play
+effect give @s minecraft:resistance infinite 255 true
 execute unless entity @s[tag=RandomUser] run scoreboard players set @s customMove3Cooldown 900
 scoreboard players set @s customMoveSpamDelay 10
 

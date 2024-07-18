@@ -12,6 +12,16 @@ tag @s remove ListeningParty_7
 tag @s remove ListeningParty_8
 tag @s remove ListeningParty_9
 
+execute if entity @s[tag=ListeningParty_1Host] as @a[tag=ListeningParty_1Member] at @s run function cassette:ui/pages/8/disband {party:"1"}
+execute if entity @s[tag=ListeningParty_2Host] as @a[tag=ListeningParty_2Member] at @s run function cassette:ui/pages/8/disband {party:"2"}
+execute if entity @s[tag=ListeningParty_3Host] as @a[tag=ListeningParty_3Member] at @s run function cassette:ui/pages/8/disband {party:"3"}
+execute if entity @s[tag=ListeningParty_4Host] as @a[tag=ListeningParty_4Member] at @s run function cassette:ui/pages/8/disband {party:"4"}
+execute if entity @s[tag=ListeningParty_5Host] as @a[tag=ListeningParty_5Member] at @s run function cassette:ui/pages/8/disband {party:"5"}
+execute if entity @s[tag=ListeningParty_6Host] as @a[tag=ListeningParty_6Member] at @s run function cassette:ui/pages/8/disband {party:"6"}
+execute if entity @s[tag=ListeningParty_7Host] as @a[tag=ListeningParty_7Member] at @s run function cassette:ui/pages/8/disband {party:"7"}
+execute if entity @s[tag=ListeningParty_8Host] as @a[tag=ListeningParty_8Member] at @s run function cassette:ui/pages/8/disband {party:"8"}
+execute if entity @s[tag=ListeningParty_9Host] as @a[tag=ListeningParty_9Member] at @s run function cassette:ui/pages/8/disband {party:"9"}
+
 tag @s remove ListeningParty_1Host
 tag @s remove ListeningParty_2Host
 tag @s remove ListeningParty_3Host

@@ -1,7 +1,9 @@
 function custom:items/billy/moves/rigsetup
 execute as @n[tag=aj.billy.root] run function animated_java:billy/animations/phase/play
 playsound minecraft:entity.polar_bear.warning player @a ~ ~ ~ 2.5
-gamemode spectator @s
+
+tag @s add customDetatch
+effect give @s minecraft:resistance infinite 255 true
 scoreboard players set @s customMove2Cooldown 700
 scoreboard players set @s customDelay2 60
 scoreboard players set @s customMoveSpamDelay 40

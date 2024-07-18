@@ -9,12 +9,12 @@ execute unless data storage ui container[{Slot:16b}] run scoreboard players set 
 ## pick a page to go to
 
 execute if score .button ui matches 2 at @s as @p unless entity @s[tag=ListeningParty_Member] store result storage minecraft:ui data.selected.value int 1 run scoreboard players get @s cassette_selected
-execute if score .button ui matches 2 at @s as @p unless entity @s[tag=ListeningParty_Member] run function cassette:ui/pages/6/play with storage minecraft:ui data.selected
+execute if score .button ui matches 2 at @s as @p unless entity @s[tag=ListeningParty_Member] run function cassette:ui/pages/6/search with storage minecraft:ui data.selected
 execute if score .button ui matches 2 at @s as @p if entity @s[tag=ListeningParty_Member] run function cassette:ui/pages/6/party
 
 execute if score .button ui matches 3 at @s as @p unless entity @s[tag=ListeningParty_Member] run playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~
 execute if score .button ui matches 3 at @s as @p unless entity @s[tag=ListeningParty_Member] run function cassette:ui/pages/6/extract with storage minecraft:ui data.collection
-execute if score .button ui matches 3 unless entity @p[tag=ListeningParty_Member] run scoreboard players set @s ui.page 4
+execute if score .button ui matches 3 unless entity @p[tag=ListeningParty_Member,distance=..2] run scoreboard players set @s ui.page 4
 
 execute if score .button ui matches 3 at @s as @p if entity @s[tag=ListeningParty_Member] run function cassette:ui/pages/6/party
 

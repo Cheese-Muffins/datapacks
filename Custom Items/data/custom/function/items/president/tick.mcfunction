@@ -1,4 +1,7 @@
 execute unless entity @s[tag=RandomUser] if score @s customToggle matches 1 run function custom:items/president/active
 execute unless entity @s[tag=RandomUser] if entity @s[nbt=!{Inventory:[{components:{"minecraft:custom_data":{CustomItem:1b}},Slot:8b}]}] run function custom:items/president/lock/item
 
+execute if score @s customPresidentDeath matches 1.. if score @s president_dimensionBAN matches 1 run function custom:items/president/moves/1/death
+scoreboard players reset @s customPresidentDeath
+
 execute unless entity @s[scores={customDelay1=0,customDelay2=0,customDelay3=0,customDelay4=0,customMove1Cooldown=0,customMove2Cooldown=0,customMove3Cooldown=0,customMove4Cooldown=0,customParticleDelay=0,customMoveSpamDelay=0,customToggleDelay=0,customToggle=1..}] run function custom:items/president/scores/main

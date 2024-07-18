@@ -1,4 +1,3 @@
-scoreboard players add @s customShrinkTick 1
-execute if entity @s[tag=shrinkSmall] run particle dust{color:[0.361,0.741,0.380],scale:1} ~ ~ ~ 0.25 0.25 0.25 100 1 force @a
-execute if entity @s[tag=shrinkGrow] run particle dust{color:[0.361,0.741,0.380],scale:1} ~ ~1 ~ 1 1 1 100 1 force @a
-execute if score @s customShrinkTick matches 600.. run function custom:items/shrinkray/timer/reset
+execute on vehicle on passengers run scoreboard players set @s customOnVehicle 1
+execute unless score @s customOnVehicle matches 1 at @s run function custom:items/shrinkray/timer/pass
+scoreboard players reset @s customOnVehicle

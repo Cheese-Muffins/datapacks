@@ -1,4 +1,4 @@
-scoreboard players set @s customDelay2 60
+scoreboard players set @s customDelay2 80
 execute unless entity @s[tag=RandomUser] run scoreboard players set @s customMove2Cooldown 400
 scoreboard players set @s customMoveSpamDelay 10
 

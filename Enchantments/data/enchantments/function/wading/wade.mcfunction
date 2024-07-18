@@ -1,1 +1,1 @@
-execute as @s at @s if block ~ ~-.89 ~ lava unless block ~ ~ ~ lava run function enchantments:wading/effect
+execute if block ~ ~ ~ lava unless block ~ ~ ~ lava run function enchantments:wading/effect
