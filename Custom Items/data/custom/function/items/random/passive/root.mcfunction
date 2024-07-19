@@ -5,7 +5,10 @@ execute if score @s customRandomPassiveValue matches 4 run function custom:items
 
 execute if score @s customRandomPassiveValue matches 5 at @s if entity @n[type=minecraft:armor_stand,distance=..0.6,tag=PresidentFreezer] run function custom:items/president/passive/near
 
-execute if score @s customRandomPassiveValue matches 6 run function custom:items/gojo/passive/normal
-execute if score @s customRandomPassiveValue matches 7 run function custom:items/gojo/passive/honored
+execute if score @s customRandomPassiveValue matches 6 run function custom:items/gojo/passive/normal/main
+execute if score @s customRandomPassiveValue matches 7 run function custom:items/gojo/passive/honored/main
 
 execute if score @s customRandomPassiveValue matches 8 run function custom:items/billy/passive/main
+
+execute if score @s customRandomPassiveValue matches 9 run function custom:items/yuji/passive/normal/main
+execute if score @s customRandomPassiveValue matches 10 run function custom:items/yuji/passive/sukuna/main

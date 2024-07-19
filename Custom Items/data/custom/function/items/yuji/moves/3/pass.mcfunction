@@ -1,4 +1,4 @@
-damage @s 8 minecraft:generic by @s
+damage @s 4 minecraft:generic by @s
 function custom:items/yuji/moves/rigsetup
 execute as @n[tag=aj.yuji.root] run function animated_java:yuji/animations/pact/play
 effect give @s minecraft:resistance infinite 255 true

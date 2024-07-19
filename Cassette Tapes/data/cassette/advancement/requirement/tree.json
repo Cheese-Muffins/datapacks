@@ -11,7 +11,7 @@
               "type_specific": {
                 "type": "player",
                 "looking_at": {
-                  "type": "minecraft:pig"
+                  "type": "minecraft:player"
                 }
               }
             }

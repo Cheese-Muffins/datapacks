@@ -1,4 +1,4 @@
-execute as @a run function cassette:music/collect/constant
+execute as @a at @s run function cassette:music/collect/constant
 
 execute as @a[scores={cassette_disconnect=1..}] run function cassette:ui/pages/8/delete
 

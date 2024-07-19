@@ -22,7 +22,6 @@ execute at @s if entity @n[type=minecraft:allay,distance=..7] if entity @n[type=
 execute at @s if biome ~ ~ ~ minecraft:beach unless entity @s[tag=C96] run function cassette:music/collect/pass {id:"96"}
 execute at @s if entity @n[type=minecraft:frog,distance=..7] unless entity @s[tag=C104] run function cassette:music/collect/pass {id:"104"}
 
-
 execute if entity @s[tag=songPass] run function cassette:music/collect/grant with storage minecraft:cassette collect
 
 scoreboard players operation @s cassette_movement = @s cassette_walk
