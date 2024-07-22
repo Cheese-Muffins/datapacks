@@ -8,6 +8,7 @@ execute if entity @s[tag=ShrinkrayUser] as @s[nbt={SelectedItem:{components:{"mi
 execute if entity @s[tag=PresidentUser] as @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":1017}}}] unless score @s customToggleDelay matches 1.. run function custom:items/president/toggle
 execute if entity @s[tag=RandomUser] as @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":1018}}}] unless score @s customToggleDelay matches 1.. run function custom:items/random/toggle
 execute if entity @s[tag=BillyUser] as @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":1019}}}] unless score @s customToggleDelay matches 1.. run function custom:items/billy/toggle
+execute if entity @s[tag=GeorgeUser] as @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":1020}}}] unless score @s customToggleDelay matches 1.. run function custom:items/george/toggle
 
 
 #execute if entity @s[tag=ShrinkRayUser] run function custom:items/shrinkray/use

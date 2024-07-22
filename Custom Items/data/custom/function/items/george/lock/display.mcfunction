@@ -1,0 +1,1 @@
+$execute if score @s customHotBarSelected matches 1 run title @s actionbar [{"text":"\uEAA0"},{"text":"\uF800\$(m1)\uF806\uEAA2"},{"text":"\uF8101\uF802","color":"black"},{"text":"\uF800\uEAA1"},{"text":"\uF805\uEAA3"},{"text":"\uF807$(m1T)","color":"green"}]

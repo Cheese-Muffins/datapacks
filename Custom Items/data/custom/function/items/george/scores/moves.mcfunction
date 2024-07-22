@@ -1,0 +1,1 @@
+execute if score @s customMove1Cooldown matches 1.. run function custom:items/george/scores/moves/1

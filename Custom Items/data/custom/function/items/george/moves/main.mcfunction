@@ -1,0 +1,1 @@
+execute if score @s customHotBarSelected matches 1 unless score @s customMoveSpamDelay matches 1.. run function custom:items/george/moves/1/core
