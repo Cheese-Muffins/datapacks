@@ -72,5 +72,3 @@ scoreboard objectives add cassette_playlist1_id dummy
 
 forceload add 0 0
 setblock 0 -64 0 yellow_shulker_box
-
-function cassette:loop_1s

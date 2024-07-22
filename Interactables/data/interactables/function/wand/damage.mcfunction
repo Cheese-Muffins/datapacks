@@ -1,0 +1,1 @@
+$damage @p[scores={Mysterious_Selected=1..}] $(damage)

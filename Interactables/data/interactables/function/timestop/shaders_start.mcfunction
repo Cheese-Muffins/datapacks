@@ -1,0 +1,3 @@
+execute as @a[tag=StoppingTime] at @s run particle entity_effect{color:[0.9960784313725490196078431372549,0.9921568627450980392156862745098,0.00392156863,1.00]} ~ ~ ~ 0 0 0 1 0 force @s
+execute at @a[tag=StoppingTime] run particle entity_effect{color:[0.9960784313725490196078431372549,0.9921568627450980392156862745098,0.0117647059,1.00]} ~ ~ ~ 0 0 0 1 0 force @a[tag=TimeStop_ShaderVictim]
+schedule function interactables:timestop/shaders_start 1t

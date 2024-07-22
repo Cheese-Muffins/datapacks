@@ -1,0 +1,1 @@
+function server:loop_1s

@@ -1,0 +1,3 @@
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":1},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:timestop/core
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":2},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:wand/main
+advancement revoke @s only interactables:itemuse
