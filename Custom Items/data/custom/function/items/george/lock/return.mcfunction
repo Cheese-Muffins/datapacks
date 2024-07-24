@@ -1,4 +1,5 @@
 data modify block 0 -51 0 Items[{Slot:0b}] set from storage minecraft:custom george.food.store
+$data modify block 0 -51 0 Items[{Slot:0b}].count set value $(count)
 $item replace entity @s hotbar.$(before) from block 0 -51 0 container.0
 data modify block 0 -51 0 Items[{Slot:0b}] set value {}
 data remove storage minecraft:custom george.food.store

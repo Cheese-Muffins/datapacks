@@ -70,6 +70,9 @@ scoreboard objectives add customTimer dummy
 scoreboard objectives add customDimension dummy
 scoreboard objectives add customOnVehicle dummy
 scoreboard objectives add customPresidentDeath deathCount
+scoreboard objectives add customGeorgeConsumableCount dummy
+scoreboard objectives add customGeorgeComsumableCooldown dummy
+scoreboard objectives add customGeorgeTemperature dummy
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"

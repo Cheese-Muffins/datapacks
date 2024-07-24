@@ -11,6 +11,8 @@ execute if entity @s[nbt={SelectedItemSlot:8}] run scoreboard players set @s cus
 
 # Crouch Sync #
 execute if entity @s[tag=toggleCrouch] run scoreboard players operation @s customHotBarSelectionBefore = @s customHotBarSelection
+execute if entity @s[tag=toggleCrouch] store result score @s customGeorgeConsumableCount run data get entity @s SelectedItem.count
+execute if entity @s[tag=toggleCrouch] store result storage minecraft:custom george.hotbar.count int 1 run scoreboard players get @s customGeorgeConsumableCount
 execute if entity @s[tag=toggleCrouch] run tag @s remove toggleCrouch
 
 # If selected slot has changed #

@@ -3,6 +3,9 @@ execute unless entity @s[tag=aj.george.root] run return 0
 execute unless score @s aj.is_rig_loaded matches 1 run function #animated_java:global/root/on_load
 function #animated_java:george/as_root/pre_tick
 execute if entity @s[tag=aj.george.animation.hasten.playing] run function animated_java:george/animations/hasten/zzz/on_tick
+execute if entity @s[tag=aj.george.animation.combust.playing] run function animated_java:george/animations/combust/zzz/on_tick
+execute if entity @s[tag=aj.george.animation.cook_start.playing] run function animated_java:george/animations/cook_start/zzz/on_tick
+execute if entity @s[tag=aj.george.animation.cook_anim.playing] run function animated_java:george/animations/cook_anim/zzz/on_tick
 execute on passengers if entity @s[tag=aj.george.data] run function animated_java:george/root/zzz/1
 execute at @s on passengers run tp @s ~ ~ ~ ~ ~
 function #animated_java:george/as_root/post_tick
