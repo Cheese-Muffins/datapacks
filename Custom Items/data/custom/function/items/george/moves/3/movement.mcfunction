@@ -15,4 +15,4 @@ execute if block ~ ~-0.5 ~ #custom:raycast_pass unless block ~ ~-0.5 ~ minecraft
 
 execute unless block ~ ~ ~ #custom:raycast_pass unless block ~ ~1 ~ #custom:raycast_pass run function custom:items/george/moves/3/destroy
 
-execute as @e[type=!#custom:not_mob,tag=!GeorgeUser,distance=..2] run function custom:items/george/moves/3/transition
+execute as @e[type=!#custom:not_mob,tag=GeorgeUser,distance=..2] run function custom:items/george/moves/3/transition

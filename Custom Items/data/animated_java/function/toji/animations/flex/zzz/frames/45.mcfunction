@@ -10,4 +10,4 @@ $data merge entity $(bone_leftarm) { transformation: [-1f,0f,1.2246467991473532e
 $data merge entity $(bone_head) { transformation: [-1f,0f,1.2246467991473532e-16f,0f,0f,1f,0f,1.5f,-1.2246467991473532e-16f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 $data merge entity $(bone_upper) { transformation: [-1f,0f,1.2246467991473532e-16f,0f,0f,1f,0f,0.75f,-1.2246467991473532e-16f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/flex/zzz/frames/zzz/45
-data modify entity @s data merge value {"locators":{"head":{"posx":0,"posy":1.5,"posz":0,"rotx":0,"roty":0},"mount":{"posx":0,"posy":1.75,"posz":0,"rotx":0,"roty":0}},"cameras":{}}
+data modify entity @s data merge value {"locators":{"head":{"posx":0,"posy":1.5,"posz":0,"rotx":0,"roty":0},"mount":{"posx":0,"posy":1.75,"posz":0,"rotx":0,"roty":0}},"cameras":{"camera":{"posx":0,"posy":0,"posz":0,"rotx":0,"roty":0}}}

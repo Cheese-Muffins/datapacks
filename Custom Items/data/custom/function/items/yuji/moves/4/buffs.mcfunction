@@ -1,4 +1,6 @@
-effect give @s minecraft:absorption 10 0 true
-effect give @s minecraft:regeneration 10 1 true
-effect give @s minecraft:resistance 90 0 true
-effect give @s minecraft:speed 90 5 true
+effect clear @s minecraft:speed
+effect give @s minecraft:speed 90 4 true
+effect clear @s minecraft:jump_boost
+effect give @s minecraft:jump_boost 90 2 true
+effect give @s absorption 30 1 true
+effect give @s regeneration 15 1 true

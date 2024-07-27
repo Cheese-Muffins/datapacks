@@ -3,6 +3,7 @@ playsound minecraft:entity.villager.yes player @s ~ ~ ~ 1000000
 gamemode survival @s
 tp @s @e[tag=aj.toji.root,sort=nearest,limit=1]
 effect clear @s minecraft:invisibility
+kill @n[type=minecraft:item_display,tag=aj.toji.camera.camera]
 execute as @n[tag=aj.toji.root] run function animated_java:toji/remove/this
 tag @s add Berserk
 tag @s remove customSpectate

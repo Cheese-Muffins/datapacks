@@ -1,42 +1,41 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "category": "building",
-    "pattern": [
-      "#$#",
-      "*%*",
-      "#$#"
-    ],
-    "key": {
-      "%": {
-        "item": "minecraft:totem_of_undying"
-      },
-      "$": {
-        "item": "minecraft:heart_of_the_sea"
-      },
-      "*": {
-        "item": "minecraft:gold_block"
-      },
-      "#": {
-        "item": "minecraft:gold_ingot"
-      }
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#$#",
+    "*%*",
+    "#$#"
+  ],
+  "key": {
+    "%": {
+      "item": "minecraft:totem_of_undying"
     },
-    "result": {
-      "id": "minecraft:light_blue_dye",
-      "components": {
-        "minecraft:custom_model_data": 2,
-        "custom_name": "{\"text\":\"Storm Totem\",\"color\":\"blue\",\"italic\":false}",
-        "minecraft:lore": [
-          "{\"text\":\"Calls upon Stormy Weather\",\"color\":\"gray\",\"italic\":false}"
-        ],
-        "minecraft:custom_data": "{custom:totem}",
-        "minecraft:food": {
-          "nutrition": 0,
-          "saturation": 0,
-          "can_always_eat": true,
-          "eat_seconds": 99999999
-        },
-        "minecraft:max_stack_size": 1
-      }
+    "$": {
+      "item": "minecraft:wind_charge"
+    },
+    "*": {
+      "item": "minecraft:gold_block"
+    },
+    "#": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "id": "minecraft:light_blue_dye",
+    "components": {
+      "minecraft:custom_model_data": 2,
+      "custom_name": "{\"text\":\"Storm Totem\",\"color\":\"blue\",\"italic\":false}",
+      "minecraft:lore": [
+        "{\"text\":\"Calls upon Stormy Weather\",\"color\":\"gray\",\"italic\":false}"
+      ],
+      "minecraft:custom_data": "{custom:totem}",
+      "minecraft:food": {
+        "nutrition": 0,
+        "saturation": 0,
+        "can_always_eat": true,
+        "eat_seconds": 99999999
+      },
+      "minecraft:max_stack_size": 1
     }
   }
-  
+}

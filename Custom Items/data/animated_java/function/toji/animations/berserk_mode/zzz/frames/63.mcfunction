@@ -8,6 +8,5 @@ $data merge entity $(bone_blade) { transformation: [-3.3306690738754696e-16f,-5.
 $data merge entity $(bone_bottom) { transformation: [-1f,0f,1.2246467991473532e-16f,0.375f,0f,1f,0f,1.125f,-1.2246467991473532e-16f,0f,-1f,4.592425496802575e-17f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 $data merge entity $(bone_leftarm) { transformation: [-1f,0f,1.2246467991473532e-16f,0.3125f,0f,1f,0f,1.375f,-1.2246467991473532e-16f,0f,-1f,3.827021247335479e-17f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 $data merge entity $(bone_head) { transformation: [-1f,0f,1.2246467991473532e-16f,0f,0f,1f,0f,1.5f,-1.2246467991473532e-16f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
-$data merge entity $(bone_upper) { transformation: [-1f,0f,1.2246467991473532e-16f,0f,0f,1f,0f,0.75f,-1.2246467991473532e-16f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
-execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/berserk_mode/zzz/frames/zzz/0
-data modify entity @s data merge value {"locators":{"head":{"posx":0,"posy":1.5,"posz":0,"rotx":0,"roty":0},"mount":{"posx":0,"posy":1.75,"posz":0,"rotx":0,"roty":0}},"cameras":{}}
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/berserk_mode/zzz/frames/zzz/2
+data modify entity @s data merge value {"locators":{"head":{"posx":0,"posy":1.5,"posz":0,"rotx":0,"roty":0},"mount":{"posx":0,"posy":1.75,"posz":0,"rotx":0,"roty":0}},"cameras":{"camera":{"posx":-2.7363201918448674e-16,"posy":1.5,"posz":2.234375,"rotx":0,"roty":180}}}

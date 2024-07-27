@@ -1,2 +1,2 @@
-execute if predicate custom:gojo/honored unless entity @s[tag=Honored] run function custom:items/gojo/awakening/pass
-execute unless entity @s[tag=Honored] run function custom:items/gojo/awakening/fail
+execute if predicate custom:toji/berserk unless entity @s[tag=Berserk] run function custom:items/toji/awakening/pass
+execute unless entity @s[tag=Berserk] run function custom:items/toji/awakening/fail

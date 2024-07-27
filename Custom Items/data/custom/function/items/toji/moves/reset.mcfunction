@@ -7,7 +7,6 @@ tag @s remove customDetatch
 ride @s dismount
 tag @s remove customSpectate
 tag @s remove customAnim
-execute if score @s customRandomValue matches 19 if entity @s[tag=RandomUser] run tag @s remove TojiUser
-execute if score @s customRandomValue matches 21 if entity @s[tag=RandomUser] run tag @s remove TojiUser
-execute if score @s customRandomValue matches 22 if entity @s[tag=RandomUser] run tag @s remove TojiUser
+
+kill @n[type=minecraft:item_display,tag=aj.toji.camera.camera]
 execute as @n[tag=aj.toji.root] run function animated_java:toji/remove/this

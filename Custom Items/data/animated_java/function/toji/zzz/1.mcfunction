@@ -7,6 +7,9 @@ data modify entity @s data.locators.head.uuid set from storage aj:uuid main.out
 summon minecraft:item_display ~ ~ ~ {Tags:['aj.new', 'aj.locator', 'aj.toji.locator', 'aj.toji.locator.mount']}
 execute as @e[type=minecraft:item_display,tag=aj.new,tag=aj.locator,limit=1,distance=..0.01] run function animated_java:toji/zzz/3
 data modify entity @s data.locators.mount.uuid set from storage aj:uuid main.out
+summon item_display ~ ~ ~ {Tags:['aj.new', 'aj.camera', 'aj.toji.camera', 'aj.toji.camera.camera'], teleport_duration: 2}
+execute as @e[type=item_display,tag=aj.new,tag=aj.camera,limit=1,distance=..0.01] run function animated_java:toji/zzz/4
+data modify entity @s data.cameras.camera.uuid set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.toji.bone.blade2] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
 data modify entity @s data.bones.bone_blade2 set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.toji.bone.chain2] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s

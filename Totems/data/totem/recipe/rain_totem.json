@@ -2,22 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "#$#",
-    "#%#",
+    "#*#",
+    "&%&",
     "#*#"
   ],
   "key": {
     "#": {
       "item": "minecraft:lapis_lazuli"
     },
-    "$": {
-      "item": "minecraft:heart_of_the_sea"
-    },
     "%": {
       "item": "minecraft:totem_of_undying"
     },
     "*": {
       "item": "minecraft:diamond"
+    },
+    "&": {
+      "item": "minecraft:lapis_block"
     }
   },
   "result": {

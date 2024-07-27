@@ -1,2 +1,2 @@
-execute if score @s customHealth < @s customHealthFetch run function custom:items/yuji/awakening/math
-execute if score @s customHealth > @s customHealthFetch run scoreboard players operation @s customHealthFetch = @s customHealth
+execute if predicate custom:yuji/sukuna unless entity @s[tag=Sukuna] run function custom:items/yuji/awakening/pass
+execute unless entity @s[tag=Sukuna] run function custom:items/yuji/awakening/fail

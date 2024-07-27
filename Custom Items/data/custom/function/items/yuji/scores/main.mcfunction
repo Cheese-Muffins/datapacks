@@ -9,5 +9,6 @@ execute unless entity @s[tag=RandomUser] if score @s customParticleDelay matches
 
 # SPECIAL TO THIS ITEM #
 
-execute unless entity @s[tag=RandomUser] if score @s customAwakenedCooldown matches 1.. run function custom:items/gojo/awakening/cooldown
+execute unless entity @s[tag=RandomUser] if score @s customAwakenedCooldown matches 1.. run function custom:items/yuji/awakening/cooldown
 execute unless entity @s[tag=RandomUser] if score @s customAwakening matches 1.. run function custom:items/yuji/scores/awakening
+execute unless entity @s[tag=RandomUser] if score @s customYujiAbsorbed matches 80.. unless entity @s[tag=Sukuna] unless score @s customAwakenedCooldown matches 1.. run function custom:items/yuji/awakening/main

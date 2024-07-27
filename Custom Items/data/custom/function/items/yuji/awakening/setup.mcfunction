@@ -3,6 +3,7 @@ playsound minecraft:entity.villager.yes player @s ~ ~ ~ 1000000
 gamemode survival @s
 tp @s @e[tag=aj.yuji.root,sort=nearest,limit=1]
 effect clear @s minecraft:invisibility
+kill @n[type=minecraft:item_display,tag=aj.yuji.camera.camera]
 execute as @n[tag=aj.yuji.root] run function animated_java:yuji/remove/this
 tag @s add Sukuna
 tag @s remove customSpectate

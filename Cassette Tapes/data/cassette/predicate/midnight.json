@@ -2,7 +2,7 @@
     "condition": "minecraft:time_check",
     "value": {
       "min": 18500,
-      "max": 19500
+      "max": 22000
     }
 }
   

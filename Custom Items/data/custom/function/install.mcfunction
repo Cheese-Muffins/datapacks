@@ -73,6 +73,8 @@ scoreboard objectives add customPresidentDeath deathCount
 scoreboard objectives add customGeorgeConsumableCount dummy
 scoreboard objectives add customGeorgeComsumableCooldown dummy
 scoreboard objectives add customGeorgeTemperature dummy
+scoreboard objectives add customTojiDamage minecraft.custom:minecraft.damage_dealt
+scoreboard objectives add customYujiAbsorbed minecraft.custom:minecraft.damage_taken
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"
