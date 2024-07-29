@@ -1,0 +1,1 @@
+give @s item_frame[max_stack_size=16,item_name='{"italic":false,"text":"Phantom Ward"}',custom_model_data=1,entity_data={id:"minecraft:item_frame",Fixed:1b,Invisible:1b,Silent:1b,Invulnerable:1b,Tags:["specialBlock","phantomWard"]}] 1

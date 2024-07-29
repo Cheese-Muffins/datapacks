@@ -32,4 +32,6 @@ execute if score Quickdraw Lagless matches 2 run execute at @a[tag=StoppingTime]
 execute if score Lag_less Lagless matches 14 run execute at @a[tag=StoppingTime] run execute as @e[tag=!Stopped,type=#interactables:directionusers,distance=..40] run data merge entity @s {Tags:["Stopped"],NoAI:1b,Motion:[0.0d,0.0d,0.0d],power:[0.0d,0.0d,0.0d],NoGravity:1b}
 execute if score Quickdraw Lagless matches 4 run execute at @a[tag=StoppingTime] run execute as @a[tag=!StoppingTime,distance=..40] at @s run function interactables:timestop/freezeplayer
 
+execute at @s if entity @e[type=minecraft:ender_dragon,tag=Stopped] run advancement grant @s only server:stop_dragon
+
 attribute @p[tag=StoppingTime] minecraft:generic.knockback_resistance base set 1

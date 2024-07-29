@@ -23,7 +23,7 @@
           {
             "items": "minecraft:enchanted_book",
             "components": {
-              "minecraft:enchantments": {
+              "minecraft:stored_enchantments": {
                 "minecraft:lava_wading": 1
               }
             }

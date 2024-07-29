@@ -1,0 +1,16 @@
+{
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:tick"
+      }
+    },
+    "rewards": {
+      "recipes": [
+      "consumables:red",
+      "totem:rain_totem",
+      "totem:storm_totem",
+      "totem:recall_totem"
+      ]
+    }
+  }
+  

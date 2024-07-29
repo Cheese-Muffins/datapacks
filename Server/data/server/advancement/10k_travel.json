@@ -6,13 +6,13 @@
         "minecraft:custom_model_data": 4
       }
     },
-    "title": "Strap In",
+    "title": "Godspeed",
     "description": "Travel at least 10,000 blocks with a Recall Totem",
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "server:mark",
+  "parent": "server:recall",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:impossible"

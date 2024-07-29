@@ -6,9 +6,9 @@
         "minecraft:custom_model_data": 3
       }
     },
-    "title": "I'm Not Addicted",
+    "title": "Just a Phase",
     "description": "Consume 20 of any type of drug",
-    "frame": "challenge",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true
   },

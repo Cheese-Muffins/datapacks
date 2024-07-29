@@ -12,3 +12,5 @@ scoreboard objectives add decoy.rotation dummy
 scoreboard objectives add decoy.hp dummy
 team add mopo.decoy
 team modify mopo.decoy collisionRule never
+
+scoreboard objectives add consumables_DrugsConsumed dummy

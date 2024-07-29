@@ -6,3 +6,4 @@ attribute @s minecraft:generic.scale base set 2.5
 attribute @s minecraft:generic.step_height base set 1.1
 attribute @s minecraft:player.block_interaction_range base set 6.5
 attribute @s minecraft:player.entity_interaction_range base set 5.0
+advancement grant @s only server:wand_75

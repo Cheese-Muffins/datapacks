@@ -3,7 +3,7 @@ clear @p[tag=this] #minecraft:ui[minecraft:custom_data={ui:{null:1b}}]
 
 ## isolate items to be returned
 data modify storage ui return set from storage ui container
-data remove storage ui return[{ui:{null:1b}}]
+data remove storage ui return[{"minecraft:custom_data":{ui:{null:1b}}}]
 # set the coords here to your shulker box!
 execute positioned 0 -64 0 run function cassette:ui/return/start
 

@@ -6,8 +6,8 @@
         "minecraft:custom_model_data": 3
       }
     },
-    "title": "Wake Up",
-    "description": "Click on a Lodestone with a Recall Totem to activate it",
+    "title": "Beam Me Up Scotty!",
+    "description": "Recall to the marked lodestone with a Recall Totem",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true

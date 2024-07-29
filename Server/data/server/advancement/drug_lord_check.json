@@ -1,0 +1,54 @@
+{
+    "criteria": {
+      "crack": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:carrot",
+              "components": {
+                "minecraft:custom_model_data": 1
+              }
+            }
+          ]
+        }
+      },
+      "weed": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:carrot",
+              "components": {
+                "minecraft:custom_model_data": 2
+              }
+            }
+          ]
+        }
+      },
+      "meth": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:carrot",
+              "components": {
+                "minecraft:custom_model_data": 3
+              }
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "crack",
+        "weed",
+        "meth"
+      ]
+    ],
+    "rewards": {
+      "function": "consumables:drugs/check"
+    }
+  }
+  
