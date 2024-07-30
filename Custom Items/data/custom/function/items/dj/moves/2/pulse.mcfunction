@@ -1,2 +1,2 @@
-$execute at @e[type=minecraft:marker,sort=nearest,limit=1,tag=customM2Anchor] as @e[type=!#custom:not_mob,tag=!DJUser,distance=..$(range)] run damage @s 3 minecraft:generic_kill by @p[tag=DJUser]
+$execute at @e[type=minecraft:marker,sort=nearest,limit=1,tag=customM2Anchor] as @e[type=!#custom:not_mob,tag=!DJUser,distance=..$(range)] run function custom:items/dj/moves/2/damage
 kill @e[type=marker,tag=customDJM2]

@@ -16,10 +16,7 @@
                     "predicate": {
                       "items": [
                         "minecraft:air"
-                      ],
-                      "components": {
-                        "minecraft:custom_data": "{drop_contents:1b}"
-                      }
+                      ]
                     }
                   }
                 ]

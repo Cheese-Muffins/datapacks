@@ -1,1 +1,2 @@
 data modify entity @s item.components."minecraft:custom_model_data" set value 2
+execute as @n[type=minecraft:item_display,tag=phantomWard_Gun] at @s if entity @n[type=minecraft:phantom,distance=..20] run function blocks:phantom_ward/shoot/start

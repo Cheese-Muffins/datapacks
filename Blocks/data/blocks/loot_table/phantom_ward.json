@@ -17,20 +17,13 @@
                     "Invisible": 1,
                     "Fixed": 1,
                     "Tags": ["specialBlock","phantomWard"]
-                  }
+                  },
+                  "minecraft:item_name": "{\"text\":\"Phantom Ward\",\"color\":\"aqua\",\"italic\":false}"
                 }
               },
               {
                 "function": "minecraft:set_custom_model_data",
                 "value": 1
-              },
-              {
-                "function": "minecraft:set_name",
-                "name": {
-                  "text": "Phantom Ward",
-                  "color": "aqua",
-                  "italic": false
-                }
               },
               {
                 "function": "minecraft:set_lore",

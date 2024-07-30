@@ -7,6 +7,7 @@ execute unless data storage ui container[{Slot:2b}] run scoreboard players set .
 execute unless data storage ui container[{Slot:3b}] run scoreboard players set .button ui 2
 execute unless data storage ui container[{Slot:4b}] run scoreboard players set .button ui 3
 execute unless data storage ui container[{Slot:5b}] run scoreboard players set .button ui 4
+execute unless data storage ui container[{Slot:6b}] run scoreboard players set .button ui 17
 
 execute unless data storage ui container[{Slot:10b}] run scoreboard players set .button ui 5
 execute unless data storage ui container[{Slot:11b}] run scoreboard players set .button ui 6
@@ -18,10 +19,12 @@ execute unless data storage ui container[{Slot:14b}] run scoreboard players set 
 execute unless data storage ui container[{Slot:15b}] run scoreboard players set .button ui 10
 execute unless data storage ui container[{Slot:16b}] run scoreboard players set .button ui 11
 
+execute unless data storage ui container[{Slot:20b}] run scoreboard players set .button ui 15
 execute unless data storage ui container[{Slot:21b}] run scoreboard players set .button ui 12
 execute unless data storage ui container[{Slot:22b}] run scoreboard players set .button ui 13
 execute unless data storage ui container[{Slot:23b}] run scoreboard players set .button ui 14
-execute unless data storage ui container[{Slot:24b}] run scoreboard players set .button ui 15
+execute unless data storage ui container[{Slot:24b}] run scoreboard players set .button ui 16
+
 
 
 execute if score .button ui matches 1 at @s as @p run function cassette:ui/pages/5/selection/1
@@ -42,6 +45,8 @@ execute if score .button ui matches 12 at @s as @p run function cassette:ui/page
 execute if score .button ui matches 13 at @s as @p run function cassette:ui/pages/5/selection/12
 execute if score .button ui matches 14 at @s as @p run function cassette:ui/pages/5/selection/13
 execute if score .button ui matches 15 at @s as @p run function cassette:ui/pages/5/selection/14
+execute if score .button ui matches 16 at @s as @p run function cassette:ui/pages/5/selection/15
+execute if score .button ui matches 17 at @s as @p run function cassette:ui/pages/5/selection/16
 
 execute unless score @s ui.page matches 5 run scoreboard players set .page_change ui 1
 execute unless score @s ui.page matches 5 run function cassette:ui/refresh

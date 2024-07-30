@@ -7,6 +7,7 @@ tag @s remove TojiUser
 tag @s remove YujiUser
 tag @s remove RandomUser
 tag @s remove BillyUser
+tag @s remove GeorgeUser
 scoreboard players set @s president_dimensionBAN 0
 tag @s add CustomItemHolder
 $tag @s add $(item)User

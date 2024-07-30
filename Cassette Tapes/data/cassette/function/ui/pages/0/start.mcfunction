@@ -7,8 +7,10 @@ data remove storage ui return[{"minecraft:custom_data":{ui:{null:1b}}}]
 # set the coords here to your shulker box!
 execute positioned 0 -64 0 run function cassette:ui/return/start
 
+execute store result storage minecraft:ui data.stats.total int 1 run scoreboard players get @p cassette_total
+
 ## process what happened here
 execute if score .page_change ui matches 0 run function cassette:ui/pages/0/buttons
 
 ## apply mask of the ui shape -> if you are still on the same page!
-execute if score @s ui.page matches 0 run function cassette:ui/pages/0/mask
+execute if score @s ui.page matches 0 run function cassette:ui/pages/0/mask with storage minecraft:ui data.stats

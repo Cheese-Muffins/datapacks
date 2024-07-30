@@ -67,6 +67,7 @@ scoreboard objectives add cassette_playlist1color dummy
 scoreboard objectives add cassette_playlist2icon dummy
 scoreboard objectives add cassette_playlist2color dummy
 scoreboard objectives add cassette_playlist1_id dummy
+scoreboard objectives add cassette_playlist2_id dummy
 
 
 
