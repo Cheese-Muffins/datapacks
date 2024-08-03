@@ -1,0 +1,13 @@
+{
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:tick"
+      }
+    },
+    "rewards": {
+      "recipes": [
+      "blocks:phantom_ward"
+      ]
+    }
+  }
+  
