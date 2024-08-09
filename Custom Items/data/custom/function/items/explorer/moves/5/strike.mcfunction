@@ -1,0 +1,2 @@
+particle snowflake ~ ~ ~ 0 0 0 1 100
+execute as @e[type=!#custom:not_mob,distance=..4] unless score @s customMoveID = @n[type=minecraft:item_display,tag=aj.projectiles.root] customMoveID run function custom:items/explorer/moves/5/damage

@@ -1,0 +1,29 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:axolotl_bucket"
+      },
+      "title": "The Toast of Shame",
+      "description": "You killed a Blue Axolotl",
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": true
+    },
+    "parent": "server:root",
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:player_killed_entity",
+        "conditions": {
+          "entity": {
+            "type": "minecraft:axolotl",
+            "nbt": "{Variant:4}"
+          }
+        }
+      }
+    },
+    "rewards": {
+      "experience": 1
+    }
+  }
+  

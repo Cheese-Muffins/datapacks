@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove6Cooldown 1
+execute if score @s customMove6Cooldown matches 451..500 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B0"
+execute if score @s customMove6Cooldown matches 401..450 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B1"
+execute if score @s customMove6Cooldown matches 351..400 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B2"
+execute if score @s customMove6Cooldown matches 301..350 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B3"
+execute if score @s customMove6Cooldown matches 251..300 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B4"
+execute if score @s customMove6Cooldown matches 201..250 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B5"
+execute if score @s customMove6Cooldown matches 151..200 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B6"
+execute if score @s customMove6Cooldown matches 101..150 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B7"
+execute if score @s customMove6Cooldown matches 51..100 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B8"
+execute if score @s customMove6Cooldown matches 1..50 run data modify storage minecraft:custom explorer.ui.m6 set value "u11B9"
+execute if score @s customMove6Cooldown matches 0 run data modify storage minecraft:custom explorer.ui.m6 set value "u11C0"

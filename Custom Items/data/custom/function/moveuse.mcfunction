@@ -8,4 +8,5 @@ execute if entity @s[tag=RandomUser] run function custom:items/random/moves/main
 execute if entity @s[tag=BillyUser] unless entity @s[tag=RandomUser] run function custom:items/billy/moves/main
 execute if entity @s[tag=GeorgeUser] unless items entity @s weapon.mainhand #custom:combustable unless entity @s[tag=RandomUser] run function custom:items/george/moves/main
 execute if entity @s[tag=GeorgeUser] if items entity @s weapon.mainhand #custom:combustable unless score @s customGeorgeComsumableCooldown matches 1.. run function custom:items/george/passive/consume/main
+execute if entity @s[tag=ExplorerUser] unless entity @s[tag=RandomUser] run function custom:items/explorer/moves/main
 advancement revoke @s only custom:moveuse

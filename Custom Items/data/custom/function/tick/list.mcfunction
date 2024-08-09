@@ -8,3 +8,4 @@ execute if entity @s[tag=PresidentUser] run function custom:items/president/tick
 execute if entity @s[tag=RandomUser] run function custom:items/random/tick
 execute if entity @s[tag=BillyUser] run function custom:items/billy/tick
 execute if entity @s[tag=GeorgeUser] run function custom:items/george/tick
+execute if entity @s[tag=ExplorerUser] run function custom:items/explorer/tick

@@ -23,6 +23,7 @@ scoreboard objectives add customMove5Cooldown dummy
 scoreboard objectives add customMove6Cooldown dummy
 scoreboard objectives add customMove7Cooldown dummy
 scoreboard objectives add customMove8Cooldown dummy
+scoreboard objectives add customMoveID dummy
 scoreboard objectives add customDelay1 dummy
 scoreboard objectives add customDelay2 dummy
 scoreboard objectives add customDelay3 dummy
@@ -75,6 +76,25 @@ scoreboard objectives add customGeorgeComsumableCooldown dummy
 scoreboard objectives add customGeorgeTemperature dummy
 scoreboard objectives add customTojiDamage minecraft.custom:minecraft.damage_dealt
 scoreboard objectives add customYujiAbsorbed minecraft.custom:minecraft.damage_taken
+
+scoreboard objectives add customIDStore dummy
+
+scoreboard objectives add customExplorer_TweenXBefore dummy
+scoreboard objectives add customExplorer_TweenZBefore dummy
+scoreboard objectives add customExplorer_TweenXCurrent dummy
+scoreboard objectives add customExplorer_TweenZCurrent dummy
+scoreboard objectives add customExplorer_PassiveXBefore dummy
+scoreboard objectives add customExplorer_PassiveZBefore dummy
+scoreboard objectives add customExplorer_PassiveXCurrent dummy
+scoreboard objectives add customExplorer_PassiveZCurrent dummy
+scoreboard objectives add customExplorer_Passive dummy
+scoreboard objectives add customExplorer_TriangulateThinking dummy
+scoreboard objectives add customExplorer_TriangulateRandom dummy
+scoreboard objectives add customExplorer_TriangulateMap dummy
+scoreboard objectives add customExplorer_XMarksTheSpotX dummy
+scoreboard objectives add customExplorer_XMarksTheSpotY dummy
+scoreboard objectives add customExplorer_XMarksTheSpotZ dummy
+scoreboard objectives add customExplorer_XMarksTheSpotDimension dummy
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"
