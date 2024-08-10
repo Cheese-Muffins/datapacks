@@ -1,0 +1,2 @@
+tellraw @s ["",{"text":"Custom Items - Settings","color":"gold"},{"text":"\n"},{"text":"Must have a ","color":"gray"},{"text":"Custom Item","color":"yellow"},{"text":" with an ","color":"gray"},{"text":"awakening!","color":"aqua"}]
+playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5

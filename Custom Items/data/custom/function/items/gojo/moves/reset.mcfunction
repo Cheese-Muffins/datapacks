@@ -8,4 +8,6 @@ tag @s remove customDetatch
 tag @s remove customSpectate
 tag @s remove customAnim
 execute if score @s customRandomValue matches 12 if entity @s[tag=RandomUser] run tag @s remove GojoUser
-execute as @n[tag=aj.gojo.root] run function animated_java:gojo/remove/this
+
+kill @n[type=minecraft:item_display,tag=aj.satoru.camera.camera]
+execute as @n[tag=aj.satoru.root] run function animated_java:satoru/remove/this

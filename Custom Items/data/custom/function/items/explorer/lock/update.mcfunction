@@ -6,8 +6,5 @@ execute if entity @s[scores={customHotBarSelection=8,customHotBarSelectionBefore
 execute if score @s customHotBarSelected matches 7.. run scoreboard players set @s customHotBarSelected 1
 execute if score @s customHotBarSelected matches ..0 run scoreboard players set @s customHotBarSelected 6
 execute store result storage minecraft:custom explorer.hotbar.before int 1 run scoreboard players get @s customHotBarSelectionBefore
-function custom:items/explorer/lock/return with storage minecraft:custom explorer.hotbar
-
-clear @s minecraft:phantom_membrane[minecraft:custom_data={moveTrigger:1b}]
 
 scoreboard players operation @s customHotBarSelectionBefore = @s customHotBarSelection
