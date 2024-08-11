@@ -4,8 +4,8 @@ execute if score @s customExplorer_Passive matches 1000.. unless entity @s[nbt={
 attribute @s minecraft:generic.step_height base set 1.1
 
 
-execute store result score @s customExplorer_PassiveXCurrent run data get entity @p[tag=ExplorerUser] Pos[0] 1
-execute store result score @s customExplorer_PassiveZCurrent run data get entity @p[tag=ExplorerUser] Pos[2] 1
+execute store result score @s customExplorer_PassiveXCurrent run data get entity @s[tag=ExplorerUser] Pos[0] 1
+execute store result score @s customExplorer_PassiveZCurrent run data get entity @s[tag=ExplorerUser] Pos[2] 1
 execute unless score @s customExplorer_PassiveXCurrent = @s customExplorer_PassiveXBefore run scoreboard players add @s customExplorer_Passive 1
 execute unless score @s customExplorer_PassiveZCurrent = @s customExplorer_PassiveZBefore run scoreboard players add @s customExplorer_Passive 1
 scoreboard players operation @s customExplorer_PassiveXBefore = @s customExplorer_PassiveXCurrent

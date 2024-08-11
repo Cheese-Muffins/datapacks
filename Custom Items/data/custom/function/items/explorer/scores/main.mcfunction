@@ -1,6 +1,7 @@
 # UNIVERSAL (PRETTY MUCH) #
 execute unless entity @s[tag=RandomUser] unless entity @s[scores={customMove1Cooldown=0,customMove2Cooldown=0,customMove3Cooldown=0,customMove4Cooldown=0,customMove5Cooldown=0,customMove6Cooldown=0}] run function custom:items/explorer/scores/moves
-execute unless entity @s[scores={customDelay1=0,customDelay2=0,customDelay3=0}] run function custom:items/explorer/scores/delays
+execute unless entity @s[tag=RandomUser] if score @s customDelay4 matches 1.. run function custom:items/explorer/moves/4/delay
+
 execute unless entity @s[tag=RandomUser] unless entity @s[scores={customMove1Cooldown=0..}] unless entity @s[scores={customMove2Cooldown=0..}] unless entity @s[scores={customMove3Cooldown=0..}] unless entity @s[scores={customMove4Cooldown=0..}] unless entity @s[scores={customParticleDelay=0..}] unless entity @s[scores={customToggleDelay=0}] unless entity @s[scores={customToggle=1..}] run function custom:items/explorer/scores/enable
 execute unless entity @s[tag=RandomUser] unless score @s customToggle matches 1.. run scoreboard players set @s customToggle 2
 execute unless entity @s[tag=RandomUser] if score @s customMoveSpamDelay matches 1.. run scoreboard players remove @s customMoveSpamDelay 1

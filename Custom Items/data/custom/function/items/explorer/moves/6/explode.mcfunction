@@ -15,9 +15,9 @@ summon item ~ ~-0.5 ~ {Age:5900,PickupDelay:32767,Motion:[0.0, 0.15, -0.2],Item:
 summon item ~ ~-0.5 ~ {Age:5900,PickupDelay:32767,Motion:[-0.05, 0.15, 0.3],Item:{id:"minecraft:emerald",count:2}}
 summon item ~ ~-0.5 ~ {Age:5900,PickupDelay:32767,Motion:[0.2, 0.15, -0.1],Item:{id:"minecraft:emerald",count:1}}
 
-execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] if predicate custom:explorer/rare run function custom:items/explorer/moves/6/damage {range:"8",damageP:"9",damageE:"44"}
-execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] if predicate custom:explorer/uncommon run function custom:items/explorer/moves/6/damage {range:"6",damageP:"7",damageE:"33"}
-execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] unless predicate custom:explorer/uncommon unless predicate custom:explorer/rare run function custom:items/explorer/moves/6/damage {range:"5",damageP:"5",damageE:"25"}
+execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] if predicate custom:explorer/rare run function custom:items/explorer/moves/6/damage {range:"10",damageP:"11",damageE:"44"}
+execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] if predicate custom:explorer/uncommon run function custom:items/explorer/moves/6/damage {range:"8",damageP:"9",damageE:"33"}
+execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] unless predicate custom:explorer/uncommon unless predicate custom:explorer/rare run function custom:items/explorer/moves/6/damage {range:"7",damageP:"7",damageE:"25"}
 
 execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] if predicate custom:explorer/rare run tellraw @p[tag=ExplorerUser] ["",{"text":"The Explorer","color":"gold"},{"text":"\n"},{"text":"The ","color":"gray"},{"text":"damage ","color":"red"},{"text":"from this move is ","color":"gray"},{"text":"MAXIMUMIZED ","color":"red"},{"text":"because you are in a ","color":"gray"},{"text":"Rare Biome!","color":"yellow"}]
 execute at @n[type=minecraft:item_display,tag=aj.projectiles.root] if predicate custom:explorer/uncommon run tellraw @p[tag=ExplorerUser] ["",{"text":"The Explorer","color":"gold"},{"text":"\n"},{"text":"The ","color":"gray"},{"text":"damage ","color":"red"},{"text":"from this move is ","color":"gray"},{"text":"AVERAGE ","color":"red"},{"text":"because you are in an ","color":"gray"},{"text":"Uncommon Biome!","color":"yellow"}]

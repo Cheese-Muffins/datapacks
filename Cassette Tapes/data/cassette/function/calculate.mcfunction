@@ -105,6 +105,11 @@ execute if entity @s[advancements={cassette:103=true}] run scoreboard players ad
 execute if entity @s[advancements={cassette:104=true}] run scoreboard players add @s cassette_total 1
 execute if entity @s[advancements={cassette:105=true}] run scoreboard players add @s cassette_total 1
 
+execute if score @s cassette_total >= .1 cassette_total unless entity @s[tag=tempLeaderboard] run function cassette:music/redeem/leaderboard/1
+execute if score @s cassette_total >= .2 cassette_total unless entity @s[tag=tempLeaderboard] run function cassette:music/redeem/leaderboard/2
+execute if score @s cassette_total >= .3 cassette_total unless entity @s[tag=tempLeaderboard] run function cassette:music/redeem/leaderboard/3
+tag @s remove tempLeaderboard
+
 execute if score @s cassette_total matches 25.. run advancement grant @s only server:cassette_25
 execute if score @s cassette_total matches 50.. run advancement grant @s only server:cassette_50
 execute if score @s cassette_total matches 75.. run advancement grant @s only server:cassette_75
