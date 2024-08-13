@@ -95,6 +95,7 @@ scoreboard objectives add customExplorer_XMarksTheSpotX dummy
 scoreboard objectives add customExplorer_XMarksTheSpotY dummy
 scoreboard objectives add customExplorer_XMarksTheSpotZ dummy
 scoreboard objectives add customExplorer_XMarksTheSpotDimension dummy
+scoreboard objectives add customExplorer_FragmentID dummy
 setblock 0 -50 0 shulker_box
 
 data modify storage minecraft:custom dj.ui.m1 set value "uEA10"

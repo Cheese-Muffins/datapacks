@@ -1,3 +1,10 @@
 execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":1},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:timestop/core
 execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":2},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:wand/main
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":3},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:fragments/check {name:"silence",id:"1"}
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":4},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:fragments/check {name:"lost",id:"2"}
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":5},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:fragments/check {name:"past",id:"3"}
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":6},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:fragments/check {name:"enemy",id:"4"}
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":7},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:fragments/check {name:"worthy",id:"5"}
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":8},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:fragments/check {name:"strength",id:"6"}
+execute if entity @s[nbt={SelectedItem:{components:{"minecraft:custom_model_data":9},id:"minecraft:bowl"}}] unless score @s Interactables_Delay matches 1.. run function interactables:fragments/check {name:"wave",id:"7"}
 advancement revoke @s only interactables:itemuse

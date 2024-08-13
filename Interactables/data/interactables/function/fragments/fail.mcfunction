@@ -1,0 +1,2 @@
+playsound minecraft:entity.bat.takeoff player @s ~ ~ ~ 0.5
+tellraw @s ["",{"text":"The Explorer","color":"gold"},{"text":"\n"},{"text":"You already have this ","color":"gray"},{"text":"fragment unlocked!","color":"red"}]
