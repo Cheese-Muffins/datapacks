@@ -6,6 +6,8 @@ execute if score @n[type=minecraft:item_display,tag=aj.fragments.root] customExp
 execute if score @n[type=minecraft:item_display,tag=aj.fragments.root] customExplorer_FragmentID matches 5 run advancement grant @s only server:worthy
 execute if score @n[type=minecraft:item_display,tag=aj.fragments.root] customExplorer_FragmentID matches 6 run advancement grant @s only server:strength
 execute if score @n[type=minecraft:item_display,tag=aj.fragments.root] customExplorer_FragmentID matches 7 run advancement grant @s only server:wave
+advancement grant @s only server:1_fragment
+execute if entity @s[advancements={server:silence=true,server:lost=true,server:past=true,server:enemy=true,server:worthy=true,server:strength=true,server:wave=true}] run advancement grant @s only server:guide_to_exploration
 kill @n[type=minecraft:item_display,tag=aj.fragments.camera.camera]
 execute as @n[tag=aj.fragments.root] run function animated_java:fragments/remove/this
 

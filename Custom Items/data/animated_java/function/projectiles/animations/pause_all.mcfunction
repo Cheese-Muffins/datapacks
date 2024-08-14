@@ -2,7 +2,8 @@
 execute unless entity @s[type=item_display,tag=aj.projectiles.root] run return run function animated_java:global/errors/function_not_executed_as_root_entity {'export_namespace': 'projectiles', 'function_path': 'animated_java:projectiles/animations/pause_all'}
 tag @s remove aj.projectiles.animation.reversal_red.playing
 tag @s remove aj.projectiles.animation.lapis_blue.playing
-tag @s remove aj.projectiles.animation.hollow_purple.playing
+tag @s remove aj.projectiles.animation.hollow_purple_quickfire.playing
+tag @s remove aj.projectiles.animation.hollow_purple_domain.playing
 tag @s remove aj.projectiles.animation.firecube.playing
 tag @s remove aj.projectiles.animation.chest_drop.playing
 tag @s remove aj.projectiles.animation.wormhole.playing

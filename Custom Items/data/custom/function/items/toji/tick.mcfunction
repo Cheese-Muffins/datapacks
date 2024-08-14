@@ -1,5 +1,3 @@
-execute unless entity @s[tag=RandomUser] if score @s customHealth matches 1..4 unless score @s customAwakenedCooldown matches 1.. run function custom:items/toji/awakening/main
-
 execute if score @s customToggle matches 1 run function custom:items/toji/active
 execute unless entity @s[tag=RandomUser] if entity @s[nbt=!{Inventory:[{components:{"minecraft:custom_data":{CustomItem:1b}},Slot:8b}]}] run function custom:items/toji/lock/item
 

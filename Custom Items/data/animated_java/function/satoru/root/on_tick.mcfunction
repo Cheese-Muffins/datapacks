@@ -7,8 +7,9 @@ execute if entity @s[tag=aj.satoru.animation.lapis_blue.playing] run function an
 execute if entity @s[tag=aj.satoru.animation.reversal_red.playing] run function animated_java:satoru/animations/reversal_red/zzz/on_tick
 execute if entity @s[tag=aj.satoru.animation.honored.playing] run function animated_java:satoru/animations/honored/zzz/on_tick
 execute if entity @s[tag=aj.satoru.animation.infinity.playing] run function animated_java:satoru/animations/infinity/zzz/on_tick
-execute if entity @s[tag=aj.satoru.animation.hollow_purple.playing] run function animated_java:satoru/animations/hollow_purple/zzz/on_tick
+execute if entity @s[tag=aj.satoru.animation.hollow_purple_quickfire.playing] run function animated_java:satoru/animations/hollow_purple_quickfire/zzz/on_tick
 execute if entity @s[tag=aj.satoru.animation.domain_expansion.playing] run function animated_java:satoru/animations/domain_expansion/zzz/on_tick
+execute if entity @s[tag=aj.satoru.animation.hollow_purple_domain.playing] run function animated_java:satoru/animations/hollow_purple_domain/zzz/on_tick
 execute on passengers if entity @s[tag=aj.satoru.data] run function animated_java:satoru/root/zzz/1
 execute at @s on passengers run tp @s ~ ~ ~ ~ ~
 function #animated_java:satoru/as_root/post_tick

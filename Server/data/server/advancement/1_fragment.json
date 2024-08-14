@@ -5,7 +5,7 @@
     },
     "title": "Missing Piece of the Puzzle",
     "description": "Discover and use your first Lost Fragment",
-    "frame": "goal",
+    "frame": "task",
     "show_toast": true,
     "announce_to_chat": true
   },

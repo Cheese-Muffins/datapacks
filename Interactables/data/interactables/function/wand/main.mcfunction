@@ -4,7 +4,7 @@ execute if score @s Mysterious_Selected matches 1 run function interactables:wan
 execute if score @s Mysterious_Selected matches 2 run function interactables:wand/morphs/axolotl
 execute if score @s Mysterious_Selected matches 3 run function interactables:wand/morphs/cat
 execute if score @s Mysterious_Selected matches 4 run function interactables:wand/morphs/fox
-execute if score @s Mysterious_Selected matches 5 run function interactables:wand/morphs/golem
+execute if score @s Mysterious_Selected matches 5 run function interactables:wand/morphs/armadillo
 execute if score @s Mysterious_Selected matches 6 run function interactables:wand/morphs/polar_bear
 execute if score @s Mysterious_Selected matches 7 run function interactables:wand/morphs/blaze
 execute if score @s Mysterious_Selected matches 8 unless score @s cassette_total matches 75.. run function interactables:wand/morphs/reset

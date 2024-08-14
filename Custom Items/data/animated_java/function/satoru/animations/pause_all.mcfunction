@@ -5,5 +5,6 @@ tag @s remove aj.satoru.animation.lapis_blue.playing
 tag @s remove aj.satoru.animation.reversal_red.playing
 tag @s remove aj.satoru.animation.honored.playing
 tag @s remove aj.satoru.animation.infinity.playing
-tag @s remove aj.satoru.animation.hollow_purple.playing
+tag @s remove aj.satoru.animation.hollow_purple_quickfire.playing
 tag @s remove aj.satoru.animation.domain_expansion.playing
+tag @s remove aj.satoru.animation.hollow_purple_domain.playing

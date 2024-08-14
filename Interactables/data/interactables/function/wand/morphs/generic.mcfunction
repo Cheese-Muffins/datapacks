@@ -17,8 +17,6 @@ execute if score @s Mysterious_Selected matches 3 run attribute @s minecraft:gen
 execute if score @s Mysterious_Selected matches 4 run attribute @s minecraft:generic.jump_strength base set 0.42
 execute if score @s Mysterious_Selected matches 4 run attribute @s minecraft:generic.safe_fall_distance base set 3.0
 
-execute if score @s Mysterious_Selected matches 5 run attribute @s minecraft:generic.step_height base set 0.6
-execute if score @s Mysterious_Selected matches 5 run effect clear @s minecraft:strength
 execute if score @s Mysterious_Selected matches 5 run effect clear @s minecraft:resistance
 
 execute if score @s Mysterious_Selected matches 6 run effect clear @s minecraft:haste

@@ -4,6 +4,7 @@ scoreboard objectives add aj.lapis_blue.frame dummy
 scoreboard objectives add aj.reversal_red.frame dummy
 scoreboard objectives add aj.honored.frame dummy
 scoreboard objectives add aj.infinity.frame dummy
-scoreboard objectives add aj.hollow_purple.frame dummy
+scoreboard objectives add aj.hollow_purple_quickfire.frame dummy
 scoreboard objectives add aj.domain_expansion.frame dummy
+scoreboard objectives add aj.hollow_purple_domain.frame dummy
 execute as @e[type=item_display,tag=aj.satoru.root] unless score @s aj.is_rig_loaded matches 1 at @s run function animated_java:satoru/root/on_load

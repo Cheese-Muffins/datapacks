@@ -4,7 +4,8 @@ execute unless score @s aj.is_rig_loaded matches 1 run function #animated_java:g
 function #animated_java:projectiles/as_root/pre_tick
 execute if entity @s[tag=aj.projectiles.animation.reversal_red.playing] run function animated_java:projectiles/animations/reversal_red/zzz/on_tick
 execute if entity @s[tag=aj.projectiles.animation.lapis_blue.playing] run function animated_java:projectiles/animations/lapis_blue/zzz/on_tick
-execute if entity @s[tag=aj.projectiles.animation.hollow_purple.playing] run function animated_java:projectiles/animations/hollow_purple/zzz/on_tick
+execute if entity @s[tag=aj.projectiles.animation.hollow_purple_quickfire.playing] run function animated_java:projectiles/animations/hollow_purple_quickfire/zzz/on_tick
+execute if entity @s[tag=aj.projectiles.animation.hollow_purple_domain.playing] run function animated_java:projectiles/animations/hollow_purple_domain/zzz/on_tick
 execute if entity @s[tag=aj.projectiles.animation.firecube.playing] run function animated_java:projectiles/animations/firecube/zzz/on_tick
 execute if entity @s[tag=aj.projectiles.animation.chest_drop.playing] run function animated_java:projectiles/animations/chest_drop/zzz/on_tick
 execute if entity @s[tag=aj.projectiles.animation.wormhole.playing] run function animated_java:projectiles/animations/wormhole/zzz/on_tick
