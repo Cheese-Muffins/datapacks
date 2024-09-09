@@ -9,3 +9,6 @@ execute positioned ^ ^ ^1.25 unless block ~-0.5 ~ ~ #custom:raycast_pass unless 
 
 execute positioned ^ ^ ^1.25 unless block ~ ~ ~0.5 #custom:raycast_pass unless block ~ ~1 ~0.5 #custom:raycast_pass unless block ~ ~ ~0.5 #custom:raycast_pass run function custom:items/gojo/moves/2/bounce/z
 execute positioned ^ ^ ^1.25 unless block ~ ~ ~-0.5 #custom:raycast_pass unless block ~ ~1 ~-0.5 #custom:raycast_pass unless block ~ ~ ~-0.5 #custom:raycast_pass run function custom:items/gojo/moves/2/bounce/z
+
+execute as @e[type=!#custom:not_mob,tag=!gojoPickedUp,distance=..3] run function custom:items/gojo/moves/2/pickup
+execute as @e[type=!#custom:not_mob,tag=gojoPickedUp] at @s at @n[type=minecraft:item_display,tag=aj.projectiles.root] run function custom:items/gojo/moves/2/mount

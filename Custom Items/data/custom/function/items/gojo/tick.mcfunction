@@ -1,6 +1,4 @@
-execute unless entity @s[tag=RandomUser] if score @s customHealth matches 1..4 unless score @s customAwakenedCooldown matches 1.. run function custom:items/gojo/awakening/main
-
 execute if score @s customToggle matches 1 run function custom:items/gojo/active
-execute unless entity @s[tag=RandomUser] if entity @s[nbt=!{Inventory:[{components:{"minecraft:custom_data":{CustomItem:1b}},Slot:8b}]}] run function custom:items/gojo/lock/item
 
-execute unless entity @s[scores={customDelay1=0,customDelay2=0,customDelay3=0,customDelay4=0,customDelay5=0,customDelay6=0,customMove1Cooldown=0,customMove2Cooldown=0,customMove3Cooldown=0,customMove4Cooldown=0,customMove5Cooldown=0,customMove6Cooldown=0,customParticleDelay=0,customAwakenedCooldown=0,customMoveSpamDelay=0,customToggleDelay=0,customToggle=1..}] run function custom:items/gojo/scores/main
+execute unless items entity @s hotbar.8 minecraft:bowl[minecraft:custom_data={CustomItem:1b}] run function custom:items/gojo/handheld
+execute unless entity @s[scores={customMoveSpamDelay=0,customToggleDelay=0,customToggle=1..}] run function custom:items/gojo/scores/main

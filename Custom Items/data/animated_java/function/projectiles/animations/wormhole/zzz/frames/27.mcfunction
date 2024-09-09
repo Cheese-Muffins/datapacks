@@ -2,4 +2,4 @@
 $data merge entity $(bone_arm) { transformation: [-0.00001f,0f,1.2246467991473532e-21f,0f,0f,0.00001f,0f,0f,-1.2246467991473532e-21f,0f,-0.00001f,0f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 $data merge entity $(item_display_map) { transformation: [-0.00001f,-1.4695761589768238e-20f,1.2246467991473532e-21f,0f,-1.4695761589768238e-20f,0.00001f,0f,0f,-1.2246467991473532e-21f,-1.799711739194229e-36f,-0.00001f,0f,0f,0f,0f,1f], start_interpolation: 0, interpolation_duration: 1 }
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0.0000040625 rotated ~0 ~0 run function animated_java:projectiles/animations/wormhole/zzz/frames/zzz/3
-data modify entity @s data merge value {"locators":{"chestdrop":{"posx":0,"posy":0,"posz":0,"rotx":0,"roty":0},"end":{"posx":-4.975127621536122e-22,"posy":0,"posz":0.0000040625000000000005,"rotx":0,"roty":0}},"cameras":{}}
+data modify entity @s data merge value {"locators":{"chestdrop":{"posx":0,"posy":0,"posz":0,"roty":0,"rotx":0},"end":{"posx":-4.975127621536122e-22,"posy":0,"posz":0.0000040625000000000005,"roty":0,"rotx":0}},"cameras":{}}

@@ -1,0 +1,16 @@
+{
+    "condition": "minecraft:entity_properties",
+    "entity": "this",
+    "predicate": {
+      "location": {
+        "biomes": [
+          "minecraft:badlands",
+          "minecraft:eroded_badlands",
+          "minecraft:wooded_badlands",
+          "minecraft:mushroom_fields",
+          "minecraft:frozen_peaks"
+        ]
+      }
+    }
+  }
+  

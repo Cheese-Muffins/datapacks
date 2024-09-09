@@ -3,8 +3,12 @@ execute unless entity @s[type=item_display,tag=aj.satoru.root] run return run fu
 tag @s remove aj.satoru.animation.reversed_cursed_technique.playing
 tag @s remove aj.satoru.animation.lapis_blue.playing
 tag @s remove aj.satoru.animation.reversal_red.playing
+tag @s remove aj.satoru.animation.lapis_blue_old.playing
+tag @s remove aj.satoru.animation.reversal_red_old.playing
 tag @s remove aj.satoru.animation.honored.playing
 tag @s remove aj.satoru.animation.infinity.playing
 tag @s remove aj.satoru.animation.hollow_purple_quickfire.playing
 tag @s remove aj.satoru.animation.domain_expansion.playing
 tag @s remove aj.satoru.animation.hollow_purple_domain.playing
+tag @s remove aj.satoru.animation.domain_expansion_test.playing
+tag @s remove aj.satoru.animation.honored2.playing

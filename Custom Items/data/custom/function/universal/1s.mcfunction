@@ -1,0 +1,1 @@
+execute unless entity @s[scores={customMove1Cooldown=0,customMove2Cooldown=0,customMove3Cooldown=0,customMove4Cooldown=0,customMove5Cooldown=0,customMove6Cooldown=0}] run function custom:universal/scores/cooldowns/item
