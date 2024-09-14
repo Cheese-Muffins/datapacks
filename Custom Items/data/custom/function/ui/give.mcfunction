@@ -1,0 +1,1 @@
+give @s paper[max_stack_size=1,item_name='{"color":"light_purple","italic":false,"text":"Custom Item Tome"}',lore=['[{"color":"gray","italic":false,"text":"Interact to open the "},{"color":"aqua","italic":false,"text":"Custom Item UI"}]'],unbreakable={},custom_model_data=1000,custom_data={ui:1b}] 1

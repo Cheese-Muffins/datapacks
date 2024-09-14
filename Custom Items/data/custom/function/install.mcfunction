@@ -11,3 +11,5 @@ setblock 0 -64 0 yellow_shulker_box
 # Gojo #
 scoreboard objectives add customGojo_InfinityPassive dummy
 scoreboard objectives add customGojo_BlueMount dummy
+
+scoreboard objectives add customGojo_SixEyes dummy
