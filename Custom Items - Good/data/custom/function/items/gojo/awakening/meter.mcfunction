@@ -1,0 +1,17 @@
+scoreboard players remove @s customAwakening 1
+$execute if score @s customAwakening matches $(15a)..$(16) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01F6"
+$execute if score @s customAwakening matches $(14a)..$(15b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01F5"
+$execute if score @s customAwakening matches $(13a)..$(14b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01F4"
+$execute if score @s customAwakening matches $(12a)..$(13b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01F3"
+$execute if score @s customAwakening matches $(11a)..$(12b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01F2"
+$execute if score @s customAwakening matches $(10a)..$(11b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01F1"
+$execute if score @s customAwakening matches $(9a)..$(10b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01F0"
+$execute if score @s customAwakening matches $(8a)..$(9b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E9"
+$execute if score @s customAwakening matches $(7a)..$(8b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E8"
+$execute if score @s customAwakening matches $(6a)..$(7b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E7"
+$execute if score @s customAwakening matches $(5a)..$(6b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E6"
+$execute if score @s customAwakening matches $(4a)..$(5b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E5"
+$execute if score @s customAwakening matches $(3a)..$(4b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E4"
+$execute if score @s customAwakening matches $(2a)..$(3b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E3"
+$execute if score @s customAwakening matches $(1)..$(2b) run data modify storage minecraft:custom gojo.ui.awakeningdisplay set value "u01E2"
+execute if score @s customAwakening matches 0 run function custom:items/gojo/awakening/end

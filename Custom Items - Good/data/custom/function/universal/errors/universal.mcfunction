@@ -1,0 +1,1 @@
+execute if entity @s[tag=customGojo_BluePickedUp] run function custom:universal/errors/errorfind {error:"100"}

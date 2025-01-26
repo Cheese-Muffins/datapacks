@@ -1,9 +1,8 @@
 stopsound @s record
-tag @s remove p1_playing
-tag @s remove p2_playing
-scoreboard players reset @s cassette2
-scoreboard players reset @s cassette3
-scoreboard players reset @s cassette5
-tag @s remove vanilla
-tag @s remove cmlisten
-tag @s remove listening
+scoreboard players reset @s Cassette_Song.ID
+scoreboard players reset @s Cassette_Song.Total
+scoreboard players reset @s Cassette_Song.Duration
+tag @s remove Cassette_Random
+tag @s remove Cassette_Specific
+tag @s remove Cassette_Loop
+tag @s remove Cassette_Listening

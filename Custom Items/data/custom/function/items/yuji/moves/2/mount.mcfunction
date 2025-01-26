@@ -1,0 +1,1 @@
+$ride @s mount @n[type=minecraft:item_display,tag=aj.yuji.locator.mount,scores={customUniversal_RigID=$(id)}]

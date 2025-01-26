@@ -1,0 +1,1 @@
+$execute if entity @e[type=minecraft:phantom,distance=..$(radius)] unless score @s enchantment_LullabyCD matches 1.. run function enchantments:lullaby/logic/destroy {cd:"$(cd)"}

@@ -1,0 +1,99 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+        "rolls": 1,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:air",
+            "weight": 5
+          },
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:carrot_on_a_stick",
+            "weight": 2,
+            "functions": [
+              {
+                "function": "minecraft:set_custom_data",
+                "tag": "{cassette:redeem}"
+              },
+              {
+                "function": "minecraft:set_custom_model_data",
+                "value": 148
+              },
+              {
+                "function": "minecraft:set_lore",
+                "lore": [
+                  [
+                    {
+                      "text": "By: DragonForce",
+                      "color": "gray",
+                      "italic": false
+                    }
+                  ]
+                ],
+                "mode": "replace_section"
+              },
+              {
+                "function": "minecraft:set_name",
+                "name": {
+                  "text": "Through The Fire And The Flames",
+                  "color": "yellow",
+                  "italic": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "rolls": 1,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:air",
+            "weight": 2
+          },
+          {
+            "type": "minecraft:item",
+            "name": "minecraft:carrot_on_a_stick",
+            "weight": 1,
+            "functions": [
+              {
+                "function": "minecraft:set_custom_data",
+                "tag": "{cassette:redeem}"
+              },
+              {
+                "function": "minecraft:set_custom_model_data",
+                "value": 112
+              },
+              {
+                "function": "minecraft:set_lore",
+                "lore": [
+                  [
+                    {
+                      "text": "By: We Are The Empty",
+                      "color": "gray",
+                      "italic": false
+                    }
+                  ]
+                ],
+                "mode": "replace_section"
+              },
+              {
+                "function": "minecraft:set_name",
+                "name": {
+                  "text": "Antidote",
+                  "color": "blue",
+                  "italic": false
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "random_sequence": "minecraft:entities/ender_dragon"
+  }
+  

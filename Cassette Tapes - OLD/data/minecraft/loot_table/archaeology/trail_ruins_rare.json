@@ -1,0 +1,96 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:carrot_on_a_stick",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_custom_data",
+              "tag": "{cassette:redeem}"
+            },
+            {
+              "function": "minecraft:set_custom_model_data",
+              "value": 160
+            },
+            {
+              "function": "minecraft:set_lore",
+              "lore": [
+                [
+                  {
+                    "text": "By: Noise Storm",
+                    "color": "gray",
+                    "italic": false
+                  }
+                ]
+              ],
+              "mode": "replace_section"
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "text": "Crab Rave",
+                "color": "dark_red",
+                "italic": false
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:burn_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:danger_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:friend_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:heart_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:heartbreak_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:howl_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sheaf_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:wayfinder_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:raiser_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:shaper_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:host_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:music_disc_relic"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "minecraft:archaeology/trail_ruins_rare"
+}

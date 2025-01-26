@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Funky Town",duration:"4780",artist:"Lipps Inc.",$(obtainment_path):"Be nearby a dancing Parrot who is on top of a Jukebox",color:"light_purple",id:"22"}}
+$$(extra)

@@ -1,22 +1,12 @@
-# Music
+# UI #
+execute as @a run function cassette:ui/player/tick
+execute as @e[type=chest_minecart,tag=CassetteUI] run function cassette:ui/minecart/tick
 
-execute as @a[scores={cassette2=1}] at @s run function cassette:music/main
+execute as @a[tag=Cassette_Listening] at @s run function cassette:music/core/playing
+execute as @a[scores={cassetteRedeem.Delay=1..}] run scoreboard players remove @s cassetteRedeem.Delay 1
 
-execute as @a[scores={cassette1=1..},nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick",components:{"minecraft:custom_data":{cassette:redeem}}}}] run function cassette:music/redeem/main
-scoreboard players reset @a[scores={cassette1=1..}] cassette1
+execute as @a[scores={cassetteParty.Disconnected=1..}] if entity @s[tag=cassetteParty.Joined] run function cassette:ui/menu/pages/parties/leave_game/self
 
-
-
-
-
-
-# UI 
-
-scoreboard players add @a ui.id 0
-execute as @a[scores={ui.id=0},nbt={SelectedItem:{id:"minecraft:carrot_on_a_stick",components:{"minecraft:custom_data":{ui:1b}}}}] at @s run function cassette:ui/spawn
-
-execute as @a[scores={ui.id=1..}] unless data entity @s SelectedItem.components.minecraft:custom_data.ui run function cassette:ui/close
-
-execute if score .kill ui matches 1 run kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{ui:{null:1b}}}}}]
-scoreboard players set .kill ui 0
-execute as @e[type=marker,tag=ui] at @s run function cassette:ui/main
+scoreboard players operation .Previous cassetteParty.Disconnected = .Players cassetteParty.Disconnected
+execute store result score .Players cassetteParty.Disconnected if entity @a[tag=cassetteParty.Joined]
+execute if score .Previous cassetteParty.Disconnected > .Players cassetteParty.Disconnected run function cassette:ui/menu/pages/parties/leave_game/member/start

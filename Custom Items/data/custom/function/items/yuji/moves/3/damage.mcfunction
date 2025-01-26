@@ -1,0 +1,1 @@
+$execute as @e[type=!#custom:not_mob,tag=customYuji_PactVictim] if entity @s[scores={customUniversal_RigID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"22",type:"minecraft:generic",ability:"Yuji",objective:"customUniversal_RigID",first:"was erased by",second:"using Pact"}

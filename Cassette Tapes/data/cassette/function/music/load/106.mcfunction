@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Bury the Light V",duration:"11660",artist:"Casey Edwards & Victor Borba",$(obtainment_path):"Collect every song on Page 1 of the Collection Menu",color:"aqua",id:"106"}}
+$$(extra)

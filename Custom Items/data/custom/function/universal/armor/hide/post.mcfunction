@@ -1,0 +1,5 @@
+$execute as @n[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage] unless score @s customUniversal_ArmorStore matches 1.. run scoreboard players set @s customUniversal_ArmorStore $(id)
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @n[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)}] armor.head from entity @s armor.head
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @n[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)}] armor.chest from entity @s armor.chest
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @n[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)}] armor.legs from entity @s armor.legs
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @n[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)}] armor.feet from entity @s armor.feet

@@ -1,0 +1,12 @@
+scoreboard players remove @s customMove1Cooldown 1
+execute if score @s customMove1Cooldown matches 2161..2400 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D0"
+execute if score @s customMove1Cooldown matches 1921..2160 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D1"
+execute if score @s customMove1Cooldown matches 1681..1920 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D2"
+execute if score @s customMove1Cooldown matches 1441..1680 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D3"
+execute if score @s customMove1Cooldown matches 1201..1440 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D4"
+execute if score @s customMove1Cooldown matches 961..1200 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D5"
+execute if score @s customMove1Cooldown matches 721..960 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D6"
+execute if score @s customMove1Cooldown matches 481..720 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D7"
+execute if score @s customMove1Cooldown matches 241..480 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D8"
+execute if score @s customMove1Cooldown matches 1..240 run data modify storage minecraft:custom gojo.ui.move1 set value "u01D9"
+execute if score @s customMove1Cooldown matches 0 run data modify storage minecraft:custom gojo.ui.move1 set value "u01E0"

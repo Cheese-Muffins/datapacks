@@ -1,0 +1,1 @@
+$data merge storage minecraft:ui {cassette:{playlist1_icon_name:"$(name)",playlist1_icon_color:"$(color)"}}

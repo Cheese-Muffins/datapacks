@@ -1,0 +1,1 @@
+execute as @e[type=minecraft:item_display,tag=aj.herobrine.root] at @s run function boss:herobrine/logic/main

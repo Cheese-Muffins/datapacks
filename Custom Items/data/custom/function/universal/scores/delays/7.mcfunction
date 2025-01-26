@@ -1,0 +1,1 @@
+$function custom:items/$(ability)/moves/7/delay

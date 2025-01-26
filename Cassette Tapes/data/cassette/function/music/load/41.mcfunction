@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Bad Things",duration:"4580",artist:"I Prevail",$(obtainment_path):"Complete the Advancement: Spooky Scary Skeletons",color:"green",id:"41"}}
+$$(extra)

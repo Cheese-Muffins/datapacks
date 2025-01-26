@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Running Up That Hill",duration:"4480",artist:"Kate Bush",$(obtainment_path):"Requirement: Travel 25k blocks on Foot",color:"light_purple",id:"6"}}
+$$(extra)

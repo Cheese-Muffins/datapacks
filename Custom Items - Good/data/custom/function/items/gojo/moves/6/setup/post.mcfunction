@@ -1,0 +1,1 @@
+$execute as @e[type=!#custom:not_mob,distance=..30] unless entity @s[scores={customUniversal_RigID=$(id)}] run function custom:items/gojo/moves/6/freeze/main {id:"$(id)"}

@@ -1,0 +1,2 @@
+execute store result storage minecraft:ui cassette.id int 1 run scoreboard players get @s Cassette_Song.ID
+function cassette:ui/menu/pages/parties/load/playing/retrieve with storage minecraft:ui cassette

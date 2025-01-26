@@ -4,6 +4,8 @@ attribute @s minecraft:generic.gravity base set 0.08
 particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
 effect clear @s minecraft:invisibility
 
-function custom:universal/armor/return/start
+function custom:universal/armor/return/start {ability:"gojo"}
 
+tag @s remove customCancellable
+tag @s remove customUniversal_DisconnectCheck
 tag @s remove customAnim

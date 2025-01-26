@@ -1,0 +1,2 @@
+tellraw @s ["",{"text":"Cassette System","color":"gold"},{"text":"\n"},{"text":"You're ","color":"gray"},{"text":"already ","color":"red"},{"text":"in a party, leave to ","color":"gray"},{"text":"join ","color":"aqua"},{"text":"another one!","color":"gray"}]
+playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5

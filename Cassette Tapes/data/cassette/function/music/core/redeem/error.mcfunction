@@ -1,0 +1,2 @@
+$title @s actionbar ["",{"text":"$(name)","underlined":true,"color":"dark_red"},{"text":" is already","color":"gray"},{"text":" redeemed!","color":"red"}]
+execute at @s run playsound minecraft:block.anvil.land record @s ~ ~ ~ 0.5

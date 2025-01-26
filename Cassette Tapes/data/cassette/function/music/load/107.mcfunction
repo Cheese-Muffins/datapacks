@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Avid",duration:"5000",artist:"Hiroyuki Sawano",$(obtainment_path):"Collect every song on Page 2 of the Collection Menu",color:"dark_aqua",id:"107"}}
+$$(extra)

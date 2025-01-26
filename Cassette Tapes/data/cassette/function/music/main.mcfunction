@@ -1,3 +1,3 @@
-execute unless entity @s[tag=listening] unless entity @s[tag=vanilla] run function cassette:music/roll
-execute if entity @s[tag=listening] run function cassette:music/playing with storage minecraft:cassette song
-execute unless entity @s[tag=listening] if entity @s[tag=vanilla] run function cassette:music/songs/vanilla/main
+execute if entity @s[tag=Cassette_Regular.Search] run function cassette:music/core/search/pre/regular
+execute if entity @s[tag=Cassette_Playlist1.Search] run function cassette:music/core/search/pre/play1
+execute if entity @s[tag=Cassette_Playlist2.Search] run function cassette:music/core/search/pre/play2

@@ -1,0 +1,1 @@
+execute if entity @p[distance=8..] unless entity @s[tag=animationWalking] run function boss:herobrine/animations/walk/play

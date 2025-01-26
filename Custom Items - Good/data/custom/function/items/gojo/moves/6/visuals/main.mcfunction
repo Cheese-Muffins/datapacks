@@ -1,0 +1,2 @@
+$execute as @a[tag=customGojo_InfiniteVoiding$(rig)] at @s run function custom:universal/shaders/infinite_void/user
+$execute as @a[tag=customGojo_InfiniteVoided$(rig)] at @s run function custom:universal/shaders/infinite_void/victim

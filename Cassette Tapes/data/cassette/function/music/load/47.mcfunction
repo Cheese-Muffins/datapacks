@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Tanjiro No Uta",duration:"6560",artist:"Nami Nakagawa",$(obtainment_path):"Stay submerged in lava for 3 minutes, without Fire Resistance",color:"dark_red",id:"47"}}
+$$(extra)

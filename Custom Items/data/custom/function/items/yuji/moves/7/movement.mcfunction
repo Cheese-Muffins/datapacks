@@ -1,0 +1,2 @@
+tp @s ^ ^ ^3.5
+$execute as @e[type=!#custom:not_mob,distance=..2] unless entity @s[scores={customYuji_DismantleID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"14",type:"minecraft:generic",ability:"Yuji",objective:"customYuji_DismantleID",first:"was slashed by",second:"using Dismantle"}

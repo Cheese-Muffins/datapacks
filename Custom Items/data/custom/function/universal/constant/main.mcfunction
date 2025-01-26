@@ -1,0 +1,1 @@
+execute if entity @s[tag=customYuji.MajinConstant] run function custom:universal/constant/majin/start

@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Sometimes You Are The Hammer, Sometimes You Are The Nail",duration:"5500",artist:"A Day To Remember",$(obtainment_path):"Kill an Iron Golem with a Mace",color:"gold",id:"38"}}
+$$(extra)

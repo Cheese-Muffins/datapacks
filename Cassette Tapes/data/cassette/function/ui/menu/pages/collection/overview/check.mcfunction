@@ -1,0 +1,3 @@
+$execute at @s as @p if entity @s[advancements={cassette:$(id)=true}] as @n[type=minecraft:chest_minecart] run function cassette:ui/menu/pages/collection/overview/flip
+$execute at @s as @p if entity @s[advancements={cassette:$(id)=false}] as @n[type=minecraft:chest_minecart] run function cassette:ui/menu/pages/collection/overview/fail
+execute if score @s cassetteCollection.ClickValue matches 1000.. run function cassette:ui/menu/pages/collection/overview/fail

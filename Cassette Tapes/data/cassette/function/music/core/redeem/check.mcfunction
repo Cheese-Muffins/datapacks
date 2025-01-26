@@ -1,0 +1,3 @@
+$function cassette:music/load/$(id) {storage:"cassette",path:"redeem",namepath:"name",obtainment_path:"obtainment",extra:"random value 1..2"}
+$execute if entity @s[advancements={cassette:$(id)=true}] run function cassette:music/core/redeem/error with storage minecraft:cassette redeem
+$execute if entity @s[advancements={cassette:$(id)=false}] run function cassette:music/core/redeem/give with storage minecraft:cassette redeem

@@ -1,0 +1,5 @@
+execute if score @s cassetteCollection.Sort matches 1 run function cassette:ui/menu/pages/collection/songs/sort/style/all with storage minecraft:ui cassette
+execute if score @s cassetteCollection.Sort matches 2 run function cassette:ui/menu/pages/collection/songs/sort/style/locked with storage minecraft:ui cassette
+execute if score @s cassetteCollection.Sort matches 3 run function cassette:ui/menu/pages/collection/songs/sort/style/unlocked with storage minecraft:ui cassette
+execute if score @s cassetteCollection.Sort matches 4 run function cassette:ui/menu/pages/collection/songs/sort/style/playlist1 with storage minecraft:ui cassette
+execute if score @s cassetteCollection.Sort matches 5 run function cassette:ui/menu/pages/collection/songs/sort/style/playlist2 with storage minecraft:ui cassette

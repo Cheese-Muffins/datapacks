@@ -1,0 +1,2 @@
+$function cassette:music/load/$(id) {storage:"cassette",path:"display",namepath:"name",obtainment_path:"obtainment",extra:"random value 1..2"}
+function cassette:music/core/display/show with storage minecraft:cassette display

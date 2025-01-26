@@ -1,0 +1,1 @@
+$data merge storage minecraft:ui {cassette:{party$(party)_title:"$(party_name)\\'s Party",party$(party)_desc:"Click to listen along with the host!",party$(party)_color:"green"}}

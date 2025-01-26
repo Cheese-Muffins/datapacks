@@ -1,0 +1,2 @@
+$execute if score @s customMove1Cooldown matches 1.. run function custom:universal/scores/cooldowns/path {item:"$(item)",move:"1"}
+$execute if score @s customMove2Cooldown matches 1.. run function custom:universal/scores/cooldowns/path {item:"$(item)",move:"2"}

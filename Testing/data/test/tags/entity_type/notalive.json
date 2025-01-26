@@ -1,0 +1,14 @@
+{
+    "values": [
+    "minecraft:item_frame",
+    "minecraft:snowball",
+    "minecraft:arrow",
+    "minecraft:spectral_arrow",
+    "minecraft:trident",
+    "minecraft:armor_stand",
+    "minecraft:wither_skull",
+	"minecraft:item",
+	"minecraft:area_effect_cloud",
+    "minecraft:small_fireball"
+]
+}

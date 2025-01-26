@@ -1,0 +1,1 @@
+$execute as @n[type=item_display,tag=aj.$(item).root] at @s if score @s customUniversal_RigID = @p[tag=$(user)User] customUniversal_RigID as @n[type=item_display,tag=aj.$(item).camera.camera] unless score @s customUniversal_RigID matches 1.. run scoreboard players operation @s customUniversal_RigID = @n[type=minecraft:item_display,tag=aj.$(item).root] customUniversal_RigID

@@ -1,0 +1,2 @@
+execute if score .Change cassetteStatistics.Completion matches 0 run function cassette:ui/menu/pages/statistics/leaderboard/update/1/add with storage minecraft:ui cassette
+execute if score .Change cassetteStatistics.Completion matches 1 run function cassette:ui/menu/pages/statistics/leaderboard/update/1/new with storage minecraft:ui cassette

@@ -1,5 +1,5 @@
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.head from entity @s armor.head
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.chest from entity @s armor.chest
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.legs from entity @s armor.legs
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.feet from entity @s armor.feet
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run kill @s[type=minecraft:armor_stand]
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @s armor.head from entity @e[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)},limit=1] armor.head
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @s armor.chest from entity @e[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)},limit=1] armor.chest
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @s armor.legs from entity @e[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)},limit=1] armor.legs
+$execute in minecraft:overworld positioned 0 -63 0 run item replace entity @s armor.feet from entity @e[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)},limit=1] armor.feet
+$execute as @n[type=minecraft:armor_stand,tag=customUniversal_ArmorStorage,scores={customUniversal_ArmorStore=$(id)}] run kill @s[type=minecraft:armor_stand]

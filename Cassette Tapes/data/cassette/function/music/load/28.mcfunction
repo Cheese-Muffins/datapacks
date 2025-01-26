@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Adventure Of A Lifetime",duration:"5300",artist:"Coldplay",$(obtainment_path):"Complete the Advancement: Adventuring Time",color:"blue",id:"28"}}
+$$(extra)

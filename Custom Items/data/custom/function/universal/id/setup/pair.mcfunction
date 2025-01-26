@@ -1,0 +1,1 @@
+$execute store result score @n[type=$(type),tag=$(what)] customUniversal_RigID run scoreboard players get @s customUniversal_RigID

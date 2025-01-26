@@ -1,0 +1,2 @@
+$execute if entity @s[advancements={cassette:$(id)=true}] unless entity @s[tag=Cassette_Song.$(id)] if entity @s[tag=Cassette_Playlist1.$(id)] run function cassette:music/load/$(id) {storage:"cassette",path:"song",namepath:"name",obtainment_path:"obtainment",extra:"tag @s add Cassette_Selected"}
+$execute if entity @s[tag=Cassette_Selected] unless entity @s[tag=Cassette_Song.$(id)] if entity @s[tag=Cassette_Playlist1.$(id)] run function cassette:music/core/found with storage minecraft:cassette song

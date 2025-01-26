@@ -1,0 +1,16 @@
+{
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:player_killed_entity",
+        "conditions": {
+          "entity": {
+            "type": "#cassette:friendly"
+          }
+        }
+      }
+    },
+    "rewards": {
+      "function": "cassette:music/collect/kills_friendly"
+    }
+  }
+  

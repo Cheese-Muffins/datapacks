@@ -1,0 +1,1 @@
+$data merge storage minecraft:ui {cassette:{party_current:"$(party_name)"}}

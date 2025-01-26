@@ -1,0 +1,1 @@
+$execute as @e[type=minecraft:item_display,tag=$(item)] at @s as @a[tag=GojoUser] if score @s customUniversal_RigID = @n[type=minecraft:item_display,tag=$(item)] customUniversal_RigID run function custom:universal/id_system/attacks/sync {attack:"$(attack)"}

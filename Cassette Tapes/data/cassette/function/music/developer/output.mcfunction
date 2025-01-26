@@ -1,0 +1,1 @@
+$tellraw @s ["",{"text":"Cassette System - Developer","color":"gold"},{"text":"\n"},{"text":"This is ","color":"gray"},{"text":"$(name) ","color":"$(color)"},{"text":"by ","color":"gray"},{"text":"$(artist) ","color":"aqua"},{"text":"with a duration of ","color":"gray"},{"text":"$(duration)","color":"green"}]

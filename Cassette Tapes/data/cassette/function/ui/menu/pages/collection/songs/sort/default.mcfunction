@@ -1,0 +1,2 @@
+scoreboard players set @s cassetteCollection.Sort 1
+function cassette:ui/menu/pages/collection/songs/sort/merge {all_color:"green",locked_color:"gray",unlocked_color:"gray",playlist1_color:"gray",playlist2_color:"gray"}

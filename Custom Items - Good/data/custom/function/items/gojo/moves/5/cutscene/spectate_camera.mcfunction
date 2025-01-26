@@ -1,0 +1,1 @@
+$execute as @a[scores={customUniversal_RigID=$(rig)}] run spectate @n[type=minecraft:item_display,tag=aj.gojo_cutscene.camera.camera,scores={customUniversal_RigID=$(rig)}]

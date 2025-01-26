@@ -1,0 +1,1 @@
+$execute as @n[type=minecraft:marker,tag=customGojo_InfiniteVoid_Anchor,scores={customGojo_DomainID=$(id)}] at @s if entity @s[scores={customGojo_DomainTimer=1..}] run function custom:items/gojo/moves/6/timer/countdown {id:"$(id)"}

@@ -1,0 +1,2 @@
+$function cassette:music/load/$(icon1) {storage:"ui",path:"cassette",namepath:"name",obtainment_path:"obtainment",extra:"random value 1..2"}
+function cassette:ui/menu/pages/statistics/icon/1/apply with storage minecraft:ui cassette

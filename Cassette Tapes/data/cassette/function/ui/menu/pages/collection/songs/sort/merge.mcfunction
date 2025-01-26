@@ -1,0 +1,1 @@
+$data merge storage minecraft:ui {cassette:{all_color:"$(all_color)",locked_color:"$(locked_color)",unlocked_color:"$(unlocked_color)",playlist1_color:"$(playlist1_color)",playlist2_color:"$(playlist2_color)"}}

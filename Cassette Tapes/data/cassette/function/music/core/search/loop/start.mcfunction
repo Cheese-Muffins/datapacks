@@ -1,0 +1,2 @@
+execute store result storage minecraft:ui overview.id int 1 run scoreboard players get @s cassetteCollection.ClickValue
+execute at @s as @p run function cassette:music/core/search/loop/retrieve with storage minecraft:ui overview

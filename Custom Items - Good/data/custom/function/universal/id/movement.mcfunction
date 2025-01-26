@@ -1,0 +1,1 @@
+$tp @n[type=item_display,tag=aj.$(item).root,scores={customUniversal_RigID=$(rig)}] ~ ~ ~ ~ 0

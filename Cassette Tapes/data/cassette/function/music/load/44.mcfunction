@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"The Only Thing They Fear Is You",duration:"8220",artist:"Doom Eternal OST",$(obtainment_path):"Drops from the Warden (33%)",color:"red",id:"44"}}
+$$(extra)

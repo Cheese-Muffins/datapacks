@@ -1,0 +1,1 @@
+playsound minecraft:gojo.hollow.global_music player @s ~ ~ ~ 0.5

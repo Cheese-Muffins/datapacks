@@ -1,8 +1,9 @@
 effect give @s minecraft:invisibility infinite 1 true
 
-execute in overworld run summon armor_stand ~ ~-10 ~ {NoGravity:1b,Invulnerable:1b,Tags:["customArmorStore"]}
-scoreboard players add .global customIDStore 1
-scoreboard players operation @s customIDStore = .global customIDStore
+execute in overworld run summon armor_stand 0 -63 0 {NoGravity:1b,Invulnerable:1b,Tags:["customUniversal_ArmorStorage"]}
+scoreboard players add .global customUniversal_ArmorStore 1
+scoreboard players operation @s customUniversal_ArmorStore = .global customUniversal_ArmorStore
+execute in overworld positioned 0 
 execute store result score @n[type=minecraft:armor_stand,tag=customArmorStore] customIDStore run scoreboard players get @s customIDStore
 item replace entity @n[type=minecraft:armor_stand,tag=customArmorStore] armor.head from entity @s armor.head
 item replace entity @n[type=minecraft:armor_stand,tag=customArmorStore] armor.chest from entity @s armor.chest

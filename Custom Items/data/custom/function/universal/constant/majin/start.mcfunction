@@ -1,0 +1,2 @@
+execute store result storage minecraft:custom yuji.constant.id int 1 run scoreboard players get @s customUniversal_RigID
+function custom:items/yuji/moves/2/constant with storage minecraft:custom yuji.constant

@@ -1,0 +1,1 @@
+data merge entity @s {Silent:1b,NoAI:1b}

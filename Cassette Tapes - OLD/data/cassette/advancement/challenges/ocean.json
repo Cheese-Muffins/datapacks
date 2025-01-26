@@ -1,0 +1,18 @@
+{
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:nautilus_shell"
+            }
+          ]
+        }
+      }
+    },
+    "rewards": {
+      "function": "cassette:music/collect/core"
+    }
+  }
+  

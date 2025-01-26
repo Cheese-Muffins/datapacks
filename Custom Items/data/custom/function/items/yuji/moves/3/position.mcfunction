@@ -1,0 +1,2 @@
+$execute at @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] rotated as @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] positioned ^-0.5 ^ ^-1 facing entity @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] eyes run tp @s ~ ~ ~ ~ 0
+$effect give @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] slowness 1 3 true

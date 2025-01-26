@@ -1,0 +1,2 @@
+execute if entity @s[tag=customAnim] unless entity @s[tag=customGojo_BeachSkin] run function custom:items/gojo/skins/default with storage minecraft:custom gojo.skins
+execute if entity @s[tag=customAnim] if entity @s[tag=customGojo_BeachSkin] run function custom:items/gojo/skins/beach with storage minecraft:custom gojo.skins

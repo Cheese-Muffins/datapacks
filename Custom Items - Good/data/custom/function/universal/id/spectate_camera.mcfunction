@@ -1,0 +1,1 @@
+$execute as @a[tag=$(user)User,scores={customUniversal_RigID=$(rig)}] run spectate @n[type=minecraft:item_display,tag=aj.$(ability).camera.camera,scores={customUniversal_RigID=$(rig)}]

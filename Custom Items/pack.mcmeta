@@ -1,7 +1,17 @@
 {
 	"pack": {
-  	"pack_format": 33,
-  	"description": "da custom items?!?!?!?"
+		"pack_format": 48,
+		"description": "da custom items?!?!?!?"
+	},
+	"overlays": {
+		"entries": [
+			{
+				"directory": "animated_java",
+				"formats": {
+					"min_inclusive": 48,
+					"max_inclusive": 56
+				}
+			}
+		]
 	}
 }
-

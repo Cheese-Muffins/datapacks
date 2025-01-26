@@ -1,0 +1,2 @@
+$data merge storage $(storage) {$(path):{$(namepath):"Hometown",duration:"4640",artist:"21 Pilots",$(obtainment_path):"Travel at least 10,000 blocks out, and return back to 0, 0",color:"dark_red",id:"34"}}
+$$(extra)
