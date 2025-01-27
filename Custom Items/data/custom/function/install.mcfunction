@@ -28,6 +28,7 @@ scoreboard objectives add customMove5Cooldown dummy
 scoreboard objectives add customMove6Cooldown dummy
 scoreboard objectives add customMove7Cooldown dummy
 scoreboard objectives add customMove8Cooldown dummy
+scoreboard objectives add customMove9Cooldown dummy
 scoreboard objectives add customMove1CooldownConverted dummy
 scoreboard objectives add customMove2CooldownConverted dummy
 scoreboard objectives add customMove3CooldownConverted dummy
@@ -36,6 +37,7 @@ scoreboard objectives add customMove5CooldownConverted dummy
 scoreboard objectives add customMove6CooldownConverted dummy
 scoreboard objectives add customMove7CooldownConverted dummy
 scoreboard objectives add customMove8CooldownConverted dummy
+scoreboard objectives add customMove9CooldownConverted dummy
 scoreboard objectives add customAwakening dummy
 
 function custom:tick_1s
@@ -76,7 +78,9 @@ function custom:universal/hotbar/move_math {ability:"GojoQuickfire",storage:"goj
 function custom:universal/hotbar/move_math {ability:"GojoCutscene",storage:"gojo",path:"5b",move:"5",cooldown:"110"}
 function custom:universal/hotbar/move_math {ability:"GojoCutscene",storage:"gojo",path:"6",move:"6",cooldown:"150"}
 
+scoreboard objectives add customYuji.SkinState dummy
 scoreboard objectives add customYuji.BlackFlash dummy
+scoreboard objectives add customYuji.BindingVow_Cooldown dummy
 scoreboard objectives add customYuji.MajinMath dummy
 scoreboard objectives add customYuji_PactX dummy
 scoreboard objectives add customYuji_PactY dummy
@@ -87,6 +91,9 @@ scoreboard objectives add customYuji_FugaID dummy
 scoreboard objectives add customYuji.RepetitiveBlackFlash_X dummy
 scoreboard objectives add customYuji.RepetitiveBlackFlash_Y dummy
 scoreboard objectives add customYuji.RepetitiveBlackFlash_Z dummy
+scoreboard objectives add customYuji.WorldCuttingSlash_X dummy
+scoreboard objectives add customYuji.WorldCuttingSlash_Y dummy
+scoreboard objectives add customYuji.WorldCuttingSlash_Z dummy
 
 
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"1",move:"1",cooldown:"90"}
@@ -94,9 +101,12 @@ function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"3",move:"3",cooldown:"20"}
 function custom:items/yuji/awakening/math {duration:"228"}
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"4",move:"4",cooldown:"70"}
-function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"5",move:"5",cooldown:"20"}
+function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"5a",move:"5",cooldown:"20"}
+function custom:universal/hotbar/move_math {ability:"YujiVow",storage:"yuji",path:"5b",move:"5",cooldown:"60"}
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"6",move:"6",cooldown:"18"}
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"7",move:"7",cooldown:"150"}
+function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"8",move:"8",cooldown:"20"}
+function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"9",move:"9",cooldown:"300"}
 
 # The World #
 scoreboard objectives add customWorld_Timeskip dummy

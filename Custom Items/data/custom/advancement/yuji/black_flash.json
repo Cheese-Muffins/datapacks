@@ -5,6 +5,6 @@
       }
     },
     "rewards": {
-      "function": "custom:items/yuji/passive/check"
+      "function": "custom:items/yuji/passive/black_flash/check"
     }
   }

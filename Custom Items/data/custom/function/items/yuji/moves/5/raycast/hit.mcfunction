@@ -1,4 +1,5 @@
 scoreboard players set .distance beam 400
+tag @s add customUniversal_DisconnectCheck
 tag @s add customYuji_CleaveVictim
 tag @s add customYuji_tHit
 

@@ -1,1 +1,1 @@
-$execute as @a[tag=GojoUser,scores={customUniversal_RigID=$(rig)}] run spectate @e[type=minecraft:item_display,limit=1,tag=aj.satoru.camera.camera,scores={customUniversal_RigID=$(rig)}]
+$execute as @a[tag=GojoUser,scores={customUniversal_RigID=$(rig)}] run spectate @e[type=minecraft:item_display,limit=1,tag=aj.satoru.camera,scores={customUniversal_RigID=$(rig)}]

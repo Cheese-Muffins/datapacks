@@ -1,0 +1,1 @@
+$execute as @n[type=minecraft:item_display,tag=aj.$(type).root,scores={customUniversal_RigID=$(id)}] run function animated_java:$(type)/variants/true_mahito/apply

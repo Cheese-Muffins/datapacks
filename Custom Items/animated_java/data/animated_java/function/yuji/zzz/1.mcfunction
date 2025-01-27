@@ -7,6 +7,18 @@ data modify entity @s data.locators.mount.uuid set from storage aj:uuid main.out
 summon item_display ~ ~ ~ {Tags:['aj.new', 'aj.global.camera', 'aj.yuji.camera', 'aj.yuji.camera'], teleport_duration: 2}
 execute as @e[type=item_display,tag=aj.new,tag=aj.global.camera,limit=1,distance=..0.01] run function animated_java:yuji/zzz/3
 data modify entity @s data.cameras.camera.uuid set from storage aj:uuid main.out
+execute on vehicle on passengers if entity @s[tag=aj.yuji.node.tail_node5] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
+data modify entity @s data.bones.bone_tail_node5 set from storage aj:uuid main.out
+execute on vehicle on passengers if entity @s[tag=aj.yuji.node.tail_node4] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
+data modify entity @s data.bones.bone_tail_node4 set from storage aj:uuid main.out
+execute on vehicle on passengers if entity @s[tag=aj.yuji.node.tail_node3] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
+data modify entity @s data.bones.bone_tail_node3 set from storage aj:uuid main.out
+execute on vehicle on passengers if entity @s[tag=aj.yuji.node.tail_node2] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
+data modify entity @s data.bones.bone_tail_node2 set from storage aj:uuid main.out
+execute on vehicle on passengers if entity @s[tag=aj.yuji.node.tail_node1] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
+data modify entity @s data.bones.bone_tail_node1 set from storage aj:uuid main.out
+execute on vehicle on passengers if entity @s[tag=aj.yuji.node.tail_root] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
+data modify entity @s data.bones.bone_tail_root set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.yuji.node.fuga] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
 data modify entity @s data.bones.bone_fuga set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.yuji.node.bottom2] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s

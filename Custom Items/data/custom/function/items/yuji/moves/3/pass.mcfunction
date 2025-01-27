@@ -5,7 +5,7 @@ function custom:universal/id/setup/pair with storage minecraft:custom yuji.pair
 
 tag @s add customCancellable
 execute as @n[tag=aj.yuji.root] run function animated_java:yuji/animations/pact/play
-execute unless entity @s[tag=customSettings_NoCooldowns] run scoreboard players operation @s customMove1Cooldown = .YujiCooldown customMove3Cooldown
+execute unless entity @s[tag=customSettings_NoCooldowns] run scoreboard players operation @s customMove3Cooldown = .YujiCooldown customMove3Cooldown
 scoreboard players set @s customMoveSpamDelay 10
 
 data merge storage minecraft:custom {yuji:{pair:{type:"minecraft:item_display",what:"aj.yuji.locator.mount",ability:"Yuji"}}}

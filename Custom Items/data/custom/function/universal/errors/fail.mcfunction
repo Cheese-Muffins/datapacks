@@ -24,6 +24,6 @@ tag @s remove error100
 tag @s remove error101
 
 
-playsound minecraft:entity.villager.no player @s ~ ~ ~ 10000
+playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5
 scoreboard players set @s customMoveSpamDelay 10
 scoreboard players set @s customFailReturn 0

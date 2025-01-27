@@ -1,4 +1,5 @@
 tag @s add customAnim
+tag @s add customUniversal_DisconnectCheck
 tag @s add customYuji.RepetitiveBlackFlash
 tag @s add customYuji.RepetitiveBlackFlash_User
 gamemode spectator @s

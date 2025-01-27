@@ -6,6 +6,8 @@ particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
 tag @s add customYuji_FugaCastable
 scoreboard players set @s customDelay7 200
 
+tag @e[tag=customYuji_NearDomain] remove customYuji_NearDomain
+
 gamemode survival @s
 $tp @s @n[type=minecraft:item_display,tag=aj.yuji_cutscene.root,scores={customUniversal_RigID=$(id)}]
 
