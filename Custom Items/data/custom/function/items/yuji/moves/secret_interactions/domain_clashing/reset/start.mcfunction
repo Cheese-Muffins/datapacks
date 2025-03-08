@@ -1,0 +1,2 @@
+$execute as @a[tag=YujiUser,scores={$(objective)=$(id)}] at @s run function custom:items/yuji/moves/secret_interactions/domain_clashing/reset/user {id:"$(id)"}
+function custom:items/yuji/moves/reset/rig with storage minecraft:custom yuji.cutscenes

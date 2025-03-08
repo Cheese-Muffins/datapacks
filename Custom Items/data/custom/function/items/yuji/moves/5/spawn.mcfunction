@@ -1,5 +1,3 @@
 execute positioned ~ ~1 ~ run function animated_java:projectiles/summon {args:{}}
-$function custom:universal/id/setup/attack/start {type:"minecraft:item_display",rig:"aj.projectiles.root",id:"$(id)",objective:"customYuji_CleaveID",extra:"random value 1..2"}
-
-$data merge storage minecraft:custom {yuji:{attack:{objective:"customYuji_CleaveID",extra:",tag=!playing",animation:"animated_java:projectiles/animations/cleave/play",id:"$(id)"}}}
-function custom:universal/id/setup/attack/play with storage minecraft:custom yuji.attack
+$data merge storage minecraft:custom {yuji:{moves:{type:"minecraft:item_display",what:"tag=aj.projectiles.root",objective:"customYuji.CleaveID",id:"$(id)",animation:"animated_java:projectiles/animations/cleave/play"}}}
+function custom:universal/setup/attack/existing with storage minecraft:custom yuji.moves

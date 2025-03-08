@@ -1,0 +1,12 @@
+#tellraw @s ["",{"text":"Score "},{"score":{"name":"@s","objective":"customHotBarSelectionBefore"}}]
+execute if score @s customHotBarSelection > @s customHotBarSelectionBefore unless entity @s[scores={customHotBarSelection=8,customHotBarSelectionBefore=0}] run scoreboard players add @s customHotBarSelected 1
+execute if score @s customHotBarSelection < @s customHotBarSelectionBefore unless entity @s[scores={customHotBarSelection=0,customHotBarSelectionBefore=8}] run scoreboard players remove @s customHotBarSelected 1
+execute if entity @s[scores={customHotBarSelection=0,customHotBarSelectionBefore=8}] run scoreboard players add @s customHotBarSelected 1
+execute if entity @s[scores={customHotBarSelection=8,customHotBarSelectionBefore=0}] run scoreboard players remove @s customHotBarSelected 1
+execute unless entity @s[tag=Sukuna] if score @s customHotBarSelected matches 4.. run scoreboard players set @s customHotBarSelected 1
+execute unless entity @s[tag=Sukuna] if score @s customHotBarSelected matches ..0 run scoreboard players set @s customHotBarSelected 3
+execute if entity @s[tag=Sukuna] if score @s customHotBarSelected matches 5.. run scoreboard players set @s customHotBarSelected 1
+execute if entity @s[tag=Sukuna] if score @s customHotBarSelected matches ..0 run scoreboard players set @s customHotBarSelected 4
+execute store result storage minecraft:custom yuji.hotbar.before int 1 run scoreboard players get @s customHotBarSelectionBefore
+
+scoreboard players operation @s customHotBarSelectionBefore = @s customHotBarSelection

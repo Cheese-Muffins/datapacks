@@ -1,0 +1,1 @@
+$execute rotated as @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] run rotate @s ~ ~

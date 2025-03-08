@@ -1,4 +1,5 @@
-summon marker ^ ^0.25 ^1 {Tags:["direction"]}
+#tag @s remove customCancellable
+execute rotated ~ 0 run summon marker ^ ^0.25 ^1 {Tags:["direction"]}
 
 # get the coordinates of the player and the entity
 execute store result score .playerX customYuji.MajinMath run data get entity @s Pos[0] 1000
@@ -14,11 +15,11 @@ scoreboard players operation .targetY customYuji.MajinMath -= .playerY customYuj
 scoreboard players operation .targetZ customYuji.MajinMath -= .playerZ customYuji.MajinMath
 
 # apply motion to projectile
-$execute as @e[type=minecraft:item,tag=customYuji.MajinMotion,limit=1,scores={customUniversal_RigID=$(id)}] store result entity @s Motion[0] double 0.001 run scoreboard players get .targetX customYuji.MajinMath
-$execute as @e[type=minecraft:item,tag=customYuji.MajinMotion,limit=1,scores={customUniversal_RigID=$(id)}] store result entity @s Motion[1] double 0.001 run scoreboard players get .targetY customYuji.MajinMath
-$execute as @e[type=minecraft:item,tag=customYuji.MajinMotion,limit=1,scores={customUniversal_RigID=$(id)}] store result entity @s Motion[2] double 0.001 run scoreboard players get .targetZ customYuji.MajinMath
+$execute as @e[type=minecraft:item,tag=customYuji.MajinMotion,limit=1,scores={customUniversal_RigID=$(id)}] store result entity @s Motion[0] double 0.0015 run scoreboard players get .targetX customYuji.MajinMath
+$execute as @e[type=minecraft:item,tag=customYuji.MajinMotion,limit=1,scores={customUniversal_RigID=$(id)}] store result entity @s Motion[1] double 0.0015 run scoreboard players get .targetY customYuji.MajinMath
+$execute as @e[type=minecraft:item,tag=customYuji.MajinMotion,limit=1,scores={customUniversal_RigID=$(id)}] store result entity @s Motion[2] double 0.0015 run scoreboard players get .targetZ customYuji.MajinMath
 
-$ride @s mount @e[type=minecraft:item_display,tag=customYuji.MajinMount,limit=1,scores={customUniversal_RigID=$(id)}]
+$ride @s mount @e[type=minecraft:item_display,tag=customYuji.MajinMotion,limit=1,scores={customUniversal_RigID=$(id)}]
 
 # clean up, ready for the next player
 kill @e[tag=direction]

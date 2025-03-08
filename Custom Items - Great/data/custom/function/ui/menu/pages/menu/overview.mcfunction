@@ -1,0 +1,1 @@
+execute at @s as @p if entity @s[tag=GojoUser] run function custom:ui/menu/pages/selection/gojo/open

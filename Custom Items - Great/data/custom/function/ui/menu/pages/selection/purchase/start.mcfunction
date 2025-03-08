@@ -1,0 +1,4 @@
+$scoreboard players set @s customUI.PurchasePath $(context)
+$execute if entity @s[tag=$(ownership)] run function custom:ui/menu/pages/selection/purchase/owned/main with storage minecraft:ui custom.purchase
+$execute unless entity @s[tag=$(ownership)] if score @s customUI.PurchasePath matches 0 run function custom:ui/menu/pages/selection/$(ability_path)/skins/equip/$(skin_path)/cost with storage minecraft:ui custom.purchase
+$execute unless entity @s[tag=$(ownership)] if score @s customUI.PurchasePath matches 1 run function custom:ui/menu/pages/selection/$(ability_path)/toggle/cost with storage minecraft:ui custom.purchase

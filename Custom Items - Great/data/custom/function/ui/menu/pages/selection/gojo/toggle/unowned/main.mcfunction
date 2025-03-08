@@ -1,0 +1,4 @@
+execute if score @s customUI.AbilityConfirm matches 1.. run function custom:ui/menu/pages/selection/yuji/toggle/unowned/buy
+execute if score @s customCurrency.YujiFinger matches 1.. if score @s customCurrency.Other matches 6.. if entity @s[advancements={minecraft:adventure/kill_all_mobs=true,minecraft:nether/loot_bastion=true,minecraft:nether/obtain_crying_obsidian=true}] unless score @s customUI.AbilityConfirm matches 1.. run function custom:ui/menu/pages/selection/yuji/toggle/unowned/ask
+execute unless entity @s[tag=customProduct.Temp] run function custom:ui/menu/pages/selection/yuji/toggle/unowned/fail
+tag @s remove customProduct.Temp

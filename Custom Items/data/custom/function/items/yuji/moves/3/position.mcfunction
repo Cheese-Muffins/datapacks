@@ -1,2 +1,2 @@
-$execute at @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] rotated as @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] positioned ^-0.5 ^ ^-1 facing entity @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] eyes run tp @s ~ ~ ~ ~ 0
-$effect give @n[type=!#custom:not_mob,tag=customYuji_PactVictim,scores={customUniversal_RigID=$(id)}] slowness 1 3 true
+$execute as @e[type=!#custom:not_mob,tag=customYuji.PactVictim,scores={customYuji.PactID=$(id)}] at @s rotated as @s positioned ^-0.5 ^ ^-1 as @e[type=minecraft:item_display,tag=aj.yuji.root,scores={customYuji.PactID=$(id)}] facing entity @e[type=!#custom:not_mob,tag=customYuji.PactVictim,limit=1,scores={customYuji.PactID=$(id)}] eyes run tp @s ~ ~ ~ ~ 0
+$effect give @e[type=!#custom:not_mob,tag=customYuji.PactVictim,scores={customYuji.PactID=$(id)}] slowness 1 3 true

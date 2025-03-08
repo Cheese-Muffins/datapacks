@@ -11,6 +11,11 @@ scoreboard objectives add customUniversal_Health health
 scoreboard objectives add customUniversal_DeathCount deathCount
 scoreboard objectives add customUniversal_DeathCountPre dummy
 scoreboard objectives add customUniversal_Disconnected minecraft.custom:minecraft.leave_game
+scoreboard objectives add customUniversal.ReturnItem dummy
+scoreboard objectives add customUniversal.VFXRepeatLimit dummy
+scoreboard objectives add customUniversal.VFXConditions dummy
+scoreboard objectives add customUniversal.VFXPosition dummy
+scoreboard objectives add customUniversal.VFXOffsetCheck dummy
 
 scoreboard objectives add customDelay1 dummy
 scoreboard objectives add customDelay2 dummy
@@ -45,9 +50,19 @@ function custom:tick_1s
 # UI #
 scoreboard objectives add ui dummy
 scoreboard objectives add ui.id dummy
+scoreboard objectives add customUI.PurchasePath dummy
+scoreboard objectives add customUI.AbilityConfirm dummy
+scoreboard objectives add customUI.Move4Swap dummy
+scoreboard objectives add customUI.Move5Swap dummy
+scoreboard objectives add customUI.FugaSwap dummy
+scoreboard objectives add customUI.SkinClick dummy
+scoreboard objectives add customUI.SkinClickPrevious dummy
+scoreboard objectives add customUI.SkinConfirm dummy
 setblock 0 -64 0 yellow_shulker_box
 
 # Gojo #
+scoreboard objectives add customCurrency.GojoBlindfold dummy
+scoreboard objectives add customCurrency.GojoSixEyes dummy
 scoreboard objectives add customGojo_InfinityPassive dummy
 
 scoreboard objectives add customGojo_BlueID dummy
@@ -62,8 +77,6 @@ scoreboard objectives add customGojo_CutscenePurple_XPos dummy
 scoreboard objectives add customGojo_CutscenePurple_YPos dummy
 scoreboard objectives add customGojo_CutscenePurple_ZPos dummy
 
-
-scoreboard objectives add customGojo_SixEyes dummy
 scoreboard objectives add customGojo_CutscenePurple_EPos dummy
 scoreboard objectives add customGojo_DomainID dummy
 scoreboard objectives add customGojo_DomainTimer dummy
@@ -78,22 +91,32 @@ function custom:universal/hotbar/move_math {ability:"GojoQuickfire",storage:"goj
 function custom:universal/hotbar/move_math {ability:"GojoCutscene",storage:"gojo",path:"5b",move:"5",cooldown:"110"}
 function custom:universal/hotbar/move_math {ability:"GojoCutscene",storage:"gojo",path:"6",move:"6",cooldown:"150"}
 
+
+# Yuji Itadori #
+scoreboard objectives add customCurrency.YujiFinger dummy
+scoreboard objectives add customCurrency.Other dummy
 scoreboard objectives add customYuji.SkinState dummy
-scoreboard objectives add customYuji.BlackFlash dummy
-scoreboard objectives add customYuji.BindingVow_Cooldown dummy
-scoreboard objectives add customYuji.MajinMath dummy
-scoreboard objectives add customYuji_PactX dummy
-scoreboard objectives add customYuji_PactY dummy
-scoreboard objectives add customYuji_PactZ dummy
-scoreboard objectives add customYuji_CleaveID dummy
-scoreboard objectives add customYuji_DismantleID dummy
-scoreboard objectives add customYuji_FugaID dummy
-scoreboard objectives add customYuji.RepetitiveBlackFlash_X dummy
-scoreboard objectives add customYuji.RepetitiveBlackFlash_Y dummy
-scoreboard objectives add customYuji.RepetitiveBlackFlash_Z dummy
-scoreboard objectives add customYuji.WorldCuttingSlash_X dummy
-scoreboard objectives add customYuji.WorldCuttingSlash_Y dummy
-scoreboard objectives add customYuji.WorldCuttingSlash_Z dummy
+# Passives #
+    scoreboard objectives add customYuji.BlackFlash dummy
+    scoreboard objectives add customYuji.BindingVow_Cooldown dummy
+# Majin Kick #
+    scoreboard objectives add customYuji.MajinMath dummy
+    scoreboard objectives add customYuji.MajinRotationX dummy
+    scoreboard objectives add customYuji.MajinRotationY dummy
+
+    scoreboard objectives add customYuji.PactID dummy
+    scoreboard objectives add customYuji_PactX dummy
+    scoreboard objectives add customYuji_PactY dummy
+    scoreboard objectives add customYuji_PactZ dummy
+    scoreboard objectives add customYuji.CleaveID dummy
+    scoreboard objectives add customYuji.DismantleID dummy
+    scoreboard objectives add customYuji_FugaID dummy
+    scoreboard objectives add customYuji.RepetitiveBlackFlash_X dummy
+    scoreboard objectives add customYuji.RepetitiveBlackFlash_Y dummy
+    scoreboard objectives add customYuji.RepetitiveBlackFlash_Z dummy
+    scoreboard objectives add customYuji.WorldCuttingSlash_X dummy
+    scoreboard objectives add customYuji.WorldCuttingSlash_Y dummy
+    scoreboard objectives add customYuji.WorldCuttingSlash_Z dummy
 
 
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"1",move:"1",cooldown:"90"}
@@ -107,6 +130,11 @@ function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"7",move:"7",cooldown:"150"}
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"8",move:"8",cooldown:"20"}
 function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"9",move:"9",cooldown:"300"}
+
+# Eren Yeager #
+
+scoreboard objectives add customEren.ShiftCooldown dummy
+function custom:universal/hotbar {ability:"Eren",storage:"eren",path:"1a",move:"1",cooldown:"10"}
 
 # The World #
 scoreboard objectives add customWorld_Timeskip dummy

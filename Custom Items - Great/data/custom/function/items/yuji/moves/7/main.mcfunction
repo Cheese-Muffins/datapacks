@@ -1,0 +1,3 @@
+particle minecraft:sweep_attack ~ ~1 ~ 25 25 25 1 150 force @a
+$execute as @e[type=!#custom:not_mob,distance=..40] at @s unless entity @s[tag=customSettings_Immunity] unless entity @s[gamemode=spectator] run function custom:items/yuji/moves/7/range/in {id:"$(id)"}
+execute as @e[type=!#custom:not_mob,tag=customYuji_NearDomain,distance=40..] at @s unless entity @e[type=minecraft:item_display,tag=customYuji_Domain,distance=..40] run function custom:items/yuji/moves/7/range/out

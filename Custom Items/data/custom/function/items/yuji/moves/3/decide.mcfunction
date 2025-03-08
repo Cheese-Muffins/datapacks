@@ -1,0 +1,2 @@
+#$execute if predicate custom:yuji/awakening run function custom:items/yuji/moves/3/awaken {id:$(id)}
+$execute if entity @e[type=minecraft:item_display,tag=aj.yuji.root,scores={customUniversal_RigID=$(id)}] run function custom:items/yuji/moves/3/mark {id:$(id)}

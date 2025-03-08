@@ -1,0 +1,2 @@
+execute if entity @s[tag=customYuji.DefaultSkin] run function custom:ui/menu/pages/selection/yuji/skins/equip/default/fail
+execute unless entity @s[tag=customYuji.DefaultSkin] run function custom:ui/menu/pages/selection/yuji/skins/equip/default/pass

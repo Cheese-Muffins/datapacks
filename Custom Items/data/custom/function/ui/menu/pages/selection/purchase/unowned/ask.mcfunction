@@ -1,0 +1,6 @@
+execute if score @s customUI.PurchasePath matches 0 run scoreboard players add @s customUI.SkinConfirm 1
+execute if score @s customUI.PurchasePath matches 1 run scoreboard players add @s customUI.AbilityConfirm 1
+tag @s add customProduct.Temp
+$execute if score @s customUI.PurchasePath matches 0 run tellraw @s ["",{"text":"Custom Abilities ($(name))","color":"gold"},{"text":"\n"},{"text":"You're ","color":"gray"},{"text":"about ","color":"green"},{"text":"to purchase the ","color":"gray"},{"text":"$(skin_name) Outfit ","color":"aqua"},{"text":"for ","color":"gray"},{"text":"$(ability_name)... ","color":"red"},{"text":"Are you sure?","color":"light_purple"}]
+$execute if score @s customUI.PurchasePath matches 1 run tellraw @s ["",{"text":"Custom Abilities ($(name))","color":"gold"},{"text":"\n"},{"text":"You're ","color":"gray"},{"text":"about ","color":"green"},{"text":"to purchase ","color":"gray"},{"text":"$(skin_name)... ","color":"aqua"},{"text":"Are you sure?","color":"light_purple"}]
+playsound minecraft:entity.villager.trade player @s ~ ~ ~ 0.5

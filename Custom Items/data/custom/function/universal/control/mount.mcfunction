@@ -1,0 +1,1 @@
+$execute unless entity @s[nbt={RootVehicle:{}}] run ride @s mount @e[type=$(type),$(what),limit=1,scores={$(objective)=$(id)}]

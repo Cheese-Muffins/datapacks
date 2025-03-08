@@ -1,0 +1,2 @@
+execute if entity @s[tag=customGojo_BluePickedUp] run function custom:universal/errors/errorfind {error:"100"}
+execute if entity @s[tag=customGojo_InfiniteVoided] run function custom:universal/errors/errorfind {error:"101"}

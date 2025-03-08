@@ -11,7 +11,7 @@ execute if score @s customMove9Cooldown matches 1.. run scoreboard players remov
 
 execute if score @s customYuji.BindingVow_Cooldown matches 1.. run scoreboard players remove @s customYuji.BindingVow_Cooldown 1
 
-execute if score @s customDelay5 matches 1.. run function custom:universal/scores/delays/5 {ability:"yuji"}
-execute if score @s customDelay7 matches 1.. run function custom:universal/scores/delays/7 {ability:"yuji"}
+execute if score @s customDelay5 matches 1.. run function custom:universal/delays/5 {ability:"yuji"}
+execute if score @s customDelay7 matches 1.. run function custom:universal/delays/7 {ability:"yuji"}
 execute if score @s customToggleDelay matches 1.. run scoreboard players remove @s customToggleDelay 1
 execute if score @s customMoveSpamDelay matches 1.. run scoreboard players remove @s customMoveSpamDelay 1

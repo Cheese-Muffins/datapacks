@@ -1,0 +1,3 @@
+$execute if score @s customMove$(move)CooldownConverted matches 100.. run execute store result storage minecraft:custom gojo.ui.move$(move)T int 1 run scoreboard players get @s customMove$(move)CooldownConverted
+$execute if score @s customMove$(move)CooldownConverted matches 10..99 run data merge storage minecraft:custom {gojo:{ui:{move$(move)T:"0$(time)"}}}
+$execute if score @s customMove$(move)CooldownConverted matches 0..9 run data merge storage minecraft:custom {gojo:{ui:{move$(move)T:"00$(time)"}}}

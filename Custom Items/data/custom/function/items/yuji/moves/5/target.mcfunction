@@ -1,0 +1,1 @@
+scoreboard players set @s customDelay5 41

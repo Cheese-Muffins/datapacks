@@ -1,0 +1,3 @@
+$execute if score @s customUI.PurchasePath matches 0 run tellraw @s ["",{"text":"Custom Abilities ($(name))","color":"gold"},{"text":"\n"},{"text":"You do ","color":"gray"},{"text":"NOT ","color":"red"},{"text":"meet the requirements to purchase ","color":"gray"},{"text":"$(skin_name) $(ability_name)","color":"aqua"}]
+$execute if score @s customUI.PurchasePath matches 1 run tellraw @s ["",{"text":"Custom Abilities ($(name))","color":"gold"},{"text":"\n"},{"text":"You do ","color":"gray"},{"text":"NOT ","color":"red"},{"text":"meet the requirements to purchase ","color":"gray"},{"text":"$(skin_name)","color":"aqua"}]
+playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5

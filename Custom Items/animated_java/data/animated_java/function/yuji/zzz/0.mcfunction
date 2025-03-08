@@ -6,7 +6,7 @@ execute if data storage aj:temp args.variant run function animated_java:yuji/zzz
 execute unless data storage aj:temp args.animation run function animated_java:yuji/set_default_pose
 execute if data storage aj:temp args.animation run function animated_java:yuji/zzz/8 with storage aj:temp args
 tp @s ~ ~ ~ ~ ~
-execute at @s on passengers run tp @s ~ ~ ~ ~ ~
-data modify entity @s teleport_duration set value 1
-execute on passengers run data modify entity @s teleport_duration set value 1
+execute at @s on passengers run rotate @s ~ ~
+data modify entity @s teleport_duration set value 2
+execute on passengers run data modify entity @s teleport_duration set value 2
 function #animated_java:yuji/as_root/on_summon

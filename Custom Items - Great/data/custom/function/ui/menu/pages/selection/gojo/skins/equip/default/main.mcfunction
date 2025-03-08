@@ -1,0 +1,2 @@
+execute if entity @s[tag=customGojo.DefaultSkin] run function custom:ui/menu/pages/selection/gojo/skins/equip/default/fail
+execute unless entity @s[tag=customGojo.DefaultSkin] run function custom:ui/menu/pages/selection/gojo/skins/equip/default/pass
