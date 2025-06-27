@@ -1,0 +1,4 @@
+# Generated with MC-Build
+
+data merge storage minecraft:custom {dice:{roll:{name:"Firework"}}}
+data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Firework\n","color":"gold"},{"text":"The user is ","color":"gray"},{"text":"launched ","color":"aqua"},{"text":"up into the sky, where they then ","color":"gray"},{"text":"explode ","color":"red"},{"text":"into a ","color":"gray"},{"text":"b","color":"red"},{"text":"e","color":"gold"},{"text":"a","color":"yellow"},{"text":"u","color":"green"},{"text":"t","color":"blue"},{"text":"i","color":"light_purple"},{"text":"f","color":"dark_purple"},{"text":"u","color":"red"},{"text":"l","color":"gold"},{"text":" firework launching their items ","color":"gray"},{"text":"everywhere!","color":"yellow"}]}}}

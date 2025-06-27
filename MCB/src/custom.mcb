@@ -1,0 +1,829 @@
+advancement click {
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:using_item",
+        "conditions": {
+          "item": {
+            "components": {
+              "minecraft:food": {
+                "nutrition": 0,
+                "saturation": 0,
+                "can_always_eat": true
+              },
+              "minecraft:consumable": {
+                "consume_seconds":7777777,
+                "animation":"none",
+                "has_consume_particles":false
+              },
+              "minecraft:custom_data": "{CustomAbility:1b}"
+            }
+          }
+        }
+      }
+    },
+    "rewards": {
+      "function": "custom:universal/click/detect"
+    }
+}
+
+function on_load minecraft:load{
+    # you can use MC-Build without its internal scoreboard but this will limit the available features
+    scoreboard objectives add mcb.internal dummy
+    scoreboard objectives add customUniversal.RigID dummy
+    scoreboard objectives add customUniversal.Toggle dummy
+    scoreboard objectives add customUniversal.ToggleDelay dummy
+    scoreboard objectives add customUniversal.CooldownMath dummy
+    scoreboard players set div20 customUniversal.CooldownMath 20
+    scoreboard objectives add customUniversal.FailReturn dummy
+
+    scoreboard objectives add customUniversal.HotbarMaximumMath dummy
+    scoreboard objectives add customUniversal.HotbarPrevious dummy
+    scoreboard objectives add customUniversal.HotbarActive dummy
+    scoreboard objectives add customUniversal.HotbarMove dummy
+    scoreboard objectives add customUniversal.LaunchMath dummy
+    scoreboard objectives add customUniversal.VFXID dummy
+    scoreboard objectives add customUniversal.VFXConditions dummy
+    scoreboard objectives add customUniversal.VFXRotation dummy
+    scoreboard objectives add customUniversal.VFXSpeed dummy
+    scoreboard objectives add customUniversal.VFXDuration dummy
+    scoreboard objectives add customUniversal.VFXSpeedXL dummy
+    scoreboard objectives add customUniversal.VFXSpeedXR dummy
+    scoreboard objectives add customUniversal.VFXSpeedYL dummy
+    scoreboard objectives add customUniversal.VFXSpeedYR dummy
+    scoreboard objectives add customUniversal.VFXSpeedZL dummy
+    scoreboard objectives add customUniversal.VFXSpeedZR dummy
+
+    REPEAT (1,9) as i {
+        scoreboard objectives add customUniversal.Move<%i%>Cooldown dummy
+        scoreboard objectives add customUniversal.Move<%i%>CooldownConverted dummy
+    }
+    scoreboard objectives add customUniversal.MoveDelay dummy
+
+    scoreboard objectives add customUniversal.MoveCooldowns dummy
+    scoreboard players set x20 customUniversal.MoveCooldowns 20
+    scoreboard players set div11 customUniversal.MoveCooldowns 11
+
+    # Satoru Gojo #
+    scoreboard objectives add customGojo.LapisBlueID dummy
+    scoreboard objectives add customGojo.LapisBlueRotation dummy
+    scoreboard objectives add customGojo.LapisBlueOrbit dummy
+    scoreboard objectives add customGojo.LapisBlueMotion dummy
+    scoreboard objectives add customGojo.ReversalRedID dummy
+    function custom:universal/cooldowns {ability:"Gojo",storage:"gojo",path:"1",move:"1",cooldown:"120"}
+    function custom:universal/cooldowns {ability:"Gojo",storage:"gojo",path:"2",move:"2",cooldown:"18"}
+    function custom:universal/cooldowns {ability:"Gojo",storage:"gojo",path:"3",move:"3",cooldown:"15"}
+}
+
+function tick minecraft:tick {
+    execute as @a[tag=CustomAbilityUser] run {
+        execute if entity @s[tag=customAbility.Gojo] run function custom:abilities/gojo/tick
+    }
+}
+
+
+dir abilities {
+    # dir gojo {
+    #     function tick {
+    #         execute if score @s customUniversal.Toggle matches 1 run {
+    #             function custom:abilities/gojo/active
+    #         }
+    #         function custom:abilities/gojo/handheld
+    #         execute unless entity @s[scores={customUniversal.Move1Cooldown=0,customUniversal.Move2Cooldown=0,customUniversal.Move3Cooldown=0,customUniversal.Move4Cooldown=0,customUniversal.Move5Cooldown=0,customUniversal.Move6Cooldown=0,customAwakening=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0,customUniversal.Toggle=1..}] run {
+    #             REPEAT (1,6) as i {
+    #                 execute if score @s customUniversal.Move<%i%>Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move<%i%>Cooldown 1
+    #             }
+    #             execute if score @s customAwakening matches 1.. run scoreboard players remove @s customAwakening 1
+                    
+    #             execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+    #             execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+    #         }
+    #     }
+
+    #     function active {
+            
+    #         execute if predicate custom:universal/sneaking run function custom:universal/hotbar/scroll {maximum:4}
+    #         execute unless predicate custom:universal/sneaking run tag @s add customUniversal.HotbarToggleCrouch
+    #         execute unless entity @s[tag=customUniversal_HideHUD] run function custom:abilities/gojo/hotbar/main
+    #     }
+
+    #     dir hotbar {
+    #         dir progress {
+    #             REPEAT (1,6) as i {
+    #                 function <%i%> {
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01A5"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01A6"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01A7"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01A8"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01A9"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01B0"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01B1"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01B2"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01B3"
+    #                     $execute if score @s customUniversal.Move<%i%>Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01B4"
+    #                     execute if score @s customUniversal.Move<%i%>Cooldown matches 0 run data modify storage minecraft:custom gojo.hotbar.move<%i%> set value "u01B5"
+
+    #                     scoreboard players operation @s customUniversal.Move<%i%>CooldownConverted = @s customUniversal.Move<%i%>Cooldown
+    #                     scoreboard players operation @s customUniversal.Move<%i%>CooldownConverted /= div20 customUniversal_MoveCooldowns
+    #                 }
+    #             }
+    #         }
+
+    #         function choose {
+                
+    #         }
+
+    #         function main {
+    #             block {
+    #                 function custom:abilities/gojo/hotbar/progress/1 with storage minecraft:custom gojo.cooldowns.move1
+    #                 function custom:abilities/gojo/hotbar/progress/2 with storage minecraft:custom gojo.cooldowns.move2
+    #                 function custom:abilities/gojo/hotbar/progress/3 with storage minecraft:custom gojo.cooldowns.move3
+    #             }
+
+    #             execute unless entity @s[tag=customGojo.Awakening] run {
+    #                 REPEAT (1,3) as i {
+    #                     execute if entity @s[scores={customUniversal.HotbarMove=<%i%>}] run function custom:universal/hotbar/time {ability:"gojo",selected:<%i%>}
+    #                 }
+
+    #                 execute if score @s customUniversal.HotbarMove matches 1 run block { with storage minecraft:custom gojo.hotbar
+    #                     $title @s actionbar [{"text":"\uF807\u01A0"},{"text":"\uF803\$(move1)\uF801\u01A3"},{"text":"\uF803\$(move2)"},{"text":"\uF803\$(move3)"},{"text":"\uF805\$(meter)"},{"text":"\uF806\u01A1"},{"text":"\uF806\u01A4"},{"text":"\uF808$(time)","color":"yellow"}]
+    #                 }
+    #                 execute if score @s customUniversal.HotbarMove matches 2 run block { with storage minecraft:custom gojo.hotbar
+    #                     $title @s actionbar [{"text":"\uF807\u01A0"},{"text":"\uF803\$(move1)"},{"text":"\uF803\$(move2)\uF801\u01A3"},{"text":"\uF803\$(move3)"},{"text":"\uF805\$(meter)"},{"text":"\uF806\u01A1"},{"text":"\uF806\u01A4"},{"text":"\uF808$(time)","color":"yellow"}]
+    #                 }
+    #                 execute if score @s customUniversal.HotbarMove matches 3 run block { with storage minecraft:custom gojo.hotbar
+    #                     $title @s actionbar [{"text":"\uF807\u01A0"},{"text":"\uF803\$(move1)"},{"text":"\uF803\$(move2)"},{"text":"\uF803\$(move3)\uF801\u01A3"},{"text":"\uF805\$(meter)"},{"text":"\uF806\u01A1"},{"text":"\uF806\u01A4"},{"text":"\uF808$(time)","color":"yellow"}]
+    #                 }
+    #             } else run {
+    #                 say fail
+    #             }
+    #         } 
+    #     }
+
+    #     function handheld {
+    #         execute unless items entity @s hotbar.8 minecraft:bowl[minecraft:custom_data={CustomAbility:1b}] run {
+    #             # execute unless items entity @s hotbar.8 minecraft:bowl[minecraft:custom_data={CustomAbility:1b}] run function custom:universal/return_item/start
+    #             clear @s minecraft:bowl[minecraft:custom_data={CustomAbility:1b}]
+
+    #             execute unless entity @s[tag=customGojo.Awakening] unless entity @s[tag=customUniversal.Animation] run item replace entity @s hotbar.8 with bowl[max_stack_size=1,item_name='{"color":"aqua","italic":false,"text":"Satoru Gojo"}',lore=['{"color":"gray","italic":false,"text":"Don\'t Worry, I\'m the Strongest"}','" "','[{"color":"dark_purple","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"to toggle"}]','[{"color":"dark_purple","italic":false,"text":"Click "},{"color":"gray","italic":false,"text":"to cast moves"}]','" "','{"color":"gold","italic":false,"text":"Server Exclusive"}'],custom_data={CustomAbility:1b},item_model="minecraft:interactables/custom/gojo/default_skin",food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:7777777,animation:"none",has_consume_particles:false}] 1
+    #             execute unless entity @s[tag=customGojo.Awakening] if entity @s[tag=customUniversal.Animation] run item replace entity @s hotbar.8 with bowl[max_stack_size=1,item_name='{"color":"aqua","italic":false,"text":"Satoru Gojo"}',lore=['{"color":"gray","italic":false,"text":"Don\'t Worry, I\'m the Strongest"}','" "','[{"color":"dark_purple","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"to toggle"}]','[{"color":"dark_purple","italic":false,"text":"Click "},{"color":"gray","italic":false,"text":"to cast moves"}]','" "','{"color":"gold","italic":false,"text":"Server Exclusive"}'],custom_data={CustomAbility:1b},item_model="minecraft:empty",food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:7777777,animation:"none",has_consume_particles:false}] 1
+    #             execute if entity @s[tag=customGojo.Awakening] unless entity @s[tag=customUniversal.Animation] run item replace entity @s hotbar.8 with bowl[max_stack_size=1,item_name='{"color":"aqua","italic":false,"text":"Satoru Gojo"}',lore=['{"color":"gray","italic":false,"text":"Throughout Heaven and Earth, I Alone Am The Honored One"}','" "','[{"color":"dark_purple","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"to toggle"}]','[{"color":"dark_purple","italic":false,"text":"Click "},{"color":"gray","italic":false,"text":"to cast moves"}]','" "','{"color":"gold","italic":false,"text":"Server Exclusive"}'],custom_data={CustomAbility:1b},item_model="minecraft:interactables/custom/yuji/default_sukuna",food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:7777777,animation:"none",has_consume_particles:false}] 1
+    #             execute if entity @s[tag=customGojo.Awakening] if entity @s[tag=customUniversal.Animation] run item replace entity @s hotbar.8 with bowl[max_stack_size=1,item_name='{"color":"aqua","italic":false,"text":"Satoru Gojo"}',lore=['{"color":"gray","italic":false,"text":"Throughout Heaven and Earth, I Alone Am The Honored One"}','" "','[{"color":"dark_purple","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"to toggle"}]','[{"color":"dark_purple","italic":false,"text":"Click "},{"color":"gray","italic":false,"text":"to cast moves"}]','" "','{"color":"gold","italic":false,"text":"Server Exclusive"}'],custom_data={CustomAbility:1b},item_model="minecraft:empty",food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:7777777,animation:"none",has_consume_particles:false}] 1
+
+    #             kill @e[type=item,nbt={Item:{id:"minecraft:bowl",components:{"minecraft:custom_data":{CustomAbility:1b}}}}]
+    #         }
+    #     }
+
+    #     dir toggle {
+    #         function on {
+    #             playsound minecraft:gojo.toggle.spawn player @s ~ ~ ~ 0.35
+    #             scoreboard players set @s customUniversal.ToggleDelay 20
+    #         }
+    #         function off {
+    #             title @s actionbar ""
+    #             playsound minecraft:gojo.toggle.remove player @s ~ ~ ~ 0.5
+    #             scoreboard players set @s customUniversal.ToggleDelay 10
+    #         }
+    #     }
+
+    #     dir moves {
+    #         function select {
+    #             execute unless score @s customUniversal.MoveDelay matches 1.. run {
+    #                 execute unless entity @s[tag=customGojo.Awakening] run {
+    #                     execute if score @s customUniversal.HotbarMove matches 1 run function custom:abilities/gojo/moves/1/core
+    #                     execute if score @s customUniversal.HotbarMove matches 2 run function custom:abilities/gojo/moves/2/core
+    #                     execute if score @s customUniversal.HotbarMove matches 3 run function custom:abilities/gojo/moves/3/core
+    #                 } else run {
+    #                     execute if score @s customUniversal.HotbarMove matches 1 run function custom:abilities/gojo/moves/4/core
+    #                     execute if score @s customUniversal.HotbarMove matches 2 run function custom:abilities/gojo/moves/5/core
+    #                     execute if score @s customUniversal.HotbarMove matches 3 run function custom:abilities/gojo/moves/6/core
+    #                 }
+    #             }
+    #         }
+
+    #         function setup {
+    #             tag @s add customUniversal.Animation
+    #             tag @s add customUniversal.DisconnectCheck
+    #             effect give @s minecraft:invisibility infinite 0 true
+    #             particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
+
+    #             function custom:universal/armor/hide
+    #             $execute rotated ~ 0 run function animated_java:gojo/summon {args:{animation:'$(animation)', start_animation: true}}
+    #             $function custom:universal/setup/rig {objective:"$(objective)",item:"gojo"}
+    #             item modify entity @s hotbar.8 custom:hide
+
+    #             $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.gojo.camera",objective:"$(objective)"}
+    #         }
+
+    #         dir 1 {
+    #             function core {
+    #                 execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+    #                 execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+    #                 function custom:universal/error_messages/universal
+
+    #                 execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/gojo/moves/1/pass
+    #                 execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,move:"Reversed Cursed Technique"}
+    #             }
+
+    #             function pass {
+    #                 function custom:abilities/gojo/moves/setup {objective:"customUniversal.RigID"}
+    #                 tag @s add customUniversal.Cancellable
+    #                 execute as @n[tag=aj.gojo.root] run function animated_java:gojo/animations/reverse_cursed_technique/play
+    #                 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .GojoCooldown customUniversal.Move1Cooldown
+    #                 scoreboard players set @s customUniversal.MoveDelay 10
+
+    #                 attribute @s minecraft:movement_speed base set 0.025
+    #                 attribute @s minecraft:jump_strength base set 0
+    #             }
+
+    #             function buff {
+    #                 effect give @s minecraft:absorption 15 0 true
+    #                 effect give @s minecraft:resistance 15 0 true
+    #                 effect give @s minecraft:jump_boost 90 2 true
+    #                 effect give @s minecraft:speed 90 2 true
+    #                 # execute if score @s customUniversal_Health matches 1..10 if predicate custom:gojo/awakening run function custom:items/gojo/awakening/play
+    #             }
+    #         }
+
+    #         dir 2 {
+    #             function core {
+    #                 execute unless score @s customUniversal.Move2Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+    #                 execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+    #                 function custom:universal/error_messages/universal
+
+    #                 execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/gojo/moves/2/pass
+    #                 execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,move:"Lapis Blue"}
+    #             }
+
+    #             function pass {
+    #                 function custom:abilities/gojo/moves/setup {objective:"customGojo.LapisBlueID"}
+    #                 tag @s add customUniversal.Cancellable
+    #                 execute as @n[tag=aj.gojo.root] run function animated_java:gojo/animations/lapis_blue/play
+    #                 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .GojoCooldown customUniversal.Move2Cooldown
+    #                 scoreboard players set @s customUniversal.MoveDelay 10
+
+    #                 attribute @s minecraft:movement_speed base set 0.025
+    #                 attribute @s minecraft:jump_strength base set 0
+    #             }
+
+    #             function spawn {
+    #                 execute rotated ~ ~ positioned ^-0.4 ^.6 ^0.85 run function animated_java:projectiles/summon {args:{}}
+    #                 $execute as @n[type=minecraft:item_display,tag=aj.projectiles.root,tag=!playing] run scoreboard players set @s $(objective) $(id)
+    #                 block { with storage minecraft:custom universal.control
+    #                     $execute as @n[type=minecraft:item_display,tag=aj.projectiles.root,tag=!playing,scores={$(objective)=$(id)}] run function animated_java:projectiles/animations/lapis_blue/play
+    #                     REPEAT (1,8) as i {
+    #                        $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.projectiles.locator.anc<%i%>",objective:"$(objective)"} 
+    #                     }
+    #                 }
+    #             }
+
+    #             function movement {
+    #                 execute unless block ~ ~ ~ #custom:raycast_pass run tp @s ^ ^1 ^
+    #                 execute positioned ^ ^ ^1.25 if block ~ ~ ~ #custom:raycast_pass run tp @s ^ ^ ^-0.5
+
+    #                 execute positioned ^ ^ ^1.25 unless block ~ ~0.5 ~ #custom:raycast_pass run function custom:abilities/gojo/moves/2/bounce/y
+    #                 execute positioned ^ ^ ^1.25 unless block ~ ~-0.5 ~ #custom:raycast_pass run function custom:abilities/gojo/moves/2/bounce/y
+
+    #                 execute positioned ^ ^ ^1.25 unless block ~0.5 ~ ~ #custom:raycast_pass unless block ~0.5 ~1 ~ #custom:raycast_pass unless block ~0.5 ~ ~ #custom:raycast_pass run function custom:abilities/gojo/moves/2/bounce/x
+    #                 execute positioned ^ ^ ^1.25 unless block ~-0.5 ~ ~ #custom:raycast_pass unless block ~-0.5 ~1 ~ #custom:raycast_pass unless block ~-0.5 ~ ~ #custom:raycast_pass run function custom:abilities/gojo/moves/2/bounce/x
+
+    #                 execute positioned ^ ^ ^1.25 unless block ~ ~ ~0.5 #custom:raycast_pass unless block ~ ~1 ~0.5 #custom:raycast_pass unless block ~ ~ ~0.5 #custom:raycast_pass run function custom:abilities/gojo/moves/2/bounce/z
+    #                 execute positioned ^ ^ ^1.25 unless block ~ ~ ~-0.5 #custom:raycast_pass unless block ~ ~1 ~-0.5 #custom:raycast_pass unless block ~ ~ ~-0.5 #custom:raycast_pass run function custom:abilities/gojo/moves/2/bounce/z
+
+    #                 $execute as @e[type=!#custom:not_mob,tag=!customGojo.LapisBlueVictim,distance=..3] unless entity @s[scores={customGojo.LapisBlueID=$(id)}] unless entity @s[tag=customSettings_Immunity] unless entity @s[gamemode=spectator] run block { {id:$(id)}
+    #                     tag @s add customGojo.LapisBlueVictim
+    #                     $scoreboard players set @s customGojo.LapisBlueID $(id)
+    #                     execute store result score @s customGojo.LapisBlueOrbit run random value 1..8
+    #                 }
+
+    #                 $execute as @e[type=!#custom:not_mob,tag=customGojo.LapisBlueVictim,scores={customGojo.LapisBlueID=$(id)}] unless entity @s[nbt={RootVehicle:1b}] run block {
+    #                     execute store result storage minecraft:custom gojo.moves.id int 1 run scoreboard players get @s customGojo.LapisBlueID
+    #                     execute store result storage minecraft:custom gojo.moves.orbit int 1 run scoreboard players get @s customGojo.LapisBlueOrbit
+    #                     block { with storage minecraft:custom gojo.moves
+    #                         $ride @s mount @n[type=minecraft:item_display,tag=aj.projectiles.locator.blue,tag=aj.projectiles.locator.anc$(orbit),scores={customGojo.LapisBlueID=$(id)}]
+    #                     }
+    #                 }
+    #             }
+
+    #             dir bounce {
+    #                 function x {
+    #                     execute at @s run playsound minecraft:gojo.blue.bounce player @a ~ ~ ~ 1
+    #                     execute store result entity @s Rotation[0] float -1 run data get entity @s Rotation[0]
+    #                 }
+
+    #                 function y {
+    #                     execute at @s run playsound minecraft:gojo.blue.bounce player @a ~ ~ ~ 1
+    #                     execute store result entity @s Rotation[1] float -1 run data get entity @s Rotation[1]
+    #                 }
+
+    #                 function z {
+    #                     execute at @s run playsound minecraft:gojo.blue.bounce player @a ~ ~ ~ 1
+    #                     scoreboard players set .scale customGojo.LapisBlueRotation 18000
+    #                     execute store result score .scaledDown customGojo.LapisBlueRotation run data get entity @s Rotation[0] 100.0
+    #                     execute store result entity @s Rotation[0] float 0.01 run scoreboard players operation .scale customGojo.LapisBlueRotation -= .scaledDown customGojo.LapisBlueRotation
+    #                 }
+    #             }
+
+    #             function launch {
+    #                 execute store result storage minecraft:custom gojo.moves.id int 1 run scoreboard players get @s customGojo.LapisBlueID
+    #                 block { with storage minecraft:custom gojo.moves
+    #                     $execute as @e[type=!#custom:not_mob,tag=customGojo.LapisBlueVictim,scores={customGojo.LapisBlueID=$(id)}] at @s run {
+    #                         execute store result score @s customGojo.LapisBlueMotion run random value -180..180
+    #                         execute store result storage minecraft:custom gojo.moves.launch_angle int 1 run scoreboard players get @s customGojo.LapisBlueMotion
+
+    #                         summon item ~ ~ ~ {Age:-32768,PickupDelay:32768,Tags:["customUniversal.LaunchMount"],Item:{id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty"}}}
+    #                         function custom:universal/setup/pair {type:"minecraft:item",what:"customUniversal.LaunchMount",objective:"customGojo.LapisBlueID"} 
+
+    #                         ride @s dismount
+    #                         block { custom:universal/launch with storage minecraft:custom gojo.moves
+    #                             $execute rotated ~$(launch_angle) 0 run summon marker ^ ^0.75 ^0.5 {Tags:["direction"]}
+
+    #                             # get the coordinates of the player and the entity
+    #                             execute store result score .playerX customUniversal.LaunchMath run data get entity @s Pos[0] 1000
+    #                             execute store result score .playerY customUniversal.LaunchMath run data get entity @s Pos[1] 1000
+    #                             execute store result score .playerZ customUniversal.LaunchMath run data get entity @s Pos[2] 1000
+    #                             execute store result score .targetX customUniversal.LaunchMath as @e[type=marker,tag=direction,limit=1] run data get entity @s Pos[0] 1000
+    #                             execute store result score .targetY customUniversal.LaunchMath as @e[type=marker,tag=direction,limit=1] run data get entity @s Pos[1] 1000
+    #                             execute store result score .targetZ customUniversal.LaunchMath as @e[type=marker,tag=direction,limit=1] run data get entity @s Pos[2] 1000
+
+    #                             # do the math
+    #                             scoreboard players operation .targetX customUniversal.LaunchMath -= .playerX customUniversal.LaunchMath
+    #                             scoreboard players operation .targetY customUniversal.LaunchMath -= .playerY customUniversal.LaunchMath
+    #                             scoreboard players operation .targetZ customUniversal.LaunchMath -= .playerZ customUniversal.LaunchMath
+
+    #                             # apply motion to projectile
+    #                             $execute as @e[type=minecraft:item,tag=customUniversal.LaunchMount,limit=1,tag=!customUniversal.LaunchPost,scores={customGojo.LapisBlueID=$(id)}] store result entity @s Motion[0] double 0.0015 run scoreboard players get .targetX customUniversal.LaunchMath
+    #                             $execute as @e[type=minecraft:item,tag=customUniversal.LaunchMount,limit=1,tag=!customUniversal.LaunchPost,scores={customGojo.LapisBlueID=$(id)}] store result entity @s Motion[1] double 0.0015 run scoreboard players get .targetY customUniversal.LaunchMath
+    #                             $execute as @e[type=minecraft:item,tag=customUniversal.LaunchMount,limit=1,tag=!customUniversal.LaunchPost,scores={customGojo.LapisBlueID=$(id)}] store result entity @s Motion[2] double 0.0015 run scoreboard players get .targetZ customUniversal.LaunchMath
+
+    #                             $ride @s mount @e[type=minecraft:item,tag=customUniversal.LaunchMount,limit=1,tag=!customUniversal.LaunchPost,scores={customGojo.LapisBlueID=$(id)}]
+    #                             $execute as @e[type=minecraft:item,tag=customUniversal.LaunchMount,limit=1,tag=!customUniversal.LaunchPost,scores={customGojo.LapisBlueID=$(id)}] run tag @s add customUniversal.LaunchPost
+
+    #                             # clean up, ready for the next player
+    #                             kill @e[tag=direction]
+    #                         }
+    #                     }
+    #                 }
+    #             }
+    #         }
+
+
+    #         dir 3 {
+    #             function core {
+    #                 execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+    #                 execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+    #                 function custom:universal/error_messages/universal
+
+    #                 execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/gojo/moves/3/pass
+    #                 execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,move:"Reversal Red"}
+    #             }
+
+    #             function pass {
+    #                 function custom:abilities/gojo/moves/setup {objective:"customGojo.ReversalRedID",animation:"reversal_red"}
+    #                 tag @s add customUniversal.Cancellable
+    #                 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .GojoCooldown customUniversal.Move3Cooldown
+    #                 scoreboard players set @s customUniversal.MoveDelay 10
+
+    #                 attribute @s minecraft:movement_speed base set 0.025
+    #                 attribute @s minecraft:jump_strength base set 0
+    #             }
+
+    #             function spawn {
+    #                 execute rotated ~ ~ positioned ^-0.4 ^.6 ^0.85 run function animated_java:projectiles/summon {args:{animation:'reversal_red', start_animation: true}}
+    #                 $execute as @n[type=minecraft:item_display,tag=aj.projectiles.root,tag=!playing] run scoreboard players set @s $(objective) $(id)
+    #             }
+
+    #             function movement {
+    #                 tp @s ^ ^ ^1
+    #                 $execute as @e[type=!#custom:not_mob,distance=..3] unless entity @s[scores={customGojo.ReversalRedID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"12",type:"minecraft:generic",ability:"Gojo",objective:"customGojo_RedID",first:"was vaporized by",second:"using Reversal Red"}
+    #             }
+    #         }
+
+    #         dir reset {
+    #             function all {
+    #                 $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+    #                 $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+    #                 block { with storage minecraft:custom universal.control
+    #                     $execute as @a[tag=customAbility.Gojo,scores={$(objective)=$(id)}] at @s run function custom:abilities/gojo/moves/reset/player
+    #                     $function animated_java:$(rig)/remove/this
+    #                 }
+    #             }
+    #             function player {
+    #                 attribute @s minecraft:movement_speed base reset
+    #                 attribute @s minecraft:jump_strength base reset
+    #                 attribute @s minecraft:gravity base reset
+    #                 particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
+
+    #                 effect clear @s minecraft:invisibility
+    #                 ride @s dismount
+
+    #                 item modify entity @s hotbar.8 custom:gojo/base
+    #                 function custom:universal/armor/reveal
+
+    #                 tag @s remove customUniversal.Cancellable
+    #                 tag @s remove customUniversal.DisconnectCheck
+    #                 tag @s remove customUniversal.Animation
+    #             }
+    #         }
+    #     }
+    # }
+
+    dir the_world {
+        function tick {
+
+        }
+
+        function active {
+
+        }
+
+        dir toggle {
+            function on {
+                function animated_java:the_world/summon {args:{animation: 'summon', start_animation: true}}
+                playsound minecraft:the_world.toggle.spawn player @s ~ ~ ~ 0.35
+                scoreboard players set @s customUniversal.ToggleDelay 20 
+            }
+        }
+
+        dir moves {
+            dir 1 {
+                function core {
+                    say a
+                }
+            }
+        }
+    }
+}
+
+
+dir universal {
+    # dir vfx {
+    #     function enable {
+    #         scoreboard players add .global customUniversal.VFXID 1
+    #         scoreboard players operation @s customUniversal.VFXID = .global customUniversal.VFXID
+    #     }
+    #     function spawn {
+    #         #  --   Required Args  --   #
+    #         # Mode: 1 - 3 | 
+            
+    #         # Mode 1 EX
+    #             # data merge storage minecraft:custom {universal:{vfx:{offsetXL:1,offsetXR:50,offsetYL:1,offsetYR:50,offsetZL:1,offsetZR:50}}}
+    #             # data merge storage minecraft:custom {universal:{vfx:{duration:30,speedXL:1,speedXR:50,speedYL:1,speedYR:50,speedZL:1,speedZR:50}}}
+    #             # function custom:universal/vfx/spawn {mode:1,speed:1}
+
+    #         # Mode 2 EX
+    #             # function custom:universal/vfx/spawn {mode:2}
+
+    #         # Mode 1 - Spawning with a specific offset.
+    #         # Mode 2 - Spawning with a random offset, provided by args.
+            
+
+    #         $scoreboard players set .Mode customUniversal.VFXConditions $(mode)
+    #         $scoreboard players set .Speed customUniversal.VFXConditions $(speed)
+
+    #         execute if score .Mode customUniversal.VFXConditions matches 1 run block { with storage minecraft:custom universal.vfx
+    #             $execute store result storage minecraft:custom universal.vfx.offsetXLfinal int 1 run random value -$(offsetXL)..$(offsetXL)
+    #             $execute store result storage minecraft:custom universal.vfx.offsetXRfinal int 1 run random value 0..$(offsetXR)
+    #             $execute store result storage minecraft:custom universal.vfx.offsetYLfinal int 1 run random value -$(offsetYL)..$(offsetYL)
+    #             $execute store result storage minecraft:custom universal.vfx.offsetYRfinal int 1 run random value 0..$(offsetYR)
+    #             $execute store result storage minecraft:custom universal.vfx.offsetZLfinal int 1 run random value -$(offsetZL)..$(offsetZL)
+    #             $execute store result storage minecraft:custom universal.vfx.offsetZRfinal int 1 run random value 0..$(offsetZR)
+
+    #             execute store result storage minecraft:custom universal.vfx.id int 1 run scoreboard players get .global customUniversal.VFXID
+
+    #             block { with storage minecraft:custom universal.vfx
+    #                 $execute positioned ~$(offsetXLfinal).$(offsetXRfinal) ~$(offsetYLfinal).$(offsetYRfinal) ~$(offsetZLfinal).$(offsetZRfinal) run function animated_java:vfx/summon {args:{animation:'$(animation)', start_animation: true}}
+    #                 execute as @e[type=minecraft:item_display,tag=aj.vfx.root] if entity @s[tag=customUniversal.VFXSpawn] run block { with storage minecraft:custom universal.vfx
+    #                     $scoreboard players set @s customUniversal.VFXID $(id)
+    #                     tag @s remove customUniversal.VFXSpawn
+    #                 }
+    #                 # $say $(offsetXL).$(offsetXR), $(offsetYL).$(offsetYR), $(offsetZL).$(offsetZR)
+    #             }
+    #         }
+
+    #         # Mounting spawner with random rotation
+    #         execute if score .Mode customUniversal.VFXConditions matches 2 run block {
+    #             execute store result storage minecraft:custom universal.vfx.id int 1 run scoreboard players get @s customUniversal.VFXID
+
+    #             block { with storage minecraft:custom universal.vfx
+    #                 function animated_java:vfx/summon {args:{animation:'lapis_blue_static', start_animation: true}}
+    #                 execute as @e[type=minecraft:item_display,tag=aj.vfx.root,tag=customUniversal.VFXSpawn] run block { with storage minecraft:custom universal.vfx
+    #                     scoreboard players set @s customUniversal.VFXRotation 1
+    #                     $scoreboard players set @s customUniversal.VFXID $(id)
+    #                     $ride @s mount @n[type=minecraft:item_display,tag=aj.projectiles.locator.center]
+    #                     tag @s remove customUniversal.VFXSpawn
+    #                 }
+    #                 # $say $(offsetXL).$(offsetXR), $(offsetYL).$(offsetYR), $(offsetZL).$(offsetZR)
+    #             }
+    #         }
+
+    #         # Mounting spawner with random rotation using center billboard
+    #         execute if score .Mode customUniversal.VFXConditions matches 3 run block {
+    #             execute store result storage minecraft:custom universal.vfx.id int 1 run scoreboard players get @s customUniversal.VFXID
+    #             execute store result storage minecraft:custom universal.vfx.rotationX int 1 run random value -180..180
+    #             execute store result storage minecraft:custom universal.vfx.rotationY int 1 run random value -90..90
+
+    #             block { with storage minecraft:custom universal.vfx
+    #                 $function animated_java:vfx_billboard/summon {args:{animation:'$(animation)_center', start_animation: true}}
+    #                 $function animated_java:vfx/summon {args:{animation:'$(animation)', start_animation: true}}
+    #                 execute as @e[type=minecraft:item_display,tag=aj.vfx_billboard.root,tag=customUniversal.VFXBillboard] run block { with storage minecraft:custom universal.vfx
+    #                     # scoreboard players set @s customUniversal.VFXRotation 1
+    #                     $scoreboard players set @s customUniversal.VFXID $(id)
+    #                     ride @s mount @n[type=minecraft:item_display,tag=aj.projectiles.locator.center]
+    #                     $rotate @s $(rotationX) $(rotationY)
+
+    #                     ride @n[type=minecraft:item_display,tag=aj.vfx.root,tag=customUniversal.VFXSpawn] mount @n[type=minecraft:item_display,tag=aj.vfx_billboard.locator.mount]
+    #                     tag @s remove customUniversal.VFXBillboard
+    #                 }
+    #                 # $say $(offsetXL).$(offsetXR), $(offsetYL).$(offsetYR), $(offsetZL).$(offsetZR)
+    #             }
+    #         }
+
+    #         execute if score .Speed customUniversal.VFXConditions matches 1 run block { with storage minecraft:custom universal.vfx
+    #             execute as @n[type=minecraft:item_display,tag=aj.vfx.root,tag=customUniversal.VFXSpeed] run block { with storage minecraft:custom universal.vfx
+    #                 scoreboard players set @s customUniversal.VFXSpeed 1
+    #                 $scoreboard players set @s customUniversal.VFXDuration $(duration)
+    #                 $execute store result score @s customUniversal.VFXSpeedXL run random value -$(speedXL)..$(speedXL)
+    #                 $execute store result score @s customUniversal.VFXSpeedXR run random value 0..$(speedXR)
+    #                 $execute store result score @s customUniversal.VFXSpeedYL run random value -$(speedYL)..$(speedYL)
+    #                 $execute store result score @s customUniversal.VFXSpeedYR run random value 0..$(speedYR)
+    #                 $execute store result score @s customUniversal.VFXSpeedZL run random value -$(speedZL)..$(speedZL)
+    #                 $execute store result score @s customUniversal.VFXSpeedZR run random value 0..$(speedZR)
+    #                 tag @s remove customUniversal.VFXSpeed
+    #             }
+    #         }
+            
+    #         # scoreboard players set .Mode customUniversal.VFXConditions 0
+    #         # scoreboard players set .Speed customUniversal.VFXConditions 0
+    #         # data remove storage minecraft:custom universal.vfx
+    #     }
+
+    #     function speed {
+    #         execute store result storage minecraft:custom universal.vfx.speedXLfinal int 1 run scoreboard players get @s customUniversal.VFXSpeedXL
+    #         execute store result storage minecraft:custom universal.vfx.speedXRfinal int 1 run scoreboard players get @s customUniversal.VFXSpeedXR
+    #         execute store result storage minecraft:custom universal.vfx.speedYLfinal int 1 run scoreboard players get @s customUniversal.VFXSpeedYL
+    #         execute store result storage minecraft:custom universal.vfx.speedYRfinal int 1 run scoreboard players get @s customUniversal.VFXSpeedYR
+    #         execute store result storage minecraft:custom universal.vfx.speedZLfinal int 1 run scoreboard players get @s customUniversal.VFXSpeedZL
+    #         execute store result storage minecraft:custom universal.vfx.speedZRfinal int 1 run scoreboard players get @s customUniversal.VFXSpeedZR
+    #         block { with storage minecraft:custom universal.vfx
+    #             $tp @s ~$(speedXLfinal).$(speedXRfinal) ~$(speedYLfinal).$(speedYRfinal) ~$(speedZLfinal).$(speedZRfinal)
+    #         }
+
+    #         data remove storage minecraft:custom universal.vfx
+    #     }
+
+    #     function random_rotation {
+    #         execute store result storage minecraft:custom universal.vfx.rotationX int 1 run random value -180..180
+    #         execute store result storage minecraft:custom universal.vfx.rotationY int 1 run random value -180..180
+    #         block { with storage minecraft:custom universal.vfx
+    #             say a
+    #             $rotate @s $(rotationX) $(rotationY)
+    #         }
+    #     }
+
+    #     function random_variant {
+    #         # EX: function custom:universal/vfx/random {variant_pool:"blue_static",range:"6"}
+    #         $data merge storage minecraft:custom {universal:{vfx:{variant_pool:"$(variant_pool)",range:$(range)}}}
+            
+    #         block { with storage minecraft:custom universal.vfx
+    #             $execute store result storage minecraft:custom universal.vfx.random int 1 run random value 1..$(range)
+    #             block { with storage minecraft:custom universal.vfx
+    #                 $function animated_java:vfx/variants/$(variant_pool)_$(random)/apply
+    #             }
+    #         }
+    #     }
+    # }
+
+    function cooldowns {
+        $scoreboard players set .$(ability)Cooldown customUniversal.Move$(move)Cooldown $(cooldown)
+        $scoreboard players operation .$(ability)Cooldown customUniversal.Move$(move)Cooldown *= x20 customUniversal.MoveCooldowns
+        $scoreboard players operation .$(ability)CooldownDivided customUniversal.Move$(move)Cooldown = .$(ability)Cooldown customUniversal.Move$(move)Cooldown
+        $scoreboard players operation .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown = .$(ability)Cooldown customUniversal.Move$(move)Cooldown
+        $scoreboard players operation .$(ability)CooldownDivided customUniversal.Move$(move)Cooldown = .$(ability)Cooldown customUniversal.Move$(move)Cooldown
+        $scoreboard players operation .$(ability)CooldownDivided customUniversal.Move$(move)Cooldown /= div11 customUniversal.MoveCooldowns
+
+        $execute store result storage minecraft:custom $(storage).cooldowns.move$(path).11 int 1 run scoreboard players get .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown
+
+        REPEAT (10,1) as i {
+            $scoreboard players operation .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown -= .$(ability)CooldownDivided customUniversal.Move$(move)Cooldown
+            $execute store result storage minecraft:custom $(storage).cooldowns.move$(path).<%i%>a int 1 run scoreboard players get .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown
+            $scoreboard players remove .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown 1
+            $execute store result storage minecraft:custom $(storage).cooldowns.move$(path).<%i%>b int 1 run scoreboard players get .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown
+        }
+
+        $scoreboard players operation .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown -= .$(ability)CooldownDivided customUniversal.Move$(move)Cooldown
+        $execute store result storage minecraft:custom $(storage).cooldowns.move$(path).1 int 1 run scoreboard players get .$(ability)CooldownThresholds customUniversal.Move$(move)Cooldown
+    }
+
+    dir hotbar {
+        function scroll {
+            REPEAT (0,8) as i {
+                execute if entity @s[nbt={SelectedItemSlot:<%i%>}] run scoreboard players set @s customUniversal.HotbarActive <%i%>
+            }
+
+            execute if entity @s[tag=customUniversal.HotbarToggleCrouch] run {
+                scoreboard players operation @s customUniversal.HotbarPrevious = @s customUniversal.HotbarActive
+                tag @s remove customUniversal.HotbarToggleCrouch
+            }
+
+            $block { {maximum:$(maximum)}
+                $scoreboard players set .Maximum customUniversal.HotbarMaximumMath $(maximum)
+                $scoreboard players set .Offset customUniversal.HotbarMaximumMath $(maximum)
+                scoreboard players add .Offset customUniversal.HotbarMaximumMath 1
+                execute store result storage minecraft:custom universal.hotbar.maximum int 1 run scoreboard players get .Maximum customUniversal.HotbarMaximumMath
+                execute store result storage minecraft:custom universal.hotbar.offset int 1 run scoreboard players get .Offset customUniversal.HotbarMaximumMath
+            }
+                
+            execute unless score @s customUniversal.HotbarActive = @s customUniversal.HotbarPrevious run block { with storage minecraft:custom universal.hotbar
+                execute if score @s customUniversal.HotbarActive > @s customUniversal.HotbarPrevious unless entity @s[scores={customUniversal.HotbarActive=8,customUniversal.HotbarPrevious=0}] run scoreboard players add @s customUniversal.HotbarMove 1
+                execute if score @s customUniversal.HotbarActive < @s customUniversal.HotbarPrevious unless entity @s[scores={customUniversal.HotbarActive=0,customUniversal.HotbarPrevious=8}] run scoreboard players remove @s customUniversal.HotbarMove 1
+                            
+                execute if entity @s[scores={customUniversal.HotbarActive=0,customUniversal.HotbarPrevious=8}] run scoreboard players add @s customUniversal.HotbarMove 1
+                execute if entity @s[scores={customUniversal.HotbarActive=8,customUniversal.HotbarPrevious=0}] run scoreboard players remove @s customUniversal.HotbarMove 1
+                $execute if score @s customUniversal.HotbarMove matches $(offset).. run scoreboard players set @s customUniversal.HotbarMove 1
+                $execute if score @s customUniversal.HotbarMove matches ..0 run scoreboard players set @s customUniversal.HotbarMove $(maximum)
+
+                scoreboard players operation @s customUniversal.HotbarPrevious = @s customUniversal.HotbarActive
+            }
+        }
+
+        function time {
+            $execute store result storage minecraft:custom universal.hotbar.time int 1 run scoreboard players get @s customUniversal.Move$(selected)CooldownConverted
+            $data merge storage minecraft:custom {universal:{hotbar:{ability:"$(ability)",move:$(selected)}}}
+            block { with storage minecraft:custom universal.hotbar
+                $execute if score @s customUniversal.Move$(move)CooldownConverted matches 100.. store result storage minecraft:custom $(ability).hotbar.time int 1 run scoreboard players get @s customUniversal.Move$(move)CooldownConverted
+                $execute if score @s customUniversal.Move$(move)CooldownConverted matches 10..99 run data merge storage minecraft:custom {$(ability):{hotbar:{time:"0$(time)"}}}
+                $execute if score @s customUniversal.Move$(move)CooldownConverted matches 0..9 run data merge storage minecraft:custom {$(ability):{hotbar:{time:"00$(time)"}}}
+            }
+        }
+    }
+
+    dir control {
+        function movement {
+            $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+            block { with storage minecraft:custom universal.control
+                $execute as @a[tag=$(user),scores={$(objective)=$(id)}] at @s run tp @n[type=item_display,tag=$(rig),scores={$(objective)=$(id)}] ~ ~ ~ ~ 0
+            }
+        }
+        function connect_player {
+            $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {universal:{control:{who:"$(who)",objective:"$(objective)",path:"$(path)"}}}
+            block { with storage minecraft:custom universal.control
+                $execute as @a[tag=$(who),scores={$(objective)=$(id)}] at @s run $(path)
+            }
+        }
+    }
+
+    dir setup {
+        function rig {
+            $scoreboard players add .global $(objective) 1
+            $scoreboard players operation @s $(objective) = .global $(objective)
+            $execute store result score @n[type=minecraft:item_display,tag=aj.$(item).root] $(objective) run scoreboard players get @s $(objective)
+        }
+        function pair {
+            $execute store result score @n[type=$(type),tag=$(what)] $(objective) run scoreboard players get @s $(objective)
+        }
+    }
+
+    dir armor {
+        function hide {
+            item modify entity @s armor.head custom:universal/hide_armor/helmet
+            item modify entity @s armor.chest custom:universal/hide_armor/chest
+            item modify entity @s armor.legs custom:universal/hide_armor/legs
+            item modify entity @s armor.feet custom:universal/hide_armor/feet
+
+            effect give @s minecraft:invisibility infinite 1 true
+            tag @s add customUniversal.LockArmor
+        }
+
+        function reveal {
+            execute if items entity @s armor.feet minecraft:leather_boots run item modify entity @s armor.feet custom:universal/reveal_armor/feet/leather
+            execute if items entity @s armor.feet minecraft:chainmail_boots run item modify entity @s armor.feet custom:universal/reveal_armor/feet/chainmail
+            execute if items entity @s armor.feet minecraft:iron_boots run item modify entity @s armor.feet custom:universal/reveal_armor/feet/iron
+            execute if items entity @s armor.feet minecraft:golden_boots run item modify entity @s armor.feet custom:universal/reveal_armor/feet/golden
+            execute if items entity @s armor.feet minecraft:diamond_boots run item modify entity @s armor.feet custom:universal/reveal_armor/feet/diamond
+            execute if items entity @s armor.feet minecraft:netherite_boots run item modify entity @s armor.feet custom:universal/reveal_armor/feet/netherite
+
+            execute if items entity @s armor.chest minecraft:leather_chestplate run item modify entity @s armor.chest custom:universal/reveal_armor/chest/leather
+            execute if items entity @s armor.chest minecraft:chainmail_chestplate run item modify entity @s armor.chest custom:universal/reveal_armor/chest/chainmail
+            execute if items entity @s armor.chest minecraft:iron_chestplate run item modify entity @s armor.chest custom:universal/reveal_armor/chest/iron
+            execute if items entity @s armor.chest minecraft:golden_chestplate run item modify entity @s armor.chest custom:universal/reveal_armor/chest/golden
+            execute if items entity @s armor.chest minecraft:diamond_chestplate run item modify entity @s armor.chest custom:universal/reveal_armor/chest/diamond
+            execute if items entity @s armor.chest minecraft:netherite_chestplate run item modify entity @s armor.chest custom:universal/reveal_armor/chest/netherite
+
+            execute if items entity @s armor.legs minecraft:leather_leggings run item modify entity @s armor.legs custom:universal/reveal_armor/legs/leather
+            execute if items entity @s armor.legs minecraft:chainmail_leggings run item modify entity @s armor.legs custom:universal/reveal_armor/legs/chainmail
+            execute if items entity @s armor.legs minecraft:iron_leggings run item modify entity @s armor.legs custom:universal/reveal_armor/legs/iron
+            execute if items entity @s armor.legs minecraft:golden_leggings run item modify entity @s armor.legs custom:universal/reveal_armor/legs/golden
+            execute if items entity @s armor.legs minecraft:diamond_leggings run item modify entity @s armor.legs custom:universal/reveal_armor/legs/diamond
+            execute if items entity @s armor.legs minecraft:netherite_leggings run item modify entity @s armor.legs custom:universal/reveal_armor/legs/netherite
+
+            execute if items entity @s armor.head minecraft:leather_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/leather
+            execute if items entity @s armor.head minecraft:chainmail_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/chainmail
+            execute if items entity @s armor.head minecraft:iron_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/iron
+            execute if items entity @s armor.head minecraft:golden_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/golden
+            execute if items entity @s armor.head minecraft:diamond_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/diamond
+            execute if items entity @s armor.head minecraft:netherite_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/netherite
+            execute if items entity @s armor.head minecraft:turtle_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/turtle
+        }
+    }
+
+    # dir click {
+    #     function detect {
+    #         execute if predicate custom:universal/sneaking if entity @s[tag=CustomAbilityUser] unless score @s customUniversal.ToggleDelay matches 1.. run {
+    #             scoreboard players add @s customUniversal.Toggle 1
+    #             execute if score @s customUniversal.Toggle matches 3.. run scoreboard players set @s customUniversal.Toggle 1
+    #             execute if entity @s[tag=customAbility.Gojo] run {
+    #                 execute if score @s customUniversal.Toggle matches 1 run function custom:abilities/gojo/toggle/on
+    #                 execute if score @s customUniversal.Toggle matches 2.. run function custom:abilities/gojo/toggle/off 
+    #             }
+    #             execute if entity @s[tag=customAbility.TheWorld] run {
+    #                 execute if score @s customUniversal.Toggle matches 1 run function custom:abilities/world/toggle/on
+    #                 execute if score @s customUniversal.Toggle matches 2.. run function custom:abilities/world/toggle/off 
+    #             }
+    #         } else run {
+    #             execute unless predicate custom:universal/sneaking unless score @s customUniversal.Toggle matches 2 run {
+    #                 execute if entity @s[tag=customAbility.Gojo] run {
+    #                     function custom:abilities/gojo/moves/select
+    #                 }
+    #                 execute if entity @s[tag=customAbility.TheWorld] run {
+    #                     function custom:abilities/the_world/moves/select
+    #                 }
+    #             }
+    #         }
+    #         advancement revoke @s only custom:click
+    #     }
+    # }
+
+    dir toggle {
+        function main {
+            execute if entity @s[tag=CustomAbility.User] run {
+                execute unless entity @s[tag=CustomAbility.Active] run {
+                    # Toggle ON #
+                    tag @s add CustomAbility.Active
+                    tag @s add temp
+                    execute if entity @s[tag=customAbility.Gojo] run {
+                        function custom:abilities/the_world/toggle/on
+                    }
+                    execute if entity @s[tag=customAbility.TheWorld] run {
+                        function custom:abilities/the_world/toggle/on
+                    }
+                } else execute unless entity @s[tag=temp] run {
+                    # Toggle OFF #
+                    tag @s remove CustomAbility.Active
+                    execute if entity @s[tag=customAbility.Gojo] run {
+                        say no more gojo
+                    }
+                    execute if entity @s[tag=customAbility.TheWorld] run {
+                        say no more world
+                    }
+                }
+                tag @s remove temp
+            } else run {
+                say b
+            }
+        }
+    }
+    
+    dir error_messages {
+        function universal {
+            execute if entity @s[tag=customGojo.RidingBlue] run function custom:universal/error_messages/find {error:100}
+            execute if entity @s[tag=customGojo.InfiniteVoided] run function custom:universal/error_messages/find {error:101}
+        }
+        function find {
+            $tag @s add customUniversal.Error$(error)
+            scoreboard players set @s customUniversal.FailReturn 1
+
+        }
+        function fail {
+            $scoreboard players operation @s customUniversal.CooldownMath = @s customUniversal.Move$(number)Cooldown
+            scoreboard players operation @s customUniversal.CooldownMath /= div20 customUniversal.CooldownMath
+            $tellraw @s ["",{"text":"\n\u01D2 ","color":"white"},{"text":" $(move)","color":"gold"}]
+            execute if entity @s[tag=customUniversal.Error1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" ","color":"blue"},{"score":{"name":"@s","objective":"customUniversal.CooldownMath"},"color":"red"},{"text":"s","color":"red"}]
+            execute if entity @s[tag=customUniversal.Error2] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Another move is ","color":"gray"},{"text":"currently casting!","color":"blue"}]
+            execute if entity @s[tag=customUniversal.Error3] run tellraw @s ["",{"text":"- This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]
+            execute if entity @s[tag=customUniversal.Error4] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"be looking at an entity to use ","color":"gray"},{"text":"this ","color":"aqua"},{"text":"move!","color":"gray"}]
+            execute if entity @s[tag=customUniversal.Error5] run tellraw @s ["",{"text":"- You can't use ","color":"gray"},{"text":"Domain Expansion","color":"dark_purple"},{"text":" - ","color":"gray"},{"text":"Infinite Void","color":"light_purple"},{"text":" whilst nearby someone ","color":"gray"},{"text":"currently using","color":"gold"},{"text":" or ","color":"red"},{"text":"performing ","color":"gold"},{"text":"this move!","color":"gray"}]
+            execute if entity @s[tag=customUniversal.Error6] run tellraw @s ["",{"text":"- You must be on ","color":"gray"},{"text":"solid ground ","color":"green"},{"text":"to cast this ","color":"gray"},{"text":"move!","color":"gold"}]
+            execute if entity @s[tag=customUniversal.Error7] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use this attack whilst it's ","color":"gray"},{"text":"currently casting!","color":"aqua"}]
+            execute if entity @s[tag=customUniversal.Error8] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CAN'T","color":"red"},{"text":" use this move whilst being targeted by ","color":"gray"},{"text":"Pact!","color":"aqua"}]
+
+            execute if entity @s[tag=customUniversal.Error9] run scoreboard players operation @s customUniversal.CooldownMath = @s customEren.ShiftCooldown
+            execute if entity @s[tag=customUniversal.Error9] run scoreboard players operation @s customUniversal.CooldownMath /= #divide customUniversal.CooldownMath
+            execute if entity @s[tag=customUniversal.Error9] run tellraw @s ["",{"text":"- You can't attempt to ","color":"gray"},{"text":"shift","color":"gold"},{"text":" into the ","color":"gray"},{"text":"Attack Titan","color":"aqua"},{"text":" for another ","color":"gray"},{"score":{"name":"@s","objective":"customUniversal.CooldownMath"},"color":"red"},{"text":"s!","color":"red"}]
+
+
+            execute if entity @s[tag=customUniversal.Error100] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
+            execute if entity @s[tag=customUniversal.Error101] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
+            
+            REPEAT (1,101) as i {
+                tag @s remove customUniversal.Error<%i%>
+            }
+
+            playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5
+            scoreboard players set @s customUniversal.MoveDelay 10
+            scoreboard players set @s customUniversal.FailReturn 0
+            tellraw @s ""
+        }
+    }
+}

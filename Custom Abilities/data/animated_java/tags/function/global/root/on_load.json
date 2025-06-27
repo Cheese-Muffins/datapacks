@@ -1,0 +1,12 @@
+{
+	"values": [
+		"animated_java:gojo/root/on_load",
+		"animated_java:gojo_projectiles/root/on_load",
+		"animated_java:gojo_vfx/root/on_load",
+		"animated_java:projectiles/root/on_load",
+		"animated_java:the_world/root/on_load",
+		"animated_java:the_world_cutscenes/root/on_load",
+		"animated_java:the_world_projectiles/root/on_load",
+		"animated_java:vfx_billboard/root/on_load"
+	]
+}

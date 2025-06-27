@@ -3,6 +3,8 @@
 
 execute unless entity @s[tag=customUniversal_HideHUD] run function custom:items/eren/hotbar/display/main
 
+execute if entity @s[tag=AttackTitan] run function custom:items/eren/passives/attack_titan/main
+
 #execute at @s if entity @s[tag=Sukuna] if score @s customUniversal_Health matches ..4 run function custom:items/yuji/passive/binding_vow/main
 #execute if entity @s[tag=customYuji.BindingVow_Temp] if score @s customUniversal_Health matches 5.. run tag @s remove customYuji.BindingVow_Temp
 

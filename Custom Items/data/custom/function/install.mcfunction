@@ -133,7 +133,13 @@ function custom:universal/hotbar/move_math {ability:"Yuji",storage:"yuji",path:"
 
 # Eren Yeager #
 
+scoreboard objectives add customEren.TitanID dummy
 scoreboard objectives add customEren.ShiftCooldown dummy
+scoreboard objectives add customEren.Titan_HeadRotationX_Current dummy
+scoreboard objectives add customEren.Titan_HeadRotationY_Current dummy
+scoreboard objectives add customEren.Titan_HeadRotationX_Previous dummy
+scoreboard objectives add customEren.Titan_HeadRotationY_Previous dummy
+scoreboard objectives add customEren.Titan_Rotation dummy
 function custom:universal/hotbar {ability:"Eren",storage:"eren",path:"1a",move:"1",cooldown:"10"}
 
 # The World #

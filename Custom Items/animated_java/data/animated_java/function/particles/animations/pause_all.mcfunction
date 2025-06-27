@@ -4,3 +4,4 @@ tag @s remove aj.particles.animation.titan_shift.playing
 tag @s remove aj.particles.animation.eren_blood.playing
 tag @s remove aj.particles.animation.eren_blood_drip.playing
 tag @s remove aj.particles.animation.shift_static.playing
+tag @s remove aj.particles.animation.titan_scream.playing

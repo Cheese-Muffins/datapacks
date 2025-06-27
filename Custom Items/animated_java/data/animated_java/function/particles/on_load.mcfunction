@@ -3,3 +3,4 @@ scoreboard objectives add aj.titan_shift.frame dummy
 scoreboard objectives add aj.eren_blood.frame dummy
 scoreboard objectives add aj.eren_blood_drip.frame dummy
 scoreboard objectives add aj.shift_static.frame dummy
+scoreboard objectives add aj.titan_scream.frame dummy

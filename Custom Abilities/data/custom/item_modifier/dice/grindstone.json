@@ -1,0 +1,7 @@
+{
+  "function": "minecraft:set_components",
+  "enchantments": {},
+  "components": {
+    "!minecraft:enchantments": {}
+  }
+}

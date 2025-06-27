@@ -6,6 +6,7 @@ execute if entity @s[tag=aj.particles.animation.titan_shift.playing] run functio
 execute if entity @s[tag=aj.particles.animation.eren_blood.playing] run function animated_java:particles/animations/eren_blood/zzz/on_tick
 execute if entity @s[tag=aj.particles.animation.eren_blood_drip.playing] run function animated_java:particles/animations/eren_blood_drip/zzz/on_tick
 execute if entity @s[tag=aj.particles.animation.shift_static.playing] run function animated_java:particles/animations/shift_static/zzz/on_tick
+execute if entity @s[tag=aj.particles.animation.titan_scream.playing] run function animated_java:particles/animations/titan_scream/zzz/on_tick
 execute on passengers if entity @s[tag=aj.particles.data] run function animated_java:particles/root/zzz/1
 execute at @s on passengers run rotate @s ~ ~
 function #animated_java:particles/as_root/post_tick

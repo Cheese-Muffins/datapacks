@@ -1,0 +1,4 @@
+#$tp @n[type=minecraft:item_display,tag=aj.eren.locator.head_offset,scores={customEren.TitanID=$(id)}] @n[type=minecraft:item_display,tag=aj.eren.root,scores={customEren.TitanID=$(id)}]
+$execute rotated as @a[tag=AttackTitan,scores={customEren.TitanID=$(id)}] run rotate @n[type=minecraft:item_display,tag=aj.eren.locator.head_offset,scores={customEren.TitanID=$(id)}] ~ 0
+$execute as @n[type=minecraft:item_display,tag=aj.eren.locator.head_offset,scores={customEren.TitanID=$(id)}] at @s run tp @s ^ ^ ^0.5
+$tp @n[type=minecraft:item_display,tag=aj.eren.root,scores={customEren.TitanID=$(id)}] @n[type=minecraft:item_display,tag=aj.eren.locator.head_offset,scores={customEren.TitanID=$(id)}]

@@ -3,12 +3,18 @@ function animated_java:global/internal/gu/convert_uuid_array_to_string with enti
 data modify entity @s data.bones.data_data set from storage aj:uuid main.out
 summon minecraft:item_display ~ ~ ~ {Tags:['aj.new', 'aj.global.locator', 'aj.eren.locator', 'aj.eren.locator']}
 execute as @e[type=minecraft:item_display,tag=aj.new,tag=aj.global.locator,limit=1,distance=..0.01] run function animated_java:eren/zzz/2
-data modify entity @s data.locators.dripping_blood.uuid set from storage aj:uuid main.out
+data modify entity @s data.locators.head.uuid set from storage aj:uuid main.out
 summon minecraft:item_display ~ ~ ~ {Tags:['aj.new', 'aj.global.locator', 'aj.eren.locator', 'aj.eren.locator']}
 execute as @e[type=minecraft:item_display,tag=aj.new,tag=aj.global.locator,limit=1,distance=..0.01] run function animated_java:eren/zzz/3
-data modify entity @s data.locators.anchor.uuid set from storage aj:uuid main.out
+data modify entity @s data.locators.dripping_vfx.uuid set from storage aj:uuid main.out
+summon minecraft:item_display ~ ~ ~ {Tags:['aj.new', 'aj.global.locator', 'aj.eren.locator', 'aj.eren.locator']}
+execute as @e[type=minecraft:item_display,tag=aj.new,tag=aj.global.locator,limit=1,distance=..0.01] run function animated_java:eren/zzz/4
+data modify entity @s data.locators.user_anchor.uuid set from storage aj:uuid main.out
+summon minecraft:item_display ~ ~ ~ {Tags:['aj.new', 'aj.global.locator', 'aj.eren.locator', 'aj.eren.locator']}
+execute as @e[type=minecraft:item_display,tag=aj.new,tag=aj.global.locator,limit=1,distance=..0.01] run function animated_java:eren/zzz/5
+data modify entity @s data.locators.projectile_vfx.uuid set from storage aj:uuid main.out
 summon item_display ~ ~ ~ {Tags:['aj.new', 'aj.global.camera', 'aj.eren.camera', 'aj.eren.camera'], teleport_duration: 2}
-execute as @e[type=item_display,tag=aj.new,tag=aj.global.camera,limit=1,distance=..0.01] run function animated_java:eren/zzz/4
+execute as @e[type=item_display,tag=aj.new,tag=aj.global.camera,limit=1,distance=..0.01] run function animated_java:eren/zzz/6
 data modify entity @s data.cameras.camera.uuid set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.eren.node.item_display] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
 data modify entity @s data.bones.item_display_item_display set from storage aj:uuid main.out
@@ -20,8 +26,8 @@ execute on vehicle on passengers if entity @s[tag=aj.eren.node.bottom] run funct
 data modify entity @s data.bones.bone_bottom set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.eren.node.leftarm] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
 data modify entity @s data.bones.bone_leftarm set from storage aj:uuid main.out
-execute on vehicle on passengers if entity @s[tag=aj.eren.node.head] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
-data modify entity @s data.bones.bone_head set from storage aj:uuid main.out
+execute on vehicle on passengers if entity @s[tag=aj.eren.node.head1] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
+data modify entity @s data.bones.bone_head1 set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.eren.node.upper] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s
 data modify entity @s data.bones.bone_upper set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.eren.node.bottom3] run function animated_java:global/internal/gu/convert_uuid_array_to_string with entity @s

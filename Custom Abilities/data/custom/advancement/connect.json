@@ -1,0 +1,1 @@
+{"criteria":{"join":{"trigger": "minecraft:tick"}},"requirements": [["join"]],"rewards":{"function": "custom:connect"}}

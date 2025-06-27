@@ -1,0 +1,3 @@
+$ride @n[type=item_display,tag=aj.heads.root,scores={customEren.TitanID=$(id)}] mount @n[type=item_display,tag=aj.eren.locator.head,scores={customEren.TitanID=$(id)}]
+$execute as @n[type=item_display,tag=aj.heads.root,scores={customEren.TitanID=$(id)}] run function animated_java:heads/animations/transform/play
+$execute rotated as @n[type=item_display,tag=aj.eren.locator.head,scores={customEren.TitanID=$(id)}] run rotate @n[type=item_display,tag=aj.heads.root,scores={customEren.TitanID=$(id)}] ~ ~
