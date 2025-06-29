@@ -3,6 +3,7 @@
 		"animated_java:gojo/root/on_tick",
 		"animated_java:gojo_projectiles/root/on_tick",
 		"animated_java:gojo_vfx/root/on_tick",
+		"animated_java:recieve_item/root/on_tick",
 		"animated_java:the_world/root/on_tick",
 		"animated_java:the_world_cutscenes/root/on_tick",
 		"animated_java:the_world_projectiles/root/on_tick",

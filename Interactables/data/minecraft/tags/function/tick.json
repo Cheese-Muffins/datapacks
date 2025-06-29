@@ -1,5 +1,3 @@
 {
-  "values": [
-    "interactables:loop"
-  ]
+	"values": ["interactables:tick"]
 }

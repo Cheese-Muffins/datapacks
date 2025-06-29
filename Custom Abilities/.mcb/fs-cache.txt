@@ -118,7 +118,7 @@ data/custom/function/abilities/dice/key_bindings/move2.mcfunction:c56d463ab898d8
 data/custom/function/abilities/dice/key_bindings/move3.mcfunction:a2801991a860903b8e671d055c3ebd122a9823f5
 data/custom/function/abilities/dice/moves/1/core.mcfunction:a9f183dd45d4530c9d82ac08c02f756f394ee06f
 data/custom/function/abilities/dice/moves/1/pass.mcfunction:798cd4e64e26014a300eb08c2e7d63d5a3c26a8f
-data/custom/function/abilities/dice/moves/1/roll.mcfunction:c09aa9e0db89152858264ba9915128394c98eea9
+data/custom/function/abilities/dice/moves/1/roll.mcfunction:80e0f5172a118d1925d3ae8ac1f353cd0f6f2642
 data/custom/function/abilities/dice/moves/2/core.mcfunction:904b927a66744289c61c50fb84ae9166bb076260
 data/custom/function/abilities/dice/moves/2/pass.mcfunction:df4d943f3c564d72ec1f4f638afc35f645b35cd9
 data/custom/function/abilities/dice/roll/1/select.mcfunction:9786928a37661b93acd88ee7f67e74c0350de539
@@ -131,6 +131,11 @@ data/custom/function/abilities/dice/roll/1/translocation_100k/description.mcfunc
 data/custom/function/abilities/dice/roll/1/grindstone/main.mcfunction:16c997d103837d4c1d4a4546a6d74cfacfebb3fa
 data/custom/function/abilities/dice/roll/1/grindstone/remove.mcfunction:fa710e7c74ba53aa6e420066fa7bf206f67eb9db
 data/custom/function/abilities/dice/roll/1/grindstone/description.mcfunction:d2962a187d89a869085cf13167880e5604e06d0f
+data/custom/function/abilities/dice/roll/20/select.mcfunction:2b5b1bcd4514198088842ffd74ae3337b9da15f8
+data/custom/function/abilities/dice/roll/20/announce.mcfunction:04eb483f7efcb97f782edee94f83cacaecc09c72
+data/custom/function/abilities/dice/roll/20/tommy_gun/main.mcfunction:2eaeaddbf6f501576492ee87f0689d473d78f862
+data/custom/function/abilities/dice/roll/20/tommy_gun/description.mcfunction:b9a93a74617e6c20d1b1729366ef964dbaebcbcd
+data/custom/function/abilities/dice/roll/20/tommy_gun/inform.mcfunction:4b0e0c4bc1c3819bff477702aee5249e29b67d64
 data/custom/function/abilities/dice/hotbar/zzz/0.mcfunction:779f37acce098ac9648da836aaf463b6d5ee74db
 data/custom/function/abilities/dice/hotbar/zzz/1.mcfunction:86d3f53811efdfbc7ebcfd83c18c645944fba2d7
 data/custom/function/abilities/dice/hotbar/zzz/2.mcfunction:211d78340c8f9c530689f2e998cdbd7ca3ff4924
@@ -293,6 +298,7 @@ data/custom/function/universal/toggle/zzz/8.mcfunction:6b1960401ad115382d8337784
 data/custom/function/universal/toggle/zzz/5.mcfunction:3d0ddeaab3ca471b96651207cd9a67f08aef37cd
 data/custom/function/universal/toggle/zzz/0.mcfunction:21fa32533dd09d4a6b1bb33b7709e778b0d6114c
 data/custom/function/universal/toggle/main.mcfunction:c29ce0ad39dab6c4c7068908174422d3d5badd0a
+data/custom/function/universal/fetch_block.mcfunction:554440932825dc963803f1a27c9df1b2d20a486f
 data/custom/function/ui/player/tick.mcfunction:f743be7e68d37cd8bb52028a23491cb9e76a0b5a
 data/custom/function/ui/player/close.mcfunction:fab331e1103554f1e99dcee8cfa7b437a64397ee
 data/custom/function/ui/player/teleport.mcfunction:ab74c7ad1a48cb25b9531616b668d631f8747b12

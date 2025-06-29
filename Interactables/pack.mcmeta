@@ -1,7 +1,6 @@
 {
-	"pack": {
-  	"pack_format": 48,
-  	"description": "item click does stuf?!??!"
+	"pack":{
+		"pack_format": 81,
+		"description": "Interactables Made with MC-Build!"
 	}
 }
-

@@ -1,0 +1,134 @@
+advancement use {
+    "criteria": {
+      "requirement": {
+        "trigger": "minecraft:using_item",
+        "conditions": {
+          "item": {
+            "components": {
+              "minecraft:food": {
+                "nutrition": 0,
+                "saturation": 0,
+                "can_always_eat": true
+              },
+              "minecraft:consumable": {
+                "consume_seconds": 8888888
+              }
+            }
+          }
+        }
+      }
+    },
+    "rewards": {
+      "function": "interactables:use"
+    }
+}
+
+function on_load minecraft:load{
+    # you can use MC-Build without its internal scoreboard but this will limit the available features
+    scoreboard objectives add mcb.internal dummy
+    scoreboard objectives add interactablesUniversal.Delay dummy
+    scoreboard objectives add interactablesUniversal.RecieveItemID dummy
+
+    scoreboard objectives add interactablesTommyGun.Statistics dummy
+}
+
+function tick {
+    execute as @a[scores={interactablesUniversal.Delay=1..}] run scoreboard players remove @s interactablesUniversal.Delay 1
+
+}
+
+function use {
+    execute if entity @s[nbt={SelectedItem:{components:{"minecraft:item_model":"minecraft:interactables/tommy_gun"}}}] unless score @s interactablesUniversal.Delay matches 1.. run function interactables:tommy_gun/main
+    advancement revoke @s only interactables:use
+}
+
+dir recieve_item {
+    function create_scenario {
+        tag @s add interactablesUniversal.RecieveItemSpectator
+        $execute at @s rotated ~ 0 run function animated_java:recieve_item/summon {args:{animation:'$(animation)', start_animation: true}}
+        $execute as @n[type=minecraft:item_display,tag=aj.recieve_item.item_display.item] run data merge entity @s {item:{components:{"minecraft:item_model":"$(item)"}}}
+        scoreboard players add .global interactablesUniversal.RecieveItemID 1
+        scoreboard players operation @s interactablesUniversal.RecieveItemID = .global interactablesUniversal.RecieveItemID
+        execute as @n[type=minecraft:item_display,tag=aj.recieve_item.root] run scoreboard players operation @s interactablesUniversal.RecieveItemID = .global interactablesUniversal.RecieveItemID
+        execute as @n[type=minecraft:item_display,tag=aj.recieve_item.locator.camera] run scoreboard players operation @s interactablesUniversal.RecieveItemID = .global interactablesUniversal.RecieveItemID
+        gamemode spectator @s
+    }
+
+    function spectate {
+        # function interactables:recieve_item/spectate {objective:"interactablesUniversal.RecieveItemID",spectator:"interactablesUniversal.RecieveItemSpectator",camera:"aj.recieve_item.camera"}
+        $execute store result storage minecraft:interactables camera.id int 1 run scoreboard players get @s $(objective)
+        $data merge storage minecraft:interactables {camera:{spectator:"$(spectator)",camera:"$(camera)",objective:"$(objective)"}}
+        block { with storage minecraft:interactables camera
+            $execute as @a[tag=$(spectator),scores={$(objective)=$(id)}] run spectate @n[type=minecraft:item_display,tag=$(camera),scores={$(objective)=$(id)}]
+        }
+    }
+
+    function reset {
+        execute store result storage minecraft:interactables recieve.id int 1 run scoreboard players get @s interactablesUniversal.RecieveItemID
+        block { with storage minecraft:interactables recieve
+            $execute as @a[tag=interactablesUniversal.RecieveItemSpectator,scores={interactablesUniversal.RecieveItemID=$(id)}] at @s run block { {id:$(id)}
+                gamemode survival @s
+                $tp @s @n[type=minecraft:item_display,tag=aj.recieve_item.root,scores={interactablesUniversal.RecieveItemID=$(id)}]
+                tag @s remove interactablesUniversal.RecieveItemSpectator
+            }
+            function animated_java:recieve_item/remove/this
+        }
+    }
+
+    function run_command {
+        # function interactables:recieve_item/run_command {objective:"interactablesUniversal.RecieveItemID",what:"tag=interactablesUniversal.RecieveItemSpectator",output:"say a"}
+        $execute store result storage minecraft:interactables recieve.id int 1 run scoreboard players get @s $(objective)
+        $data merge storage minecraft:interactables {recieve:{what:"$(what)",objective:"$(objective)",output:"$(output)"}}
+        block { with storage minecraft:interactables recieve
+            $execute as @a[$(what),scores={$(objective)=$(id)}] at @s run $(output)
+        }
+    }
+}
+
+dir tommy_gun {
+    function main {
+        scoreboard players set @s interactablesUniversal.Delay 2
+
+        item replace block -48605 87 7339 container.0 from entity @s weapon
+        execute store result score .BulletCount interactablesTommyGun.Statistics run data get block -48605 87 7339 Items[0].components."minecraft:custom_data".bullets
+        execute store result score .DamageValue interactablesTommyGun.Statistics run data get block -48605 87 7339 Items[0].components."minecraft:damage"
+        scoreboard players remove .BulletCount interactablesTommyGun.Statistics 1
+        scoreboard players add .DamageValue interactablesTommyGun.Statistics 1
+        execute store result storage minecraft:interactables tommy_gun.bullet_count int 1 run scoreboard players get .BulletCount interactablesTommyGun.Statistics
+        execute store result storage minecraft:interactables tommy_gun.damage_value int 1 run scoreboard players get .DamageValue interactablesTommyGun.Statistics
+        
+        block { with storage minecraft:interactables tommy_gun
+          $data modify block -48605 87 7339 Items[0].components."minecraft:lore"[3].text set value "$(bullet_count)"
+          $data modify block -48605 87 7339 Items[0].components."minecraft:custom_data".bullets set value $(bullet_count)
+          $data modify block -48605 87 7339 Items[0].components."minecraft:damage" set value $(damage_value)
+        }
+
+        execute if score .BulletCount interactablesTommyGun.Statistics matches 1.. run {
+          item replace entity @s weapon from block -48605 87 7339 container.0
+        } else run {
+          item replace entity @s weapon with air
+        }
+        item replace block -48605 87 7339 container.0 with minecraft:air
+
+        block logic {
+          tag @s add temp
+          execute anchored eyes positioned ^ ^ ^ run block fire {
+            execute as @e[tag=!temp,type=!#custom:not_mob,dx=0] positioned ~-0.99 ~-0.99 ~-0.99 if entity @s[dx=0] positioned ~0.99 ~0.99 ~0.99 run {
+              scoreboard players set .distance interactablesTommyGun.Statistics 500
+              damage @s 8 interactables:tommy_gun by @p[tag=temp]
+            }
+            execute positioned ^ ^ ^0.2 unless block ^ ^ ^ #custom:raycast_pass run {
+              function custom:universal/fetch_block
+              block { with storage minecraft:custom universal.fetch_block
+                $particle block{block_state:"$(id)"} ^ ^ ^-0.2 0 0 0 1 10 normal
+              }
+            }
+            scoreboard players add .distance interactablesTommyGun.Statistics 1
+            particle minecraft:smoke ~ ~ ~ 0 0 0 0 1 force @a[tag=!temp]
+            execute if score .distance interactablesTommyGun.Statistics matches ..500 positioned ^ ^ ^.2 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass run function interactables:tommy_gun/logic/fire
+          }
+          tag @s remove temp
+          scoreboard players reset .distance interactablesTommyGun.Statistics
+        }
+    }
+}

@@ -851,7 +851,7 @@ dir abilities {
                     attribute @s minecraft:jump_strength base reset
                     tag @s remove customUniversal.Animation
                     execute store result score @s customDice.RollValue run random value 1..20
-                    execute if score @s customDice.RollValue matches 1..20 run function custom:abilities/dice/roll/1/select
+                    execute if score @s customDice.RollValue matches 1..20 run function custom:abilities/dice/roll/20/select
                 }
             }
 
@@ -949,6 +949,37 @@ dir abilities {
                     function description {
                         data merge storage minecraft:custom {dice:{roll:{name:"Grindstone"}}}
                         data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Grindstone","color":"gold"},{"text":"\n"},{"text":"Completely ","color":"gray"},{"text":"remove all enchantments","color":"red"},{"text":" from a ","color":"gray"},{"text":"random ","color":"light_purple"},{"text":"armor piece.","color":"gray"}]}}}
+                    }
+                }
+            }
+
+            dir 20 {
+                function select {
+                    execute store result score @s customDice.SecondaryRollValue run random value 1..2
+                    execute if score @s customDice.SecondaryRollValue matches 1..2 run function custom:abilities/dice/roll/20/tommy_gun/main
+                }
+
+                function announce {
+                    $tellraw @s [{"text":"Fatebound Dice\n","color":"gold"},{"color":"green","italic":false,"text":"Congrats! "},{"color":"gray","italic":false,"text":"You rolled a "},{"color":"red","italic":false,"text":"d"},{"color":"red","italic":false,"score":{"name":"@s","objective":"customDice.RollValue"}},{"color":"gray","italic":false,"text":" cursing you with "},{"color":"gold","hover_event":{"action":"show_text","value":[$(description)]},"italic":false,"text":"$(name)!"}]
+                }
+
+                dir tommy_gun {
+                    function main {
+                        scoreboard players set @s customDice.PreviousRoll 600
+                        
+                        function interactables:recieve_item/create_scenario {animation:'common',item:"minecraft:interactables/tommy_gun"}
+
+                        # give @p bowl[max_stack_size=1,max_damage=30,item_name={"color":"yellow","italic":false,"text":"Tommy Gun"},lore=[{"color":"gray","italic":false,"text":"Welcome to the land of the free"}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"fire "},{"color":"gray","italic":false,"text":"a bullet"}],[{"color":"gold","italic":false,"text":"30"},{"color":"gray","italic":false,"text":"/"},{"color":"gold","italic":false,"text":"30 "},{"color":"gray","italic":false,"text":"Bullets"}]],damage=0,food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/tommy_gun"] 1
+                    }
+
+                    function description {
+                        data merge storage minecraft:custom {dice:{roll:{name:"Second Amendment"}}}
+                        data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Second Amendment","color":"gold"},{"text":"\n"},{"text":"Get given a ","color":"gray"},{"text":"Tommy Gun","color":"yellow"},{"text":" which has ","color":"gray"},{"text":"30 bullets,","color":"green"},{"text":" and will be ","color":"gray"},{"text":"destroyed","color":"red"},{"text":" upon firing all rounds. This item can be stored in chests or passed around to allies.","color":"gray"}]}}}
+                    }
+
+                    function inform {
+                        function custom:abilities/dice/roll/20/tommy_gun/description
+                        function custom:abilities/dice/roll/20/announce with storage minecraft:custom dice.roll
                     }
                 }
             }
@@ -1951,6 +1982,12 @@ dir universal {
                 tag @s remove temp
             } 
         }
+    }
+
+    function fetch_block {
+        loot insert -48605 87 7339 mine ~ ~ ~ minecraft:stick[tool={can_destroy_blocks_in_creative:true,default_mining_speed:90,damage_per_block:90,rules:[]},enchantments={"minecraft:silk_touch":1}]
+        data modify storage minecraft:custom universal.fetch_block.id set string block -48605 87 7339 Items[0].id
+        item replace block -48605 87 7339 container.0 with minecraft:air
     }
 }
 

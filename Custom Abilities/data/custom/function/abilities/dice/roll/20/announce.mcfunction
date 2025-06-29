@@ -1,0 +1,3 @@
+# Generated with MC-Build
+
+$tellraw @s [{"text":"Fatebound Dice\n","color":"gold"},{"color":"green","italic":false,"text":"Congrats! "},{"color":"gray","italic":false,"text":"You rolled a "},{"color":"red","italic":false,"text":"d"},{"color":"red","italic":false,"score":{"name":"@s","objective":"customDice.RollValue"}},{"color":"gray","italic":false,"text":" cursing you with "},{"color":"gold","hover_event":{"action":"show_text","value":[$(description)]},"italic":false,"text":"$(name)!"}]

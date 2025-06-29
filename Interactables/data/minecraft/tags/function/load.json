@@ -1,5 +1,1 @@
-{
-  "values": [
-    "interactables:install"
-  ]
-}
+{"values":["interactables:on_load"]}
