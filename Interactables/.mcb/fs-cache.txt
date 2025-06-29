@@ -13,10 +13,10 @@ data/interactables/function/recieve_item/run_command.mcfunction:a7e3c927bc8f0b97
 data/interactables/function/tommy_gun/zzz/0.mcfunction:566b3135e01be3d5e08b27ccc2d5ba9a89206062
 data/interactables/function/tommy_gun/zzz/1.mcfunction:eba208c5a865acb8cfda090b53c9f57620feb2d9
 data/interactables/function/tommy_gun/zzz/2.mcfunction:f321acd23353bd56ea2e1ac91a4dad6f1fdc2d58
-data/interactables/function/tommy_gun/logic/fire/zzz/3.mcfunction:815cce2d175a143439ecad2fee928904aec2ba9d
+data/interactables/function/tommy_gun/logic/fire/zzz/3.mcfunction:e5f6f4cc4cc4f4e8f712a717b7e759ad619e4e49
 data/interactables/function/tommy_gun/logic/fire/zzz/5.mcfunction:cc3e50248c4fbcefa90f609bb8d26837b8e59e84
 data/interactables/function/tommy_gun/logic/fire/zzz/4.mcfunction:54127e22cdcfceae51e7e53015b65c225553a48c
 data/interactables/function/tommy_gun/logic/fire.mcfunction:df2fc56aca80c347795ba7663872379be5649c53
-data/interactables/function/tommy_gun/logic.mcfunction:c681abcd186b6468f4dddeec0be5dea61b69fe99
+data/interactables/function/tommy_gun/logic.mcfunction:907a6ee5948b098e69a08fc4a9e4b4aac139627b
 data/interactables/function/tommy_gun/main.mcfunction:04a480ed2c29348e95e712c54f5056e25d1ac4ab
 data/minecraft/tags/function/load.json:da186f9f33b01073898d89e2f9e1092c8f49c2b8

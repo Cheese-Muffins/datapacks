@@ -112,10 +112,12 @@ dir tommy_gun {
 
         block logic {
           tag @s add temp
+          playsound minecraft:tommy_gun.fire player @a ~ ~ ~ 1
           execute anchored eyes positioned ^ ^ ^ run block fire {
             execute as @e[tag=!temp,type=!#custom:not_mob,dx=0] positioned ~-0.99 ~-0.99 ~-0.99 if entity @s[dx=0] positioned ~0.99 ~0.99 ~0.99 run {
               scoreboard players set .distance interactablesTommyGun.Statistics 500
               damage @s 8 interactables:tommy_gun by @p[tag=temp]
+              particle block{block_state:"minecraft:redstone_block"} ~ ~ ~ 0 0 0 1 25 force @a
             }
             execute positioned ^ ^ ^0.2 unless block ^ ^ ^ #custom:raycast_pass run {
               function custom:universal/fetch_block
