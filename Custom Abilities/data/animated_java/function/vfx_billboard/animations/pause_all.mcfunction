@@ -4,3 +4,7 @@ tag @s remove aj.vfx_billboard.animation.lapis_blue.playing
 tag @s remove aj.vfx_billboard.animation.reversal_red.playing
 tag @s remove aj.vfx_billboard.animation.hollow_purple.playing
 tag @s remove aj.vfx_billboard.animation.light_beam.playing
+tag @s remove aj.vfx_billboard.animation.twinkle.playing
+tag @s remove aj.vfx_billboard.animation.countdown1.playing
+tag @s remove aj.vfx_billboard.animation.countdown2.playing
+tag @s remove aj.vfx_billboard.animation.countdown3.playing

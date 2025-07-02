@@ -106,9 +106,16 @@ function on_load {
     scoreboard objectives add customDice.TertiaryRollValue dummy
     scoreboard objectives add customDice.TranslocationX dummy
     scoreboard objectives add customDice.TranslocationZ dummy
+
+        # Passives #
+        scoreboard objectives add customDice.ActivePassive dummy
+        scoreboard objectives add customDice.PassiveRepetitiveTimer dummy
+
+
     function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:1,move:1,cooldown:30}
     function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:2,move:2,cooldown:30}
-    function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:3,cooldown:1}
+    function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:3,cooldown:30}
+    function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:4,cooldown:1}
 }
 
 function tick {
@@ -810,6 +817,27 @@ dir abilities {
             }
 
             function custom:abilities/dice/hotbar/main
+
+            execute if score @s customDice.ActivePassive matches 1.. run function custom:abilities/dice/passive/main
+        }
+
+        dir passive {
+            function main {
+                # Passive: Repetitive Motion
+                execute if score @s customDice.ActivePassive matches 1 run {
+                    scoreboard players add @s customDice.PassiveRepetitiveTimer 1
+                    execute if predicate custom:dice/repetitive/forward run scoreboard players reset @s customDice.PassiveRepetitiveTimer
+                    execute if predicate custom:dice/repetitive/backward run scoreboard players reset @s customDice.PassiveRepetitiveTimer
+                    execute if predicate custom:dice/repetitive/left run scoreboard players reset @s customDice.PassiveRepetitiveTimer
+                    execute if predicate custom:dice/repetitive/right run scoreboard players reset @s customDice.PassiveRepetitiveTimer
+                    execute if predicate custom:dice/repetitive/jump run scoreboard players reset @s customDice.PassiveRepetitiveTimer
+
+                    execute if score @s customDice.PassiveRepetitiveTimer matches 100.. run {
+                        kill @s
+                        scoreboard players reset @s customDice.PassiveRepetitiveTimer
+                    }
+                }
+            }
         }
 
         dir key_bindings {
@@ -876,10 +904,12 @@ dir abilities {
         dir roll {
             dir 1 {
                 function select {
-                    execute store result score @s customDice.SecondaryRollValue run random value 1..3
+                    execute store result score @s customDice.SecondaryRollValue run random value 1..5
                     execute if score @s customDice.SecondaryRollValue matches 1 run function custom:abilities/dice/roll/1/firework/main
                     execute if score @s customDice.SecondaryRollValue matches 2 run function custom:abilities/dice/roll/1/translocation_100k/main
                     execute if score @s customDice.SecondaryRollValue matches 3 run function custom:abilities/dice/roll/1/grindstone/main
+                    execute if score @s customDice.SecondaryRollValue matches 4 run function custom:abilities/dice/roll/1/death/main
+                    execute if score @s customDice.SecondaryRollValue matches 5 run function custom:abilities/dice/roll/1/repetitive_passive/main
                 }
 
                 function announce {
@@ -951,12 +981,43 @@ dir abilities {
                         data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Grindstone","color":"gold"},{"text":"\n"},{"text":"Completely ","color":"gray"},{"text":"remove all enchantments","color":"red"},{"text":" from a ","color":"gray"},{"text":"random ","color":"light_purple"},{"text":"armor piece.","color":"gray"}]}}}
                     }
                 }
+
+                dir death {
+                    function main {
+                        scoreboard players set @s customDice.PreviousRoll 4
+                        function custom:abilities/dice/roll/1/death/description
+                        function custom:abilities/dice/roll/1/announce with storage minecraft:custom dice.roll
+
+                        kill @s
+                    }
+
+                    function description {
+                        data merge storage minecraft:custom {dice:{roll:{name:"Death"}}}
+                        data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Death","color":"gold"},{"text":"\n"},{"text":"Instantaneously ","color":"gray"},{"text":"die ","color":"red"},{"text":"upon rolling.","color":"gray"}]}}}
+                    }
+                }
+
+                dir repetitive_passive {
+                    function main {
+                        scoreboard players set @s customDice.PreviousRoll 5
+                        function custom:abilities/dice/roll/1/repetitive_passive/description
+                        function custom:abilities/dice/roll/1/announce with storage minecraft:custom dice.roll
+
+                        scoreboard players set @s customDice.ActivePassive 1
+                    }
+
+                    function description {
+                        data merge storage minecraft:custom {dice:{roll:{name:"Passive: Repetitive Motion"}}}
+                        data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Passive: Repetitive Motion","color":"gold"},{"text":"\n"},{"text":"Active until rolling ","color":"gray"},{"text":"another ","color":"white"},{"text":"passive. ","color":"gray"},{"text":"Standing still","color":"light_purple"},{"text":" for longer than ","color":"gray"},{"text":"5s","color":"gold"},{"text":" will immediately ","color":"gray"},{"text":"kill","color":"red"},{"text":" the user.","color":"gray"}]}}}
+                    }
+                }
             }
 
             dir 20 {
                 function select {
                     execute store result score @s customDice.SecondaryRollValue run random value 1..2
-                    execute if score @s customDice.SecondaryRollValue matches 1..2 run function custom:abilities/dice/roll/20/tommy_gun/main
+                    execute if score @s customDice.SecondaryRollValue matches 1 run function custom:abilities/dice/roll/20/tommy_gun/main
+                    execute if score @s customDice.SecondaryRollValue matches 2 run function custom:abilities/dice/roll/20/microphone/main
                 }
 
                 function announce {
@@ -965,9 +1026,10 @@ dir abilities {
 
                 dir tommy_gun {
                     function main {
-                        scoreboard players set @s customDice.PreviousRoll 600
-                        
-                        function interactables:recieve_item/create_scenario {animation:'common',item:"minecraft:interactables/tommy_gun"}
+                        scoreboard players set @s customDice.PreviousRoll 601
+
+                        scoreboard players set @s interactablesUniversal.GiveItemID 1
+                        function interactables:recieve_item/create_scenario {animation:'common',perspective:"none",item:"minecraft:interactables/tommy_gun"}
 
                         # give @p bowl[max_stack_size=1,max_damage=30,item_name={"color":"yellow","italic":false,"text":"Tommy Gun"},lore=[{"color":"gray","italic":false,"text":"Welcome to the land of the free"}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"fire "},{"color":"gray","italic":false,"text":"a bullet"}],[{"color":"gold","italic":false,"text":"30"},{"color":"gray","italic":false,"text":"/"},{"color":"gold","italic":false,"text":"30 "},{"color":"gray","italic":false,"text":"Bullets"}]],damage=0,food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/tommy_gun"] 1
                     }
@@ -980,6 +1042,29 @@ dir abilities {
                     function inform {
                         function custom:abilities/dice/roll/20/tommy_gun/description
                         function custom:abilities/dice/roll/20/announce with storage minecraft:custom dice.roll
+
+                        give @p bowl[max_stack_size=1,max_damage=50,item_name={"color":"yellow","italic":false,"text":"Tommy Gun"},lore=[{"color":"gray","italic":false,"text":"Welcome to the land of the free"}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"fire "},{"color":"gray","italic":false,"text":"a bullet"}],[{"color":"gold","italic":false,"text":"50"},{"color":"gray","italic":false,"text":"/"},{"color":"gold","italic":false,"text":"50 "},{"color":"gray","italic":false,"text":"Bullets"}]],damage=0,food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/tommy_gun",custom_data={bullets:50}] 1
+                    }
+                }
+
+                dir microphone {
+                    function main {
+                        scoreboard players set @s customDice.PreviousRoll 602
+
+                        scoreboard players set @s interactablesUniversal.GiveItemID 2
+                        function interactables:recieve_item/create_scenario {animation:'common',perspective:"head",item:"minecraft:interactables/microphone"}
+                    }
+
+                    function description {
+                        data merge storage minecraft:custom {dice:{roll:{name:"Microphone"}}}
+                        data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Microphone","color":"gold"},{"text":"\n"},{"text":"Gives the gambler a ","color":"gray"},{"text":"microphone item.","color":"white"},{"text":" Upon using this item, you'll be put into a cutscene where you launch off a ","color":"gray"},{"text":"Miku Beam","color":"aqua"},{"text":" obliterating literally anything in front of you.","color":"gray"}]}}}
+                    }
+
+                    function inform {
+                        function custom:abilities/dice/roll/20/microphone/description
+                        function custom:abilities/dice/roll/20/announce with storage minecraft:custom dice.roll
+
+                        give @p bowl[max_stack_size=1,max_damage=3,item_name={"color":"aqua","italic":false,"text":"Microphone"},lore=[{"color":"gray","italic":false,"text":"Miku Miku BEAMMMMM!"}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"fire "},{"color":"gray","italic":false,"text":"a Miku Beam"}],[{"color":"gold","italic":false,"text":"3"},{"color":"gray","italic":false,"text":"/"},{"color":"gold","italic":false,"text":"3 "},{"color":"gray","italic":false,"text":"Beams Left"}]],damage=0,food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/microphone",custom_data={beams:3}] 1
                     }
                 }
             }
@@ -987,11 +1072,11 @@ dir abilities {
 
         dir hotbar {
             function main {
-                REPEAT (1,3) as i {
+                REPEAT (1,4) as i {
                     function custom:abilities/dice/hotbar/base_progress with storage minecraft:custom dice.cooldowns.move<%i%>
                 }
                 
-                REPEAT (1,3) as i {
+                REPEAT (1,4) as i {
                     execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
                         function custom:universal/hotbar/time {ability:"dice",selected:<%i%>}
                     }
@@ -1014,15 +1099,19 @@ dir abilities {
                 }
 
                 execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom dice.hotbar
-                    $title @s actionbar [{"text":"\uF821\u04A0"},{"text":"\uF822$(roll_value)","color":"$(roll_color)"},{"text":"\uF823"},{"text":"\uF820\$(move1)\uF801\u01B5"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                    $title @s actionbar [{"text":"\uF821\u04A0"},{"text":"\uF822$(roll_value)","color":"$(roll_color)"},{"text":"\uF823"},{"text":"\uF820\$(move1)\uF801\u01B5"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
                 }
 
                 execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom dice.hotbar
-                    $title @s actionbar [{"text":"\uF821\u04A0"},{"text":"\uF822$(roll_value)","color":"$(roll_color)"},{"text":"\uF823"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)\uF801\u01B5"},{"text":"\uF800\$(move3)"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                    $title @s actionbar [{"text":"\uF821\u04A0"},{"text":"\uF822$(roll_value)","color":"$(roll_color)"},{"text":"\uF823"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)\uF801\u01B5"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
                 }
 
                 execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom dice.hotbar
-                    $title @s actionbar [{"text":"\u04A0"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)\uF801\u01B5"}{"text":"\uF808$(time)","color":"yellow"}]
+                    $title @s actionbar [{"text":"\u04A0"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)\uF801\u01B5"},{"text":"\uF800\$(move4)"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 4 run block { with storage minecraft:custom dice.hotbar
+                    $title @s actionbar [{"text":"\u04A0"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)\uF801\u01B5"},{"text":"\uF808$(time)","color":"yellow"}]
                 }
             }
 
@@ -1630,7 +1719,7 @@ dir universal {
                 execute store result storage minecraft:custom universal.vfx.id int 1 run scoreboard players get @s customUniversal.VFXID
 
                 block { with storage minecraft:custom universal.vfx
-                    $function animated_java:gojo_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
+                    $function animated_java:$(branch)_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
                     $function animated_java:vfx_billboard/summon {args:{animation:'$(animation)', start_animation: true}}
                     execute as @e[type=minecraft:item_display,tag=aj.vfx_billboard.root,tag=customUniversal.VFXBillboard] run block { with storage minecraft:custom universal.vfx
                         # scoreboard players set @s customUniversal.VFXRotation 1
@@ -1640,7 +1729,7 @@ dir universal {
                             tag @s add temp
                         }
 
-                        execute as @n[type=minecraft:item_display,tag=aj.gojo_vfx.root,tag=customUniversal.VFXSpawn] run {
+                        $execute as @n[type=minecraft:item_display,tag=aj.$(branch)_vfx.root,tag=customUniversal.VFXSpawn] run {
                             ride @s mount @n[type=minecraft:item_display,tag=customUniversal.VFXBillboardMount,tag=notMounted,tag=temp]
                             tag @s remove customUniversal.VFXSpawn
                         }
@@ -1666,19 +1755,19 @@ dir universal {
                 execute store result storage minecraft:custom universal.vfx.rotationY int 1 run random value -90..90
 
                 block { with storage minecraft:custom universal.vfx
-                    $function animated_java:gojo_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
+                    $function animated_java:$(branch)_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
                     $function animated_java:vfx_billboard/summon {args:{animation:'$(animation)', start_animation: true}}
                     execute as @e[type=minecraft:item_display,tag=aj.vfx_billboard.root,tag=customUniversal.VFXBillboard] run block { with storage minecraft:custom universal.vfx
                         # scoreboard players set @s customUniversal.VFXRotation 1
                         $scoreboard players set @s customUniversal.VFXID $(id)
-                        ride @s mount @n[type=minecraft:item_display,tag=aj.projectiles.locator.center]
+                        # ride @s mount @n[type=minecraft:item_display,tag=aj.projectiles.locator.center]
                         $rotate @s $(rotationX) $(rotationY)
 
                         execute as @n[type=minecraft:item_display,tag=customUniversal.VFXBillboardMount,tag=notMounted,tag=!temp] run {
                             tag @s add temp
                         }
 
-                        execute as @n[type=minecraft:item_display,tag=aj.gojo_vfx.root,tag=customUniversal.VFXSpawn] run {
+                        $execute as @n[type=minecraft:item_display,tag=aj.$(branch)_vfx.root,tag=customUniversal.VFXSpawn] run {
                             ride @s mount @n[type=minecraft:item_display,tag=customUniversal.VFXBillboardMount,tag=notMounted,tag=temp]
                             tag @s remove customUniversal.VFXSpawn
                         }
@@ -1726,7 +1815,6 @@ dir universal {
             execute store result storage minecraft:custom universal.vfx.rotationX int 1 run random value -180..180
             execute store result storage minecraft:custom universal.vfx.rotationY int 1 run random value -180..180
             block { with storage minecraft:custom universal.vfx
-                say a
                 $rotate @s $(rotationX) $(rotationY)
             }
         }
@@ -1985,9 +2073,9 @@ dir universal {
     }
 
     function fetch_block {
-        loot insert -48605 87 7339 mine ~ ~ ~ minecraft:stick[tool={can_destroy_blocks_in_creative:true,default_mining_speed:90,damage_per_block:90,rules:[]},enchantments={"minecraft:silk_touch":1}]
-        data modify storage minecraft:custom universal.fetch_block.id set string block -48605 87 7339 Items[0].id
-        item replace block -48605 87 7339 container.0 with minecraft:air
+        loot insert 0 -63 0 mine ~ ~ ~ minecraft:stick[tool={can_destroy_blocks_in_creative:true,default_mining_speed:90,damage_per_block:90,rules:[]},enchantments={"minecraft:silk_touch":1}]
+        data modify storage minecraft:custom universal.fetch_block.id set string block 0 -63 0 Items[0].id
+        item replace block 0 -63 0 container.0 with minecraft:air
     }
 }
 

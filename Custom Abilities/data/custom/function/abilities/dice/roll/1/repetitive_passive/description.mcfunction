@@ -1,0 +1,4 @@
+# Generated with MC-Build
+
+data merge storage minecraft:custom {dice:{roll:{name:"Passive: Repetitive Motion"}}}
+data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Passive: Repetitive Motion","color":"gold"},{"text":"\n"},{"text":"Active until rolling ","color":"gray"},{"text":"another ","color":"white"},{"text":"passive. ","color":"gray"},{"text":"Standing still","color":"light_purple"},{"text":" for longer than ","color":"gray"},{"text":"5s","color":"gold"},{"text":" will immediately ","color":"gray"},{"text":"kill","color":"red"},{"text":" the user.","color":"gray"}]}}}

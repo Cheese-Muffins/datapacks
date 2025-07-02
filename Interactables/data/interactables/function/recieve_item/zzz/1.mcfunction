@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$execute as @a[tag=interactablesUniversal.RecieveItemSpectator,scores={interactablesUniversal.RecieveItemID=$(id)}] at @s run function interactables:recieve_item/zzz/2 {id:$(id)}
-function animated_java:recieve_item/remove/this
+gamemode survival @s
+$tp @s @n[type=minecraft:item_display,tag=aj.recieve_item.root,scores={interactablesUniversal.RecieveItemID=$(id)}]
+tag @s remove interactablesUniversal.RecieveItemSpectator

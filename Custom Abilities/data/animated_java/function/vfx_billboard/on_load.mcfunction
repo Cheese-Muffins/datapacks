@@ -3,3 +3,7 @@ scoreboard objectives add aj.lapis_blue.frame dummy
 scoreboard objectives add aj.reversal_red.frame dummy
 scoreboard objectives add aj.hollow_purple.frame dummy
 scoreboard objectives add aj.light_beam.frame dummy
+scoreboard objectives add aj.twinkle.frame dummy
+scoreboard objectives add aj.countdown1.frame dummy
+scoreboard objectives add aj.countdown2.frame dummy
+scoreboard objectives add aj.countdown3.frame dummy

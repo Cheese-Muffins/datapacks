@@ -5,5 +5,9 @@ execute if entity @s[tag=aj.vfx_billboard.animation.lapis_blue.playing] run func
 execute if entity @s[tag=aj.vfx_billboard.animation.reversal_red.playing] run function animated_java:vfx_billboard/animations/reversal_red/zzz/on_tick
 execute if entity @s[tag=aj.vfx_billboard.animation.hollow_purple.playing] run function animated_java:vfx_billboard/animations/hollow_purple/zzz/on_tick
 execute if entity @s[tag=aj.vfx_billboard.animation.light_beam.playing] run function animated_java:vfx_billboard/animations/light_beam/zzz/on_tick
+execute if entity @s[tag=aj.vfx_billboard.animation.twinkle.playing] run function animated_java:vfx_billboard/animations/twinkle/zzz/on_tick
+execute if entity @s[tag=aj.vfx_billboard.animation.countdown1.playing] run function animated_java:vfx_billboard/animations/countdown1/zzz/on_tick
+execute if entity @s[tag=aj.vfx_billboard.animation.countdown2.playing] run function animated_java:vfx_billboard/animations/countdown2/zzz/on_tick
+execute if entity @s[tag=aj.vfx_billboard.animation.countdown3.playing] run function animated_java:vfx_billboard/animations/countdown3/zzz/on_tick
 execute on passengers if entity @s[tag=aj.vfx_billboard.data] run function animated_java:vfx_billboard/root/zzz/on_tick/locators_and_cameras
 execute at @s on passengers run rotate @s ~ ~

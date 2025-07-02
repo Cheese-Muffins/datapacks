@@ -98,6 +98,10 @@ scoreboard objectives add customDice.SecondaryRollValue dummy
 scoreboard objectives add customDice.TertiaryRollValue dummy
 scoreboard objectives add customDice.TranslocationX dummy
 scoreboard objectives add customDice.TranslocationZ dummy
+# Passives #
+scoreboard objectives add customDice.ActivePassive dummy
+scoreboard objectives add customDice.PassiveRepetitiveTimer dummy
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:1,move:1,cooldown:30}
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:2,move:2,cooldown:30}
-function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:3,cooldown:1}
+function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:3,cooldown:30}
+function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:4,cooldown:1}

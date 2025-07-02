@@ -6,9 +6,13 @@ execute as @n[ type=minecraft:item_display, tag=aj.new, tag=aj.recieve_item.loca
 data modify entity @s data.uuids.locator_item_locator set from storage aj:uuid main.out
 data modify entity @s data.locators.item_locator.uuid set from storage aj:uuid main.out
 summon minecraft:item_display ^0 ^0 ^0 {Tags:["aj.global.bone.camera_bone.child","aj.global.bone.camera_bone.child.locator","aj.global.bone.camera_bone.decendant","aj.global.bone.camera_bone.decendant.locator","aj.global.bone.camera_bone.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.camera","aj.new","aj.recieve_item.bone.camera_bone.child","aj.recieve_item.bone.camera_bone.child.locator","aj.recieve_item.bone.camera_bone.decendant","aj.recieve_item.bone.camera_bone.decendant.locator","aj.recieve_item.bone.camera_bone.tree","aj.recieve_item.entity","aj.recieve_item.locator","aj.recieve_item.locator.camera","aj.recieve_item.node","aj.recieve_item.node.camera"]}
-execute as @n[ type=minecraft:item_display, tag=aj.new, tag=aj.recieve_item.locator.camera, distance=..4 ] run function animated_java:recieve_item/zzz/summon/as_data_entity/as_locator/camera
+execute as @n[ type=minecraft:item_display, tag=aj.new, tag=aj.recieve_item.locator.camera, distance=..5 ] run function animated_java:recieve_item/zzz/summon/as_data_entity/as_locator/camera
 data modify entity @s data.uuids.locator_camera set from storage aj:uuid main.out
 data modify entity @s data.locators.camera.uuid set from storage aj:uuid main.out
+summon minecraft:item_display ^0 ^0 ^0 {Tags:["aj.global.bone.camera_bone.child","aj.global.bone.camera_bone.child.camera","aj.global.bone.camera_bone.decendant","aj.global.bone.camera_bone.decendant.camera","aj.global.bone.camera_bone.tree","aj.global.camera","aj.global.entity","aj.global.node","aj.global.node.camera","aj.new","aj.recieve_item.bone.camera_bone.child","aj.recieve_item.bone.camera_bone.child.camera","aj.recieve_item.bone.camera_bone.decendant","aj.recieve_item.bone.camera_bone.decendant.camera","aj.recieve_item.bone.camera_bone.tree","aj.recieve_item.camera","aj.recieve_item.camera.camera","aj.recieve_item.entity","aj.recieve_item.node","aj.recieve_item.node.camera"], teleport_duration: 2}
+execute as @n[ type=minecraft:item_display, tag=aj.new, tag=aj.recieve_item.camera.camera, distance=..5 ] run function animated_java:recieve_item/zzz/summon/as_data_entity/as_camera/camera
+data modify entity @s data.uuids.camera_camera set from storage aj:uuid main.out
+data modify entity @s data.cameras.camera.uuid set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.recieve_item.node.top] run function animated_java:global/internal/gu/convert_uuid_array_to_string
 data modify entity @s data.uuids.bone_top set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.recieve_item.node.chest] run function animated_java:global/internal/gu/convert_uuid_array_to_string
