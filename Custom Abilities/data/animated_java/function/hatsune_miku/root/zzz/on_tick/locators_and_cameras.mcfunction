@@ -4,3 +4,5 @@ function animated_java:hatsune_miku/root/zzz/on_tick/select_locator_right_hand w
 function animated_java:hatsune_miku/root/zzz/on_tick/select_locator_left_hand with entity @s data.locators.left_hand
 function animated_java:hatsune_miku/root/zzz/on_tick/select_locator_countdown with entity @s data.locators.countdown
 function animated_java:hatsune_miku/root/zzz/on_tick/select_locator_camera with entity @s data.locators.camera
+function animated_java:hatsune_miku/root/zzz/on_tick/select_locator_beam with entity @s data.locators.beam
+function animated_java:hatsune_miku/root/zzz/on_tick/select_locator_star with entity @s data.locators.star

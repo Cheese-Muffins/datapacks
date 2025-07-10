@@ -7,3 +7,7 @@ data modify storage aj:temp args merge from entity @s data.locators.countdown
 function animated_java:hatsune_miku/zzz/at_all_locators/execute_at_transform with storage aj:temp args
 data modify storage aj:temp args merge from entity @s data.locators.camera
 function animated_java:hatsune_miku/zzz/at_all_locators/execute_at_transform with storage aj:temp args
+data modify storage aj:temp args merge from entity @s data.locators.beam
+function animated_java:hatsune_miku/zzz/at_all_locators/execute_at_transform with storage aj:temp args
+data modify storage aj:temp args merge from entity @s data.locators.star
+function animated_java:hatsune_miku/zzz/at_all_locators/execute_at_transform with storage aj:temp args

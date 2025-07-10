@@ -879,7 +879,7 @@ dir abilities {
                     attribute @s minecraft:jump_strength base reset
                     tag @s remove customUniversal.Animation
                     execute store result score @s customDice.RollValue run random value 1..20
-                    execute if score @s customDice.RollValue matches 1..20 run function custom:abilities/dice/roll/20/select
+                    execute if score @s customDice.RollValue matches 1..20 run function custom:abilities/dice/roll/12_15/select
                 }
             }
 
@@ -1009,6 +1009,41 @@ dir abilities {
                     function description {
                         data merge storage minecraft:custom {dice:{roll:{name:"Passive: Repetitive Motion"}}}
                         data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Passive: Repetitive Motion","color":"gold"},{"text":"\n"},{"text":"Active until rolling ","color":"gray"},{"text":"another ","color":"white"},{"text":"passive. ","color":"gray"},{"text":"Standing still","color":"light_purple"},{"text":" for longer than ","color":"gray"},{"text":"5s","color":"gold"},{"text":" will immediately ","color":"gray"},{"text":"kill","color":"red"},{"text":" the user.","color":"gray"}]}}}
+                    }
+                }
+            }
+
+            dir 12_15 {
+                function select {
+                    execute store result score @s customDice.SecondaryRollValue run random value 1..2
+                    execute if score @s customDice.SecondaryRollValue matches 1..2 run function custom:abilities/dice/roll/12_15/propulsion/main
+                    # execute if score @s customDice.SecondaryRollValue matches 2 run function custom:abilities/dice/roll/20/microphone/main
+                }
+
+                function announce {
+                    $tellraw @s [{"text":"Fatebound Dice\n","color":"gold"},{"color":"green","italic":false,"text":"Congrats! "},{"color":"gray","italic":false,"text":"You rolled a "},{"color":"red","italic":false,"text":"d"},{"color":"red","italic":false,"score":{"name":"@s","objective":"customDice.RollValue"}},{"color":"gray","italic":false,"text":" cursing you with "},{"color":"gold","hover_event":{"action":"show_text","value":[$(description)]},"italic":false,"text":"$(name)!"}]
+                }
+
+                dir propulsion {
+                    function main {
+                        scoreboard players set @s customDice.PreviousRoll 300
+
+                        scoreboard players set @s interactablesUniversal.GiveItemID 3
+                        function interactables:recieve_item/create_scenario {animation:'common',perspective:"none",item:"minecraft:interactables/propulsion"}
+
+                        # give @p bowl[max_stack_size=1,max_damage=30,item_name={"color":"yellow","italic":false,"text":"Tommy Gun"},lore=[{"color":"gray","italic":false,"text":"Welcome to the land of the free"}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"fire "},{"color":"gray","italic":false,"text":"a bullet"}],[{"color":"gold","italic":false,"text":"30"},{"color":"gray","italic":false,"text":"/"},{"color":"gold","italic":false,"text":"30 "},{"color":"gray","italic":false,"text":"Bullets"}]],damage=0,food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/tommy_gun"] 1
+                    }
+
+                    function description {
+                        data merge storage minecraft:custom {dice:{roll:{name:"Expiremental Propulsion Device"}}}
+                        data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Expiremental Propulsion Device","color":"gold"},{"text":"\n"},{"text":"Skyrockets the wielder ","color":"gray"},{"text":"forward in the direction they're looking","color":"green"},{"text":" at ","color":"gray"},{"text":"incredible ","color":"aqua"},{"text":"speeds. Become completely ","color":"gray"},{"text":"immune to fall damage","color":"light_purple"},{"text":" until ","color":"gray"},{"text":"landing","color":"white"},{"text":" again.","color":"gray"}]}}}
+                    }
+
+                    function inform {
+                        function custom:abilities/dice/roll/12_15/propulsion/description
+                        function custom:abilities/dice/roll/12_15/announce with storage minecraft:custom dice.roll
+
+                        give @s bowl[max_stack_size=1,item_name={"color":"yellow","italic":false,"text":"Expiremental Propulsion Device"},lore=[{"color":"gray","italic":false,"text":"Consumer fully liable."}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"launch "},{"color":"gray","italic":false,"text":"forward incredibly"}],{"color":"gray","italic":false,"text":"far in the direction you're looking"}],food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/propulsion"] 1
                     }
                 }
             }
@@ -1672,7 +1707,7 @@ dir universal {
             
             $scoreboard players set @s customUniversal.VFXCount $(count)
             $scoreboard players set .Mode customUniversal.VFXConditions $(mode)
-            $data merge storage minecraft:custom {universal:{vfx:{speed:$(speed),animation:'$(animation)',duration:$(duration),branch:"$(branch)"}}}
+            $data merge storage minecraft:custom {universal:{vfx:{speed:$(speed),animation:'$(animation)',duration:$(duration),branch:"$(branch)",extra:"$(extra)"}}}
 
             # Particle with speed, duration, and random rotation config
             execute if score .Mode customUniversal.VFXConditions matches 1 run function custom:universal/vfx/mode_1
@@ -1704,6 +1739,7 @@ dir universal {
                     $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] if entity @s[tag=customUniversal.VFXSpawn] run block { with storage minecraft:custom universal.vfx
                         $data merge entity @s {teleport_duration:$(duration)}
                         $scoreboard players set @s customUniversal.VFXID $(id)
+                        $$(extra)
                         $scoreboard players set @s customUniversal.VFXSpeed $(speed)
                         tag @s remove customUniversal.VFXSpawn
                     }
@@ -1724,6 +1760,7 @@ dir universal {
                     execute as @e[type=minecraft:item_display,tag=aj.vfx_billboard.root,tag=customUniversal.VFXBillboard] run block { with storage minecraft:custom universal.vfx
                         # scoreboard players set @s customUniversal.VFXRotation 1
                         $scoreboard players set @s customUniversal.VFXID $(id)
+                        $$(extra)
 
                         execute as @n[type=minecraft:item_display,tag=customUniversal.VFXBillboardMount,tag=notMounted,tag=!temp] run {
                             tag @s add temp
@@ -1760,7 +1797,7 @@ dir universal {
                     execute as @e[type=minecraft:item_display,tag=aj.vfx_billboard.root,tag=customUniversal.VFXBillboard] run block { with storage minecraft:custom universal.vfx
                         # scoreboard players set @s customUniversal.VFXRotation 1
                         $scoreboard players set @s customUniversal.VFXID $(id)
-                        # ride @s mount @n[type=minecraft:item_display,tag=aj.projectiles.locator.center]
+                        $$(extra)
                         $rotate @s $(rotationX) $(rotationY)
 
                         execute as @n[type=minecraft:item_display,tag=customUniversal.VFXBillboardMount,tag=notMounted,tag=!temp] run {
@@ -2076,6 +2113,78 @@ dir universal {
         loot insert 0 -63 0 mine ~ ~ ~ minecraft:stick[tool={can_destroy_blocks_in_creative:true,default_mining_speed:90,damage_per_block:90,rules:[]},enchantments={"minecraft:silk_touch":1}]
         data modify storage minecraft:custom universal.fetch_block.id set string block 0 -63 0 Items[0].id
         item replace block 0 -63 0 container.0 with minecraft:air
+    }
+
+    dir stable_player_display {
+        function test {
+            $function animated_java:$(branch)/remove/all 
+            $execute rotated ~ 0 run function animated_java:$(branch)/summon {args:{}}
+            $function custom:universal/stable_player_display/mask {branch:$(branch)}
+            $execute as @n[tag=aj.$(branch).root] run function animated_java:$(branch)/animations/$(animation)/play
+        }
+
+        function main {
+
+        }
+
+        function mask {
+            $loot replace entity @n[tag=aj.$(branch).bone.head] hotbar.0 loot minecraft:player/head
+            $loot replace entity @n[tag=aj.$(branch).bone.right_arm] hotbar.0 loot minecraft:player/right_arm
+            $loot replace entity @n[tag=aj.$(branch).bone.right_forearm] hotbar.0 loot minecraft:player/right_forearm
+            $loot replace entity @n[tag=aj.$(branch).bone.left_arm] hotbar.0 loot minecraft:player/left_arm
+            $loot replace entity @n[tag=aj.$(branch).bone.left_forearm] hotbar.0 loot minecraft:player/left_forearm
+            $loot replace entity @n[tag=aj.$(branch).bone.waist] hotbar.0 loot minecraft:player/waist
+            $loot replace entity @n[tag=aj.$(branch).bone.right_leg] hotbar.0 loot minecraft:player/right_leg
+            $loot replace entity @n[tag=aj.$(branch).bone.lower_right_leg] hotbar.0 loot minecraft:player/lower_right_leg
+            $loot replace entity @n[tag=aj.$(branch).bone.left_leg] hotbar.0 loot minecraft:player/left_leg
+            $loot replace entity @n[tag=aj.$(branch).bone.lower_left_leg] hotbar.0 loot minecraft:player/lower_left_leg
+
+            $data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:empty",chestplate_body:"minecraft:empty",chestplate_arms:"minecraft:empty",leggings_pants:"minecraft:empty",leggings_upper:"minecraft:empty",leggings_lower:"minecraft:empty",boots:"minecraft:empty",branch:$(branch)}}}
+            execute if items entity @s armor.head #minecraft:head_armor run {
+                execute if items entity @s armor.head minecraft:netherite_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/netherite/helmet"}}}
+                execute if items entity @s armor.head minecraft:diamond_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/diamond/helmet"}}}
+                execute if items entity @s armor.head minecraft:iron_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/iron/helmet"}}}
+                execute if items entity @s armor.head minecraft:chainmail_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/chainmail/helmet"}}}
+                execute if items entity @s armor.head minecraft:golden_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/gold/helmet"}}}
+            }
+            execute if items entity @s armor.chest #minecraft:chest_armor run {
+                execute if items entity @s armor.chest minecraft:netherite_chestplate run data merge storage minecraft:custom {universal:{stable_player_display:{chestplate_arms:"minecraft:armor/netherite/chestplate/arms",chestplate_body:"minecraft:armor/netherite/chestplate/body"}}}
+                execute if items entity @s armor.chest minecraft:diamond_chestplate run data merge storage minecraft:custom {universal:{stable_player_display:{chestplate_arms:"minecraft:armor/diamond/chestplate/arms",chestplate_body:"minecraft:armor/diamond/chestplate/body"}}}
+                execute if items entity @s armor.chest minecraft:iron_chestplate run data merge storage minecraft:custom {universal:{stable_player_display:{chestplate_arms:"minecraft:armor/iron/chestplate/arms",chestplate_body:"minecraft:armor/iron/chestplate/body"}}}
+                execute if items entity @s armor.chest minecraft:chainmail_chestplate run data merge storage minecraft:custom {universal:{stable_player_display:{chestplate_arms:"minecraft:armor/chainmail/chestplate/arms",chestplate_body:"minecraft:armor/chainmail/chestplate/body"}}}
+                execute if items entity @s armor.chest minecraft:golden_chestplate run data merge storage minecraft:custom {universal:{stable_player_display:{chestplate_arms:"minecraft:armor/gold/chestplate/arms",chestplate_body:"minecraft:armor/gold/chestplate/body"}}}
+            }
+
+            execute if items entity @s armor.legs #minecraft:leg_armor run {
+                execute if items entity @s armor.legs minecraft:netherite_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/netherite/leggings/pants",leggings_upper:"minecraft:armor/netherite/leggings/upper",leggings_lower:"minecraft:armor/netherite/leggings/lower"}}}
+                execute if items entity @s armor.legs minecraft:diamond_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/diamond/leggings/pants",leggings_upper:"minecraft:armor/diamond/leggings/upper",leggings_lower:"minecraft:armor/diamond/leggings/lower"}}}
+                execute if items entity @s armor.legs minecraft:iron_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/iron/leggings/pants",leggings_upper:"minecraft:armor/iron/leggings/upper",leggings_lower:"minecraft:armor/iron/leggings/lower"}}}
+                execute if items entity @s armor.legs minecraft:chainmail_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/chainmail/leggings/pants",leggings_upper:"minecraft:armor/chainmail/leggings/upper",leggings_lower:"minecraft:armor/chainmail/leggings/lower"}}}
+                execute if items entity @s armor.legs minecraft:golden_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/gold/leggings/pants",leggings_upper:"minecraft:armor/gold/leggings/upper",leggings_lower:"minecraft:armor/gold/leggings/lower"}}}
+            }
+
+            execute if items entity @s armor.feet #minecraft:foot_armor run {
+                execute if items entity @s armor.feet minecraft:netherite_boots run data merge storage minecraft:custom {universal:{stable_player_display:{boots:"minecraft:armor/netherite/boots"}}}
+                execute if items entity @s armor.feet minecraft:diamond_boots run data merge storage minecraft:custom {universal:{stable_player_display:{boots:"minecraft:armor/diamond/boots"}}}
+                execute if items entity @s armor.feet minecraft:iron_boots run data merge storage minecraft:custom {universal:{stable_player_display:{boots:"minecraft:armor/iron/boots"}}}
+                execute if items entity @s armor.feet minecraft:chainmail_boots run data merge storage minecraft:custom {universal:{stable_player_display:{boots:"minecraft:armor/chainmail/boots"}}}
+                execute if items entity @s armor.feet minecraft:golden_boots run data merge storage minecraft:custom {universal:{stable_player_display:{boots:"minecraft:armor/gold/boots"}}}
+            }
+
+            block { with storage minecraft:custom universal.stable_player_display
+                $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)"}}}
+                $execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)"}}}
+            }
+        }
     }
 }
 

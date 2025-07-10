@@ -17,6 +17,14 @@ summon minecraft:item_display ^0 ^0 ^0 {Tags:["aj.global.bone.camera_bone.child"
 execute as @n[ type=minecraft:item_display, tag=aj.new, tag=aj.hatsune_miku.locator.camera, distance=..7 ] run function animated_java:hatsune_miku/zzz/summon/as_data_entity/as_locator/camera
 data modify entity @s data.uuids.locator_camera set from storage aj:uuid main.out
 data modify entity @s data.locators.camera.uuid set from storage aj:uuid main.out
+summon minecraft:item_display ^0 ^1 ^1 {Tags:["aj.global.bone.beam_bone.child","aj.global.bone.beam_bone.child.locator","aj.global.bone.beam_bone.decendant","aj.global.bone.beam_bone.decendant.locator","aj.global.bone.beam_bone.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.beam","aj.hatsune_miku.bone.beam_bone.child","aj.hatsune_miku.bone.beam_bone.child.locator","aj.hatsune_miku.bone.beam_bone.decendant","aj.hatsune_miku.bone.beam_bone.decendant.locator","aj.hatsune_miku.bone.beam_bone.tree","aj.hatsune_miku.entity","aj.hatsune_miku.locator","aj.hatsune_miku.locator.beam","aj.hatsune_miku.node","aj.hatsune_miku.node.beam","aj.new"]}
+execute as @n[ type=minecraft:item_display, tag=aj.new, tag=aj.hatsune_miku.locator.beam, distance=..2 ] run function animated_java:hatsune_miku/zzz/summon/as_data_entity/as_locator/beam
+data modify entity @s data.uuids.locator_beam set from storage aj:uuid main.out
+data modify entity @s data.locators.beam.uuid set from storage aj:uuid main.out
+summon minecraft:item_display ^0 ^1 ^-1.5 {Tags:["aj.global.bone.star_bone.child","aj.global.bone.star_bone.child.locator","aj.global.bone.star_bone.decendant","aj.global.bone.star_bone.decendant.locator","aj.global.bone.star_bone.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.star","aj.hatsune_miku.bone.star_bone.child","aj.hatsune_miku.bone.star_bone.child.locator","aj.hatsune_miku.bone.star_bone.decendant","aj.hatsune_miku.bone.star_bone.decendant.locator","aj.hatsune_miku.bone.star_bone.tree","aj.hatsune_miku.entity","aj.hatsune_miku.locator","aj.hatsune_miku.locator.star","aj.hatsune_miku.node","aj.hatsune_miku.node.star","aj.new"]}
+execute as @n[ type=minecraft:item_display, tag=aj.new, tag=aj.hatsune_miku.locator.star, distance=..2 ] run function animated_java:hatsune_miku/zzz/summon/as_data_entity/as_locator/star
+data modify entity @s data.uuids.locator_star set from storage aj:uuid main.out
+data modify entity @s data.locators.star.uuid set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.hatsune_miku.node.bottom2] run function animated_java:global/internal/gu/convert_uuid_array_to_string
 data modify entity @s data.uuids.bone_bottom2 set from storage aj:uuid main.out
 execute on vehicle on passengers if entity @s[tag=aj.hatsune_miku.node.rightarm] run function animated_java:global/internal/gu/convert_uuid_array_to_string

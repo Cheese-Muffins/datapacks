@@ -1,0 +1,4 @@
+# Generated with MC-Build
+
+data merge storage minecraft:custom {dice:{roll:{name:"Expiremental Propulsion Device"}}}
+data merge storage minecraft:custom {dice:{roll:{description:["",{"text":"Expiremental Propulsion Device","color":"gold"},{"text":"\n"},{"text":"Skyrockets the wielder ","color":"gray"},{"text":"forward in the direction they're looking","color":"green"},{"text":" at ","color":"gray"},{"text":"incredible ","color":"aqua"},{"text":"speeds. Become completely ","color":"gray"},{"text":"immune to fall damage","color":"light_purple"},{"text":" until ","color":"gray"},{"text":"landing","color":"white"},{"text":" again.","color":"gray"}]}}}

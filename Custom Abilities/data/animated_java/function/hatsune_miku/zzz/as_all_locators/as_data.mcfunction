@@ -7,3 +7,7 @@ data modify storage aj:temp args.uuid set from entity @s data.uuids.locator_coun
 function animated_java:hatsune_miku/zzz/as_all_locators/execute_as_uuid with storage aj:temp args
 data modify storage aj:temp args.uuid set from entity @s data.uuids.locator_camera
 function animated_java:hatsune_miku/zzz/as_all_locators/execute_as_uuid with storage aj:temp args
+data modify storage aj:temp args.uuid set from entity @s data.uuids.locator_beam
+function animated_java:hatsune_miku/zzz/as_all_locators/execute_as_uuid with storage aj:temp args
+data modify storage aj:temp args.uuid set from entity @s data.uuids.locator_star
+function animated_java:hatsune_miku/zzz/as_all_locators/execute_as_uuid with storage aj:temp args

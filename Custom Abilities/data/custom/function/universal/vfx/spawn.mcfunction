@@ -18,7 +18,7 @@
 # Mode 2 - Spawning with a random offset, provided by args.
 $scoreboard players set @s customUniversal.VFXCount $(count)
 $scoreboard players set .Mode customUniversal.VFXConditions $(mode)
-$data merge storage minecraft:custom {universal:{vfx:{speed:$(speed),animation:'$(animation)',duration:$(duration),branch:"$(branch)"}}}
+$data merge storage minecraft:custom {universal:{vfx:{speed:$(speed),animation:'$(animation)',duration:$(duration),branch:"$(branch)",extra:"$(extra)"}}}
 # Particle with speed, duration, and random rotation config
 execute if score .Mode customUniversal.VFXConditions matches 1 run function custom:universal/vfx/mode_1
 # Mounting spawner with NO rotation

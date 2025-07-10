@@ -1,0 +1,7 @@
+# Generated with MC-Build
+
+execute if items entity @s armor.legs minecraft:netherite_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/netherite/leggings/pants",leggings_upper:"minecraft:armor/netherite/leggings/upper",leggings_lower:"minecraft:armor/netherite/leggings/lower"}}}
+execute if items entity @s armor.legs minecraft:diamond_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/diamond/leggings/pants",leggings_upper:"minecraft:armor/diamond/leggings/upper",leggings_lower:"minecraft:armor/diamond/leggings/lower"}}}
+execute if items entity @s armor.legs minecraft:iron_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/iron/leggings/pants",leggings_upper:"minecraft:armor/iron/leggings/upper",leggings_lower:"minecraft:armor/iron/leggings/lower"}}}
+execute if items entity @s armor.legs minecraft:chainmail_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/chainmail/leggings/pants",leggings_upper:"minecraft:armor/chainmail/leggings/upper",leggings_lower:"minecraft:armor/chainmail/leggings/lower"}}}
+execute if items entity @s armor.legs minecraft:golden_leggings run data merge storage minecraft:custom {universal:{stable_player_display:{leggings_pants:"minecraft:armor/gold/leggings/pants",leggings_upper:"minecraft:armor/gold/leggings/upper",leggings_lower:"minecraft:armor/gold/leggings/lower"}}}

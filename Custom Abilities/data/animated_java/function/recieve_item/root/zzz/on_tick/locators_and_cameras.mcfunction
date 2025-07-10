@@ -2,4 +2,4 @@
 function animated_java:recieve_item/root/zzz/on_tick/select_locator_commands with entity @s data.locators.commands
 function animated_java:recieve_item/root/zzz/on_tick/select_locator_item_locator with entity @s data.locators.item_locator
 function animated_java:recieve_item/root/zzz/on_tick/select_locator_camera with entity @s data.locators.camera
-function animated_java:recieve_item/root/zzz/on_tick/select_camera_camera with entity @s data.cameras.camera
+function animated_java:recieve_item/root/zzz/on_tick/select_camera_camera1 with entity @s data.cameras.camera1

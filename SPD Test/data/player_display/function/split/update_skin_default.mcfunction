@@ -1,0 +1,11 @@
+loot replace entity @e[tag=aj.spd_test.bone.head] hotbar.0 loot minecraft:player/head
+loot replace entity @e[tag=aj.spd_test.bone.right_arm] hotbar.0 loot minecraft:player/right_arm
+loot replace entity @e[tag=aj.spd_test.bone.right_forearm] hotbar.0 loot minecraft:player/right_forearm
+loot replace entity @e[tag=aj.spd_test.bone.left_arm] hotbar.0 loot minecraft:player/left_arm
+loot replace entity @e[tag=aj.spd_test.bone.left_forearm] hotbar.0 loot minecraft:player/left_forearm
+loot replace entity @e[tag=aj.spd_test.bone.waist] hotbar.0 loot minecraft:player/waist
+loot replace entity @e[tag=aj.spd_test.bone.right_leg] hotbar.0 loot minecraft:player/right_leg
+loot replace entity @e[tag=aj.spd_test.bone.lower_right_leg] hotbar.0 loot minecraft:player/lower_right_leg
+loot replace entity @e[tag=aj.spd_test.bone.left_leg] hotbar.0 loot minecraft:player/left_leg
+loot replace entity @e[tag=aj.spd_test.bone.lower_left_leg] hotbar.0 loot minecraft:player/lower_left_leg
+execute as @n[tag=aj.spd_test.item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:armor/diamond/helmet"}}}

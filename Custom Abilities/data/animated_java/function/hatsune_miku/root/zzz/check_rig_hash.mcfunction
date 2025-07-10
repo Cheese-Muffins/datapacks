@@ -4,7 +4,7 @@ execute store result storage aj:temp args.x int 1 store result score #this.x aj.
 execute store result storage aj:temp args.y int 1 store result score #this.y aj.i run data get entity @s Pos[1] 1
 execute store result storage aj:temp args.z int 1 store result score #this.z aj.i run data get entity @s Pos[2] 1
 function animated_java:hatsune_miku/root/zzz/show_outdated_warning with storage aj:temp args
-data modify entity @s data.rigHash set value 'ec31f9c64519b1d16357ed0c86b8d9222c39d84963944e6f908f112106e7af80'
+data modify entity @s data.rigHash set value '144c3de59b386b5e9b003247fa8330063d9bf8217d8c2b3d4e52d02051f87cb0'
 execute on passengers run data merge entity @s {Glowing: 1b, glow_color_override: 16711680}
 summon minecraft:text_display ~ ~ ~ { Tags:['aj.global.entity', 'aj.outdated_rig_text_display', 'aj.new'], text:["",{"text":"This rig instance is outdated!\\nIt will not function correctly and should be removed or re-summoned.","color":"red"}], alignment: 'center', billboard: 'vertical', transformation:{ translation:[0f,3f,0f], left_rotation:[0f,0f,0f,1f], right_rotation:[0f,0f,0f,1f], scale:[1f,1f,1f] } }
 ride @e[type=minecraft:text_display,tag=aj.new,limit=1,distance=..0.01] mount @s

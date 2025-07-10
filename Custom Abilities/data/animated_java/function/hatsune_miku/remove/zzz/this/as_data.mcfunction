@@ -3,3 +3,5 @@ function animated_java:hatsune_miku/remove/zzz/this/kill_locator with entity @s 
 function animated_java:hatsune_miku/remove/zzz/this/kill_locator with entity @s data.locators.locator_left_hand
 function animated_java:hatsune_miku/remove/zzz/this/kill_locator with entity @s data.locators.locator_countdown
 function animated_java:hatsune_miku/remove/zzz/this/kill_locator with entity @s data.locators.locator_camera
+function animated_java:hatsune_miku/remove/zzz/this/kill_locator with entity @s data.locators.locator_beam
+function animated_java:hatsune_miku/remove/zzz/this/kill_locator with entity @s data.locators.locator_star

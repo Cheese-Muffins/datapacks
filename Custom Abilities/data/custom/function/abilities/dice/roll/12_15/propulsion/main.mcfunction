@@ -1,0 +1,6 @@
+# Generated with MC-Build
+
+scoreboard players set @s customDice.PreviousRoll 300
+scoreboard players set @s interactablesUniversal.GiveItemID 3
+function interactables:recieve_item/create_scenario {animation:'common',perspective:"none",item:"minecraft:interactables/propulsion"}
+# give @p bowl[max_stack_size=1,max_damage=30,item_name={"color":"yellow","italic":false,"text":"Tommy Gun"},lore=[{"color":"gray","italic":false,"text":"Welcome to the land of the free"}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"fire "},{"color":"gray","italic":false,"text":"a bullet"}],[{"color":"gold","italic":false,"text":"30"},{"color":"gray","italic":false,"text":"/"},{"color":"gold","italic":false,"text":"30 "},{"color":"gray","italic":false,"text":"Bullets"}]],damage=0,food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/tommy_gun"] 1
