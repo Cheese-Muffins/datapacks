@@ -105,3 +105,7 @@ function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:1,move:1
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:2,move:2,cooldown:30}
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:3,cooldown:30}
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:4,cooldown:1}
+# Billy #
+function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:1,move:1,cooldown:30}
+function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:2,move:2,cooldown:30}
+function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:3,move:3,cooldown:30}

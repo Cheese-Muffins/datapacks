@@ -1,5 +1,6 @@
 {
 	"values": [
+		"animated_java:billy/on_load",
 		"animated_java:gojo/on_load",
 		"animated_java:gojo_projectiles/on_load",
 		"animated_java:gojo_vfx/on_load",
@@ -7,7 +8,6 @@
 		"animated_java:hatsune_miku_vfx/on_load",
 		"animated_java:recieve_item/on_load",
 		"animated_java:recieve_item_vfx/on_load",
-		"animated_java:spd_test/on_load",
 		"animated_java:the_world/on_load",
 		"animated_java:the_world_cutscenes/on_load",
 		"animated_java:the_world_projectiles/on_load",
