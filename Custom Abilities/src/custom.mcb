@@ -37,6 +37,7 @@ function on_load {
     scoreboard objectives add customUI.PurchaseItemCount dummy
     scoreboard objectives add customUI.SkinLastPatchID dummy
     scoreboard objectives add customUI.SkinPatchID dummy
+    scoreboard objectives add customUI.PlayerOP dummy
 
     scoreboard objectives add customUniversal.GlobalCounter dummy
     scoreboard objectives add customUniversal.RigID dummy
@@ -123,6 +124,10 @@ function on_load {
 
 
     # Billy #
+    scoreboard objectives add customBilly.RigID dummy
+    scoreboard objectives add customBilly.PhaseMovement dummy
+    scoreboard objectives add customBilly.SnareID dummy
+
     function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:1,move:1,cooldown:30}
     function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:2,move:2,cooldown:30}
     function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:3,move:3,cooldown:30}
@@ -1704,10 +1709,15 @@ dir abilities {
         }
 
         function active {
+            execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
             REPEAT (1,3) as i {
                 execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
                 execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
                 execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
+            }
+
+            execute unless entity @s[gamemode=spectator] run block { with storage minecraft:custom billy
+                $tp @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] ~ ~ ~ ~ 0
             }
 
             function custom:abilities/billy/hotbar/main
@@ -1764,50 +1774,85 @@ dir abilities {
 
         dir toggle {
             function on {
-                playsound minecraft:gojo.toggle.spawn player @s ~ ~ ~ 0.35
-                scoreboard players set @s customUniversal.ToggleDelay 20 
+                tag @s add temp
+                function animated_java:billy/summon {args:{animation: 'summon', start_animation: true}}
+                execute as @n[type=minecraft:item_display,tag=aj.billy.root,tag=!customTheWorld.IDAssigned] run {
+                    scoreboard players add .global customBilly.RigID 1
+                    scoreboard players operation @s customBilly.RigID = .global customBilly.RigID
+                    execute as @p[tag=customAbility.Billy,tag=temp] run {
+                        scoreboard players operation @s customBilly.RigID = .global customBilly.RigID
+                        tag @s remove temp
+                    }
+                    tag @s add customBilly.IDAssigned
+                }
+                scoreboard players set @s customUniversal.ToggleDelay 40 
+            }
+
+            function land {
+                execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+                block { with storage minecraft:custom universal.fetch_block
+                    $particle block{block_state:"$(id)"} ^ ^0.5 ^0.25 0.75 0 0.75 1 50 normal
+                    playsound minecraft:block.pointed_dripstone.hit player @a ~ ~ ~ 0.5
+                }
             }
 
             function off {
                 title @s actionbar ""
-                playsound minecraft:gojo.toggle.remove player @s ~ ~ ~ 0.5
-                scoreboard players set @s customUniversal.ToggleDelay 10
+                execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+                block { with storage minecraft:custom billy
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run {
+                        function animated_java:billy/animations/idle/stop
+                        function animated_java:billy/animations/withdraw/play
+                    }
+                }
+                scoreboard players set @s customUniversal.ToggleDelay 40 
             }
         }
 
         dir moves {
             function setup {
-
                 tag @s add customUniversal.Animation
                 tag @s add customUniversal.DisconnectCheck
-                effect give @s minecraft:invisibility infinite 0 true
                 particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
 
-                function custom:universal/armor/hide
-                $execute rotated ~ 0 run function animated_java:gojo/summon {args:{animation:'$(animation)', start_animation: true}}
-                $function custom:universal/setup/rig {objective:"$(objective)",item:"gojo"}
+                # function custom:universal/armor/hide
+                $function custom:universal/setup/rig {objective:"$(objective)",item:"$(rig)"}
+                $execute store result storage minecraft:custom billy.temp.id int 1 run scoreboard players get .global $(objective)
+                $data merge storage minecraft:custom {billy:{temp:{objective:'$(objective)',animation:'$(animation)'}}}
+                block { with storage minecraft:custom billy.temp
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={$(objective)=$(id)}] run block { with storage minecraft:custom billy.temp
+                        function animated_java:billy/animations/idle/stop
+                        $function animated_java:billy/animations/$(animation)/play
+                    }
+                }
                 # item modify entity @s hotbar.8 custom:hide
 
-                $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.gojo.camera",objective:"$(objective)"}
-
-                scoreboard players add .global customUniversal.GlobalCounter 1
-                scoreboard players operation @s customUniversal.GlobalCounter = .global customUniversal.GlobalCounter
-                function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.gojo.root",objective:"customUniversal.GlobalCounter"}
+                $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.billy.locator.camera",objective:"$(objective)"}
             }
 
             dir 1 {
                 function core {
-                    # execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
-                    # execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
-                    # function custom:universal/error_messages/universal
+                    execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    function custom:universal/error_messages/universal
                     
-                    # scoreboard players set @s customUniversal.ActiveHotbar 1
-                    # execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/gojo/moves/1/pass
-                    # execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Reverse Cursed Technique"}
+                    scoreboard players set @s customUniversal.ActiveHotbar 1
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/billy/moves/1/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Encourage"}
                 }
 
                 function pass {
-                    
+                    function custom:abilities/billy/moves/setup {rig:"billy",objective:"customUniversal.RigID",animation:'encourage'}
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .BillyCooldown customUniversal.Move1Cooldown
+                    scoreboard players set @s customUniversal.MoveLastUsed 2
+                    scoreboard players set @s customUniversal.MoveDelay 10
+
+                    attribute @s minecraft:movement_speed base set 0.05
+                    attribute @s minecraft:jump_strength base set 0
+                }
+
+                function buffs {
+                    say aAAA
                 }
             }
 
@@ -1817,13 +1862,75 @@ dir abilities {
                     execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
                     function custom:universal/error_messages/universal
                     
-                    scoreboard players set @s customUniversal.ActiveHotbar 1
+                    scoreboard players set @s customUniversal.ActiveHotbar 2
                     execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/billy/moves/2/pass
                     execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Reverse Cursed Technique"}
                 }
 
                 function pass {
+                    function custom:abilities/billy/moves/setup {rig:"billy",objective:"customUniversal.RigID",animation:'phase'}
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .BillyCooldown customUniversal.Move2Cooldown
+                    scoreboard players set @s customUniversal.MoveLastUsed 2
+                    scoreboard players set @s customUniversal.MoveDelay 10
 
+                    attribute @s minecraft:movement_speed base set 0.05
+                    attribute @s minecraft:jump_strength base set 0
+                    gamemode spectator @s
+
+                }
+
+                dir movement {
+                    function main {
+                        function custom:abilities/billy/moves/2/movement/recursive
+                        scoreboard players reset .distance customBilly.PhaseMovement
+                    }
+
+                    function recursive {
+                        scoreboard players add .distance customBilly.PhaseMovement 1
+                        tp @s ^ ^ ^
+
+                        execute if block ^ ^ ^0.1 #custom:raycast_pass if entity @s[tag=customBilly.PhaseBegin] run function custom:abilities/billy/moves/2/movement/end
+
+                        execute if score .distance customBilly.PhaseMovement matches ..15 positioned ^ ^ ^.1 rotated ~ ~ run function custom:abilities/billy/moves/2/movement/recursive
+                    }
+                    
+                    function end {
+                        tp @s ^ ^ ^-0.1
+                        execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+                        function animated_java:billy/animations/phase/stop
+                        function custom:abilities/billy/moves/reset/all {user:"customAbility.Billy",objective:"customBilly.RigID",rig:"billy"}
+                        tag @s remove customBilly.PhaseBegin
+                        
+                        block { with storage minecraft:custom billy
+                            $execute as @p[tag=customAbility.Billy,scores={customBilly.RigID=$(id)}] run block { with storage minecraft:custom billy
+                                gamemode survival @s
+                                $tp @s @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}]
+                                playsound minecraft:entity.bat.takeoff player @s ~ ~ ~ 0.5
+                            }
+                        }
+                    }
+                }
+            }
+
+            dir 3 {
+                function core {
+                    execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    function custom:universal/error_messages/universal
+                    
+                    scoreboard players set @s customUniversal.ActiveHotbar 3
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/billy/moves/3/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A0",move:"Snare"}
+                }
+
+                function pass {
+                    function custom:abilities/billy/moves/setup {rig:"billy",objective:"customBilly.SnareID",animation:'snare_set'}
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .BillyCooldown customUniversal.Move3Cooldown
+                    scoreboard players set @s customUniversal.MoveLastUsed 2
+                    scoreboard players set @s customUniversal.MoveDelay 10
+
+                    attribute @s minecraft:movement_speed base set 0.05
+                    attribute @s minecraft:jump_strength base set 0
                 }
             }
 
@@ -1832,8 +1939,9 @@ dir abilities {
                     $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
                     $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
                     block { with storage minecraft:custom universal.control
-                        $execute as @a[tag=customAbility.Gojo,scores={$(objective)=$(id)}] at @s run function custom:abilities/gojo/moves/reset/player
-                        $function animated_java:$(rig)/remove/this
+                        $execute as @a[tag=customAbility.Billy,scores={$(objective)=$(id)}] at @s run function custom:abilities/billy/moves/reset/player
+                        function animated_java:billy/animations/idle/play
+                        # $function animated_java:$(rig)/remove/this
                     }
                 }
                 function player {
@@ -1897,6 +2005,11 @@ dir abilities {
 }
 
 dir universal {
+    function admin_setup {
+        tag @s add customUI.AdminAccess
+        tellraw @s ["",{"text":"Custom Abilities","color":"gold"},{"text":"\n"},{"text":"You now have complete ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"a","color":"gold"},{"text":"t","color":"yellow"},{"text":"o","color":"green"},{"text":"r","color":"blue"},{"text":" access to everything relating to ","color":"gray"},{"text":"Custom Abilities!","color":"aqua"}]
+    }
+
     dir vfx {
         function enable {
             scoreboard players add .global customUniversal.VFXID 1
@@ -2464,7 +2577,7 @@ dir ui {
 
                     # setblock ~ ~ ~ chest{Items:[{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Settings Config"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the way Custom Items are used"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}}]} replace
 
-                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(ability_item_model)","minecraft:item_name":{"color":"gold","italic":false,"text":"$(ability_name)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"$(ability_description)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_selection_page)"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Settings Config"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the way Custom Abilities are used"},{"text":" "},[{"color":"gray","italic":false,"text":"Currently "},{"color":"red","italic":false,"text":"Admin Only"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_moveset_page)"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","italic":false,"text":"Statistics"},"minecraft:lore":[{"color":"gray","italic":false,"text":"View statistics for the following catergories..."},{"text":""},{"color":"gray","italic":false,"text":"$(ability_name) Stats"},{"color":"gray","italic":false,"text":"General Stats"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_skin_page)"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Ability Selection"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Overview of all Custom Abilities"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{empty:1b}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(ability_item_model)","minecraft:item_name":{"color":"gold","italic":false,"text":"$(ability_name)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"$(ability_description)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_selection_page)"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Settings Config"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the way Custom Abilities are used"}," ",[{"color":"blue","italic":false,"text":"Click"},{"color":"gray","italic":false,"text":" for "},{"color":"green","italic":false,"text":"Generic "},{"color":"gray","italic":false,"text":"access."}],[{"color":"blue","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"with "},{"color":"gold","italic":false,"text":"OP "},{"color":"gray","italic":false,"text":"for "},{"color":"red","italic":false,"text":"A"},{"color":"gold","italic":false,"text":"d"},{"color":"yellow","italic":false,"text":"m"},{"color":"green","italic":false,"text":"i"},{"color":"blue","italic":false,"text":"n"},{"color":"light_purple","italic":false,"text":"i"},{"color":"dark_purple","italic":false,"text":"s"},{"color":"red","italic":false,"text":"t"},{"color":"gold","italic":false,"text":"r"},{"color":"yellow","italic":false,"text":"a"},{"color":"green","italic":false,"text":"t"},{"color":"blue","italic":false,"text":"o"},{"color":"light_purple","italic":false,"text":"r "},{"color":"gray","italic":false,"text":"access"}]],"minecraft:custom_data":{ui_item:{settings_button:1b,empty:1b}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_moveset_page)"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","italic":false,"text":"Statistics"},"minecraft:lore":[{"color":"gray","italic":false,"text":"View statistics for the following catergories..."},{"text":""},{"color":"gray","italic":false,"text":"$(ability_name) Stats"},{"color":"gray","italic":false,"text":"General Stats"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_skin_page)"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Ability Selection"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Overview of all Custom Abilities"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{empty:1b}}}}]
                 }
 
                 function open {
@@ -2510,6 +2623,69 @@ dir ui {
                         data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/selection/gojo/flip"}}}
                         data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/selection/gojo/moveset/flip"}}}
                         data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/selection/gojo/skins/flip"}}}
+                    }
+                }
+            }
+
+            dir settings {
+                dir administrator {
+                    function open {
+                        execute at @s as @p run {
+                            data merge storage minecraft:ui {custom:{settings:{administrator:{cooldown_state:"Yes"}}}}
+                            data merge storage minecraft:ui {custom:{settings:{administrator:{cooldown_color:"red"}}}}
+                            data merge storage minecraft:ui {custom:{settings:{administrator:{immunity_state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{settings:{administrator:{immunity_color:"red"}}}}
+
+                            execute if entity @s[tag=customSettings.NoCooldowns] run {
+                                data merge storage minecraft:ui {custom:{settings:{administrator:{cooldown_state:"No"}}}}
+                                data merge storage minecraft:ui {custom:{settings:{administrator:{cooldown_color:"green"}}}}
+                            }
+
+                            execute if entity @s[tag=customSettings.Immunity] run {
+                                data merge storage minecraft:ui {custom:{settings:{administrator:{immunity_state:"Yes"}}}}
+                                data merge storage minecraft:ui {custom:{settings:{administrator:{immunity_color:"green"}}}}
+                            }
+                        }
+
+                        function custom:ui/menu/pages/settings/administrator/mask with storage minecraft:ui custom.settings.administrator
+                        data modify storage ui current set from storage ui mask
+                        execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/settings/administrator/mask"
+                    }
+
+                    function mask {
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Toggle Cooldowns"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Click to enable/disable cooldowns on moves"}," ",[{"color":"gray","italic":false,"text":"Cooldowns: "},{"color":"$(cooldown_color)","italic":false,"text":"$(cooldown_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/administrator/cooldowns"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Toggle Immunity"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Click to enable/disable immunity to all attacks"},{"color":"gray","italic":false,"text":"caused by Custom Abilities"}," ",[{"color":"gray","italic":false,"text":"Immunity: "},{"color":"$(immunity_color)","italic":false,"text":"$(immunity_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/administrator/immunity"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Randomization Mode"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Controls the chances of Secret Interactions,"},{"color":"gray","italic":false,"text":"Awakenings, and Rolling"}," ",{"color":"gray","italic":false,"text":"Click to cycle between 3 different modes..."}," ",[{"color":"gray","italic":false,"text":"Immunity: "},{"color":"$(immunity_color)","italic":false,"text":"$(immunity_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/administrator/immunity"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/administrator_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{empty:1b}}}}]
+                    }
+
+                    function cooldowns {
+                        execute at @s as @p run {
+                            execute unless entity @s[tag=customSettings.NoCooldowns] run {
+                                tag @s add customSettings.NoCooldowns
+                                tag @s add temp
+                            }
+
+                            execute if entity @s[tag=customSettings.NoCooldowns] unless entity @s[tag=temp] run {
+                                tag @s remove customSettings.NoCooldowns
+                            }
+
+                            tag @s remove temp
+                        }
+                        function custom:ui/menu/pages/settings/administrator/open
+                    }
+
+                    function immunity {
+                        execute at @s as @p run {
+                            execute unless entity @s[tag=customSettings.Immunity] run {
+                                tag @s add customSettings.Immunity
+                                tag @s add temp
+                            }
+
+                            execute if entity @s[tag=customSettings.Immunity] unless entity @s[tag=temp] run {
+                                tag @s remove customSettings.Immunity
+                            }
+
+                            tag @s remove temp
+                        }
+                        function custom:ui/menu/pages/settings/administrator/open
                     }
                 }
             }
@@ -3120,7 +3296,7 @@ dir ui {
                 # $execute if score @s customUI.SkinClick matches 3 run function custom:ui/menu/pages/selection/$(ability)/skins/equip/$(skin_name)/main
             }
 
-            function start {
+            function shop {
                 execute at @s as @p run item replace block 0 -63 0 container.0 from entity @s player.cursor
                 data modify storage minecraft:ui custom.purchase.price set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.price
                 data modify storage minecraft:ui custom.purchase.context set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.context
@@ -3135,6 +3311,20 @@ dir ui {
                 item replace block 0 -63 0 container.0 with air
                 data remove storage minecraft:ui custom.purchase
             }
+
+            dir settings {
+                function player {
+                    say player
+                }
+
+                function admin {
+                    execute if entity @p[tag=customUI.AdminAccess] run {
+                        function custom:ui/menu/pages/settings/administrator/open
+                    } else run {
+                        say not admin
+                    }
+                }
+            }
         }
 
         function load_page {
@@ -3145,7 +3335,10 @@ dir ui {
         }
 
         function on_change {
-            execute at @s as @p if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchaseable_item:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/start
+            execute at @s as @p if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchaseable_item:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/shop
+            execute at @s as @p if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/settings/player
+            execute at @s as @p if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/settings/admin
+            execute at @s as @p if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/settings/admin
             clear @a *[minecraft:custom_data~{ui_item:{}}]
 
             scoreboard players set .type ui 1

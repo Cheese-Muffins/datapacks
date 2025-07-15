@@ -2,13 +2,11 @@
 
 tag @s add customUniversal.Animation
 tag @s add customUniversal.DisconnectCheck
-effect give @s minecraft:invisibility infinite 0 true
 particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
-function custom:universal/armor/hide
-$execute rotated ~ 0 run function animated_java:gojo/summon {args:{animation:'$(animation)', start_animation: true}}
-$function custom:universal/setup/rig {objective:"$(objective)",item:"gojo"}
+# function custom:universal/armor/hide
+$function custom:universal/setup/rig {objective:"$(objective)",item:"$(rig)"}
+$execute store result storage minecraft:custom billy.temp.id int 1 run scoreboard players get .global $(objective)
+$data merge storage minecraft:custom {billy:{temp:{objective:'$(objective)',animation:'$(animation)'}}}
+function custom:abilities/billy/moves/zzz/0 with storage minecraft:custom billy.temp
 # item modify entity @s hotbar.8 custom:hide
-$function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.gojo.camera",objective:"$(objective)"}
-scoreboard players add .global customUniversal.GlobalCounter 1
-scoreboard players operation @s customUniversal.GlobalCounter = .global customUniversal.GlobalCounter
-function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.gojo.root",objective:"customUniversal.GlobalCounter"}
+$function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.billy.locator.camera",objective:"$(objective)"}

@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
 title @s actionbar ""
-playsound minecraft:gojo.toggle.remove player @s ~ ~ ~ 0.5
-scoreboard players set @s customUniversal.ToggleDelay 10
+execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+function custom:abilities/billy/toggle/zzz/3 with storage minecraft:custom billy
+scoreboard players set @s customUniversal.ToggleDelay 40

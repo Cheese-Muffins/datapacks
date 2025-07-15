@@ -8,6 +8,7 @@ scoreboard objectives add customUI.PurchaseConfirm dummy
 scoreboard objectives add customUI.PurchaseItemCount dummy
 scoreboard objectives add customUI.SkinLastPatchID dummy
 scoreboard objectives add customUI.SkinPatchID dummy
+scoreboard objectives add customUI.PlayerOP dummy
 scoreboard objectives add customUniversal.GlobalCounter dummy
 scoreboard objectives add customUniversal.RigID dummy
 scoreboard objectives add customUniversal.AwakeningDuration dummy
@@ -106,6 +107,9 @@ function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:2,move:2
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:3,cooldown:30}
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:4,cooldown:1}
 # Billy #
+scoreboard objectives add customBilly.RigID dummy
+scoreboard objectives add customBilly.PhaseMovement dummy
+scoreboard objectives add customBilly.SnareID dummy
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:1,move:1,cooldown:30}
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:2,move:2,cooldown:30}
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:3,move:3,cooldown:30}
