@@ -63,6 +63,7 @@ scoreboard players set x20 customUniversal.MoveCooldowns 20
 scoreboard players set div11 customUniversal.MoveCooldowns 11
 scoreboard objectives add customUniversal.VFXCount dummy
 scoreboard objectives add customUniversal.VFXSpeed dummy
+scoreboard objectives add customUniversal.SecretInteractionCount dummy
 # Gojo Satoru #
 scoreboard objectives add customGojo.InfinityPassive dummy
 scoreboard objectives add customGojo.LapisBlueID dummy
@@ -108,8 +109,19 @@ function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:3
 function custom:universal/cooldowns {ability:"Dice",storage:"dice",path:3,move:4,cooldown:1}
 # Billy #
 scoreboard objectives add customBilly.RigID dummy
+scoreboard objectives add customBilly.ToggleOnText dummy
+scoreboard objectives add customBilly.PassiveSnowParticles dummy
+scoreboard objectives add customBilly.PassiveMaul dummy
+scoreboard objectives add customBilly.EncourageBuffDuration dummy
 scoreboard objectives add customBilly.PhaseMovement dummy
-scoreboard objectives add customBilly.SnareID dummy
+scoreboard objectives add customBilly.TrapDuration dummy
+scoreboard objectives add customBilly.TrapLinger dummy
+scoreboard objectives add customBilly.TrapSuccess dummy
+scoreboard objectives add customBilly.DevourID dummy
+scoreboard objectives add customBilly.DevourX dummy
+scoreboard objectives add customBilly.DevourY dummy
+scoreboard objectives add customBilly.DevourZ dummy
+scoreboard objectives add customBilly.DevourRotationX dummy
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:1,move:1,cooldown:30}
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:2,move:2,cooldown:30}
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:3,move:3,cooldown:30}

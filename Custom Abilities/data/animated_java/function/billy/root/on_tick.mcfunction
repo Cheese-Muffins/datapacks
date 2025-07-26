@@ -4,10 +4,12 @@ execute unless score @s aj.is_rig_loaded matches 1 run function #animated_java:g
 execute if entity @s[tag=aj.billy.animation.summon.playing] run function animated_java:billy/animations/summon/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.idle.playing] run function animated_java:billy/animations/idle/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.idle_snarl.playing] run function animated_java:billy/animations/idle_snarl/zzz/on_tick
+execute if entity @s[tag=aj.billy.animation.movement.playing] run function animated_java:billy/animations/movement/zzz/on_tick
+execute if entity @s[tag=aj.billy.animation.maul.playing] run function animated_java:billy/animations/maul/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.encourage.playing] run function animated_java:billy/animations/encourage/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.phase.playing] run function animated_java:billy/animations/phase/zzz/on_tick
-execute if entity @s[tag=aj.billy.animation.snare_trigger.playing] run function animated_java:billy/animations/snare_trigger/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.snare_set.playing] run function animated_java:billy/animations/snare_set/zzz/on_tick
+execute if entity @s[tag=aj.billy.animation.snare_trigger.playing] run function animated_java:billy/animations/snare_trigger/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.withdraw.playing] run function animated_java:billy/animations/withdraw/zzz/on_tick
 execute on passengers if entity @s[tag=aj.billy.data] run function animated_java:billy/root/zzz/on_tick/locators_and_cameras
 execute at @s on passengers run rotate @s ~ ~

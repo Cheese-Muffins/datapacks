@@ -3,8 +3,10 @@ execute unless entity @s[type=minecraft:item_display,tag=aj.billy.root] run retu
 tag @s remove aj.billy.animation.summon.playing
 tag @s remove aj.billy.animation.idle.playing
 tag @s remove aj.billy.animation.idle_snarl.playing
+tag @s remove aj.billy.animation.movement.playing
+tag @s remove aj.billy.animation.maul.playing
 tag @s remove aj.billy.animation.encourage.playing
 tag @s remove aj.billy.animation.phase.playing
-tag @s remove aj.billy.animation.snare_trigger.playing
 tag @s remove aj.billy.animation.snare_set.playing
+tag @s remove aj.billy.animation.snare_trigger.playing
 tag @s remove aj.billy.animation.withdraw.playing

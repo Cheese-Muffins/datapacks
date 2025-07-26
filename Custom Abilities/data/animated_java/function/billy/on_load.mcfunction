@@ -2,8 +2,10 @@
 scoreboard objectives add aj.summon.frame dummy
 scoreboard objectives add aj.idle.frame dummy
 scoreboard objectives add aj.idle_snarl.frame dummy
+scoreboard objectives add aj.movement.frame dummy
+scoreboard objectives add aj.maul.frame dummy
 scoreboard objectives add aj.encourage.frame dummy
 scoreboard objectives add aj.phase.frame dummy
-scoreboard objectives add aj.snare_trigger.frame dummy
 scoreboard objectives add aj.snare_set.frame dummy
+scoreboard objectives add aj.snare_trigger.frame dummy
 scoreboard objectives add aj.withdraw.frame dummy

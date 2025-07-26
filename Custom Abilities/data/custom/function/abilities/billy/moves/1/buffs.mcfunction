@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-say aAAA
+execute at @s as @a[distance=..3] run function custom:abilities/billy/moves/1/zzz/0

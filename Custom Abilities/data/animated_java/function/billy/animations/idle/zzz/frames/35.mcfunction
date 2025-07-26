@@ -6,3 +6,5 @@ $data merge entity $(bone_frontleftleg) {transformation: [-1f,0f,0f,1.0938f,0f,0
 $data merge entity $(bone_bottom2) {transformation: [-1f,0f,0f,0.6563f,0f,0.9999f,-0.017f,0.3115f,0f,-0.017f,-0.9999f,-0.5031f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_frontrightleg2) {transformation: [-1f,0f,0f,0.6563f,0f,0.9999f,-0.017f,0.402f,0f,-0.017f,-0.9999f,-0.6921f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_front) {transformation: [-1f,0f,0f,0.875f,0f,0.9999f,0.0113f,0.8125f,0f,0.0113f,-0.9999f,-1.0625f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:billy/animations/idle/zzz/frames/35_locator_commands
+data modify entity @s data merge value {"cameras":{},"locators":{"mouth":{"posx":0.8749999999999999,"posy":0.6898612579556059,"posz":0.0553751707306499,"roty":0,"rotx":3.148000000000001}}}

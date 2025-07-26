@@ -68,6 +68,7 @@ function on_load {
     scoreboard players set div11 customUniversal.MoveCooldowns 11
     scoreboard objectives add customUniversal.VFXCount dummy
     scoreboard objectives add customUniversal.VFXSpeed dummy
+    scoreboard objectives add customUniversal.SecretInteractionCount dummy
 
     # Gojo Satoru #
     scoreboard objectives add customGojo.InfinityPassive dummy
@@ -125,8 +126,19 @@ function on_load {
 
     # Billy #
     scoreboard objectives add customBilly.RigID dummy
+    scoreboard objectives add customBilly.ToggleOnText dummy
+    scoreboard objectives add customBilly.PassiveSnowParticles dummy
+    scoreboard objectives add customBilly.PassiveMaul dummy
+    scoreboard objectives add customBilly.EncourageBuffDuration dummy
     scoreboard objectives add customBilly.PhaseMovement dummy
-    scoreboard objectives add customBilly.SnareID dummy
+    scoreboard objectives add customBilly.TrapDuration dummy
+    scoreboard objectives add customBilly.TrapLinger dummy
+    scoreboard objectives add customBilly.TrapSuccess dummy
+    scoreboard objectives add customBilly.DevourID dummy
+    scoreboard objectives add customBilly.DevourX dummy
+    scoreboard objectives add customBilly.DevourY dummy
+    scoreboard objectives add customBilly.DevourZ dummy
+    scoreboard objectives add customBilly.DevourRotationX dummy
 
     function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:1,move:1,cooldown:30}
     function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:2,move:2,cooldown:30}
@@ -155,6 +167,54 @@ function tick {
             effect clear @s minecraft:weakness
             tag @s remove customUniversal.ConstantCheck
             tag @s remove customTheWorld.BarrageVictim
+        }
+
+        execute if score @s customBilly.EncourageBuffDuration matches 1.. run {
+            scoreboard players remove @s customBilly.EncourageBuffDuration 1
+
+            execute unless score @s customBilly.EncourageBuffDuration matches 1.. run {
+                attribute @s minecraft:movement_speed modifier remove custom:billy.encourage
+            }
+        }
+    }
+
+    execute as @e[type=minecraft:item_display,tag=customUniversal.Tick] at @s run {
+        execute if entity @s[tag=customBilly.Trap] run {
+            scoreboard players remove @s customBilly.TrapDuration 1
+            scoreboard players add @s customBilly.TrapLinger 1
+
+            execute if score @s customBilly.TrapLinger matches 20.. run {
+                execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+                block { with storage minecraft:custom universal.fetch_block
+                    $particle block{block_state:"$(id)"} ~ ~ ~ 0.75 0 0.75 1 15 normal
+                }
+                scoreboard players reset @s customBilly.TrapLinger
+            }
+
+            execute if entity @e[type=!#custom:not_mob,distance=..1.75] run {
+                data modify storage minecraft:custom billy.trap.self set string entity @s data.username
+                data merge storage minecraft:custom {billy:{trap:{victim:""}}}
+                execute as @n[type=!#custom:not_mob,distance=..1.75] if entity @s[type=minecraft:player] run {
+                    loot insert 0 -63 0 loot custom:player_head
+                    data modify storage minecraft:custom billy.trap.victim set string block 0 -63 0 Items[0].components."minecraft:profile".name
+                    item replace block 0 -63 0 container.0 with minecraft:air
+                }
+                execute store success score @s customBilly.TrapSuccess run data modify storage minecraft:custom billy.trap.victim set from storage minecraft:custom billy.trap.self
+
+                execute if score @s customBilly.TrapSuccess matches 1 run block { with storage minecraft:custom billy.trap
+                    $execute as @n[type=!#custom:not_mob,distance=..1.75,name=!$(self)] run {
+                        attribute @s minecraft:movement_speed modifier add custom:billy.snare -0.25 add_multiplied_total
+                    }
+                    function animated_java:billy/summon {args:{animation: 'snare_trigger', start_animation: true}}
+                    execute as @n[type=minecraft:item_display,tag=aj.billy.root,tag=!temp] run block {
+                        data modify entity @s data.username set string storage minecraft:custom billy.trap.self
+                        tag @s add temp
+                    }
+                    kill @s
+                }
+            }
+
+            execute unless score @s customBilly.TrapDuration matches 1.. run kill @s[type=minecraft:item_display]
         }
     }
 
@@ -1695,32 +1755,110 @@ dir abilities {
         function tick {
             execute if score @s customUniversal.Toggle matches 1 run {
                 execute at @s run function custom:abilities/billy/active
+            }
 
-                execute unless entity @s[scores={customUniversal.Move1Cooldown=0,customUniversal.Move2Cooldown=0,customUniversal.Move3Cooldown=0,customUniversal.AwakeningDuration=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
-                    REPEAT (1,3) as i {
-                        execute if score @s customUniversal.Move<%i%>Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move<%i%>Cooldown 1
-                    }
-
-                    execute if score @s customUniversal.AwakeningDuration matches 1.. run scoreboard players remove @s customUniversal.AwakeningDuration 1
-                    execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
-                    execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+            execute unless entity @s[scores={customUniversal.Move1Cooldown=0,customUniversal.Move2Cooldown=0,customUniversal.Move3Cooldown=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0,customBilly.ToggleOnText=0}] run {
+                REPEAT (1,3) as i {
+                    execute if score @s customUniversal.Move<%i%>Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move<%i%>Cooldown 1
                 }
+
+                execute if score @s customBilly.ToggleOnText matches 1.. run {
+                    execute if score @s customBilly.ToggleOnText matches 35 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location]",what:{"color":"aqua","text":"Demarcus"}}
+
+                    execute if score @s customBilly.ToggleOnText matches 25 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location]",what:{"color":"aqua","text":"Bartholomew"}}
+
+                    execute if score @s customBilly.ToggleOnText matches 15 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location]",what:{"color":"aqua","text":"James"}}
+
+                    execute if score @s customBilly.ToggleOnText matches 8 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location]",what:{"color":"aqua","text":"the"}}
+                    
+                    execute if score @s customBilly.ToggleOnText matches 1 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location]",what:{"color":"aqua","text":"III"}}
+
+                    scoreboard players remove @s customBilly.ToggleOnText 1
+                }
+
+                execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+            }
+        }
+
+        dir toggle {
+            function on {
+                tag @s add temp
+                scoreboard players reset @s customUniversal.Move1Trigger
+                    scoreboard players enable @s customUniversal.Move1Trigger
+                    scoreboard players reset @s customUniversal.Move2Trigger
+                    scoreboard players enable @s customUniversal.Move2Trigger
+                    scoreboard players reset @s customUniversal.Move3Trigger
+                    scoreboard players enable @s customUniversal.Move3Trigger
+                function animated_java:billy/summon {args:{animation: 'summon', start_animation: true}}
+                execute as @n[type=minecraft:item_display,tag=aj.billy.root,tag=!customTheWorld.IDAssigned] run {
+                    scoreboard players add .global customBilly.RigID 1
+                    scoreboard players operation @s customBilly.RigID = .global customBilly.RigID
+                    execute as @p[tag=customAbility.Billy,tag=temp] run {
+                        scoreboard players operation @s customBilly.RigID = .global customBilly.RigID
+                        tag @s remove temp
+                    }
+                    tag @s add customBilly.IDAssigned
+                }
+                tag @s add customUniversal.HideUI
+                tag @s add customBilly.ToggleDelay
+                scoreboard players set @s customUniversal.ToggleDelay 40 
+            }
+
+            function appear {
+                data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"billy",animation:'appear',extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.position]"}
+            }
+
+            function land {
+                execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+                block { with storage minecraft:custom universal.fetch_block
+                    $particle block{block_state:"$(id)"} ^ ^0.5 ^0.25 0.75 0 0.75 1 50 normal
+                    particle minecraft:snowflake ~ ~ ~ 0 0 0 0.25 50 force @a
+                }
+            }
+
+            function enable {
+                scoreboard players set @s customBilly.ToggleOnText 44
+                tag @s remove customBilly.ToggleDelay
+            }
+
+            function off {
+                title @s actionbar ""
+                execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+                block { with storage minecraft:custom billy
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run {
+                        function animated_java:billy/animations/idle/stop
+                        function animated_java:billy/animations/withdraw/play
+                    }
+                }
+                scoreboard players reset @s customBilly.ToggleOnText
+                scoreboard players set @s customUniversal.ToggleDelay 20 
             }
         }
 
         function active {
             execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+            execute unless entity @s[tag=customBilly.ToggleDelay] run scoreboard players add @s customBilly.PassiveSnowParticles 1
+
+            execute if score @s customBilly.PassiveSnowParticles matches 20.. run block { with storage minecraft:custom billy
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run function animated_java:billy/as_locator {name:'position',command:'particle minecraft:snowflake ~ ~0.5 ~ 0.5 0.5 0.5 0.1 20 force @a'}
+                scoreboard players reset @s customBilly.PassiveSnowParticles
+            }
+
             REPEAT (1,3) as i {
-                execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
-                execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
-                execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
+                execute unless entity @s[tag=customBilly.ToggleDelay] if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
+                execute unless entity @s[tag=customBilly.ToggleDelay] if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
+                execute unless entity @s[tag=customBilly.ToggleDelay] if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/billy/key_bindings/move<%i%>
             }
 
-            execute unless entity @s[gamemode=spectator] run block { with storage minecraft:custom billy
-                $tp @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] ~ ~ ~ ~ 0
+            block { with storage minecraft:custom billy
+                $execute unless entity @s[gamemode=spectator] run tp @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] ~ ~ ~ ~ 0
+                execute unless entity @s[tag=customUniversal.Animation] unless entity @s[tag=customBilly.ToggleDelay] unless entity @s[tag=customBilly.MaulAnimation] run function custom:abilities/billy/movement/main with storage minecraft:custom billy
             }
 
-            function custom:abilities/billy/hotbar/main
+            execute unless entity @s[tag=customUniversal.HideUI] run function custom:abilities/billy/hotbar/main
         }
 
         dir key_bindings {
@@ -1750,7 +1888,15 @@ dir abilities {
                 }
 
                 execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom billy.hotbar
-                    $title @s actionbar [{"text":"\uF821\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                    $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom billy.hotbar
+                    $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+                
+                execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom billy.hotbar
+                    $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
                 }
             }
 
@@ -1772,43 +1918,6 @@ dir abilities {
             }
         }
 
-        dir toggle {
-            function on {
-                tag @s add temp
-                function animated_java:billy/summon {args:{animation: 'summon', start_animation: true}}
-                execute as @n[type=minecraft:item_display,tag=aj.billy.root,tag=!customTheWorld.IDAssigned] run {
-                    scoreboard players add .global customBilly.RigID 1
-                    scoreboard players operation @s customBilly.RigID = .global customBilly.RigID
-                    execute as @p[tag=customAbility.Billy,tag=temp] run {
-                        scoreboard players operation @s customBilly.RigID = .global customBilly.RigID
-                        tag @s remove temp
-                    }
-                    tag @s add customBilly.IDAssigned
-                }
-                scoreboard players set @s customUniversal.ToggleDelay 40 
-            }
-
-            function land {
-                execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
-                block { with storage minecraft:custom universal.fetch_block
-                    $particle block{block_state:"$(id)"} ^ ^0.5 ^0.25 0.75 0 0.75 1 50 normal
-                    playsound minecraft:block.pointed_dripstone.hit player @a ~ ~ ~ 0.5
-                }
-            }
-
-            function off {
-                title @s actionbar ""
-                execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
-                block { with storage minecraft:custom billy
-                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run {
-                        function animated_java:billy/animations/idle/stop
-                        function animated_java:billy/animations/withdraw/play
-                    }
-                }
-                scoreboard players set @s customUniversal.ToggleDelay 40 
-            }
-        }
-
         dir moves {
             function setup {
                 tag @s add customUniversal.Animation
@@ -1822,6 +1931,9 @@ dir abilities {
                 block { with storage minecraft:custom billy.temp
                     $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={$(objective)=$(id)}] run block { with storage minecraft:custom billy.temp
                         function animated_java:billy/animations/idle/stop
+                        function animated_java:billy/animations/movement/stop
+                        tag @s remove customBilly.Idle
+                        tag @s remove customBilly.Moving
                         $function animated_java:billy/animations/$(animation)/play
                     }
                 }
@@ -1851,8 +1963,18 @@ dir abilities {
                     attribute @s minecraft:jump_strength base set 0
                 }
 
+                function encourage {
+                    data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                    data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                    execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"billy",animation:'encourage',extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.mouth]"}
+                }
+
                 function buffs {
-                    say aAAA
+                    execute at @s as @a[distance=..3] run {
+                        tag @s add customUniversal.ConstantCheck
+                        scoreboard players set @s customBilly.EncourageBuffDuration 600
+                        attribute @s minecraft:movement_speed modifier add custom:billy.encourage 0.25 add_multiplied_total
+                    }
                 }
             }
 
@@ -1864,7 +1986,7 @@ dir abilities {
                     
                     scoreboard players set @s customUniversal.ActiveHotbar 2
                     execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/billy/moves/2/pass
-                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Reverse Cursed Technique"}
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Phase"}
                 }
 
                 function pass {
@@ -1872,6 +1994,7 @@ dir abilities {
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .BillyCooldown customUniversal.Move2Cooldown
                     scoreboard players set @s customUniversal.MoveLastUsed 2
                     scoreboard players set @s customUniversal.MoveDelay 10
+                    function custom:universal/stable_player_display/mask {branch:"billy"}
 
                     attribute @s minecraft:movement_speed base set 0.05
                     attribute @s minecraft:jump_strength base set 0
@@ -1924,13 +2047,56 @@ dir abilities {
                 }
 
                 function pass {
-                    function custom:abilities/billy/moves/setup {rig:"billy",objective:"customBilly.SnareID",animation:'snare_set'}
+                    function custom:abilities/billy/moves/setup {rig:"billy",objective:"customUniversal.RigID",animation:'snare_set'}
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .BillyCooldown customUniversal.Move3Cooldown
                     scoreboard players set @s customUniversal.MoveLastUsed 2
                     scoreboard players set @s customUniversal.MoveDelay 10
+                    playsound minecraft:entity.polar_bear.hurt player @a ~ ~ ~ 0.5
 
                     attribute @s minecraft:movement_speed base set 0.05
                     attribute @s minecraft:jump_strength base set 0
+                }
+
+                function dig {
+                    execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+                    block { with storage minecraft:custom universal.fetch_block
+                        $particle block{block_state:"$(id)"} ~ ~ ~ 0.5 0 0.5 1 10 normal
+                    }
+                }
+
+                function setup {
+                    execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom billy
+                        $execute as @p[tag=customAbility.Billy,scores={customUniversal.RigID=$(id)}] run {
+                            loot insert 0 -63 0 loot custom:player_head
+                            data modify storage minecraft:custom billy.username set string block 0 -63 0 Items[0].components."minecraft:profile".name
+                            item replace block 0 -63 0 container.0 with minecraft:air
+                        }
+                        block { with storage minecraft:custom billy
+                            $function animated_java:billy/as_locator {name:'position',command:'summon item_display ~ ~1.2 ~ {Tags:["customBilly.Trap","temp","customUniversal.Tick"],data:{username:"$(username)"}}'}
+                            execute as @n[type=minecraft:item_display,tag=customBilly.Trap,tag=temp] run {
+                                scoreboard players set @s customBilly.TrapDuration 1500
+                                tag @s remove temp
+                            }
+                        }
+                    }
+                    
+                    function custom:abilities/billy/moves/reset/all {user:"customAbility.Billy",objective:"customUniversal.RigID",rig:"billy"}
+                }
+
+                function slam {
+                    data modify storage minecraft:custom billy.trap.damage set string entity @s data.username
+                    block { with storage minecraft:custom billy.trap
+                        $execute as @e[type=!#custom:not_mob,distance=..2.5,name=!$(damage)] run {
+                            damage @s 10
+                            attribute @s minecraft:movement_speed modifier remove custom:billy.snare
+                        }
+                    }
+
+                    execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+                    block { with storage minecraft:custom universal.fetch_block
+                        $particle block{block_state:"$(id)"} ~ ~ ~ 1 0 1 1 100 force @a
+                    }
                 }
             }
 
@@ -1940,7 +2106,6 @@ dir abilities {
                     $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
                     block { with storage minecraft:custom universal.control
                         $execute as @a[tag=customAbility.Billy,scores={$(objective)=$(id)}] at @s run function custom:abilities/billy/moves/reset/player
-                        function animated_java:billy/animations/idle/play
                         # $function animated_java:$(rig)/remove/this
                     }
                 }
@@ -1963,20 +2128,150 @@ dir abilities {
             }
         }
 
-        dir passive {
-            function main {
-                scoreboard players add @s customGojo.InfinityPassive 1
+        dir secret_interactions {
+            dir devour {
+                function pass {
+                    execute unless entity @s[tag=customBilly.SecretInteractionDevour] run {
+                        tag @s add customBilly.SecretInteractionDevour
+                        function custom:universal/secret_interaction_notify {description:["",{"text":"Devour","color":"gold"},{"text":"\n"},{"text":"Everytime ","color":"gray"},{"text":"Maul ","color":"yellow"},{"text":"is activated, there is a ","color":"gray"},{"text":"0.5% chance","color":"green"},{"text":" that Billy plays a cutscene version of the passive instead.","color":"gray"},{"text":"\n"},{"text":"-> Damage: ","color":"gray"},{"text":"30","color":"red"},{"text":"\n"},{"text":"-> Victim Movement Speed: ","color":"gray"},{"text":"0.75x","color":"red"},{"text":"\n"},{"text":"-> Victim Jump Strength: ","color":"gray"},{"text":"0.5x","color":"red"},{"text":"\n"},{"text":"-> Effect Duration:","color":"gray"},{"text":" 15s","color":"yellow"}]}
+                    }
 
-                execute unless entity @s[tag=customGojo.Awakening] run {
-                    execute if score @s customGojo.InfinityPassive matches 6 run function custom:abilities/gojo/passive/enable
-                    execute if score @s customGojo.InfinityPassive matches 7.. run function custom:abilities/gojo/passive/alert
-                } else run {
-                    execute if entity @s[tag=customGojo.InfinityAmplification] run {
-                        execute if score @s customGojo.InfinityPassive matches 3 run function custom:abilities/gojo/passive/enable
-                        execute if score @s customGojo.InfinityPassive matches 4.. run function custom:abilities/gojo/passive/alert
-                    } else run {
-                        execute if score @s customGojo.InfinityPassive matches 5 run function custom:abilities/gojo/passive/enable
-                        execute if score @s customGojo.InfinityPassive matches 6.. run function custom:abilities/gojo/passive/alert
+                    execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+                    block { with storage minecraft:custom billy
+                        $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run function animated_java:billy/remove/this
+
+                        $execute rotated as @p[tag=customAbility.Billy,scores={customBilly.RigID=$(id)}] rotated ~ 0 run {
+                            function animated_java:billy_cutscenes/summon {args:{animation: 'devour', start_animation: true}}
+                        }
+
+                        execute as @n[type=minecraft:item_display,tag=aj.billy_cutscenes.root,tag=!temp] run {
+                            scoreboard players operation @s customBilly.DevourID = .global customBilly.DevourID
+                            execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.DevourID
+                            tag @s add temp
+                        }
+
+                        block { with storage minecraft:custom billy
+                            $execute as @n[type=!#custom:not_mob,tag=customBilly.DevourVictim,scores={customBilly.DevourID=$(id)}] run function custom:universal/stable_player_display/mask {branch:"billy_cutscenes"}
+                        }
+
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.billy_cutscenes.locator.camera",objective:"customBilly.DevourID"}
+                    }
+                }
+
+                function end {
+                    execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.DevourID
+                    function animated_java:billy_cutscenes/remove/this
+
+                    block { with storage minecraft:custom billy
+                        $execute as @p[tag=customAbility.Billy,tag=customBilly.DevourUser,scores={customBilly.DevourID=$(id)}] run {
+                            execute store result storage minecraft:custom billy.x int 1 run scoreboard players get @s customBilly.DevourX
+                            execute store result storage minecraft:custom billy.y int 1 run scoreboard players get @s customBilly.DevourY
+                            execute store result storage minecraft:custom billy.z int 1 run scoreboard players get @s customBilly.DevourZ
+                            execute store result storage minecraft:custom billy.rotx int 1 run scoreboard players get @s customBilly.DevourRotationX
+                            tag @s remove customBilly.DevourCutscene
+                            tag @s remove customBilly.DevourUser
+                            block { with storage minecraft:custom billy
+                                gamemode survival @s
+                                $tp @s $(x) $(y) $(z) $(rotx) 0
+                            }
+                            function custom:abilities/billy/toggle/on
+                            tag @s remove customUniversal.Animation
+                            attribute @s minecraft:movement_speed base reset
+                            attribute @s minecraft:jump_strength base reset
+                            attribute @s minecraft:gravity base reset
+                            scoreboard players reset @s customBilly.DevourID
+                        }
+                        
+                        $execute as @n[type=!#custom:not_mob,tag=customBilly.DevourVictim,scores={customBilly.DevourID=$(id)}] run block { with storage minecraft:custom billy
+                            execute store result storage minecraft:custom billy.x int 1 run scoreboard players get @s customBilly.DevourX
+                            execute store result storage minecraft:custom billy.y int 1 run scoreboard players get @s customBilly.DevourY
+                            execute store result storage minecraft:custom billy.z int 1 run scoreboard players get @s customBilly.DevourZ
+                            execute store result storage minecraft:custom billy.rotx int 1 run scoreboard players get @s customBilly.DevourRotationX
+                            $function custom:universal/damage/victim {id:"$(id)",damage:"17",type:"minecraft:generic",attacker:"tag=customAbility.Billy,tag=customBilly.DevourUser",objective:"customBilly.DevourID",first:"was devoured",second:"using Devour"}
+                            tag @s remove customBilly.DevourCutscene
+                            tag @s remove customBilly.DevourVictim
+                            block { with storage minecraft:custom billy
+                                gamemode survival @s
+                                $tp @s $(x) $(y) $(z) $(rotx) 0
+                            }
+
+                            execute if entity @s[type=minecraft:player] run {
+                                attribute @s minecraft:movement_speed base reset
+                                attribute @s minecraft:jump_strength base reset
+                                attribute @s minecraft:gravity base reset
+                            } else run {
+                                data merge entity @s {NoAI:0b}
+                            }
+                            scoreboard players reset @s customBilly.DevourID
+                        }
+                    }
+                }
+            }
+        }
+
+        dir passive {
+            dir maul {
+                function start {
+                    scoreboard players add @s customBilly.PassiveMaul 1
+                    execute if score @s customBilly.PassiveMaul matches 5.. run {
+                        execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+                        execute if predicate custom:billy/devour_chance run {
+                            scoreboard players add .global customBilly.DevourID 1
+                            # as player
+                            block {
+                                tag @s add customBilly.DevourUser
+                                tag @s add customBilly.DevourCutscene
+                                scoreboard players operation @s customBilly.DevourID = .global customBilly.DevourID
+                                execute store result score @s customBilly.DevourX run data get entity @s Pos[0] 1
+                                execute store result score @s customBilly.DevourY run data get entity @s Pos[1] 1
+                                execute store result score @s customBilly.DevourZ run data get entity @s Pos[2] 1
+                                execute store result score @s customBilly.DevourRotationX run data get entity @s Rotation[0] 1
+
+                                gamemode spectator @s
+                            }
+
+                            # as victim
+                            execute as @n[type=!#custom:not_mob,nbt={HurtTime:10s}] run {
+                                tag @s add customBilly.DevourVictim
+                                tag @s add customBilly.DevourCutscene
+                                scoreboard players operation @s customBilly.DevourID = .global customBilly.DevourID
+                                execute store result score @s customBilly.DevourX run data get entity @s Pos[0] 1
+                                execute store result score @s customBilly.DevourY run data get entity @s Pos[1] 1
+                                execute store result score @s customBilly.DevourZ run data get entity @s Pos[2] 1
+                                execute store result score @s customBilly.DevourRotationX run data get entity @s Rotation[0] 1
+
+                                execute if entity @s[type=minecraft:player] run {
+                                    gamemode spectator @s
+                                } else run {
+                                    data merge entity @s {NoAI:1b}
+                                    tp @s ~ -70 ~
+                                }
+                            }
+
+                            function custom:abilities/billy/secret_interactions/devour/pass
+                        } else run {
+                            execute as @n[type=!#custom:not_mob,nbt={HurtTime:10s}] run tag @s add customBilly.MaulVictim
+                            block { with storage minecraft:custom billy
+                                tag @s add customBilly.MaulAnimation
+                                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run {
+                                    function animated_java:billy/animations/movement/stop
+                                    function animated_java:billy/animations/idle/stop
+                                    function animated_java:billy/animations/maul/play
+                                    tag @s remove customBilly.Moving
+                                    tag @s remove customBilly.Idle
+                                }
+                            }
+                        }
+                        scoreboard players reset @s customBilly.PassiveMaul
+                    }
+                }
+
+                function damage {
+                    execute store result storage minecraft:custom billy.id int 1 run scoreboard players get @s customBilly.RigID
+                    execute as @n[type=!#custom:not_mob,tag=customBilly.MaulVictim] at @s run block { with storage minecraft:custom billy
+                        particle block{block_state:"minecraft:redstone_block"} ~ ~ ~ 0.5 0.5 0.5 1 30 force @a
+                        $function custom:universal/damage/victim {id:"$(id)",damage:"8",type:"interactables:microphone",attacker:"tag=customAbility.Billy",objective:"customBilly.RigID",first:"was mauled to death by",second:"using Billy"}
+                        tag @s remove customBilly.MaulVictim
                     }
                 }
             }
@@ -2001,10 +2296,66 @@ dir abilities {
             # execute unless entity @s[tag=Honored] if score @s customGojo.InfinityPassive matches 5 run function custom:items/gojo/passive/damaged/infinity
             # execute unless entity @s[tag=Honored] if score @s customGojo.InfinityPassive matches 6.. run function custom:items/gojo/passive/damaged/reset
         }
+
+        dir movement {
+            function main {
+                execute if predicate custom:universal/forward run function custom:abilities/billy/movement/moving with storage minecraft:custom billy
+                execute if predicate custom:universal/backward run function custom:abilities/billy/movement/moving with storage minecraft:custom billy
+                execute if predicate custom:universal/left run function custom:abilities/billy/movement/moving with storage minecraft:custom billy
+                execute if predicate custom:universal/right run function custom:abilities/billy/movement/moving with storage minecraft:custom billy
+
+                execute unless predicate custom:universal/forward unless predicate custom:universal/backward unless predicate custom:universal/left unless predicate custom:universal/right run function custom:abilities/billy/movement/idle with storage minecraft:custom billy
+            }
+
+            function moving {
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run {
+                    execute unless entity @s[tag=customBilly.Moving] run {
+                        function animated_java:billy/animations/idle/stop
+                        function animated_java:billy/animations/maul/stop
+                        function animated_java:billy/animations/movement/play
+                    }
+                    tag @s remove customBilly.Idle
+                    tag @s add customBilly.Moving
+                }
+            }
+
+            function idle {
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] run {
+                    execute unless entity @s[tag=customBilly.Idle] run {
+                        function animated_java:billy/animations/movement/stop
+                        function animated_java:billy/animations/maul/stop
+                        function animated_java:billy/animations/idle/play
+                    }
+                    tag @s remove customBilly.Moving
+                    tag @s add customBilly.Idle
+                }
+            }
+        }
     }
 }
 
 dir universal {
+    function secret_interaction_notify {
+        # function custom:universal/secret_interaction_notify {description:["",{"text":"Devour","color":"gold"},{"text":"\n"},{"text":"Everytime ","color":"gray"},{"text":"Maul ","color":"yellow"},{"text":"is activated, there is a ","color":"gray"},{"text":"0.5% chance","color":"green"},{"text":" that Billy plays a cutscene version of the passive instead.","color":"gray"},{"text":"\n"},{"text":"-> Damage: ","color":"gray"},{"text":"30","color":"red"},{"text":"\n"},{"text":"-> Victim Movement Speed: ","color":"gray"},{"text":"0.75x","color":"red"},{"text":"\n"},{"text":"-> Victim Jump Strength: ","color":"gray"},{"text":"0.5x","color":"red"},{"text":"\n"},{"text":"-> Effect Duration:","color":"gray"},{"text":" 15s","color":"yellow"}]}
+        $tellraw @s ["",{"text":"Custom Abilities","color":"gold"},{"text":"\n"},{"text":"C","color":"red"},{"text":"o","color":"gold"},{"text":"n","color":"yellow"},{"text":"g","color":"green"},{"text":"r","color":"blue"},{"text":"a","color":"light_purple"},{"text":"t","color":"dark_purple"},{"text":"u","color":"red"},{"text":"l","color":"gold"},{"text":"a","color":"yellow"},{"text":"t","color":"green"},{"text":"i","color":"blue"},{"text":"o","color":"light_purple"},{"text":"n","color":"dark_purple"},{"text":"s","color":"red"},{"text":"!","color":"gold"},{"text":" You've discovered a new ","color":"gray"},{"text":"[Secret Interaction]","color":"light_purple","hover_event":{"action":"show_text","value":[$(description)]}}]
+        playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.5
+        scoreboard players add @s customUniversal.SecretInteractionCount 1
+    }
+
+    function text {
+        # function custom:universal/text {type:"up",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location]",what:{"color":"yellow","text":"Billy"}}
+        $execute at @s positioned ~ ~$(y_offset) ~ run function animated_java:text_display/summon {args:{animation: '$(type)', start_animation: true}}
+        $data merge storage minecraft:custom {universal:{text:{what:$(what),extra:"$(extra)"}}}
+        execute as @n[type=minecraft:text_display,tag=aj.text_display.text_display.display,tag=!customUniversal.WrittenText] run block { with storage minecraft:custom universal.text
+            $data merge entity @s {text:$(what)}
+            tag @s add customUniversal.WrittenText
+        }
+        execute as @n[type=minecraft:item_display,tag=aj.text_display.root,tag=!customUniversal.TextPost] run block { with storage minecraft:custom universal.text
+            $$(extra)
+            tag @s add customUniversal.TextPost
+        }
+    }
+
     function admin_setup {
         tag @s add customUI.AdminAccess
         tellraw @s ["",{"text":"Custom Abilities","color":"gold"},{"text":"\n"},{"text":"You now have complete ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"a","color":"gold"},{"text":"t","color":"yellow"},{"text":"o","color":"green"},{"text":"r","color":"blue"},{"text":" access to everything relating to ","color":"gray"},{"text":"Custom Abilities!","color":"aqua"}]
@@ -2343,6 +2694,12 @@ dir universal {
             advancement revoke @s only custom:taken_damage
         }
 
+        function entity {
+            execute if score @s customUniversal.Toggle matches 1 if entity @s[tag=customAbility.Billy] run function custom:abilities/billy/passive/maul/start
+            # execute as @n[nbt={HurtTime:10s}] run say ow
+            advancement revoke @s only custom:dealt_damage
+        }
+
         function victim {
             gamerule showDeathMessages false
             scoreboard players operation @s customUniversal_DeathCountPre = @s customUniversal_DeathCount
@@ -2408,7 +2765,7 @@ dir universal {
 
     dir toggle {
         function main {
-            execute if entity @s[tag=CustomAbility.User] unless entity @s[tag=customUniversal.Animation] run {
+            execute if entity @s[tag=CustomAbility.User] unless entity @s[tag=customUniversal.Animation] unless score @s customUniversal.ToggleDelay matches 1.. run {
                 execute unless entity @s[tag=CustomAbility.Active] run {
                     # Toggle ON #
                     tag @s add CustomAbility.Active
@@ -2460,10 +2817,6 @@ dir universal {
             $execute rotated ~ 0 run function animated_java:$(branch)/summon {args:{}}
             $function custom:universal/stable_player_display/mask {branch:$(branch)}
             $execute as @n[tag=aj.$(branch).root] run function animated_java:$(branch)/animations/$(animation)/play
-        }
-
-        function main {
-
         }
 
         function mask {

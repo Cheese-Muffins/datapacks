@@ -6,3 +6,4 @@ $data merge entity $(bone_frontleftleg) {transformation: [-1f,0f,0f,0.2187f,0f,0
 $data merge entity $(bone_bottom2) {transformation: [-1f,0f,0f,-0.2188f,0f,0.9997f,-0.0261f,0.311f,0f,-0.0261f,-0.9997f,0.4953f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_frontrightleg2) {transformation: [-1f,0f,0f,-0.2188f,0f,0.9997f,-0.0261f,0.3998f,0f,-0.0261f,-0.9997f,0.3054f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_front) {transformation: [-1f,0f,0f,0f,0f,0.9998f,0.0174f,0.8125f,0f,0.0174f,-0.9998f,-0.0625f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+data modify entity @s data merge value {"cameras":{},"locators":{"mouth":{"posx":0.01670812752622652,"posy":0.7362921278407161,"posz":1.071409590489592,"roty":1.0129168746111077,"rotx":-4.284525200842292}}}
