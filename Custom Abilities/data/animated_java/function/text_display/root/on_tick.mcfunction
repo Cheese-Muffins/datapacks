@@ -2,5 +2,6 @@
 execute unless entity @s[tag=aj.text_display.root] run return 0
 execute unless score @s aj.is_rig_loaded matches 1 run function #animated_java:global/root/on_load
 execute if entity @s[tag=aj.text_display.animation.billy.playing] run function animated_java:text_display/animations/billy/zzz/on_tick
+execute if entity @s[tag=aj.text_display.animation.toji_npc.playing] run function animated_java:text_display/animations/toji_npc/zzz/on_tick
 execute on passengers if entity @s[tag=aj.text_display.data] run function animated_java:text_display/root/zzz/on_tick/locators_and_cameras
 execute at @s on passengers run rotate @s ~ ~

@@ -64,6 +64,8 @@ scoreboard players set div11 customUniversal.MoveCooldowns 11
 scoreboard objectives add customUniversal.VFXCount dummy
 scoreboard objectives add customUniversal.VFXSpeed dummy
 scoreboard objectives add customUniversal.SecretInteractionCount dummy
+scoreboard objectives add customUniversal.QuestID dummy
+scoreboard objectives add customUniversal.QuestDialogue dummy
 # Gojo Satoru #
 scoreboard objectives add customGojo.InfinityPassive dummy
 scoreboard objectives add customGojo.LapisBlueID dummy
@@ -125,3 +127,15 @@ scoreboard objectives add customBilly.DevourRotationX dummy
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:1,move:1,cooldown:30}
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:2,move:2,cooldown:30}
 function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:3,move:3,cooldown:30}
+# Toji #
+scoreboard objectives add customToji.QuestProgress dummy
+scoreboard objectives add customToji.ObtainmentMonsterKills dummy
+scoreboard objectives add customToji.PassiveBloodlust dummy
+scoreboard objectives add customToji.AcrobaticsX dummy
+scoreboard objectives add customToji.AcrobaticsY dummy
+scoreboard objectives add customToji.AcrobaticsZ dummy
+scoreboard objectives add customToji.AcrobaticsRotationX dummy
+scoreboard objectives add customToji.AcrobaticsAnimation dummy
+function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
+function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
+function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}

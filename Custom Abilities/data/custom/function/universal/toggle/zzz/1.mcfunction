@@ -9,3 +9,4 @@ execute if entity @s[tag=customAbility.Gojo] run function custom:universal/toggl
 execute if entity @s[tag=customAbility.TheWorld] run function custom:universal/toggle/zzz/3
 execute if entity @s[tag=customAbility.Dice] run function custom:universal/toggle/zzz/4
 execute if entity @s[tag=customAbility.Billy] run function custom:universal/toggle/zzz/5
+execute if entity @s[tag=customAbility.Toji] run function custom:universal/toggle/zzz/6

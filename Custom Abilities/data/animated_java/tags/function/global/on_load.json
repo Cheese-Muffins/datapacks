@@ -14,6 +14,7 @@
 		"animated_java:the_world/on_load",
 		"animated_java:the_world_cutscenes/on_load",
 		"animated_java:the_world_projectiles/on_load",
+		"animated_java:toji/on_load",
 		"animated_java:vfx_billboard/on_load"
 	]
 }
