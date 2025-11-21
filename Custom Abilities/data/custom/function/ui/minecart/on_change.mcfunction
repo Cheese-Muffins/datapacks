@@ -1,10 +1,8 @@
 # Generated with MC-Build
 
-execute at @s as @p if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchaseable_item:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/shop
-execute at @s as @p if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/settings/player
-execute at @s as @p if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/settings/admin
-execute at @s as @p if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart] run function custom:ui/minecart/click/settings/admin
+execute at @s as @p run function custom:ui/minecart/zzz/0
 clear @a *[minecraft:custom_data~{ui_item:{}}]
+data remove storage minecraft:ui custom
 scoreboard players set .type ui 1
 data modify storage ui in set from storage ui current
 data remove storage ui in[{components:{"minecraft:custom_data":{ui_item:{}}}}]

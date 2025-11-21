@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @e[type=!#custom:not_mob,distance=..2.5,name=!$(damage)] run function custom:abilities/billy/moves/3/zzz/6
+$function animated_java:billy/as_locator {name:'position',command:'summon item_display ~ ~1.2 ~ {Tags:["customBilly.Trap","temp","customUniversal.ConstantCheck"],data:{username:"$(username)"}}'}
+execute as @n[type=minecraft:item_display,tag=customBilly.Trap,tag=temp] run function custom:abilities/billy/moves/3/zzz/6

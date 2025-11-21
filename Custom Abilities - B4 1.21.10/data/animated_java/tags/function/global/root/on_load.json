@@ -1,0 +1,21 @@
+{
+	"values": [
+		"animated_java:billy_cutscenes/root/on_load",
+		"animated_java:billy_vfx/root/on_load",
+		"animated_java:gojo/root/on_load",
+		"animated_java:gojo_projectiles/root/on_load",
+		"animated_java:gojo_vfx/root/on_load",
+		"animated_java:hatsune_miku/root/on_load",
+		"animated_java:hatsune_miku_vfx/root/on_load",
+		"animated_java:recieve_item/root/on_load",
+		"animated_java:recieve_item_vfx/root/on_load",
+		"animated_java:text_display/root/on_load",
+		"animated_java:the_world/root/on_load",
+		"animated_java:the_world_cutscenes/root/on_load",
+		"animated_java:the_world_projectiles/root/on_load",
+		"animated_java:vfx_billboard/root/on_load",
+		"animated_java:yuji/root/on_load",
+		"animated_java:yuji_domain/root/on_load",
+		"animated_java:yuji_vfx/root/on_load"
+	]
+}

@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-tag @s add customSettings.NoCooldowns
-tag @s add temp
+data merge storage minecraft:ui {custom:{settings:{administrator:{debug_state:"Yes"}}}}
+data merge storage minecraft:ui {custom:{settings:{administrator:{debug_color:"green"}}}}

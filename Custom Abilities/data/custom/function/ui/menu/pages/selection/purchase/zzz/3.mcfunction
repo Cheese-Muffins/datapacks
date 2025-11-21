@@ -1,5 +1,7 @@
 # Generated with MC-Build
 
-$tag @s add $(context)
-function custom:ui/menu/pages/selection/purchase/remove_tags with storage minecraft:ui custom.purchase
-playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.25
+tag @s remove customTheWorld.SkinDefault
+tag @s remove customTheWorld.SkinTW2
+tag @s remove customTheWorld.SkinVTW
+tag @s remove customTheWorld.SkinRTW
+tag @s remove customTheWorld.SkinSTW

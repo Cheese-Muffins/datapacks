@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-function animated_java:billy/animations/idle/stop
-function animated_java:billy/animations/withdraw/play
+$execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] at @s run function custom:abilities/billy/toggle/zzz/5

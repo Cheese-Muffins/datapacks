@@ -1,18 +1,12 @@
 {
 	"pack": {
 		"pack_format": 71,
-		"description": "Custom Made with MC-Build!"
-	},
-	"overlays": {
-		"entries": [
-			{
-				"directory": "animated_java_1_21_5",
-				"formats": 71
-			},
-			{
-				"directory": "animated_java_1_21_4",
-				"formats": 61
-			}
-		]
+		"description": "testing2 Made with MC-Build!",
+		"min_format": 88,
+		"max_format": 9999999,
+		"supported_formats": {
+			"min_inclusive": 71,
+			"max_inclusive": 79
+		}
 	}
 }

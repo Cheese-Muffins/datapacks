@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-$execute as @p[tag=customAbility.Billy,scores={customUniversal.RigID=$(id)}] run function custom:abilities/billy/moves/3/zzz/2
-function custom:abilities/billy/moves/3/zzz/3 with storage minecraft:custom billy
+$execute if entity @e[type=minecraft:item_display,tag=customBilly.Trap,distance=..4,nbt={data:{username:"$(username)"}}] run function custom:universal/error_messages/find {error:13}

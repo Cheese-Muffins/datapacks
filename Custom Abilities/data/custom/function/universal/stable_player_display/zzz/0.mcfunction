@@ -1,7 +1,8 @@
 # Generated with MC-Build
 
-execute if items entity @s armor.head minecraft:netherite_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/netherite/helmet"}}}
-execute if items entity @s armor.head minecraft:diamond_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/diamond/helmet"}}}
-execute if items entity @s armor.head minecraft:iron_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/iron/helmet"}}}
-execute if items entity @s armor.head minecraft:chainmail_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/chainmail/helmet"}}}
-execute if items entity @s armor.head minecraft:golden_helmet run data merge storage minecraft:custom {universal:{stable_player_display:{helmet:"minecraft:armor/gold/helmet"}}}
+$execute on passengers run item replace entity @s[tag=aj.$(branch).bone.head] container.0 with player_head[profile={name:$(name)},minecraft:item_model="animated_java:blueprint/player_display/head",minecraft:custom_model_data={strings:["default"]}]
+$execute on passengers run item replace entity @s[tag=aj.$(branch).bone.left_arm] container.0 with player_head[profile={name:$(name)},minecraft:item_model="animated_java:blueprint/player_display/left_arm",minecraft:custom_model_data={strings:["default"]}]
+$execute on passengers run item replace entity @s[tag=aj.$(branch).bone.right_arm] container.0 with player_head[profile={name:$(name)},minecraft:item_model="animated_java:blueprint/player_display/right_arm",minecraft:custom_model_data={strings:["default"]}]
+$execute on passengers run item replace entity @s[tag=aj.$(branch).bone.torso] container.0 with player_head[profile={name:$(name)},minecraft:item_model="animated_java:blueprint/player_display/torso",minecraft:custom_model_data={strings:["default"]}]
+$execute on passengers run item replace entity @s[tag=aj.$(branch).bone.left_leg] container.0 with player_head[profile={name:$(name)},minecraft:item_model="animated_java:blueprint/player_display/left_leg",minecraft:custom_model_data={strings:["default"]}]
+$execute on passengers run item replace entity @s[tag=aj.$(branch).bone.right_leg] container.0 with player_head[profile={name:$(name)},minecraft:item_model="animated_java:blueprint/player_display/right_leg",minecraft:custom_model_data={strings:["default"]}]

@@ -33,4 +33,4 @@ $data merge entity $(bone_lower_left_leg) {transformation:[0.9942f,-0.0757f,-0.0
 $data merge entity $(item_display_leggings_upper_r) {transformation: [-1.0936f,-0.1184f,-0.0052f,-0.0157f,0.0284f,-0.3086f,1.0555f,0.033f,-0.115f,1.0492f,0.3098f,2.5583f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_leg) {transformation:[0.9942f,-0.1076f,0.0047f,0.0196f,-0.0258f,-0.2805f,-0.9595f,-5119.875f,0.1046f,0.9538f,-0.2816f,2.2453f,0.0f,0.0f,0.0f,1.0f],start_interpolation:0,interpolation_duration:1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:billy_cutscenes/animations/devour/zzz/frames/53_locator_commands
-data modify entity @s data merge value {"cameras":{},"locators":{"camera":{"posx":-1.0625000000000002,"posy":0.4375,"posz":1.9374999999999998,"roty":300,"rotx":0}}}
+data modify entity @s data merge value {"cameras":{"camera":{"px":-1.0625000000000002,"py":0.4375,"pz":1.9374999999999998,"ry":300,"rx":0}},"locators":{"victim_position":{"px":0.12499999999999972,"py":0.125,"pz":2.3125,"ry":186.416057817969,"rx":-58.19511199891675}}}

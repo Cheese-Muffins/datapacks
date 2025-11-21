@@ -1,7 +1,6 @@
 # Generated with MC-Build
 
 tag @s add customUniversal.Animation
-tag @s add customUniversal.DisconnectCheck
 particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
 # function custom:universal/armor/hide
 $function custom:universal/setup/rig {objective:"$(objective)",item:"$(rig)"}

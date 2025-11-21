@@ -1,3 +1,6 @@
 # Generated with MC-Build
 
-$particle block{block_state:"$(id)"} ~ ~ ~ 0.5 0 0.5 1 10 normal
+loot insert 0 -63 0 loot custom:player_head
+data modify storage minecraft:custom billy.username set string block 0 -63 0 Items[0].components."minecraft:profile".name
+item replace block 0 -63 0 container.0 with minecraft:air
+function custom:abilities/billy/moves/3/zzz/1 with storage minecraft:custom billy

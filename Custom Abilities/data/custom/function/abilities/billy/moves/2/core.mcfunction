@@ -5,4 +5,4 @@ execute if entity @s[tag=customUniversal.Animation] run function custom:universa
 function custom:universal/error_messages/universal
 scoreboard players set @s customUniversal.ActiveHotbar 2
 execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/billy/moves/2/pass
-execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Phase"}
+execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A1",move:"Phase"}

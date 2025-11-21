@@ -2,3 +2,5 @@
 playsound minecraft:entity.polar_bear.warning player @a ~ ~ ~ 0.5
 function custom:universal/as/player {objective:"customBilly.RigID",what:"tag=customAbility.Billy",output:"function custom:abilities/billy/moves/1/buffs"}
 function custom:abilities/billy/moves/1/encourage
+function custom:abilities/billy/moves/1/range
+particle minecraft:dust{color:[0.000,0.494,0.741],scale:1} ~ ~ ~ 2 0 2 0.1 100 force @a

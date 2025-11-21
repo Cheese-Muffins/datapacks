@@ -1,0 +1,10 @@
+{
+  "function": "minecraft:set_components",
+  "components": {
+    "minecraft:equippable": {
+      "slot": "chest",
+      "asset_id": "minecraft:gold"
+    },
+    "minecraft:custom_data": {}
+  }
+}

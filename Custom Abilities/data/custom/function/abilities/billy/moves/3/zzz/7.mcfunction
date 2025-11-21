@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$particle block{block_state:"$(id)"} ~ ~ ~ 1 0 1 1 100 force @a
+execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+function custom:abilities/billy/moves/3/zzz/8 with storage minecraft:custom universal.fetch_block
+scoreboard players reset @s customBilly.TrapLinger
