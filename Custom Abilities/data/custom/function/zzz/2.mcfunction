@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-execute if entity @s[tag=customUniversal.ConstantCheck] run function custom:universal/constant_tick/main
-execute as @s[type=chest_minecart,tag=ui] run function custom:ui/minecart/tick
+function custom:ui/player/tick
+execute if score @s customUniversal.Disconnected matches 1.. run function custom:universal/disconnect/self/main

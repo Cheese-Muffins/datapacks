@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-data merge storage minecraft:ui {custom:{selection:{gojo:{beach_ownership_color:"green"}}}}
-data merge storage minecraft:ui {custom:{selection:{gojo:{beach_ownership_state:"Yes"}}}}
+tag @s remove customUniversal.SkinContext
+tag @s remove customToji.DefaultSkinBypass

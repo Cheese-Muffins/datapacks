@@ -1,6 +1,7 @@
 # Generated with MC-Build
 
-$execute as @n[type=!#custom:not_mob,distance=..1.75,name=!$(self)] run function custom:abilities/billy/moves/3/zzz/12
-function animated_java:billy/summon {args:{animation: 'snare_trigger', start_animation: true}}
-execute as @n[type=minecraft:item_display,tag=aj.billy.root,tag=!temp] run function custom:abilities/billy/moves/3/zzz/13
-kill @s
+data modify storage minecraft:custom billy.trap.self set string entity @s data.username
+data merge storage minecraft:custom {billy:{trap:{victim:""}}}
+execute as @n[type=!#custom:not_mob,distance=..1.75] if entity @s[type=minecraft:player] run function custom:abilities/billy/moves/3/zzz/12
+execute store success score @s customBilly.TrapSuccess run data modify storage minecraft:custom billy.trap.victim set from storage minecraft:custom billy.trap.self
+execute if score @s customBilly.TrapSuccess matches 1 run function custom:abilities/billy/moves/3/zzz/13 with storage minecraft:custom billy.trap

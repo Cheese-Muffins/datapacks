@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"yellow","text":"Demarcus"}}
-tag @s remove customBilly.ToggleDelay
+$execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={customBilly.RigID=$(id)}] at @s run function animated_java:billy/as_locator {name:'position',command:'particle minecraft:snowflake ~ ~0.5 ~ 0.5 0.5 0.5 0.1 20 force @a'}
+scoreboard players reset @s customBilly.PassiveSnowParticles

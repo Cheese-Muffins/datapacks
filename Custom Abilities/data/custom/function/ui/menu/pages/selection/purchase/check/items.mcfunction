@@ -11,4 +11,4 @@ $tag @s add customUniversal.RequiredItem$(number)
 $execute if entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{purchase:{type$(number):"$(type)",count$(number):$(required)}}}
 $data merge storage minecraft:ui {custom:{selection:{$(storage):{$(product)_item$(number)color:"red",number:$(number),name:"$(name)",product:"$(product)"}}}}
 $execute if score .Item$(number)_Count customUI.PurchaseItemCount matches $(required).. unless entity @s[tag=clickEvent] run function custom:ui/menu/pages/selection/purchase/check/zzz/0 {storage:"$(storage)",number:$(number),product:"$(product)"}
-$execute unless score .Item$(number)_Count customUI.PurchaseItemCount matches $(required).. if entity @s[tag=clickEvent] run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)
+$execute unless score .Item$(number)_Count customUI.PurchaseItemCount matches $(required).. if entity @s[tag=clickEvent,tag=customUniversal.PurchaseHandler] run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)

@@ -6,3 +6,4 @@ execute if entity @s[tag=customSettings.RiggedOdds] run function custom:abilitie
 execute unless entity @s[tag=temp] run function custom:abilities/billy/passives/maul/decide/maul/start
 tag @s remove temp
 scoreboard players reset @s customBilly.PassiveMaul
+scoreboard players add @s customBilly.Statistics.Maul.Activations 1

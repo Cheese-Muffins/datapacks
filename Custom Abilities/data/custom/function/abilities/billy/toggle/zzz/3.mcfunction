@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$particle block{block_state:"$(id)"} ^ ^0.5 ^0.25 0.75 0 0.75 1 50 normal
-particle minecraft:snowflake ~ ~ ~ 0 0 0 0.25 50 force @a
+$function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"yellow","italic":false,"text":"Demarcus"}}
+tag @s remove customBilly.ToggleDelay

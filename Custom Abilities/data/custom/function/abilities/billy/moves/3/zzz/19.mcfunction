@@ -1,4 +1,6 @@
 # Generated with MC-Build
 
-$damage @s $(amount)
-attribute @s minecraft:movement_speed modifier remove custom:billy.snare
+scoreboard players add @s customBilly.Statistics.Snare.Triggered 1
+execute if entity @s[tag=customBilly.PassiveHomeland] run data merge storage minecraft:custom {billy:{trap:{amount:13}}}
+execute unless entity @s[tag=customBilly.PassiveHomeland] run data merge storage minecraft:custom {billy:{trap:{amount:10}}}
+function custom:abilities/billy/moves/3/zzz/20 with storage minecraft:custom billy.trap

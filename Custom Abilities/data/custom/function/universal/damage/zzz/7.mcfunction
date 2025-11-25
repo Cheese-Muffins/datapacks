@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customTheWorld.RigID=$(id)}] run function custom:universal/damage/zzz/8
+$execute as @n[type=minecraft:item_display,tag=aj.gojo.root,scores={customUniversal.GlobalCounter=$(id)}] run function custom:universal/damage/zzz/8

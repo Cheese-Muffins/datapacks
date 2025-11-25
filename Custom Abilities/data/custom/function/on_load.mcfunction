@@ -13,7 +13,7 @@ scoreboard objectives add customUI.PlayerOP dummy
 scoreboard objectives add customUI.SelectedOdds dummy
 scoreboard objectives add customUI.PurchaseUsername dummy
 scoreboard objectives add customUI.SelectionPage dummy
-setblock 0 -64 0 shulker_box
+setblock 0 -64 0 minecraft:yellow_shulker_box[facing=west]
 setblock 0 -63 0 shulker_box
 scoreboard objectives add customUniversal.GlobalCounter dummy
 scoreboard objectives add customUniversal.RigID dummy
@@ -23,12 +23,13 @@ scoreboard players set x20 customUniversal.AwakeningDuration 20
 scoreboard objectives add customUniversal.Toggle dummy
 scoreboard objectives add customUniversal.ToggleDelay dummy
 scoreboard objectives add customUniversal.CooldownMath dummy
-scoreboard objectives add customUniversal.MoveLastUsed dummy
+scoreboard objectives add customUniversal.LastUsedMove dummy
 scoreboard players set div20 customUniversal.CooldownMath 20
 scoreboard players set mult50 customUniversal.CooldownMath 50
 scoreboard players set div100 customUniversal.CooldownMath 100
 scoreboard objectives add customUniversal.FailReturn dummy
 scoreboard objectives add customUniversal.ActiveHotbar dummy
+scoreboard objectives add customUniversal.LastMoveState dummy
 scoreboard objectives add customUniversal.Move1Cooldown dummy
 scoreboard objectives add customUniversal.Move1CooldownConverted dummy
 scoreboard objectives add customUniversal.Delay1 dummy
@@ -67,6 +68,7 @@ scoreboard objectives add customUniversal.MoveDelay dummy
 scoreboard objectives add customUniversal.MoveCooldowns dummy
 scoreboard players set x20 customUniversal.MoveCooldowns 20
 scoreboard players set div11 customUniversal.MoveCooldowns 11
+scoreboard players set div9 customUniversal.MoveCooldowns 9
 scoreboard objectives add customUniversal.VFXID dummy
 scoreboard objectives add customUniversal.VFXConditions dummy
 scoreboard objectives add customUniversal.VFXCount dummy
@@ -76,6 +78,9 @@ scoreboard objectives add customUniversal.QuestID dummy
 scoreboard objectives add customUniversal.QuestDialogue dummy
 scoreboard objectives add customUniversal.PlayerCount dummy
 scoreboard objectives add customUniversal.Disconnected minecraft.custom:minecraft.leave_game
+# Statistics #
+scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
+scoreboard objectives add customUniversal.StatisticsEntityKills dummy
 # Billy #
 scoreboard objectives add customBilly.RigID dummy
 scoreboard objectives add customBilly.ToggleOnText dummy
@@ -95,9 +100,28 @@ scoreboard objectives add customBilly.DevourX dummy
 scoreboard objectives add customBilly.DevourY dummy
 scoreboard objectives add customBilly.DevourZ dummy
 scoreboard objectives add customBilly.DevourRotationX dummy
-function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
-function custom:universal/cooldowns {ability:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:24}
-function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
-function custom:universal/cooldowns {ability:"Billy_Homeland",storage:"billy",path:"2b",move:2,cooldown:24}
-function custom:universal/cooldowns {ability:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
-function custom:universal/cooldowns {ability:"Billy_Homeland",storage:"billy",path:"3b",move:3,cooldown:24}
+# Move Cooldowns #
+function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
+function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:24}
+function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
+function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"2b",move:2,cooldown:24}
+function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
+function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"3b",move:3,cooldown:24}
+# Statistics #
+scoreboard objectives add customBilly.Statistics.PlaytimeT dummy
+scoreboard objectives add customBilly.Statistics.PlaytimeS dummy
+scoreboard objectives add customBilly.Statistics.PlaytimeM dummy
+scoreboard objectives add customBilly.Statistics.PlaytimeH dummy
+scoreboard objectives add customBilly.Statistics.Maul.Activations dummy
+scoreboard objectives add customBilly.Statistics.Maul.Damage dummy
+scoreboard objectives add customBilly.Statistics.HomelandT dummy
+scoreboard objectives add customBilly.Statistics.HomelandS dummy
+scoreboard objectives add customBilly.Statistics.HomelandM dummy
+scoreboard objectives add customBilly.Statistics.HomelandH dummy
+scoreboard objectives add customBilly.Statistics.Encourage.Uses dummy
+scoreboard objectives add customBilly.Statistics.Encourage.BuffedCount dummy
+scoreboard objectives add customBilly.Statistics.Phase.Uses dummy
+scoreboard objectives add customBilly.Statistics.Phase.Distance dummy
+scoreboard objectives add customBilly.Statistics.Snare.Uses dummy
+scoreboard objectives add customBilly.Statistics.Snare.Triggered dummy
+scoreboard objectives add customBilly.Statistics.Snare.Damage dummy

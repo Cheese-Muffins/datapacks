@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$particle block{block_state:"$(id)"} ~ ~ ~ 0.75 0 0.75 1 15 normal
+scoreboard players set @s customBilly.TrapDuration 1500
+tag @s remove temp

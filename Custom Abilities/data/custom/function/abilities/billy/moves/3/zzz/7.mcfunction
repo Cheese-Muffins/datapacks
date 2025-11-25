@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
-function custom:abilities/billy/moves/3/zzz/8 with storage minecraft:custom universal.fetch_block
-scoreboard players reset @s customBilly.TrapLinger
+$function animated_java:billy/as_locator {name:'position',command:'summon item_display ~ ~1.2 ~ {Tags:["customBilly.Trap","temp","customUniversal.ConstantCheck"],data:{username:"$(username)"}}'}
+execute as @n[type=minecraft:item_display,tag=customBilly.Trap,tag=temp] run function custom:abilities/billy/moves/3/zzz/8

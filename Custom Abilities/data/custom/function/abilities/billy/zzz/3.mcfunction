@@ -1,9 +1,4 @@
 # Generated with MC-Build
 
-$execute if score @s customBilly.ToggleOnText matches 54 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"red","text":"Billy"}}
-$execute if score @s customBilly.ToggleOnText matches 44 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"gold","text":"Demetrius"}}
-execute if score @s customBilly.ToggleOnText matches 35 run function custom:abilities/billy/zzz/4 with storage minecraft:custom billy
-$execute if score @s customBilly.ToggleOnText matches 25 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"green","text":"Bartholomew"}}
-$execute if score @s customBilly.ToggleOnText matches 15 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"blue","text":"James"}}
-$execute if score @s customBilly.ToggleOnText matches 8 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"light_purple","text":"the"}}
-$execute if score @s customBilly.ToggleOnText matches 1 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"dark_purple","text":"III"}}
+scoreboard players add @s customBilly.PassiveSnowParticles 1
+function custom:universal/statistics/time {ability:"Billy",stat:"Playtime"}

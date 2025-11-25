@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$particle block{block_state:"$(id)"} ~ ~ ~ 1 0 1 1 100 force @a
+$execute if entity @s[tag=customSettings.DebugLog] run tellraw @s "trap damage: $(amount)"
+$scoreboard players add @s customBilly.Statistics.Snare.Damage $(amount)
