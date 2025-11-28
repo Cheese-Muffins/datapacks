@@ -35,4 +35,3 @@ $data merge entity $(bone_left_leg) {transformation: [-0.9973f,-0.0656f,-0.034f,
 $data merge entity $(item_display_leggings_upper_r) {transformation: [1.097f,-0.0722f,0.0374f,0.1035f,0.0745f,1.0952f,-0.0714f,2.0892f,-0.0325f,0.0737f,1.097f,0.772f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_leg_group) {transformation: [-0.9973f,-0.0656f,-0.034f,0.125f,-0.0677f,0.9956f,0.0649f,1.7625f,0.0296f,0.067f,-0.9973f,0.75f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 data modify entity @s data merge value {"cameras":{},"locators":{"acrobatics_mount":{"px":-9.184850993605148e-17,"py":1.7625,"pz":0.75,"ry":7.5,"rx":0}}}
-function animated_java:toji/animations/acrobatics_mantle/zzz/frames/on_tick/transform_floating_entities

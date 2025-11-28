@@ -7,6 +7,10 @@ scoreboard objectives remove aj.acrobatics_wall.frame
 scoreboard objectives remove aj.acrobatics_mantle.frame
 scoreboard objectives remove aj.acrobatics_ceiling.frame
 scoreboard objectives remove aj.acrobatics_ground.frame
+scoreboard objectives remove aj.blitz_start.frame
+scoreboard objectives remove aj.blitz_land.frame
+scoreboard objectives remove aj.blitz_fall.frame
+scoreboard objectives remove aj.blitz_slam.frame
 scoreboard objectives remove aj.spring_windup.frame
 scoreboard objectives remove aj.spring_coil.frame
 scoreboard objectives remove aj.spring_land.frame

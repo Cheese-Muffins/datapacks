@@ -7,6 +7,10 @@ tag @s remove aj.toji.animation.acrobatics_wall.playing
 tag @s remove aj.toji.animation.acrobatics_mantle.playing
 tag @s remove aj.toji.animation.acrobatics_ceiling.playing
 tag @s remove aj.toji.animation.acrobatics_ground.playing
+tag @s remove aj.toji.animation.blitz_start.playing
+tag @s remove aj.toji.animation.blitz_land.playing
+tag @s remove aj.toji.animation.blitz_fall.playing
+tag @s remove aj.toji.animation.blitz_slam.playing
 tag @s remove aj.toji.animation.spring_windup.playing
 tag @s remove aj.toji.animation.spring_coil.playing
 tag @s remove aj.toji.animation.spring_land.playing

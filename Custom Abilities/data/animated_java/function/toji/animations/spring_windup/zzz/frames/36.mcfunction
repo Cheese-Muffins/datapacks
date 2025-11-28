@@ -13,7 +13,7 @@ $data merge entity $(item_display_chestplate_arm_r) {transformation: [-0.895f,-0
 $data merge entity $(bone_right_arm_group) {transformation: [0.5908f,-0.2129f,-0.7783f,0.5098f,0.5117f,-0.6469f,0.5654f,1.8198f,-0.6238f,-0.7323f,-0.2733f,0.0768f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_arm) {transformation: [-0.3559f,0.6279f,-0.6922f,-0.1612f,0.8054f,-0.1697f,-0.568f,1.5678f,-0.4741f,-0.7596f,-0.4453f,0.2976f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_wounded1) {transformation: [-0.3559f,0.6279f,-0.6922f,-0.8354f,0.8054f,-0.1697f,-0.568f,1.8355f,-0.4741f,-0.7596f,-0.4453f,0.0919f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(bone_blade2) {transformation: [0f,0f,0f,-0.1911f,0f,0f,0f,1.8582f,0f,0f,0f,0.8123f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_blade2) {transformation: [0.5238f,0.7739f,0.3559f,-0.1911f,-0.2482f,0.5383f,-0.8054f,1.8582f,-0.8149f,0.3335f,0.4741f,0.8123f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm) {transformation: [-0.3559f,0.5238f,-0.7739f,-0.3214f,0.8054f,-0.2482f,-0.5383f,1.6077f,-0.4741f,-0.8149f,-0.3335f,0.4858f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm_group) {transformation: [-0.3559f,0.5238f,-0.7739f,-0.3378f,0.8054f,-0.2482f,-0.5383f,1.6155f,-0.4741f,-0.8149f,-0.3335f,0.5112f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_arm_l) {transformation: [0.796f,0.7221f,-0.4092f,0.1233f,0.6532f,-0.1951f,0.9262f,1.4909f,0.5121f,-0.8735f,-0.5452f,-0.0466f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
@@ -36,4 +36,3 @@ $data merge entity $(item_display_leggings_upper_r) {transformation: [-0.9846f,0
 $data merge entity $(bone_left_leg_group) {transformation: [0.8951f,0.2967f,-0.3329f,-0.1935f,0.3958f,-0.1844f,0.8996f,2.2471f,0.2055f,-0.937f,-0.2825f,0.0982f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/spring_windup/zzz/frames/36_locator_commands
 data modify entity @s data merge value {"cameras":{},"locators":{"acrobatics_mount":{"px":-0.06943891905741889,"py":2.261821130901172,"pz":0.09486288082963715,"ry":347.0016605734073,"rx":-14.299957266515216}}}
-function animated_java:toji/animations/spring_windup/zzz/frames/on_tick/transform_floating_entities

@@ -5,6 +5,7 @@
 		"animated_java:billy_vfx/on_load",
 		"animated_java:billy/on_load",
 		"animated_java:text_display/on_load",
+		"animated_java:toji_vfx/on_load",
 		"animated_java:toji/on_load"
 	]
 }

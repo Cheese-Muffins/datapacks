@@ -110,6 +110,34 @@ function on_load {
             scoreboard objectives add customBilly.Statistics.Snare.Uses dummy
             scoreboard objectives add customBilly.Statistics.Snare.Triggered dummy
             scoreboard objectives add customBilly.Statistics.Snare.Damage dummy
+
+    # Toji #
+        scoreboard objectives add customToji.QuestProgress dummy
+        scoreboard objectives add customToji.ObtainmentMonsterKills dummy
+        scoreboard objectives add customToji.PassiveBloodlust dummy
+        scoreboard objectives add customToji.AcrobaticsX dummy
+        scoreboard objectives add customToji.AcrobaticsY dummy
+        scoreboard objectives add customToji.AcrobaticsZ dummy
+        scoreboard objectives add customToji.AcrobaticsRotationX dummy
+        scoreboard objectives add customToji.AcrobaticsAnimation dummy
+        scoreboard objectives add customToji.BlitzTravel dummy
+        scoreboard objectives add customToji.BlitzGravity dummy
+        scoreboard objectives add customToji.BlitzDamage dummy
+        scoreboard objectives add customToji.SpringX dummy
+        scoreboard objectives add customToji.SpringY dummy
+        scoreboard objectives add customToji.SpringZ dummy
+        scoreboard objectives add customToji.SpringRotationX dummy
+        scoreboard objectives add customToji.SpringMath dummy
+        scoreboard players set div15 customToji.SpringMath 15
+        scoreboard players set div15 customToji.SpringMath 15
+        scoreboard objectives add customToji.Spring2DIncrements dummy
+        scoreboard objectives add customToji.SpringYIncrements dummy
+
+        # Move Cooldowns #
+            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
+            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
+            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}
+            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:4,move:4,cooldown:30}
 }
 
 function tick {
@@ -212,6 +240,7 @@ dir abilities {
             }
 
             function appear {
+                data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
                 data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
                 data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
                 execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"billy",animation:'appear',extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.position]"}
@@ -517,12 +546,14 @@ dir abilities {
                 }
 
                 function encourage {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
                     data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
                     data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
                     execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"billy",animation:'encourage',extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.mouth]"}
                 }
 
                 function range {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
                     data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
                     data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
                     execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"billy",animation:'range',extra:"random value 1..2"}
@@ -1019,6 +1050,704 @@ dir abilities {
             }
         }
     }
+
+    dir toji {
+        function tick {
+            execute if score @s customUniversal.Toggle matches 1 run {
+                execute at @s run function custom:abilities/toji/active
+            }
+
+            execute unless entity @s[scores={customUniversal.Move1Cooldown=0,customUniversal.Move2Cooldown=0,customUniversal.Move3Cooldown=0,customUniversal.Move4Cooldown=0,customUniversal.Delay4=0,customUniversal.AwakeningDuration=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                REPEAT (1,4) as i {
+                    execute if score @s customUniversal.Move<%i%>Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move<%i%>Cooldown 1
+                }
+                
+                execute if score @s customUniversal.Delay4 matches 1.. run {
+                    scoreboard players remove @s customUniversal.Delay4 1
+                    execute if score @s customUniversal.Delay4 matches 0 run {
+                        tag @s remove customGojo.InfinityAmplification
+                    }
+                }
+
+                execute if score @s customUniversal.AwakeningDuration matches 1.. run scoreboard players remove @s customUniversal.AwakeningDuration 1
+                execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+            }
+        }
+
+        dir toggle {
+            function on {
+                playsound minecraft:gojo.toggle.spawn player @s ~ ~ ~ 0.35
+                scoreboard players set @s customUniversal.ToggleDelay 20 
+            }
+
+            function off {
+                title @s actionbar ""
+                playsound minecraft:gojo.toggle.remove player @s ~ ~ ~ 0.5
+                scoreboard players set @s customUniversal.ToggleDelay 10
+            }
+        }
+
+        function skin {
+            $execute store result storage minecraft:custom toji.skin.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {toji:{skin:{rig:"$(rig)",objective:"$(objective)"}}}
+            block { with storage minecraft:custom toji.skin
+                $execute as @p[tag=customAbility.Toji,scores={$(objective)=$(id)}] run {
+                    execute if entity @s[tag=customToji.SkinDefault] run block { with storage minecraft:custom toji.skin
+                        $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] run function animated_java:$(rig)/variants/default/apply
+                    }
+                    execute if entity @s[tag=customToji.SkinWounded] run block { with storage minecraft:custom toji.skin
+                        $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] run function animated_java:$(rig)/variants/wounded/apply
+                    }
+                }
+            }
+        }
+
+        dir key_bindings {
+            REPEAT (1,4) as i {
+                function move<%i%> {
+                    function custom:abilities/toji/moves/<%i%>/core
+                    scoreboard players reset @s customUniversal.Move<%i%>Trigger
+                }
+            }
+        }
+
+        dir hotbar {
+            function main {
+                REPEAT (1,4) as i {
+                    function custom:abilities/toji/hotbar/progress with storage minecraft:custom toji.cooldowns.move<%i%>
+                }
+                
+                REPEAT (1,4) as i {
+                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                        function custom:universal/hotbar/time {ability:"toji",selected:<%i%>}
+                    }
+                }
+
+                block {
+                    execute store result storage minecraft:custom toji.hotbar.bloodlust_string int 1 run scoreboard players get @s customToji.PassiveBloodlust
+                    block { with storage minecraft:custom toji.hotbar
+                        $execute if score @s customToji.PassiveBloodlust matches 10..99 run data merge storage minecraft:custom {toji:{hotbar:{bloodlust:"$(bloodlust_string)"}}}
+                        $execute if score @s customToji.PassiveBloodlust matches 0..9 run data merge storage minecraft:custom {toji:{hotbar:{bloodlust:"0$(bloodlust_string)"}}}
+                    }
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom toji.hotbar
+                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF826$(bloodlust)","color":"#FFF56B"},{"text":"\uF819\u06A0"},{"text":"\uF800\$(move1)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom toji.hotbar
+                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF826$(bloodlust)","color":"#FFF56B"},{"text":"\uF819\u06A0"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom toji.hotbar
+                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF826$(bloodlust)","color":"#FFF56B"},{"text":"\uF819\u06A0"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\$(move4)"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 4 run block { with storage minecraft:custom toji.hotbar
+                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF826$(bloodlust)","color":"#FFF56B"},{"text":"\uF819\u06A0"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+            }
+
+            function progress {
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A2"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A3"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A4"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A5"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A6"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A7"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A8"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06A9"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom toji.hotbar.move$(selection) set value "u06B0"
+
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+            }
+        }
+
+        function active {
+            REPEAT (1,4) as i {
+                execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/toji/key_bindings/move<%i%>
+            }
+
+            function custom:abilities/toji/hotbar/main
+        }
+
+        dir moves {
+            function setup {
+                tag @s add customUniversal.Animation
+                tag @s add customUniversal.DisconnectCheck
+                effect give @s minecraft:invisibility infinite 0 true
+                particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
+
+                function custom:universal/armor/hide
+                $execute rotated ~ 0 run function animated_java:toji/summon {args:{animation:'$(animation)', start_animation: true}}
+                $function custom:universal/setup/rig {objective:"$(objective)",item:"toji"}
+
+                execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"toji"}
+                execute if entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/skin {branch:"toji"}
+                # item modify entity @s hotbar.8 custom:hide
+
+                $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.toji.camera",objective:"$(objective)"}
+
+                scoreboard players add .global customUniversal.GlobalCounter 1
+                scoreboard players operation @s customUniversal.GlobalCounter = .global customUniversal.GlobalCounter
+                function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.toji.root",objective:"customUniversal.GlobalCounter"}
+            }
+
+            dir 1 {
+                function core {
+                    execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    execute if entity @s[tag=customToji.AcrobaticsRecastable] run {
+                        tag @s remove customUniversal.Error1
+                        tag @s remove customUniversal.Error2
+                        scoreboard players set @s customUniversal.FailReturn 0
+                    }
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/toji/moves/1/raycast/start
+
+                    function custom:universal/error_messages/universal
+                    
+                    scoreboard players set @s customUniversal.ActiveHotbar 1
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/toji/moves/1/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Acrobatics"}
+                }
+
+                dir raycast {
+                    function start {
+                        tag @s add customToji.AcrobaticsRaycast
+                        function custom:universal/error_messages/find {error:"11"}
+                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/toji/moves/1/raycast/fire
+                        scoreboard players reset .distance beam
+                        tag @s remove customToji.AcrobaticsRaycast
+                    }
+
+                    function fire {
+                        execute unless block ^ ^ ^.1 #custom:raycast_pass run function custom:abilities/toji/moves/1/raycast/found
+                        scoreboard players add .distance beam 1
+                        execute if score .distance beam matches ..300 positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/1/raycast/fire
+                    }
+
+                    function found {
+                        block {
+                            execute unless block ~ ~0.1 ~ #custom:raycast_pass run scoreboard players set @s customToji.AcrobaticsAnimation 1
+                            execute positioned ~ ~ ~0.1 unless block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/1/raycast/wall_or_mantle
+                            execute positioned ~0.1 ~ ~ unless block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/1/raycast/wall_or_mantle
+                            execute positioned ~ ~ ~-0.1 unless block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/1/raycast/wall_or_mantle
+                            execute positioned ~-0.1 ~ ~ unless block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/1/raycast/wall_or_mantle
+                            execute unless block ~ ~-0.1 ~ #custom:raycast_pass run scoreboard players set @s customToji.AcrobaticsAnimation 3
+                        }
+                        summon marker ~ ~ ~ {NoGravity:1b,Tags:["customToji.AcrobaticsMarker"]}
+                        execute store result score @s customToji.AcrobaticsRotationX run data get entity @s Rotation[0]
+                        execute store result score @s customToji.AcrobaticsX run data get entity @n[type=minecraft:marker,tag=customToji.AcrobaticsMarker] Pos[0]
+                        execute store result score @s customToji.AcrobaticsY run data get entity @n[type=minecraft:marker,tag=customToji.AcrobaticsMarker] Pos[1]
+                        execute store result score @s customToji.AcrobaticsZ run data get entity @n[type=minecraft:marker,tag=customToji.AcrobaticsMarker] Pos[2]
+                        kill @n[type=minecraft:marker,tag=customToji.AcrobaticsMarker]
+
+                        scoreboard players set @s customUniversal.FailReturn 0
+                        scoreboard players set .distance beam 300
+                        tag @s remove customUniversal.Error11
+                        tag @s remove customToji.AcrobaticsAnchor
+                    }
+
+                    function wall_or_mantle {
+                        execute unless block ~ ~ ~ #custom:raycast_pass unless block ~ ~1 ~ #custom:raycast_pass run {
+                            scoreboard players set @s customToji.AcrobaticsAnimation 2
+                        } else run {
+                            scoreboard players set @s customToji.AcrobaticsAnimation 4
+                        }
+                    }
+                }
+
+                function pass {
+                    execute unless entity @s[tag=customToji.AcrobaticsRecastable] run {
+                        function custom:abilities/toji/moves/setup {animation:'acrobatics_start',objective:"customUniversal.RigID"}
+                        execute as @n[tag=aj.toji.locator.acrobatics_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .TojiCooldown customUniversal.Move1Cooldown
+                        scoreboard players set @s customUniversal.MoveDelay 10
+
+                        playsound minecraft:toji.acrobatics.voiceline player @a ~ ~ ~ 0.5
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
+                    } else run {
+                        scoreboard players remove @s customToji.PassiveBloodlust 2
+
+                        execute store result storage minecraft:custom toji.acrobatics.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom toji.acrobatics
+                            $execute as @n[type=minecraft:item_display,tag=aj.toji.root,scores={customUniversal.RigID=$(id)}] run {
+                                function custom:abilities/toji/moves/1/reposition
+                            }
+                        }
+
+                        tag @s remove customToji.AcrobaticsRecastable
+                    }
+                }
+
+                function reposition {
+                    execute store result storage minecraft:custom toji.acrobatics.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.acrobatics
+                        $execute as @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] run {
+                            execute store result storage minecraft:custom toji.acrobatics.animation int 1 run scoreboard players get @s customToji.AcrobaticsAnimation
+                            execute store result storage minecraft:custom toji.acrobatics.x int 1 run scoreboard players get @s customToji.AcrobaticsX
+                            execute store result storage minecraft:custom toji.acrobatics.y int 1 run scoreboard players get @s customToji.AcrobaticsY
+                            execute store result storage minecraft:custom toji.acrobatics.z int 1 run scoreboard players get @s customToji.AcrobaticsZ
+                            execute store result storage minecraft:custom toji.acrobatics.rot_x int 1 run scoreboard players get @s customToji.AcrobaticsRotationX
+                        }
+
+                        block { with storage minecraft:custom toji.acrobatics
+                            $scoreboard players set @s customToji.AcrobaticsAnimation $(animation)
+                            function animated_java:toji/animations/acrobatics_start/stop
+                            function animated_java:toji/animations/acrobatics_wall/stop
+                            function animated_java:toji/animations/acrobatics_ceiling/stop 
+                            function animated_java:toji/animations/acrobatics_ground/stop
+                            function animated_java:toji/animations/acrobatics_mantle/stop
+                            $execute as @a unless score @s customUniversal.RigID matches $(id) run playsound minecraft:toji.acrobatics.relocate player @s ~ ~ ~ 0.25
+                            $tp @s $(x) $(y) $(z) $(rot_x) 0
+
+                            execute if score @s customToji.AcrobaticsAnimation matches 1 run function animated_java:toji/animations/acrobatics_ceiling/play
+                            execute if score @s customToji.AcrobaticsAnimation matches 2 run function animated_java:toji/animations/acrobatics_wall/play
+                            execute if score @s customToji.AcrobaticsAnimation matches 3 run function animated_java:toji/animations/acrobatics_ground/play
+                            execute if score @s customToji.AcrobaticsAnimation matches 4 run function animated_java:toji/animations/acrobatics_mantle/play
+                        }
+                    }
+                }
+
+                function mount {
+                    execute store result storage minecraft:custom toji.acrobatics.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.acrobatics
+                        $execute as @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] run block { with storage minecraft:custom toji.acrobatics
+                            $ride @s mount @n[type=minecraft:item_display,tag=aj.toji.locator.acrobatics_mount,scores={customUniversal.RigID=$(id)}]
+                            attribute @s minecraft:movement_speed base reset
+                            attribute @s minecraft:jump_strength base reset
+                        }
+                    }
+                }
+
+                function wall {
+                    execute store result storage minecraft:custom toji.acrobatics.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.acrobatics
+                        $execute as @n[type=minecraft:item_display,tag=aj.toji.locator.acrobatics_mount,scores={customUniversal.RigID=$(id)}] rotated as @s run rotate @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] ~-15 0
+                    }
+                }
+
+                function determine {
+                    execute store result storage minecraft:custom toji.acrobatics.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.acrobatics
+                        $execute as @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] if score @s customToji.PassiveBloodlust matches 2.. run {
+                            tag @s add customToji.AcrobaticsRecastable
+                        }
+                    }
+                }
+            }
+
+            dir 2 {
+                function core {
+                    execute unless score @s customUniversal.Move2Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    function custom:universal/error_messages/universal
+
+                    scoreboard players set @s customUniversal.ActiveHotbar 2
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/toji/moves/2/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Blitz"}
+                }
+
+                function pass {
+                    function custom:abilities/toji/moves/setup {animation:'blitz_start',objective:"customUniversal.RigID"}
+                    execute as @n[tag=aj.toji.locator.acrobatics_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
+                    tag @s add customUniversal.Cancellable
+                    scoreboard players set @s customUniversal.MoveLastUsed 2
+
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .TojiCooldown customUniversal.Move2Cooldown
+                    scoreboard players set @s customUniversal.MoveDelay 10
+
+                    function custom:abilities/toji/moves/2/danger_zone
+                    execute as @n[type=minecraft:item_display,tag=aj.toji_vfx.root,tag=!found] run {
+                        scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
+                        tag @s add found
+                    }
+
+                    attribute @s minecraft:movement_speed base set 0
+                    attribute @s minecraft:jump_strength base set 0
+                }
+
+                function aiming {
+                    function custom:universal/control/movement {user:"customAbility.Toji",rig:"aj.toji.root",objective:"customUniversal.RigID"}
+                    
+                    execute store result storage minecraft:custom toji.blitz.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.blitz
+                        $execute at @s as @n[type=minecraft:item_display,tag=aj.toji_vfx.root,scores={customUniversal.RigID=$(id)}] run tp @s ~ ~ ~ ~ 0
+                    }
+                }
+
+                function danger_zone {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                    data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                    data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                    execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"toji",animation:'danger_rectangle',extra:"random value 1..2"}
+                }
+
+                function impact_stars_white {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"^"}}}
+                    data merge storage minecraft:custom {universal:{vfx:{offsetXL:2,offsetXR:0,offsetYL:3,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                    data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                    execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:15,duration:0,branch:"toji",animation:'impact_white',extra:"random value 1..2"}
+                }
+
+                function impact_stars_black {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"^"}}}
+                    data merge storage minecraft:custom {universal:{vfx:{offsetXL:2,offsetXR:0,offsetYL:3,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                    data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                    execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:15,duration:0,branch:"toji",animation:'impact_black',extra:"random value 1..2"}
+                }
+
+                function mount {
+                    execute store result storage minecraft:custom toji.acrobatics.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.acrobatics
+                        $execute as @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] run block { with storage minecraft:custom toji.acrobatics
+                            $ride @s mount @n[type=minecraft:item_display,tag=aj.toji.locator.acrobatics_mount,scores={customUniversal.RigID=$(id)}]
+                        }
+                    }
+                }
+
+                dir damage {
+                    function main {
+                        execute store result storage minecraft:custom toji.blitz.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom toji.blitz
+                            $execute as @e[type=!#custom:not_mob,tag=!customToji.BlitzDamaged,distance=..2.5] unless entity @s[scores={customUniversal.RigID=$(id)}] run {
+                                damage @s 1
+                                execute at @s run particle minecraft:sweep_attack ~ ~1 ~ 0 0 0 0 1 force @a
+                                tag @s add customToji.BlitzDamaged
+                            }
+                        }
+
+                        # execute rotated 90 0 run function custom:abilities/toji/moves/2/damage/beam with storage minecraft:custom toji.blitz
+                        # scoreboard players reset .distance customToji.BlitzDamage
+
+                        # execute rotated -90 0 run function custom:abilities/toji/moves/2/damage/beam with storage minecraft:custom toji.blitz
+                        # scoreboard players reset .distance customToji.BlitzDamage
+                    }
+
+                    function beam {
+                        # scoreboard players add .distance customToji.BlitzDamage 1
+
+                        # # found entity
+                        # $execute as @e[type=!#custom:not_mob,tag=!customToji.BlitzDamaged,dx=0] unless entity @s[scores={customUniversal.RigID=$(id)}] positioned ~-0.99 ~-0.99 ~-0.99 if entity @s[dx=0] positioned ~0.99 ~0.99 ~0.99 run {
+                        #     damage @s 1
+                        #     execute at @s run particle minecraft:sweep_attack ~ ~1 ~ 0 0 0 0 1 force @a
+                        #     tag @s add customToji.BlitzDamaged
+                        # }
+
+                        # execute if score .distance customToji.BlitzDamage matches ..25 positioned ^ ^ ^0.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/2/damage/beam with storage minecraft:custom toji.blitz
+                    }
+                }
+
+                dir decide {
+                    function main {
+                        execute if block ~ ~-0.1 ~ #custom:raycast_pass run {
+                            function animated_java:toji/animations/blitz_fall/play
+                            tag @s add customToji.BlitzFalling
+                        }
+                        execute unless block ~ ~-0.1 ~ #custom:raycast_pass run function animated_java:toji/animations/blitz_land/play
+                    }
+                }
+
+                dir movement {
+                    function main {
+                        particle minecraft:instant_effect ~ ~1 ~ 1 1 1 0 10 force @a
+                        function custom:abilities/toji/moves/2/movement/recursive
+                        execute if entity @s[tag=customToji.BlitzFalling] run {
+                            execute if entity @s[tag=customToji.BlitzGravityCorrected] run {
+                                function animated_java:toji/animations/blitz_slam/play
+                                tag @s remove customToji.BlitzFalling
+                            }
+                            execute unless block ~ ~-0.1 ~ #custom:raycast_pass run {
+                                function animated_java:toji/animations/blitz_slam/play
+                                tag @s remove customToji.BlitzFalling
+                            }
+                        }
+                        scoreboard players reset .distance customToji.BlitzTravel
+                        tag @s remove customToji.BlitzGravityCorrected
+                    }
+
+                    function recursive {
+                        scoreboard players add .distance customToji.BlitzTravel 1
+
+                        # if = not solid (air / pass-through)
+                        # unless = solid block
+
+                        execute if block ^ ^-0.1 ^ #custom:raycast_pass run {
+                            # not solid ground
+                            scoreboard players add @s customToji.BlitzGravity 1
+
+                            # max grav
+                            execute if score @s customToji.BlitzGravity matches 250.. run {
+                                scoreboard players set @s customToji.BlitzGravity 250
+                            }
+
+                            scoreboard players operation .Math customToji.BlitzGravity = @s customToji.BlitzGravity
+                            scoreboard players operation .Math customToji.BlitzGravity *= @s customToji.BlitzGravity
+
+                            execute store result storage minecraft:custom toji.blitz.fall double 0.000025 run scoreboard players get .Math customToji.BlitzGravity
+                            block { with storage minecraft:custom toji.blitz
+                                $execute positioned ^ ^-$(fall) ^ run {
+                                    execute if block ~ ~ ~ #custom:raycast_pass run tp @s ^ ^ ^
+                                    execute unless block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=customToji.BlitzGravityCorrected] run function custom:abilities/toji/moves/2/movement/gravity_correct
+                                }
+                            }
+                            data remove storage minecraft:custom toji.blitz.fall
+                        } else run {
+                            # solid ground
+                            execute if block ^ ^ ^0.5 #custom:raycast_pass if block ^ ^1 ^0.5 #custom:raycast_pass run {
+                                tp @s ^ ^ ^
+                            } else execute unless block ^ ^ ^0.5 #custom:raycast_pass if block ^ ^1 ^0.5 #custom:raycast_pass run {
+                                tp @s ^ ^1 ^
+                            } else execute unless block ^ ^ ^0.5 #custom:raycast_pass unless block ^ ^1 ^0.5 #custom:raycast_pass run {
+                                function custom:abilities/toji/moves/2/movement/end
+                            }
+
+                            # reset gravity when ground is hit
+                            scoreboard players reset @s customToji.BlitzGravity
+                        }
+                        execute if score .distance customToji.BlitzTravel matches ..26 positioned ^ ^ ^0.05 rotated ~ ~ unless entity @s[tag=customToji.BlitzWall] run function custom:abilities/toji/moves/2/movement/recursive
+                    }
+
+                    function gravity_correct {
+                        execute if block ~ ~ ~ #custom:raycast_pass run {
+                            tp @s ~ ~ ~
+                            tag @s add customToji.BlitzGravityCorrected
+                        }
+                        execute unless block ~ ~ ~ #custom:raycast_pass positioned ~ ~0.01 ~ run function custom:abilities/toji/moves/2/movement/gravity_correct
+                    }
+
+                    function end {
+                        tag @s add customToji.BlitzWall
+                    }
+                }
+
+                function land {
+                    playsound minecraft:toji.blitz.land player @a ~ ~ ~ 1
+                    execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+                    block { with storage minecraft:custom universal.fetch_block
+                        $particle block{block_state:"$(id)"} ^ ^0.5 ^ 1.5 0 1.5 1 100 normal
+                    }
+                }
+            }
+
+            dir 4 {
+                function core {
+                    execute unless score @s customUniversal.Move4Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    function custom:universal/error_messages/universal
+
+                    scoreboard players set @s customUniversal.ActiveHotbar 4
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/toji/moves/4/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:4,unicode:"u50A0",move:"Spring"}
+                }
+
+                function pass {
+                    function custom:abilities/toji/moves/setup {animation:'spring_windup',objective:"customUniversal.RigID"}
+                    tag @s add customUniversal.Cancellable
+                    scoreboard players set @s customUniversal.MoveLastUsed 4
+                    execute as @n[tag=aj.toji.locator.coil_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
+
+                    function custom:abilities/toji/moves/4/danger_zone
+                    execute as @n[type=minecraft:item_display,tag=aj.toji_vfx.root,tag=!found] run {
+                        scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
+                        tag @s add found
+                    }
+
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move4Cooldown = .TojiCooldown customUniversal.Move4Cooldown
+                    scoreboard players set @s customUniversal.MoveDelay 10
+
+                    attribute @s minecraft:movement_speed base set 0.025
+                    attribute @s minecraft:jump_strength base set 0
+                }
+
+                function danger_zone {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                    data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                    data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                    execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"toji",animation:'danger_zone',extra:"random value 1..2"}
+                }
+
+                dir raycast {
+                    function start {
+                        tag @s add customToji.SpringRaycast
+                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/toji/moves/4/raycast/fire
+                        scoreboard players reset .distance beam
+                        tag @s remove customToji.SpringRaycast
+                    }
+
+                    function fire {
+                        execute unless block ^ ^ ^.1 #custom:raycast_pass unless block ~ ~-1 ~ #custom:raycast_pass run function custom:abilities/toji/moves/4/raycast/found
+                        scoreboard players add .distance beam 1
+                        execute if score .distance beam matches ..300 positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/4/raycast/fire
+                    }
+
+                    function found {
+                        execute store result storage minecraft:custom toji.spring.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom toji.spring
+                            execute store result score @s customToji.SpringRotationX run data get entity @s Rotation[0] 10
+                            execute store result storage minecraft:custom toji.spring.rotation float 0.1 run scoreboard players get @s customToji.SpringRotationX
+                            $execute as @n[type=minecraft:item_display,tag=aj.toji_vfx.root,scores={customUniversal.RigID=$(id)}] align xz positioned ~0.5 ~ ~0.5 run block { with storage minecraft:custom toji.spring
+                                $tp @s ~ ~ ~ $(rotation) 0
+                            }
+                            $execute store result score @s customToji.SpringX run data get entity @n[type=minecraft:item_display,tag=aj.toji_vfx.root,scores={customUniversal.RigID=$(id)}] Pos[0] 1000
+                            $execute store result score @s customToji.SpringY run data get entity @n[type=minecraft:item_display,tag=aj.toji_vfx.root,scores={customUniversal.RigID=$(id)}] Pos[1] 1000
+                            $execute store result score @s customToji.SpringZ run data get entity @n[type=minecraft:item_display,tag=aj.toji_vfx.root,scores={customUniversal.RigID=$(id)}] Pos[2] 1000
+                        }
+
+                        scoreboard players set .distance beam 300
+                        tag @s remove customToji.SpringAnchor
+                    }
+                }
+
+                function coil_start {
+                    execute store result storage minecraft:custom toji.spring.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.spring
+                        # Locate Endpoint
+                        $execute as @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] run block { with storage minecraft:custom toji.spring
+                            scoreboard players operation dx customToji.SpringMath = @s customToji.SpringX
+                            $execute store result score t customToji.SpringMath run data get entity @n[type=minecraft:item_display,tag=aj.toji.root,scores={customUniversal.RigID=$(id)}] Pos[0] 1000
+                            scoreboard players operation dx customToji.SpringMath -= t customToji.SpringMath
+                            scoreboard players operation dz customToji.SpringMath = @s customToji.SpringZ
+                            $execute store result score t customToji.SpringMath run data get entity @n[type=minecraft:item_display,tag=aj.toji.root,scores={customUniversal.RigID=$(id)}] Pos[2] 1000
+                            scoreboard players operation dz customToji.SpringMath -= t customToji.SpringMath
+                            scoreboard players operation r2 customToji.SpringMath = dx customToji.SpringMath
+                            scoreboard players operation r2 customToji.SpringMath *= dx customToji.SpringMath
+                            scoreboard players operation t customToji.SpringMath = dz customToji.SpringMath
+                            scoreboard players operation t customToji.SpringMath *= dz customToji.SpringMath
+                            scoreboard players operation r2 customToji.SpringMath += t customToji.SpringMath
+                            scoreboard players operation g customToji.SpringMath = dx customToji.SpringMath
+                            $execute store result score ax customToji.SpringMath run data get entity @n[type=minecraft:item_display,tag=aj.toji.root,scores={customUniversal.RigID=$(id)}] Pos[0] 0
+                            execute if score g customToji.SpringMath matches ..-1 run scoreboard players operation g customToji.SpringMath *= -1 customToji.SpringMath
+                            scoreboard players operation t customToji.SpringMath = dz customToji.SpringMath
+                            execute if score t customToji.SpringMath matches ..-1 run scoreboard players operation t customToji.SpringMath *= -1 customToji.SpringMath
+                            scoreboard players operation g customToji.SpringMath += t customToji.SpringMath
+                            scoreboard players set two customToji.SpringMath 2
+                            execute if score g customToji.SpringMath matches 0 run scoreboard players set g customToji.SpringMath 1
+                            scoreboard players operation q customToji.SpringMath = r2 customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath += g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= two customToji.SpringMath
+                            scoreboard players operation g customToji.SpringMath = q customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath = r2 customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath += g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= two customToji.SpringMath
+                            scoreboard players operation g customToji.SpringMath = q customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath = r2 customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath += g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= two customToji.SpringMath
+                            scoreboard players operation g customToji.SpringMath = q customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath = r2 customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath += g customToji.SpringMath
+                            scoreboard players operation q customToji.SpringMath /= two customToji.SpringMath
+                            scoreboard players operation g customToji.SpringMath = q customToji.SpringMath
+                            scoreboard players operation dist1000 customToji.SpringMath = g customToji.SpringMath
+                            scoreboard players operation @s customToji.Spring2DIncrements = dist1000 customToji.SpringMath
+                            scoreboard players operation @s customToji.Spring2DIncrements /= div15 customToji.SpringMath
+
+                            $execute store result score posY1000 customToji.SpringMath run data get entity @n[type=minecraft:item_display,tag=aj.toji.root,scores={customUniversal.RigID=$(id)}] Pos[1] 1000
+                            scoreboard players operation tgtY1000 customToji.SpringMath = @s customToji.SpringY
+                            scoreboard players operation dy1000 customToji.SpringMath = tgtY1000 customToji.SpringMath
+                            scoreboard players operation dy1000 customToji.SpringMath -= posY1000 customToji.SpringMath
+
+                            scoreboard players operation @s customToji.SpringYIncrements = dy1000 customToji.SpringMath
+                            scoreboard players operation @s customToji.SpringYIncrements /= div15 customToji.SpringMath
+
+                            execute store result storage minecraft:custom toji.spring.total_distance double 0.001 run scoreboard players get dist1000 customToji.SpringMath
+                            execute store result storage minecraft:custom toji.spring.rotation float 0.1 run scoreboard players get @s customToji.SpringRotationX
+                            execute store result storage minecraft:custom toji.spring.2Dincrements double 0.001 run scoreboard players get @s customToji.Spring2DIncrements
+                            execute store result storage minecraft:custom toji.spring.Yincrements double 0.001 run scoreboard players get @s customToji.SpringYIncrements
+                            block { with storage minecraft:custom toji.spring
+                                $tellraw @a[tag=customSettings.DebugLog] "spring debug log\ndistance: $(total_distance)m\nrotation: $(rotation)f\n2Dincrements: $(2Dincrements)m\nYincrements: $(Yincrements)m"
+                            }
+                        }
+
+                        block { with storage minecraft:custom toji.spring
+                            $rotate @s $(rotation) 0
+                        }
+                    }
+
+                    function animated_java:toji/animations/spring_windup/stop
+                    function animated_java:toji/animations/spring_coil/play
+                }
+
+                function coil_movement {
+                    execute store result storage minecraft:custom toji.spring.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom toji.spring
+                        $execute as @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] run {
+                            execute store result storage minecraft:custom toji.spring.2Dincrements double 0.001 run scoreboard players get @s customToji.Spring2DIncrements
+                            execute store result storage minecraft:custom toji.spring.Yincrements double 0.001 run scoreboard players get @s customToji.SpringYIncrements
+                        }
+
+                        block { with storage minecraft:custom toji.spring
+                            $tp @s ^ ^$(Yincrements) ^$(2Dincrements)
+                        }
+
+                        execute if predicate custom:universal/0.35 run playsound minecraft:toji.spring.rapid_spin player @a ~ ~ ~ 0.5
+                    }
+                    function animated_java:toji/as_locator {name:'coil_mount',command:'particle minecraft:cloud ~ ~ ~ 0.1 0.1 0.1 0.1 2 force @a'}
+                }
+
+                function mount {
+                    execute store result storage minecraft:custom toji.spring.id int 1 run scoreboard players get @s customUniversal.RigID
+                    $data merge storage minecraft:custom {toji:{spring:{movement:$(movement)}}}
+
+                    block { with storage minecraft:custom toji.spring
+                        $execute as @p[tag=customAbility.Toji,scores={customUniversal.RigID=$(id)}] run block { with storage minecraft:custom toji.spring
+                            $ride @s mount @n[type=minecraft:item_display,tag=aj.toji.locator.coil_mount,scores={customUniversal.RigID=$(id)}]
+                            attribute @s minecraft:movement_speed base reset
+                            attribute @s minecraft:jump_strength base reset
+                        }
+                        $execute positioned ^ ^ ^$(movement) if block ^ ^ ^ #custom:raycast_pass run tp @s ^ ^ ^ $(rotation) 0
+                        # $tp @s ^ ^ ^$(movement) $(rotation) 0
+                    }
+                }
+
+                function land {
+                    execute positioned ~ ~-1 ~ run function custom:universal/fetch_block
+                    block { with storage minecraft:custom universal.fetch_block
+                        $particle block{block_state:"$(id)"} ^ ^0.5 ^ 1.5 0 1.5 1 100 normal
+                    }
+                }
+            }
+
+            dir reset {
+                function all {
+                    $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+                    $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+                    block { with storage minecraft:custom universal.control
+                        $execute as @a[tag=customAbility.Toji,scores={$(objective)=$(id)}] at @s run function custom:abilities/toji/moves/reset/player
+                        $function animated_java:$(rig)/remove/this
+                    }
+                }
+                function player {
+                    attribute @s minecraft:movement_speed base reset
+                    attribute @s minecraft:jump_strength base reset
+                    attribute @s minecraft:gravity base reset
+                    particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
+
+                    effect clear @s minecraft:invisibility
+                    ride @s dismount
+
+                    # item modify entity @s hotbar.8 custom:gojo/base
+                    function custom:universal/armor/reveal
+
+                    tag @s remove customToji.AcrobaticsRecastable
+                    tag @s remove customUniversal.Cancellable
+                    tag @s remove customUniversal.DisconnectCheck
+                    tag @s remove customUniversal.Animation
+                }
+            }
+        }
+    }
 }
 
 dir universal {
@@ -1214,7 +1943,7 @@ dir universal {
                 execute store result storage minecraft:custom universal.vfx.id int 1 run scoreboard players get .global customUniversal.VFXID
 
                 block { with storage minecraft:custom universal.vfx
-                    $execute positioned ~$(offsetXLfinal).$(offsetXRfinal) ~$(offsetYLfinal).$(offsetYRfinal) ~$(offsetZLfinal).$(offsetZRfinal) run function animated_java:$(branch)_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
+                    $execute positioned $(notation)$(offsetXLfinal).$(offsetXRfinal) $(notation)$(offsetYLfinal).$(offsetYRfinal) $(notation)$(offsetZLfinal).$(offsetZRfinal) run function animated_java:$(branch)_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
                     $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless entity @s[tag=customUniversal.VFXSpawned] run block { with storage minecraft:custom universal.vfx
                         $data merge entity @s {teleport_duration:$(duration)}
                         $scoreboard players set @s customUniversal.VFXID $(id)
@@ -1365,7 +2094,7 @@ dir universal {
         }
 
         function random_variant {
-            # EX: function custom:universal/vfx/random {variant_pool:"blue_static",range:"6"}
+            # EX: function custom:universal/vfx/random_variant {particle_set:"toji",variant_pool:"impact",range:5}
             $data merge storage minecraft:custom {universal:{vfx:{variant_pool:"$(variant_pool)",range:$(range),particle_set:"$(particle_set)"}}}
             
             block { with storage minecraft:custom universal.vfx
@@ -1460,6 +2189,7 @@ dir universal {
         }
 
         function movement {
+            # ex: function custom:universal/control/spectate_camera {user:customAbility.Toji,rig=aj.toji.root,customUniversal.RigID}
             $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
             $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
             block { with storage minecraft:custom universal.control
@@ -1894,7 +2624,7 @@ dir ui {
         dir pages {
             dir menu {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(ability_item_model)","minecraft:item_name":{"color":"gold","italic":false,"text":"$(ability_name)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"$(ability_description)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_selection_page)"}}}},{Slot:9b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Settings Config"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the way Custom Abilities are used"}," ",[{"color":"blue","italic":false,"text":"Click"},{"color":"gray","italic":false,"text":" for "},{"color":"green","italic":false,"text":"Generic "},{"color":"gray","italic":false,"text":"access."}],[{"color":"blue","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"with "},{"color":"gold","italic":false,"text":"OP "},{"color":"gray","italic":false,"text":"for "},{"color":"red","italic":false,"text":"A"},{"color":"gold","italic":false,"text":"d"},{"color":"yellow","italic":false,"text":"m"},{"color":"green","italic":false,"text":"i"},{"color":"blue","italic":false,"text":"n"},{"color":"light_purple","italic":false,"text":"i"},{"color":"dark_purple","italic":false,"text":"s"},{"color":"red","italic":false,"text":"t"},{"color":"gold","italic":false,"text":"r"},{"color":"yellow","italic":false,"text":"a"},{"color":"green","italic":false,"text":"t"},{"color":"blue","italic":false,"text":"o"},{"color":"light_purple","italic":false,"text":"r "},{"color":"gray","italic":false,"text":"access"}]],"minecraft:custom_data":{ui_item:{settings_button:1b,empty:1b}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Passive(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_moveset_page)"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_skin_page)"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Ability Selection"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Overview of all Custom Abilities"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Observe various different sets of data","italic":false,"color":"gray"}],[{"text":"ranging from ","italic":false,"color":"gray"},{"text":"general ","italic":false,"color":"green"},{"text":"or specific to the","italic":false,"color":"gray"}],[{"text":"currently equipped ability.","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{empty:1b}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(ability_item_model)","minecraft:item_name":{"color":"gold","italic":false,"text":"$(ability_name)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"$(ability_description)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_selection_page)"}}}},{Slot:9b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Settings Config"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the way Custom Abilities are used"}," ",[{"color":"blue","italic":false,"text":"Click"},{"color":"gray","italic":false,"text":" for "},{"color":"green","italic":false,"text":"Generic "},{"color":"gray","italic":false,"text":"access."}],[{"color":"blue","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"with "},{"color":"gold","italic":false,"text":"OP "},{"color":"gray","italic":false,"text":"for "},{"color":"red","italic":false,"text":"A"},{"color":"gold","italic":false,"text":"d"},{"color":"yellow","italic":false,"text":"m"},{"color":"green","italic":false,"text":"i"},{"color":"blue","italic":false,"text":"n"},{"color":"light_purple","italic":false,"text":"i"},{"color":"dark_purple","italic":false,"text":"s"},{"color":"red","italic":false,"text":"t"},{"color":"gold","italic":false,"text":"r"},{"color":"yellow","italic":false,"text":"a"},{"color":"green","italic":false,"text":"t"},{"color":"blue","italic":false,"text":"o"},{"color":"light_purple","italic":false,"text":"r "},{"color":"gray","italic":false,"text":"access"}]],"minecraft:custom_data":{ui_item:{settings_button:1b,empty:1b}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Help"},"minecraft:lore":[[{"text":"Information on various conditions that","italic":false,"color":"gray"}],[{"text":"are present on abilities","italic":false,"color":"gray"}],[{"text":"o Traits","italic":false,"color":"gray"}],[{"text":"o Tokens","italic":false,"color":"gray"}],[{"text":"o Cancelling","italic":false,"color":"gray"}],[{"text":"o Disconnecting","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Passive(s)"},"minecraft:lore":$(ability_passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_moveset_page)"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_skin_page)"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Ability Selection"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Overview of all Custom Abilities"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Observe various different sets of data","italic":false,"color":"gray"}],[{"text":"ranging from ","italic":false,"color":"gray"},{"text":"general ","italic":false,"color":"green"},{"text":"or specific to the","italic":false,"color":"gray"}],[{"text":"currently equipped ability.","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{empty:1b}}}}]
                 }
 
                 function open {
@@ -1924,6 +2654,7 @@ dir ui {
                         data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/menu/same"}}}
                         data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/menu/same"}}}
                         data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/menu/same"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_passive:[[{"text":"Select an ability to view Passive(s)","italic":false,"color":"gray"}]]}}}
                     }
 
                     execute if entity @s[tag=customAbility.TheWorld] run {
@@ -1951,6 +2682,17 @@ dir ui {
                         data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/selection/billy/flip"}}}
                         data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/selection/billy/moveset/flip"}}}
                         data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/menu/same"}}}
+                        function custom:ui/menu/pages/selection/billy/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
+                    }
+
+                    execute if entity @s[tag=customAbility.Toji] run {
+                        data merge storage minecraft:ui {custom:{menu:{ability_name:"Toji Fushiguro"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_description:"Kill all Sorcerers huh..? You're a Sorcerer."}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_item_model:"minecraft:interactables/custom/toji/default_skin"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/selection/toji/flip"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/selection/toji/moveset/flip"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/selection/toji/skins/flip"}}}
+                        function custom:ui/menu/pages/selection/toji/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
                     }
                 }
             }
@@ -2285,7 +3027,7 @@ dir ui {
 
                             data merge storage minecraft:ui {custom:{purchase:{state:"add"}}}
                             function custom:ui/menu/pages/selection/purchase/remove_tags with storage minecraft:ui custom.purchase
-                            execute unless entity @s[tag=customUniversal.SkinContext] run {
+                            execute unless entity @s[tag=customUniversal.SkinContext] run block { with storage minecraft:ui custom.purchase
                                 tag @s add customAbility.User
                                 $tag @s add $(toggle)
                             }
@@ -2296,7 +3038,6 @@ dir ui {
                         }
                         
                         function disable {
-                            execute if score @s customUniversal.Toggle matches 1 run function custom:universal/toggle/main
                             $tag @s add $(context)
 
                             data merge storage minecraft:ui {custom:{purchase:{state:"remove"}}}
@@ -2369,17 +3110,12 @@ dir ui {
                         scoreboard players reset @s customUI.SkinPatchID
 
                         execute if entity @s[tag=customUniversal.AbilityContext] run {
+                            execute if score @s customUniversal.Toggle matches 1 run function custom:universal/toggle/main
                             tag @s remove customAbility.User
                             tag @s remove customAbility.Gojo
                             tag @s remove customAbility.Toji
                             tag @s remove customAbility.TheWorld
                             tag @s remove customAbility.Billy
-                        }
-
-                        execute if entity @s[tag=customGojo.SkinContext] run {
-                            tag @s remove customGojo.SkinDefault
-                            tag @s remove customGojo.SkinWushu
-                            tag @s remove customGojo.SkinBeach
                         }
 
                         execute if entity @s[tag=customToji.SkinContext] run block { with storage minecraft:ui custom.purchase
@@ -2388,14 +3124,6 @@ dir ui {
 
                             $tag @s $(state) $(toggle)
                             execute if entity @s[tag=!customToji.SkinDefault,tag=!customToji.SkinWounded] run tag @s add customToji.SkinDefault
-                        }
-
-                        execute if entity @s[tag=customTheWorld.SkinContext] run {
-                            tag @s remove customTheWorld.SkinDefault
-                            tag @s remove customTheWorld.SkinTW2
-                            tag @s remove customTheWorld.SkinVTW
-                            tag @s remove customTheWorld.SkinRTW
-                            tag @s remove customTheWorld.SkinSTW
                         }
                         $tag @s remove $(context)
                     }
@@ -2642,7 +3370,7 @@ dir ui {
 
                 dir toji {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Watch your back.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","text":"Passive(s)"},"minecraft:lore":[[{"text":"Bloodlust ","italic":false,"color":"aqua"},{"text":"increases whenever you deal damage.","italic":false,"color":"gray"}],[{"text":"Reaching higher levels of bloodlust can ","italic":false,"color":"gray"},{"text":"improve","italic":false,"color":"yellow"}],[{"text":"the quality of specific moves in Toji's kit. Failing to","italic":false,"color":"gray"}],[{"text":"damage anything after ","italic":false,"color":"gray"},{"text":"15s","italic":false,"color":"gold"},{"text":" will begin to reduce","italic":false,"color":"gray"}],[{"text":"Bloodlust ","italic":false,"color":"aqua"},{"text":"stacks.","italic":false,"color":"gray"}],[{"text":" o Maximum Bloodlust: ","italic":false,"color":"gray"},{"text":"50","italic":false,"color":"green"}],[{"text":" o Decay Rate: ","italic":false,"color":"gray"},{"text":"1/5s","italic":false,"color":"red"}],"",[{"text":" o ","italic":false,"color":"gray"},{"text":"Bloodlust Gain","italic":false,"color":"light_purple"}],[{"text":"  o Melee Attacks: ","italic":false,"color":"gray"},{"text":"1 Stack","italic":false,"color":"green"}],[{"text":"  o Ability Damage: ","italic":false,"color":"gray"},{"text":"3 Stacks","italic":false,"color":"green"}],"",[{"text":" o ","italic":false,"color":"gray"},{"text":"Bloodlust Improvements","italic":false,"color":"light_purple"}],[{"text":"  o Blitz Horizontal Spread: ","italic":false,"color":"gray"},{"text":"+0.02m per Stack","italic":false,"color":"green"}],[{"text":"  o Sneak Attack Windup: ","italic":false,"color":"gray"},{"text":"-0.015s per Stack","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_gray","italic":false,"text":"Toji Fushiguro"},"minecraft:lore":[[{"text":"Kill all Sorcerers huh..? You're a Sorcerer.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/2 Heavenly Inverted Spear(s)","italic":false,"color":"$(ability_item1color)"},{"text":" can be found","italic":false,"color":"gray"}],[{"text":"in Ominous Trial Chambers or Trail Ruins.","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/7 Bounty Contract(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be purchased from","italic":false,"color":"gray"}],[{"text":"Cartographer Villagers.","italic":false,"color":"gray"}],[{"text":"Advancement(s):","italic":false,"color":"$(ability_advancement_color)"},{"text":" Light as a Rabbit, Revaulting, and","italic":false,"color":"gray"}],[{"text":"Respecting the Remnants.","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/toji/ability_price",name:"Toji",tag:"customToji.Ownership",toggle:"customAbility.Toji",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/toji/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/toji/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Watch your back.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_gray","italic":false,"text":"Toji Fushiguro"},"minecraft:lore":[[{"text":"Kill all Sorcerers huh..? You're a Sorcerer.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/2 Heavenly Inverted Spear(s)","italic":false,"color":"$(ability_item1color)"},{"text":" can be found","italic":false,"color":"gray"}],[{"text":"in Ominous Trial Chambers or Trail Ruins.","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/7 Bounty Contract(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be purchased from","italic":false,"color":"gray"}],[{"text":"Cartographer Villagers.","italic":false,"color":"gray"}],[{"text":"Advancement(s):","italic":false,"color":"$(ability_advancement_color)"},{"text":" Light as a Rabbit, Revaulting, and","italic":false,"color":"gray"}],[{"text":"Respecting the Remnants.","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/toji/ability_price",name:"Toji",tag:"customToji.Ownership",toggle:"customAbility.Toji",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/toji/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/toji/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}}]
                     }
 
                     function open {
@@ -2658,6 +3386,10 @@ dir ui {
                         function custom:ui/menu/pages/selection/toji/open
                     }
 
+                    function passive {
+                        $data merge storage minecraft:ui $(open):[[{"text":"Bloodlust ","italic":false,"color":"aqua"},{"text":"increases whenever you deal damage.","italic":false,"color":"gray"}],[{"text":"Reaching higher levels of bloodlust can ","italic":false,"color":"gray"},{"text":"improve","italic":false,"color":"yellow"}],[{"text":"the quality of specific moves in Toji's kit. Failing to","italic":false,"color":"gray"}],[{"text":"damage anything after ","italic":false,"color":"gray"},{"text":"15s","italic":false,"color":"gold"},{"text":" will begin to reduce","italic":false,"color":"gray"}],[{"text":"Bloodlust ","italic":false,"color":"aqua"},{"text":"stacks.","italic":false,"color":"gray"}],[{"text":" o Maximum Bloodlust: ","italic":false,"color":"gray"},{"text":"50","italic":false,"color":"green"}],[{"text":" o Decay Rate: ","italic":false,"color":"gray"},{"text":"1/5s","italic":false,"color":"red"}],"",[{"text":" o ","italic":false,"color":"gray"},{"text":"Bloodlust Gain","italic":false,"color":"light_purple"}],[{"text":"  o Melee Attacks: ","italic":false,"color":"gray"},{"text":"1 Stack","italic":false,"color":"green"}],[{"text":"  o Ability Damage: ","italic":false,"color":"gray"},{"text":"3 Stacks","italic":false,"color":"green"}],"",[{"text":" o ","italic":false,"color":"gray"},{"text":"Bloodlust Improvements","italic":false,"color":"light_purple"}],[{"text":"  o Blitz Horizontal Spread: ","italic":false,"color":"gray"},{"text":"+0.02m per Stack","italic":false,"color":"green"}],[{"text":"  o Sneak Attack Windup: ","italic":false,"color":"gray"},{"text":"-0.015s per Stack","italic":false,"color":"green"}]]$(end)
+                    }
+
                     function flip {
                         execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
                         function custom:ui/menu/pages/selection/toji/open
@@ -2671,6 +3403,7 @@ dir ui {
                             data merge storage minecraft:ui {custom:{selection:{toji:{ownership_state:"No"}}}}
                             data merge storage minecraft:ui {custom:{selection:{toji:{secret_interaction1state:"No"}}}}
                             data merge storage minecraft:ui {custom:{selection:{toji:{secret_interaction1color:"red"}}}}
+                            function custom:ui/menu/pages/selection/toji/passive {open:"{custom:{selection:{toji:{passive",end:"}}}}"}
                         }
 
                         execute if entity @s[tag=customAbility.Toji] run {
@@ -2692,7 +3425,7 @@ dir ui {
                     }
 
                     function ability_price {
-                        data merge storage minecraft:ui {custom:{purchase:{clickID:9174910}}}
+                        data merge storage minecraft:ui {custom:{purchase:{clickID:1}}}
                         function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:arrow",number:1,required:2,product:"ability",storage:"toji",name:"Toji Fushiguro"}
                         function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:dirt",number:2,required:6,product:"ability",storage:"toji",name:"Toji Fushiguro"}
 
@@ -2807,7 +3540,7 @@ dir ui {
 
                 dir billy {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Unique secrets that you can find specific to this Ability."},{"color":"gray","italic":false,"text":"They can range anywhere from a simple change, to an"},{"color":"gray","italic":false,"text":"entirely different move. Hints are provided below."}," ",{"color":"gold","italic":false,"text":"Interaction (1)"},[{"color":"gray","italic":false,"text":"Billy "},{"color":"red","bold":true,"text":"Hungers."}],[{"color":"gray","italic":false,"text":"Discovered: "},{"color":"$(secret_interaction1color)","italic":false,"text":"$(secret_interaction1state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","text":"Passive(s)"},"minecraft:lore":[[{"text":"Maul","italic":false,"color":"light_purple"},{"text":" activates after dealing damage ","italic":false,"color":"gray"},{"text":"5 times,","italic":false,"color":"gold"}],[{"text":"dealing a secondary tick of ","italic":false,"color":"gray"},{"text":"8 damage.","italic":false,"color":"red"}],"",[{"text":"Homeland ","italic":false,"color":"light_purple"},{"text":"is active whilst inside of ","italic":false,"color":"gray"},{"text":"colder climates,","italic":false,"color":"aqua"}],[{"text":"amplifying Billy in several ways.","italic":false,"color":"gray"}],[{"text":" o Damage: ","italic":false,"color":"gray"},{"text":"1.25x","italic":false,"color":"green"}],[{"text":" o Cooldowns: ","italic":false,"color":"gray"},{"text":"0.8x","italic":false,"color":"green"}],[{"text":" o Snare Limit: ","italic":false,"color":"gray"},{"text":"+1","italic":false,"color":"green"}],[{"text":" o Maul Activation: ","italic":false,"color":"gray"},{"text":"-1","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}," ",{"color":"gold","italic":false,"text":"Ability Cost"},[{"color":"$(ability_usernamecolor)","italic":false,"text":"Jaboble_Head "},{"color":"gray","italic":false,"text":"must be your Mojang"}],{"color":"gray","italic":false,"text":"account username"}," ",[{"color":"gray","italic":false,"text":"Unlocked: "},{"color":"$(ownership_color)","italic":false,"text":"$(ownership_state)"}],[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(equip_color)","italic":false,"text":"$(equip_state)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/billy/ability_price",name:"Billy",tag:"customBilly.Ownership",toggle:"customAbility.Billy",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/billy/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/billy/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Unique secrets that you can find specific to this Ability."},{"color":"gray","italic":false,"text":"They can range anywhere from a simple change, to an"},{"color":"gray","italic":false,"text":"entirely different move. Hints are provided below."}," ",{"color":"gold","italic":false,"text":"Interaction (1)"},[{"color":"gray","italic":false,"text":"Billy "},{"color":"red","bold":true,"text":"Hungers."}],[{"color":"gray","italic":false,"text":"Discovered: "},{"color":"$(secret_interaction1color)","italic":false,"text":"$(secret_interaction1state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}," ",{"color":"gold","italic":false,"text":"Ability Cost"},[{"color":"$(ability_usernamecolor)","italic":false,"text":"Jaboble_Head "},{"color":"gray","italic":false,"text":"must be your Mojang"}],{"color":"gray","italic":false,"text":"account username"}," ",[{"color":"gray","italic":false,"text":"Unlocked: "},{"color":"$(ownership_color)","italic":false,"text":"$(ownership_state)"}],[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(equip_color)","italic":false,"text":"$(equip_state)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/billy/ability_price",name:"Billy",tag:"customBilly.Ownership",toggle:"customAbility.Billy",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/billy/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/billy/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}}]
                     }
 
                     function open {
@@ -2816,6 +3549,10 @@ dir ui {
                         function custom:ui/menu/pages/selection/billy/mask with storage minecraft:ui custom.selection.billy
                         data modify storage ui current set from storage ui mask
                         execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/billy/mask"
+                    }
+
+                    function passive {
+                        $data merge storage minecraft:ui $(open):[[{"text":"Maul","italic":false,"color":"light_purple"},{"text":" activates after dealing damage ","italic":false,"color":"gray"},{"text":"5 times,","italic":false,"color":"gold"}],[{"text":"dealing a secondary tick of ","italic":false,"color":"gray"},{"text":"8 damage.","italic":false,"color":"red"}],"",[{"text":"Homeland ","italic":false,"color":"light_purple"},{"text":"is active whilst inside of ","italic":false,"color":"gray"},{"text":"colder climates,","italic":false,"color":"aqua"}],[{"text":"amplifying Billy in several ways.","italic":false,"color":"gray"}],[{"text":" o Damage: ","italic":false,"color":"gray"},{"text":"1.25x","italic":false,"color":"green"}],[{"text":" o Cooldowns: ","italic":false,"color":"gray"},{"text":"0.8x","italic":false,"color":"green"}],[{"text":" o Snare Limit: ","italic":false,"color":"gray"},{"text":"+1","italic":false,"color":"green"}],[{"text":" o Maul Activation: ","italic":false,"color":"gray"},{"text":"-1","italic":false,"color":"green"}]]$(end)
                     }
 
                     function same {
@@ -2836,6 +3573,7 @@ dir ui {
                             data merge storage minecraft:ui {custom:{selection:{billy:{ownership_state:"No"}}}}
                             data merge storage minecraft:ui {custom:{selection:{billy:{secret_interaction1state:"No"}}}}
                             data merge storage minecraft:ui {custom:{selection:{billy:{secret_interaction1color:"red"}}}}
+                            function custom:ui/menu/pages/selection/billy/passive {open:"{custom:{selection:{billy:{passive",end:"}}}}"}
                         }
 
                         execute if entity @s[tag=customAbility.Billy] run {

@@ -36,4 +36,3 @@ $data merge entity $(item_display_leggings_upper_r) {transformation: [0.9525f,-0
 $data merge entity $(bone_left_leg_group) {transformation: [-0.8659f,-0.0078f,-0.0134f,0.1083f,-0.0114f,0.8266f,0.2582f,1.5891f,0.0105f,0.2583f,-0.8265f,1.4072f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/acrobatics_start/zzz/frames/18_locator_commands
 data modify entity @s data merge value {"cameras":{},"locators":{"acrobatics_mount":{"px":-1.7232934935223993e-16,"py":1.5891203703703707,"pz":1.4071759259259267,"ry":357.5405596727992,"rx":52.47183269998041}}}
-function animated_java:toji/animations/acrobatics_start/zzz/frames/on_tick/transform_floating_entities

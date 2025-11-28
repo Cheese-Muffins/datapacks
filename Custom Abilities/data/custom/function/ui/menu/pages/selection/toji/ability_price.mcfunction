@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-data merge storage minecraft:ui {custom:{purchase:{clickID:9174910}}}
+data merge storage minecraft:ui {custom:{purchase:{clickID:1}}}
 function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:arrow",number:1,required:2,product:"ability",storage:"toji",name:"Toji Fushiguro"}
 function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:dirt",number:2,required:6,product:"ability",storage:"toji",name:"Toji Fushiguro"}
 tag @s add customUniversal.AdvancementCheck

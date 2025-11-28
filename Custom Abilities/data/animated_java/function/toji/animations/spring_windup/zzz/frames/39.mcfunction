@@ -13,7 +13,7 @@ $data merge entity $(item_display_chestplate_arm_r) {transformation: [-1.1479f,0
 $data merge entity $(bone_right_arm_group) {transformation: [-0.035f,0.0501f,-0.9981f,0.4445f,-0.1144f,0.992f,0.0538f,2.3094f,0.9928f,0.116f,-0.029f,0.0196f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_arm) {transformation: [-0.035f,0.0501f,-0.9981f,-0.296f,-0.1144f,0.992f,0.0538f,2.314f,0.9928f,0.116f,-0.029f,-0.0989f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_wounded1) {transformation: [-0.035f,0.0501f,-0.9981f,-0.7366f,-0.1144f,0.992f,0.0538f,1.9626f,0.9928f,0.116f,-0.029f,0.4022f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(bone_blade2) {transformation: [0f,0f,0f,0.0327f,0f,0f,0f,1.8041f,0f,0f,0f,-0.1455f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_blade2) {transformation: [0.0065f,0.9994f,0.035f,0.0327f,0.9934f,-0.0104f,0.1144f,1.8041f,0.1146f,0.0341f,-0.9928f,-0.1455f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm) {transformation: [-0.035f,0.0065f,-0.9994f,-0.3099f,-0.1144f,0.9934f,0.0104f,2.0661f,0.9928f,0.1146f,-0.0341f,-0.128f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm_group) {transformation: [-0.035f,0.0065f,-0.9994f,-0.3101f,-0.1144f,0.9934f,0.0104f,2.035f,0.9928f,0.1146f,-0.0341f,-0.1315f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_arm_l) {transformation: [1.1479f,0.0576f,-0.0403f,-0.2734f,-0.0618f,1.1408f,-0.1315f,2.7635f,0.0334f,0.1334f,1.1417f,-0.0463f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
@@ -35,4 +35,3 @@ $data merge entity $(bone_left_leg) {transformation: [0.9767f,0.0699f,-0.2027f,-
 $data merge entity $(item_display_leggings_upper_r) {transformation: [-1.0744f,0.0769f,0.223f,-0.1109f,0.235f,0.2588f,1.043f,2.029f,0.0204f,1.0664f,-0.2692f,0.7822f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_leg_group) {transformation: [0.9767f,0.0699f,-0.2027f,-0.1339f,-0.2137f,0.2353f,-0.9482f,1.9518f,-0.0186f,0.9694f,0.2447f,0.4641f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 data modify entity @s data merge value {"cameras":{},"locators":{"acrobatics_mount":{"px":-0.0089049186787365,"py":1.9541572394381754,"pz":0.466154517752304,"ry":188.58068594563878,"rx":55.10189485685501}}}
-function animated_java:toji/animations/spring_windup/zzz/frames/on_tick/transform_floating_entities
