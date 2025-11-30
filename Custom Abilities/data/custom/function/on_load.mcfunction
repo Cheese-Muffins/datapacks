@@ -143,11 +143,18 @@ scoreboard objectives add customToji.SpringZ dummy
 scoreboard objectives add customToji.SpringRotationX dummy
 scoreboard objectives add customToji.SpringMath dummy
 scoreboard players set div15 customToji.SpringMath 15
-scoreboard players set div15 customToji.SpringMath 15
 scoreboard objectives add customToji.Spring2DIncrements dummy
 scoreboard objectives add customToji.SpringYIncrements dummy
 # Move Cooldowns #
-function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
-function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
-function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}
-function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:4,move:4,cooldown:30}
+function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
+function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
+function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}
+function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:4,move:4,cooldown:30}
+# Mr. President #
+scoreboard objectives add customPresident.KidnapMovement dummy
+scoreboard objectives add customPresident.KidnapGravity dummy
+# Move Cooldowns #
+function custom:universal/cooldowns/10x {ability:"PresidentKidnap",storage:"president",path:1a,move:1,cooldown:30}
+function custom:universal/cooldowns/10x {ability:"PresidentSelfKidnap",storage:"president",path:1b,move:1,cooldown:30}
+function custom:universal/cooldowns/10x {ability:"President",storage:"president",path:2,move:2,cooldown:30}
+function custom:universal/cooldowns/10x {ability:"President",storage:"president",path:3,move:3,cooldown:30}

@@ -129,27 +129,32 @@ function on_load {
         scoreboard objectives add customToji.SpringRotationX dummy
         scoreboard objectives add customToji.SpringMath dummy
         scoreboard players set div15 customToji.SpringMath 15
-        scoreboard players set div15 customToji.SpringMath 15
         scoreboard objectives add customToji.Spring2DIncrements dummy
         scoreboard objectives add customToji.SpringYIncrements dummy
 
         # Move Cooldowns #
-            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
-            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
-            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}
-            function custom:universal/cooldowns {ability:"Toji",storage:"toji",path:4,move:4,cooldown:30}
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:4,move:4,cooldown:30}
+
+    # Mr. President #
+        scoreboard objectives add customPresident.KidnapMovement dummy
+        scoreboard objectives add customPresident.KidnapGravity dummy
+
+            # Move Cooldowns #
+                function custom:universal/cooldowns/10x {ability:"PresidentKidnap",storage:"president",path:1a,move:1,cooldown:30}
+                function custom:universal/cooldowns/10x {ability:"PresidentSelfKidnap",storage:"president",path:1b,move:1,cooldown:30}
+                function custom:universal/cooldowns/10x {ability:"President",storage:"president",path:2,move:2,cooldown:30}
+                function custom:universal/cooldowns/10x {ability:"President",storage:"president",path:3,move:3,cooldown:30}
 }
 
 function tick {
     execute as @a run {
         execute as @s[tag=customAbility.User] run {
-            execute if entity @s[tag=customAbility.Gojo] run function custom:abilities/gojo/tick
-            execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/tick
-            execute if entity @s[tag=customAbility.Dice] run function custom:abilities/dice/tick
             execute if entity @s[tag=customAbility.Billy] run function custom:abilities/billy/tick
             execute if entity @s[tag=customAbility.Toji] run function custom:abilities/toji/tick
-            execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/tick
-            execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/tick
+            execute if entity @s[tag=customAbility.President] run function custom:abilities/president/tick
 
             execute if score @s customUniversal.ToggleTrigger matches 1.. at @s run function custom:universal/toggle/main
         }
@@ -1051,6 +1056,278 @@ dir abilities {
         }
     }
 
+    dir president {
+        function tick {
+            execute if score @s customUniversal.Toggle matches 1 run {
+                execute at @s run function custom:abilities/president/active
+            }
+
+            execute unless entity @s[scores={customUniversal.Move1Cooldown=0,customUniversal.Move2Cooldown=0,customUniversal.Move3Cooldown=0,customUniversal.Delay4=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                REPEAT (1,3) as i {
+                    execute if score @s customUniversal.Move<%i%>Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move<%i%>Cooldown 1
+                }
+
+                execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+            }
+        }
+
+        dir toggle {
+            function on {
+                playsound minecraft:gojo.toggle.spawn player @s ~ ~ ~ 0.35
+                scoreboard players set @s customUniversal.ToggleDelay 20 
+            }
+
+            function off {
+                title @s actionbar ""
+                playsound minecraft:gojo.toggle.remove player @s ~ ~ ~ 0.5
+                scoreboard players set @s customUniversal.ToggleDelay 10
+            }
+        }
+
+        dir key_bindings {
+            REPEAT (1,3) as i {
+                function move<%i%> {
+                    function custom:abilities/president/moves/<%i%>/core
+                    scoreboard players reset @s customUniversal.Move<%i%>Trigger
+                }
+            }
+        }
+
+        dir hotbar {
+            function main {
+                REPEAT (1,3) as i {
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move<%i%>
+                }
+                
+                REPEAT (1,3) as i {
+                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                        function custom:universal/hotbar/time {ability:"president",selected:<%i%>}
+                    }
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom president.hotbar
+                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom president.hotbar
+                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom president.hotbar
+                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+            }
+
+            function progress {
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A2"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A3"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A4"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A5"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A6"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A7"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A8"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A9"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06B0"
+
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+            }
+        }
+
+        function active {
+            REPEAT (1,4) as i {
+                execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/president/key_bindings/move<%i%>
+            }
+
+            function custom:abilities/president/hotbar/main
+        }
+
+        dir moves {
+            function setup {
+                tag @s add customUniversal.Animation
+                tag @s add customUniversal.DisconnectCheck
+                effect give @s minecraft:invisibility infinite 0 true
+
+                function custom:universal/armor/hide
+                $execute rotated ~ 0 run function animated_java:president/summon {args:{animation:'$(animation)', start_animation: true}}
+                $function custom:universal/setup/rig {objective:"$(objective)",item:"president"}
+
+                $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.camera",objective:"$(objective)"}
+
+                function custom:universal/stable_player_display/mask {branch:"president"}
+
+                scoreboard players add .global customUniversal.GlobalCounter 1
+                scoreboard players operation @s customUniversal.GlobalCounter = .global customUniversal.GlobalCounter
+                function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.root",objective:"customUniversal.GlobalCounter"}
+            }
+
+            dir 1 {
+                function core {
+                    execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    function custom:universal/error_messages/universal
+                    
+                    scoreboard players set @s customUniversal.ActiveHotbar 1
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/1/decide
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Kidnap / Self Kidnap"}
+                }
+                
+                function decide {
+                    execute unless predicate custom:universal/sneak run function custom:abilities/president/moves/1/kidnap/pass
+                    execute if predicate custom:universal/sneak run function custom:abilities/president/moves/1/self_kidnap/pass
+                }
+
+                dir kidnap {
+                    function pass {
+                        function custom:abilities/president/moves/setup {animation:'kidnap',objective:"customUniversal.RigID"}
+                        execute as @n[tag=aj.president.locator.mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
+                        tag @s add customUniversal.Cancellable
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .PresidentKidnapCooldown customUniversal.Move1Cooldown
+                        scoreboard players set @s customUniversal.MoveDelay 10
+
+                        attribute @s minecraft:movement_speed base set 0.025
+                        attribute @s minecraft:jump_strength base set 0
+                    }
+
+                    function mount {
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.kidnap
+                            $execute as @p[tag=customAbility.President,scores={customUniversal.RigID=$(id)}] run block { with storage minecraft:custom president.kidnap
+                                $ride @s mount @n[type=minecraft:item_display,tag=aj.president.locator.mount,scores={customUniversal.RigID=$(id)}]
+                            }
+                        }
+                    }
+
+                    function adjust {
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.kidnap
+                            $execute as @p[tag=customAbility.President,scores={customUniversal.RigID=$(id)}] at @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run block { with storage minecraft:custom president.kidnap
+                                ride @s dismount
+                                tp @s ~ ~ ~
+                            }
+                        }
+                    }
+
+                    function steal {
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.kidnap
+                            $execute as @n[type=#custom:nob_mob,distance=..2,scores={customUniversal.RigID=$(id)}] run {
+                                effect give @s minecraft:glowing infinite 1 true
+                            }
+                        }
+                    }
+
+                    dir movement {
+                        function main {
+                            function custom:abilities/president/moves/1/kidnap/movement/recursive
+                            scoreboard players reset .distance customPresident.KidnapMovement
+                            tag @s remove customPresident.KidnapGravityCorrected
+                        }
+
+                        function recursive {
+                            scoreboard players add .distance customPresident.KidnapMovement 1
+
+                            # if = not solid (air / pass-through)
+                            # unless = solid block
+
+                            execute if block ^ ^-0.1 ^ #custom:raycast_pass run {
+                                # not solid ground
+                                scoreboard players add @s customPresident.KidnapGravity 1
+
+                                # max grav
+                                execute if score @s customPresident.KidnapGravity matches 250.. run {
+                                    scoreboard players set @s customPresident.KidnapGravity 250
+                                }
+
+                                scoreboard players operation .Math customPresident.KidnapGravity = @s customPresident.KidnapGravity
+                                scoreboard players operation .Math customPresident.KidnapGravity *= @s customPresident.KidnapGravity
+
+                                execute store result storage minecraft:custom president.kidnap.fall double 0.00025 run scoreboard players get .Math customPresident.KidnapGravity
+                                block { with storage minecraft:custom president.kidnap
+                                    $execute positioned ^ ^-$(fall) ^ run {
+                                        execute if block ~ ~ ~ #custom:raycast_pass run tp @s ^ ^ ^
+                                        execute unless block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=customToji.BlitzGravityCorrected] run function custom:abilities/president/moves/1/kidnap/movement/gravity_correct
+                                    }
+                                }
+                                data remove storage minecraft:custom president.kidnap.fall
+                            } else execute unless entity @s[tag=customPresident.StopMovement] run {
+                                # solid ground
+                                execute if block ^ ^ ^0.5 #custom:raycast_pass if block ^ ^1 ^0.5 #custom:raycast_pass run {
+                                    tp @s ^ ^ ^
+                                } else execute unless block ^ ^ ^0.5 #custom:raycast_pass if block ^ ^1 ^0.5 #custom:raycast_pass run {
+                                    tp @s ^ ^1 ^
+                                } else execute unless block ^ ^ ^0.5 #custom:raycast_pass unless block ^ ^1 ^0.5 #custom:raycast_pass run {
+                                    function custom:abilities/president/moves/1/kidnap/movement/end
+                                }
+
+                                # reset gravity when ground is hit
+                                scoreboard players reset @s customPresident.KidnapGravity
+                            }
+                            execute if score .distance customPresident.KidnapMovement matches ..7 positioned ^ ^ ^0.05 rotated ~ ~ unless entity @s[tag=customPresident.KidnapWall] run function custom:abilities/president/moves/1/kidnap/movement/recursive
+                        }
+
+                        function gravity_correct {
+                            execute if block ~ ~ ~ #custom:raycast_pass run {
+                                tp @s ~ ~ ~
+                                tag @s add customPresident.KidnapGravityCorrected
+                            }
+                            execute unless block ~ ~ ~ #custom:raycast_pass positioned ~ ~0.01 ~ run function custom:abilities/president/moves/1/kidnap/movement/gravity_correct
+                        }
+
+                        function end {
+                            tag @s add customPresident.KidnapWall
+                        }
+                    }
+                }
+
+                dir self_kidnap {
+                    function pass {
+                        function custom:abilities/president/moves/setup {animation:'self_kidnap',objective:"customUniversal.RigID"}
+                        tag @s add customUniversal.Cancellable
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .PresidentSelfKidnapCooldown customUniversal.Move1Cooldown
+                        scoreboard players set @s customUniversal.MoveDelay 10
+
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
+                    }
+                }
+            }
+
+            dir reset {
+                function all {
+                    $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+                    $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+                    block { with storage minecraft:custom universal.control
+                        $execute as @a[tag=customAbility.President,scores={$(objective)=$(id)}] at @s run function custom:abilities/president/moves/reset/player
+                        $function animated_java:$(rig)/remove/this
+                    }
+                }
+                function player {
+                    attribute @s minecraft:movement_speed base reset
+                    attribute @s minecraft:jump_strength base reset
+                    attribute @s minecraft:gravity base reset
+
+                    effect clear @s minecraft:invisibility
+                    ride @s dismount
+
+                    # item modify entity @s hotbar.8 custom:gojo/base
+                    function custom:universal/armor/reveal
+
+                    tag @s remove customUniversal.Cancellable
+                    tag @s remove customUniversal.DisconnectCheck
+                    tag @s remove customUniversal.Animation
+                }
+            }
+        }
+    }
+
     dir toji {
         function tick {
             execute if score @s customUniversal.Toggle matches 1 run {
@@ -1536,30 +1813,30 @@ dir abilities {
                 }
             }
 
-            dir 4 {
+            dir 3 {
                 function core {
-                    execute unless score @s customUniversal.Move4Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute unless score @s customUniversal.Move33Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
                     execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
                     function custom:universal/error_messages/universal
 
-                    scoreboard players set @s customUniversal.ActiveHotbar 4
-                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/toji/moves/4/pass
-                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:4,unicode:"u50A0",move:"Spring"}
+                    scoreboard players set @s customUniversal.ActiveHotbar 3
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/toji/moves/3/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A0",move:"Spring"}
                 }
 
                 function pass {
                     function custom:abilities/toji/moves/setup {animation:'spring_windup',objective:"customUniversal.RigID"}
                     tag @s add customUniversal.Cancellable
-                    scoreboard players set @s customUniversal.MoveLastUsed 4
+                    scoreboard players set @s customUniversal.MoveLastUsed 3
                     execute as @n[tag=aj.toji.locator.coil_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
 
-                    function custom:abilities/toji/moves/4/danger_zone
+                    function custom:abilities/toji/moves/3/danger_zone
                     execute as @n[type=minecraft:item_display,tag=aj.toji_vfx.root,tag=!found] run {
                         scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
                         tag @s add found
                     }
 
-                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move4Cooldown = .TojiCooldown customUniversal.Move4Cooldown
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .TojiCooldown customUniversal.Move3Cooldown
                     scoreboard players set @s customUniversal.MoveDelay 10
 
                     attribute @s minecraft:movement_speed base set 0.025
@@ -1576,15 +1853,15 @@ dir abilities {
                 dir raycast {
                     function start {
                         tag @s add customToji.SpringRaycast
-                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/toji/moves/4/raycast/fire
+                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/toji/moves/3/raycast/fire
                         scoreboard players reset .distance beam
                         tag @s remove customToji.SpringRaycast
                     }
 
                     function fire {
-                        execute unless block ^ ^ ^.1 #custom:raycast_pass unless block ~ ~-1 ~ #custom:raycast_pass run function custom:abilities/toji/moves/4/raycast/found
+                        execute unless block ^ ^ ^.1 #custom:raycast_pass unless block ~ ~-1 ~ #custom:raycast_pass run function custom:abilities/toji/moves/3/raycast/found
                         scoreboard players add .distance beam 1
-                        execute if score .distance beam matches ..300 positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/4/raycast/fire
+                        execute if score .distance beam matches ..300 positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass run function custom:abilities/toji/moves/3/raycast/fire
                     }
 
                     function found {
@@ -1751,6 +2028,16 @@ dir abilities {
 }
 
 dir universal {
+    dir items {
+        function heavenly_inverted_spear {
+            $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Heavenly Inverted Spear","italic":false,"color":"light_purple"}],max_stack_size=1,item_model="minecraft:currencies/heavenly_inverted_spear",custom_data={currency:1b,heavenly_inverted_spear:1b}] $(count)
+        }
+
+        function bounty_contract {
+            $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Bounty Contract","italic":false,"color":"yellow"}],item_model="minecraft:currencies/bounty_contract",custom_data={currency:1b,bounty_contract:1b}] $(count)
+        }
+    }
+
     dir statistics {
         function time {
             $scoreboard players add @s custom$(ability).Statistics.$(stat)T 1
@@ -2390,6 +2677,9 @@ dir universal {
                     execute if entity @s[tag=customAbility.Toji] run {
                         function custom:abilities/toji/toggle/on
                     }
+                    execute if entity @s[tag=customAbility.President] run {
+                        function custom:abilities/president/toggle/on
+                    }
                     execute if entity @s[tag=customAbility.Yuji] run {
                         function custom:abilities/yuji/toggle/on
                     }
@@ -2411,6 +2701,9 @@ dir universal {
                     }
                     execute if entity @s[tag=customAbility.Toji] run {
                         function custom:abilities/toji/toggle/off
+                    }
+                    execute if entity @s[tag=customAbility.President] run {
+                        function custom:abilities/president/toggle/off
                     }
                     execute if entity @s[tag=customAbility.Yuji] run {
                         function custom:abilities/yuji/toggle/off
@@ -2624,7 +2917,7 @@ dir ui {
         dir pages {
             dir menu {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(ability_item_model)","minecraft:item_name":{"color":"gold","italic":false,"text":"$(ability_name)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"$(ability_description)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_selection_page)"}}}},{Slot:9b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Settings Config"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the way Custom Abilities are used"}," ",[{"color":"blue","italic":false,"text":"Click"},{"color":"gray","italic":false,"text":" for "},{"color":"green","italic":false,"text":"Generic "},{"color":"gray","italic":false,"text":"access."}],[{"color":"blue","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"with "},{"color":"gold","italic":false,"text":"OP "},{"color":"gray","italic":false,"text":"for "},{"color":"red","italic":false,"text":"A"},{"color":"gold","italic":false,"text":"d"},{"color":"yellow","italic":false,"text":"m"},{"color":"green","italic":false,"text":"i"},{"color":"blue","italic":false,"text":"n"},{"color":"light_purple","italic":false,"text":"i"},{"color":"dark_purple","italic":false,"text":"s"},{"color":"red","italic":false,"text":"t"},{"color":"gold","italic":false,"text":"r"},{"color":"yellow","italic":false,"text":"a"},{"color":"green","italic":false,"text":"t"},{"color":"blue","italic":false,"text":"o"},{"color":"light_purple","italic":false,"text":"r "},{"color":"gray","italic":false,"text":"access"}]],"minecraft:custom_data":{ui_item:{settings_button:1b,empty:1b}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Help"},"minecraft:lore":[[{"text":"Information on various conditions that","italic":false,"color":"gray"}],[{"text":"are present on abilities","italic":false,"color":"gray"}],[{"text":"o Traits","italic":false,"color":"gray"}],[{"text":"o Tokens","italic":false,"color":"gray"}],[{"text":"o Cancelling","italic":false,"color":"gray"}],[{"text":"o Disconnecting","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Passive(s)"},"minecraft:lore":$(ability_passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_moveset_page)"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_skin_page)"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Ability Selection"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Overview of all Custom Abilities"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Observe various different sets of data","italic":false,"color":"gray"}],[{"text":"ranging from ","italic":false,"color":"gray"},{"text":"general ","italic":false,"color":"green"},{"text":"or specific to the","italic":false,"color":"gray"}],[{"text":"currently equipped ability.","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{empty:1b}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(ability_item_model)","minecraft:item_name":{"color":"gold","italic":false,"text":"$(ability_name)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"$(ability_description)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_selection_page)"}}}},{Slot:9b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Settings Config"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the way Custom Abilities are used"}," ",[{"color":"blue","italic":false,"text":"Click"},{"color":"gray","italic":false,"text":" for "},{"color":"green","italic":false,"text":"Generic "},{"color":"gray","italic":false,"text":"access."}],[{"color":"blue","italic":false,"text":"Shift-Click "},{"color":"gray","italic":false,"text":"with "},{"color":"gold","italic":false,"text":"OP "},{"color":"gray","italic":false,"text":"for "},{"color":"red","italic":false,"text":"A"},{"color":"gold","italic":false,"text":"d"},{"color":"yellow","italic":false,"text":"m"},{"color":"green","italic":false,"text":"i"},{"color":"blue","italic":false,"text":"n"},{"color":"light_purple","italic":false,"text":"i"},{"color":"dark_purple","italic":false,"text":"s"},{"color":"red","italic":false,"text":"t"},{"color":"gold","italic":false,"text":"r"},{"color":"yellow","italic":false,"text":"a"},{"color":"green","italic":false,"text":"t"},{"color":"blue","italic":false,"text":"o"},{"color":"light_purple","italic":false,"text":"r "},{"color":"gray","italic":false,"text":"access"}]],"minecraft:custom_data":{ui_item:{settings_button:1b,empty:1b}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Help"},"minecraft:lore":[[{"text":"Information on various conditions that","italic":false,"color":"gray"}],[{"text":"are present on abilities","italic":false,"color":"gray"}],[{"text":"o Traits","italic":false,"color":"gray"}],[{"text":"o Tokens","italic":false,"color":"gray"}],[{"text":"o Cancelling","italic":false,"color":"gray"}],[{"text":"o Disconnecting","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Passive(s)"},"minecraft:lore":$(ability_passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_moveset_page)"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of $(ability_name)"}],"minecraft:custom_data":{ui_item:{cmd:"$(ability_skin_page)"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","italic":false,"text":"Ability Selection"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Overview of all Custom Abilities"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Observe various different sets of data","italic":false,"color":"gray"}],[{"text":"ranging from ","italic":false,"color":"gray"},{"text":"general ","italic":false,"color":"green"},{"text":"or specific to the","italic":false,"color":"gray"}],[{"text":"currently equipped ability.","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{empty:1b}}}}]
                 }
 
                 function open {
@@ -2693,6 +2986,16 @@ dir ui {
                         data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/selection/toji/moveset/flip"}}}
                         data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/selection/toji/skins/flip"}}}
                         function custom:ui/menu/pages/selection/toji/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
+                    }
+
+                    execute if entity @s[tag=customAbility.President] run {
+                        data merge storage minecraft:ui {custom:{menu:{ability_name:"Mr. President"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_description:"I'll fulfill my promise."}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_item_model:"minecraft:interactables/custom/president/default_skin"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/selection/president/flip"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/selection/president/moveset/flip"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/selection/president/skins/flip"}}}
+                        function custom:ui/menu/pages/selection/president/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
                     }
                 }
             }
@@ -2963,7 +3266,7 @@ dir ui {
             dir selection {
                 dir mask {
                     function 1 {
-                        data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/gojo/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"Satoru Gojo"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Honored One"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/gojo/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/yuji/default_skin","minecraft:item_name":{"color":"red","italic":false,"text":"Yuji Itadori"},"minecraft:lore":[{"color":"gray","italic":false,"text":"That is my role in this war."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/toji/default_skin","minecraft:item_name":{"color":"dark_gray","italic":false,"text":"Toji Fushiguro"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Kill all Sorcerers huh?... You're a Sorcerer."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/flip"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Yare Yare Daze..."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","italic":false,"text":"Shrinkray"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Yare Yare Daze..."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","italic":false,"text":"DJ"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Yare Yare Daze..."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/arrows/next"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}}]
+                        data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/gojo/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"Satoru Gojo"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Honored One"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/gojo/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/yuji/default_skin","minecraft:item_name":{"color":"red","italic":false,"text":"Yuji Itadori"},"minecraft:lore":[{"color":"gray","italic":false,"text":"That is my role in this war."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/toji/default_skin","minecraft:item_name":{"color":"dark_gray","italic":false,"text":"Toji Fushiguro"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Kill all Sorcerers huh?... You're a Sorcerer."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/flip"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","italic":false,"text":"Shrinkray"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Yare Yare Daze..."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"aqua","italic":false,"text":"DJ"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Yare Yare Daze..."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/settings/open"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/arrows/next"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}}]
                     }
 
                     function 2 {
@@ -3116,6 +3419,7 @@ dir ui {
                             tag @s remove customAbility.Toji
                             tag @s remove customAbility.TheWorld
                             tag @s remove customAbility.Billy
+                            tag @s remove customAbility.President
                         }
 
                         execute if entity @s[tag=customToji.SkinContext] run block { with storage minecraft:ui custom.purchase
@@ -3124,6 +3428,13 @@ dir ui {
 
                             $tag @s $(state) $(toggle)
                             execute if entity @s[tag=!customToji.SkinDefault,tag=!customToji.SkinWounded] run tag @s add customToji.SkinDefault
+                        }
+
+                        execute if entity @s[tag=customPresident.SkinContext] run block { with storage minecraft:ui custom.purchase
+                            tag @s remove customPresident.SkinDefault
+
+                            $tag @s $(state) $(toggle)
+                            execute if entity @s[tag=!customPresident.SkinDefault] run tag @s add customPresident.SkinDefault
                         }
                         $tag @s remove $(context)
                     }
@@ -3426,8 +3737,8 @@ dir ui {
 
                     function ability_price {
                         data merge storage minecraft:ui {custom:{purchase:{clickID:1}}}
-                        function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:arrow",number:1,required:2,product:"ability",storage:"toji",name:"Toji Fushiguro"}
-                        function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:dirt",number:2,required:6,product:"ability",storage:"toji",name:"Toji Fushiguro"}
+                        function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,heavenly_inverted_spear:1b}]",number:1,required:2,product:"ability",storage:"toji",name:"Toji Fushiguro"}
+                        function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,bounty_contract:1b}]",number:2,required:6,product:"ability",storage:"toji",name:"Toji Fushiguro"}
 
                         tag @s add customUniversal.AdvancementCheck
                         function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/walk_on_powder_snow_with_leather_boots",product:"ability",storage:"toji",name:"Toji Fushiguro"}
@@ -3705,6 +4016,155 @@ dir ui {
                         function beach {
                             data merge storage minecraft:ui {custom:{purchase:{clickID:8310301}}}
                             function custom:ui/menu/pages/selection/inventory/check {type:"minecraft:dirt",required:12,number:1,product:"beach",storage:"gojo",name:"Satoru Gojo"}
+                        }
+                    }
+                }
+
+                dir president {
+                    function mask {
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Power beyond all known comprehension.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[[{"text":"I'll fulfill my promise.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/12 Turtle Scute(s)","italic":false,"color":"$(ability_item1color)"}],[{"text":"$(ability_item2count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be excavated from","italic":false,"color":"gray"}],[{"text":"inside Trail Ruins","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Sneak 100 and Respecting the","italic":false,"color":"gray"}],[{"text":"Remnants","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"JoeBingleBarf ","italic":false,"color":"green"},{"text":"as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/president/ability_price",name:"President",tag:"customPresident.Ownership",toggle:"customAbility.President",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/president/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/president/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function cstom:ui/menu/pages/selection/president/same"}}}}]
+                    }
+
+                    function open {
+                        execute at @s as @p run function custom:ui/menu/pages/selection/president/player
+
+                        function custom:ui/menu/pages/selection/president/mask with storage minecraft:ui custom.selection.president
+                        data modify storage ui current set from storage ui mask
+                        execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/president/mask"
+                    }
+
+                    function same {
+                        execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                        function custom:ui/menu/pages/selection/president/open
+                    }
+
+                    function passive {
+                        $data merge storage minecraft:ui $(open):[[{"text":"Freezer Room","italic":false,"color":"light_purple"},{"text":" activates upon walking against","italic":false,"color":"gray"}],[{"text":"the locked room inside ","italic":false,"color":"gray"},{"text":"your","italic":false,"color":"yellow"},{"text":" personal","italic":false,"color":"gray"},{"text":" Pocket","italic":false,"color":"aqua"}],[{"text":"Dimension.","italic":false,"color":"aqua"},{"text":" Gain access to ","italic":false,"color":"gray"},{"text":"3","italic":false,"color":"gold"},{"text":" personal chests","italic":false,"color":"gray"}],[{"text":"that can be accessed from anywhere.","italic":false,"color":"gray"}],"",[{"text":"Endure","italic":false,"color":"light_purple"},{"text":" gains a stack anytime damage is taken","italic":false,"color":"gray"}],[{"text":"whilst in ","italic":false,"color":"gray"},{"text":"Turtle Form.","italic":false,"color":"aqua"},{"text":" Casting moves with ","italic":false,"color":"gray"},{"text":"Endure","italic":false,"color":"light_purple"}],[{"text":"stacks will remove all stacks and enhance that","italic":false,"color":"gray"}],[{"text":"move. ","italic":false,"color":"gray"}],[{"text":" o Kidnap Range: ","italic":false,"color":"gray"},{"text":"0.2m per stack","italic":false,"color":"green"}],[{"text":" o Shake Damage: ","italic":false,"color":"gray"},{"text":"+1 per stack","italic":false,"color":"green"}],[{"text":" o Refreshments: ","italic":false,"color":"gray"},{"text":"+1 health per stack","italic":false,"color":"green"}],[{"text":" o Max Tokens: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"green"}]]$(end)
+                    }
+
+                    function flip {
+                        execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                        function custom:ui/menu/pages/selection/president/open
+                    }
+
+                    function player {
+                        block {
+                            data merge storage minecraft:ui {custom:{selection:{president:{equip_color:"red"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{equip_state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{ownership_color:"red"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{ownership_state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{secret_interaction1state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{secret_interaction1color:"red"}}}}
+                            function custom:ui/menu/pages/selection/president/passive {open:"{custom:{selection:{president:{passive",end:"}}}}"}
+                        }
+
+                        execute if entity @s[tag=customAbility.President] run {
+                            data merge storage minecraft:ui {custom:{selection:{president:{equip_color:"green"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{equip_state:"Yes"}}}}
+                        }
+
+                        execute if entity @s[tag=customPresident.Ownership] run {
+                            data merge storage minecraft:ui {custom:{selection:{president:{ownership_color:"green"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{ownership_state:"Yes"}}}}
+                        }
+                        
+                        execute if entity @s[tag=customPresident.SecretInteractionAscend] run {
+                            data merge storage minecraft:ui {custom:{selection:{president:{secret_interaction1state:"Yes"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{president:{secret_interaction1color:"green"}}}}
+                        }
+
+                        function custom:ui/menu/pages/selection/president/ability_price
+                    }
+
+                    function ability_price {
+                        data merge storage minecraft:ui {custom:{purchase:{clickID:1}}}
+
+                        # scute x12 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:turtle_scute",number:1,required:12,product:"ability",storage:"president",name:"Mr. President"}
+
+                        # mysterious arrow x1 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:dirt",number:2,required:1,product:"ability",storage:"president",name:"Mr. President"}
+
+                        tag @s add customUniversal.AdvancementCheck
+                        function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/avoid_vibration",product:"ability",storage:"president",name:"Mr. President"}
+                        function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/salvage_sherd",product:"ability",storage:"president",name:"Mr. President"}
+                        execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{president:{ability_advancement_color:"green"}}}}
+                        tag @s remove customUniversal.AdvancementCheck
+                    }
+
+                    dir moveset {
+                        function open {
+                            function custom:ui/menu/pages/selection/president/moveset/mask
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/president/moveset/mask"
+                        }
+
+                        function mask {
+                            data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Back"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Toji's overview"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/encourage","minecraft:item_name":{"color":"aqua","text":"Kidnap / Self-Kidnap"},"minecraft:lore":[[{"text":"Variation depending on the crouch state of","italic":false,"color":"gray"}],[{"text":"the user.","italic":false,"color":"gray"}],"",[{"text":"Not Crouched: ","italic":false,"color":"gray"},{"text":"Kidnap","italic":false,"color":"light_purple"}],[{"text":"Leap slightly forward sending anything in","italic":false,"color":"gray"}],[{"text":"range to your ","italic":false,"color":"gray"},{"text":"pocket dimension. ","italic":false,"color":"aqua"}],[{"text":"o Cancellable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}],"",[{"text":"Crouched: ","italic":false,"color":"gray"},{"text":"Self-Kidnap","italic":false,"color":"light_purple"}],[{"text":"Stand completely still for ","italic":false,"color":"gray"},{"text":"5s","italic":false,"color":"gold"},{"text":" initiating","italic":false,"color":"gray"}],[{"text":"the process to enter your ","italic":false,"color":"gray"},{"text":"pocket dimension.","italic":false,"color":"aqua"}],[{"text":"Taking damage, moving, jumping or disconnecting","italic":false,"color":"gray"}],[{"text":"during this process will ","italic":false,"color":"gray"},{"text":"cancel ","italic":false,"color":"red"},{"text":"this process.","italic":false,"color":"gray"}],[{"text":"Whilst in your ","italic":false,"color":"gray"},{"text":"Pocket Dimension,","italic":false,"color":"aqua"},{"text":" the windup for","italic":false,"color":"gray"}],[{"text":"Self-Kidnap","italic":false,"color":"light_purple"},{"text":" is mitigated.","italic":false,"color":"gray"}],[{"text":"o Cancellable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"19s","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/phase","minecraft:item_name":{"color":"aqua","text":"Shake Key / Refreshments"},"minecraft:lore":[[{"text":"Variation depending on the crouch state of","italic":false,"color":"gray"}],[{"text":"the user.","italic":false,"color":"gray"}],"",[{"text":"Not Crouched: ","italic":false,"color":"gray"},{"text":"Shake Key","italic":false,"color":"light_purple"}],[{"text":"Violently shake your key damaging anyone inside","italic":false,"color":"gray"}],[{"text":"your ","italic":false,"color":"gray"},{"text":"Pocket Dimension.","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"15","italic":false,"color":"green"}],"",[{"text":"Crouched: ","italic":false,"color":"gray"},{"text":"Refreshments","italic":false,"color":"light_purple"}],[{"text":"Gift the following ","italic":false,"color":"gray"},{"text":"b","italic":false,"color":"red"},{"text":"u","italic":false,"color":"gold"},{"text":"f","italic":false,"color":"yellow"},{"text":"f","italic":false,"color":"green"},{"text":"s","italic":false,"color":"blue"},{"text":" to anyone inside your","italic":false,"color":"gray"}],[{"text":"Pocket Dimension.","italic":false,"color":"aqua"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1m","italic":false,"color":"green"}],[{"text":"-> Healing: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"green"}],[{"text":"->","italic":false,"color":"gray"},{"text":" Movement Speed: ","italic":false,"color":"gray"},{"text":"1.25x","italic":false,"color":"green"}],[{"text":"-> Jump Strength: ","italic":false,"color":"gray"},{"text":"1.5x","italic":false,"color":"green"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"30s","italic":false,"color":"green"}],[{"text":"-> ","italic":false,"color":"gray"},{"text":"Resistance I","italic":false,"color":"white"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"30s","italic":false,"color":"gold"}],[{"text":"Cancellable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/snare","minecraft:item_name":{"color":"aqua","text":"Spring"},"minecraft:lore":[[{"text":"Toggle between being a Turtle or Human.","italic":false,"color":"gray"}],[{"text":"Whilst disguised, ","italic":false,"color":"gray"},{"text":"Endure","italic":false,"color":"light_purple"},{"text":" can gain stacks,","italic":false,"color":"gray"}],[{"text":"additionally giving the user the following","italic":false,"color":"gray"}],[{"text":"changes.","italic":false,"color":"gray"}],[{"text":"o Size: ","italic":false,"color":"gray"},{"text":"0.25x","italic":false,"color":"red"}],[{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.33x","italic":false,"color":"red"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Resistance II","italic":false,"color":"white"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"3s","italic":false,"color":"gold"}],[{"text":"Cancellable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:26b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:ui/custom/president/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}}]
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+                    }
+
+                    dir skins {
+                        function open {
+                            execute at @s as @p run function custom:ui/menu/pages/selection/president/skins/player
+
+                            function custom:ui/menu/pages/selection/president/skins/mask with storage minecraft:ui custom.selection.president
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/president/skins/mask"
+                        }
+
+                        function mask {
+                            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."},[{"color":"gray","italic":false,"text":"Rarity: "},{"color":"aqua","italic":false,"text":"Default"}],{"color":"gray","italic":false,"text":" "},[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(default_equip_color)","italic":false,"text":"$(default_equip_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/default"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President Overview"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/president/skins","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/same"}}}}]
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/skins/open
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/skins/open
+                        }
+
+                        function player {
+                            block {
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_color:"red"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_state:"No"}}}}
+                            }
+
+                            execute if entity @s[tag=customPresident.SkinDefault] run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_color:"green"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_state:"Yes"}}}}
+                            }
+                        }
+
+                        function default {
+                            execute at @s as @p run {
+                                tag @s add customUniversal.SkinContext
+                                tag @s add customPresident.DefaultSkinBypass
+                            }
+
+                            data merge storage minecraft:ui {custom:{purchase:{tag:"customPresident.DefaultSkinBypass"}}}
+                            data merge storage minecraft:ui {custom:{purchase:{toggle:"customPresident.SkinDefault"}}}
+                            data merge storage minecraft:ui {custom:{purchase:{context:"customPresident.SkinContext"}}}
+                            execute at @s as @p run function custom:ui/menu/pages/selection/purchase/main with storage minecraft:ui custom.purchase
+                            function custom:ui/menu/pages/selection/president/skins/open
+
+                            execute at @s as @p run {
+                                tag @s remove customUniversal.SkinContext
+                                tag @s remove customPresident.DefaultSkinBypass
+                            }
                         }
                     }
                 }

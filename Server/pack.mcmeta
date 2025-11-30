@@ -1,7 +1,12 @@
 {
-	"pack": {
-  	"pack_format": 48,
-  	"description": "yummy treats and substances!!"
-	}
+  "pack": {
+    "pack_format": 71,
+    "description": "SERVER BULK FILES",
+    "min_format": 88,
+    "max_format": 9999999,
+    "supported_formats": {
+      "min_inclusive": 71,
+      "max_inclusive": 79
+    }
+  }
 }
-

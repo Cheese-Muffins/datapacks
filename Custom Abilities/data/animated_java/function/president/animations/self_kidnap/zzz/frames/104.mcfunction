@@ -11,4 +11,5 @@ $data merge entity $(item_display_chestplate_arm_l) {transformation: [-0.4458f,-
 $data merge entity $(bone_left_arm) {transformation: [-0.9092f,-0.152f,0.3876f,0.391f,-0.3072f,0.8733f,-0.3781f,1.3589f,-0.281f,-0.4628f,-0.8407f,-0.0871f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_body) {transformation: [1.1296f,0.0418f,-0.2115f,0.0323f,0.0136f,1.1122f,0.2921f,1.6114f,0.2152f,-0.2894f,1.092f,-0.2241f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_leggings_pants) {transformation: [-1.0805f,0.0399f,0.2023f,0.0255f,-0.013f,1.0638f,-0.2794f,1.43f,-0.2058f,-0.2768f,-1.0445f,-0.177f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify entity @s data merge value {"cameras":{},"locators":{"victim_position":{"px":0,"py":0.75,"pz":0,"ry":10.963503586596829,"rx":-14.714588709911567}}}
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:president/animations/self_kidnap/zzz/frames/104_locator_constant
+data modify entity @s data merge value {"cameras":{},"locators":{"mount":{"px":0,"py":0.75,"pz":0,"ry":10.963503586596829,"rx":-14.714588709911567}}}

@@ -5,3 +5,4 @@ execute if entity @s[tag=customAbility.TheWorld] run function custom:ui/menu/pag
 execute if entity @s[tag=customAbility.Gojo] run function custom:ui/menu/pages/menu/zzz/2
 execute if entity @s[tag=customAbility.Billy] run function custom:ui/menu/pages/menu/zzz/3
 execute if entity @s[tag=customAbility.Toji] run function custom:ui/menu/pages/menu/zzz/4
+execute if entity @s[tag=customAbility.President] run function custom:ui/menu/pages/menu/zzz/5

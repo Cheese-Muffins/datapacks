@@ -6,9 +6,10 @@ $data merge entity $(bone_key) {transformation: [-0.0187f,-0.9962f,0.0847f,-0.41
 $data merge entity $(bone_right_forearm) {transformation: [-0.9962f,0.0664f,0.0558f,-0.3935f,0.0548f,0.9806f,-0.1884f,1.0985f,-0.0672f,-0.1846f,-0.9805f,0.0351f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_arm_r) {transformation: [0.065f,0.0757f,1.1457f,-0.3452f,-0.2042f,1.13f,-0.063f,1.8201f,-1.1299f,-0.1999f,0.0773f,-0.0925f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_right_arm) {transformation: [-0.9962f,0.0658f,0.0565f,-0.375f,0.0548f,0.9826f,-0.1776f,1.3748f,-0.0672f,-0.1738f,-0.9825f,-0.0137f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(bone_left_forearm) {transformation: [-0.9763f,-0.2113f,-0.0468f,0.4344f,-0.2163f,0.9577f,0.1897f,1.1055f,0.0048f,0.1954f,-0.9807f,-0.0687f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(item_display_chestplate_arm_l) {transformation: [0.0539f,-0.243f,-1.1228f,0.2793f,-0.2181f,1.1014f,-0.2488f,1.8088f,1.1278f,0.2246f,0.0055f,0.0748f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(bone_left_arm) {transformation: [-0.9763f,-0.2113f,-0.0468f,0.375f,-0.2163f,0.9577f,0.1897f,1.3748f,0.0048f,0.1953f,-0.9807f,-0.0137f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_left_forearm) {transformation: [-0.9998f,-0.0183f,-0.0003f,0.3802f,-0.0183f,0.9998f,-0.0036f,1.0936f,0.0004f,-0.0036f,-1f,-0.0127f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(item_display_chestplate_arm_l) {transformation: [0.0004f,-0.0211f,-1.1498f,0.3667f,0.0042f,1.1498f,-0.0211f,1.8279f,1.15f,-0.0042f,0.0005f,-0.0154f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_left_arm) {transformation: [-0.9998f,-0.0183f,-0.0003f,0.375f,-0.0183f,0.9998f,-0.0037f,1.3748f,0.0004f,-0.0037f,-1f,-0.0137f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_body) {transformation: [1.15f,0f,0f,0f,0f,1.1497f,0.0253f,1.6404f,0f,-0.0253f,1.1497f,-0.0196f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_leggings_pants) {transformation: [-1.1f,0f,0f,0f,0f,1.0997f,-0.0242f,1.453f,0f,-0.0242f,-1.0997f,-0.0155f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify entity @s data merge value {"cameras":{},"locators":{"victim_position":{"px":0,"py":0.75,"pz":0,"ry":0,"rx":-1.2597656250000002}}}
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:president/animations/self_kidnap/zzz/frames/1_locator_constant
+data modify entity @s data merge value {"cameras":{},"locators":{"mount":{"px":0,"py":0.75,"pz":0,"ry":0,"rx":-1.2597656250000002}}}

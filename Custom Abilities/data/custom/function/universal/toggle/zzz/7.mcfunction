@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-function custom:abilities/yuji/toggle/on
+function custom:abilities/president/toggle/on

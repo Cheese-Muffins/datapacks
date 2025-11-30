@@ -11,4 +11,4 @@ $data merge entity $(item_display_chestplate_arm_l) {transformation: [-0.2427f,-
 $data merge entity $(bone_left_arm) {transformation: [-0.9669f,-0.1436f,0.211f,0.3665f,-0.1369f,0.9895f,0.0462f,1.3789f,-0.2155f,0.0158f,-0.9764f,0.0381f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_body) {transformation: [1.1494f,-0.0152f,-0.0348f,-0.0118f,0.0137f,1.1489f,-0.0493f,1.6397f,0.0354f,0.0488f,1.1484f,0.0378f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_leggings_pants) {transformation: [-1.0994f,-0.0146f,0.0333f,-0.0093f,-0.0131f,1.0989f,0.0471f,1.4524f,-0.0339f,0.0467f,-1.0985f,0.0298f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify entity @s data merge value {"cameras":{},"locators":{"victim_position":{"px":0,"py":0.75,"pz":0,"ry":1.7370568516887488,"rx":2.454515544193285}}}
+data modify entity @s data merge value {"cameras":{},"locators":{"mount":{"px":0,"py":0.75,"pz":0,"ry":1.7370568516887488,"rx":2.454515544193285}}}

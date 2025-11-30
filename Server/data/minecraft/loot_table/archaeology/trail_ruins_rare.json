@@ -1,0 +1,97 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:burn_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:danger_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:friend_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:heart_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:heartbreak_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:howl_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sheaf_pottery_sherd"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:wayfinder_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:raiser_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:shaper_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:host_armor_trim_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:music_disc_relic"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:phantom_membrane",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_model": "minecraft:currencies/heavenly_inverted_spear",
+                "minecraft:custom_data": "{currency:1b,heavenly_inverted_spear:1b}",
+                "minecraft:lore": [
+                  {
+                    "text": "Can be used to buy specific custom abilities",
+                    "color": "gray",
+                    "italic": false
+                  },
+                  {
+                    "text": "or skins.",
+                    "color": "gray",
+                    "italic": false
+                  },
+                  "",
+                  {
+                    "text": "Server Exclusive 2025",
+                    "color": "gold",
+                    "italic": false
+                  }
+                ],
+                "minecraft:item_name": {
+                  "text": "Heavenly Inverted Spear",
+                  "color": "light_purple",
+                  "italic": false
+                },
+                "minecraft:max_stack_size": 1
+              }
+            }
+          ]
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "minecraft:archaeology/trail_ruins_rare"
+}

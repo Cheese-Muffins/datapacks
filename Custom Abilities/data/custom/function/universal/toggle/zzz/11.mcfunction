@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-function custom:abilities/dice/toggle/off
+function custom:abilities/the_world/toggle/off

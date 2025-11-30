@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-function custom:abilities/billy/toggle/off
+function custom:abilities/dice/toggle/off

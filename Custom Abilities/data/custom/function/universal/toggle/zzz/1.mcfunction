@@ -10,4 +10,5 @@ execute if entity @s[tag=customAbility.TheWorld] run function custom:universal/t
 execute if entity @s[tag=customAbility.Dice] run function custom:universal/toggle/zzz/4
 execute if entity @s[tag=customAbility.Billy] run function custom:universal/toggle/zzz/5
 execute if entity @s[tag=customAbility.Toji] run function custom:universal/toggle/zzz/6
-execute if entity @s[tag=customAbility.Yuji] run function custom:universal/toggle/zzz/7
+execute if entity @s[tag=customAbility.President] run function custom:universal/toggle/zzz/7
+execute if entity @s[tag=customAbility.Yuji] run function custom:universal/toggle/zzz/8
