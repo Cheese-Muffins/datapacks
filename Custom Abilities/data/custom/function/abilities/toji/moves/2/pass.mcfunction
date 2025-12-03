@@ -2,7 +2,7 @@
 
 function custom:abilities/toji/moves/setup {animation:'blitz_start',objective:"customUniversal.RigID"}
 execute as @n[tag=aj.toji.locator.acrobatics_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
-tag @s add customUniversal.Cancellable
+tag @s add customUniversal.Cancelable
 scoreboard players set @s customUniversal.MoveLastUsed 2
 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .TojiCooldown customUniversal.Move2Cooldown
 scoreboard players set @s customUniversal.MoveDelay 10

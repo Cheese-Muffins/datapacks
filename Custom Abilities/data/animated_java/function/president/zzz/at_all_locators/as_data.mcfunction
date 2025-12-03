@@ -3,5 +3,9 @@ data modify storage animated_java:temp args merge from entity @s data.locators.c
 function animated_java:president/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.constant
 function animated_java:president/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from entity @s data.locators.sfx
+function animated_java:president/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.mount
+function animated_java:president/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from entity @s data.locators.text_location
 function animated_java:president/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args

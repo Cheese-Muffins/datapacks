@@ -1,6 +1,9 @@
 # Generated with MC-Build
 
 data merge storage minecraft:ui {custom:{purchase:{clickID:1}}}
+# bypass #
+tag @s add customUI.BypassCheck
+function custom:ui/menu/pages/selection/purchase/check/username {product:"ability",storage:"president",username:"JoeBingleBarf"}
 # scute x12 #
 function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:turtle_scute",number:1,required:12,product:"ability",storage:"president",name:"Mr. President"}
 # mysterious arrow x1 #

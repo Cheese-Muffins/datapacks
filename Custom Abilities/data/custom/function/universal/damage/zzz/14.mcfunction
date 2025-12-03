@@ -1,12 +1,6 @@
 # Generated with MC-Build
 
-stopsound @s player minecraft:the_world.barrage.shinei
-stopsound @s player minecraft:the_world.barrage.voiceline
-stopsound @s player minecraft:the_world.impale.laugh
-stopsound @s player minecraft:the_world.impale.punch
-stopsound @s player minecraft:the_world.impale.rustle
-stopsound @s player minecraft:the_world.impale.shinei
-stopsound @s player minecraft:the_world.impale.voiceline1
-stopsound @s player minecraft:the_world.impale.voiceline2
-stopsound @s player minecraft:the_world.knife_throw.voiceline
-stopsound @s player minecraft:the_world.timeskip.sfx
+scoreboard players set #ifelse mcb.internal 1
+scoreboard players set #ifelse mcb.internal 0
+execute if score @s customUniversal.LastMoveState matches 1 run function custom:universal/damage/zzz/15
+execute if score #ifelse mcb.internal matches 0 run function custom:universal/damage/zzz/16

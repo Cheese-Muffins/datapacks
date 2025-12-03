@@ -3,11 +3,40 @@ data modify entity @s data.uuids append from storage animated_java:gu out
 function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.data_data set from storage animated_java:gu out
-summon minecraft:item_display ^0 ^0.75 ^0 {Tags:["aj.global.bone.player.decendant","aj.global.bone.player.decendant.locator","aj.global.bone.player.tree","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.bone.waist.child","aj.global.bone.waist.child.locator","aj.global.bone.waist.decendant","aj.global.bone.waist.decendant.locator","aj.global.bone.waist.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.mount","aj.new","aj.president.bone.player.decendant","aj.president.bone.player.decendant.locator","aj.president.bone.player.tree","aj.president.bone.upper_body.decendant","aj.president.bone.upper_body.decendant.locator","aj.president.bone.upper_body.tree","aj.president.bone.waist.child","aj.president.bone.waist.child.locator","aj.president.bone.waist.decendant","aj.president.bone.waist.decendant.locator","aj.president.bone.waist.tree","aj.president.entity","aj.president.locator","aj.president.locator.mount","aj.president.node","aj.president.node.mount"]}
+summon minecraft:item_display ^0 ^0.75 ^0 {Tags:["aj.global.bone.grouped.decendant","aj.global.bone.grouped.decendant.locator","aj.global.bone.grouped.tree","aj.global.bone.player.decendant","aj.global.bone.player.decendant.locator","aj.global.bone.player.tree","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.bone.waist.child","aj.global.bone.waist.child.locator","aj.global.bone.waist.decendant","aj.global.bone.waist.decendant.locator","aj.global.bone.waist.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.mount","aj.new","aj.president.bone.grouped.decendant","aj.president.bone.grouped.decendant.locator","aj.president.bone.grouped.tree","aj.president.bone.player.decendant","aj.president.bone.player.decendant.locator","aj.president.bone.player.tree","aj.president.bone.upper_body.decendant","aj.president.bone.upper_body.decendant.locator","aj.president.bone.upper_body.tree","aj.president.bone.waist.child","aj.president.bone.waist.child.locator","aj.president.bone.waist.decendant","aj.president.bone.waist.decendant.locator","aj.president.bone.waist.tree","aj.president.entity","aj.president.locator","aj.president.locator.mount","aj.president.node","aj.president.node.mount"]}
 execute as @n[ type=minecraft:item_display, tag=aj.president.locator.mount, tag=aj.new, distance=..2 ] run function animated_java:president/zzz/summon/as_data_entity/as_locator/mount
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.locator_mount set from storage animated_java:gu out
 data modify entity @s data.locators.mount.uuid set from storage animated_java:gu out
+summon minecraft:item_display ^0 ^2.25 ^0 {Tags:["aj.global.bone.grouped.decendant","aj.global.bone.grouped.decendant.locator","aj.global.bone.grouped.tree","aj.global.bone.text_location_bone.child","aj.global.bone.text_location_bone.child.locator","aj.global.bone.text_location_bone.decendant","aj.global.bone.text_location_bone.decendant.locator","aj.global.bone.text_location_bone.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.text_location","aj.new","aj.president.bone.grouped.decendant","aj.president.bone.grouped.decendant.locator","aj.president.bone.grouped.tree","aj.president.bone.text_location_bone.child","aj.president.bone.text_location_bone.child.locator","aj.president.bone.text_location_bone.decendant","aj.president.bone.text_location_bone.decendant.locator","aj.president.bone.text_location_bone.tree","aj.president.entity","aj.president.locator","aj.president.locator.text_location","aj.president.node","aj.president.node.text_location"]}
+execute as @n[ type=minecraft:item_display, tag=aj.president.locator.text_location, tag=aj.new, distance=..3 ] run function animated_java:president/zzz/summon/as_data_entity/as_locator/text_location
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.locator_text_location set from storage animated_java:gu out
+data modify entity @s data.locators.text_location.uuid set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.key_turtle] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_key_turtle set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.body_rotation] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_body_rotation set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.turtle_head] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_turtle_head set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.leg3] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_leg3 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.leg4] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_leg4 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.body2_rotation] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_body2_rotation set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.leg1] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_leg1 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.president.node.leg2] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_leg2 set from storage animated_java:gu out
 execute on vehicle on passengers if entity @s[tag=aj.president.node.waist] run function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.bone_waist set from storage animated_java:gu out

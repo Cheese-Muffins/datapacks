@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$execute positioned ^ ^-$(fall) ^ run function custom:abilities/president/moves/1/kidnap/movement/zzz/3
+scoreboard players set @s customPresident.KidnapGravity 250

@@ -3,3 +3,5 @@ tag @s remove aj.president.animation.kidnap.playing
 tag @s remove aj.president.animation.self_kidnap.playing
 tag @s remove aj.president.animation.shake_key.playing
 tag @s remove aj.president.animation.refreshments.playing
+tag @s remove aj.president.animation.turtle_idle.playing
+tag @s remove aj.president.animation.turtle_walk.playing

@@ -37,7 +37,7 @@ function on_load {
             scoreboard objectives add customUniversal.Delay<%i%> dummy
         }
         REPEAT (1,6) as i {
-            scoreboard objectives add customUniversal.Move<%i%>Trigger trigger
+            scoreboard objectives add customUniversal.Move<%i%>Trigger dummy
         }
         scoreboard objectives add customUniversal.ToggleTrigger trigger
         scoreboard objectives add customUniversal.MoveDelay dummy
@@ -59,94 +59,9 @@ function on_load {
         scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
         scoreboard objectives add customUniversal.StatisticsEntityKills dummy
 
-    # Billy #
-        scoreboard objectives add customBilly.RigID dummy
-        scoreboard objectives add customBilly.ToggleOnText dummy
-        scoreboard objectives add customBilly.PassiveSnowParticles dummy
-        scoreboard objectives add customBilly.PassiveMaul dummy
-        scoreboard objectives add customBilly.EncourageBuffDuration dummy
-        scoreboard objectives add customBilly.PhaseMovement dummy
-        scoreboard objectives add customBilly.PhaseX dummy
-        scoreboard objectives add customBilly.PhaseY dummy
-        scoreboard objectives add customBilly.PhaseZ dummy
-        scoreboard objectives add customBilly.TrapLimit dummy
-        scoreboard objectives add customBilly.TrapDuration dummy
-        scoreboard objectives add customBilly.TrapLinger dummy
-        scoreboard objectives add customBilly.TrapSuccess dummy
-        scoreboard objectives add customBilly.DevourID dummy
-        scoreboard objectives add customBilly.DevourX dummy
-        scoreboard objectives add customBilly.DevourY dummy
-        scoreboard objectives add customBilly.DevourZ dummy
-        scoreboard objectives add customBilly.DevourRotationX dummy
-        
-        # Move Cooldowns #
-            function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
-            function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:24}
-            function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
-            function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"2b",move:2,cooldown:24}
-            function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
-            function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"3b",move:3,cooldown:24}
-
-        # Statistics #
-            scoreboard objectives add customBilly.Statistics.PlaytimeT dummy
-            scoreboard objectives add customBilly.Statistics.PlaytimeS dummy
-            scoreboard objectives add customBilly.Statistics.PlaytimeM dummy
-            scoreboard objectives add customBilly.Statistics.PlaytimeH dummy
-
-            scoreboard objectives add customBilly.Statistics.Maul.Activations dummy
-            scoreboard objectives add customBilly.Statistics.Maul.Damage dummy
-
-            scoreboard objectives add customBilly.Statistics.HomelandT dummy
-            scoreboard objectives add customBilly.Statistics.HomelandS dummy
-            scoreboard objectives add customBilly.Statistics.HomelandM dummy
-            scoreboard objectives add customBilly.Statistics.HomelandH dummy
-
-            scoreboard objectives add customBilly.Statistics.Encourage.Uses dummy
-            scoreboard objectives add customBilly.Statistics.Encourage.BuffedCount dummy
-
-            scoreboard objectives add customBilly.Statistics.Phase.Uses dummy
-            scoreboard objectives add customBilly.Statistics.Phase.Distance dummy
-
-            scoreboard objectives add customBilly.Statistics.Snare.Uses dummy
-            scoreboard objectives add customBilly.Statistics.Snare.Triggered dummy
-            scoreboard objectives add customBilly.Statistics.Snare.Damage dummy
-
-    # Toji #
-        scoreboard objectives add customToji.QuestProgress dummy
-        scoreboard objectives add customToji.ObtainmentMonsterKills dummy
-        scoreboard objectives add customToji.PassiveBloodlust dummy
-        scoreboard objectives add customToji.AcrobaticsX dummy
-        scoreboard objectives add customToji.AcrobaticsY dummy
-        scoreboard objectives add customToji.AcrobaticsZ dummy
-        scoreboard objectives add customToji.AcrobaticsRotationX dummy
-        scoreboard objectives add customToji.AcrobaticsAnimation dummy
-        scoreboard objectives add customToji.BlitzTravel dummy
-        scoreboard objectives add customToji.BlitzGravity dummy
-        scoreboard objectives add customToji.BlitzDamage dummy
-        scoreboard objectives add customToji.SpringX dummy
-        scoreboard objectives add customToji.SpringY dummy
-        scoreboard objectives add customToji.SpringZ dummy
-        scoreboard objectives add customToji.SpringRotationX dummy
-        scoreboard objectives add customToji.SpringMath dummy
-        scoreboard players set div15 customToji.SpringMath 15
-        scoreboard objectives add customToji.Spring2DIncrements dummy
-        scoreboard objectives add customToji.SpringYIncrements dummy
-
-        # Move Cooldowns #
-            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
-            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
-            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}
-            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:4,move:4,cooldown:30}
-
-    # Mr. President #
-        scoreboard objectives add customPresident.KidnapMovement dummy
-        scoreboard objectives add customPresident.KidnapGravity dummy
-
-            # Move Cooldowns #
-                function custom:universal/cooldowns/10x {ability:"PresidentKidnap",storage:"president",path:1a,move:1,cooldown:30}
-                function custom:universal/cooldowns/10x {ability:"PresidentSelfKidnap",storage:"president",path:1b,move:1,cooldown:30}
-                function custom:universal/cooldowns/10x {ability:"President",storage:"president",path:2,move:2,cooldown:30}
-                function custom:universal/cooldowns/10x {ability:"President",storage:"president",path:3,move:3,cooldown:30}
+    function custom:abilities/billy/install
+    function custom:abilities/toji/install
+    function custom:abilities/president/install
 }
 
 function tick {
@@ -173,6 +88,60 @@ function tick {
 
 dir abilities {
     dir billy {
+        function install {
+            # General #
+            scoreboard objectives add customBilly.RigID dummy
+            scoreboard objectives add customBilly.ToggleOnText dummy
+            scoreboard objectives add customBilly.PassiveSnowParticles dummy
+            scoreboard objectives add customBilly.PassiveMaul dummy
+            scoreboard objectives add customBilly.EncourageBuffDuration dummy
+            scoreboard objectives add customBilly.PhaseMovement dummy
+            scoreboard objectives add customBilly.PhaseX dummy
+            scoreboard objectives add customBilly.PhaseY dummy
+            scoreboard objectives add customBilly.PhaseZ dummy
+            scoreboard objectives add customBilly.TrapLimit dummy
+            scoreboard objectives add customBilly.TrapDuration dummy
+            scoreboard objectives add customBilly.TrapLinger dummy
+            scoreboard objectives add customBilly.TrapSuccess dummy
+            scoreboard objectives add customBilly.DevourID dummy
+            scoreboard objectives add customBilly.DevourX dummy
+            scoreboard objectives add customBilly.DevourY dummy
+            scoreboard objectives add customBilly.DevourZ dummy
+            scoreboard objectives add customBilly.DevourRotationX dummy
+            
+            # Move Cooldowns #
+            function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
+            function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:24}
+            function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
+            function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"2b",move:2,cooldown:24}
+            function custom:universal/cooldowns/8x {ability:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
+            function custom:universal/cooldowns/8x {ability:"Billy_Homeland",storage:"billy",path:"3b",move:3,cooldown:24}
+
+            # Statistics #
+            scoreboard objectives add customBilly.Statistics.PlaytimeT dummy
+            scoreboard objectives add customBilly.Statistics.PlaytimeS dummy
+            scoreboard objectives add customBilly.Statistics.PlaytimeM dummy
+            scoreboard objectives add customBilly.Statistics.PlaytimeH dummy
+
+            scoreboard objectives add customBilly.Statistics.Maul.Activations dummy
+            scoreboard objectives add customBilly.Statistics.Maul.Damage dummy
+
+            scoreboard objectives add customBilly.Statistics.HomelandT dummy
+            scoreboard objectives add customBilly.Statistics.HomelandS dummy
+            scoreboard objectives add customBilly.Statistics.HomelandM dummy
+            scoreboard objectives add customBilly.Statistics.HomelandH dummy
+
+            scoreboard objectives add customBilly.Statistics.Encourage.Uses dummy
+            scoreboard objectives add customBilly.Statistics.Encourage.BuffedCount dummy
+
+            scoreboard objectives add customBilly.Statistics.Phase.Uses dummy
+            scoreboard objectives add customBilly.Statistics.Phase.Distance dummy
+
+            scoreboard objectives add customBilly.Statistics.Snare.Uses dummy
+            scoreboard objectives add customBilly.Statistics.Snare.Triggered dummy
+            scoreboard objectives add customBilly.Statistics.Snare.Damage dummy
+        }
+
         function tick {
             execute if score @s customUniversal.Toggle matches 1 run {
                 execute at @s run function custom:abilities/billy/active
@@ -482,7 +451,7 @@ dir abilities {
                             execute if entity @s[tag=customBilly.PassiveHomeland] run data merge storage minecraft:custom {billy:{maul:{amount:10}}}
                             execute unless entity @s[tag=customBilly.PassiveHomeland] run data merge storage minecraft:custom {billy:{maul:{amount:8}}}
                             block { with storage minecraft:custom billy.maul
-                                $execute if entity @s[tag=customSettings.DebugLog] run tellraw @s "trap damage: $(amount)"
+                                $execute if entity @s[tag=customSettings.DebugLog] run tellraw @s "maul damage: $(amount)"
                                 $scoreboard players add @s customBilly.Statistics.Maul.Damage $(amount)
                             }
                         }
@@ -542,7 +511,7 @@ dir abilities {
                     }
                     scoreboard players set @s customUniversal.LastUsedMove 1
                     scoreboard players set @s customUniversal.MoveDelay 10
-                    tag @s add customUniversal.Cancellable
+                    tag @s add customUniversal.Cancelable
 
                     attribute @s minecraft:movement_speed base set 0.05
                     attribute @s minecraft:jump_strength base set 0
@@ -835,7 +804,7 @@ dir abilities {
                     # item modify entity @s hotbar.8 custom:gojo/base
                     function custom:universal/armor/reveal
 
-                    tag @s remove customUniversal.Cancellable
+                    tag @s remove customUniversal.Cancelable
                     tag @s remove customUniversal.DisconnectCheck
                     tag @s remove customUniversal.Animation
                 }
@@ -1057,14 +1026,87 @@ dir abilities {
     }
 
     dir president {
+        function install {
+            # Moves #
+            scoreboard objectives add customPresident.SplitMove1Kidnap dummy
+            scoreboard objectives add customPresident.SplitMove1Self_Kidnap dummy
+            scoreboard objectives add customPresident.SplitMove2Shake_Key dummy
+            scoreboard objectives add customPresident.SplitMove2Refreshments dummy
+
+            # General #
+            scoreboard objectives add customPresident.PocketID dummy
+            scoreboard objectives add customPresident.KidnappedID dummy
+            scoreboard objectives add customPresident.KidnapDuration dummy
+            scoreboard objectives add customPresident.KidnapMovement dummy
+            scoreboard objectives add customPresident.KidnapGravity dummy
+            scoreboard objectives add customPresident.KidnapDeath deathCount
+            scoreboard objectives add customPresident.PassiveEndure dummy
+            scoreboard objectives add customPresident.OutsideX dummy
+            scoreboard objectives add customPresident.OutsideY dummy
+            scoreboard objectives add customPresident.OutsideZ dummy
+            scoreboard objectives add customPresident.RefreshmentBuffDuration dummy
+            scoreboard objectives add customPresident.DisguisedDamagedTint dummy
+
+            # UI #
+            scoreboard objectives add customUI.PresidentMove1 dummy
+            scoreboard objectives add customUI.PresidentMove2 dummy
+
+            # Move Cooldowns #
+            function custom:universal/cooldowns/10x {ability:"President_State1",storage:"president",path:"1a",move:1,cooldown:13}
+            function custom:universal/cooldowns/10x {ability:"President_State2",storage:"president",path:"1b",move:1,cooldown:24}
+            function custom:universal/cooldowns/10x {ability:"President_State1",storage:"president",path:"2a",move:2,cooldown:8}
+            function custom:universal/cooldowns/10x {ability:"President_State2",storage:"president",path:"2b",move:2,cooldown:60}
+            function custom:universal/cooldowns/10x {ability:"President_State1",storage:"president",path:3,move:3,cooldown:3}
+
+            # Statistics #
+            scoreboard objectives add customPresident.Statistics.PlaytimeT dummy
+            scoreboard objectives add customPresident.Statistics.PlaytimeS dummy
+            scoreboard objectives add customPresident.Statistics.PlaytimeM dummy
+            scoreboard objectives add customPresident.Statistics.PlaytimeH dummy
+
+            scoreboard objectives add customPresident.Statistics.Endure.Stacks dummy
+
+            scoreboard objectives add customPresident.Statistics.Kidnap.Uses dummy
+            scoreboard objectives add customPresident.Statistics.Kidnap.EntitiesStolen dummy
+            scoreboard objectives add customPresident.Statistics.Kidnap.EndureSpent dummy
+
+            scoreboard objectives add customPresident.Statistics.Self_Kidnap.Uses dummy
+            
+            scoreboard objectives add customPresident.Statistics.Shake.Uses dummy
+            scoreboard objectives add customPresident.Statistics.Shake.Damage dummy
+            scoreboard objectives add customPresident.Statistics.Shake.EndureSpent dummy
+
+            scoreboard objectives add customPresident.Statistics.Refreshments.Uses dummy
+            scoreboard objectives add customPresident.Statistics.Refreshments.EntitiesBuffed dummy
+            scoreboard objectives add customPresident.Statistics.Refreshments.EndureSpent dummy
+
+            scoreboard objectives add customPresident.Statistics.Disguise.Uses dummy
+
+            scoreboard objectives add customPresident.Statistics.DisguiseT dummy
+            scoreboard objectives add customPresident.Statistics.DisguiseS dummy
+            scoreboard objectives add customPresident.Statistics.DisguiseM dummy
+            scoreboard objectives add customPresident.Statistics.DisguiseH dummy
+        }
+
         function tick {
             execute if score @s customUniversal.Toggle matches 1 run {
                 execute at @s run function custom:abilities/president/active
             }
 
-            execute unless entity @s[scores={customUniversal.Move1Cooldown=0,customUniversal.Move2Cooldown=0,customUniversal.Move3Cooldown=0,customUniversal.Delay4=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
-                REPEAT (1,3) as i {
-                    execute if score @s customUniversal.Move<%i%>Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move<%i%>Cooldown 1
+            execute unless entity @s[scores={customPresident.SplitMove1Kidnap=0,customPresident.SplitMove1Self_Kidnap=0,customPresident.SplitMove2Shake_Key=0,customPresident.SplitMove2Refreshments=0,customUniversal.Move3Cooldown=0,customPresident.DisguisedDamagedTint=0,customUniversal.Delay4=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                execute if score @s customPresident.SplitMove1Kidnap matches 1.. run scoreboard players remove @s customPresident.SplitMove1Kidnap 1
+                execute if score @s customPresident.SplitMove1Self_Kidnap matches 1.. run scoreboard players remove @s customPresident.SplitMove1Self_Kidnap 1
+                execute if score @s customPresident.SplitMove2Shake_Key matches 1.. run scoreboard players remove @s customPresident.SplitMove2Shake_Key 1
+                execute if score @s customPresident.SplitMove2Refreshments matches 1.. run scoreboard players remove @s customPresident.SplitMove2Refreshments 1
+                execute if score @s customUniversal.Move3Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move3Cooldown 1
+                execute if score @s customPresident.DisguisedDamagedTint matches 1.. run {
+                    scoreboard players remove @s customPresident.DisguisedDamagedTint 1
+                    execute if score @s customPresident.DisguisedDamagedTint matches 0 run {
+                        execute store result storage minecraft:custom president.disguised.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.disguised
+                            $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run function animated_java:president/variants/default/apply
+                        }
+                    }
                 }
 
                 execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
@@ -1074,13 +1116,45 @@ dir abilities {
 
         dir toggle {
             function on {
-                playsound minecraft:gojo.toggle.spawn player @s ~ ~ ~ 0.35
-                scoreboard players set @s customUniversal.ToggleDelay 20 
+                playsound minecraft:president.toggle.enable player @a ~ ~ ~ 1
+                scoreboard players set @s customUniversal.ToggleDelay 20
+
+                execute unless entity @s[scores={customPresident.PocketID=1..}] run {
+                    scoreboard players add .global customPresident.PocketID 1
+                    scoreboard players operation @s customPresident.PocketID = .global customPresident.PocketID
+
+                    execute store result storage minecraft:custom president.room.id int 1 run scoreboard players get @s customPresident.PocketID
+                    scoreboard players set .pos_z customPresident.PocketID 48
+                    scoreboard players set .chunk_z customPresident.PocketID 3
+                    block { with storage minecraft:custom president.room
+                        $scoreboard players set .multiplier customPresident.PocketID $(id)
+                        $execute store result storage minecraft:custom president.room.chunk_z int $(id) run scoreboard players get .chunk_z customPresident.PocketID
+                        
+                        scoreboard players operation .pos_z customPresident.PocketID *= .multiplier customPresident.PocketID
+                        scoreboard players remove .pos_z customPresident.PocketID 8
+                        execute store result storage minecraft:custom president.room.pos_z int 1 run scoreboard players get .pos_z customPresident.PocketID
+
+                        block { with storage minecraft:custom president.room
+                            $execute in server:god positioned 0 14 $(pos_z) run {
+                                forceload add ~ ~
+                                place template custom:president/default_skin ~ ~ ~
+                                tag @s add customPresident.RoomTempload
+                            }
+                        }
+                    }
+
+
+                    # place template custom:president/default_skin 0 14 -8
+
+                }
             }
 
             function off {
                 title @s actionbar ""
-                playsound minecraft:gojo.toggle.remove player @s ~ ~ ~ 0.5
+                playsound minecraft:president.toggle.withdraw player @a ~ ~ ~ 0.5
+
+                execute if entity @s[tag=customPresident.Disguised] run function custom:abilities/president/moves/3/pass
+
                 scoreboard players set @s customUniversal.ToggleDelay 10
             }
         }
@@ -1096,9 +1170,18 @@ dir abilities {
 
         dir hotbar {
             function main {
-                REPEAT (1,3) as i {
-                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move<%i%>
+                execute unless predicate custom:universal/sneak run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customPresident.SplitMove1Kidnap
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customPresident.SplitMove2Shake_Key
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move1a
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move2a
+                } else run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customPresident.SplitMove1Self_Kidnap
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customPresident.SplitMove2Refreshments
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move1b
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move2b
                 }
+                function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move3
                 
                 REPEAT (1,3) as i {
                     execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
@@ -1106,31 +1189,38 @@ dir abilities {
                     }
                 }
 
+                execute unless score @s customPresident.PassiveEndure matches 1.. run scoreboard players set @s customPresident.PassiveEndure 0
+                execute store result storage minecraft:custom president.hotbar.endure_string int 1 run scoreboard players get @s customPresident.PassiveEndure
+                block { with storage minecraft:custom president.hotbar
+                    $execute if score @s customPresident.PassiveEndure matches 10..99 run data merge storage minecraft:custom {president:{hotbar:{endure:"$(endure_string)"}}}
+                    $execute if score @s customPresident.PassiveEndure matches 0..9 run data merge storage minecraft:custom {president:{hotbar:{endure:"0$(endure_string)"}}}
+                }
+
                 execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom president.hotbar
-                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
                 }
 
                 execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom president.hotbar
-                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
                 }
 
                 execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom president.hotbar
-                    $title @s actionbar [{"text":"\uF817\u06B2"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF824\u06B1","color":"#4e5c24"},{"text":"\uF800\u06A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
+                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u03B4"},{"text":"\uF808$(time)","color":"yellow"}]
                 }
             }
 
             function progress {
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A2"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A3"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A4"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A5"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A6"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A7"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A8"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06A9"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06B0"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06B0"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u06B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A3"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A4"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A5"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A6"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A7"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A8"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A9"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B1"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B2"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B3"
 
                 $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
                 $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
@@ -1138,11 +1228,116 @@ dir abilities {
         }
 
         function active {
+            function custom:universal/statistics/time {ability:"President",stat:"Playtime"}
             REPEAT (1,4) as i {
-                execute if score @s customUniversal.Move<%i%>Trigger matches 1.. run function custom:abilities/president/key_bindings/move<%i%>
+                execute if score @s customUniversal.Move<%i%>Trigger matches 1.. unless score @s customUniversal.MoveDelay matches 1.. run function custom:abilities/president/key_bindings/move<%i%>
             }
 
+            execute if entity @s[tag=customPresident.RoomTempload] in server:god run {
+                execute as @e[type=minecraft:marker,tag=customPresident.EntranceRoom,tag=!assigned] run {
+                    scoreboard players operation @s customPresident.PocketID = .global customPresident.PocketID
+                    tag @s add assigned
+                }
+                execute as @e[type=minecraft:marker,tag=customPresident.FreezerGate,tag=!assigned] run {
+                    scoreboard players operation @s customPresident.PocketID = .global customPresident.PocketID
+                    tag @s add assigned
+                }
+                tag @s remove customPresident.RoomTempload
+            }
+
+            execute if entity @s[tag=customPresident.Disguised] run function custom:abilities/president/movement/main
+
             function custom:abilities/president/hotbar/main
+            function custom:abilities/president/passives/main
+        }
+
+        dir movement {
+            function main {
+                function custom:universal/statistics/time {ability:"President",stat:"Disguise"}
+                execute store result storage minecraft:custom president.movement.id int 1 run scoreboard players get @s customUniversal.RigID
+                execute if predicate custom:universal/forward run function custom:abilities/president/movement/moving with storage minecraft:custom president.movement
+                execute if predicate custom:universal/backward run function custom:abilities/president/movement/moving with storage minecraft:custom president.movement
+                execute if predicate custom:universal/left run function custom:abilities/president/movement/moving with storage minecraft:custom president.movement
+                execute if predicate custom:universal/right run function custom:abilities/president/movement/moving with storage minecraft:custom president.movement
+
+                execute unless predicate custom:universal/forward unless predicate custom:universal/backward unless predicate custom:universal/left unless predicate custom:universal/right run function custom:abilities/president/movement/idle with storage minecraft:custom president.movement
+            }
+
+            function moving {
+                $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run {
+                    execute unless entity @s[tag=customPresident.Movement] run {
+                        function animated_java:president/animations/turtle_walk/play
+                    }
+                    tag @s remove customPresident.Idle
+                    tag @s add customPresident.Movement
+                }
+            }
+
+            function idle {
+                $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run {
+                    execute unless entity @s[tag=customPresident.Idle] run {
+                        function animated_java:president/animations/turtle_idle/play
+                    }
+                    tag @s remove customPresident.Movement
+                    tag @s add customPresident.Idle
+                }
+            }
+        }
+
+        dir passives {
+            function main {
+                execute if entity @s[tag=customPresident.InsideRoom] at @s run function custom:abilities/president/passives/freezer
+            }
+
+            function freezer {
+                execute store result storage minecraft:custom president.room.id int 1 run scoreboard players get @s customPresident.PocketID
+                block { with storage minecraft:custom president.room
+                    $execute at @e[type=minecraft:marker,tag=customPresident.FreezerGate,tag=assigned,distance=..1,scores={customPresident.PocketID=$(id)}] rotated ~ 0 run {
+                        execute unless entity @s[tag=customPresident.PassiveFreezer] run {
+                            tp @s ^ ^ ^-1
+                            tag @s add customPresident.PassiveFreezer
+                            tag @s add temp
+                        }
+                        execute if entity @s[tag=customPresident.PassiveFreezer] unless entity @s[tag=temp] run {
+                            tp @s ^ ^ ^1
+                            tag @s remove customPresident.PassiveFreezer
+                        }
+                        tag @s remove temp
+                        playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
+                    }
+                }
+            }
+
+            dir endure {
+                function damaged {
+                    execute store result storage minecraft:custom president.disguised.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom president.disguised
+                        $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run function animated_java:president/variants/turtle_hurt/apply
+                    }
+                    scoreboard players set @s customPresident.DisguisedDamagedTint 10
+
+                    execute unless score @s customPresident.PassiveEndure matches 10.. run {
+                        scoreboard players add @s customPresident.PassiveEndure 1
+                        scoreboard players add @s customPresident.Statistics.Endure.Stacks 1
+                        
+                        execute store result storage minecraft:custom president.disguised.pitch double 0.1 run scoreboard players get @s customPresident.PassiveEndure
+                        block { with storage minecraft:custom president.disguised
+                            $playsound minecraft:item.shield.block player @a ~ ~ ~ 0.5 $(pitch)
+                        }
+                    }
+                }
+
+                function consume {
+                    execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                    execute store result storage minecraft:custom president.kidnap.endure int 1 run scoreboard players get @s customPresident.PassiveEndure
+                    $data merge storage minecraft:custom {president:{kidnap:{statistic:"$(statistic)"}}}
+                    block { with storage minecraft:custom president.kidnap
+                        $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run scoreboard players set @s customPresident.PassiveEndure $(endure)
+                        $scoreboard players add @s $(statistic) $(endure)
+                    }
+                    scoreboard players reset @s customPresident.PassiveEndure
+                }
+            }
         }
 
         dir moves {
@@ -1156,8 +1351,18 @@ dir abilities {
                 $function custom:universal/setup/rig {objective:"$(objective)",item:"president"}
 
                 $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.camera",objective:"$(objective)"}
+                $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.locator.text_location",objective:"$(objective)"}
+
+                function custom:universal/fetch_username {path:"president.text"}
+                execute store result storage minecraft:custom president.text.id int 1 run scoreboard players get @s customUniversal.RigID
+                block { with storage minecraft:custom president.text
+                    $function custom:universal/text {type:"username",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.president.locator.text_location,scores={customUniversal.RigID=$(id)}]",what:{"color":"white","text":"$(username)"}}
+                }
+                
 
                 function custom:universal/stable_player_display/mask {branch:"president"}
+
+                # function custom:universal/text {type:"username",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.president.locator.text_location]",what:{"color":"yellow","text":"Billy"}}
 
                 scoreboard players add .global customUniversal.GlobalCounter 1
                 scoreboard players operation @s customUniversal.GlobalCounter = .global customUniversal.GlobalCounter
@@ -1168,26 +1373,44 @@ dir abilities {
                 function core {
                     execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
                     execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    execute if entity @s[tag=customPresident.Disguised] run function custom:universal/error_messages/find {error:15}
                     function custom:universal/error_messages/universal
                     
                     scoreboard players set @s customUniversal.ActiveHotbar 1
                     execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/1/decide
-                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Kidnap / Self Kidnap"}
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Kidnap / Self-Kidnap"}
                 }
                 
                 function decide {
-                    execute unless predicate custom:universal/sneak run function custom:abilities/president/moves/1/kidnap/pass
-                    execute if predicate custom:universal/sneak run function custom:abilities/president/moves/1/self_kidnap/pass
+                    execute unless predicate custom:universal/sneak run {
+                        execute if entity @s[nbt={Dimension:"server:god"}] run function custom:universal/error_messages/find {error:14}
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/1/kidnap/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Kidnap"}
+                    }
+                    execute if predicate custom:universal/sneak run {
+                        execute if entity @s[scores={customPresident.KidnapDuration=1..}] run function custom:universal/error_messages/find {error:16}
+                        execute unless score @s customUniversal.FailReturn matches 1 run {
+                            execute unless entity @s[tag=customPresident.PersonalPocketDimension] run function custom:abilities/president/moves/1/self_kidnap/pass
+                            execute if entity @s[tag=customPresident.PersonalPocketDimension] run function custom:abilities/president/moves/1/self_kidnap/exit
+                        }
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Kidnap"}
+                    }
                 }
 
                 dir kidnap {
                     function pass {
                         function custom:abilities/president/moves/setup {animation:'kidnap',objective:"customUniversal.RigID"}
-                        execute as @n[tag=aj.president.locator.mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
-                        tag @s add customUniversal.Cancellable
-                        scoreboard players set @s customUniversal.MoveLastUsed 1
 
-                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .PresidentKidnapCooldown customUniversal.Move1Cooldown
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.locator.mount",objective:"customUniversal.RigID"}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.root",objective:"customPresident.PocketID"}
+
+                        function custom:abilities/president/passives/endure/consume {statistic:"customPresident.Statistics.Kidnap.EndureSpent"}
+
+                        scoreboard players add @s customPresident.Statistics.Kidnap.Uses 1
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+                        scoreboard players set @s customUniversal.LastMoveState 1
+
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customPresident.SplitMove1Kidnap = .President_State1Cooldown customUniversal.Move1Cooldown
                         scoreboard players set @s customUniversal.MoveDelay 10
 
                         attribute @s minecraft:movement_speed base set 0.025
@@ -1214,17 +1437,43 @@ dir abilities {
                     }
 
                     function steal {
-                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                        execute store result storage minecraft:custom president.kidnap.user int 1 run scoreboard players get @s customUniversal.RigID
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customPresident.PocketID
                         block { with storage minecraft:custom president.kidnap
-                            $execute as @n[type=#custom:nob_mob,distance=..2,scores={customUniversal.RigID=$(id)}] run {
-                                effect give @s minecraft:glowing infinite 1 true
+                            $execute as @e[type=!#custom:not_mob,distance=..2] unless entity @s[scores={customUniversal.RigID=$(user)}] in server:god run block { with storage minecraft:custom president.kidnap
+                                $execute as @p[tag=customAbility.President,scores={customUniversal.RigID=$(user)}] run scoreboard players add @s customPresident.Statistics.Kidnap.EntitiesStolen 1
+                                execute at @s run particle minecraft:cloud ~ ~1 ~ 0.5 0.75 0.5 0 10 force @a
+                                execute store result score @s customPresident.OutsideX run data get entity @s Pos[0] 10
+                                execute store result score @s customPresident.OutsideY run data get entity @s Pos[1] 10
+                                execute store result score @s customPresident.OutsideZ run data get entity @s Pos[2] 10
+                                $scoreboard players set @s customPresident.KidnappedID $(id)
+                                tag @s add customPresident.InsideRoom
+                                tag @s add customUniversal.ConstantCheck
+                                $execute at @n[type=minecraft:marker,tag=customPresident.EntranceRoom,tag=assigned,scores={customPresident.PocketID=$(id)}] run tp @s ~ ~ ~
+
+                                execute if entity @s[type=minecraft:player] run {
+                                    scoreboard players reset @s customPresident.KidnapDeath
+                                    scoreboard players set @s customPresident.KidnapDuration 600
+                                } else run {
+                                    scoreboard players set @s customPresident.KidnapDuration 1200
+                                }
                             }
                         }
                     }
 
                     dir movement {
                         function main {
-                            function custom:abilities/president/moves/1/kidnap/movement/recursive
+                            execute store result storage minecraft:custom president.kidnap.endure int 1 run scoreboard players get @s customPresident.PassiveEndure
+                            block { with storage minecraft:custom president.kidnap
+                                $scoreboard players set .speed_bonus customPresident.KidnapMovement $(endure)
+                                function custom:universal/math/multiply {multiply_value:4,score:".speed_bonus",objective:"customPresident.KidnapMovement"}
+
+                                scoreboard players set .speed customPresident.KidnapMovement 50
+                                scoreboard players operation .speed customPresident.KidnapMovement += .speed_bonus customPresident.KidnapMovement
+                                
+                                execute store result storage minecraft:custom president.kidnap.speed double 0.001 run scoreboard players get .speed customPresident.KidnapMovement
+                            }
+                            function custom:abilities/president/moves/1/kidnap/movement/recursive with storage minecraft:custom president.kidnap 
                             scoreboard players reset .distance customPresident.KidnapMovement
                             tag @s remove customPresident.KidnapGravityCorrected
                         }
@@ -1251,7 +1500,7 @@ dir abilities {
                                 block { with storage minecraft:custom president.kidnap
                                     $execute positioned ^ ^-$(fall) ^ run {
                                         execute if block ~ ~ ~ #custom:raycast_pass run tp @s ^ ^ ^
-                                        execute unless block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=customToji.BlitzGravityCorrected] run function custom:abilities/president/moves/1/kidnap/movement/gravity_correct
+                                        execute unless block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=customPresident.KidnapGravityCorrected] run function custom:abilities/president/moves/1/kidnap/movement/y_correct
                                     }
                                 }
                                 data remove storage minecraft:custom president.kidnap.fall
@@ -1259,8 +1508,8 @@ dir abilities {
                                 # solid ground
                                 execute if block ^ ^ ^0.5 #custom:raycast_pass if block ^ ^1 ^0.5 #custom:raycast_pass run {
                                     tp @s ^ ^ ^
-                                } else execute unless block ^ ^ ^0.5 #custom:raycast_pass if block ^ ^1 ^0.5 #custom:raycast_pass run {
-                                    tp @s ^ ^1 ^
+                                } else execute unless block ^ ^ ^0.5 #custom:raycast_pass if block ^ ^1 ^0.5 #custom:raycast_pass unless entity @s[tag=customPresident.KidnapGravityCorrected] positioned ^ ^ ^0.5 run {
+                                    function custom:abilities/president/moves/1/kidnap/movement/y_correct
                                 } else execute unless block ^ ^ ^0.5 #custom:raycast_pass unless block ^ ^1 ^0.5 #custom:raycast_pass run {
                                     function custom:abilities/president/moves/1/kidnap/movement/end
                                 }
@@ -1268,15 +1517,15 @@ dir abilities {
                                 # reset gravity when ground is hit
                                 scoreboard players reset @s customPresident.KidnapGravity
                             }
-                            execute if score .distance customPresident.KidnapMovement matches ..7 positioned ^ ^ ^0.05 rotated ~ ~ unless entity @s[tag=customPresident.KidnapWall] run function custom:abilities/president/moves/1/kidnap/movement/recursive
+                            $execute if score .distance customPresident.KidnapMovement matches ..7 positioned ^ ^ ^$(speed) rotated ~ ~ unless entity @s[tag=customPresident.KidnapWall] run function custom:abilities/president/moves/1/kidnap/movement/recursive with storage minecraft:custom president.kidnap
                         }
 
-                        function gravity_correct {
+                        function y_correct {
                             execute if block ~ ~ ~ #custom:raycast_pass run {
                                 tp @s ~ ~ ~
                                 tag @s add customPresident.KidnapGravityCorrected
                             }
-                            execute unless block ~ ~ ~ #custom:raycast_pass positioned ~ ~0.01 ~ run function custom:abilities/president/moves/1/kidnap/movement/gravity_correct
+                            execute unless block ~ ~ ~ #custom:raycast_pass positioned ~ ~0.01 ~ run function custom:abilities/president/moves/1/kidnap/movement/y_correct
                         }
 
                         function end {
@@ -1288,15 +1537,191 @@ dir abilities {
                 dir self_kidnap {
                     function pass {
                         function custom:abilities/president/moves/setup {animation:'self_kidnap',objective:"customUniversal.RigID"}
-                        tag @s add customUniversal.Cancellable
+                        tag @s add customUniversal.Cancelable
                         scoreboard players set @s customUniversal.MoveLastUsed 1
+                        scoreboard players set @s customUniversal.LastMoveState 2
 
-                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .PresidentSelfKidnapCooldown customUniversal.Move1Cooldown
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customPresident.SplitMove1Self_Kidnap = .President_State2Cooldown customUniversal.Move1Cooldown
                         scoreboard players set @s customUniversal.MoveDelay 10
 
                         attribute @s minecraft:movement_speed base set 0
                         attribute @s minecraft:jump_strength base set 0
                     }
+
+                    function enter {
+                        execute store result storage minecraft:custom president.room.id int 1 run scoreboard players get @s customPresident.PocketID
+                        execute store result score @s customPresident.OutsideX run data get entity @s Pos[0] 10
+                        execute store result score @s customPresident.OutsideY run data get entity @s Pos[1] 10
+                        execute store result score @s customPresident.OutsideZ run data get entity @s Pos[2] 10
+                        execute in server:god run block { with storage minecraft:custom president.room
+                            scoreboard players add @s customPresident.Statistics.Self_Kidnap.Uses 1
+                            scoreboard players reset @s customPresident.KidnapDeath
+                            $scoreboard players set @s customPresident.KidnappedID $(id)
+                            $execute at @n[type=minecraft:marker,tag=customPresident.EntranceRoom,tag=assigned,scores={customPresident.PocketID=$(id)}] run tp @s ~ ~ ~
+                            playsound minecraft:entity.enderman.teleport player @a ~ ~ ~ 0.5
+                            tag @s add customUniversal.ConstantCheck
+                            tag @s add customPresident.PersonalPocketDimension
+                            tag @s add customPresident.InsideRoom
+                        }
+                    }
+
+                    function exit {
+                        execute store result storage minecraft:custom president.room.x double 0.1 run scoreboard players get @s customPresident.OutsideX
+                        execute store result storage minecraft:custom president.room.y double 0.1 run scoreboard players get @s customPresident.OutsideY
+                        execute store result storage minecraft:custom president.room.z double 0.1 run scoreboard players get @s customPresident.OutsideZ
+                        block { with storage minecraft:custom president.room
+                            playsound minecraft:entity.enderman.teleport player @a ~ ~ ~ 0.5
+                            $execute in minecraft:overworld run tp @s $(x) $(y) $(z)
+                            scoreboard players reset @s customPresident.KidnappedID
+                            tag @s remove customPresident.PersonalPocketDimension
+                            tag @s remove customPresident.InsideRoom
+                            tag @s remove customPresident.PassiveFreezer
+                        }
+                    }
+                }
+            }
+
+            dir 2 {
+                function core {
+                    execute unless score @s customUniversal.Move2Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    execute if entity @s[tag=customPresident.Disguised] run function custom:universal/error_messages/find {error:15}
+                    function custom:universal/error_messages/universal
+                    
+                    scoreboard players set @s customUniversal.ActiveHotbar 2
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/2/decide
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Shake Key / Refreshments"}
+                }
+
+                function decide {
+                    execute unless predicate custom:universal/sneak run function custom:abilities/president/moves/2/shake_key/pass
+                    execute if predicate custom:universal/sneak run function custom:abilities/president/moves/2/refreshments/pass
+                }
+
+                dir shake_key {
+                    function pass {
+                        function custom:abilities/president/moves/setup {animation:'shake_key',objective:"customUniversal.RigID"}
+
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.root",objective:"customPresident.PocketID"}
+
+                        tag @s add customUniversal.Cancelable
+                        scoreboard players add @s customPresident.Statistics.Shake.Uses 1
+                        scoreboard players set @s customUniversal.MoveLastUsed 2
+                        scoreboard players set @s customUniversal.LastMoveState 1
+
+                        function custom:abilities/president/passives/endure/consume {statistic:"customPresident.Statistics.Shake.EndureSpent"}
+
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customPresident.SplitMove2Shake_Key = .President_State1Cooldown customUniversal.Move2Cooldown
+                        scoreboard players set @s customUniversal.MoveDelay 10
+                    }
+
+                    function sfx {
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customPresident.PocketID
+                        block { with storage minecraft:custom president.kidnap
+                            $execute in server:god as @e[type=!#custom:not_mob,scores={customPresident.KidnappedID=$(id)}] run playsound minecraft:president.shake_key.victim player @s ~ ~ ~ 1
+                        }
+                    }
+
+                    function damage {
+                        execute store result storage minecraft:custom president.kidnap.endure int 1 run scoreboard players get @s customPresident.PassiveEndure
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.kidnap
+                            scoreboard players set .damage customPresident.KidnapMovement 16
+                            $scoreboard players set .damage_bonus customPresident.KidnapMovement $(endure)
+                            
+                            scoreboard players operation .damage customPresident.KidnapMovement += .damage_bonus customPresident.KidnapMovement
+                            
+                            execute store result storage minecraft:custom president.kidnap.damage int 1 run scoreboard players get .damage customPresident.KidnapMovement
+                        }
+
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customPresident.PocketID
+                        block { with storage minecraft:custom president.kidnap
+                            $execute in server:god as @e[type=!#custom:not_mob,scores={customPresident.KidnappedID=$(id)}] run block { with storage minecraft:custom president.kidnap
+                                $execute as @p[tag=customAbility.President,scores={customPresident.PocketID=$(id)}] run scoreboard players add @s customPresident.Statistics.Shake.Damage $(damage)
+                                $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"minecraft:in_wall",attacker:"tag=customAbility.President",objective:"customBilly.RigID",first:"was thrashed around until death by",second:"using Mr. President"}
+                            }
+                        }
+                    }
+                }
+
+                dir refreshments {
+                    function pass {
+                        function custom:abilities/president/moves/setup {animation:'refreshments',objective:"customUniversal.RigID"}
+
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.root",objective:"customPresident.PocketID"}
+
+                        function custom:abilities/president/passives/endure/consume {statistic:"customPresident.Statistics.Refreshments.EndureSpent"}
+
+                        scoreboard players add @s customPresident.Statistics.Refreshments.Uses 1
+                        scoreboard players set @s customUniversal.MoveLastUsed 2
+                        scoreboard players set @s customUniversal.LastMoveState 2
+
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customPresident.SplitMove2Refreshments = .President_State2Cooldown customUniversal.Move2Cooldown
+                        scoreboard players set @s customUniversal.MoveDelay 10
+                    }
+
+                    function buff {
+                        execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customPresident.PocketID
+                        block { with storage minecraft:custom president.kidnap
+                            $execute in server:god as @e[type=!#custom:not_mob,scores={customPresident.KidnappedID=$(id)}] at @s run block { with storage minecraft:custom president.kidnap
+                                $execute as @p[tag=customAbility.President,scores={customPresident.PocketID=$(id)}] run scoreboard players add @s customPresident.Statistics.Refreshments.EntitiesBuffed 1
+                                playsound minecraft:entity.generic.eat player @s ~ ~ ~ 0.5
+                                effect give @s minecraft:instant_health 1 1 true
+                                effect give @s minecraft:haste 30 1 true
+
+                                tag @s add customUniversal.ConstantCheck
+                                scoreboard players set @s customPresident.RefreshmentBuffDuration 1200
+                                attribute @s minecraft:movement_speed modifier add custom:president.refreshments 0.75 add_multiplied_total
+                                attribute @s minecraft:jump_strength modifier add custom:president.refreshments 0.5 add_multiplied_total
+                            }
+                        }
+                    }
+                }
+            }
+
+            dir 3 {
+                function core {
+                    execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    function custom:universal/error_messages/universal
+                    
+                    scoreboard players set @s customUniversal.ActiveHotbar 3
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/3/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A0",move:"Disguise"}
+                }
+
+                function pass {
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .President_State1Cooldown customUniversal.Move3Cooldown
+                    scoreboard players set @s customUniversal.MoveDelay 10
+                    scoreboard players set @s customUniversal.MoveLastUsed 3
+                    scoreboard players add @s customPresident.Statistics.Disguise.Uses 1
+
+                    playsound minecraft:entity.zombie_villager.converted player @a ~ ~ ~ 0.5 2
+
+                    execute unless entity @s[tag=customPresident.Disguised] run {
+                        attribute @s minecraft:scale modifier add custom:president.disguise -0.5 add_multiplied_base
+                        attribute @s minecraft:movement_speed modifier add custom:president.disguise -0.66 add_multiplied_base
+                        attribute @s minecraft:jump_strength modifier add custom:president.disguise -0.25 add_multiplied_base
+                        effect give @s minecraft:resistance infinite 1 true
+                        function custom:abilities/president/moves/setup {animation:'turtle_idle',objective:"customUniversal.RigID"}
+                        tag @s remove customUniversal.Animation
+
+                        tag @s add customPresident.Disguised
+                        tag @s add temp
+                    }
+                    execute if entity @s[tag=customPresident.Disguised] unless entity @s[tag=temp] run {
+                        attribute @s minecraft:scale modifier remove custom:president.disguise
+                        attribute @s minecraft:movement_speed modifier remove custom:president.disguise
+                        attribute @s minecraft:jump_strength modifier remove custom:president.disguise
+                        effect clear @s minecraft:resistance
+                        execute store result storage minecraft:custom president.disguised.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.disguised
+                            $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run function custom:abilities/president/moves/reset/all {user:"customAbility.President",objective:"customUniversal.RigID",rig:"president"}
+                        }
+
+                        tag @s remove customPresident.Disguised
+                    }
+                    tag @s remove temp
                 }
             }
 
@@ -1320,15 +1745,49 @@ dir abilities {
                     # item modify entity @s hotbar.8 custom:gojo/base
                     function custom:universal/armor/reveal
 
-                    tag @s remove customUniversal.Cancellable
+                    tag @s remove customUniversal.Cancelable
                     tag @s remove customUniversal.DisconnectCheck
                     tag @s remove customUniversal.Animation
                 }
             }
         }
+
+        function disconnect {
+            # disconnected with billy active
+            execute if entity @s[tag=customAbility.President] if entity @s[tag=customPresident.Disguised] run function custom:abilities/president/moves/3/pass
+        }
     }
 
     dir toji {
+        function install {
+            # General #
+            scoreboard objectives add customToji.QuestProgress dummy
+            scoreboard objectives add customToji.ObtainmentMonsterKills dummy
+            scoreboard objectives add customToji.PassiveBloodlust dummy
+            scoreboard objectives add customToji.AcrobaticsX dummy
+            scoreboard objectives add customToji.AcrobaticsY dummy
+            scoreboard objectives add customToji.AcrobaticsZ dummy
+            scoreboard objectives add customToji.AcrobaticsRotationX dummy
+            scoreboard objectives add customToji.AcrobaticsAnimation dummy
+            scoreboard objectives add customToji.BlitzTravel dummy
+            scoreboard objectives add customToji.BlitzGravity dummy
+            scoreboard objectives add customToji.BlitzDamage dummy
+            scoreboard objectives add customToji.SpringX dummy
+            scoreboard objectives add customToji.SpringY dummy
+            scoreboard objectives add customToji.SpringZ dummy
+            scoreboard objectives add customToji.SpringRotationX dummy
+            scoreboard objectives add customToji.SpringMath dummy
+            scoreboard players set div15 customToji.SpringMath 15
+            scoreboard objectives add customToji.Spring2DIncrements dummy
+            scoreboard objectives add customToji.SpringYIncrements dummy
+
+            # Move Cooldowns #
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:1,move:1,cooldown:30}
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:2,move:2,cooldown:30}
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:3,move:3,cooldown:30}
+            function custom:universal/cooldowns/10x {ability:"Toji",storage:"toji",path:4,move:4,cooldown:30}
+        }
+
         function tick {
             execute if score @s customUniversal.Toggle matches 1 run {
                 execute at @s run function custom:abilities/toji/active
@@ -1634,7 +2093,7 @@ dir abilities {
                 function pass {
                     function custom:abilities/toji/moves/setup {animation:'blitz_start',objective:"customUniversal.RigID"}
                     execute as @n[tag=aj.toji.locator.acrobatics_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
-                    tag @s add customUniversal.Cancellable
+                    tag @s add customUniversal.Cancelable
                     scoreboard players set @s customUniversal.MoveLastUsed 2
 
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .TojiCooldown customUniversal.Move2Cooldown
@@ -1826,7 +2285,7 @@ dir abilities {
 
                 function pass {
                     function custom:abilities/toji/moves/setup {animation:'spring_windup',objective:"customUniversal.RigID"}
-                    tag @s add customUniversal.Cancellable
+                    tag @s add customUniversal.Cancelable
                     scoreboard players set @s customUniversal.MoveLastUsed 3
                     execute as @n[tag=aj.toji.locator.coil_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
 
@@ -2018,7 +2477,7 @@ dir abilities {
                     function custom:universal/armor/reveal
 
                     tag @s remove customToji.AcrobaticsRecastable
-                    tag @s remove customUniversal.Cancellable
+                    tag @s remove customUniversal.Cancelable
                     tag @s remove customUniversal.DisconnectCheck
                     tag @s remove customUniversal.Animation
                 }
@@ -2028,6 +2487,23 @@ dir abilities {
 }
 
 dir universal {
+    dir remove {
+        function cancelable {
+            # function custom:universal/remove/cancelable {objective:"customUniversal.RigID"}
+            $execute store result storage minecraft:custom universal.cancelable.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {universal:{cancelable:{objective:"$(objective)"}}}
+            block { with storage minecraft:custom universal.cancelable
+                $execute as @p[scores={$(objective)=$(id)}] run tag @s remove customUniversal.Cancelable
+            }
+        }
+    }
+
+    function fetch_username {
+        loot insert 0 -63 0 loot custom:player_head
+        $data modify storage minecraft:custom $(path).username set string block 0 -63 0 Items[0].components."minecraft:profile".name
+        item replace block 0 -63 0 container.0 with minecraft:air
+    }
+
     dir items {
         function heavenly_inverted_spear {
             $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Heavenly Inverted Spear","italic":false,"color":"light_purple"}],max_stack_size=1,item_model="minecraft:currencies/heavenly_inverted_spear",custom_data={currency:1b,heavenly_inverted_spear:1b}] $(count)
@@ -2035,6 +2511,15 @@ dir universal {
 
         function bounty_contract {
             $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Bounty Contract","italic":false,"color":"yellow"}],item_model="minecraft:currencies/bounty_contract",custom_data={currency:1b,bounty_contract:1b}] $(count)
+        }
+    }
+
+    dir math {
+        function multiply {
+            # function custom:universal/math/multiply {multiply_value:4,score:".speed_bonus",objective:"customPresident.KidnapMovement"}
+            $scoreboard players set .multiplier $(objective) $(multiply_value)
+            $scoreboard players operation $(score) $(objective) *= .multiplier $(objective)
+            $scoreboard players reset .multiplier $(objective)
         }
     }
 
@@ -2074,6 +2559,28 @@ dir universal {
                 execute store result storage minecraft:custom billy.statistics.snare_triggered int 1 run scoreboard players get @s customBilly.Statistics.Snare.Triggered
                 execute store result storage minecraft:custom billy.statistics.snare_damage int 1 run scoreboard players get @s customBilly.Statistics.Snare.Damage
             }
+
+            function president {
+                execute store result storage minecraft:custom president.statistics.playtime_s int 1 run scoreboard players get @s customPresident.Statistics.PlaytimeS
+                execute store result storage minecraft:custom president.statistics.playtime_m int 1 run scoreboard players get @s customPresident.Statistics.PlaytimeM
+                execute store result storage minecraft:custom president.statistics.playtime_h int 1 run scoreboard players get @s customPresident.Statistics.PlaytimeH
+
+                execute store result storage minecraft:custom president.statistics.endure_stacks int 1 run scoreboard players get @s customPresident.Statistics.Endure.Stacks
+                execute store result storage minecraft:custom president.statistics.kidnap_uses int 1 run scoreboard players get @s customPresident.Statistics.Kidnap.Uses
+                execute store result storage minecraft:custom president.statistics.kidnap_total_stolen int 1 run scoreboard players get @s customPresident.Statistics.Kidnap.EntitiesStolen
+                execute store result storage minecraft:custom president.statistics.kidnap_endure_spent int 1 run scoreboard players get @s customPresident.Statistics.Kidnap.EndureSpent
+                execute store result storage minecraft:custom president.statistics.self_kidnap_uses int 1 run scoreboard players get @s customPresident.Statistics.Self_Kidnap.Uses
+                execute store result storage minecraft:custom president.statistics.shake_uses int 1 run scoreboard players get @s customPresident.Statistics.Shake.Uses
+                execute store result storage minecraft:custom president.statistics.shake_damage int 1 run scoreboard players get @s customPresident.Statistics.Shake.Damage
+                execute store result storage minecraft:custom president.statistics.shake_endure_spent int 1 run scoreboard players get @s customPresident.Statistics.Shake.EndureSpent
+                execute store result storage minecraft:custom president.statistics.refreshments_uses int 1 run scoreboard players get @s customPresident.Statistics.Refreshments.Uses
+                execute store result storage minecraft:custom president.statistics.refreshments_buffed int 1 run scoreboard players get @s customPresident.Statistics.Refreshments.EntitiesBuffed
+                execute store result storage minecraft:custom president.statistics.refreshments_endure_spent int 1 run scoreboard players get @s customPresident.Statistics.Refreshments.EndureSpent
+                execute store result storage minecraft:custom president.statistics.disguise_uses int 1 run scoreboard players get @s customPresident.Statistics.Disguise.Uses
+                execute store result storage minecraft:custom president.statistics.disguisetime_s int 1 run scoreboard players get @s customPresident.Statistics.DisguiseS
+                execute store result storage minecraft:custom president.statistics.disguisetime_m int 1 run scoreboard players get @s customPresident.Statistics.DisguiseM
+                execute store result storage minecraft:custom president.statistics.disguisetime_h int 1 run scoreboard players get @s customPresident.Statistics.DisguiseH
+            }
         }
     }
 
@@ -2085,6 +2592,7 @@ dir universal {
         dir self {
             function main {
                 function custom:abilities/billy/disconnect
+                function custom:abilities/president/disconnect
 
                 scoreboard players reset @s customUniversal.Disconnected
             }
@@ -2105,8 +2613,14 @@ dir universal {
             # billy snare lurk
             execute if entity @s[type=minecraft:item_display,tag=customBilly.Trap] run function custom:abilities/billy/moves/3/lurk
 
+            # president kidnapped
+            execute if entity @s[tag=customPresident.InsideRoom] run function custom:universal/constant_tick/pocket_dimension
+
+            # president refreshments
+            execute if score @s customPresident.RefreshmentBuffDuration matches 1.. run function custom:universal/constant_tick/refreshments
+
             # if all constant ticks are neutral
-            execute if entity @s[tag=!customTheWorld.BarrageVictim,tag=!customBilly.Trap] unless entity @s[scores={customBilly.EncourageBuffDuration=1..}] run tag @s remove customUniversal.ConstantCheck
+            execute if entity @s[tag=!customTheWorld.BarrageVictim,tag=!customBilly.Trap,tag=!customPresident.InsideRoom] unless entity @s[scores={customBilly.EncourageBuffDuration=1..}] unless entity @s[scores={customPresident.RefreshmentBuffDuration=1..}] run tag @s remove customUniversal.ConstantCheck
         }
 
         function world_barrage {
@@ -2130,6 +2644,53 @@ dir universal {
             execute unless score @s customBilly.EncourageBuffDuration matches 1.. run {
                 attribute @s minecraft:movement_speed modifier remove custom:billy.encourage
                 attribute @s minecraft:jump_strength modifier remove custom:billy.encourage
+            }
+        }
+        
+        function pocket_dimension {
+            execute if score @s customPresident.KidnapDuration matches 1.. run {
+                scoreboard players remove @s customPresident.KidnapDuration 1
+
+                execute unless score @s customPresident.KidnapDuration matches 1.. run {
+                    execute store result storage minecraft:custom president.room.x double 0.1 run scoreboard players get @s customPresident.OutsideX
+                    execute store result storage minecraft:custom president.room.y double 0.1 run scoreboard players get @s customPresident.OutsideY
+                    execute store result storage minecraft:custom president.room.z double 0.1 run scoreboard players get @s customPresident.OutsideZ
+                    block { with storage minecraft:custom president.room
+                        $execute in minecraft:overworld run tp @s $(x) $(y) $(z)
+                    }
+                    scoreboard players reset @s customPresident.KidnapDuration
+                    scoreboard players reset @s customPresident.KidnappedID
+                }
+            }
+
+            execute if score @s customPresident.KidnapDeath matches 1.. run {
+                gamemode survival @s
+
+                execute store result storage minecraft:custom president.room.id int 1 run scoreboard players get @s customPresident.KidnappedID
+                execute store result storage minecraft:custom president.room.x double 0.1 run scoreboard players get @s customPresident.OutsideX
+                execute store result storage minecraft:custom president.room.y double 0.1 run scoreboard players get @s customPresident.OutsideY
+                execute store result storage minecraft:custom president.room.z double 0.1 run scoreboard players get @s customPresident.OutsideZ
+                block { with storage minecraft:custom president.room
+                    $execute in server:god at @n[type=minecraft:marker,tag=customPresident.EntranceRoom,tag=assigned,scores={customPresident.PocketID=$(id)}] as @e[type=minecraft:item,distance=..15] in minecraft:overworld run tp @s $(x) $(y) $(z)
+                }
+
+                scoreboard players reset @s customPresident.KidnapDuration
+                scoreboard players reset @s customPresident.KidnappedID
+                scoreboard players reset @s customPresident.KidnapDeath
+                tag @s remove customPresident.InsideRoom
+                tag @s remove customPresident.PersonalPocketDimension
+                tag @s remove customPresident.PassiveFreezer
+                tellraw @s ["",{"text":"Mr. President","color":"gold"},{"text":"\n"},{"text":"You've ","color":"gray"},{"text":"died ","color":"red"},{"text":"inside of the ","color":"gray"},{"text":"Pocket Dimension.","color":"aqua"},{"text":" Your inventory has been ","color":"gray"},{"text":"moved outside","color":"green"},{"text":" to where you were kidnapped.","color":"gray"}]
+            }
+        }
+
+        function refreshments {
+            scoreboard players remove @s customPresident.RefreshmentBuffDuration 1
+
+            execute unless score @s customPresident.RefreshmentBuffDuration matches 1.. run {
+                playsound minecraft:entity.player.burp player @s ~ ~ ~ 0.5
+                attribute @s minecraft:movement_speed modifier remove custom:president.refreshments
+                attribute @s minecraft:jump_strength modifier remove custom:president.refreshments
             }
         }
     }
@@ -2487,7 +3048,7 @@ dir universal {
 
     dir damage {
         function self {
-            execute if entity @s[tag=customUniversal.Cancellable] run {
+            execute if entity @s[tag=customUniversal.Cancelable] run {
                 execute if entity @s[tag=customAbility.Billy] run {
                     execute store result storage minecraft:custom billy.cancelled.id int 1 run scoreboard players get @s customBilly.RigID
                     execute store result storage minecraft:custom billy.cancelled.number int 1 run scoreboard players get @s customUniversal.LastUsedMove
@@ -2509,6 +3070,50 @@ dir universal {
                         $scoreboard players operation @s customUniversal.Move$(number)Cooldown /= div100 customUniversal.CooldownMath
                     }
                     function custom:abilities/billy/moves/reset/player
+                }
+
+                execute if entity @s[tag=customAbility.President] run {
+                    execute store result storage minecraft:custom president.cancelled.id int 1 run scoreboard players get @s customUniversal.GlobalCounter
+                    execute store result storage minecraft:custom president.cancelled.number int 1 run scoreboard players get @s customUniversal.MoveLastUsed
+                    block { with storage minecraft:custom president.cancelled
+                        $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.GlobalCounter=$(id)}] run {
+                            function animated_java:president/remove/this
+                            execute as @a[distance=..16] run {
+                                # sfx
+                                say d
+                            }
+                        }
+                    }
+
+                    execute if score @s customUniversal.MoveLastUsed matches 1..2 run {
+                        execute if score @s customUniversal.MoveLastUsed matches 1 run {
+                            execute if score @s customUniversal.LastMoveState matches 1 run {
+                                data merge storage minecraft:custom {president:{cancelled:{state:"President_State1Cooldown"}}}
+                                data merge storage minecraft:custom {president:{cancelled:{seperator:"customPresident.SplitMove1Kidnap"}}}
+                            } else run {
+                                data merge storage minecraft:custom {president:{cancelled:{state:"President_State2Cooldown"}}}
+                                data merge storage minecraft:custom {president:{cancelled:{seperator:"customPresident.SplitMove1Self_Kidnap"}}}
+                            }
+                        } else run {
+                            execute if score @s customUniversal.LastMoveState matches 1 run {
+                                data merge storage minecraft:custom {president:{cancelled:{state:"President_State1Cooldown"}}}
+                                data merge storage minecraft:custom {president:{cancelled:{seperator:"customPresident.SplitMove2Shake_Key"}}}
+                            } else run {
+                                data merge storage minecraft:custom {president:{cancelled:{state:"President_State2Cooldown"}}}
+                                data merge storage minecraft:custom {president:{cancelled:{seperator:"customPresident.SplitMove2Refreshments"}}}
+                            }
+                        }
+                    } else run {
+                        data merge storage minecraft:custom {president:{cancelled:{state:"President_State1Cooldown"}}}
+                        data merge storage minecraft:custom {president:{cancelled:{seperator:"customUniversal.Move3Cooldown"}}}
+                    }
+
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run block { with storage minecraft:custom president.cancelled
+                        $scoreboard players operation @s $(seperator) = .$(state) customUniversal.Move$(number)Cooldown
+                        $scoreboard players operation @s $(seperator) *= mult50 customUniversal.CooldownMath
+                        $scoreboard players operation @s $(seperator) /= div100 customUniversal.CooldownMath
+                    }
+                    function custom:abilities/president/moves/reset/player
                 }
 
                 execute if entity @s[tag=customAbility.Gojo] run {
@@ -2572,11 +3177,15 @@ dir universal {
 
                     function custom:abilities/the_world/moves/reset/player
                 }
-                tag @s remove customUniversal.Cancellable
+                tag @s remove customUniversal.Cancelable
             }
 
             execute if entity @s[tag=customAbility.Gojo] run {
                 function custom:abilities/gojo/passive/main
+            }
+
+            execute if entity @s[tag=customAbility.President,tag=customPresident.Disguised] run {
+                function custom:abilities/president/passives/endure/damaged
             }
 
             advancement revoke @s only custom:taken_damage
@@ -2639,6 +3248,9 @@ dir universal {
             execute if entity @s[tag=customUniversal.Error11] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be looking at a ","color":"gray"},{"text":"block in range","color":"aqua"},{"text":" in order to use ","color":"gray"},{"text":"Acrobatics","color":"light_purple"}]
             execute if entity @s[tag=customUniversal.Error12] run tellraw @s ["",{"text":"- You've reached the ","color":"gray"},{"text":"maximum ","color":"red"},{"text":"number of ","color":"gray"},{"text":"traps!","color":"aqua"}]
             execute if entity @s[tag=customUniversal.Error13] run tellraw @s ["",{"text":"- Traps must be spaced ","color":"gray"},{"text":"at least 4 meters apart","color":"light_purple"},{"text":" from eachother!","color":"gray"}]
+            execute if entity @s[tag=customUniversal.Error14] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"cast this move inside the ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
+            execute if entity @s[tag=customUniversal.Error15] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves while ","color":"gray"},{"text":"disguised","color":"light_purple"},{"text":" as a ","color":"gray"},{"text":"Turtle!","color":"green"}]
+            execute if entity @s[tag=customUniversal.Error16] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
 
             execute if entity @s[tag=customUniversal.Error100] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
             execute if entity @s[tag=customUniversal.Error101] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
@@ -3010,8 +3622,18 @@ dir ui {
                         block { with storage minecraft:custom billy.statistics
                             data merge storage minecraft:ui {custom:{statistics:{ui_path:"minecraft:ui/custom/billy/statistics"}}}
                             $data merge storage minecraft:ui {custom:{statistics:{ability_general:[[{"text":"Statistics with an unorganized category","italic":false,"color":"gray"}],"",[{"text":"Playtime: ","italic":false,"color":"gray"},{"text":"$(playtime_h)h $(playtime_m)m $(playtime_s)s","italic":false,"color":"aqua"}]]}}}
-                            $data merge storage minecraft:ui {custom:{statistics:{ability_passive_or_awakening:[[{"text":"Statistics for Passives or Awakening","italic":false,"color":"gray"}],"",[{"text":"Passive #1: ","italic":false,"color":"gray"},{"text":"Maul","italic":false,"color":"yellow"}],[{"text":"o Activations: ","italic":false,"color":"gray"},{"text":"$(maul_activations)","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"$(maul_damage)","italic":false,"color":"aqua"}],"",[{"text":"Passive #2: ","italic":false,"color":"gray"},{"text":"Homeland","italic":false,"color":"yellow"}],[{"text":"o Total Duration: ","italic":false,"color":"gray"},{"text":"$(homelandtime_h)h $(homelandtime_m)m $(homelandtime_s)s","italic":false,"color":"aqua"}]]}}}
-                            $data merge storage minecraft:ui {custom:{statistics:{moves:[[{"text":"Statistics for all available moves","italic":false,"color":"gray"}],"",[{"text":"Move #1: ","italic":false,"color":"gray"},{"text":"Encourage","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(encourage_uses)","italic":false,"color":"aqua"}],[{"text":"o Players Buffed: ","italic":false,"color":"gray"},{"text":"$(encourage_buffedcount)","italic":false,"color":"aqua"}],"",[{"text":"Move  #2: ","italic":false,"color":"gray"},{"text":"Phase","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(phase_uses)","italic":false,"color":"aqua"}],[{"text":"o Distance Travelled: ","italic":false,"color":"gray"},{"text":"$(phase_distance)m","italic":false,"color":"aqua"}],"",[{"text":"Move #3: ","italic":false,"color":"gray"},{"text":"Snare","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(snare_uses)","italic":false,"color":"aqua"}],[{"text":"o Traps Triggered: ","italic":false,"color":"gray"},{"text":"$(snare_triggered)","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"$(snare_damage)","italic":false,"color":"aqua"}]]}}}
+                            $data merge storage minecraft:ui {custom:{statistics:{ability_passive_or_awakening:[[{"text":"Statistics for Passive(s) or Awakening","italic":false,"color":"gray"}],"",[{"text":"Passive #1: ","italic":false,"color":"gray"},{"text":"Maul","italic":false,"color":"yellow"}],[{"text":"o Activations: ","italic":false,"color":"gray"},{"text":"$(maul_activations)","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"$(maul_damage)","italic":false,"color":"aqua"}],"",[{"text":"Passive #2: ","italic":false,"color":"gray"},{"text":"Homeland","italic":false,"color":"yellow"}],[{"text":"o Total Duration: ","italic":false,"color":"gray"},{"text":"$(homelandtime_h)h $(homelandtime_m)m $(homelandtime_s)s","italic":false,"color":"aqua"}]]}}}
+                            $data merge storage minecraft:ui {custom:{statistics:{moves:[[{"text":"Statistics for all available moves","italic":false,"color":"gray"}],"",[{"text":"Move #1: ","italic":false,"color":"gray"},{"text":"Kidnap","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(kidnap_uses)","italic":false,"color":"aqua"}],[{"text":"o Entities Kidnapped: ","italic":false,"color":"gray"},{"text":"$(","italic":false,"color":"aqua"},{"text":"kidnap_total_stolen","italic":false,"color":"aqua"},{"text":")","italic":false,"color":"aqua"}],[{"text":"o Endure Stacks Spent: ","italic":false,"color":"gray"},{"text":"$(kidnap_endure_spent)","italic":false,"color":"aqua"}],"",[{"text":"Move  #2: ","italic":false,"color":"gray"},{"text":"Self-Kidnap","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(self_kidnap_uses)","italic":false,"color":"aqua"}],"",[{"text":"Move #3: ","italic":false,"color":"gray"},{"text":"Shake Key","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(shake_uses)","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"$(","italic":false,"color":"aqua"},{"text":"shake_damage","italic":false,"color":"aqua"},{"text":")","italic":false,"color":"aqua"}],[{"text":"o Endure Stacks Spent: ","italic":false,"color":"gray"},{"text":"$(shake_endure_spent)","italic":false,"color":"aqua"}],"",[{"text":"Move #4: ","italic":false,"color":"gray"},{"text":"Refreshments","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(refreshments_uses)","italic":false,"color":"aqua"}],[{"text":"o Entities Buffed:","italic":false,"color":"gray"},{"text":" ","italic":false},{"text":"$(refreshments_buffed)","italic":false,"color":"aqua"}],[{"text":"o Endure Stacks Spent: ","italic":false,"color":"gray"},{"text":"$(shake_endure_spent)","italic":false,"color":"aqua"}],"",[{"text":"Move #5: ","italic":false,"color":"gray"},{"text":"Disguise","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(disguise_uses)","italic":false,"color":"aqua"}],[{"text":"o Time Disguised: ","italic":false,"color":"gray"},{"text":"$(disguisetime_h)h $(disguisetime_m)m $(disguisetime_s)s","italic":false,"color":"aqua"}]]}}}
+                        }
+                    }
+
+                    execute if entity @s[tag=customAbility.President] run {
+                        function custom:universal/statistics/fetch/president
+                        block { with storage minecraft:custom president.statistics
+                            data merge storage minecraft:ui {custom:{statistics:{ui_path:"minecraft:ui/custom/president/statistics"}}}
+                            $data merge storage minecraft:ui {custom:{statistics:{ability_general:[[{"text":"Statistics with an unorganized category","italic":false,"color":"gray"}],"",[{"text":"Playtime: ","italic":false,"color":"gray"},{"text":"$(playtime_h)h $(playtime_m)m $(playtime_s)s","italic":false,"color":"aqua"}]]}}}
+                            $data merge storage minecraft:ui {custom:{statistics:{ability_passive_or_awakening:[[{"text":"Statistics for Passive(s) or Awakening","italic":false,"color":"gray"}],"",[{"text":"Passive #2: ","italic":false,"color":"gray"},{"text":"Endure","italic":false,"color":"yellow"}],[{"text":"o Total Stacks Gained: ","italic":false,"color":"gray"},{"text":"$(endure_stacks)","italic":false,"color":"aqua"}]]}}}
+                            $data merge storage minecraft:ui {custom:{statistics:{moves:[[{"text":"Statistics for all available moves","italic":false,"color":"gray"}],"",[{"text":"Move #1: ","italic":false,"color":"gray"},{"text":"Kidnap","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(kidnap_uses)","italic":false,"color":"aqua"}],[{"text":"o Entities Kidnapped: ","italic":false,"color":"gray"},{"text":"$(kidnap_total_stolen)","italic":false,"color":"aqua"}],[{"text":"o Endure Stacks Spent: ","italic":false,"color":"gray"},{"text":"$(kidnap_endure_spent)","italic":false,"color":"aqua"}],"",[{"text":"Move #2: ","italic":false,"color":"gray"},{"text":"Self-Kidnap","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(self_kidnap_uses)","italic":false,"color":"aqua"}],"",[{"text":"Move #3: ","italic":false,"color":"gray"},{"text":"Shake Key","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(shake_uses)","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"$(shake_damage)","italic":false,"color":"aqua"}],[{"text":"o Endure Stacks Spent: ","italic":false,"color":"gray"},{"text":"$(shake_endure_spent)","italic":false,"color":"aqua"}],"",[{"text":"Move #4: ","italic":false,"color":"gray"},{"text":"Refreshments","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(refreshments_uses)","italic":false,"color":"aqua"}],[{"text":"o Entities Buffed:","italic":false,"color":"gray"},{"text":" ","italic":false},{"text":"$(refreshments_buffed)","italic":false,"color":"aqua"}],[{"text":"o Endure Stacks Spent: ","italic":false,"color":"gray"},{"text":"$(refreshments_endure_spent)","italic":false,"color":"aqua"}],"",[{"text":"Move #5: ","italic":false,"color":"gray"},{"text":"Disguise","italic":false,"color":"yellow"}],[{"text":"o Casted: ","italic":false,"color":"gray"},{"text":"$(disguise_uses)","italic":false,"color":"aqua"}],[{"text":"o Time Disguised: ","italic":false,"color":"gray"},{"text":"$(disguisetime_h)h $(disguisetime_m)m $(disguisetime_s)s","italic":false,"color":"aqua"}]]}}}
                         }
                     }
                 }
@@ -3372,6 +3994,7 @@ dir ui {
                             tag @s remove temp
                             tag @s remove clickEvent
                             tag @s remove customUniversal.PurchaseHandler
+                            tag @s remove customUI.BypassRequirements
                         }
 
                         function confirm {
@@ -3383,11 +4006,13 @@ dir ui {
                             scoreboard players reset @s customUI.SkinPatchID
                             tag @s add temp
 
-                            REPEAT (1,5) as i {
-                                execute if entity @s[tag=customUniversal.RequiredItem<%i%>] run block { with storage minecraft:ui custom.purchase
-                                    $clear @s $(type<%i%>) $(count<%i%>)
-                                    $data remove storage minecraft:ui custom.purchase.$(type<%i%>)
-                                    $data remove storage minecraft:ui custom.purchase.$(count<%i%>)
+                            execute unless entity @s[tag=customUI.BypassRequirements] run {
+                                REPEAT (1,5) as i {
+                                    execute if entity @s[tag=customUniversal.RequiredItem<%i%>] run block { with storage minecraft:ui custom.purchase
+                                        $clear @s $(type<%i%>) $(count<%i%>)
+                                        $data remove storage minecraft:ui custom.purchase.$(type<%i%>)
+                                        $data remove storage minecraft:ui custom.purchase.$(count<%i%>)
+                                    }
                                 }
                             }
                             $tag @s add $(tag)
@@ -3460,7 +4085,7 @@ dir ui {
                                 $data merge storage minecraft:ui {custom:{selection:{$(storage):{$(product)_item$(number)color:"green"}}}}
                             }
 
-                            $execute unless score .Item$(number)_Count customUI.PurchaseItemCount matches $(required).. if entity @s[tag=clickEvent,tag=customUniversal.PurchaseHandler] run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)
+                            $execute unless score .Item$(number)_Count customUI.PurchaseItemCount matches $(required).. if entity @s[tag=clickEvent,tag=customUniversal.PurchaseHandler] unless entity @s[tag=customUI.BypassRequirements] run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)
                         }
 
                         function advancements {
@@ -3468,26 +4093,31 @@ dir ui {
                             $execute if entity @s[advancements={$(advancement)=false}] run block { {storage:"$(storage)"}
                                 tag @s remove customUniversal.AdvancementCheck
 
-                                $execute if entity @s[tag=customUniversal.PurchaseHandler] run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)
+                                $execute if entity @s[tag=customUniversal.PurchaseHandler] unless entity @s[tag=customUI.BypassRequirements] run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)
                             }
                         }
 
                         function username {
-                            $data merge storage minecraft:ui {custom:{selection:{$(storage):{ability:"$(ability)",username_required:"$(username)",storage:"$(storage)",ability_usernamecolor:"red"}}}}
+                            $data merge storage minecraft:ui {custom:{selection:{$(storage):{product:"$(product)",username_required:"$(username)",storage:"$(storage)"}}}}
 
                             loot insert 0 -63 0 loot custom:player_head
                             $data modify storage minecraft:ui custom.selection.$(storage).username_current set string block 0 -63 0 Items[0].components."minecraft:profile".name
                             item replace block 0 -63 0 container.0 with minecraft:air
                             $block { with storage minecraft:ui custom.selection.$(storage)
+                                $data merge storage minecraft:ui {custom:{selection:{$(storage):{$(product)_usernamecolor:"red"}}}}
                                 $execute if entity @s[tag=customSettings.DebugLog] run block { with storage minecraft:ui custom.selection.$(storage)
                                     $tellraw @s "required username: $(username_required)"
                                     $tellraw @s "provided username: $(username_current)"
                                 }
                                 
                                 $execute store success score @s customUI.PurchaseUsername run data modify storage minecraft:ui custom.selection.$(storage).username_current set from storage minecraft:ui custom.selection.$(storage).username_required
-                                $execute if score @s customUI.PurchaseUsername matches 0 run data merge storage minecraft:ui {custom:{selection:{$(storage):{ability_usernamecolor:"green"}}}}
-                                $execute if entity @s[tag=customUniversal.PurchaseHandler] if score @s customUI.PurchaseUsername matches 1 run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)
+                                $execute if score @s customUI.PurchaseUsername matches 0 run block { with storage minecraft:ui custom.selection.$(storage)
+                                    $data merge storage minecraft:ui {custom:{selection:{$(storage):{$(product)_usernamecolor:"green"}}}}
+                                    execute if entity @s[tag=customUI.BypassCheck] run tag @s add customUI.BypassRequirements
+                                }
+                                $execute if entity @s[tag=customUniversal.PurchaseHandler] unless entity @s[tag=customUI.BypassCheck] if score @s customUI.PurchaseUsername matches 1 run function custom:ui/menu/pages/selection/purchase/fail with storage minecraft:ui custom.selection.$(storage)
                             }
+                            tag @s remove customUI.BypassCheck
                         }
                     }
                 }
@@ -3681,7 +4311,7 @@ dir ui {
 
                 dir toji {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Watch your back.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_gray","italic":false,"text":"Toji Fushiguro"},"minecraft:lore":[[{"text":"Kill all Sorcerers huh..? You're a Sorcerer.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/2 Heavenly Inverted Spear(s)","italic":false,"color":"$(ability_item1color)"},{"text":" can be found","italic":false,"color":"gray"}],[{"text":"in Ominous Trial Chambers or Trail Ruins.","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/7 Bounty Contract(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be purchased from","italic":false,"color":"gray"}],[{"text":"Cartographer Villagers.","italic":false,"color":"gray"}],[{"text":"Advancement(s):","italic":false,"color":"$(ability_advancement_color)"},{"text":" Light as a Rabbit, Revaulting, and","italic":false,"color":"gray"}],[{"text":"Respecting the Remnants.","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/toji/ability_price",name:"Toji",tag:"customToji.Ownership",toggle:"customAbility.Toji",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/toji/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/toji/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Watch your back.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_gray","italic":false,"text":"Toji Fushiguro"},"minecraft:lore":[[{"text":"Kill all Sorcerers huh..? You're a Sorcerer.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/2 Heavenly Inverted Spear(s)","italic":false,"color":"$(ability_item1color)"},{"text":" can be found","italic":false,"color":"gray"}],[{"text":"in Ominous Trial Chambers or Trail Ruins.","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/7 Bounty Contract(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be purchased from","italic":false,"color":"gray"}],[{"text":"Cartographer Villagers.","italic":false,"color":"gray"}],[{"text":"Advancement(s):","italic":false,"color":"$(ability_advancement_color)"},{"text":" Light as a Rabbit, Revaulting, and","italic":false,"color":"gray"}],[{"text":"Respecting the Remnants.","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"BaconEater","italic":false,"color":"$(ability_usernamecolor)"},{"text":" as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/toji/ability_price",name:"Toji",tag:"customToji.Ownership",toggle:"customAbility.Toji",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/toji/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/toji/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/toji/same"}}}}]
                     }
 
                     function open {
@@ -3737,7 +4367,15 @@ dir ui {
 
                     function ability_price {
                         data merge storage minecraft:ui {custom:{purchase:{clickID:1}}}
+
+                        # bypass #
+                        tag @s add customUI.BypassCheck
+                        function custom:ui/menu/pages/selection/purchase/check/username {product:"ability",storage:"toji",username:"BaconEater"}
+
+                        # heavenly inverted spear x2 #
                         function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,heavenly_inverted_spear:1b}]",number:1,required:2,product:"ability",storage:"toji",name:"Toji Fushiguro"}
+
+                        # bounty contract x7 #
                         function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,bounty_contract:1b}]",number:2,required:6,product:"ability",storage:"toji",name:"Toji Fushiguro"}
 
                         tag @s add customUniversal.AdvancementCheck
@@ -3907,7 +4545,7 @@ dir ui {
 
                     function ability_price {
                         data merge storage minecraft:ui {custom:{purchase:{clickID:4814019}}}
-                        function custom:ui/menu/pages/selection/purchase/check/username {ability:"Billy",storage:"billy",username:"Jaboble_Head"}
+                        function custom:ui/menu/pages/selection/purchase/check/username {product:"ability",storage:"billy",username:"Jaboble_Head"}
                     }
 
                     dir moveset {
@@ -4022,7 +4660,7 @@ dir ui {
 
                 dir president {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Power beyond all known comprehension.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[[{"text":"I'll fulfill my promise.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/12 Turtle Scute(s)","italic":false,"color":"$(ability_item1color)"}],[{"text":"$(ability_item2count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be excavated from","italic":false,"color":"gray"}],[{"text":"inside Trail Ruins","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Sneak 100 and Respecting the","italic":false,"color":"gray"}],[{"text":"Remnants","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"JoeBingleBarf ","italic":false,"color":"green"},{"text":"as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/president/ability_price",name:"President",tag:"customPresident.Ownership",toggle:"customAbility.President",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/president/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/president/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function cstom:ui/menu/pages/selection/president/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Power beyond all known comprehension.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[[{"text":"I'll fulfill my promise.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/12 Turtle Scute(s)","italic":false,"color":"$(ability_item1color)"}],[{"text":"$(ability_item2count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be excavated from","italic":false,"color":"gray"}],[{"text":"inside Trail Ruins","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Sneak 100 and Respecting the","italic":false,"color":"gray"}],[{"text":"Remnants","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"JoeBingleBarf ","italic":false,"color":"$(ability_usernamecolor)"},{"text":"as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/president/ability_price",name:"Mr. President",tag:"customPresident.Ownership",toggle:"customAbility.President",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/president/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/president/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function cstom:ui/menu/pages/selection/president/same"}}}}]
                     }
 
                     function open {
@@ -4079,6 +4717,11 @@ dir ui {
                     function ability_price {
                         data merge storage minecraft:ui {custom:{purchase:{clickID:1}}}
 
+                        
+                        # bypass #
+                        tag @s add customUI.BypassCheck
+                        function custom:ui/menu/pages/selection/purchase/check/username {product:"ability",storage:"president",username:"JoeBingleBarf"}
+
                         # scute x12 #
                         function custom:ui/menu/pages/selection/purchase/check/items {type:"minecraft:turtle_scute",number:1,required:12,product:"ability",storage:"president",name:"Mr. President"}
 
@@ -4094,13 +4737,43 @@ dir ui {
 
                     dir moveset {
                         function open {
-                            function custom:ui/menu/pages/selection/president/moveset/mask
+                            function custom:ui/menu/pages/selection/president/moveset/data
+                            function custom:ui/menu/pages/selection/president/moveset/mask with storage minecraft:ui custom.selection.president
                             data modify storage ui current set from storage ui mask
                             execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/president/moveset/mask"
                         }
 
                         function mask {
-                            data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Back"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Toji's overview"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/encourage","minecraft:item_name":{"color":"aqua","text":"Kidnap / Self-Kidnap"},"minecraft:lore":[[{"text":"Variation depending on the crouch state of","italic":false,"color":"gray"}],[{"text":"the user.","italic":false,"color":"gray"}],"",[{"text":"Not Crouched: ","italic":false,"color":"gray"},{"text":"Kidnap","italic":false,"color":"light_purple"}],[{"text":"Leap slightly forward sending anything in","italic":false,"color":"gray"}],[{"text":"range to your ","italic":false,"color":"gray"},{"text":"pocket dimension. ","italic":false,"color":"aqua"}],[{"text":"o Cancellable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}],"",[{"text":"Crouched: ","italic":false,"color":"gray"},{"text":"Self-Kidnap","italic":false,"color":"light_purple"}],[{"text":"Stand completely still for ","italic":false,"color":"gray"},{"text":"5s","italic":false,"color":"gold"},{"text":" initiating","italic":false,"color":"gray"}],[{"text":"the process to enter your ","italic":false,"color":"gray"},{"text":"pocket dimension.","italic":false,"color":"aqua"}],[{"text":"Taking damage, moving, jumping or disconnecting","italic":false,"color":"gray"}],[{"text":"during this process will ","italic":false,"color":"gray"},{"text":"cancel ","italic":false,"color":"red"},{"text":"this process.","italic":false,"color":"gray"}],[{"text":"Whilst in your ","italic":false,"color":"gray"},{"text":"Pocket Dimension,","italic":false,"color":"aqua"},{"text":" the windup for","italic":false,"color":"gray"}],[{"text":"Self-Kidnap","italic":false,"color":"light_purple"},{"text":" is mitigated.","italic":false,"color":"gray"}],[{"text":"o Cancellable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"19s","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/phase","minecraft:item_name":{"color":"aqua","text":"Shake Key / Refreshments"},"minecraft:lore":[[{"text":"Variation depending on the crouch state of","italic":false,"color":"gray"}],[{"text":"the user.","italic":false,"color":"gray"}],"",[{"text":"Not Crouched: ","italic":false,"color":"gray"},{"text":"Shake Key","italic":false,"color":"light_purple"}],[{"text":"Violently shake your key damaging anyone inside","italic":false,"color":"gray"}],[{"text":"your ","italic":false,"color":"gray"},{"text":"Pocket Dimension.","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"15","italic":false,"color":"green"}],"",[{"text":"Crouched: ","italic":false,"color":"gray"},{"text":"Refreshments","italic":false,"color":"light_purple"}],[{"text":"Gift the following ","italic":false,"color":"gray"},{"text":"b","italic":false,"color":"red"},{"text":"u","italic":false,"color":"gold"},{"text":"f","italic":false,"color":"yellow"},{"text":"f","italic":false,"color":"green"},{"text":"s","italic":false,"color":"blue"},{"text":" to anyone inside your","italic":false,"color":"gray"}],[{"text":"Pocket Dimension.","italic":false,"color":"aqua"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1m","italic":false,"color":"green"}],[{"text":"-> Healing: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"green"}],[{"text":"->","italic":false,"color":"gray"},{"text":" Movement Speed: ","italic":false,"color":"gray"},{"text":"1.25x","italic":false,"color":"green"}],[{"text":"-> Jump Strength: ","italic":false,"color":"gray"},{"text":"1.5x","italic":false,"color":"green"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"30s","italic":false,"color":"green"}],[{"text":"-> ","italic":false,"color":"gray"},{"text":"Resistance I","italic":false,"color":"white"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"30s","italic":false,"color":"gold"}],[{"text":"Cancellable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/snare","minecraft:item_name":{"color":"aqua","text":"Spring"},"minecraft:lore":[[{"text":"Toggle between being a Turtle or Human.","italic":false,"color":"gray"}],[{"text":"Whilst disguised, ","italic":false,"color":"gray"},{"text":"Endure","italic":false,"color":"light_purple"},{"text":" can gain stacks,","italic":false,"color":"gray"}],[{"text":"additionally giving the user the following","italic":false,"color":"gray"}],[{"text":"changes.","italic":false,"color":"gray"}],[{"text":"o Size: ","italic":false,"color":"gray"},{"text":"0.25x","italic":false,"color":"red"}],[{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.33x","italic":false,"color":"red"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Resistance II","italic":false,"color":"white"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"3s","italic":false,"color":"gold"}],[{"text":"Cancellable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:26b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:ui/custom/president/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}}]
+                            $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Back"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Toji's overview"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(move1_model)","minecraft:item_name":{"color":"aqua","text":"$(move1_name)"},"minecraft:lore":$(move1_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/1"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(move2_model)","minecraft:item_name":{"color":"aqua","text":"$(move2_name)"},"minecraft:lore":$(move2_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/2"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/disguise","minecraft:item_name":{"color":"aqua","text":"Disguise"},"minecraft:lore":[[{"text":"Swap between ","italic":false,"color":"gray"},{"text":"Human ","italic":false,"color":"aqua"},{"text":"and ","italic":false,"color":"gray"},{"text":"Turtle form.","italic":false,"color":"aqua"},{"text":" Whilst","italic":false,"color":"gray"}],[{"text":"disguised as a ","italic":false,"color":"gray"},{"text":"Turtle,","italic":false,"color":"aqua"},{"text":" gain the following changes.","italic":false,"color":"gray"}],[{"text":"o Size: ","italic":false,"color":"gray"},{"text":"0.25x","italic":false,"color":"red"}],[{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.33x","italic":false,"color":"red"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Resistance II","italic":false,"color":"white"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"3s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:26b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:ui/custom/president/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}}]
+                        }
+
+                        function data {
+                            execute unless score @s customUI.PresidentMove1 matches 1.. run scoreboard players set @s customUI.PresidentMove1 1
+                            execute unless score @s customUI.PresidentMove2 matches 1.. run scoreboard players set @s customUI.PresidentMove2 1
+
+                            execute if score @s customUI.PresidentMove1 matches 1 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_name:"Kidnap"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_lore:[[{"text":"Not Crouching ","italic":false,"color":"light_purple"},{"text":"whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in the user leaping slightly forward sending","italic":false,"color":"gray"}],[{"text":"anything in range to the ","italic":false,"color":"gray"},{"text":"pocket dimension.","italic":false,"color":"aqua"}],[{"text":"o Range: ","italic":false,"color":"gray"},{"text":"2.8m","italic":false,"color":"red"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Self-Kidnap","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"13s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_model:"minecraft:interactables/custom/president/moveset/kidnap"}}}}
+                            }
+
+                            execute if score @s customUI.PresidentMove1 matches 2 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_name:"Self-Kidnap"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_lore:[[{"text":"Crouching ","italic":false,"color":"light_purple"},{"text":"whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in the user being completely immobilized for ","italic":false,"color":"gray"},{"text":"5s,","italic":false,"color":"gold"}],[{"text":"initiating the process to enter their ","italic":false,"color":"gray"},{"text":"Pocket","italic":false,"color":"aqua"}],[{"text":"Dimension.","italic":false,"color":"aqua"},{"text":" The windup for this ability is neglected","italic":false,"color":"gray"}],[{"text":"whilst inside this space.","italic":false,"color":"gray"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Kidnap","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"24s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_model:"minecraft:interactables/custom/president/moveset/self_kidnap"}}}}
+                            }
+
+                            execute if score @s customUI.PresidentMove2 matches 1 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_name:"Shake Key"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_lore:[[{"text":"Not Crouching","italic":false,"color":"light_purple"},{"text":" whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in their key being ","italic":false,"color":"gray"},{"text":"violently shaked ","italic":false,"color":"red"},{"text":"damaging","italic":false,"color":"gray"}],[{"text":"anything inside the ","italic":false,"color":"gray"},{"text":"Pocket Dimension.","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"16","italic":false,"color":"green"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Refreshments","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"8s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_model:"minecraft:interactables/custom/president/moveset/shake_key"}}}}
+                            }
+
+                            execute if score @s customUI.PresidentMove2 matches 2 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_name:"Refreshments"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_lore:[[{"text":"Crouching","italic":false,"color":"light_purple"},{"text":" whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in anything inside the room receiving healing","italic":false,"color":"gray"}],[{"text":"and ","italic":false,"color":"gray"},{"text":"b","italic":false,"color":"red"},{"text":"u","italic":false,"color":"gold"},{"text":"f","italic":false,"color":"yellow"},{"text":"f","italic":false,"color":"green"},{"text":"s","italic":false,"color":"blue"},{"text":".","italic":false,"color":"light_purple"}],[{"text":"o Healing: ","italic":false,"color":"gray"},{"text":"8","italic":false,"color":"green"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1m","italic":false,"color":"gold"}],[{"text":"-> Movement Speed: ","italic":false,"color":"gray"},{"text":"1.75x","italic":false,"color":"green"}],[{"text":"-> Jump Strength: ","italic":false,"color":"gray"},{"text":"1.5x","italic":false,"color":"green"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"30s","italic":false,"color":"gold"}],[{"text":"-> ","italic":false,"color":"gray"},{"text":"Haste II","italic":false,"color":"white"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Shake Key","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"1m","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_model:"minecraft:interactables/custom/president/moveset/refreshments"}}}}
+                            }
                         }
 
                         function same {
@@ -4110,6 +4783,20 @@ dir ui {
 
                         function flip {
                             execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+
+                        function 1 {
+                            scoreboard players add @s customUI.PresidentMove1 1
+                            execute if score @s customUI.PresidentMove1 matches 3.. run scoreboard players set @s customUI.PresidentMove1 1
+                            execute at @s as @p run playsound minecraft:entity.enderman.teleport player @a ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+
+                        function 2 {
+                            scoreboard players add @s customUI.PresidentMove2 1
+                            execute if score @s customUI.PresidentMove2 matches 3.. run scoreboard players set @s customUI.PresidentMove2 1
+                            execute at @s as @p run playsound minecraft:entity.enderman.teleport player @a ~ ~ ~ 0.5
                             function custom:ui/menu/pages/selection/president/moveset/open
                         }
                     }
@@ -4506,9 +5193,13 @@ dir ui {
             execute if score #bool ui matches 1 run function custom:ui/minecart/on_change
             # why r u down here bro
         }
+        # im gonna blow up
     }
+    # im gonna blow up
 
     function run_cmd {
         $$(cmd)
     }
+    # im gonna blow up
 }
+# im gonna blow up

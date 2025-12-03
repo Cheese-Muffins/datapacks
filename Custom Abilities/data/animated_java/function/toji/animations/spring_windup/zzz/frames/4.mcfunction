@@ -34,5 +34,6 @@ $data merge entity $(bone_lower_left_leg_group) {transformation: [-0.9882f,-0.01
 $data merge entity $(bone_left_leg) {transformation: [-0.9882f,-0.1281f,-0.0844f,0.125f,-0.0054f,0.579f,-0.8153f,0.5691f,0.1533f,-0.8052f,-0.5729f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_leggings_upper_r) {transformation: [1.087f,-0.1409f,0.0928f,0.083f,0.0059f,0.6369f,0.8968f,0.7591f,-0.1686f,-0.8857f,0.6301f,-0.2642f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_leg_group) {transformation: [-0.9882f,-0.1281f,-0.0844f,0.125f,-0.0054f,0.579f,-0.8153f,0.5691f,0.1533f,-0.8052f,-0.5729f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/spring_windup/zzz/frames/4_locator_commands
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/spring_windup/zzz/frames/4_locator_constant
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:toji/animations/spring_windup/zzz/frames/4_locator_mount
 data modify entity @s data merge value {"cameras":{},"locators":{"acrobatics_mount":{"px":0,"py":0.5691,"pz":0,"ry":10.64022295563339,"rx":22.804058572993252}}}

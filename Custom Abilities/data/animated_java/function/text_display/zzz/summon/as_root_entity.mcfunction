@@ -12,5 +12,6 @@ execute on passengers if entity @s[tag=aj.global.data] run function animated_jav
 execute on passengers run rotate @s ~ ~
 data modify entity @s teleport_duration set value 1
 execute on passengers run data modify entity @s teleport_duration set value 1
+execute on passengers if entity @s[tag=aj.text_display.node.display] run function animated_java:text_display/zzz/summon/node_on_summon_display
 tag @s remove aj.new
 execute on passengers run tag @s remove aj.new

@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
 function custom:abilities/toji/moves/setup {animation:'spring_windup',objective:"customUniversal.RigID"}
-tag @s add customUniversal.Cancellable
+tag @s add customUniversal.Cancelable
 scoreboard players set @s customUniversal.MoveLastUsed 3
 execute as @n[tag=aj.toji.locator.coil_mount] run scoreboard players operation @s customUniversal.RigID = .global customUniversal.RigID
 function custom:abilities/toji/moves/3/danger_zone

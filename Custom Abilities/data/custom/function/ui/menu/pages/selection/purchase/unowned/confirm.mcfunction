@@ -7,9 +7,5 @@ scoreboard players reset @s customUI.PurchaseConfirm
 scoreboard players reset @s customUI.SkinLastPatchID
 scoreboard players reset @s customUI.SkinPatchID
 tag @s add temp
-execute if entity @s[tag=customUniversal.RequiredItem1] run function custom:ui/menu/pages/selection/purchase/unowned/zzz/1 with storage minecraft:ui custom.purchase
-execute if entity @s[tag=customUniversal.RequiredItem2] run function custom:ui/menu/pages/selection/purchase/unowned/zzz/2 with storage minecraft:ui custom.purchase
-execute if entity @s[tag=customUniversal.RequiredItem3] run function custom:ui/menu/pages/selection/purchase/unowned/zzz/3 with storage minecraft:ui custom.purchase
-execute if entity @s[tag=customUniversal.RequiredItem4] run function custom:ui/menu/pages/selection/purchase/unowned/zzz/4 with storage minecraft:ui custom.purchase
-execute if entity @s[tag=customUniversal.RequiredItem5] run function custom:ui/menu/pages/selection/purchase/unowned/zzz/5 with storage minecraft:ui custom.purchase
+execute unless entity @s[tag=customUI.BypassRequirements] run function custom:ui/menu/pages/selection/purchase/unowned/zzz/1
 $tag @s add $(tag)

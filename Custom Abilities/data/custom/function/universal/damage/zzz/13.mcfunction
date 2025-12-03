@@ -1,7 +1,5 @@
 # Generated with MC-Build
 
-function animated_java:the_world/animations/barrage/stop
-function animated_java:the_world/animations/impale/stop
-function animated_java:the_world/animations/knife_throw/stop
-function animated_java:the_world/animations/hide_dio/play
-execute as @a[distance=..16] run function custom:universal/damage/zzz/14
+scoreboard players set #ifelse mcb.internal 1
+data merge storage minecraft:custom {president:{cancelled:{state:"President_State2Cooldown"}}}
+data merge storage minecraft:custom {president:{cancelled:{seperator:"customPresident.SplitMove1Self_Kidnap"}}}

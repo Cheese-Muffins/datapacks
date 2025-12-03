@@ -5,7 +5,7 @@ execute unless entity @s[tag=customSettings.NoCooldowns] unless entity @s[tag=cu
 execute unless entity @s[tag=customSettings.NoCooldowns] if entity @s[tag=customBilly.PassiveHomeland] run function custom:abilities/billy/moves/1/zzz/1
 scoreboard players set @s customUniversal.LastUsedMove 1
 scoreboard players set @s customUniversal.MoveDelay 10
-tag @s add customUniversal.Cancellable
+tag @s add customUniversal.Cancelable
 attribute @s minecraft:movement_speed base set 0.05
 attribute @s minecraft:jump_strength base set 0
 scoreboard players add @s customBilly.Statistics.Encourage.Uses 1

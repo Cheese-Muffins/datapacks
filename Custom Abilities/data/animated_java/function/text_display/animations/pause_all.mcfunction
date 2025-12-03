@@ -2,3 +2,4 @@
 tag @s remove aj.text_display.animation.billy.playing
 tag @s remove aj.text_display.animation.homeland.playing
 tag @s remove aj.text_display.animation.toji_npc.playing
+tag @s remove aj.text_display.animation.username.playing

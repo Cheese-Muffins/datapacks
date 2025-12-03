@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-tp @s ~ ~ ~
-tag @s add customPresident.KidnapGravityCorrected
+scoreboard players set #ifelse mcb.internal 1
+function custom:abilities/president/moves/1/kidnap/movement/end

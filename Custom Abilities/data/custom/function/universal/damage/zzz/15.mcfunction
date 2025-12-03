@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-$scoreboard players operation @s customUniversal.Move$(last)Cooldown = .The_WorldCooldown customUniversal.Move$(last)Cooldown
-$scoreboard players operation @s customUniversal.Move$(last)Cooldown *= mult50 customUniversal.CooldownMath
-$scoreboard players operation @s customUniversal.Move$(last)Cooldown /= div100 customUniversal.CooldownMath
+scoreboard players set #ifelse mcb.internal 1
+data merge storage minecraft:custom {president:{cancelled:{state:"President_State1Cooldown"}}}
+data merge storage minecraft:custom {president:{cancelled:{seperator:"customPresident.SplitMove2Shake_Key"}}}

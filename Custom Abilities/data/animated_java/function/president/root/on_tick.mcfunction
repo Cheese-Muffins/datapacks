@@ -4,5 +4,7 @@ execute if entity @s[tag=aj.president.animation.kidnap.playing] run function ani
 execute if entity @s[tag=aj.president.animation.self_kidnap.playing] run function animated_java:president/animations/self_kidnap/zzz/on_tick
 execute if entity @s[tag=aj.president.animation.shake_key.playing] run function animated_java:president/animations/shake_key/zzz/on_tick
 execute if entity @s[tag=aj.president.animation.refreshments.playing] run function animated_java:president/animations/refreshments/zzz/on_tick
+execute if entity @s[tag=aj.president.animation.turtle_idle.playing] run function animated_java:president/animations/turtle_idle/zzz/on_tick
+execute if entity @s[tag=aj.president.animation.turtle_walk.playing] run function animated_java:president/animations/turtle_walk/zzz/on_tick
 execute on passengers if entity @s[tag=aj.global.data] run function animated_java:president/root/on_tick/transform_floating_entities
 execute on passengers run rotate @s ~ ~

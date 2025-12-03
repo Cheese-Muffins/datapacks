@@ -5,5 +5,5 @@ execute if score @s aj.tween_duration matches 0 on passengers run data modify en
 data remove storage animated_java:temp args
 execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.shake_key.frame
 function animated_java:president/animations/shake_key/zzz/apply_frame with storage animated_java:temp args
-execute if score @s aj.shake_key.frame matches 15 run return run function animated_java:president/animations/shake_key/zzz/loop_mode_stop
+execute if score @s aj.shake_key.frame matches 17 run return run function animated_java:president/animations/shake_key/zzz/loop_mode_stop
 scoreboard players add @s aj.shake_key.frame 1

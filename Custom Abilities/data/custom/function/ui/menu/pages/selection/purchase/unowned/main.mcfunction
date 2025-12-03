@@ -13,3 +13,4 @@ execute if entity @s[tag=customUniversal.PurchaseHandler] unless score @s custom
 tag @s remove temp
 tag @s remove clickEvent
 tag @s remove customUniversal.PurchaseHandler
+tag @s remove customUI.BypassRequirements
