@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
 # sfx
-say d
+random value 1..2

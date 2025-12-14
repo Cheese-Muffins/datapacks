@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-function custom:abilities/gojo/passive/main
+scoreboard players set #ifelse mcb.internal 1
+execute if score @s customUniversal.LastMoveState matches 1 run function custom:universal/damage/zzz/30

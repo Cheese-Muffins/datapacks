@@ -25,3 +25,4 @@ execute if items entity @s armor.head minecraft:golden_helmet run item modify en
 execute if items entity @s armor.head minecraft:diamond_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/diamond
 execute if items entity @s armor.head minecraft:netherite_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/netherite
 execute if items entity @s armor.head minecraft:turtle_helmet run item modify entity @s armor.head custom:universal/reveal_armor/head/turtle
+stopsound @s player minecraft:item.armor.equip_generic

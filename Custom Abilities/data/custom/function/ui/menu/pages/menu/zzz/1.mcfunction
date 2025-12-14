@@ -6,3 +6,4 @@ data merge storage minecraft:ui {custom:{menu:{ability_item_model:"minecraft:int
 data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/selection/the_world/flip"}}}
 data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/selection/the_world/moveset/flip"}}}
 data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/selection/the_world/skins/flip"}}}
+function custom:ui/menu/pages/selection/the_world/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}

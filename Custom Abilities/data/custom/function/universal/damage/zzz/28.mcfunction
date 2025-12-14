@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-$scoreboard players operation @s customUniversal.Move$(last)Cooldown = .The_WorldCooldown customUniversal.Move$(last)Cooldown
-$scoreboard players operation @s customUniversal.Move$(last)Cooldown *= mult50 customUniversal.CooldownMath
-$scoreboard players operation @s customUniversal.Move$(last)Cooldown /= div100 customUniversal.CooldownMath
+scoreboard players set #ifelse mcb.internal 0
+execute if score @s customUniversal.MoveLastUsed matches 1 run function custom:universal/damage/zzz/29
+execute if score #ifelse mcb.internal matches 0 run function custom:universal/damage/zzz/31

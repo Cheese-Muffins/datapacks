@@ -9,4 +9,3 @@ data modify storage minecraft:ui custom.purchase.toggle set from block 0 -64 0 I
 # data modify storage minecraft:ui custom.skin_name set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.skin_name
 # data modify storage minecraft:ui custom.ability set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.ability
 execute at @s as @p run function custom:ui/menu/pages/selection/purchase/main with storage minecraft:ui custom.purchase
-item replace block 0 -64 0 container.0 with air

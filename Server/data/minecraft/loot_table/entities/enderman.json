@@ -1,0 +1,74 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            }
+          ],
+          "name": "minecraft:ender_pearl"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:phantom_membrane",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_model": "minecraft:currencies/time_fragment",
+                "minecraft:custom_data": "{currency:1b,time_fragment:1b}",
+                "minecraft:lore": [
+                  {
+                    "text": "Can be used to buy specific custom abilities",
+                    "color": "gray",
+                    "italic": false
+                  },
+                  {
+                    "text": "or skins.",
+                    "color": "gray",
+                    "italic": false
+                  },
+                  "",
+                  {
+                    "text": "Server Exclusive 2025",
+                    "color": "gold",
+                    "italic": false
+                  }
+                ],
+                "minecraft:item_name": {
+                  "text": "Time Fragment",
+                  "color": "aqua",
+                  "italic": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "minecraft:entities/enderman"
+}

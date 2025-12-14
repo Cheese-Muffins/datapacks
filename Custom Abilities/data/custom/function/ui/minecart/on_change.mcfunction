@@ -2,6 +2,7 @@
 
 execute at @s as @p run function custom:ui/minecart/zzz/0
 clear @a *[minecraft:custom_data~{ui_item:{}}]
+kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{ui_item:{}}}}}]
 data remove storage minecraft:ui custom
 scoreboard players set .type ui 1
 data modify storage ui in set from storage ui current

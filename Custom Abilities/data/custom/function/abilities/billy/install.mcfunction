@@ -14,6 +14,7 @@ scoreboard objectives add customBilly.TrapLimit dummy
 scoreboard objectives add customBilly.TrapDuration dummy
 scoreboard objectives add customBilly.TrapLinger dummy
 scoreboard objectives add customBilly.TrapSuccess dummy
+scoreboard objectives add customBilly.TrapScare dummy
 scoreboard objectives add customBilly.DevourID dummy
 scoreboard objectives add customBilly.DevourX dummy
 scoreboard objectives add customBilly.DevourY dummy

@@ -1,0 +1,3 @@
+# Generated with MC-Build
+
+$give @s minecraft:phantom_membrane[lore=[[{"text":"Puff, puff, pass","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Weed","italic":false,"color":"green"}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:1.5},item_model="minecraft:consumables/weed",custom_data={consumable:1b,weed:1b}] $(count)

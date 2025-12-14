@@ -1,0 +1,4 @@
+# Generated with MC-Build
+
+$execute as @e[type=!#custom:not_mob,tag=!customTheWorld.TimeLocked,distance=..40] unless score @s customUniversal.RigID matches $(id) unless entity @s[gamemode=spectator] at @s run function custom:abilities/the_world/moves/1/timestop/zzz/1 with storage minecraft:custom timestop
+$execute as @e[type=minecraft:item_display,tag=!customTheWorld.TimeLocked,tag=!customUniversal.IgnoreTimestop,tag=aj.global.root,distance=..40] unless score @s customUniversal.RigID matches $(id) at @s run function custom:abilities/the_world/moves/1/timestop/zzz/2 with storage minecraft:custom timestop

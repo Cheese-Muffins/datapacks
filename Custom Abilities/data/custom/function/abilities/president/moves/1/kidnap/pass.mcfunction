@@ -7,6 +7,7 @@ function custom:abilities/president/passives/endure/consume {statistic:"customPr
 scoreboard players add @s customPresident.Statistics.Kidnap.Uses 1
 scoreboard players set @s customUniversal.MoveLastUsed 1
 scoreboard players set @s customUniversal.LastMoveState 1
+perspective @s second
 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customPresident.SplitMove1Kidnap = .President_State1Cooldown customUniversal.Move1Cooldown
 scoreboard players set @s customUniversal.MoveDelay 10
 attribute @s minecraft:movement_speed base set 0.025

@@ -13,6 +13,8 @@ scoreboard objectives add customUI.PlayerOP dummy
 scoreboard objectives add customUI.SelectedOdds dummy
 scoreboard objectives add customUI.PurchaseUsername dummy
 scoreboard objectives add customUI.SelectionPage dummy
+scoreboard objectives add customUI.AbilitiesUnlocked dummy
+scoreboard objectives add customUI.SkinsUnlocked dummy
 setblock 0 -64 0 minecraft:yellow_shulker_box[facing=west]
 setblock 0 -63 0 shulker_box
 scoreboard objectives add customUniversal.GlobalCounter dummy
@@ -78,9 +80,16 @@ scoreboard objectives add customUniversal.QuestID dummy
 scoreboard objectives add customUniversal.QuestDialogue dummy
 scoreboard objectives add customUniversal.PlayerCount dummy
 scoreboard objectives add customUniversal.Disconnected minecraft.custom:minecraft.leave_game
+scoreboard objectives add customUniversal.ToggleCastDelay dummy
+scoreboard objectives add customUniversal.TimeStopAnimation dummy
+scoreboard objectives add customUniversal.DeathCountInit dummy
+scoreboard objectives add customUniversal.DeathCountPost dummy
 # Statistics #
 scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
 scoreboard objectives add customUniversal.StatisticsEntityKills dummy
+function custom:traits/install
+function custom:consumables/install
 function custom:abilities/billy/install
 function custom:abilities/toji/install
 function custom:abilities/president/install
+function custom:abilities/the_world/install

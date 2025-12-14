@@ -11,6 +11,7 @@ scoreboard objectives add customPresident.KidnappedID dummy
 scoreboard objectives add customPresident.KidnapDuration dummy
 scoreboard objectives add customPresident.KidnapMovement dummy
 scoreboard objectives add customPresident.KidnapGravity dummy
+scoreboard objectives add customPresident.KidnapDimension dummy
 scoreboard objectives add customPresident.KidnapDeath deathCount
 scoreboard objectives add customPresident.PassiveEndure dummy
 scoreboard objectives add customPresident.OutsideX dummy

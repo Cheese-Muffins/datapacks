@@ -6,6 +6,8 @@
 		"animated_java:billy/root/on_tick",
 		"animated_java:president/root/on_tick",
 		"animated_java:text_display/root/on_tick",
+		"animated_java:the_world_vfx/root/on_tick",
+		"animated_java:the_world/root/on_tick",
 		"animated_java:toji_vfx/root/on_tick",
 		"animated_java:toji/root/on_tick"
 	]

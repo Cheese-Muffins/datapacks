@@ -1,6 +1,16 @@
 # Generated with MC-Build
 
-$function animated_java:$(branch)/variants/default/apply
+$function custom:abilities/$(branch)/skin {objective:"$(objective)",rig:"$(branch)"}
+$item replace entity @n[tag=aj.$(branch).bone.head] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.right_arm] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.right_forearm] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.left_arm] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.left_forearm] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.waist] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.right_leg] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.lower_right_leg] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.left_leg] hotbar.0 with minecraft:air
+$item replace entity @n[tag=aj.$(branch).bone.lower_left_leg] hotbar.0 with minecraft:air
 $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
 $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
 $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}

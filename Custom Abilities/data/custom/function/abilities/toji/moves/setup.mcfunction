@@ -7,7 +7,7 @@ particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
 function custom:universal/armor/hide
 $execute rotated ~ 0 run function animated_java:toji/summon {args:{animation:'$(animation)', start_animation: true}}
 $function custom:universal/setup/rig {objective:"$(objective)",item:"toji"}
-execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"toji"}
+execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"toji",objective:"customUniversal.RigID"}
 execute if entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/skin {branch:"toji"}
 # item modify entity @s hotbar.8 custom:hide
 $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.toji.camera",objective:"$(objective)"}

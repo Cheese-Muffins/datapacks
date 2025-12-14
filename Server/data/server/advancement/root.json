@@ -3,9 +3,9 @@
     "icon": {
       "id": "minecraft:command_block"
     },
-    "title": "1.21 Expansion",
-    "description": "Welcome to the server!",
-    "background": "minecraft:textures/gui/advancements/backgrounds/server.png",
+    "title": "Welcome!",
+    "description": "Use the advancement tree to utilize all features!",
+    "background": "minecraft:block/deepslate",
     "show_toast": true,
     "announce_to_chat": true
   },
@@ -13,16 +13,5 @@
     "requirement": {
       "trigger": "minecraft:tick"
     }
-  },
-  "rewards": {
-    "recipes": [
-      "consumables:classic",
-      "consumables:red",
-      "consumables:blue",
-      "consumables:decoy",
-      "totem:rain_totem",
-      "totem:storm_totem",
-      "totem:recall_totem"
-    ]
   }
 }

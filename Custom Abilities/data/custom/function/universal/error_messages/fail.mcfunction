@@ -23,6 +23,7 @@ execute if entity @s[tag=customUniversal.Error15] run tellraw @s ["",{"text":"- 
 execute if entity @s[tag=customUniversal.Error16] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
 execute if entity @s[tag=customUniversal.Error100] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
 execute if entity @s[tag=customUniversal.Error101] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
+execute if entity @s[tag=customUniversal.Error102] run tellraw @s ["",{"text":"- You can't use moves when ","color":"gray"},{"text":"frozen ","color":"red"},{"text":"in ","color":"gray"},{"text":"time!","color":"aqua"}]
 tag @s remove customUniversal.Error1
 tag @s remove customUniversal.Error2
 tag @s remove customUniversal.Error3
@@ -124,6 +125,7 @@ tag @s remove customUniversal.Error98
 tag @s remove customUniversal.Error99
 tag @s remove customUniversal.Error100
 tag @s remove customUniversal.Error101
+tag @s remove customUniversal.Error102
 playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5
 scoreboard players set @s customUniversal.MoveDelay 10
 scoreboard players set @s customUniversal.FailReturn 0

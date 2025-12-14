@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-function custom:abilities/president/passives/endure/damaged
+data merge storage minecraft:custom {the_world:{cancelled:{state:"TheWorld_State1Cooldown"}}}
+data merge storage minecraft:custom {the_world:{cancelled:{seperator:"customTheWorld.SplitMove1Timeskip"}}}

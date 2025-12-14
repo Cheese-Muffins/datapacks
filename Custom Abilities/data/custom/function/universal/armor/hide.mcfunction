@@ -6,3 +6,4 @@ item modify entity @s armor.legs custom:universal/hide_armor/legs
 item modify entity @s armor.feet custom:universal/hide_armor/feet
 effect give @s minecraft:invisibility infinite 1 true
 tag @s add customUniversal.LockArmor
+stopsound @s player minecraft:item.armor.equip_generic
