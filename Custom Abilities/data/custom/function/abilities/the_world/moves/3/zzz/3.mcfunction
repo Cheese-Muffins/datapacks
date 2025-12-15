@@ -1,5 +1,7 @@
 # Generated with MC-Build
 
-tag @s add this
-$execute as @e[type=!#custom:not_mob,distance=..1.5] unless score @s customTheWorld.BarrageID matches $(id) run function custom:abilities/the_world/moves/3/zzz/4 with storage minecraft:custom the_world.barrage
-tag @s remove this
+data merge storage minecraft:custom {the_world:{barrage:{skin:"default"}}}
+execute if entity @s[tag=customTheWorld.SkinTW2] run data merge storage minecraft:custom {the_world:{barrage:{skin:"the_world_2"}}}
+execute if entity @s[tag=customTheWorld.SkinVampire] run data merge storage minecraft:custom {the_world:{barrage:{skin:"vampire_the_world"}}}
+execute if entity @s[tag=customTheWorld.SkinRetro] run data merge storage minecraft:custom {the_world:{barrage:{skin:"retro_the_world"}}}
+execute if entity @s[tag=customTheWorld.SkinShadow] run data merge storage minecraft:custom {the_world:{barrage:{skin:"shadow_the_world"}}}

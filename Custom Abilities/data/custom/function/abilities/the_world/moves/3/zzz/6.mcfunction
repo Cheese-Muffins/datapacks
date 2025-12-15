@@ -1,4 +1,9 @@
 # Generated with MC-Build
 
-$execute rotated as @n[type=minecraft:item_display,tag=aj.the_world.locator.hitbox,scores={customTheWorld.BarrageID=$(id)}] rotated ~ -20 as @s run launch @s looking 1.5
-$function custom:universal/damage/victim {id:"$(id)",damage:"12",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.KnifeThrowID",first:"was pummeled",second:"using Barage"}
+$function custom:universal/damage/victim {id:"$(id)",damage:"2",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.BarrageID",first:"was pummeled",second:"using Barrage Rush"}
+$execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.BarrageID=$(id)}] run function custom:abilities/the_world/passive/rage/gain {amount:1}
+scoreboard players set @s customTheWorld.BarrageStun 15
+attribute @s minecraft:movement_speed modifier add custom:the_world.barrage_zone -0.5 add_multiplied_total
+attribute @s minecraft:jump_strength modifier add custom:the_world.barrage_zone -0.5 add_multiplied_total
+effect give @s minecraft:weakness infinite 255 true
+tag @s add customUniversal.ConstantCheck

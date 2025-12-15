@@ -10,3 +10,4 @@ function custom:universal/constant_tick/zzz/4 with storage minecraft:custom pres
 gamemode survival @s
 scoreboard players reset @s customPresident.KidnapDuration
 scoreboard players reset @s customPresident.KidnappedID
+execute if entity @s[type=minecraft:creeper] run data merge entity @s {ExplosionRadius:3b}

@@ -5,6 +5,7 @@ scoreboard objectives add customTheWorld.SplitMove1Timeskip dummy
 scoreboard objectives add customTheWorld.SplitMove1Timestop dummy
 # General #
 scoreboard objectives add customTheWorld.RigID dummy
+scoreboard objectives add customTheWorld.IdleMode dummy
 scoreboard objectives add customTheWorld.PassiveRageCount dummy
 scoreboard objectives add customTheWorld.PassiveRageDecay dummy
 scoreboard objectives add customTheWorld.TimeskipMovement dummy
@@ -19,7 +20,7 @@ scoreboard objectives add customTheWorld.FlurryOffsetDistance dummy
 scoreboard objectives add customTheWorld.FlurryStun dummy
 scoreboard objectives add customTheWorld.FlurryExpire dummy
 scoreboard objectives add customTheWorld.TimeStopID dummy
-scoreboard objectives add customTheWorld.TimeStopInitialHealth dummy
+scoreboard objectives add customTheWorld.TimeStopDuration dummy
 scoreboard objectives add customTheWorld.TimeStopVictimHit dummy
 scoreboard objectives add customTheWorld.TimeStopVictimDuration dummy
 # Awakening #

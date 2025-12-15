@@ -19,4 +19,5 @@ $data merge entity $(bone_left_leg_world) {transformation: [0.9921f,-0.0353f,-0.
 $data merge entity $(bone_gear2) {transformation: [-1f,0f,0f,0.5848f,0f,1f,0f,1.6367f,0f,0f,-1f,0.8175f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_gear3) {transformation: [-1f,0f,0f,-0.6974f,0f,1f,0f,1.7688f,0f,0f,-1f,0.9032f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world/animations/barrage/zzz/frames/40_locator_constant
+$execute on vehicle unless entity @s[tag=aj.transforms_only] as $(locator_hitbox) positioned ^0 ^1.046875 ^2.5625 rotated ~0 ~0 run function animated_java:the_world/animations/barrage/zzz/frames/40_locator_hitbox
 data modify entity @s data merge value {"cameras":{},"locators":{"right_hand_world":{"px":-0.3080668031691625,"py":1.3730011273149558,"pz":1.1067030270511986,"ry":135.80911645946688,"rx":43.11814444975519},"barrage_anchor":{"px":-0.05375000000000014,"py":1.125,"pz":1.124375,"ry":0,"rx":0}}}
