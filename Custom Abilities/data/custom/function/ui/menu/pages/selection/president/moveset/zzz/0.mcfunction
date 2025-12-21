@@ -1,5 +1,0 @@
-# Generated with MC-Build
-
-data merge storage minecraft:ui {custom:{selection:{president:{move1_name:"Kidnap"}}}}
-data merge storage minecraft:ui {custom:{selection:{president:{move1_lore:[[{"text":"Not Crouching ","italic":false,"color":"light_purple"},{"text":"whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in the user leaping slightly forward sending","italic":false,"color":"gray"}],[{"text":"anything in range to the ","italic":false,"color":"gray"},{"text":"pocket dimension.","italic":false,"color":"aqua"}],[{"text":"o Range: ","italic":false,"color":"gray"},{"text":"2.8m","italic":false,"color":"red"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Self-Kidnap","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"13s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]]}}}}
-data merge storage minecraft:ui {custom:{selection:{president:{move1_model:"minecraft:interactables/custom/president/moveset/kidnap"}}}}

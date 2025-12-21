@@ -1,3 +1,0 @@
-# Generated with MC-Build
-
-$give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Mysterious Arrow","italic":false,"color":"yellow"}],max_stack_size=4,item_model="minecraft:currencies/mysterious_arrow",custom_data={currency:1b,mysterious_arrow:1b}] $(count)
