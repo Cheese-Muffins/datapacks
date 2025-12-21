@@ -1,7 +1,16 @@
 # Generated with MC-Build
 
-execute if score @s customUniversal.TimeStopAnimation matches 1 run function animated_java:the_world/animations/knife_throw/resume
-execute if score @s customUniversal.TimeStopAnimation matches 2 run function animated_java:the_world/animations/barrage/resume
-execute if score @s customUniversal.TimeStopAnimation matches 3 run function animated_java:the_world/animations/flurry/resume
-execute if score @s customUniversal.TimeStopAnimation matches 4 run function animated_java:the_world/animations/timestop/resume
-execute unless entity @s[tag=aj.the_world.animation.summon.playing,tag=aj.the_world.animation.idle.playing,tag=aj.the_world.animation.knife_throw.playing,tag=aj.the_world.animation.barrage.playing,tag=aj.the_world.animation.flurry.playing,tag=aj.the_world.animation.rage_mode.playing,tag=aj.the_world.animation.hide_dio.playing,tag=aj.the_world.animation.timestop.playing] run function animated_java:the_world/animations/idle/resume
+tag @s remove customTheWorld.TimeLocked
+shader disable @s invert
+playsound minecraft:the_world.timestop.resume player @s ~ ~ ~
+attribute @s minecraft:movement_speed modifier remove custom:the_world.timestop
+attribute @s minecraft:jump_strength modifier remove custom:the_world.timestop
+attribute @s minecraft:gravity modifier remove custom:the_world.timestop
+attribute @s minecraft:knockback_resistance modifier remove custom:the_world.timestop
+effect clear @s minecraft:resistance
+effect clear @s minecraft:weakness
+execute store result storage minecraft:custom timestop.absorbed int 1 run scoreboard players get @s customTheWorld.TimeStopVictimHit
+function custom:abilities/the_world/moves/1/timestop/zzz/10 with storage minecraft:custom timestop
+scoreboard players reset @s customTheWorld.TimeStopVictimHit
+tag @s add customUniversal.ConstantCheck
+execute if entity @s[type=!minecraft:player] run data merge entity @s {NoAI:0b,Silent:0b}

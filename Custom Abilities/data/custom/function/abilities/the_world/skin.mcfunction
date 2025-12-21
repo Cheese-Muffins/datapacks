@@ -2,4 +2,4 @@
 
 $execute store result storage minecraft:custom the_world.skin.id int 1 run scoreboard players get @s $(objective)
 $data merge storage minecraft:custom {the_world:{skin:{rig:"$(rig)",objective:"$(objective)"}}}
-function custom:abilities/the_world/zzz/10 with storage minecraft:custom the_world.skin
+function custom:abilities/the_world/zzz/11 with storage minecraft:custom the_world.skin

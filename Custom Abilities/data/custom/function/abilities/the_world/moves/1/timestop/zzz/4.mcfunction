@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-execute if entity @s[nbt={HurtTime:10s}] run scoreboard players add @s customTheWorld.TimeStopVictimHit 1
+$execute as @e[type=!#custom:not_mob,tag=customTheWorld.TimeLocked,scores={customTheWorld.TimeStopID=$(id)}] run function custom:abilities/the_world/moves/1/timestop/zzz/5

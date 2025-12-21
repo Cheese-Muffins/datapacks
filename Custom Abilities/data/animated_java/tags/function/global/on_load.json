@@ -1,10 +1,12 @@
 {
 	"replace": false,
 	"values": [
+		"animated_java:avatar_vfx/on_load",
 		"animated_java:billy_cutscenes/on_load",
 		"animated_java:billy_vfx/on_load",
 		"animated_java:billy/on_load",
 		"animated_java:president/on_load",
+		"animated_java:shrinkray/on_load",
 		"animated_java:text_display/on_load",
 		"animated_java:the_world_vfx/on_load",
 		"animated_java:the_world/on_load",

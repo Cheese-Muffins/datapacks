@@ -8,6 +8,7 @@ attribute @s minecraft:gravity modifier add custom:the_world.timestop -0.9 add_m
 attribute @s minecraft:knockback_resistance modifier add custom:the_world.timestop 1 add_value
 effect give @s minecraft:resistance infinite 255 true
 effect give @s minecraft:weakness infinite 255 true
+execute if entity @s[type=minecraft:player] run function custom:abilities/the_world/moves/1/timestop/zzz/2
 $scoreboard players set @s customTheWorld.TimeStopID $(id)
 tp @s ~ ~ ~
 execute if entity @s[type=!minecraft:player] run data merge entity @s {NoAI:1b,Silent:1b}

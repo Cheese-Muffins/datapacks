@@ -23,6 +23,11 @@ scoreboard objectives add customTheWorld.TimeStopID dummy
 scoreboard objectives add customTheWorld.TimeStopDuration dummy
 scoreboard objectives add customTheWorld.TimeStopVictimHit dummy
 scoreboard objectives add customTheWorld.TimeStopVictimDuration dummy
+scoreboard objectives add customTheWorld.TimeStopX dummy
+scoreboard objectives add customTheWorld.TimeStopY dummy
+scoreboard objectives add customTheWorld.TimeStopZ dummy
+scoreboard objectives add customTheWorld.TimeStopRotationX dummy
+scoreboard objectives add customTheWorld.TimeStopRotationY dummy
 # Awakening #
 scoreboard objectives add customTheWorld.AwakeningDuration dummy
 # Move Cooldowns #

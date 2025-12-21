@@ -2,6 +2,8 @@
 
 tag @s add customUniversal.Animation
 tag @s add customUniversal.DisconnectCheck
+tag @s add customUniversal.HideUI
+title @s actionbar ""
 gamemode spectator @s
 function custom:universal/setup/rig {objective:"customUniversal.RigID",item:"the_world"}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.camera",objective:"customUniversal.RigID"}

@@ -60,6 +60,7 @@ function on_load {
         scoreboard objectives add customUniversal.TimeStopAnimation dummy
         scoreboard objectives add customUniversal.DeathCountInit dummy
         scoreboard objectives add customUniversal.DeathCountPost dummy
+        scoreboard objectives add customUniversal.PreviousHotbar dummy
 
     # Statistics #
         scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
@@ -72,15 +73,19 @@ function on_load {
     function custom:abilities/toji/install
     function custom:abilities/president/install
     function custom:abilities/the_world/install
+    function custom:abilities/avatar/install
+    function custom:abilities/shrinkray/install
 }
 
 function tick {
     execute as @a run {
-        execute as @s[tag=customAbility.User] run {
+        execute if entity @s[tag=customAbility.User] as @s run {
             execute if entity @s[tag=customAbility.Billy] run function custom:abilities/billy/tick
             execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/tick
             execute if entity @s[tag=customAbility.Toji] run function custom:abilities/toji/tick
             execute if entity @s[tag=customAbility.President] run function custom:abilities/president/tick
+            execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/tick
+            execute if entity @s[tag=customAbility.Shrinkray] run function custom:abilities/shrinkray/tick
 
             execute if score @s customUniversal.ToggleTrigger matches 1.. at @s run function custom:universal/toggle/main
         }
@@ -1072,6 +1077,11 @@ dir abilities {
             scoreboard objectives add customTheWorld.TimeStopDuration dummy
             scoreboard objectives add customTheWorld.TimeStopVictimHit dummy
             scoreboard objectives add customTheWorld.TimeStopVictimDuration dummy
+            scoreboard objectives add customTheWorld.TimeStopX dummy
+            scoreboard objectives add customTheWorld.TimeStopY dummy
+            scoreboard objectives add customTheWorld.TimeStopZ dummy
+            scoreboard objectives add customTheWorld.TimeStopRotationX dummy
+            scoreboard objectives add customTheWorld.TimeStopRotationY dummy
 
             # Awakening #
             scoreboard objectives add customTheWorld.AwakeningDuration dummy
@@ -1108,7 +1118,7 @@ dir abilities {
                 execute if score @s customTheWorld.PassiveRageCount matches 1.. run {
                     scoreboard players add @s customTheWorld.PassiveRageDecay 1
                     execute if score @s customTheWorld.PassiveRageDecay matches 1200 run {
-                        scoreboard players remove @s customTheWorld.PassiveRageCount 1
+                        scoreboard players remove @s customTheWorld.PassiveRageCount 10
                         scoreboard players set @s customTheWorld.PassiveRageDecay 900
                         execute unless score @s customTheWorld.PassiveRageCount matches 1.. run scoreboard players reset @s customTheWorld.PassiveRageDecay
                     }
@@ -1130,7 +1140,10 @@ dir abilities {
 
                 execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
                 execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
-                execute if score @s customUniversal.ToggleCastDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleCastDelay 1
+                execute if score @s customUniversal.ToggleCastDelay matches 1.. run {
+                    scoreboard players remove @s customUniversal.ToggleCastDelay 1
+                    execute unless score @s customUniversal.ToggleCastDelay matches 1.. run tag @s remove customUniversal.HideUI
+                }
             }
         }
 
@@ -1284,7 +1297,7 @@ dir abilities {
         }
 
         function active {
-            execute unless score @s customUniversal.ToggleCastDelay matches 1.. run function custom:abilities/the_world/hotbar/main
+            execute unless score @s customUniversal.ToggleCastDelay matches 1.. unless entity @s[tag=customUniversal.HideUI] run function custom:abilities/the_world/hotbar/main
         }
 
         dir passive {
@@ -1296,7 +1309,7 @@ dir abilities {
 
                         execute unless score @s customTheWorld.PassiveRageCount matches 100.. run playsound minecraft:item.firecharge.use player @s ~ ~ ~ 0.5
                         
-                        execute if score @s customTheWorld.PassiveRageCount matches 100 run {
+                        execute if score @s customTheWorld.PassiveRageCount matches 100.. run {
                             scoreboard players reset @s customTheWorld.PassiveRageCount
                             function custom:abilities/the_world/awakening/trigger
                         }
@@ -1309,6 +1322,8 @@ dir abilities {
             function trigger {
                 tag @s add customUniversal.Animation
                 tag @s add customUniversal.DisconnectCheck
+                tag @s add customUniversal.HideUI
+                title @s actionbar ""
                 gamemode spectator @s
 
                 function custom:universal/setup/rig {objective:"customUniversal.RigID",item:"the_world"}
@@ -1353,6 +1368,8 @@ dir abilities {
                 tag @s add customTheWorld.RageMode
                 
                 scoreboard players set @s customTheWorld.AwakeningDuration 2900
+                scoreboard players reset @s customTheWorld.PassiveRageCount
+                tag @s remove customUniversal.HideUI
             }
 
             function duration {
@@ -1498,6 +1515,14 @@ dir abilities {
                                 effect give @s minecraft:resistance infinite 255 true
                                 effect give @s minecraft:weakness infinite 255 true
 
+                                execute if entity @s[type=minecraft:player] run {
+                                    execute store result score @s customTheWorld.TimeStopX run data get entity @s Pos[0] 10
+                                    execute store result score @s customTheWorld.TimeStopY run data get entity @s Pos[1] 10
+                                    execute store result score @s customTheWorld.TimeStopZ run data get entity @s Pos[2] 10
+                                    execute store result score @s customTheWorld.TimeStopRotationX run data get entity @s Rotation[0] 10
+                                    execute store result score @s customTheWorld.TimeStopRotationY run data get entity @s Rotation[1] 10
+                                }
+
                                 $scoreboard players set @s customTheWorld.TimeStopID $(id)
                                 tp @s ~ ~ ~
 
@@ -1521,6 +1546,17 @@ dir abilities {
                         block { with storage minecraft:custom timestop
                             $execute as @e[type=!#custom:not_mob,tag=customTheWorld.TimeLocked,scores={customTheWorld.TimeStopID=$(id)}] run {
                                 execute if entity @s[nbt={HurtTime:10s}] run scoreboard players add @s customTheWorld.TimeStopVictimHit 1
+
+                                execute if entity @s[type=minecraft:player] run {
+                                    execute store result storage minecraft:custom the_world.timestop.x double 0.1 run scoreboard players get @s customTheWorld.TimeStopX
+                                    execute store result storage minecraft:custom the_world.timestop.y double 0.1 run scoreboard players get @s customTheWorld.TimeStopY
+                                    execute store result storage minecraft:custom the_world.timestop.z double 0.1 run scoreboard players get @s customTheWorld.TimeStopZ
+                                    execute store result storage minecraft:custom the_world.timestop.rotation_x double 0.1 run scoreboard players get @s customTheWorld.TimeStopRotationX
+                                    execute store result storage minecraft:custom the_world.timestop.rotation_y double 0.1 run scoreboard players get @s customTheWorld.TimeStopRotationY
+                                    block { with storage minecraft:custom the_world.timestop
+                                        $tp @s $(x) $(y) $(z) $(rotation_x) $(rotation_y)
+                                    }
+                                }
                             }
                         }
 
@@ -1639,7 +1675,6 @@ dir abilities {
                 function pass {
                     function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.KnifeThrowID",animation:'knife_throw',idle:0}
                     visibility disable @n[type=minecraft:item_display,tag=aj.the_world.root] @s
-                    tag @s add customUniversal.Cancellable
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .TheWorld_State1Cooldown customUniversal.Move2Cooldown
 
                     function custom:universal/armor/hide
@@ -2333,11 +2368,30 @@ dir abilities {
                     execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
                     execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
                     execute if entity @s[tag=customPresident.Disguised] run function custom:universal/error_messages/find {error:15}
+
+                    execute if entity @s[tag=customPresident.EnteringRoom] run {
+                        tag @s remove customUniversal.Error1
+                        tag @s remove customUniversal.Error2
+                        tag @s remove customUniversal.Error15
+                        scoreboard players reset @s customUniversal.FailReturn
+                    }
+
                     function custom:universal/error_messages/universal
+
+                    execute if entity @s[tag=customPresident.EnteringRoom] unless score @s customUniversal.FailReturn matches 1.. run {
+                        scoreboard players reset @s customUniversal.FailReturn
+
+                        execute store result storage minecraft:custom president.self_kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.self_kidnap
+                            $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run function custom:abilities/president/moves/reset/all {objective:"customUniversal.RigID",user:"customAbility.President",rig:"president"}
+                        }
+                        tag @s add temp
+                    }
                     
                     scoreboard players set @s customUniversal.ActiveHotbar 1
-                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/1/decide
+                    execute unless score @s customUniversal.FailReturn matches 1 unless entity @s[tag=customPresident.EnteringRoom] unless entity @s[tag=temp] run function custom:abilities/president/moves/1/decide
                     execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Kidnap / Self-Kidnap"}
+                    tag @s remove temp
                 }
                 
                 function decide {
@@ -2505,6 +2559,7 @@ dir abilities {
                         tag @s add customUniversal.Cancelable
                         scoreboard players set @s customUniversal.MoveLastUsed 1
                         scoreboard players set @s customUniversal.LastMoveState 2
+                        tag @s add customPresident.EnteringRoom
                         perspective @s third
 
                         execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customPresident.SplitMove1Self_Kidnap = .President_State2Cooldown customUniversal.Move1Cooldown
@@ -2526,10 +2581,12 @@ dir abilities {
                             scoreboard players add @s customPresident.Statistics.Self_Kidnap.Uses 1
                             scoreboard players reset @s customPresident.KidnapDeath
                             $scoreboard players set @s customPresident.KidnappedID $(id)
+                            scoreboard players set @s customPresident.SplitMove1Self_Kidnap 0
                             $execute at @n[type=minecraft:marker,tag=customPresident.EntranceRoom,tag=assigned,scores={customPresident.PocketID=$(id)}] run tp @s ~ ~ ~
                             playsound minecraft:entity.enderman.teleport player @a ~ ~ ~ 0.5
                             gamemode adventure @s
                             tag @s add customUniversal.ConstantCheck
+                            tag @s remove customPresident.EnteringRoom
                             tag @s add customPresident.PersonalPocketDimension
                             tag @s add customPresident.InsideRoom
                         }
@@ -2547,6 +2604,7 @@ dir abilities {
                             $execute in $(dimension) run tp @s $(x) $(y) $(z)
                             scoreboard players reset @s customPresident.KidnappedID
                             gamemode survival @s
+                            execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customPresident.SplitMove1Self_Kidnap = .President_State2Cooldown customUniversal.Move1Cooldown
                             tag @s remove customPresident.PersonalPocketDimension
                             tag @s remove customPresident.InsideRoom
                             tag @s remove customPresident.PassiveFreezer
@@ -2727,6 +2785,7 @@ dir abilities {
                     # item modify entity @s hotbar.8 custom:gojo/base
                     function custom:universal/armor/reveal
 
+                    tag @s remove customPresident.EnteringRoom
                     tag @s remove customUniversal.Cancelable
                     tag @s remove customUniversal.DisconnectCheck
                     tag @s remove customUniversal.Animation
@@ -3466,6 +3525,689 @@ dir abilities {
             }
         }
     }
+
+    dir avatar {
+        function install {
+            scoreboard objectives add customAvatar.PassiveAirMotion dummy
+            scoreboard objectives add customAvatar.WaterArrowID dummy
+            scoreboard objectives add customAvatar.WaterArrowWindup dummy
+            scoreboard objectives add customAvatar.WaterArrowMovement dummy
+            scoreboard objectives add customAvatar.WaterArrowRotationY dummy
+
+            scoreboard objectives add customAvatar.ExcavateToolDurability dummy
+            scoreboard objectives add customAvatar.ExcavateToolTier dummy
+            scoreboard objectives add customAvatar.ExcavateToolUnbreaking dummy
+            scoreboard objectives add customAvatar.ExcavateLogic dummy
+            scoreboard objectives add customAvatar.ExcavateX dummy
+            scoreboard objectives add customAvatar.ExcavateY dummy
+            scoreboard objectives add customAvatar.ExcavateZ dummy
+            scoreboard objectives add customAvatar.MeteorID dummy
+            scoreboard objectives add customAvatar.MeteorMovement dummy
+            function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:1,move:1,cooldown:11}
+            function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:2,move:2,cooldown:19}
+            function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:3,move:3,cooldown:26}
+            function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:4,move:4,cooldown:21}
+        }
+
+        function tick {
+            execute if score @s customUniversal.Toggle matches 1 run {
+                execute at @s run function custom:abilities/avatar/active
+            }
+
+            REPEAT (1,4) as i {
+                execute at @s if score @s customUniversal.Move<%i%>Trigger matches 1.. run {
+                    scoreboard players reset @s customUniversal.Move<%i%>Trigger
+                    execute if score @s customUniversal.Toggle matches 1 unless score @s customUniversal.ToggleCastDelay matches 1.. unless score @s customUniversal.MoveDelay matches 1.. run function custom:abilities/avatar/moves/<%i%>/core
+                }
+            }
+
+            execute unless entity @s[scores={customUniversal.Move1Cooldown=0,customUniversal.Move2Cooldown=0,customUniversal.Move3Cooldown=0,customUniversal.Move4Cooldown=0,customUniversal.Delay4=0,customAvatar.WaterArrowWindup=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                REPEAT (1,4) as i {
+                    execute if score @s customUniversal.Move<%i%>Cooldown matches 1.. run scoreboard players remove @s customUniversal.Move<%i%>Cooldown 1
+                }
+                
+                execute at @s if score @s customUniversal.Delay1 matches 1.. run {
+                    particle minecraft:cloud ~ ~ ~ 0.5 0.5 0.5 0 2 force @a
+                    scoreboard players remove @s customUniversal.Delay1 1
+                }
+
+                execute if score @s customAvatar.WaterArrowWindup matches 1.. at @s run {
+                    scoreboard players remove @s customAvatar.WaterArrowWindup 1
+                    execute if score @s customAvatar.WaterArrowWindup matches 31 run function custom:abilities/avatar/moves/2/windup {slow:"-0.5"}
+
+                    # spawn and fire
+                    execute if score @s customAvatar.WaterArrowWindup matches 16 run {
+                        scoreboard players add .global customAvatar.WaterArrowID 1
+                        scoreboard players operation @s customAvatar.WaterArrowID = .global customAvatar.WaterArrowID
+                    
+                        execute store result storage minecraft:custom avatar.water_arrow.id int 1 run scoreboard players get @s customAvatar.WaterArrowID
+                        function custom:abilities/avatar/moves/2/arrow with storage minecraft:custom avatar.water_arrow
+                        function custom:abilities/avatar/moves/2/windup {slow:"-1"}
+
+                        tag @s remove customUniversal.Cancelable
+                    }
+
+                    # reset player
+                    execute if score @s customAvatar.WaterArrowWindup matches 1 run function custom:abilities/avatar/moves/reset
+                }
+
+                execute if score @s customUniversal.AwakeningDuration matches 1.. run scoreboard players remove @s customUniversal.AwakeningDuration 1
+                execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+            }
+        }
+
+        function active {
+            function custom:abilities/avatar/hotbar/main
+
+            function custom:abilities/avatar/passive/main
+        }
+
+        dir hotbar {
+            function main {
+                block { with storage minecraft:custom avatar.cooldowns.move1
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07A3"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07A4"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07A5"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07A6"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07A7"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07A8"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07A9"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B0"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B1"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B2"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B3"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+                block { with storage minecraft:custom avatar.cooldowns.move2
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B4"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B5"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B6"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B7"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B8"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07B9"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C0"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C1"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C2"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C3"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C4"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+                block { with storage minecraft:custom avatar.cooldowns.move3
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C5"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C6"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C7"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C8"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07C9"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D0"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D1"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D2"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D3"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D4"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D5"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+                block { with storage minecraft:custom avatar.cooldowns.move4
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D6"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D7"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D8"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07D9"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07E0"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07E1"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07E2"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07E3"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07E4"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07E5"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u07E6"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+                
+                REPEAT (1,4) as i {
+                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                        function custom:universal/hotbar/time {ability:"avatar",selected:<%i%>}
+                    }
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom avatar.hotbar
+                    $title @s actionbar [{"text":"\uF830\u07A0\uF817"},{"text":"\uF820\$(move1)\uF801\u07A2"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF800\u07A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom avatar.hotbar
+                    $title @s actionbar [{"text":"\uF830\u07A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)\uF801\u07A2"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF800\u07A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom avatar.hotbar
+                    $title @s actionbar [{"text":"\uF830\u07A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)\uF801\u07A2"},{"text":"\uF800\$(move4)"},{"text":"\uF800\u07A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 4 run block { with storage minecraft:custom avatar.hotbar
+                    $title @s actionbar [{"text":"\uF830\u07A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)\uF801\u07A2"},{"text":"\uF800\u07A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+            }
+
+            function progress {
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A2"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A3"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A4"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A5"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A6"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A7"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A8"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06A9"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom avatar.hotbar.move$(selection) set value "u06B0"
+
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+            }
+        }
+
+        dir toggle {
+            function on {
+                playsound minecraft:entity.wind_charge.wind_burst player @s ~ ~ ~ 0.5
+                scoreboard players set @s customUniversal.ToggleDelay 20 
+            }
+
+            function off {
+                title @s actionbar ""
+                function custom:abilities/avatar/passive/changed
+                playsound minecraft:block.redstone_torch.burnout player @s ~ ~ ~ 0.5
+                scoreboard players set @s customUniversal.ToggleDelay 10
+            }
+        }
+
+        dir passive {
+            function main {
+                execute unless score @s customUniversal.PreviousHotbar = @s customUniversal.ActiveHotbar run function custom:abilities/avatar/passive/changed
+
+                execute if score @s customUniversal.ActiveHotbar matches 1 run function custom:abilities/avatar/passive/air
+                execute if score @s customUniversal.ActiveHotbar matches 2 run function custom:abilities/avatar/passive/water
+                execute if score @s customUniversal.ActiveHotbar matches 3 run function custom:abilities/avatar/passive/earth
+                execute if score @s customUniversal.ActiveHotbar matches 4 run function custom:abilities/avatar/passive/fire
+
+                scoreboard players operation @s customUniversal.PreviousHotbar = @s customUniversal.ActiveHotbar
+            }
+            
+            function changed {
+                tag @s remove customAvatar.PassiveAir
+                attribute @s minecraft:safe_fall_distance base reset
+                effect clear @s minecraft:slow_falling
+
+                tag @s remove customAvatar.PassiveWater
+                attribute @s minecraft:attack_damage modifier remove custom:avatar.passive
+                effect clear @s minecraft:dolphins_grace
+                effect clear @s minecraft:conduit_power
+
+                tag @s remove customAvatar.PassiveEarth
+                effect clear @s minecraft:haste
+
+                
+                tag @s remove customAvatar.PassiveFire
+                effect clear @s minecraft:fire_resistance
+            }
+
+            function air {
+                execute unless entity @s[tag=customAvatar.PassiveAir] run {
+                    attribute @s minecraft:safe_fall_distance base set 100000000
+                    tag @s add customAvatar.PassiveAir
+                }
+
+                execute if predicate custom:universal/sneak run {
+                    tag @s add customAvatar.PassiveAirSneaking
+                    effect clear @s minecraft:slow_falling
+                } else run {
+                    tag @s remove customAvatar.PassiveAirSneaking
+
+                    execute store result score @s customAvatar.PassiveAirMotion run data get entity @s Motion[1] 100000
+                    execute if score @s customAvatar.PassiveAirMotion matches ..-15000 run {
+                        particle minecraft:cloud ~ ~-0.5 ~ 0.35 0 0.35 0 2 force @a
+                    }
+                    effect give @s minecraft:slow_falling infinite 10 true
+                }
+            }
+
+            function water {
+                execute unless entity @s[tag=customAvatar.PassiveWater] if block ~ ~ ~ minecraft:water run {
+                    attribute @s minecraft:attack_damage modifier add custom:avatar.passive 0.25 add_multiplied_base 
+                    effect give @s minecraft:dolphins_grace infinite 0 true
+                    effect give @s minecraft:conduit_power infinite 2 true
+                    particle minecraft:falling_water ~ ~ ~ 0.5 0.25 0.5 0 25 force @a
+                    tag @s add customAvatar.PassiveWater
+                }
+
+                execute if entity @s[tag=customAvatar.PassiveWater] unless block ~ ~ ~ minecraft:water run {
+                    attribute @s minecraft:attack_damage modifier remove custom:avatar.passive
+                    effect clear @s minecraft:dolphins_grace
+                    effect clear @s minecraft:conduit_power
+                    tag @s remove customAvatar.PassiveWater
+                }
+            }
+
+            function earth {
+                execute unless entity @s[tag=customAvatar.PassiveEarth] run {
+                    attribute @s minecraft:mining_efficiency modifier add custom:avatar.passive 0.5 add_multiplied_base
+                    effect give @s minecraft:haste infinite 1 true
+                }
+            }
+
+            function fire {
+                execute unless entity @s[tag=customAvatar.PassiveFire] run {
+                    effect give @s minecraft:fire_resistance infinite 0 true
+                    tag @s add customAvatar.PassiveFire
+                }
+            }
+        }
+
+        dir moves {
+            dir 1 {
+                function core {
+                    execute if score @s customUniversal.ActiveHotbar matches 1 run {
+                        execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/avatar/moves/1/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Gust"}
+                    }
+                    scoreboard players set @s customUniversal.ActiveHotbar 1
+                }
+
+                function pass {
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move1Cooldown = .AvatarCooldown customUniversal.Move1Cooldown
+                    scoreboard players set @s customUniversal.MoveLastUsed 1
+                    scoreboard players set @s customUniversal.MoveDelay 10
+                    
+                    tag @s add temp
+                    particle minecraft:cloud ~ ~ ~ 0.35 0 0.35 0 50 force @a
+                    playsound minecraft:entity.breeze.shoot player @a ~ ~ ~ 1
+                    launch @s looking 2.5
+
+                    scoreboard players set @s customUniversal.Delay1 20
+                    execute rotated as @s as @e[type=!#custom:not_mob,distance=..3,tag=!temp] run {
+                        launch @s looking 2.5
+                    }
+                    tag @s remove temp
+                }
+            }
+
+            dir 2 {
+                function core {
+                    execute if score @s customUniversal.ActiveHotbar matches 2 run {
+                        execute unless score @s customUniversal.Move2Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/avatar/moves/2/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Water Arrow"}
+                    }
+                    scoreboard players set @s customUniversal.ActiveHotbar 2
+                }
+                
+                function pass {
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .AvatarCooldown customUniversal.Move2Cooldown
+                    scoreboard players set @s customUniversal.MoveLastUsed 2
+                    scoreboard players set @s customUniversal.MoveDelay 10
+                    tag @s add customUniversal.Cancelable
+                    tag @s add customUniversal.Animation
+
+                    playsound minecraft:entity.fishing_bobber.splash player @a ~ ~ ~ 0.25
+                    attribute @s minecraft:movement_speed modifier add custom:avatar.water_arrow -0.25 add_multiplied_total
+                    scoreboard players set @s customAvatar.WaterArrowWindup 45
+                }
+
+                function windup {
+                    playsound minecraft:entity.fishing_bobber.splash player @a ~ ~ ~ 0.25
+                    attribute @s minecraft:movement_speed modifier remove custom:avatar.water_arrow
+                    $attribute @s minecraft:movement_speed modifier add custom:avatar.water_arrow $(slow) add_multiplied_total
+
+                }
+
+                function arrow {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                    data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                    data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                    $execute rotated ~ ~-20 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"avatar",animation:'water_arrow_animation',extra:"scoreboard players set @s customAvatar.WaterArrowID $(id)"}
+                }
+
+                function rotate {
+                    execute store result storage minecraft:custom avatar.water_arrow.id int 1 run scoreboard players get @s customAvatar.WaterArrowID
+                    block { with storage minecraft:custom avatar.water_arrow
+                        $execute as @p[tag=customAbility.Avatar,scores={customAvatar.WaterArrowID=$(id)}] run {
+                            execute store result storage minecraft:custom avatar.water_arrow.rotation_x float 0.1 run data get entity @s Rotation[0] 10
+
+                            execute store result score @s customAvatar.WaterArrowRotationY run data get entity @s Rotation[1] 10
+                            scoreboard players remove @s customAvatar.WaterArrowRotationY 200
+                            execute store result storage minecraft:custom avatar.water_arrow.rotation_y float 0.1 run scoreboard players get @s customAvatar.WaterArrowRotationY
+                        }
+
+                        block { with storage minecraft:custom avatar.water_arrow
+                            $rotate @s $(rotation_x) $(rotation_y)
+                        }
+                    }
+                }
+
+                dir movement {
+                    function start {
+                        execute store result storage minecraft:custom avatar.water_arrow.id int 1 run scoreboard players get @s customAvatar.WaterArrowID
+                        function custom:abilities/avatar/moves/2/movement/main
+                        
+                        scoreboard players reset .distance customAvatar.WaterArrowMovement
+                    }
+
+                    function main {
+                        scoreboard players add .distance customAvatar.WaterArrowMovement 1
+
+                        execute if block ~ ~ ~ #custom:raycast_pass run {
+                            tp @s ^ ^ ^0.1
+
+                            execute as @e[type=!#custom:not_mob,distance=..2] run block { with storage minecraft:custom avatar.water_arrow
+                                $execute unless score @s customAvatar.WaterArrowID matches $(id) run block { with storage minecraft:custom avatar.water_arrow
+                                    $function custom:universal/damage/victim {id:"$(id)",damage:"7",type:"minecraft:in_wall",attacker:"tag=customAbility.Avatar",objective:"customAvatar.WaterArrowID",first:"was stabbed by",second:"using The Avatar"}
+                                }
+                            }
+                        } else run {
+                            function custom:abilities/avatar/moves/2/collide
+                            scoreboard players set .distance customAvatar.WaterArrowMovement 14
+                        }
+
+                        execute positioned ^ ^ ^0.1 unless score .distance customAvatar.WaterArrowMovement matches 14.. run function custom:abilities/avatar/moves/2/movement/main
+                    }
+                }
+
+                function collide {
+                    playsound minecraft:entity.player.splash.high_speed player @a ~ ~ ~ 1
+                    particle minecraft:falling_water ~ ~ ~ 1.5 1.5 1.5 0 25 force @a
+                    function animated_java:avatar_vfx/remove/this
+                }
+            }
+
+            dir 3 {
+                function core {
+                    execute if score @s customUniversal.ActiveHotbar matches 3 run {
+                        execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        execute unless items entity @s weapon.mainhand #custom:excavate run function custom:universal/error_messages/find {error:17}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/avatar/moves/3/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A0",move:"Excavate"}
+                    }
+                    scoreboard players set @s customUniversal.ActiveHotbar 3
+                }
+                
+                function pass {
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .AvatarCooldown customUniversal.Move3Cooldown
+                    scoreboard players set @s customUniversal.MoveLastUsed 3
+                    scoreboard players set @s customUniversal.MoveDelay 10
+
+                    playsound minecraft:block.gravel.break player @a ~ ~ ~ 1
+                    function custom:abilities/avatar/moves/3/logic
+               }
+
+               function logic {
+                    execute if items entity @s weapon.mainhand #custom:tools/wooden run {
+                        scoreboard players set .maximumDurability customAvatar.ExcavateToolDurability 59
+                        scoreboard players set @s customAvatar.ExcavateToolTier 1
+                    }
+                    execute if items entity @s weapon.mainhand #custom:tools/stone run {
+                        scoreboard players set .maximumDurability customAvatar.ExcavateToolDurability 131
+                        scoreboard players set @s customAvatar.ExcavateToolTier 2
+                    }
+                    execute if items entity @s weapon.mainhand #custom:tools/copper run {
+                        scoreboard players set .maximumDurability customAvatar.ExcavateToolDurability 190
+                        scoreboard players set @s customAvatar.ExcavateToolTier 3
+                    }
+                    execute if items entity @s weapon.mainhand #custom:tools/iron run {
+                        scoreboard players set .maximumDurability customAvatar.ExcavateToolDurability 250
+                        scoreboard players set @s customAvatar.ExcavateToolTier 4
+                    }
+                    execute if items entity @s weapon.mainhand #custom:tools/golden run {
+                        scoreboard players set .maximumDurability customAvatar.ExcavateToolDurability 32
+                        scoreboard players set @s customAvatar.ExcavateToolTier 5
+                    }
+                    execute if items entity @s weapon.mainhand #custom:tools/diamond run {
+                        scoreboard players set .maximumDurability customAvatar.ExcavateToolDurability 1561
+                        scoreboard players set @s customAvatar.ExcavateToolTier 6
+                    }
+                    execute if items entity @s weapon.mainhand #custom:tools/netherite run {
+                        scoreboard players set .maximumDurability customAvatar.ExcavateToolDurability 2031
+                        scoreboard players set @s customAvatar.ExcavateToolTier 7
+                    }
+
+                    execute store result score .damage customAvatar.ExcavateToolDurability run data get entity @s SelectedItem.components."minecraft:damage"
+                    scoreboard players operation .damageCheck customAvatar.ExcavateToolDurability = .damage customAvatar.ExcavateToolDurability
+                    scoreboard players operation .currentDurability customAvatar.ExcavateToolDurability = .maximumDurability customAvatar.ExcavateToolDurability
+                    scoreboard players operation @s customAvatar.ExcavateToolDurability = .maximumDurability customAvatar.ExcavateToolDurability
+                    scoreboard players operation @s customAvatar.ExcavateToolDurability -= .damage customAvatar.ExcavateToolDurability
+                    execute store result score @s customAvatar.ExcavateX run data get entity @s Pos[0]
+                    execute store result score @s customAvatar.ExcavateY run data get entity @s Pos[1]
+                    execute store result score @s customAvatar.ExcavateZ run data get entity @s Pos[2]
+
+                    execute store result score @s customAvatar.ExcavateToolUnbreaking run data get entity @s SelectedItem.components."minecraft:enchantments"."minecraft:unbreaking"
+                    execute unless score @s customAvatar.ExcavateToolUnbreaking matches 1.. run scoreboard players set @s customAvatar.ExcavateToolUnbreaking 1
+                    execute store result storage minecraft:custom avatar.excavate.unbreaking int 1 run scoreboard players get @s customAvatar.ExcavateToolUnbreaking
+                    block { with storage minecraft:custom avatar.excavate
+                        $function custom:universal/math/multiply {multiply_value:$(unbreaking),score:".maximumDurability",objective:"customAvatar.ExcavateToolDurability"}
+                        $function custom:universal/math/multiply {multiply_value:$(unbreaking),score:".damageCheck",objective:"customAvatar.ExcavateToolDurability"}
+                    }
+
+                    execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:6}
+                    execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:5}
+                    execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:4}
+                    execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:3}
+                    execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:2}
+                    execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:1}
+                    execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:0}
+
+                    block { with storage minecraft:custom avatar.excavate
+                        $function custom:universal/math/division {division_value:$(unbreaking),score:".damageAdded",objective:"customAvatar.ExcavateToolDurability"}
+                        scoreboard players operation .damage customAvatar.ExcavateToolDurability += .damageAdded customAvatar.ExcavateToolDurability
+                        scoreboard players operation .currentDurability customAvatar.ExcavateToolDurability -= .damage customAvatar.ExcavateToolDurability
+
+                        execute if score @s customAvatar.ExcavateToolTier matches 1 run item modify entity @s weapon.mainhand custom:universal/avatar/excavate/wooden
+                        execute if score @s customAvatar.ExcavateToolTier matches 2 run item modify entity @s weapon.mainhand custom:universal/avatar/excavate/stone
+                        execute if score @s customAvatar.ExcavateToolTier matches 3 run item modify entity @s weapon.mainhand custom:universal/avatar/excavate/copper
+                        execute if score @s customAvatar.ExcavateToolTier matches 4 run item modify entity @s weapon.mainhand custom:universal/avatar/excavate/iron
+                        execute if score @s customAvatar.ExcavateToolTier matches 5 run item modify entity @s weapon.mainhand custom:universal/avatar/excavate/golden
+                        execute if score @s customAvatar.ExcavateToolTier matches 6 run item modify entity @s weapon.mainhand custom:universal/avatar/excavate/diamond
+                        execute if score @s customAvatar.ExcavateToolTier matches 7 run {
+                            scoreboard players remove .currentDurability customAvatar.ExcavateToolDurability 1
+                            item modify entity @s weapon.mainhand custom:universal/avatar/excavate/netherite
+                        }
+                    }
+                    
+                    execute if entity @s[tag=customAvatar.ExcavatedToolBroken] run {
+                        playsound minecraft:entity.item.break player @a ~ ~ ~ 1
+                        item replace entity @s weapon.mainhand with air
+                        tag @s remove customAvatar.ExcavatedToolBroken
+                    }
+
+                    scoreboard players reset .damage customAvatar.ExcavateToolDurability
+                    # scoreboard players reset .damageCheck customAvatar.ExcavateToolDurability
+                    scoreboard players reset .damageAdded customAvatar.ExcavateToolDurability
+                    # scoreboard players reset .maximumDurability customAvatar.ExcavateToolDurability
+                    scoreboard players reset .currentDurability customAvatar.ExcavateToolDurability
+               }
+
+               dir recursive {
+                    function start {
+                        execute store result storage minecraft:custom avatar.excavate.x int 1 run scoreboard players get @s customAvatar.ExcavateX
+                        execute store result storage minecraft:custom avatar.excavate.y int 1 run scoreboard players get @s customAvatar.ExcavateY
+                        execute store result storage minecraft:custom avatar.excavate.z int 1 run scoreboard players get @s customAvatar.ExcavateZ
+                        execute if score @s customAvatar.ExcavateToolTier matches 1 run data modify storage minecraft:custom avatar.excavate.tier set value "wooden"
+                        execute if score @s customAvatar.ExcavateToolTier matches 2 run data modify storage minecraft:custom avatar.excavate.tier set value "stone"
+                        execute if score @s customAvatar.ExcavateToolTier matches 3 run data modify storage minecraft:custom avatar.excavate.tier set value "copper"
+                        execute if score @s customAvatar.ExcavateToolTier matches 4 run data modify storage minecraft:custom avatar.excavate.tier set value "iron"
+                        execute if score @s customAvatar.ExcavateToolTier matches 5 run data modify storage minecraft:custom avatar.excavate.tier set value "gold"
+                        execute if score @s customAvatar.ExcavateToolTier matches 6 run data modify storage minecraft:custom avatar.excavate.tier set value "diamond"
+                        execute if score @s customAvatar.ExcavateToolTier matches 7 run data modify storage minecraft:custom avatar.excavate.tier set value "netherite"
+                        data modify storage minecraft:custom avatar.excavate.id set from entity @s SelectedItem.id
+                        $data merge storage minecraft:custom {avatar:{excavate:{height:$(height)}}}
+                        block { with storage minecraft:custom avatar.excavate
+                            $execute positioned $(x) $(y) $(z) run block { with storage minecraft:custom avatar.excavate
+                                $execute positioned ~-3 ~$(height) ~-3 run function custom:abilities/avatar/moves/3/recursive/main
+                            }
+                        }
+
+                        scoreboard players reset .X customAvatar.ExcavateLogic
+                        scoreboard players reset .Z customAvatar.ExcavateLogic
+                    }
+
+                    function main {
+                        function custom:abilities/avatar/moves/3/dig with storage minecraft:custom avatar.excavate
+
+                        execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run {
+                            scoreboard players add .Z customAvatar.ExcavateLogic 1
+                            execute unless score .Z customAvatar.ExcavateLogic matches 7.. run {
+                                execute positioned ~ ~ ~1 run function custom:abilities/avatar/moves/3/recursive/main
+                            } else run {
+                                scoreboard players add .X customAvatar.ExcavateLogic 1
+                                scoreboard players reset .Z customAvatar.ExcavateLogic
+                                execute unless score .X customAvatar.ExcavateLogic matches 7.. run execute positioned ~1 ~ ~-6 run function custom:abilities/avatar/moves/3/recursive/main
+                            }
+                        }
+                    }
+               }
+
+               function dig {
+                    $execute unless block ~ ~ ~ #minecraft:incorrect_for_$(tier)_tool unless block ~ ~ ~ #custom:unbreakable run block { with storage minecraft:custom avatar.excavate
+                        $loot spawn ~ ~ ~ mine ~ ~ ~ $(id)
+                        setblock ~ ~ ~ minecraft:air
+                        scoreboard players add .damageAdded customAvatar.ExcavateToolDurability 1
+                        scoreboard players add .damageCheck customAvatar.ExcavateToolDurability 1
+
+                        execute if score .damageCheck customAvatar.ExcavateToolDurability >= .maximumDurability customAvatar.ExcavateToolDurability run tag @s add customAvatar.ExcavatedToolBroken
+                    }
+               }
+            }
+
+            dir 4 {
+                function core {
+                    execute if score @s customUniversal.ActiveHotbar matches 4 run {
+                        execute unless score @s customUniversal.Move4Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/avatar/moves/4/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:4,unicode:"u50A0",move:"Lava Cube"}
+                    }
+                    scoreboard players set @s customUniversal.ActiveHotbar 4
+                }
+                
+                function pass {
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move4Cooldown = .AvatarCooldown customUniversal.Move4Cooldown
+                    scoreboard players set @s customUniversal.MoveLastUsed 4
+                    scoreboard players set @s customUniversal.MoveDelay 10
+
+                    scoreboard players add .global customAvatar.MeteorID 1
+                    scoreboard players operation @s customAvatar.MeteorID = .global customAvatar.MeteorID
+
+                    execute store result storage minecraft:custom avatar.meteor.id int 1 run scoreboard players get @s customAvatar.MeteorID
+                    function custom:abilities/avatar/moves/4/meteor with storage minecraft:custom avatar.meteor
+                    playsound minecraft:entity.blaze.shoot player @a ~ ~ ~ 1
+                }
+
+                function meteor {
+                    data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                    data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                    data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                    $execute positioned ~ ~1 ~ rotated ~ ~ run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"avatar",animation:'meteor',extra:"scoreboard players set @s customAvatar.MeteorID $(id)"}
+                }
+
+                dir movement {
+                    function start {
+                        function custom:abilities/avatar/moves/4/movement/main
+                        scoreboard players reset .distance customAvatar.MeteorMovement
+                    }
+
+                    function main {
+                        scoreboard players add .distance customAvatar.MeteorMovement 1
+
+                        execute if block ~ ~ ~ #custom:raycast_pass run {
+                            tp @s ^ ^ ^0.1 ~ ~2
+                            particle minecraft:flame ~ ~ ~ 0 0 0 0.1 1 force @a
+                            particle minecraft:smoke ~ ~ ~ 0 0 0 0 1 force @a
+                        } else run {
+                            function custom:abilities/avatar/moves/4/collide
+                            scoreboard players set .distance customAvatar.MeteorMovement 10
+                        }
+
+                        execute positioned ^ ^ ^0.1 unless score .distance customAvatar.MeteorMovement matches 10.. run function custom:abilities/avatar/moves/4/movement/main
+                    }
+                }
+
+                function collide {
+                    particle minecraft:flame ~ ~ ~ 0 0 0 1 100 force @a
+                    particle minecraft:smoke ~ ~ ~ 3 3 3 0 150 force @a
+                    playsound minecraft:entity.generic.explode player @a ~ ~ ~ 2
+
+                    execute store result storage minecraft:custom avatar.meteor.id int 1 run scoreboard players get @s customAvatar.MeteorID
+                    block { with storage minecraft:custom avatar.meteor
+                        $execute as @e[type=!#custom:not_mob,distance=..7] unless score @s customAvatar.MeteorID matches $(id) run block { with storage minecraft:custom avatar.meteor
+                            $function custom:universal/damage/victim {id:"$(id)",damage:"11",type:"minecraft:in_wall",attacker:"tag=customAbility.President",objective:"customBilly.RigID",first:"was thrashed around until death by",second:"using Mr. President"}
+                        }
+                    }
+
+                    function animated_java:avatar_vfx/remove/this
+                }
+            }
+
+            function reset {
+                scoreboard players reset @s customAvatar.WaterArrowWindup
+                attribute @s minecraft:movement_speed modifier remove custom:avatar.water_arrow
+                tag @s remove customUniversal.Animation
+            }
+        }
+    }
+
+    dir shrinkray {
+        function install {
+            say shrinkray
+        }
+
+        function tick {
+            execute if score @s customUniversal.Toggle matches 1 run {
+                execute at @s run function custom:abilities/shrinkray/active
+            }
+
+            execute unless entity @s[scores={customShrinkray.SplitMove1SmallFire=0,customShrinkray.SplitMove1SmallSelf=0,customShrinkray.SplitMove2GrowFire=0,customShrinkray.SplitMove2GrowSelf=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                execute if score @s customShrinkray.SplitMove1SmallFire matches 1.. run scoreboard players remove @s customShrinkray.SplitMove1SmallFire 1
+                execute if score @s customShrinkray.SplitMove1SmallSelf matches 1.. run scoreboard players remove @s customShrinkray.SplitMove1SmallSelf 1
+                execute if score @s customShrinkray.SplitMove2GrowFire matches 1.. run scoreboard players remove @s customShrinkray.SplitMove2GrowFire 1
+                execute if score @s customShrinkray.SplitMove2GrowSelf matches 1.. run scoreboard players remove @s customShrinkray.SplitMove2GrowSelf 1
+
+                execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+            }
+        }
+
+        function active {
+
+        }
+
+        dir toggle {
+            function on {
+                playsound minecraft:president.toggle.enable player @s ~ ~ ~ 1
+                scoreboard players set @s customUniversal.ToggleDelay 20
+            }
+
+            function off {
+                title @s actionbar ""
+                playsound minecraft:president.toggle.withdraw player @s ~ ~ ~ 0.5
+
+                scoreboard players set @s customUniversal.ToggleDelay 10
+            }
+        }
+    }
 }
 
 dir traits {
@@ -3575,6 +4317,22 @@ dir universal {
 
         function time_fragment {
             $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Time Fragment","italic":false,"color":"aqua"}],item_model="minecraft:currencies/time_fragment",custom_data={currency:1b,time_fragment:1b}] $(count)
+        }
+
+        function gem_cluster {
+            $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Gem Cluster","italic":false,"color":"dark_aqua"}],item_model="minecraft:currencies/gem_cluster",custom_data={currency:1b,gem_cluster:1b}] $(count)
+        }
+
+        function blaze_core {
+            $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Blaze Core","italic":false,"color":"gold"}],item_model="minecraft:currencies/blaze_core",custom_data={currency:1b,blaze_core:1b}] $(count)
+        }
+
+        function phantom_feather {
+            $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Phantom Feather","italic":false,"color":"blue"}],item_model="minecraft:currencies/phantom_feather",custom_data={currency:1b,phantom_feather:1b}] $(count)
+        }
+
+        function drowned_heart {
+            $give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Drowned Heart","italic":false,"color":"aqua"}],item_model="minecraft:currencies/drowned_heart",custom_data={currency:1b,drowned_heart:1b}] $(count)
         }
     }
 
@@ -4276,6 +5034,18 @@ dir universal {
                     function custom:abilities/gojo/moves/reset/player
                 }
 
+                execute if entity @s[tag=customAbility.Avatar] run {
+                    execute store result storage minecraft:custom avatar.canceled.id int 1 run scoreboard players get @s customUniversal.GlobalCounter
+                    execute store result storage minecraft:custom avatar.canceled.last int 1 run scoreboard players get @s customUniversal.MoveLastUsed
+
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run block { with storage minecraft:custom avatar.canceled
+                        $scoreboard players operation @s customUniversal.Move$(last)Cooldown = .AvatarCooldown customUniversal.Move$(last)Cooldown
+                        $scoreboard players operation @s customUniversal.Move$(last)Cooldown *= mult50 customUniversal.CooldownMath
+                        $scoreboard players operation @s customUniversal.Move$(last)Cooldown /= div100 customUniversal.CooldownMath
+                    }
+                    function custom:abilities/avatar/moves/reset
+                }
+
                 execute if entity @s[tag=customAbility.TheWorld] run {
                     execute store result storage minecraft:custom the_world.cancelled.id int 1 run scoreboard players get @s customTheWorld.RigID
                     execute store result storage minecraft:custom the_world.cancelled.number int 1 run scoreboard players get @s customUniversal.MoveLastUsed
@@ -4376,6 +5146,7 @@ dir universal {
             execute if entity @s[tag=customGojo.RidingBlue] run function custom:universal/error_messages/find {error:100}
             execute if entity @s[tag=customGojo.InfiniteVoided] run function custom:universal/error_messages/find {error:101}
             execute if entity @s[tag=customTheWorld.TimeLocked] run function custom:universal/error_messages/find {error:102}
+            execute if score @s customTheWorld.BarrageStun matches 1.. run function custom:universal/error_messages/find {error:103}
         }
         function find {
             $tag @s add customUniversal.Error$(error)
@@ -4406,10 +5177,12 @@ dir universal {
             execute if entity @s[tag=customUniversal.Error14] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"cast this move inside the ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
             execute if entity @s[tag=customUniversal.Error15] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves while ","color":"gray"},{"text":"disguised","color":"light_purple"},{"text":" as a ","color":"gray"},{"text":"Turtle!","color":"green"}]
             execute if entity @s[tag=customUniversal.Error16] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
+            execute if entity @s[tag=customUniversal.Error17] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be holding a valid ","color":"gray"},{"text":"tool ","color":"gold"},{"text":"to use this move!","color":"gray"}]
 
             execute if entity @s[tag=customUniversal.Error100] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
             execute if entity @s[tag=customUniversal.Error101] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
             execute if entity @s[tag=customUniversal.Error102] run tellraw @s ["",{"text":"- You can't use moves when ","color":"gray"},{"text":"frozen ","color":"red"},{"text":"in ","color":"gray"},{"text":"time!","color":"aqua"}]
+            execute if entity @s[tag=customUniversal.Error103] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves whilst being ","color":"gray"},{"text":"barraged!","color":"aqua"}]
 
             REPEAT (1,102) as i {
                 tag @s remove customUniversal.Error<%i%>
@@ -4430,52 +5203,28 @@ dir universal {
                     tag @s add customAbility.Active
                     tag @s add temp
                     scoreboard players set @s customUniversal.Toggle 1
-                    execute if entity @s[tag=customAbility.Gojo] run {
-                        function custom:abilities/gojo/toggle/on
-                    }
-                    execute if entity @s[tag=customAbility.TheWorld] run {
-                        function custom:abilities/the_world/toggle/on
-                    }
-                    execute if entity @s[tag=customAbility.Dice] run {
-                        function custom:abilities/dice/toggle/on
-                    }
-                    execute if entity @s[tag=customAbility.Billy] run {
-                        function custom:abilities/billy/toggle/on
-                    }
-                    execute if entity @s[tag=customAbility.Toji] run {
-                        function custom:abilities/toji/toggle/on
-                    }
-                    execute if entity @s[tag=customAbility.President] run {
-                        function custom:abilities/president/toggle/on
-                    }
-                    execute if entity @s[tag=customAbility.Yuji] run {
-                        function custom:abilities/yuji/toggle/on
-                    }
+                    execute if entity @s[tag=customAbility.Gojo] run function custom:abilities/gojo/toggle/on
+                    execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/toggle/on
+                    execute if entity @s[tag=customAbility.Dice] run function custom:abilities/dice/toggle/on
+                    execute if entity @s[tag=customAbility.Billy] run function custom:abilities/billy/toggle/on
+                    execute if entity @s[tag=customAbility.Toji] run function custom:abilities/toji/toggle/on
+                    execute if entity @s[tag=customAbility.President] run function custom:abilities/president/toggle/on
+                    execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/toggle/on
+                    execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/toggle/on
+                    execute if entity @s[tag=customAbility.Shrinkray] run function custom:abilities/shrinkray/toggle/on
                 } else execute unless entity @s[tag=temp] run {
                     # Toggle OFF #
                     tag @s remove customAbility.Active
                     scoreboard players set @s customUniversal.Toggle 2
-                    execute if entity @s[tag=customAbility.Gojo] run {
-                        function custom:abilities/gojo/toggle/off
-                    }
-                    execute if entity @s[tag=customAbility.TheWorld] run {
-                        function custom:abilities/the_world/toggle/off
-                    }
-                    execute if entity @s[tag=customAbility.Dice] run {
-                        function custom:abilities/dice/toggle/off
-                    }
-                    execute if entity @s[tag=customAbility.Billy] run {
-                        function custom:abilities/billy/toggle/off
-                    }
-                    execute if entity @s[tag=customAbility.Toji] run {
-                        function custom:abilities/toji/toggle/off
-                    }
-                    execute if entity @s[tag=customAbility.President] run {
-                        function custom:abilities/president/toggle/off
-                    }
-                    execute if entity @s[tag=customAbility.Yuji] run {
-                        function custom:abilities/yuji/toggle/off
-                    }
+                    execute if entity @s[tag=customAbility.Gojo] run function custom:abilities/gojo/toggle/off
+                    execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/toggle/off
+                    execute if entity @s[tag=customAbility.Dice] run function custom:abilities/dice/toggle/off
+                    execute if entity @s[tag=customAbility.Billy] run function custom:abilities/billy/toggle/off
+                    execute if entity @s[tag=customAbility.Toji] run function custom:abilities/toji/toggle/off
+                    execute if entity @s[tag=customAbility.President] run function custom:abilities/president/toggle/off
+                    execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/toggle/off
+                    execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/toggle/off
+                    execute if entity @s[tag=customAbility.Shrinkray] run function custom:abilities/shrinkray/toggle/off
                 }
                 tag @s remove temp
             } 
@@ -4880,6 +5629,16 @@ dir ui {
                         data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/selection/president/skins/flip"}}}
                         function custom:ui/menu/pages/selection/president/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
                     }
+
+                    execute if entity @s[tag=customAbility.Avatar] run {
+                        data merge storage minecraft:ui {custom:{menu:{ability_name:"The Avatar"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_description:"The past can be a great teacher."}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_item_model:"minecraft:interactables/custom/avatar/default_skin"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/selection/avatar/flip"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/selection/avatar/moveset/flip"}}}
+                        data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/selection/avatar/skins/flip"}}}
+                        function custom:ui/menu/pages/selection/avatar/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
+                    }
                 }
             }
 
@@ -5159,7 +5918,7 @@ dir ui {
             dir selection {
                 dir mask {
                     function 1 {
-                        data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/billy/default_skin","minecraft:item_name":{"color":"aqua","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}}]
+                        data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/avatar/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The past can be a great teacher."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/flip"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/billy/default_skin","minecraft:item_name":{"color":"aqua","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}}]
                     }
 
                     function 2 {
@@ -5277,6 +6036,8 @@ dir ui {
                             scoreboard players reset @s customUI.SkinPatchID
                             tag @s add temp
 
+                            $advancement grant @s only server:abilities/$(namespace)
+
                             $tag @s add $(type)Purchased
                             execute if entity @s[tag=abilityPurchased] run scoreboard players add @s customUI.AbilitiesUnlocked 1
                             execute if entity @s[tag=skinPurchased] run scoreboard players add @s customUI.SkinsUnlocked 1
@@ -5319,6 +6080,7 @@ dir ui {
                             tag @s remove customAbility.TheWorld
                             tag @s remove customAbility.Billy
                             tag @s remove customAbility.President
+                            tag @s remove customAbility.Avatar
                         }
 
                         execute if entity @s[tag=customToji.SkinContext] run block { with storage minecraft:ui custom.purchase
@@ -5346,6 +6108,14 @@ dir ui {
                             $tag @s $(state) $(toggle)
                             execute if entity @s[tag=!customPresident.SkinDefault] run tag @s add customPresident.SkinDefault
                         }
+
+                        execute if entity @s[tag=customAvatar.SkinContext] run block { with storage minecraft:ui custom.purchase
+                            tag @s remove customAvatar.SkinDefault
+
+                            $tag @s $(state) $(toggle)
+                            execute if entity @s[tag=!customAvatar.SkinDefault] run tag @s add customAvatar.SkinDefault
+                        }
+
                         $tag @s remove $(context)
                     }
 
@@ -5775,7 +6545,7 @@ dir ui {
 
                 dir billy {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Unique secrets that you can find specific to this Ability."},{"color":"gray","italic":false,"text":"They can range anywhere from a simple change, to an"},{"color":"gray","italic":false,"text":"entirely different move. Hints are provided below."}," ",{"color":"gold","italic":false,"text":"Interaction (1)"},[{"color":"gray","italic":false,"text":"Billy "},{"color":"red","bold":true,"text":"Hungers."}],[{"color":"gray","italic":false,"text":"Discovered: "},{"color":"$(secret_interaction1color)","italic":false,"text":"$(secret_interaction1state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}," ",{"color":"gold","italic":false,"text":"Ability Cost"},[{"color":"$(ability_usernamecolor)","italic":false,"text":"Jaboble_Head "},{"color":"gray","italic":false,"text":"must be your Mojang"}],{"color":"gray","italic":false,"text":"account username"}," ",[{"color":"gray","italic":false,"text":"Unlocked: "},{"color":"$(ownership_color)","italic":false,"text":"$(ownership_state)"}],[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(equip_color)","italic":false,"text":"$(equip_state)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/billy/ability_price",name:"Billy",tag:"customBilly.Ownership",toggle:"customAbility.Billy",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/billy/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/billy/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Unique secrets that you can find specific to this Ability."},{"color":"gray","italic":false,"text":"They can range anywhere from a simple change, to an"},{"color":"gray","italic":false,"text":"entirely different move. Hints are provided below."}," ",{"color":"gold","italic":false,"text":"Interaction (1)"},[{"color":"gray","italic":false,"text":"Billy "},{"color":"red","bold":true,"text":"Hungers."}],[{"color":"gray","italic":false,"text":"Discovered: "},{"color":"$(secret_interaction1color)","italic":false,"text":"$(secret_interaction1state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"light_purple","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Billy"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}," ",{"color":"gold","italic":false,"text":"Ability Cost"},[{"color":"$(ability_usernamecolor)","italic":false,"text":"Jaboble_Head "},{"color":"gray","italic":false,"text":"must be your Mojang"}],{"color":"gray","italic":false,"text":"account username"}," ",[{"color":"gray","italic":false,"text":"Unlocked: "},{"color":"$(ownership_color)","italic":false,"text":"$(ownership_state)"}],[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(equip_color)","italic":false,"text":"$(equip_state)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/billy/ability_price",name:"Billy",namespace:"billy",tag:"customBilly.Ownership",toggle:"customAbility.Billy",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/billy/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/billy/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/same"}}}}]
                     }
 
                     function open {
@@ -5946,7 +6716,7 @@ dir ui {
 
                 dir the_world {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Not availiable.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for The World"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of The World"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[[{"text":"I Reject My Humanity, Jojo!","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item1color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/8 Time Fragment(s)","italic":false,"color":"$(ability_item2color)"},{"text":" Rarely dropped from killing ","italic":false,"color":"gray"}],[{"text":"Endermen","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Uneasy Alliance and Hired Help","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/ability_price",name:"The World",tag:"customTheWorld.Ownership",toggle:"customAbility.TheWorld",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/the_world/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/the_world/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Not availiable.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for The World"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of The World"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[[{"text":"I Reject My Humanity, Jojo!","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item1color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/8 Time Fragment(s)","italic":false,"color":"$(ability_item2color)"},{"text":" Rarely dropped from killing ","italic":false,"color":"gray"}],[{"text":"Endermen","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Into Fire and Hired Help","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/ability_price",name:"The World",namespace:"the_world",tag:"customTheWorld.Ownership",toggle:"customAbility.TheWorld",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/the_world/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/the_world/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/same"}}}}]
                     }
 
                     function open {
@@ -6012,7 +6782,7 @@ dir ui {
                         function custom:ui/menu/pages/selection/purchase/check/items {item:"phantom_membrane[minecraft:custom_data={currency:1b,time_fragment:1b}]",number:2,required:8,product:"ability",storage:"the_world",name:"The World"}
 
                         tag @s add customUniversal.AdvancementCheck
-                        function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:nether/uneasy_alliance",product:"ability",storage:"the_world",name:"The World"}
+                        function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:nether/obtain_blaze_rod",product:"ability",storage:"the_world",name:"The World"}
                         function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/summon_iron_golem",product:"ability",storage:"the_world",name:"The World"}
                         execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{the_world:{ability_advancement_color:"green"}}}}
                         tag @s remove customUniversal.AdvancementCheck
@@ -6074,7 +6844,7 @@ dir ui {
                         }
 
                         function mask {
-                            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"},[{"color":"gray","italic":false,"text":"Rarity: "},{"color":"aqua","italic":false,"text":"Default"}],{"color":"gray","italic":false,"text":" "},[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(default_equip_color)","italic":false,"text":"$(default_equip_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/skins/default"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/the_world_2","minecraft:item_name":{"color":"aqua","italic":false,"text":"The World 2"},"minecraft:lore":[{"color":"gray","italic":false,"text":"You're next, Jotaro!"},[{"color":"gray","italic":false,"text":"Rarity: "},{"color":"white","italic":false,"text":"Common"}],{"color":"gray","italic":false,"text":" "},{"color":"gold","italic":false,"text":"Skin Cost"},[{"text":"Advancement(s):","italic":false,"color":"$(tw2_advancement_color)"},{"text":" ","italic":false},{"text":"Spooky Scary Skeleton","italic":false,"color":"gray"}],{"color":"gray","italic":false,"text":" "},[{"color":"gray","italic":false,"text":"Unlocked: "},{"color":"$(tw2_ownership_color)","italic":false,"text":"$(tw2_ownership_state)"}],[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(tw2_equip_color)","italic":false,"text":"$(tw2_equip_state)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/tw2",name:"The World 2",tag:"customTheWorld.SkinTW2.Ownership",toggle:"customTheWorld.SkinTW2",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/vampire_the_world","minecraft:item_name":{"color":"red","italic":false,"text":"Vampire The World"},"minecraft:lore":[[{"text":"WRYYYYYYYY!!!","italic":false,"color":"gray"}],[{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"Uncommon","italic":false,"color":"green"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Skin Cost","italic":false,"color":"gold"}],[{"text":"$(vampire_item1count)/4 Golden Apple(s) ","italic":false,"color":"$(vampire_item1color)"}],[{"text":"Advancement(s):","italic":false,"color":"$(vampire_advancement_color)"},{"text":" ","italic":false,"color":"gray"},{"text":"Postmortal","italic":false,"color":"gray"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(vampire_ownership_state)","italic":false,"color":"$(vampire_ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(vampire_equip_state)","italic":false,"color":"$(vampire_equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/vampire",name:"Vampire The World",tag:"customTheWorld.SkinVampire.Ownership",toggle:"customTheWorld.SkinVampire",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/retro_the_world","minecraft:item_name":{"color":"green","italic":false,"text":"Retro The World"},"minecraft:lore":[[{"text":"In that case, Ascend","italic":false,"color":"gray"}],[{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"Epic","italic":false,"color":"light_purple"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Skin Cost","italic":false,"color":"gold"}],[{"text":"$(retro_item1count)/1 Mysterious Arrow(s):","italic":false,"color":"$(retro_item1color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"$(retro_item2count)/4 Time Fragment(s):","italic":false,"color":"$(retro_item2color)"},{"text":" Rarely dropped from killing","italic":false,"color":"gray"}],[{"text":"Endermen","italic":false,"color":"gray"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(retro_ownership_state)","italic":false,"color":"$(retro_ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(retro_equip_state)","italic":false,"color":"$(retro_equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/retro",name:"Retro The World",tag:"customTheWorld.SkinRetro.Ownership",toggle:"customTheWorld.SkinRetro",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/shadow_the_world","minecraft:item_name":{"color":"white","italic":false,"text":"Shadow The World"},"minecraft:lore":[[{"text":"What is it that you desire?","italic":false,"color":"gray"}],[{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"Legendary","italic":false,"color":"yellow"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Skin Cost","italic":false,"color":"gold"}],[{"text":"$(shadow_item1count)/2 Mysterious Arrow(s):","italic":false,"color":"$(shadow_item1color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"$(shadow_item2count)/6 Time Fragment(s):","italic":false,"color":"$(shadow_item2color)"},{"text":" Rarely dropped from killing","italic":false,"color":"gray"}],[{"text":"Endermen","italic":false,"color":"gray"}],[{"text":"Advancement(s): ","italic":false,"color":"$(shadow_advancement_color)"},{"text":"Smithing with Style and Subspace","italic":false,"color":"gray"}],[{"text":"Bubble","italic":false,"color":"gray"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(shadow_ownership_state)","italic":false,"color":"$(shadow_ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(shadow_equip_state)","italic":false,"color":"$(shadow_equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/shadow",name:"Shadow The World",tag:"customTheWorld.SkinShadow.Ownership",toggle:"customTheWorld.SkinShadow",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"The World Overview"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/the_world/skins","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/skins/same"}}}}]
+                            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"},[{"color":"gray","italic":false,"text":"Rarity: "},{"color":"aqua","italic":false,"text":"Default"}],{"color":"gray","italic":false,"text":" "},[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(default_equip_color)","italic":false,"text":"$(default_equip_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/skins/default"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/the_world_2","minecraft:item_name":{"color":"aqua","italic":false,"text":"The World 2"},"minecraft:lore":[{"color":"gray","italic":false,"text":"You're next, Jotaro!"},[{"color":"gray","italic":false,"text":"Rarity: "},{"color":"white","italic":false,"text":"Common"}],{"color":"gray","italic":false,"text":" "},{"color":"gold","italic":false,"text":"Skin Cost"},[{"text":"Advancement(s):","italic":false,"color":"$(tw2_advancement_color)"},{"text":" ","italic":false},{"text":"Spooky Scary Skeleton","italic":false,"color":"gray"}],{"color":"gray","italic":false,"text":" "},[{"color":"gray","italic":false,"text":"Unlocked: "},{"color":"$(tw2_ownership_color)","italic":false,"text":"$(tw2_ownership_state)"}],[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(tw2_equip_color)","italic":false,"text":"$(tw2_equip_state)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/tw2",name:"The World 2",namespace:"nil",tag:"customTheWorld.SkinTW2.Ownership",toggle:"customTheWorld.SkinTW2",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/vampire_the_world","minecraft:item_name":{"color":"red","italic":false,"text":"Vampire The World"},"minecraft:lore":[[{"text":"WRYYYYYYYY!!!","italic":false,"color":"gray"}],[{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"Uncommon","italic":false,"color":"green"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Skin Cost","italic":false,"color":"gold"}],[{"text":"$(vampire_item1count)/4 Golden Apple(s) ","italic":false,"color":"$(vampire_item1color)"}],[{"text":"Advancement(s):","italic":false,"color":"$(vampire_advancement_color)"},{"text":" ","italic":false,"color":"gray"},{"text":"Postmortal","italic":false,"color":"gray"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(vampire_ownership_state)","italic":false,"color":"$(vampire_ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(vampire_equip_state)","italic":false,"color":"$(vampire_equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/vampire",name:"Vampire The World",namespace:"nil",tag:"customTheWorld.SkinVampire.Ownership",toggle:"customTheWorld.SkinVampire",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/retro_the_world","minecraft:item_name":{"color":"green","italic":false,"text":"Retro The World"},"minecraft:lore":[[{"text":"In that case, Ascend","italic":false,"color":"gray"}],[{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"Epic","italic":false,"color":"light_purple"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Skin Cost","italic":false,"color":"gold"}],[{"text":"$(retro_item1count)/1 Mysterious Arrow(s):","italic":false,"color":"$(retro_item1color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"$(retro_item2count)/4 Time Fragment(s):","italic":false,"color":"$(retro_item2color)"},{"text":" Rarely dropped from killing","italic":false,"color":"gray"}],[{"text":"Endermen","italic":false,"color":"gray"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(retro_ownership_state)","italic":false,"color":"$(retro_ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(retro_equip_state)","italic":false,"color":"$(retro_equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/retro",name:"Retro The World",namespace:"nil",tag:"customTheWorld.SkinRetro.Ownership",toggle:"customTheWorld.SkinRetro",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/shadow_the_world","minecraft:item_name":{"color":"white","italic":false,"text":"Shadow The World"},"minecraft:lore":[[{"text":"What is it that you desire?","italic":false,"color":"gray"}],[{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"Legendary","italic":false,"color":"yellow"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Skin Cost","italic":false,"color":"gold"}],[{"text":"$(shadow_item1count)/2 Mysterious Arrow(s):","italic":false,"color":"$(shadow_item1color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"$(shadow_item2count)/6 Time Fragment(s):","italic":false,"color":"$(shadow_item2color)"},{"text":" Rarely dropped from killing","italic":false,"color":"gray"}],[{"text":"Endermen","italic":false,"color":"gray"}],[{"text":"Advancement(s): ","italic":false,"color":"$(shadow_advancement_color)"},{"text":"Smithing with Style and Subspace","italic":false,"color":"gray"}],[{"text":"Bubble","italic":false,"color":"gray"}],[{"text":" ","italic":false,"color":"gray"}],[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(shadow_ownership_state)","italic":false,"color":"$(shadow_ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(shadow_equip_state)","italic":false,"color":"$(shadow_equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/the_world/skins/shadow",name:"Shadow The World",tag:"customTheWorld.SkinShadow.Ownership",toggle:"customTheWorld.SkinShadow",namespace:"nil",context:"customTheWorld.SkinContext",cmd:"function custom:ui/menu/pages/selection/the_world/skins/open"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"The World Overview"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/the_world/skins","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/skins/same"}}}}]
                         }
 
                         function same {
@@ -6183,7 +6953,7 @@ dir ui {
 
                             execute at @s as @p run tag @s add customUniversal.SkinContext
                             tag @s add customUniversal.AdvancementCheck
-                            function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:nether/get_wither_skull",product:"tw2",storage:"the_world",name:"The World 2"}
+                            function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/totem_of_undying",product:"tw2",storage:"the_world",name:"The World 2"}
                             execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{the_world:{tw2_advancement_color:"green"}}}}
                             tag @s remove customUniversal.AdvancementCheck
                             execute at @s as @p run tag @s remove customUniversal.SkinContext
@@ -6241,7 +7011,7 @@ dir ui {
 
                 dir president {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Not availiable.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[[{"text":"I'll fulfill my promise.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/12 Turtle Scute(s)","italic":false,"color":"$(ability_item1color)"}],[{"text":"$(ability_item2count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Sneak 100 and Respecting the","italic":false,"color":"gray"}],[{"text":"Remnants","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"JoeBingleBarf ","italic":false,"color":"$(ability_usernamecolor)"},{"text":"as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/president/ability_price",name:"Mr. President",tag:"customPresident.Ownership",toggle:"customAbility.President",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/president/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/president/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Not availiable.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Mr. President"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[[{"text":"I'll fulfill my promise.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/12 Turtle Scute(s)","italic":false,"color":"$(ability_item1color)"}],[{"text":"$(ability_item2count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Sneak 100 and Respecting the","italic":false,"color":"gray"}],[{"text":"Remnants","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"JoeBingleBarf ","italic":false,"color":"$(ability_usernamecolor)"},{"text":"as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/president/ability_price",name:"Mr. President",namespace:"president",tag:"customPresident.Ownership",toggle:"customAbility.President",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/president/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/president/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/same"}}}}]
                     }
 
                     function open {
@@ -6436,6 +7206,165 @@ dir ui {
                         }
                     }
                 }
+
+                dir avatar {
+                    function mask {
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Not availiable.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for The Avatar"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of The Avatar"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"The Avatar"},"minecraft:lore":[[{"text":"The past can be a great teacher.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/4 Gem Cluster(s)","italic":false,"color":"$(ability_item1color)"},{"text":" Rarely dropped from","italic":false,"color":"gray"}],[{"text":"breaking Stone or Deepslate","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/4 Phantom Feather(s)","italic":false,"color":"$(ability_item2color)"},{"text":" Uncommonly dropped","italic":false,"color":"gray"}],[{"text":"from killing Phantoms","italic":false,"color":"gray"}],[{"text":"$(ability_item3count)/2 Blaze Core(s)","italic":false,"color":"$(ability_item3color)"},{"text":" Rarely dropped from killing","italic":false,"color":"gray"}],[{"text":"blazes","italic":false,"color":"gray"}],[{"text":"$(ability_item4count)/1 Drowned Heart(s)","italic":false,"color":"$(ability_item4color)"},{"text":" ","italic":false,"color":"gray"},{"text":"Rarely dropped ","italic":false,"color":"gray"},{"text":"from","italic":false,"color":"gray"}],[{"text":"killing Drowned","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" With Our Powers Combined!","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"35Shadowgames ","italic":false,"color":"$(ability_usernamecolor)"},{"text":"as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/avatar/ability_price",name:"The Avatar",tag:"customAvatar.Ownership",toggle:"customAbility.Avatar",context:"customUniversal.AbilityContext",namespace:"avatar",cmd:"function custom:ui/menu/pages/selection/avatar/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/avatar/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/same"}}}}]
+                    }
+
+                    function open {
+                        execute at @s as @p run function custom:ui/menu/pages/selection/avatar/player
+
+                        function custom:ui/menu/pages/selection/avatar/mask with storage minecraft:ui custom.selection.avatar
+                        data modify storage ui current set from storage ui mask
+                        execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/avatar/mask"
+                    }
+
+                    function same {
+                        execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                        function custom:ui/menu/pages/selection/avatar/open
+                    }
+
+                    function passive {
+                        $data merge storage minecraft:ui $(open):[[{"text":"Draft","italic":false,"color":"light_purple"},{"text":" is active whenever air mode is being hovered","italic":false,"color":"gray"}],[{"text":"and falling downwards. The user gains ","italic":false,"color":"gray"},{"text":"Slow Falling","italic":false,"color":"white"}],[{"text":"which can be canceled out by sneaking. Whilst ","italic":false,"color":"gray"},{"text":"sneaking,","italic":false,"color":"yellow"}],[{"text":"gain complete ","italic":false,"color":"gray"},{"text":"immunity ","italic":false,"color":"aqua"},{"text":"to fall damage. ","italic":false,"color":"gray"}],"",[{"text":"Dive ","italic":false,"color":"light_purple"},{"text":"is active whenever water mode is being hovered","italic":false,"color":"gray"}],[{"text":"and submerged in ","italic":false,"color":"gray"},{"text":"water.","italic":false,"color":"blue"},{"text":" The user gains the following","italic":false,"color":"gray"}],[{"text":"changes.","italic":false,"color":"gray"}],[{"text":"o Damage Multiplier: ","italic":false,"color":"gray"},{"text":"1.25x","italic":false,"color":"green"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Dolphins Grace I","italic":false,"color":"dark_aqua"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Conduit Power III","italic":false,"color":"aqua"}],"",[{"text":"Masonry ","italic":false,"color":"light_purple"},{"text":"activates whenever earth mode is being","italic":false,"color":"gray"}],[{"text":"hovered. The user gains the following changes","italic":false,"color":"gray"}],[{"text":"o Efficiency Multiplier: ","italic":false,"color":"gray"},{"text":"1.5x","italic":false,"color":"green"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Haste II","italic":false,"color":"yellow"}],"",[{"text":"Boil ","italic":false,"color":"light_purple"},{"text":"is active whenever fire mode is being hovered.","italic":false,"color":"gray"}],[{"text":"The user gains the following ","italic":false,"color":"gray"},{"text":"changes.","italic":false,"color":"gray"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Fire Resistance I","italic":false,"color":"red"}]]$(end)
+                    }
+
+                    function flip {
+                        execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                        function custom:ui/menu/pages/selection/avatar/open
+                    }
+
+                    function player {
+                        block {
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{equip_color:"red"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{equip_state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{ownership_color:"red"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{ownership_state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{secret_interaction1state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{secret_interaction1color:"red"}}}}
+                            function custom:ui/menu/pages/selection/avatar/passive {open:"{custom:{selection:{avatar:{passive",end:"}}}}"}
+                        }
+
+                        execute if entity @s[tag=customAbility.Avatar] run {
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{equip_color:"green"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{equip_state:"Yes"}}}}
+                        }
+
+                        execute if entity @s[tag=customAvatar.Ownership] run {
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{ownership_color:"green"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{ownership_state:"Yes"}}}}
+                        }
+                        
+                        execute if entity @s[tag=customAvatar.SecretInteractionAscend] run {
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{secret_interaction1state:"Yes"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{avatar:{secret_interaction1color:"green"}}}}
+                        }
+
+                        function custom:ui/menu/pages/selection/avatar/ability_price
+                    }
+
+                    function ability_price {
+                        data merge storage minecraft:ui {custom:{purchase:{type:"ability",clickID:1}}}
+
+                        
+                        # bypass #
+                        tag @s add customUI.BypassCheck
+                        function custom:ui/menu/pages/selection/purchase/check/username {product:"ability",storage:"avatar",username:"35ShadowGames"}
+
+                        # gem cluster x4 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {item:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,gem_cluster:1b}]",number:1,required:4,product:"ability",storage:"avatar",name:"The Avatar"}
+
+                        # phantom feather x4 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {item:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,phantom_feather:1b}]",number:2,required:4,product:"ability",storage:"avatar",name:"The Avatar"}
+
+                        # blaze core x2 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {item:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,blaze_core:1b}]",number:3,required:2,product:"ability",storage:"avatar",name:"The Avatar"}
+
+                        # drowned heart x1 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {item:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,drowned_heart:1b}]",number:4,required:1,product:"ability",storage:"avatar",name:"The Avatar"}
+
+                        tag @s add customUniversal.AdvancementCheck
+                        function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:husbandry/froglights",product:"ability",storage:"avatar",name:"The Avatar"}
+                        execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{avatar:{ability_advancement_color:"green"}}}}
+                        tag @s remove customUniversal.AdvancementCheck
+                    }
+
+                    dir moveset {
+                        function open {
+                            function custom:ui/menu/pages/selection/avatar/moveset/mask
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/avatar/moveset/mask"
+                        }
+
+                        function mask {
+                            data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Back"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Toji's overview"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:wind_charge","minecraft:item_name":{"color":"aqua","text":"Gust"},"minecraft:lore":[[{"text":"Launch the user in the direction they're currently","italic":false,"color":"gray"}],[{"text":"facing. ","italic":false,"color":"gray"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"11s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/moveset/same"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:water_bucket","minecraft:item_name":{"color":"aqua","text":"Water Arrow"},"minecraft:lore":[[{"text":"Following a short initial windup, launch a deadly","italic":false,"color":"gray"}],[{"text":"arrow of water ahead of where you're looking.","italic":false,"color":"gray"}],[{"text":"Using this move whilst touching ","italic":false,"color":"gray"},{"text":"water","italic":false,"color":"blue"},{"text":" increases","italic":false,"color":"gray"}],[{"text":"the arrow speed by ","italic":false,"color":"gray"},{"text":"1.5x.","italic":false,"color":"gold"}],[{"text":"o Windup: ","italic":false,"color":"gray"},{"text":"1.45s","italic":false,"color":"red"}],[{"text":"o Arrow Speed: ","italic":false,"color":"gray"},{"text":"4m/s","italic":false,"color":"green"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"12","italic":false,"color":"green"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"19s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/moveset/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:diamond_pickaxe","minecraft:item_name":{"color":"aqua","text":"Excavate"},"minecraft:lore":[[{"text":"Must be holding a pickaxe to use, draining a ","italic":false,"color":"gray"}],[{"text":"maximum of ","italic":false,"color":"gray"},{"text":"343 durability. ","italic":false,"color":"gold"},{"text":"Destroy the ","italic":false,"color":"gray"}],[{"text":"surrounding ","italic":false,"color":"gray"},{"text":"7x7x7","italic":false,"color":"green"},{"text":" area of blocks the wielded","italic":false,"color":"gray"}],[{"text":"pickaxe is capable of destroying. Blocks are","italic":false,"color":"gray"}],[{"text":"dropped on the ground when destroyed.","italic":false,"color":"gray"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"26s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/moveset/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:fire_charge","minecraft:item_name":{"color":"aqua","text":"Meteor"},"minecraft:lore":[[{"text":"Launch a molten meteor of lava ahead of where","italic":false,"color":"gray"}],[{"text":"you're looking. ","italic":false,"color":"gray"},{"text":"Collision","italic":false,"color":"gold"},{"text":" with terrain, ","italic":false,"color":"gray"},{"text":"players ","italic":false,"color":"gold"},{"text":"or","italic":false,"color":"gray"}],[{"text":"travelling for ","italic":false,"color":"gray"},{"text":"too long","italic":false,"color":"gold"},{"text":" will cause the cube to","italic":false,"color":"gray"}],[{"text":"explode ","italic":false,"color":"red"},{"text":"dealing large ","italic":false,"color":"gray"},{"text":"AOE","italic":false,"color":"red"},{"text":" damage in the area.","italic":false,"color":"gray"}],[{"text":"o AOE Range:","italic":false,"color":"gray"},{"text":" 4m","italic":false,"color":"green"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"9","italic":false,"color":"green"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"21s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/moveset/same"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Back"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to The Avatar's Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/flip"}}}},{Slot:26b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:ui/custom/avatar/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/moveset/same"}}}}]
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/avatar/moveset/open
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/avatar/moveset/open
+                        }
+                    }
+
+                    dir skins {
+                        function open {
+                            execute at @s as @p run function custom:ui/menu/pages/selection/avatar/skins/player
+
+                            function custom:ui/menu/pages/selection/avatar/skins/mask with storage minecraft:ui custom.selection.avatar
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/avatar/skins/mask"
+                        }
+
+                        function mask {
+                            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/avatar/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The past can be a great teacher."},[{"color":"gray","italic":false,"text":"Rarity: "},{"color":"aqua","italic":false,"text":"Default"}],{"color":"gray","italic":false,"text":" "},[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(default_equip_color)","italic":false,"text":"$(default_equip_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/skins/default"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"The Avatar Overview"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/avatar/skins","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/skins/same"}}}}]
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/avatar/skins/open
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/avatar/skins/open
+                        }
+
+                        function player {
+                            block {
+                                data merge storage minecraft:ui {custom:{selection:{avatar:{default_equip_color:"red"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{avatar:{default_equip_state:"No"}}}}
+                            }
+
+                            execute if entity @s[tag=customAvatar.SkinDefault] run {
+                                data merge storage minecraft:ui {custom:{selection:{avatar:{default_equip_color:"green"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{avatar:{default_equip_state:"Yes"}}}}
+                            }
+                        }
+
+                        function default {
+                            execute at @s as @p run {
+                                tag @s add customUniversal.SkinContext
+                                tag @s add customAvatar.DefaultSkinBypass
+                            }
+
+                            data merge storage minecraft:ui {custom:{purchase:{tag:"customAvatar.DefaultSkinBypass"}}}
+                            data merge storage minecraft:ui {custom:{purchase:{toggle:"customAvatar.SkinDefault"}}}
+                            data merge storage minecraft:ui {custom:{purchase:{context:"customAvatar.SkinContext"}}}
+                            execute at @s as @p run function custom:ui/menu/pages/selection/purchase/main with storage minecraft:ui custom.purchase
+                            function custom:ui/menu/pages/selection/avatar/skins/open
+
+                            execute at @s as @p run {
+                                tag @s remove customUniversal.SkinContext
+                                tag @s remove customAvatar.DefaultSkinBypass
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -6482,6 +7411,7 @@ dir ui {
                 data modify storage minecraft:ui custom.purchase.name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.name
                 data modify storage minecraft:ui custom.purchase.tag set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.tag
                 data modify storage minecraft:ui custom.purchase.toggle set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.toggle
+                data modify storage minecraft:ui custom.purchase.namespace set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.namespace
 
                 # data modify storage minecraft:ui custom.skin_name set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.skin_name
                 # data modify storage minecraft:ui custom.ability set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.ability

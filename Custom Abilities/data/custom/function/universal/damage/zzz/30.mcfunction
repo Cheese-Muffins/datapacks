@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-data merge storage minecraft:custom {the_world:{cancelled:{state:"TheWorld_State1Cooldown"}}}
-data merge storage minecraft:custom {the_world:{cancelled:{seperator:"customTheWorld.SplitMove1Timeskip"}}}
+scoreboard players set #ifelse mcb.internal 0
+execute if score @s customUniversal.MoveLastUsed matches 1 run function custom:universal/damage/zzz/31
+execute if score #ifelse mcb.internal matches 0 run function custom:universal/damage/zzz/33

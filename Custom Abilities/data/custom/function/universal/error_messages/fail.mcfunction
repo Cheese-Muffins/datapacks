@@ -21,9 +21,11 @@ execute if entity @s[tag=customUniversal.Error13] run tellraw @s ["",{"text":"- 
 execute if entity @s[tag=customUniversal.Error14] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"cast this move inside the ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
 execute if entity @s[tag=customUniversal.Error15] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves while ","color":"gray"},{"text":"disguised","color":"light_purple"},{"text":" as a ","color":"gray"},{"text":"Turtle!","color":"green"}]
 execute if entity @s[tag=customUniversal.Error16] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
+execute if entity @s[tag=customUniversal.Error17] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be holding a valid ","color":"gray"},{"text":"tool ","color":"gold"},{"text":"to use this move!","color":"gray"}]
 execute if entity @s[tag=customUniversal.Error100] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
 execute if entity @s[tag=customUniversal.Error101] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
 execute if entity @s[tag=customUniversal.Error102] run tellraw @s ["",{"text":"- You can't use moves when ","color":"gray"},{"text":"frozen ","color":"red"},{"text":"in ","color":"gray"},{"text":"time!","color":"aqua"}]
+execute if entity @s[tag=customUniversal.Error103] run tellraw @s ["",{"text":"- You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves whilst being ","color":"gray"},{"text":"barraged!","color":"aqua"}]
 tag @s remove customUniversal.Error1
 tag @s remove customUniversal.Error2
 tag @s remove customUniversal.Error3

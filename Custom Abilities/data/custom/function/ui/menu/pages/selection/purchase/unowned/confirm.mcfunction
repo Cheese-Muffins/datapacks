@@ -7,6 +7,7 @@ scoreboard players reset @s customUI.PurchaseConfirm
 scoreboard players reset @s customUI.SkinLastPatchID
 scoreboard players reset @s customUI.SkinPatchID
 tag @s add temp
+$advancement grant @s only server:abilities/$(namespace)
 $tag @s add $(type)Purchased
 execute if entity @s[tag=abilityPurchased] run scoreboard players add @s customUI.AbilitiesUnlocked 1
 execute if entity @s[tag=skinPurchased] run scoreboard players add @s customUI.SkinsUnlocked 1

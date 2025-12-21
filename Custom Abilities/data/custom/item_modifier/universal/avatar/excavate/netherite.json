@@ -1,0 +1,13 @@
+{
+  "function": "minecraft:set_damage",
+  "damage": {
+    "type": "minecraft:score",
+    "target": {
+      "type": "minecraft:fixed",
+      "name": ".currentDurability"
+    },
+    "score": "customAvatar.ExcavateToolDurability",
+    "scale": 0.0004923682914820286
+  },
+  "add": false
+}

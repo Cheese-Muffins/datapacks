@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
-execute if entity @s[scores={customPresident.KidnapDuration=1..}] run function custom:universal/error_messages/find {error:16}
-execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/1/zzz/2
-execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Kidnap"}
+scoreboard players reset @s customUniversal.FailReturn
+execute store result storage minecraft:custom president.self_kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+function custom:abilities/president/moves/1/zzz/2 with storage minecraft:custom president.self_kidnap
+tag @s add temp

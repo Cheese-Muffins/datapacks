@@ -8,6 +8,7 @@ ride @s dismount
 perspective @s first
 # item modify entity @s hotbar.8 custom:gojo/base
 function custom:universal/armor/reveal
+tag @s remove customPresident.EnteringRoom
 tag @s remove customUniversal.Cancelable
 tag @s remove customUniversal.DisconnectCheck
 tag @s remove customUniversal.Animation

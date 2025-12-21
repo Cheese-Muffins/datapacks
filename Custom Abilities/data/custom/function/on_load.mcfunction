@@ -84,6 +84,7 @@ scoreboard objectives add customUniversal.ToggleCastDelay dummy
 scoreboard objectives add customUniversal.TimeStopAnimation dummy
 scoreboard objectives add customUniversal.DeathCountInit dummy
 scoreboard objectives add customUniversal.DeathCountPost dummy
+scoreboard objectives add customUniversal.PreviousHotbar dummy
 # Statistics #
 scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
 scoreboard objectives add customUniversal.StatisticsEntityKills dummy
@@ -93,3 +94,5 @@ function custom:abilities/billy/install
 function custom:abilities/toji/install
 function custom:abilities/president/install
 function custom:abilities/the_world/install
+function custom:abilities/avatar/install
+function custom:abilities/shrinkray/install

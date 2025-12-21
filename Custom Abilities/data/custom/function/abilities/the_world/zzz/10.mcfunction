@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @p[tag=customAbility.TheWorld,scores={$(objective)=$(id)}] run function custom:abilities/the_world/zzz/11
+scoreboard players remove @s customUniversal.ToggleCastDelay 1
+execute unless score @s customUniversal.ToggleCastDelay matches 1.. run tag @s remove customUniversal.HideUI

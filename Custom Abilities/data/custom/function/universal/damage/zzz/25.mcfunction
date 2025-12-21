@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customTheWorld.RigID=$(id)}] run function custom:universal/damage/zzz/26
+$scoreboard players operation @s customUniversal.Move$(last)Cooldown = .AvatarCooldown customUniversal.Move$(last)Cooldown
+$scoreboard players operation @s customUniversal.Move$(last)Cooldown *= mult50 customUniversal.CooldownMath
+$scoreboard players operation @s customUniversal.Move$(last)Cooldown /= div100 customUniversal.CooldownMath

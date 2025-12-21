@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players set @s customTheWorld.TimeStopVictimDuration $(absorbed)
+$tp @s $(x) $(y) $(z) $(rotation_x) $(rotation_y)

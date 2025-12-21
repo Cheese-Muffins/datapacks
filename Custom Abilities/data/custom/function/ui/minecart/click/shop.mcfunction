@@ -6,6 +6,7 @@ data modify storage minecraft:ui custom.purchase.context set from block 0 -64 0 
 data modify storage minecraft:ui custom.purchase.name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.name
 data modify storage minecraft:ui custom.purchase.tag set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.tag
 data modify storage minecraft:ui custom.purchase.toggle set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.toggle
+data modify storage minecraft:ui custom.purchase.namespace set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.namespace
 # data modify storage minecraft:ui custom.skin_name set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.skin_name
 # data modify storage minecraft:ui custom.ability set from block 0 -63 0 Items[0].components."minecraft:custom_data".ui_item.ability
 execute at @s as @p run function custom:ui/menu/pages/selection/purchase/main with storage minecraft:ui custom.purchase

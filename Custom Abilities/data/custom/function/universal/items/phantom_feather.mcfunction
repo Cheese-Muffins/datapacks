@@ -1,0 +1,3 @@
+# Generated with MC-Build
+
+$give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Phantom Feather","italic":false,"color":"blue"}],item_model="minecraft:currencies/phantom_feather",custom_data={currency:1b,phantom_feather:1b}] $(count)

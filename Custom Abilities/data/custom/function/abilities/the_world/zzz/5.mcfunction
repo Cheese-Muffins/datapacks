@@ -9,4 +9,4 @@ execute if score @s customUniversal.Move4Cooldown matches 1.. run scoreboard pla
 execute unless entity @s[tag=customsettings.AwakeningDrainDisabled] if score @s customTheWorld.AwakeningDuration matches 1.. run function custom:abilities/the_world/zzz/8
 execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
 execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
-execute if score @s customUniversal.ToggleCastDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleCastDelay 1
+execute if score @s customUniversal.ToggleCastDelay matches 1.. run function custom:abilities/the_world/zzz/10

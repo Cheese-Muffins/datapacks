@@ -1,3 +1,8 @@
 # Generated with MC-Build
 
-$execute as @e[type=!#custom:not_mob,tag=customTheWorld.TimeLocked,scores={customTheWorld.TimeStopID=$(id)}] run function custom:abilities/the_world/moves/1/timestop/zzz/4
+tag @s add customTheWorld.TimeLocked
+$scoreboard players set @s customTheWorld.TimeStopID $(id)
+execute if entity @s[tag=aj.the_world.root] run function animated_java:the_world/animations/pause_all
+execute if entity @s[tag=aj.the_world_vfx.root] run function animated_java:the_world_vfx/animations/pause_all
+execute if entity @s[tag=aj.billy.root] run function animated_java:billy/animations/pause_all
+execute if entity @s[tag=aj.president.root] run function animated_java:president/animations/pause_all

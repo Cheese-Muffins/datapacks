@@ -7,3 +7,4 @@ tag @s remove customAbility.Toji
 tag @s remove customAbility.TheWorld
 tag @s remove customAbility.Billy
 tag @s remove customAbility.President
+tag @s remove customAbility.Avatar
