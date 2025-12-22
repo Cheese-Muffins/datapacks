@@ -16,9 +16,10 @@ execute store result score @s customAvatar.ExcavateX run data get entity @s Pos[
 execute store result score @s customAvatar.ExcavateY run data get entity @s Pos[1]
 execute store result score @s customAvatar.ExcavateZ run data get entity @s Pos[2]
 execute store result score @s customAvatar.ExcavateToolUnbreaking run data get entity @s SelectedItem.components."minecraft:enchantments"."minecraft:unbreaking"
+execute if score @s customAvatar.ExcavateToolUnbreaking matches 1.. run function custom:abilities/avatar/moves/3/zzz/8
 execute unless score @s customAvatar.ExcavateToolUnbreaking matches 1.. run scoreboard players set @s customAvatar.ExcavateToolUnbreaking 1
 execute store result storage minecraft:custom avatar.excavate.unbreaking int 1 run scoreboard players get @s customAvatar.ExcavateToolUnbreaking
-function custom:abilities/avatar/moves/3/zzz/8 with storage minecraft:custom avatar.excavate
+function custom:abilities/avatar/moves/3/zzz/9 with storage minecraft:custom avatar.excavate
 execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:6}
 execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:5}
 execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:4}
@@ -26,8 +27,8 @@ execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function cust
 execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:2}
 execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:1}
 execute unless entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/recursive/start {height:0}
-function custom:abilities/avatar/moves/3/zzz/9 with storage minecraft:custom avatar.excavate
-execute if entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/zzz/11
+function custom:abilities/avatar/moves/3/zzz/10 with storage minecraft:custom avatar.excavate
+execute if entity @s[tag=customAvatar.ExcavatedToolBroken] run function custom:abilities/avatar/moves/3/zzz/12
 scoreboard players reset .damage customAvatar.ExcavateToolDurability
 # scoreboard players reset .damageCheck customAvatar.ExcavateToolDurability
 scoreboard players reset .damageAdded customAvatar.ExcavateToolDurability

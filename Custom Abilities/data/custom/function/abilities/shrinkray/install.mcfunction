@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-say shrinkray
+scoreboard objectives add customShrinkray.SplitMove1SmallFire dummy

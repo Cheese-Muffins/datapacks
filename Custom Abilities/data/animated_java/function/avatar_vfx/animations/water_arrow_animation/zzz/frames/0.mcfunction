@@ -3,6 +3,7 @@ $data merge entity $(bone_water_arrow_animation) {transformation: [-2.9167f,0f,0
 $data merge entity $(bone_water_arrow_projectile) {transformation: [0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_meteor) {transformation: [0f,0f,0f,0.0688f,0f,0f,0f,0.0031f,0f,0f,0f,0.0177f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:avatar_vfx/animations/water_arrow_animation/zzz/frames/0_locator_constant
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:avatar_vfx/animations/water_arrow_animation/zzz/frames/0_locator_timestop
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0.875 ^-1.0625 rotated ~0 ~0 run function animated_java:avatar_vfx/animations/water_arrow_animation/zzz/frames/0_locator_arrow_location
-data modify entity @s data merge value {"cameras":{},"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"arrow_location":{"px":1.3011872240940627e-16,"py":0.875,"pz":-1.0625,"ry":0,"rx":0}}}
+data modify entity @s data merge value {"cameras":{},"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"timestop":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"arrow_location":{"px":1.3011872240940627e-16,"py":0.875,"pz":-1.0625,"ry":0,"rx":0}}}
 execute on vehicle unless entity @s[tag=aj.transforms_only] run function animated_java:avatar_vfx/variants/water_arrow_1/apply

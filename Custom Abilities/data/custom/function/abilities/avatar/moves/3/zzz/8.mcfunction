@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$function custom:universal/math/multiply {multiply_value:$(unbreaking),score:".maximumDurability",objective:"customAvatar.ExcavateToolDurability"}
-$function custom:universal/math/multiply {multiply_value:$(unbreaking),score:".damageCheck",objective:"customAvatar.ExcavateToolDurability"}
+execute if score @s customAvatar.ExcavateToolUnbreaking matches 3 run scoreboard players set @s customAvatar.ExcavateToolUnbreaking 5
+execute if score @s customAvatar.ExcavateToolUnbreaking matches 2 run scoreboard players set @s customAvatar.ExcavateToolUnbreaking 3
+execute if score @s customAvatar.ExcavateToolUnbreaking matches 1 run scoreboard players set @s customAvatar.ExcavateToolUnbreaking 2

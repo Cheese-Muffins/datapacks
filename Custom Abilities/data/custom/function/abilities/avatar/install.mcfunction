@@ -16,5 +16,5 @@ scoreboard objectives add customAvatar.MeteorID dummy
 scoreboard objectives add customAvatar.MeteorMovement dummy
 function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:1,move:1,cooldown:11}
 function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:2,move:2,cooldown:19}
-function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:3,move:3,cooldown:26}
+function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:3,move:3,cooldown:33}
 function custom:universal/cooldowns/10x {ability:"Avatar",storage:"avatar",path:4,move:4,cooldown:21}

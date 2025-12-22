@@ -1,5 +1,3 @@
 # Generated with MC-Build
 
-scoreboard players set #ifelse mcb.internal 1
-function custom:abilities/avatar/moves/4/collide
-scoreboard players set .distance customAvatar.MeteorMovement 10
+$execute as @e[type=!#custom:not_mob,distance=..2.5] unless entity @s[gamemode=spectator] unless score @s customAvatar.MeteorID matches $(id) as @n[type=minecraft:item_display,tag=aj.avatar_vfx.root,scores={customAvatar.MeteorID=$(id)}] run function custom:abilities/avatar/moves/4/movement/zzz/2

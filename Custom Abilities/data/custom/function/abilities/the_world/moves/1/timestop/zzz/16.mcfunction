@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-$function custom:universal/damage/victim {id:$(id),damage:7,type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customUniversal.RigID",first:"was torn apart by",second:"during Timestop"}
-particle minecraft:smoke ~ ~1 ~ 0 0 0 0.5 8 force @a
-particle minecraft:flame ~ ~1 ~ 0 0 0 0.5 2 force @a
+execute if score @s customUniversal.TimeStopAnimation matches 1 run function animated_java:avatar_vfx/animations/water_arrow_animation/resume
+execute if score @s customUniversal.TimeStopAnimation matches 2 run function animated_java:avatar_vfx/animations/water_arrow_projectile/resume
+execute if score @s customUniversal.TimeStopAnimation matches 3 run function animated_java:avatar_vfx/animations/meteor/resume

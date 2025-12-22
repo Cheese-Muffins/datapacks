@@ -7,4 +7,4 @@ tag @s add customUniversal.Cancelable
 tag @s add customUniversal.Animation
 playsound minecraft:entity.fishing_bobber.splash player @a ~ ~ ~ 0.25
 attribute @s minecraft:movement_speed modifier add custom:avatar.water_arrow -0.25 add_multiplied_total
-scoreboard players set @s customAvatar.WaterArrowWindup 45
+scoreboard players set @s customAvatar.WaterArrowWindup 25

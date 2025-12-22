@@ -1,0 +1,3 @@
+# Generated with MC-Build
+
+$give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Heavenly Inverted Spear","italic":false,"color":"light_purple"}],max_stack_size=1,item_model="minecraft:currencies/heavenly_inverted_spear",custom_data={currency:1b,heavenly_inverted_spear:1b}] $(count)
