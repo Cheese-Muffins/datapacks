@@ -8,6 +8,7 @@ effect clear @s minecraft:dolphins_grace
 effect clear @s minecraft:conduit_power
 tag @s remove customAvatar.PassiveEarth
 effect clear @s minecraft:haste
+effect clear @s minecraft:night_vision
 tag @s remove customAvatar.PassiveFireNeutral
 tag @s remove customAvatar.PassiveFireActive
 attribute @s minecraft:attack_damage modifier remove custom:avatar.passive

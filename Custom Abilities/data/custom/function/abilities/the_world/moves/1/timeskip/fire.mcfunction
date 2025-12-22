@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-scoreboard players add @s customTheWorld.Statistics.Timeskip.Distance
+scoreboard players add @s customTheWorld.Statistics.Timeskip.Distance 1
 execute unless block ^ ^ ^.1 #custom:raycast_pass run function custom:abilities/the_world/moves/1/timeskip/hit
 scoreboard players add .distance customTheWorld.TimeskipMovement 1
 execute if score .distance customTheWorld.TimeskipMovement matches 125 positioned ~ ~ ~ run function custom:abilities/the_world/moves/1/timeskip/hit

@@ -31,7 +31,7 @@ scoreboard objectives add customTheWorld.TimeStopRotationY dummy
 # Awakening #
 scoreboard objectives add customTheWorld.AwakeningDuration dummy
 # Move Cooldowns #
-function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:"1a",move:1,cooldown:8}
+function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:"1a",move:1,cooldown:9}
 function custom:universal/cooldowns/10x {ability:"TheWorld_State2",storage:"the_world",path:"1b",move:1,cooldown:50}
 function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:2,move:2,cooldown:17}
 function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:3,move:3,cooldown:23}

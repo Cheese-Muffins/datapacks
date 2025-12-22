@@ -6,7 +6,7 @@ execute store result storage minecraft:custom the_world.statistics.playtime_h in
 execute store result storage minecraft:custom the_world.statistics.rage_stacks int 1 run scoreboard players get @s customTheWorld.Statistics.Rage.Stacks
 execute store result storage minecraft:custom the_world.statistics.rage_mode_triggered int 1 run scoreboard players get @s customTheWorld.Statistics.RageMode.Triggered
 execute store result storage minecraft:custom the_world.statistics.timeskip_uses int 1 run scoreboard players get @s customTheWorld.Statistics.Timeskip.Uses
-execute store result storage minecraft:custom the_world.statistics.timeskip_distance int 1 run scoreboard players get @s customTheWorld.Statistics.Timeskip.Distance
+execute store result storage minecraft:custom the_world.statistics.timeskip_distance double 0.1 run scoreboard players get @s customTheWorld.Statistics.Timeskip.Distance
 execute store result storage minecraft:custom the_world.statistics.timestop_uses int 1 run scoreboard players get @s customTheWorld.Statistics.Timestop.Uses
 execute store result storage minecraft:custom the_world.statistics.timestop_damage int 1 run scoreboard players get @s customTheWorld.Statistics.Timestop.Damage
 execute store result storage minecraft:custom the_world.statistics.timestop_entities_frozen int 1 run scoreboard players get @s customTheWorld.Statistics.Timestop.EntitiesFrozen

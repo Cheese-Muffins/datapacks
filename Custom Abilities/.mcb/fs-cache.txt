@@ -74,7 +74,7 @@ data\custom\function\abilities\billy\moves\1\range.mcfunction:1f4b3101267b609cb1
 data\custom\function\abilities\billy\moves\1\zzz\2.mcfunction:2be704d31ae49e639c5ebea7c97081ec545f383d
 data\custom\function\abilities\billy\moves\1\zzz\3.mcfunction:6d62ea69fdc8bb0727d0cbd3c0c5d05b87e54301
 data\custom\function\abilities\billy\moves\1\buffs.mcfunction:913c0294e2f4c1959b0353cc09fbd1c4c4bbd3ac
-data\custom\function\abilities\billy\moves\2\core.mcfunction:1a3e6885490871d83f797275442f9ba83e0fdc0d
+data\custom\function\abilities\billy\moves\2\core.mcfunction:ce21e69f77d9154690b4b835ddf6bfb750fa2064
 data\custom\function\abilities\billy\moves\2\zzz\0.mcfunction:297e0fa863ea6a0ae3f9bb7c56f72df134c9870d
 data\custom\function\abilities\billy\moves\2\zzz\1.mcfunction:b911643440a1ee46f3a82663253eced0caf1a1ed
 data\custom\function\abilities\billy\moves\2\zzz\2.mcfunction:875fb1c81388adbfd9ef4629f8d7de5b11af691c
@@ -153,7 +153,7 @@ data\custom\function\abilities\billy\zzz\13.mcfunction:ed8e665886c8cf6160ac44446
 data\custom\function\abilities\billy\zzz\12.mcfunction:5dad048fbd84a240e33d63ed952ae7126e4fb5fe
 data\custom\function\abilities\billy\zzz\7.mcfunction:45d569b89c4be0e2c9351d17a8078ea99d46fc9f
 data\custom\function\abilities\billy\disconnect.mcfunction:41f328c0253cb3d792c1f1b858babfe57a713dd1
-data\custom\function\abilities\the_world\install.mcfunction:bc244ed564365d9e774465b6b5797795553c7b12
+data\custom\function\abilities\the_world\install.mcfunction:86034f4e452ea84b09860c6c1e49d6c1f75ee231
 data\custom\function\abilities\the_world\tick\zzz\0.mcfunction:7ac47af3526894403927ce165c2459af1237020f
 data\custom\function\abilities\the_world\tick\zzz\1.mcfunction:9072029c07adff19728431a7ce143c678165d750
 data\custom\function\abilities\the_world\tick\zzz\2.mcfunction:8f62f4bcaab46c75c7f5aabc8157d39fa296e358
@@ -220,11 +220,11 @@ data\custom\function\abilities\the_world\moves\1\core.mcfunction:fda94d11a6e8d68
 data\custom\function\abilities\the_world\moves\1\timeskip\core.mcfunction:94b5cef199e3ae86217a675c4f514451fa4f9037
 data\custom\function\abilities\the_world\moves\1\timeskip\zzz\0.mcfunction:73dae8e3fc2dd95ccf63d4a2516b710b9de34ab3
 data\custom\function\abilities\the_world\moves\1\timeskip\start.mcfunction:7fdd69e8fc0198c07c3a39cb676c07e10b454186
-data\custom\function\abilities\the_world\moves\1\timeskip\fire.mcfunction:942f373743c1741f3d3096a6b253e00f44fbf733
+data\custom\function\abilities\the_world\moves\1\timeskip\fire.mcfunction:3248c6de22c75f209028e5bbc43252dd4afd14c6
 data\custom\function\abilities\the_world\moves\1\timeskip\zzz\1.mcfunction:73dae8e3fc2dd95ccf63d4a2516b710b9de34ab3
 data\custom\function\abilities\the_world\moves\1\timeskip\hit.mcfunction:43580dd25afa7340cc740a2fde3cf1ff2d6b2634
 data\custom\function\abilities\the_world\moves\1\timestop\core.mcfunction:7379622a6b303fa61522215eb95ca9c6c7a363df
-data\custom\function\abilities\the_world\moves\1\timestop\pass.mcfunction:055d7f620c12ab65e74f09e0e691448d81712bbe
+data\custom\function\abilities\the_world\moves\1\timestop\pass.mcfunction:c9b8a69c30e80fc02f755e43e8745db6c24a6c4a
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\2.mcfunction:c5396424636f381685310f4a6f7348d138e5d855
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\1.mcfunction:d301105e94de6683c94dd33a25b2b532abfa4d60
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\3.mcfunction:9cd99b93b45c39ae5237e0eaee8155b93e3db5eb
@@ -233,7 +233,7 @@ data\custom\function\abilities\the_world\moves\1\timestop\freeze.mcfunction:29a4
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\7.mcfunction:b0075ac603f25ed6fa5025c24da479429b06fdb9
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\6.mcfunction:9db13217a7ff8a86835802468b0035a9b69ffecb
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\5.mcfunction:f97dd17a92c7b307ab2467c47dd1f18b77496545
-data\custom\function\abilities\the_world\moves\1\timestop\zzz\4.mcfunction:63c59c833b7aa5e721d1f222666b0ce84ec106d9
+data\custom\function\abilities\the_world\moves\1\timestop\zzz\4.mcfunction:6e32922d6a66f7f36c5628f0c498ae78876651c9
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\10.mcfunction:c694252ca517d2d5e541970eb88f3f8c82dc9f78
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\9.mcfunction:9d3e20a5927c8d72e42a32e1a6d53fbcc0ad8d38
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\12.mcfunction:71b86c5408c093df76f18c82c3b359ba6c17edcf
@@ -243,7 +243,7 @@ data\custom\function\abilities\the_world\moves\1\timestop\zzz\15.mcfunction:0147
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\16.mcfunction:a75fd21f9513167d1a7d95cf3164b8e32ff9e2c6
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\11.mcfunction:afe1e637e913e682f5968f7270a927e9083da936
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\8.mcfunction:4d80079842109f03c5352de99762b217ef4a0d90
-data\custom\function\abilities\the_world\moves\1\timestop\main.mcfunction:e4f81a7d9760d48cbcd29461c876e61c8a91311f
+data\custom\function\abilities\the_world\moves\1\timestop\main.mcfunction:be233cfcbc0649376b0248f22ddd958299708eca
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\17.mcfunction:0b3b1168450b68ad565de93215e8a5fb2b94190b
 data\custom\function\abilities\the_world\moves\1\timestop\zzz\18.mcfunction:2be91f2e196bd5b0292e6a33c7d8ca6274c38e8a
 data\custom\function\abilities\the_world\moves\1\timestop\damage.mcfunction:7cd1dd1bccefda62071abbc0c22adc2d8558ff7a
@@ -410,7 +410,7 @@ data\custom\function\abilities\president\moves\1\self_kidnap\exit.mcfunction:1db
 data\custom\function\abilities\president\moves\2\core.mcfunction:f26e26fd1716c7cf3ac00356247afdab9abe5050
 data\custom\function\abilities\president\moves\2\decide.mcfunction:997ec2b2180cc4e8cc38f75201bef3555d396b91
 data\custom\function\abilities\president\moves\2\shake_key\pass.mcfunction:b871dfab1e4e0439e3906885934bc82eadd54895
-data\custom\function\abilities\president\moves\2\shake_key\zzz\0.mcfunction:b5592b724028effcd9f8145607611b3075cd2b97
+data\custom\function\abilities\president\moves\2\shake_key\zzz\0.mcfunction:d19baad681fa7cd2215daa00b67b8763f31f6b96
 data\custom\function\abilities\president\moves\2\shake_key\sfx.mcfunction:72eb7d73ada28c232a86cf821070760c26b272c6
 data\custom\function\abilities\president\moves\2\shake_key\zzz\1.mcfunction:d58d43a81db2888c450f86a340881c4f46073638
 data\custom\function\abilities\president\moves\2\shake_key\zzz\3.mcfunction:4a709ec8883492ddd2d7b2706b890c227e8e5a14
@@ -547,7 +547,7 @@ data\custom\function\abilities\toji\moves\3\land.mcfunction:d079f62da90e151a9bda
 data\custom\function\abilities\toji\moves\reset\zzz\0.mcfunction:1f83f981a53b3eec855d96456d26cc7a32dcce90
 data\custom\function\abilities\toji\moves\reset\all.mcfunction:b7cada097dbac740178d1d7da25d7fe857638444
 data\custom\function\abilities\toji\moves\reset\player.mcfunction:0c327d47f006b6f37be02b72a00ae95dcd5d4671
-data\custom\function\abilities\avatar\install.mcfunction:46eb88847d0fb80a5e9895c385322d2703a01cdf
+data\custom\function\abilities\avatar\install.mcfunction:5b5e859328b4150b5a8103de7ba7bcf65b95a5ba
 data\custom\function\abilities\avatar\tick\zzz\0.mcfunction:e2cca5bca86e88739c33fd99a778e58e22f9d673
 data\custom\function\abilities\avatar\tick\zzz\1.mcfunction:065bd4f95ac896953827fb88711dce6ccd830581
 data\custom\function\abilities\avatar\tick\zzz\2.mcfunction:17c5400dafd2ff59a8234560f66da926a58e00bf
@@ -576,7 +576,7 @@ data\custom\function\abilities\avatar\hotbar\progress.mcfunction:a6ea8c1c1eb3c9f
 data\custom\function\abilities\avatar\toggle\on.mcfunction:296aa88ea12ab7f47ce0124ede5ffe992eceda52
 data\custom\function\abilities\avatar\toggle\off.mcfunction:54d94f0eb9062417a434d39a2407efc773f4a693
 data\custom\function\abilities\avatar\passive\main.mcfunction:af7f2870e33f8cfc3029fabe0f4affdcc97b9ada
-data\custom\function\abilities\avatar\passive\changed.mcfunction:50d814a79e04ad3196782578a8bf58af64677c56
+data\custom\function\abilities\avatar\passive\changed.mcfunction:3719d93b766267e0fa6da1ae3b7577fbf1032a18
 data\custom\function\abilities\avatar\passive\zzz\0.mcfunction:faed51c63dd476d304b0942a6cbc02f58e12b404
 data\custom\function\abilities\avatar\passive\zzz\1.mcfunction:cceb66c9f44c25b539f6b201742054b49ba8de02
 data\custom\function\abilities\avatar\passive\zzz\3.mcfunction:5327d837f2d4f018a3cb9b30f0e4049c62654b37
@@ -611,7 +611,7 @@ data\custom\function\abilities\avatar\moves\2\movement\zzz\0.mcfunction:c70b3a94
 data\custom\function\abilities\avatar\moves\2\movement\zzz\3.mcfunction:0050f1c8f5180cfe95caef9ee27c92817d9a3fd4
 data\custom\function\abilities\avatar\moves\2\movement\main.mcfunction:e3354a5858975eb661e548500b4af7410ab43167
 data\custom\function\abilities\avatar\moves\2\collide.mcfunction:54c07cebf2097b4397a31185136c00dbfd5d2c39
-data\custom\function\abilities\avatar\moves\3\zzz\0.mcfunction:e78a710f21abdc31f8ab1fee9355cfd01741fd79
+data\custom\function\abilities\avatar\moves\3\zzz\0.mcfunction:052539beb9765e01a4ba47a3d603dbe72ee475a0
 data\custom\function\abilities\avatar\moves\3\core.mcfunction:c79de30d600904421a33a389117ff35e5c0d30b0
 data\custom\function\abilities\avatar\moves\3\pass.mcfunction:39b3fefa16a8cb057f226ca050415b371fb3a4e3
 data\custom\function\abilities\avatar\moves\3\zzz\1.mcfunction:7f490ab97cd84bdea92bd7ee470f904c6b7451de
@@ -642,7 +642,7 @@ data\custom\function\abilities\avatar\moves\4\pass.mcfunction:f727e2d56439e01740
 data\custom\function\abilities\avatar\moves\4\meteor.mcfunction:7e29338d978fa4f941d83cb4ebc88bd081be1fc9
 data\custom\function\abilities\avatar\moves\4\movement\start.mcfunction:1f7c7064af45a8f62a3dee37d165f3ecb1068bd7
 data\custom\function\abilities\avatar\moves\4\movement\zzz\2.mcfunction:81e8a63aa24da97367c40fb4a164f10fd1d30bcd
-data\custom\function\abilities\avatar\moves\4\movement\zzz\1.mcfunction:4ee3934e4446ece74360890ff67c9ff028559df7
+data\custom\function\abilities\avatar\moves\4\movement\zzz\1.mcfunction:3c456ae3e2269070f3de4dbb3280e4cd2efaeb66
 data\custom\function\abilities\avatar\moves\4\movement\zzz\0.mcfunction:da1e87c93589d2fc8aedfb5cb5128fb6fad348a2
 data\custom\function\abilities\avatar\moves\4\movement\zzz\3.mcfunction:7ca8986ab5658d0718599dfa980eb88194f615f9
 data\custom\function\abilities\avatar\moves\4\movement\main.mcfunction:d5a2482d3350117f4d0557aca16c313e178a4b63
@@ -690,7 +690,7 @@ data\custom\function\universal\statistics\zzz\0.mcfunction:c8b44ea08131ef4132911
 data\custom\function\universal\statistics\time.mcfunction:dfcc32fe57cf96cac63b78761473f19733385d73
 data\custom\function\universal\statistics\fetch\billy.mcfunction:bbb05dc1ab41ab250f0ede387d3c2ce668c55dae
 data\custom\function\universal\statistics\fetch\president.mcfunction:f9b75e47983d948fa89c2204e666bdf8f2aed80a
-data\custom\function\universal\statistics\fetch\the_world.mcfunction:8037791431ffc22d4816164a1967fda50a23a36a
+data\custom\function\universal\statistics\fetch\the_world.mcfunction:28fb93380ac59fe804f93ea367be728d241adb1c
 data\custom\function\universal\disconnect\online.mcfunction:d1a71c8789412d6fa6ac05e41beaedfae1efacc2
 data\custom\function\universal\disconnect\self\main.mcfunction:6e01080bf50dadac44c3ab94c9e5d22b3a7bd00b
 data\custom\function\universal\constant_tick\zzz\0.mcfunction:9f7c983f88a554bae919d8bcb7fd489f20c2a73c
@@ -793,7 +793,7 @@ data\custom\function\universal\setup\rig.mcfunction:5254c92730c870b390928245d364
 data\custom\function\universal\setup\pair.mcfunction:3cc140ebb5c7a9be4c32bd945278f75431512aa9
 data\custom\function\universal\error_messages\universal.mcfunction:1815d82a0c077108dd7bbb3f86fabed5b45fea9f
 data\custom\function\universal\error_messages\find.mcfunction:8f0cb45b17692414f97deac88d29bc7315136b00
-data\custom\function\universal\error_messages\fail.mcfunction:4d404629ed56fcdf024ad34c584fffea7238322a
+data\custom\function\universal\error_messages\fail.mcfunction:78988a5aadbafa9b6b2ac664d18d623b77c5474e
 data\custom\function\universal\toggle\zzz\1.mcfunction:ec5ae590a4b72efadf3ca5fba23982d38a956db0
 data\custom\function\universal\toggle\zzz\2.mcfunction:b7d782b0fa137a872ccad67287e8ebfef0cb716e
 data\custom\function\universal\toggle\zzz\0.mcfunction:48bebb3860b9e000db30b6930b5bbbe5bb507ae3
@@ -848,7 +848,7 @@ data\custom\function\ui\menu\pages\statistics\zzz\1.mcfunction:3d9f2a3b5eab2119c
 data\custom\function\ui\menu\pages\statistics\zzz\0.mcfunction:a29960fc76d396e607853519e285596c0f3cf018
 data\custom\function\ui\menu\pages\statistics\zzz\3.mcfunction:f99435e1a1a0b6d7f0a6b7ad1bbc1f57f0cdf78f
 data\custom\function\ui\menu\pages\statistics\zzz\2.mcfunction:c3400aa30b71faf516c9e60add76d69d35e62446
-data\custom\function\ui\menu\pages\statistics\zzz\5.mcfunction:1bd3382b503fb17426f23ab19d963337d685cdc8
+data\custom\function\ui\menu\pages\statistics\zzz\5.mcfunction:49392470ad3d5959fa81e23a9dc82a0c35f82f0a
 data\custom\function\ui\menu\pages\statistics\zzz\4.mcfunction:999ba0439a71ea1e39f2246364bc555e1adbfa0f
 data\custom\function\ui\menu\pages\statistics\player.mcfunction:7ac076a32dd04ba420db0db99a1851ee7d4b5215
 data\custom\function\ui\menu\pages\statistics\mask.mcfunction:56ae3c3ca037debc029931b4682eff2def86fdd2
@@ -1038,7 +1038,7 @@ data\custom\function\ui\menu\pages\selection\the_world\player.mcfunction:971fea8
 data\custom\function\ui\menu\pages\selection\the_world\ability_price.mcfunction:e54e58101f85dd3ba5d8698d622c3c8ee3748e80
 data\custom\function\ui\menu\pages\selection\the_world\moveset\open.mcfunction:df14e0926691538ae2302391cf246dea79cfdebc
 data\custom\function\ui\menu\pages\selection\the_world\moveset\mask.mcfunction:4856281a276061b946adfdae45c49dcc2a4806b8
-data\custom\function\ui\menu\pages\selection\the_world\moveset\zzz\0.mcfunction:8d10bb3b19a2d3288f529dc4ff353e342e0783cc
+data\custom\function\ui\menu\pages\selection\the_world\moveset\zzz\0.mcfunction:299e668299787dd76a76fa521e011b52e9627b2e
 data\custom\function\ui\menu\pages\selection\the_world\moveset\zzz\1.mcfunction:9835de159444a151d5430b74473a766a9d2b1dae
 data\custom\function\ui\menu\pages\selection\the_world\moveset\data.mcfunction:f43bd21565115a6a18782faa755e411e6a925e27
 data\custom\function\ui\menu\pages\selection\the_world\moveset\same.mcfunction:cd5bf69d3ab03dbc283a9c0d0e7b4cd142502b4a
@@ -1110,7 +1110,7 @@ data\custom\function\ui\menu\pages\selection\avatar\zzz\3.mcfunction:9f7b5c8c2e7
 data\custom\function\ui\menu\pages\selection\avatar\player.mcfunction:7e0c57242f7cd543fe9c858794c91f47cc5c32ed
 data\custom\function\ui\menu\pages\selection\avatar\ability_price.mcfunction:444a8fc781d7c4658c10d3e1a59cdab7c52b6f91
 data\custom\function\ui\menu\pages\selection\avatar\moveset\open.mcfunction:7bc5dda628bdd7cf8f8a1e597267c848f9838ee7
-data\custom\function\ui\menu\pages\selection\avatar\moveset\mask.mcfunction:2f425db1cebb491aec1f4a2ad2e28e6a5d7c0420
+data\custom\function\ui\menu\pages\selection\avatar\moveset\mask.mcfunction:512406312b9bd9a28d098533e5b1701e4aa307ab
 data\custom\function\ui\menu\pages\selection\avatar\moveset\same.mcfunction:f43538c7f1ad8e89151fd8044e7be9ef237b4459
 data\custom\function\ui\menu\pages\selection\avatar\moveset\flip.mcfunction:218bff59f27c48bb51103e000853f6ba263d2460
 data\custom\function\ui\menu\pages\selection\avatar\skins\open.mcfunction:80ac9e46445b7c34fb81b5e1161cd2f446a90f27
@@ -1128,7 +1128,8 @@ data\custom\function\ui\menu\on_click.mcfunction:45a4c5999de577fc4d6fd89ea1cf16a
 data\custom\function\ui\menu\on_input.mcfunction:c7a75ee49ea8731a6880a3261ff133f8aff81fd0
 data\custom\function\ui\menu\refresh.mcfunction:3de3d67eff2831242b7c7cbed1d2d499c8c56bca
 data\custom\function\ui\minecart\click\check.mcfunction:481c6b0123e1d493cfc9cc39deb50533ffd1b96b
-data\custom\function\ui\minecart\click\shop.mcfunction:761089cd24371c4ce28098b406896ae2af1335ba
+data\custom\function\ui\minecart\click\zzz\0.mcfunction:f72222e11ef624a40a59a42009507c70355884d9
+data\custom\function\ui\minecart\click\shop.mcfunction:4bf9caeaa543b4a42e5263b2fa3a591b50a2368b
 data\custom\function\ui\minecart\click\settings\zzz\0.mcfunction:a80eb485264baa153c6c13185b599ba879e8e610
 data\custom\function\ui\minecart\click\settings\zzz\2.mcfunction:7c21701278421507984d48386b6b19aee1033f9d
 data\custom\function\ui\minecart\click\settings\zzz\1.mcfunction:8007673b6ec6a63e062dde198dfe72bbf9e3309d

@@ -2,6 +2,9 @@
     "values":[
         "minecraft:air",
         "minecraft:bedrock",
-        "#minecraft:portals"
+        "#minecraft:portals",
+        "minecraft:water",
+        "minecraft:lava",
+        "minecraft:end_portal_frame"
     ]
 }
