@@ -3,4 +3,5 @@ execute unless entity @s[tag=aj.shrinkray.root] run return 0
 execute if entity @s[tag=aj.shrinkray.animation.self_shrink.playing] run function animated_java:shrinkray/animations/self_shrink/zzz/on_tick
 execute if entity @s[tag=aj.shrinkray.animation.self_grow.playing] run function animated_java:shrinkray/animations/self_grow/zzz/on_tick
 execute if entity @s[tag=aj.shrinkray.animation.shoot.playing] run function animated_java:shrinkray/animations/shoot/zzz/on_tick
+execute on passengers if entity @s[tag=aj.global.data] run function animated_java:shrinkray/root/on_tick/transform_floating_entities
 execute on passengers run rotate @s ~ ~

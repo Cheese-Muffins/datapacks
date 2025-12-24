@@ -4403,37 +4403,228 @@ dir abilities {
     dir shrinkray {
         function install {
             scoreboard objectives add customShrinkray.SplitMove1SmallFire dummy
+            scoreboard objectives add customShrinkray.SplitMove1SmallSelf dummy
+            scoreboard objectives add customShrinkray.SplitMove2GrowFire dummy
+            scoreboard objectives add customShrinkray.SplitMove2GrowSelf dummy
+            scoreboard objectives add customShrinkray.PassiveAmmo dummy
+
+            scoreboard objectives add customShrinkray.ShootDistance dummy
+
+            function custom:universal/cooldowns/10x {ability:"Shrinkray_State1",storage:"shrinkray",path:"1a",move:1,cooldown:13}
+            function custom:universal/cooldowns/10x {ability:"Shrinkray_State2",storage:"shrinkray",path:"1b",move:1,cooldown:24}
+            function custom:universal/cooldowns/10x {ability:"Shrinkray_State1",storage:"shrinkray",path:"2a",move:2,cooldown:8}
+            function custom:universal/cooldowns/10x {ability:"Shrinkray_State2",storage:"shrinkray",path:"2b",move:2,cooldown:60}
         }
 
-        function tick {
-            execute if score @s customUniversal.Toggle matches 1 run {
-                execute at @s run function custom:abilities/shrinkray/active
+        dir tick {
+            function main {
+                execute if score @s customUniversal.Toggle matches 1 run {
+                    execute at @s run function custom:abilities/shrinkray/active
+                }
+
+                REPEAT (1,2) as i {
+                    execute at @s if score @s customUniversal.Move<%i%>Trigger matches 1.. run {
+                        scoreboard players reset @s customUniversal.Move<%i%>Trigger
+                        execute if score @s customUniversal.Toggle matches 1 unless score @s customUniversal.ToggleCastDelay matches 1.. unless score @s customUniversal.MoveDelay matches 1.. run function custom:abilities/shrinkray/moves/<%i%>/determine
+                    }
+                }
+
+                execute unless entity @s[scores={customShrinkray.SplitMove1SmallFire=0,customShrinkray.SplitMove1SmallSelf=0,customShrinkray.SplitMove2GrowFire=0,customShrinkray.SplitMove2GrowSelf=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                    execute if score @s customShrinkray.SplitMove1SmallFire matches 1.. run scoreboard players remove @s customShrinkray.SplitMove1SmallFire 1
+                    execute if score @s customShrinkray.SplitMove1SmallSelf matches 1.. run scoreboard players remove @s customShrinkray.SplitMove1SmallSelf 1
+                    execute if score @s customShrinkray.SplitMove2GrowFire matches 1.. run scoreboard players remove @s customShrinkray.SplitMove2GrowFire 1
+                    execute if score @s customShrinkray.SplitMove2GrowSelf matches 1.. run scoreboard players remove @s customShrinkray.SplitMove2GrowSelf 1
+
+                    execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                    execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+                }
+            }
+        }
+
+        dir hotbar {
+            function main {
+                execute unless predicate custom:universal/sneak run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customShrinkray.SplitMove1SmallFire
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customShrinkray.SplitMove1SmallSelf
+                    function custom:abilities/shrinkray/hotbar/progress with storage minecraft:custom shrinkray.cooldowns.move1a
+                    function custom:abilities/shrinkray/hotbar/progress with storage minecraft:custom shrinkray.cooldowns.move2a
+                } else run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customShrinkray.SplitMove2GrowFire
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customShrinkray.SplitMove2GrowSelf
+                    function custom:abilities/shrinkray/hotbar/progress with storage minecraft:custom shrinkray.cooldowns.move1b
+                    function custom:abilities/shrinkray/hotbar/progress with storage minecraft:custom shrinkray.cooldowns.move2b
+                }
+
+                execute unless score @s customShrinkray.PassiveAmmo matches 1.. run scoreboard players set @s customShrinkray.PassiveAmmo 0
+                execute store result storage minecraft:custom shrinkray.hotbar.ammo int 1 run scoreboard players get @s customShrinkray.PassiveAmmo
+                
+                REPEAT (1,2) as i {
+                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                        function custom:universal/hotbar/time {ability:"shrinkray",selected:<%i%>}
+                    }
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom shrinkray.hotbar
+                    $title @s actionbar [{"text":"\uF817\u09B4"},{"text":"\uF837$(ammo)","color":"yellow"},{"text":"\uF825\u09A0\uF836"},{"text":"\uF820\$(move1)\uF812\u09A2"},{"text":"\uF800\$(move2)"},{"text":"\uF800\u09A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom shrinkray.hotbar
+                    $title @s actionbar [{"text":"\uF817\u09B4"},{"text":"\uF837$(ammo)","color":"yellow"},{"text":"\uF825\u09A0\uF836"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)\uF812\u09A2"},{"text":"\uF800\u09A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
             }
 
-            execute unless entity @s[scores={customShrinkray.SplitMove1SmallFire=0,customShrinkray.SplitMove1SmallSelf=0,customShrinkray.SplitMove2GrowFire=0,customShrinkray.SplitMove2GrowSelf=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
-                execute if score @s customShrinkray.SplitMove1SmallFire matches 1.. run scoreboard players remove @s customShrinkray.SplitMove1SmallFire 1
-                execute if score @s customShrinkray.SplitMove1SmallSelf matches 1.. run scoreboard players remove @s customShrinkray.SplitMove1SmallSelf 1
-                execute if score @s customShrinkray.SplitMove2GrowFire matches 1.. run scoreboard players remove @s customShrinkray.SplitMove2GrowFire 1
-                execute if score @s customShrinkray.SplitMove2GrowSelf matches 1.. run scoreboard players remove @s customShrinkray.SplitMove2GrowSelf 1
+            function progress {
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09A3"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09A4"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09A5"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09A6"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09A7"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09A8"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09A9"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09B1"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09B2"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom shrinkray.hotbar.move$(selection) set value "u09B3"
 
-                execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
-                execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
             }
         }
 
         function active {
+            function custom:abilities/shrinkray/hotbar/main
+        }
 
+        dir moves {
+            function setup {
+                tag @s add customUniversal.Animation
+                tag @s add customUniversal.DisconnectCheck
+                effect give @s minecraft:invisibility infinite 0 true
+
+                function custom:universal/armor/hide
+                $execute rotated ~ 0 run function animated_java:shrinkray/summon {args:{animation:'$(animation)', start_animation: true}}
+                $function custom:universal/setup/rig {objective:"$(objective)",item:"shrinkray"}
+
+                function custom:universal/stable_player_display/mask {branch:"shrinkray"}
+
+                scoreboard players add .global customUniversal.GlobalCounter 1
+                scoreboard players operation @s customUniversal.GlobalCounter = .global customUniversal.GlobalCounter
+                function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.shrinkray.root",objective:"customUniversal.GlobalCounter"}
+            }
+
+            dir 1 {
+                function determine {
+                    execute unless predicate custom:universal/sneak run function custom:abilities/shrinkray/moves/1/shrink_beam/core
+                    execute if predicate custom:universal/sneak run function custom:abilities/shrinkray/moves/1/shrink_self/core
+
+                    scoreboard players set @s customUniversal.ActiveHotbar 1
+                }
+
+                dir shrink_beam {
+                    function core {
+                        execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        execute unless score @s customShrinkray.PassiveAmmo matches 1.. run function custom:universal/error_messages/find {error:18}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/shrinkray/moves/1/shrink_beam/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Shrink Beam"}
+                    }
+
+                    function pass {
+                        function custom:abilities/shrinkray/moves/setup {animation:'shoot',objective:"customUniversal.RigID"}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.shrinkray.locator.beam_position",objective:"customUniversal.RigID"}
+
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
+                    }
+
+                    function beam {
+                        data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                        data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                        data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                        
+                        execute store result storage minecraft:custom shrinkray.beam.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom shrinkray.beam
+                            $execute as @p[tag=customAbility.Shrinkray,scores={customUniversal.RigID=$(id)}] store result storage minecraft:custom shrinkray.beam.y_rotation float 0.1 run data get entity @s Rotation[1] 10
+
+                            block { with storage minecraft:custom shrinkray.beam
+                                $execute rotated ~-2 $(y_rotation) run {
+                                    function custom:abilities/shrinkray/moves/1/shrink_beam/distance
+                                    execute store result storage minecraft:custom shrinkray.beam.size int 0.1 run scoreboard players get @s customShrinkray.ShootDistance
+                                    scoreboard players reset @s customShrinkray.ShootDistance
+                                    tag @s remove temp
+
+                                    block { with storage minecraft:custom shrinkray.beam
+                                        $function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"shrinkray",animation:'beam_$(size)',extra:"random value 1..2"}
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    function distance {
+                        scoreboard players add @s customShrinkray.ShootDistance 1
+
+                        execute if predicate custom:universal/0.1 run particle dust{color:[0.435,1.000,0.000],scale:1} ~ ~ ~ 0.5 0.5 0.5 0 1 force @a
+
+                        execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add temp
+
+                        execute positioned ^ ^ ^0.1 unless score @s customShrinkray.ShootDistance matches 90.. unless entity @s[tag=temp] run function custom:abilities/shrinkray/moves/1/shrink_beam/distance
+                    }
+                }
+
+                dir shrink_self {
+                    function core {
+                        say self
+                    }
+                }
+            }
+
+            dir 2 {
+                function determine {
+                    scoreboard players set @s customUniversal.ActiveHotbar 2
+                }
+            }
+
+            dir reset {
+                function all {
+                    $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+                    $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+                    block { with storage minecraft:custom universal.control
+                        $execute as @a[tag=customAbility.Shrinkray,scores={$(objective)=$(id)}] at @s run function custom:abilities/shrinkray/moves/reset/player
+                        scoreboard players reset @s customUniversal.TimeStopAnimation
+                        $function animated_java:$(rig)/remove/this
+                    }
+                }
+                function player {
+                    attribute @s minecraft:movement_speed base reset
+                    attribute @s minecraft:jump_strength base reset
+                    attribute @s minecraft:gravity base reset
+
+                    effect clear @s minecraft:invisibility
+                    ride @s dismount
+                    # perspective @s first
+
+                    # item modify entity @s hotbar.8 custom:gojo/base
+                    function custom:universal/armor/reveal
+
+                    tag @s remove customUniversal.Cancelable
+                    tag @s remove customUniversal.DisconnectCheck
+                    tag @s remove customUniversal.Animation
+                }
+            }
         }
 
         dir toggle {
             function on {
-                playsound minecraft:president.toggle.enable player @s ~ ~ ~ 1
+                playsound minecraft:shrinkray.toggle.enable player @s ~ ~ ~ 1
                 scoreboard players set @s customUniversal.ToggleDelay 20
             }
 
             function off {
                 title @s actionbar ""
-                playsound minecraft:president.toggle.withdraw player @s ~ ~ ~ 0.5
+                playsound minecraft:shrinkray.toggle.withdraw player @s ~ ~ ~ 0.5
 
                 scoreboard players set @s customUniversal.ToggleDelay 10
             }
@@ -5311,6 +5502,7 @@ dir universal {
             execute if entity @s[tag=customUniversal.Error15] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves while ","color":"gray"},{"text":"disguised","color":"light_purple"},{"text":" as a ","color":"gray"},{"text":"Turtle!","color":"green"}]
             execute if entity @s[tag=customUniversal.Error16] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
             execute if entity @s[tag=customUniversal.Error17] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be holding a valid ","color":"gray"},{"text":"tool ","color":"gold"},{"text":"to use this move!","color":"gray"}]
+            execute if entity @s[tag=customUniversal.Error18] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"have ","color":"gray"},{"text":"ammo ","color":"gold"},{"text":"to fire the ","color":"gray"},{"text":"Shrinkray!","color":"green"}]
 
             execute if entity @s[tag=customUniversal.Error100] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
             execute if entity @s[tag=customUniversal.Error101] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
