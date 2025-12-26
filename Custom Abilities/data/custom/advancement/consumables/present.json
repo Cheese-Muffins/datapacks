@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "item": {
+          "items": "minecraft:phantom_membrane",
+          "components": {
+            "minecraft:custom_data": "{consumable:1b,present:1b}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "custom:consumables/present/start"
+  }
+}

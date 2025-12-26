@@ -4408,7 +4408,7 @@ dir abilities {
             scoreboard objectives add customShrinkray.SplitMove2GrowSelf dummy
             scoreboard objectives add customShrinkray.PassiveAmmo dummy
 
-            scoreboard objectives add customShrinkray.ShootDistance dummy
+            scoreboard objectives add customShrinkray.BeamDistance dummy
 
             function custom:universal/cooldowns/10x {ability:"Shrinkray_State1",storage:"shrinkray",path:"1a",move:1,cooldown:13}
             function custom:universal/cooldowns/10x {ability:"Shrinkray_State2",storage:"shrinkray",path:"1b",move:1,cooldown:24}
@@ -4535,42 +4535,13 @@ dir abilities {
                         function custom:abilities/shrinkray/moves/setup {animation:'shoot',objective:"customUniversal.RigID"}
                         function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.shrinkray.locator.beam_position",objective:"customUniversal.RigID"}
 
-                        attribute @s minecraft:movement_speed base set 0
-                        attribute @s minecraft:jump_strength base set 0
-                    }
-
-                    function beam {
-                        data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
-                        data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
-                        data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
-                        
                         execute store result storage minecraft:custom shrinkray.beam.id int 1 run scoreboard players get @s customUniversal.RigID
                         block { with storage minecraft:custom shrinkray.beam
-                            $execute as @p[tag=customAbility.Shrinkray,scores={customUniversal.RigID=$(id)}] store result storage minecraft:custom shrinkray.beam.y_rotation float 0.1 run data get entity @s Rotation[1] 10
-
-                            block { with storage minecraft:custom shrinkray.beam
-                                $execute rotated ~-2 $(y_rotation) run {
-                                    function custom:abilities/shrinkray/moves/1/shrink_beam/distance
-                                    execute store result storage minecraft:custom shrinkray.beam.size int 0.1 run scoreboard players get @s customShrinkray.ShootDistance
-                                    scoreboard players reset @s customShrinkray.ShootDistance
-                                    tag @s remove temp
-
-                                    block { with storage minecraft:custom shrinkray.beam
-                                        $function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"shrinkray",animation:'beam_$(size)',extra:"random value 1..2"}
-                                    }
-                                }
-                            }
+                            $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position,scores={customUniversal.RigID=$(id)}] run tag @s add customShrinkray.ShrinkBeam
                         }
-                    }
 
-                    function distance {
-                        scoreboard players add @s customShrinkray.ShootDistance 1
-
-                        execute if predicate custom:universal/0.1 run particle dust{color:[0.435,1.000,0.000],scale:1} ~ ~ ~ 0.5 0.5 0.5 0 1 force @a
-
-                        execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add temp
-
-                        execute positioned ^ ^ ^0.1 unless score @s customShrinkray.ShootDistance matches 90.. unless entity @s[tag=temp] run function custom:abilities/shrinkray/moves/1/shrink_beam/distance
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
                     }
                 }
 
@@ -4583,7 +4554,35 @@ dir abilities {
 
             dir 2 {
                 function determine {
+                    execute unless predicate custom:universal/sneak run function custom:abilities/shrinkray/moves/2/grow_beam/core
+                    execute if predicate custom:universal/sneak run function custom:abilities/shrinkray/moves/2/grow_self/core
+
                     scoreboard players set @s customUniversal.ActiveHotbar 2
+                }
+
+                dir grow_beam {
+                    function core {
+                        execute unless score @s customUniversal.Move2Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        execute unless score @s customShrinkray.PassiveAmmo matches 1.. run function custom:universal/error_messages/find {error:18}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/shrinkray/moves/2/grow_beam/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Grow Beam"}
+                    }
+
+                    function pass {
+                        function custom:abilities/shrinkray/moves/setup {animation:'shoot',objective:"customUniversal.RigID"}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.shrinkray.locator.beam_position",objective:"customUniversal.RigID"}
+
+                        execute store result storage minecraft:custom shrinkray.beam.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom shrinkray.beam
+                            $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position,scores={customUniversal.RigID=$(id)}] run tag @s add customShrinkray.GrowBeam
+                        }
+
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
+                    }
                 }
             }
 
@@ -4616,6 +4615,49 @@ dir abilities {
             }
         }
 
+        dir beam {
+            function create {
+                data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                
+                execute if entity @s[tag=customShrinkray.ShrinkBeam] run data merge storage minecraft:custom {shrinkray:{beam:{type:"shrink",path:"Shrink"}}}
+                execute if entity @s[tag=customShrinkray.GrowBeam] run data merge storage minecraft:custom {shrinkray:{beam:{type:"grow",path:"Grow"}}}
+                
+                execute store result storage minecraft:custom shrinkray.beam.id int 1 run scoreboard players get @s customUniversal.RigID
+                block { with storage minecraft:custom shrinkray.beam
+                    $execute as @p[tag=customAbility.Shrinkray,scores={customUniversal.RigID=$(id)}] store result storage minecraft:custom shrinkray.beam.y_rotation float 0.1 run data get entity @s Rotation[1] 10
+
+                    block { with storage minecraft:custom shrinkray.beam
+                        $execute rotated ~-2 $(y_rotation) run {
+                            function custom:abilities/shrinkray/beam/distance with storage minecraft:custom shrinkray.beam
+                            execute store result storage minecraft:custom shrinkray.beam.size int 0.1 run scoreboard players get @s customShrinkray.BeamDistance
+                            scoreboard players reset @s customShrinkray.BeamDistance
+                            tag @s remove temp
+
+                            block { with storage minecraft:custom shrinkray.beam
+                                $function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"shrinkray",animation:'beam_$(size)',extra:"random value 1..2"}
+                            }
+                        }
+                    }
+                }
+            }
+
+            function distance {
+                scoreboard players add @s customShrinkray.BeamDistance 1
+
+                $execute as @e[type=!#custom:not_mob,distance=..1.5] unless score @s customUniversal.RigID matches $(id) run block { with storage minecraft:custom shrinkray.beam
+                    $function custom:traits/apply_trait {amplifier:1,duration:20,what:"$(type)",path:"$(path)"}
+                }
+
+                execute if predicate custom:universal/0.1 run particle dust{color:[0.435,1.000,0.000],scale:1} ~ ~ ~ 0.5 0.5 0.5 0 1 force @a
+
+                execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add temp
+
+                execute positioned ^ ^ ^0.1 unless score @s customShrinkray.BeamDistance matches 90.. unless entity @s[tag=temp] run function custom:abilities/shrinkray/beam/distance with storage minecraft:custom shrinkray.beam
+            }
+        }
+
         dir toggle {
             function on {
                 playsound minecraft:shrinkray.toggle.enable player @s ~ ~ ~ 1
@@ -4637,15 +4679,22 @@ dir traits {
         scoreboard objectives add customTrait.BleedAmplifier dummy
         scoreboard objectives add customTrait.BleedDuration dummy
         scoreboard objectives add customTrait.BleedDelay dummy
+
+        scoreboard objectives add customTrait.ShrinkAmplifier dummy
+        scoreboard objectives add customTrait.ShrinkDuration dummy
     }
 
     function tick {
 
 
-        execute unless entity @s[scores={customTrait.BleedDuration=0}] run {
+        execute unless entity @s[scores={customTrait.BleedDuration=0,customTrait.ShrinkDuration=0}] run {
             execute if score @s customTrait.BleedDuration matches 1.. run {
                 scoreboard players remove @s customTrait.BleedDuration 1
                 function custom:traits/type/bleed/main
+            }
+            execute if score @s customTrait.ShrinkDuration matches 1.. run {
+                scoreboard players remove @s customTrait.ShrinkDuration 1
+                function custom:traits/type/shrink/main
             }
         } else run {
             tag @s remove customTrait.ConstantTick
@@ -4693,6 +4742,39 @@ dir traits {
             function end {
                 scoreboard players reset @s customTrait.BleedAmplifier
                 scoreboard players reset @s customTrait.BleedDelay
+            }
+        }
+
+        dir shrink {
+            function apply {
+                scoreboard players operation @s customTrait.ShrinkAmplifier = @s customTrait.ShrinkAmplifier
+                $scoreboard players set @s customTrait.ShrinkDuration $(duration)
+                function custom:universal/math/multiply {multiply_value:20,score:"@s",objective:"customTrait.ShrinkDuration"}
+
+                attribute @s minecraft:scale modifier add custom:ability/shrinkray -0.75 add_multiplied_total
+                attribute @s minecraft:movement_speed modifier add custom:ability/shrinkray 0.15 add_multiplied_total
+                attribute @s minecraft:safe_fall_distance modifier add custom:ability/shrinkray -0.33 add_multiplied_total
+                attribute @s minecraft:max_health modifier add custom:ability/shrinkray -0.2 add_multiplied_total
+                attribute @s minecraft:block_interaction_range modifier add custom:ability/shrinkray -0.33 add_multiplied_total
+                attribute @s minecraft:entity_interaction_range modifier add custom:ability/shrinkray -0.33 add_multiplied_total
+                execute unless entity @s[type=minecraft:player] run {
+                    attribute @s minecraft:jump_strength modifier add custom:ability/shrinkray -0.5 add_multiplied_total
+                }
+            }
+
+            function main {
+                execute unless score @s customTrait.ShrinkDuration matches 1.. run function custom:traits/type/shrink/end
+            }
+
+            function end {
+                attribute @s minecraft:scale modifier remove custom:ability/shrinkray
+                attribute @s minecraft:movement_speed modifier remove custom:ability/shrinkray
+                attribute @s minecraft:safe_fall_distance modifier remove custom:ability/shrinkray
+                attribute @s minecraft:max_health modifier remove custom:ability/shrinkray
+                attribute @s minecraft:block_interaction_range modifier remove custom:ability/shrinkray
+                attribute @s minecraft:entity_interaction_range modifier remove custom:ability/shrinkray
+                
+                attribute @s minecraft:jump_strength modifier remove custom:ability/shrinkray
             }
         }
     }
@@ -5742,6 +5824,7 @@ dir consumables {
         scoreboard objectives add customConsumables.MethDuration dummy
         scoreboard objectives add customConsumables.CocaineDuration dummy
         scoreboard objectives add customConsumables.WeedDuration dummy
+        scoreboard objectives add customConsumables.PresentRoll dummy
     }
 
     dir meth {
@@ -5800,6 +5883,161 @@ dir consumables {
         }
     }
 
+    dir present {
+        function start {
+            particle minecraft:snowflake ~ ~ ~ 0.75 1.5 0.75 0 100 force @a
+            playsound minecraft:present.open player @s ~ ~ ~ 1
+            function custom:consumables/present/index
+
+            item replace entity @s weapon.mainhand with minecraft:air
+            advancement revoke @s only custom:consumables/present
+        }
+
+        function join {
+            tellraw @s ["",{"text":"Christmas 2025","color":"gold"},{"text":"\n"},{"text":"Merry Christmas!","color":"dark_green"},{"text":" You've been given ","color":"gray"},{"text":"3 gifts","color":"gold"},{"text":" to open, ","color":"gray"},{"text":"enjoy!","color":"green"}]
+            function custom:consumables/selection/present {count:3}
+        }
+
+        function index {
+            execute store result score @s customConsumables.PresentRoll run random value 1..16
+
+            execute if score @s customConsumables.PresentRoll matches 1 run {
+                execute unless entity @s[tag=customPresident.Ownership] run {
+                    tag @s add customPresident.Ownership
+                    tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"Congratulations!","color":"aqua"},{"text":" You've just unlocked ","color":"gray"},{"text":"Mr. President!","color":"yellow"}]
+                    playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.35
+                    playsound minecraft:entity.firework_rocket.blast_far player @s ~ ~ ~ 0.35
+
+                    advancement grant @s only server:abilities/president
+                    scoreboard players add @s customUI.AbilitiesUnlocked 1
+                } else run {
+                    tag @s add temp
+                }
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 2 run {
+                execute unless entity @s[tag=customTheWorld.Ownership] run {
+                    tag @s add customTheWorld.Ownership
+                    tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"Congratulations!","color":"aqua"},{"text":" You've just unlocked ","color":"gray"},{"text":"The World!","color":"yellow"}]
+                    playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.35
+                    playsound minecraft:entity.firework_rocket.blast_far player @s ~ ~ ~ 0.35
+
+                    advancement grant @s only server:abilities/the_world
+                    scoreboard players add @s customUI.AbilitiesUnlocked 1
+                } else run {
+                    tag @s add temp
+                }
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 3 run {
+                execute unless entity @s[tag=customAvatar.Ownership] run {
+                    tag @s add customAvatar.Ownership
+                    tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"Congratulations!","color":"aqua"},{"text":" You've just unlocked ","color":"gray"},{"text":"The Avatar!","color":"yellow"}]
+                    playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.35
+                    playsound minecraft:entity.firework_rocket.blast_far player @s ~ ~ ~ 0.35
+
+                    advancement grant @s only server:abilities/avatar
+                    scoreboard players add @s customUI.AbilitiesUnlocked 1
+                } else run {
+                    tag @s add temp
+                }
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 4 run {
+                execute unless entity @s[tag=customTheWorld.SkinTW2.Ownership] run {
+                    tag @s add customTheWorld.SkinTW2.Ownership
+                    tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"Congratulations!","color":"aqua"},{"text":" You've just unlocked ","color":"gray"},{"text":"The World 2!","color":"yellow"}]
+                    playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.35
+                    playsound minecraft:entity.firework_rocket.blast_far player @s ~ ~ ~ 0.35
+
+                    scoreboard players add @s customUI.SkinsUnlocked 1
+                } else run {
+                    tag @s add temp
+                }
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 5 run {
+                execute unless entity @s[tag=customTheWorld.SkinVampire.Ownership] run {
+                    tag @s add customTheWorld.SkinVampire.Ownership
+                    tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"Congratulations!","color":"aqua"},{"text":" You've just unlocked ","color":"gray"},{"text":"Vampire The World!","color":"yellow"}]
+                    playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.35
+                    playsound minecraft:entity.firework_rocket.blast_far player @s ~ ~ ~ 0.35
+
+                    scoreboard players add @s customUI.SkinsUnlocked 1
+                } else run {
+                    tag @s add temp
+                }
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 6 run {
+                execute unless entity @s[tag=customTheWorld.SkinRetro.Ownership] run {
+                    tag @s add customTheWorld.SkinRetro.Ownership
+                    tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"Congratulations!","color":"aqua"},{"text":" You've just unlocked ","color":"gray"},{"text":"Retro The World!","color":"yellow"}]
+                    playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.35
+                    playsound minecraft:entity.firework_rocket.blast_far player @s ~ ~ ~ 0.35
+
+                    scoreboard players add @s customUI.SkinsUnlocked 1
+                } else run {
+                    tag @s add temp
+                }
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 7 run {
+                execute unless entity @s[tag=customTheWorld.SkinShadow.Ownership] run {
+                    tag @s add customTheWorld.SkinShadow.Ownership
+                    tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"Congratulations!","color":"aqua"},{"text":" You've just unlocked ","color":"gray"},{"text":"Shadow The World!","color":"yellow"}]
+                    playsound minecraft:entity.villager.yes player @s ~ ~ ~ 0.35
+                    playsound minecraft:entity.firework_rocket.blast_far player @s ~ ~ ~ 0.35
+
+                    scoreboard players add @s customUI.SkinsUnlocked 1
+                } else run {
+                    tag @s add temp
+                }
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 8 run {
+                function custom:universal/items/mysterious_arrow {count:2}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 9 run {
+                function custom:universal/items/time_fragment {count:12}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 10 run {
+                function custom:universal/items/phantom_feather {count:16}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 11 run {
+                function custom:universal/items/gem_cluster {count:9}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 12 run {
+                function custom:universal/items/blaze_core {count:4}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 13 run {
+                function custom:universal/items/drowned_heart {count:3}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 14 run {
+                function custom:consumables/selection/meth {count:64}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 15 run {
+                function custom:consumables/selection/cocaine {count:64}
+            }
+
+            execute if score @s customConsumables.PresentRoll matches 16 run {
+                function custom:consumables/selection/weed {count:64}
+            }
+
+            execute if entity @s[tag=temp] run {
+                tag @s remove temp
+                function custom:consumables/present/index
+            }
+        }
+    }
+
     dir selection {
         function meth {
             $give @s minecraft:phantom_membrane[lore=[[{"text":"It may be blue, but it's the bomb","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Methamphetamine","italic":false,"color":"aqua"}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:0.7},item_model="minecraft:consumables/meth",custom_data={consumable:1b,meth:1b}] $(count)
@@ -5811,6 +6049,10 @@ dir consumables {
 
         function weed {
             $give @s minecraft:phantom_membrane[lore=[[{"text":"Puff, puff, pass","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Weed","italic":false,"color":"green"}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:1.5},item_model="minecraft:consumables/weed",custom_data={consumable:1b,weed:1b}] $(count)
+        }
+
+        function present {
+            $give @s minecraft:phantom_membrane[lore=[[{"text":"Have you been naughty or nice..?","italic":false,"color":"gray"}],"",[{"text":"Click to unlock ","italic":false,"color":"gray"},{"text":"one ","italic":false,"color":"red"},{"text":"of the following...","italic":false,"color":"gray"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Mr. President","italic":false,"color":"aqua"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"The World","italic":false,"color":"aqua"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"The Avatar","italic":false,"color":"aqua"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"The World 2","italic":false,"color":"light_purple"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Vampire The World","italic":false,"color":"light_purple"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Retro The World","italic":false,"color":"light_purple"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Shadow The World","italic":false,"color":"light_purple"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Mysterious Arrow x2","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Time Fragment x12","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Phantom Feather x16","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Gem Cluster x9","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Blaze Core x4","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Drowned Heart x3","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Methamphetamine x64","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Cocaine x64","italic":false,"color":"gold"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Weed x64","italic":false,"color":"gold"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"C","italic":false,"color":"red"},{"text":"h","italic":false,"color":"green"},{"text":"r","italic":false,"color":"red"},{"text":"i","italic":false,"color":"green"},{"text":"s","italic":false,"color":"red"},{"text":"t","italic":false,"color":"green"},{"text":"m","italic":false,"color":"red"},{"text":"a","italic":false,"color":"green"},{"text":"s ","italic":false,"color":"red"},{"text":"P","italic":false,"color":"green"},{"text":"r","italic":false,"color":"red"},{"text":"e","italic":false,"color":"green"},{"text":"s","italic":false,"color":"red"},{"text":"e","italic":false,"color":"green"},{"text":"n","italic":false,"color":"red"},{"text":"t","italic":false,"color":"green"}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:999999},max_stack_size=1,item_model="minecraft:interactables/present",custom_data={consumable:1b,present:1b}] $(count)
         }
     }
 }
@@ -7288,7 +7530,7 @@ dir ui {
 
                             execute at @s as @p run tag @s add customUniversal.SkinContext
                             tag @s add customUniversal.AdvancementCheck
-                            function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/totem_of_undying",product:"tw2",storage:"the_world",name:"The World 2"}
+                            function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:nether/get_wither_skull",product:"tw2",storage:"the_world",name:"The World 2"}
                             execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{the_world:{tw2_advancement_color:"green"}}}}
                             tag @s remove customUniversal.AdvancementCheck
                             execute at @s as @p run tag @s remove customUniversal.SkinContext
@@ -7302,7 +7544,7 @@ dir ui {
                             function custom:ui/menu/pages/selection/purchase/check/items {item:"minecraft:golden_apple",number:1,required:4,product:"vampire",storage:"the_world",name:"Vampire The World"}
 
                             tag @s add customUniversal.AdvancementCheck
-                            function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:nether/get_wither_skull",product:"vampire",storage:"the_world",name:"Vampire The World"}
+                            function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/totem_of_undying",product:"vampire",storage:"the_world",name:"Vampire The World"}
                             execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{the_world:{vampire_advancement_color:"green"}}}}
                             tag @s remove customUniversal.AdvancementCheck
                             execute at @s as @p run tag @s remove customUniversal.SkinContext

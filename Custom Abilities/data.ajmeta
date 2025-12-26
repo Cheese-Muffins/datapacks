@@ -2599,6 +2599,7 @@
 				"data/animated_java/function/shrinkray/animations/shoot/zzz/frames/12_locator_constant.mcfunction",
 				"data/animated_java/function/shrinkray/animations/shoot/zzz/frames/13.mcfunction",
 				"data/animated_java/function/shrinkray/animations/shoot/zzz/frames/13_locator_beam_position.mcfunction",
+				"data/animated_java/function/shrinkray/animations/shoot/zzz/frames/13_locator_commands.mcfunction",
 				"data/animated_java/function/shrinkray/animations/shoot/zzz/frames/13_locator_constant.mcfunction",
 				"data/animated_java/function/shrinkray/animations/shoot/zzz/frames/14.mcfunction",
 				"data/animated_java/function/shrinkray/animations/shoot/zzz/frames/14_locator_constant.mcfunction",

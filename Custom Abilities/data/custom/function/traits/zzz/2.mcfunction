@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-scoreboard players set #ifelse mcb.internal 1
-tag @s remove customTrait.ConstantTick
+scoreboard players remove @s customTrait.ShrinkDuration 1
+function custom:traits/type/shrink/main
