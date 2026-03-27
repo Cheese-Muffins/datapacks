@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-function custom:abilities/president/moves/setup {animation:'self_kidnap',objective:"customUniversal.RigID"}
+function custom:abilities/president/moves/setup {animation:'self_kidnap',mode:"play",objective:"customUniversal.RigID"}
 tag @s add customUniversal.Cancelable
 scoreboard players set @s customUniversal.MoveLastUsed 1
 scoreboard players set @s customUniversal.LastMoveState 2

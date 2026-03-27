@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-scoreboard players add .global customTheWorld.RigID 1
-scoreboard players operation @s customTheWorld.RigID = .global customTheWorld.RigID
-tag @s add customTheWorld.IDAssigned
+scoreboard players set #ifelse mcb.internal 1
+execute if entity @s[tag=customTrait.SizeShrink] run function custom:abilities/the_world/toggle/zzz/1
+execute if entity @s[tag=customTrait.SizeGrowth] run function custom:abilities/the_world/toggle/zzz/2

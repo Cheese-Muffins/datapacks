@@ -1,6 +1,5 @@
 # Generated with MC-Build
 
-shader enable @s invert
-scoreboard players set @s customTheWorld.TimeSkipInvert 5
-tag @s add customUniversal.ConstantTick
-tag @s add customTheWorld.ConstantTick
+scoreboard players set #ifelse mcb.internal 1
+execute if entity @s[tag=customTrait.SizeShrink] run data merge storage minecraft:custom {the_world:{timeskip:{range:52}}}
+execute if entity @s[tag=customTrait.SizeGrowth] run data merge storage minecraft:custom {the_world:{timeskip:{range:188}}}

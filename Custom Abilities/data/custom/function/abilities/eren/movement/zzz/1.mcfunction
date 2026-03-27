@@ -1,0 +1,7 @@
+# Generated with MC-Build
+
+execute if predicate custom:universal/forward unless predicate custom:universal/forward_right unless predicate custom:universal/forward_left unless entity @s[tag=customEren.MovementForward] run function custom:abilities/eren/movement/state/setup {type:"forward",animation:"Forward",variation:1}
+execute if predicate custom:universal/right unless predicate custom:universal/forward_right unless entity @s[tag=customEren.MovementRight] run function custom:abilities/eren/movement/state/setup {type:"strafe_right",animation:"Right",variation:2}
+execute if predicate custom:universal/left unless predicate custom:universal/forward_left unless entity @s[tag=customEren.MovementLeft] run function custom:abilities/eren/movement/state/setup {type:"strafe_left",animation:"Left",variation:3}
+execute if predicate custom:universal/forward_right unless entity @s[tag=customEren.MovementForwardRight] run function custom:abilities/eren/movement/state/setup {type:"forward_right",animation:"ForwardRight",variation:1}
+execute if predicate custom:universal/forward_left unless entity @s[tag=customEren.MovementForwardLeft] run function custom:abilities/eren/movement/state/setup {type:"forward_left",animation:"ForwardLeft",variation:1}

@@ -19,6 +19,7 @@ setblock 0 -64 0 minecraft:yellow_shulker_box[facing=west]
 setblock 0 -63 0 shulker_box
 scoreboard objectives add customUniversal.GlobalCounter dummy
 scoreboard objectives add customUniversal.RigID dummy
+scoreboard objectives add customUniversal.AbilityID dummy
 scoreboard objectives add customUniversal.AwakeningDuration dummy
 scoreboard players set div16 customUniversal.AwakeningDuration 16
 scoreboard players set x20 customUniversal.AwakeningDuration 20
@@ -81,10 +82,13 @@ scoreboard objectives add customUniversal.QuestDialogue dummy
 scoreboard objectives add customUniversal.PlayerCount dummy
 scoreboard objectives add customUniversal.Disconnected minecraft.custom:minecraft.leave_game
 scoreboard objectives add customUniversal.ToggleCastDelay dummy
-scoreboard objectives add customUniversal.TimeStopAnimation dummy
+scoreboard objectives add customUniversal.AnimationID dummy
 scoreboard objectives add customUniversal.DeathCountInitial dummy
 scoreboard objectives add customUniversal.DeathCountPost deathCount
 scoreboard objectives add customUniversal.PreviousHotbar dummy
+scoreboard objectives add customUniversal.ShrinkrayOperation dummy
+scoreboard objectives add customUniversal.ShrinkrayFrame dummy
+scoreboard objectives add customUniversal.AnimationID dummy
 # Statistics #
 scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
 scoreboard objectives add customUniversal.StatisticsEntityKills dummy
@@ -96,3 +100,4 @@ function custom:abilities/president/install
 function custom:abilities/the_world/install
 function custom:abilities/avatar/install
 function custom:abilities/shrinkray/install
+function custom:abilities/eren/install

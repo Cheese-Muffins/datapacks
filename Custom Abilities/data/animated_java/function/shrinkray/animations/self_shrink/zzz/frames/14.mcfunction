@@ -11,4 +11,5 @@ $data merge entity $(item_display_chestplate_arm_l) {transformation: [-0.2362f,-
 $data merge entity $(bone_left_arm) {transformation:[-0.1407f,-0.0231f,0.2054f,0.0934f,-0.18f,0.1358f,-0.108f,-2047.6563f,-0.1016f,-0.2086f,-0.093f,0.0079f,0.0f,0.0f,0.0f,1.0f],start_interpolation:0,interpolation_duration:1}
 $data merge entity $(item_display_chestplate_body) {transformation: [0.2864f,0f,-0.0251f,0f,0f,0.2875f,0.0005f,0.4102f,0.0251f,-0.0005f,0.2864f,-0.0004f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_leggings_pants) {transformation: [-0.274f,0f,0.024f,0f,0f,0.275f,-0.0004f,0.3633f,-0.024f,-0.0004f,-0.274f,-0.0003f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:shrinkray/animations/self_shrink/zzz/frames/14_locator_constant
 data modify entity @s data merge value {"cameras":{},"locators":{"beam_position":{"px":-0.055529755654812885,"py":0.32950768163663413,"pz":0.14676502241678838,"ry":328.9698155876486,"rx":-28.718402202261764}}}

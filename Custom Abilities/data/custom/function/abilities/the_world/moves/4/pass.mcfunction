@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.FlurryID",animation:'flurry',idle:1}
+function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.FlurryID",animation:'flurry',mode:"play",idle:1}
 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move4Cooldown = .TheWorld_State1Cooldown customUniversal.Move4Cooldown
 function custom:universal/armor/hide
 scoreboard players set @s customUniversal.MoveLastUsed 4

@@ -11,6 +11,7 @@ scoreboard objectives add customTheWorld.PassiveRageDecay dummy
 scoreboard objectives add customTheWorld.TimeskipMovement dummy
 scoreboard objectives add customTheWorld.TimeSkipInvert dummy
 scoreboard objectives add customTheWorld.KnifeThrowID dummy
+scoreboard objectives add customTheWorld.KnifeSpread dummy
 scoreboard objectives add customTheWorld.KnifeMovement dummy
 scoreboard objectives add customTheWorld.BarrageID dummy
 scoreboard objectives add customTheWorld.BarrageTrail dummy

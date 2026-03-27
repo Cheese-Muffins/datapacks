@@ -20,6 +20,7 @@ function on_load {
 
         scoreboard objectives add customUniversal.GlobalCounter dummy
         scoreboard objectives add customUniversal.RigID dummy
+        scoreboard objectives add customUniversal.AbilityID dummy
         scoreboard objectives add customUniversal.AwakeningDuration dummy
         scoreboard players set div16 customUniversal.AwakeningDuration 16
         scoreboard players set x20 customUniversal.AwakeningDuration 20
@@ -57,10 +58,13 @@ function on_load {
         scoreboard objectives add customUniversal.PlayerCount dummy
         scoreboard objectives add customUniversal.Disconnected minecraft.custom:minecraft.leave_game
         scoreboard objectives add customUniversal.ToggleCastDelay dummy
-        scoreboard objectives add customUniversal.TimeStopAnimation dummy
+        scoreboard objectives add customUniversal.AnimationID dummy
         scoreboard objectives add customUniversal.DeathCountInitial dummy
         scoreboard objectives add customUniversal.DeathCountPost deathCount
         scoreboard objectives add customUniversal.PreviousHotbar dummy
+        scoreboard objectives add customUniversal.ShrinkrayOperation dummy
+        scoreboard objectives add customUniversal.ShrinkrayFrame dummy
+        scoreboard objectives add customUniversal.AnimationID dummy
 
     # Statistics #
         scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
@@ -75,6 +79,7 @@ function on_load {
     function custom:abilities/the_world/install
     function custom:abilities/avatar/install
     function custom:abilities/shrinkray/install
+    function custom:abilities/eren/install
 }
 
 function tick {
@@ -86,6 +91,7 @@ function tick {
             execute if entity @s[tag=customAbility.President] run function custom:abilities/president/tick/main
             execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/tick/main
             execute if entity @s[tag=customAbility.Shrinkray] run function custom:abilities/shrinkray/tick/main
+            execute if entity @s[tag=customAbility.Eren] run function custom:abilities/eren/tick/main
 
             execute if score @s customUniversal.ToggleTrigger matches 1.. at @s run function custom:universal/toggle/main
         }
@@ -833,7 +839,7 @@ dir abilities {
                         $execute as @a[tag=customAbility.Billy,scores={$(objective)=$(id)}] at @s run function custom:abilities/billy/moves/reset/player
                         function animated_java:billy/animations/idle/play
                         tag @s remove customUniversal.IgnoreTimestop
-                        scoreboard players reset @s customUniversal.TimeStopAnimation
+                        scoreboard players reset @s customUniversal.AnimationID
                     }
                 }
                 function player {
@@ -1081,6 +1087,7 @@ dir abilities {
             scoreboard objectives add customTheWorld.TimeskipMovement dummy
             scoreboard objectives add customTheWorld.TimeSkipInvert dummy
             scoreboard objectives add customTheWorld.KnifeThrowID dummy
+            scoreboard objectives add customTheWorld.KnifeSpread dummy
             scoreboard objectives add customTheWorld.KnifeMovement dummy
             scoreboard objectives add customTheWorld.BarrageID dummy
             scoreboard objectives add customTheWorld.BarrageTrail dummy
@@ -1199,7 +1206,7 @@ dir abilities {
                         $function custom:universal/damage/victim {id:"$(id)",damage:"6",type:"minecraft:arrow",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.FlurryID",first:"was impaled by",second:"using Flurry"}
                         attribute @s minecraft:movement_speed modifier remove custom:the_world.flurry_initial_stun
                         attribute @s minecraft:jump_strength modifier remove custom:the_world.flurry_stun
-                        function custom:traits/apply_trait {amplifier:3,duration:5,what:"bleed",path:"Bleed"}
+                        function custom:traits/apply {amplifier:3,duration:5,what:"bleed",path:"Bleed"}
                     }
 
                     execute unless score @s customTheWorld.FlurryStun matches 1.. run attribute @s minecraft:movement_speed modifier remove custom:the_world.flurry_post_stun
@@ -1252,18 +1259,33 @@ dir abilities {
 
         dir toggle {
             function on {
-                execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1
-                execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
-                function animated_java:the_world/summon {args:{animation: 'summon', start_animation: true}}
+                execute if entity @s[tag=customTrait.SizeChange] run {
+                    execute if entity @s[tag=customTrait.SizeShrink] run {
+                        execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1 1.5
+                        execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1 1.5
+                    }
+                    execute if entity @s[tag=customTrait.SizeGrowth] run {
+                        execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1 0.75
+                        execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1 0.75
+                    }
+                } else run {
+                    execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1
+                    execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
+                }
+
+                execute rotated ~ 0 run function animated_java:the_world/summon {args:{}}
                 execute as @n[type=minecraft:item_display,tag=aj.the_world.root,tag=!customTheWorld.IDAssigned] run {
                     scoreboard players add .global customTheWorld.RigID 1
                     scoreboard players operation @s customTheWorld.RigID = .global customTheWorld.RigID
                     tag @s add customTheWorld.IDAssigned
                 }
                 scoreboard players operation @s customTheWorld.RigID = .global customTheWorld.RigID
+                function custom:universal/control/mount/player {user:"customAbility.TheWorld",rig:"the_world",objective:"customTheWorld.RigID"}
+                function custom:universal/scale/player_source {animation:"summon",mode:"play",rig:"the_world",objective:"customTheWorld.RigID"}
+
                 tag @s add customUniversal.HideUI
                 scoreboard players set @s customUniversal.ToggleCastDelay 10
-                scoreboard players set @s customUniversal.ToggleDelay 20 
+                scoreboard players set @s customUniversal.ToggleDelay 20
             }
 
             function off {
@@ -1488,13 +1510,14 @@ dir abilities {
                 # function custom:universal/armor/hide
                 $function custom:universal/setup/rig {objective:"$(objective)",item:"$(rig)"}
                 $execute store result storage minecraft:custom the_world.temp.id int 1 run scoreboard players get .global $(objective)
-                $data merge storage minecraft:custom {the_world:{temp:{objective:'$(objective)',animation:'$(animation)'}}}
+                $data merge storage minecraft:custom {the_world:{temp:{objective:'$(objective)',animation:'$(animation)',mode:$(mode)}}}
                 block { with storage minecraft:custom the_world.temp
                     $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={$(objective)=$(id)}] run block { with storage minecraft:custom the_world.temp
+                        tag @s add customTrait.ShrinkraySizeLock
                         execute if score @p[tag=customAbility.TheWorld] customTheWorld.IdleMode matches 1 run function animated_java:the_world/animations/idle/pause
 
                         $function animated_java:the_world/animations/$(animation)/set_frame {frame:0}
-                        $function animated_java:the_world/animations/$(animation)/resume
+                        $function custom:universal/scale/rig_source {animation:"$(animation)",mode:"$(mode)",what:"tag=customAbility.TheWorld",rig:"the_world",objective:"$(objective)"}
                     }
                 }
                 execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"the_world",objective:"customTheWorld.RigID"}
@@ -1511,7 +1534,6 @@ dir abilities {
                     function core {
                         scoreboard players set @s customUniversal.ActiveHotbar 1
                         execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
-                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
                         function custom:universal/error_messages/universal
 
                         execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/the_world/moves/1/timeskip/start
@@ -1533,7 +1555,15 @@ dir abilities {
 
                         tag @s add temp
                         playsound minecraft:the_world.timeskip.sfx player @a ~ ~ ~ 0.5
-                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/the_world/moves/1/timeskip/fire
+
+                        execute if entity @s[tag=customTrait.SizeChange] run {
+                            execute if entity @s[tag=customTrait.SizeShrink] run data merge storage minecraft:custom {the_world:{timeskip:{range:52}}}
+                            execute if entity @s[tag=customTrait.SizeGrowth] run data merge storage minecraft:custom {the_world:{timeskip:{range:188}}}
+                        } else run {
+                            data merge storage minecraft:custom {the_world:{timeskip:{range:125}}}
+                        }
+
+                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/the_world/moves/1/timeskip/fire with storage minecraft:custom the_world.timeskip
                         tag @s remove temp
                         scoreboard players reset .distance customTheWorld.TimeskipMovement
                     }
@@ -1542,13 +1572,13 @@ dir abilities {
                         scoreboard players add @s customTheWorld.Statistics.Timeskip.Distance 1
                         execute unless block ^ ^ ^.1 #custom:raycast_pass run function custom:abilities/the_world/moves/1/timeskip/hit
                         scoreboard players add .distance customTheWorld.TimeskipMovement 1
-                        execute if score .distance customTheWorld.TimeskipMovement matches 125 positioned ~ ~ ~ run function custom:abilities/the_world/moves/1/timeskip/hit
-                        execute if score .distance customTheWorld.TimeskipMovement matches ..125 positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=temp2] run function custom:abilities/the_world/moves/1/timeskip/fire
+                        $execute if score .distance customTheWorld.TimeskipMovement matches $(range) positioned ~ ~ ~ run function custom:abilities/the_world/moves/1/timeskip/hit
+                        $execute if score .distance customTheWorld.TimeskipMovement matches ..$(range) positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=temp2] run function custom:abilities/the_world/moves/1/timeskip/fire with storage minecraft:custom the_world.timeskip
                         execute if entity @s[tag=temp2] run tag @s remove temp2
                     }
 
                     function hit {
-                        execute align y run tp @s ^ ^ ^-0.3
+                        tp @s ^ ^ ^-0.3
                         execute as @a[distance=..12] run {
                             shader enable @s invert
                             scoreboard players set @s customTheWorld.TimeSkipInvert 5
@@ -1694,46 +1724,46 @@ dir abilities {
                                 scoreboard players reset @s customTheWorld.TimeStopID
 
                                 execute if entity @s[tag=aj.the_world.root] run {
-                                    execute if score @s customUniversal.TimeStopAnimation matches 1 run function animated_java:the_world/animations/knife_throw/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 2 run function animated_java:the_world/animations/barrage/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 3 run function animated_java:the_world/animations/flurry/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 4 run function animated_java:the_world/animations/timestop/resume
+                                    execute if score @s customUniversal.AnimationID matches 1 run function animated_java:the_world/animations/knife_throw/resume
+                                    execute if score @s customUniversal.AnimationID matches 2 run function animated_java:the_world/animations/barrage/resume
+                                    execute if score @s customUniversal.AnimationID matches 3 run function animated_java:the_world/animations/flurry/resume
+                                    execute if score @s customUniversal.AnimationID matches 4 run function animated_java:the_world/animations/timestop/resume
                                     execute unless entity @s[tag=aj.the_world.animation.summon.playing,tag=aj.the_world.animation.idle.playing,tag=aj.the_world.animation.knife_throw.playing,tag=aj.the_world.animation.barrage.playing,tag=aj.the_world.animation.flurry.playing,tag=aj.the_world.animation.rage_mode.playing,tag=aj.the_world.animation.hide_dio.playing,tag=aj.the_world.animation.timestop.playing] run function animated_java:the_world/animations/idle/resume
                                 }
 
                                 execute if entity @s[tag=aj.the_world_vfx.root] run {
-                                    execute if score @s customUniversal.TimeStopAnimation matches 1 run function animated_java:the_world_vfx/animations/knife/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 2 run function animated_java:the_world_vfx/animations/flurry/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 3 run function animated_java:the_world_vfx/animations/ring_right/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 4 run function animated_java:the_world_vfx/animations/ring_left/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 5 run function animated_java:the_world_vfx/animations/flurry_knife/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 6 run function animated_java:the_world_vfx/animations/barrage_left_1/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 7 run function animated_java:the_world_vfx/animations/barrage_left_2/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 8 run function animated_java:the_world_vfx/animations/barrage_left_3/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 9 run function animated_java:the_world_vfx/animations/barrage_right_1/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 10 run function animated_java:the_world_vfx/animations/barrage_right_2/resume
+                                    execute if score @s customUniversal.AnimationID matches 1 run function animated_java:the_world_vfx/animations/knife/resume
+                                    execute if score @s customUniversal.AnimationID matches 2 run function animated_java:the_world_vfx/animations/flurry/resume
+                                    execute if score @s customUniversal.AnimationID matches 3 run function animated_java:the_world_vfx/animations/ring_right/resume
+                                    execute if score @s customUniversal.AnimationID matches 4 run function animated_java:the_world_vfx/animations/ring_left/resume
+                                    execute if score @s customUniversal.AnimationID matches 5 run function animated_java:the_world_vfx/animations/flurry_knife/resume
+                                    execute if score @s customUniversal.AnimationID matches 6 run function animated_java:the_world_vfx/animations/barrage_left_1/resume
+                                    execute if score @s customUniversal.AnimationID matches 7 run function animated_java:the_world_vfx/animations/barrage_left_2/resume
+                                    execute if score @s customUniversal.AnimationID matches 8 run function animated_java:the_world_vfx/animations/barrage_left_3/resume
+                                    execute if score @s customUniversal.AnimationID matches 9 run function animated_java:the_world_vfx/animations/barrage_right_1/resume
+                                    execute if score @s customUniversal.AnimationID matches 10 run function animated_java:the_world_vfx/animations/barrage_right_2/resume
                                 }
 
                                 execute if entity @s[tag=aj.billy.root] run {
-                                    execute if score @s customUniversal.TimeStopAnimation matches 1 run function animated_java:billy/animations/maul/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 2 run function animated_java:billy/animations/encourage/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 4 run function animated_java:billy/animations/snare_set/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 5 run function animated_java:billy/animations/snare_trigger/resume
+                                    execute if score @s customUniversal.AnimationID matches 1 run function animated_java:billy/animations/maul/resume
+                                    execute if score @s customUniversal.AnimationID matches 2 run function animated_java:billy/animations/encourage/resume
+                                    execute if score @s customUniversal.AnimationID matches 4 run function animated_java:billy/animations/snare_set/resume
+                                    execute if score @s customUniversal.AnimationID matches 5 run function animated_java:billy/animations/snare_trigger/resume
                                     execute unless entity @s[tag=aj.billy.animation.idle.playing,tag=aj.billy.animation.idle_snarl.playing,tag=aj.billy.animation.movement.playing,tag=aj.billy.animation.maul.playing,tag=aj.billy.animation.encourage.playing,tag=aj.billy.animation.snare_set.playing,tag=aj.billy.animation.snare_trigger.playing] run function animated_java:billy/animations/idle/resume
                                 }
 
                                 execute if entity @s[tag=aj.president.root] run {
-                                    execute if score @s customUniversal.TimeStopAnimation matches 1 run function animated_java:president/animations/kidnap/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 2 run function animated_java:president/animations/self_kidnap/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 3 run function animated_java:president/animations/shake_key/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 4 run function animated_java:president/animations/refreshments/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 5 run function animated_java:president/animations/turtle_idle/resume
+                                    execute if score @s customUniversal.AnimationID matches 1 run function animated_java:president/animations/kidnap/resume
+                                    execute if score @s customUniversal.AnimationID matches 2 run function animated_java:president/animations/self_kidnap/resume
+                                    execute if score @s customUniversal.AnimationID matches 3 run function animated_java:president/animations/shake_key/resume
+                                    execute if score @s customUniversal.AnimationID matches 4 run function animated_java:president/animations/refreshments/resume
+                                    execute if score @s customUniversal.AnimationID matches 5 run function animated_java:president/animations/turtle_idle/resume
                                 }
 
                                 execute if entity @s[tag=aj.avatar_vfx.root] run {
-                                    execute if score @s customUniversal.TimeStopAnimation matches 1 run function animated_java:avatar_vfx/animations/water_arrow_animation/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 2 run function animated_java:avatar_vfx/animations/water_arrow_projectile/resume
-                                    execute if score @s customUniversal.TimeStopAnimation matches 3 run function animated_java:avatar_vfx/animations/meteor/resume
+                                    execute if score @s customUniversal.AnimationID matches 1 run function animated_java:avatar_vfx/animations/water_arrow_animation/resume
+                                    execute if score @s customUniversal.AnimationID matches 2 run function animated_java:avatar_vfx/animations/water_arrow_projectile/resume
+                                    execute if score @s customUniversal.AnimationID matches 3 run function animated_java:avatar_vfx/animations/meteor/resume
                                 }
                             }
                         }
@@ -1784,7 +1814,7 @@ dir abilities {
                 }
 
                 function pass {
-                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.KnifeThrowID",animation:'knife_throw',idle:0}
+                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.KnifeThrowID",animation:'knife_throw',mode:"resume",idle:0}
                     visibility disable @n[type=minecraft:item_display,tag=aj.the_world.root] @s
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .TheWorld_State1Cooldown customUniversal.Move2Cooldown
 
@@ -1801,49 +1831,56 @@ dir abilities {
                 }
 
                 function voiceline {
-                    execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.voiceline player @a ~ ~ ~ 0.5
-                    execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.shadow_voiceline player @a ~ ~ ~ 0.5
+                    $execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.voiceline player @a ~ ~ ~ 0.5 $(speed)
+                    $execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.shadow_voiceline player @a ~ ~ ~ 0.5 $(speed)
                 }
 
                 function count {
-                    execute unless entity @s[tag=customTheWorld.RageMode] run {
-                        function custom:abilities/the_world/moves/2/spawn {offset:-0.5}
-                        function custom:abilities/the_world/moves/2/spawn {offset:0}
-                        function custom:abilities/the_world/moves/2/spawn {offset:0.5}
-                    } else run {
-                        function custom:abilities/the_world/moves/2/spawn {offset:-0.5}
-                        function custom:abilities/the_world/moves/2/spawn {offset:-0.25}
-                        function custom:abilities/the_world/moves/2/spawn {offset:0}
-                        function custom:abilities/the_world/moves/2/spawn {offset:0.25}
-                        function custom:abilities/the_world/moves/2/spawn {offset:0.5}
+                    $scoreboard players set @s customTheWorld.KnifeSpread $(spread)
+                    function custom:universal/math/division {division_value:2,score:"@s",objective:"customTheWorld.KnifeSpread"}
+                    execute store result storage minecraft:custom the_world.knife_throw.spread_initial double 0.01 run scoreboard players get @s customTheWorld.KnifeSpread
+                    function custom:universal/math/multiply {multiply_value:2,score:"@s",objective:"customTheWorld.KnifeSpread"}
+                    execute unless entity @s[tag=customTheWorld.RageMode] run data merge storage minecraft:custom {the_world:{knife_throw:{count:3,div_value:2}}}
+                    execute if entity @s[tag=customTheWorld.RageMode] run data merge storage minecraft:custom {the_world:{knife_throw:{count:5,div_value:4}}}
+
+                    block { with storage minecraft:custom the_world.knife_throw
+                        $function custom:universal/math/division {division_value:$(div_value),score:"@s",objective:"customTheWorld.KnifeSpread"}
+                        execute store result storage minecraft:custom the_world.knife_throw.spread double 0.01 run scoreboard players get @s customTheWorld.KnifeSpread 
+                        $execute rotated ~ ~ anchored eyes positioned ^-$(spread_initial) ^ ^ run function custom:abilities/the_world/moves/2/spawn with storage minecraft:custom the_world.knife_throw
+                        scoreboard players reset .count customTheWorld.KnifeSpread
                     }
                 }
 
                 function spawn {
+                    scoreboard players add .count customTheWorld.KnifeSpread 1
                     data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
                     data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
                     data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
 
-                    $data merge storage minecraft:custom {the_world:{knife_throw:{offset:$(offset)}}}
                     execute store result storage minecraft:custom the_world.knife_throw.id int 1 run scoreboard players get @s customTheWorld.KnifeThrowID
                     block { with storage minecraft:custom the_world.knife_throw
-                        $execute rotated ~ ~ positioned ^$(offset) ^ ^ positioned ~ ~1.25 ~ run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"the_world",animation:'knife',extra:"scoreboard players set @s customTheWorld.KnifeThrowID $(id)"}
+                        $function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"the_world",animation:'knife',extra:"scoreboard players set @s customTheWorld.KnifeThrowID $(id)"}
+                        function custom:universal/scale/player_source {animation:"knife",mode:"play",rig:"the_world_vfx",objective:"customTheWorld.KnifeThrowID"}
                     }
+
+                    $execute positioned ^$(spread) ^ ^ unless score .count customTheWorld.KnifeSpread matches $(count).. run function custom:abilities/the_world/moves/2/spawn with storage minecraft:custom the_world.knife_throw
                 }
 
                 function movement {
+                    $data merge storage minecraft:custom {the_world:{temp:{range:$(range),damage:"$(damage)"}}}
                     execute store result storage minecraft:custom the_world.temp.id int 1 run scoreboard players get @s customTheWorld.KnifeThrowID
 
-                    execute positioned ^ ^ ^ if entity @s[tag=customTheWorld.KnifeNotStuck] run function custom:abilities/the_world/moves/2/check
+                    $execute positioned ^ ^ ^ if entity @s[tag=customTheWorld.KnifeNotStuck] run function custom:abilities/the_world/moves/2/check {speed:$(speed)}
                     tag @s remove temp
 
                     execute if entity @s[tag=customTheWorld.KnifeNotStuck] run block { with storage minecraft:custom the_world.temp
                         particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
-                        $execute as @e[type=!#custom:not_mob,distance=..2] unless entity @s[scores={customTheWorld.KnifeThrowID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:custom the_world.temp
-                            $function custom:universal/damage/victim {id:"$(id)",damage:"5",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.KnifeThrowID",first:"was skewered by",second:"using Knife Throw"}
-                            $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.KnifeThrowID=$(id)}] run {
+                        $execute as @e[type=!#custom:not_mob,distance=..$(range)] unless entity @s[scores={customTheWorld.KnifeThrowID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:custom the_world.temp
+                            $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.KnifeThrowID",first:"was skewered by",second:"using Knife Throw"}
+                            $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.KnifeThrowID=$(id)}] run block { with storage minecraft:custom the_world.temp
                                 function custom:abilities/the_world/passive/rage/gain {amount:10}
-                                scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage 5
+                                $scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage $(damage)
+                                $execute if entity @s[tag=customSettings.DebugLog] run tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Knife Throw","color":"gold"},{"text":"\n"},{"text":"Damage: ","color":"gray"},{"text":"$(damage)","color":"red"}]
                             }
                             $execute as @n[type=minecraft:item_display,tag=aj.the_world_vfx.root,scores={customTheWorld.KnifeThrowID=$(id)}] run function animated_java:the_world_vfx/remove/this
                         }
@@ -1855,7 +1892,7 @@ dir abilities {
 
                 function check {
                     tag @s remove temp
-                    execute if block ^ ^ ^0.15 #custom:raycast_pass run {
+                    $execute if block ^ ^ ^$(speed) #custom:raycast_pass run {
                         scoreboard players add @s customTheWorld.KnifeMovement 1
                         execute unless score @s customTheWorld.KnifeMovement matches 15 run tag @s add temp
                     }
@@ -1868,7 +1905,7 @@ dir abilities {
                         tp @s ~ ~ ~
                     }
 
-                    execute if block ^ ^ ^0.15 #custom:raycast_pass unless score @s customTheWorld.KnifeMovement matches 15.. if entity @s[tag=temp] positioned ^ ^ ^0.15 run function custom:abilities/the_world/moves/2/check
+                    $execute if block ^ ^ ^$(speed) #custom:raycast_pass unless score @s customTheWorld.KnifeMovement matches 15.. if entity @s[tag=temp] positioned ^ ^ ^$(speed) run function custom:abilities/the_world/moves/2/check {speed:"$(speed)"}
                 }
             }
 
@@ -1884,7 +1921,7 @@ dir abilities {
                 }
 
                 function pass {
-                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.BarrageID",animation:'barrage',idle:1}
+                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.BarrageID",animation:'barrage',mode:"resume",idle:1}
                     function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.locator.hitbox",objective:"customTheWorld.BarrageID"}
                     function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.locator.barrage_anchor",objective:"customTheWorld.BarrageID"} 
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .TheWorld_State1Cooldown customUniversal.Move3Cooldown
@@ -1937,22 +1974,25 @@ dir abilities {
                     block { with storage minecraft:custom the_world.barrage
                         $function animated_java:the_world_vfx/variants/$(skin)/apply
                     }
+
+                    $function custom:universal/scale/rig_source {animation:"barrage_$(arm)_$(variant)",mode:"play",what:"tag=customAbility.TheWorld",rig:"the_world_vfx",objective:"customTheWorld.BarrageID"}
                 }
 
                 function trail {
-                    particle minecraft:smoke ~ ~ ~ 0 0 0 0 1 force @a
+                    execute if predicate custom:universal/0.50 run particle minecraft:smoke ~ ~ ~ 0 0 0 0 1 force @a
                     execute if predicate custom:universal/0.25 run particle minecraft:flame ~ ~ ~ 0 0 0 0.1 1 force @a
                 }
 
                 function check_area {
+                    $data merge storage minecraft:custom {the_world:{barrage:{range:$(range),damage:"$(damage)"}}}
                     execute store result storage minecraft:custom the_world.barrage.id int 1 run scoreboard players get @s customTheWorld.BarrageID
                     block { with storage minecraft:custom the_world.barrage
-                        $execute as @e[type=!#custom:not_mob,distance=..2.5] unless score @s customTheWorld.BarrageID matches $(id) run block { with storage minecraft:custom the_world.barrage
-                            $function custom:universal/damage/victim {id:"$(id)",damage:"2",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.BarrageID",first:"was pummeled",second:"using Barrage Rush"}
+                        $execute as @e[type=!#custom:not_mob,distance=..$(range)] unless score @s customTheWorld.BarrageID matches $(id) run block { with storage minecraft:custom the_world.barrage
+                            $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.BarrageID",first:"was pummeled",second:"using Barrage Rush"}
 
-                            $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.BarrageID=$(id)}] run {
+                            $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.BarrageID=$(id)}] run block { with storage minecraft:custom the_world.barrage
                                 function custom:abilities/the_world/passive/rage/gain {amount:1} 
-                                scoreboard players add @s customTheWorld.Statistics.Barrage.Damage 2
+                                $scoreboard players add @s customTheWorld.Statistics.Barrage.Damage $(damage)
                             }
 
                             scoreboard players set @s customTheWorld.BarrageStun 15
@@ -1966,14 +2006,15 @@ dir abilities {
                 }
 
                 function final_hit {
+                    $data merge storage minecraft:custom {the_world:{barrage:{range:$(range),damage:"$(damage)"}}}
                     execute store result storage minecraft:custom the_world.barrage.id int 1 run scoreboard players get @s customTheWorld.BarrageID
                     block { with storage minecraft:custom the_world.barrage
-                        $execute as @e[type=!#custom:not_mob,distance=..2.5] unless entity @s[scores={customTheWorld.BarrageID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:custom the_world.barrage
+                        $execute as @e[type=!#custom:not_mob,distance=..$(range)] unless entity @s[scores={customTheWorld.BarrageID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:custom the_world.barrage
                             $execute rotated as @n[type=minecraft:item_display,tag=aj.the_world.locator.hitbox,scores={customTheWorld.BarrageID=$(id)}] rotated ~ -20 as @s run launch @s looking 1.5
 
                             $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.BarrageID=$(id)}] run function custom:abilities/the_world/passive/rage/gain {amount:10} 
 
-                            $function custom:universal/damage/victim {id:"$(id)",damage:"5",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.BarrageID",first:"was pummeled",second:"using Barrage Final Hit"}
+                            $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.BarrageID",first:"was pummeled",second:"using Barrage Final Hit"}
                         }
                     }
                 }
@@ -1991,7 +2032,7 @@ dir abilities {
                 }
 
                 function pass {
-                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.FlurryID",animation:'flurry',idle:1}
+                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.FlurryID",animation:'flurry',mode:"play",idle:1}
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move4Cooldown = .TheWorld_State1Cooldown customUniversal.Move4Cooldown
 
                     function custom:universal/armor/hide
@@ -2016,10 +2057,25 @@ dir abilities {
                     data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
                     data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
                     data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
-                    execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"the_world",animation:'flurry',extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.the_world.locator.dio_shoulder]"}
+
+                    execute store result storage minecraft:custom the_world.flurry.id int 1 run scoreboard players get @s customTheWorld.FlurryID
+                    execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"the_world",animation:'flurry',extra:"function custom:abilities/the_world/moves/4/star with storage minecraft:custom the_world.flurry"}
+                }
+
+                function star {
+                    $scoreboard players set @s customTheWorld.FlurryID $(id)
+
+                    ride @s mount @n[type=minecraft:item_display,tag=aj.the_world.locator.dio_shoulder]
+                    function custom:universal/scale/rig_source {animation:"flurry",mode:"play",what:"tag=customAbility.TheWorld",rig:"the_world_vfx",objective:"customTheWorld.FlurryID"}
                 }
 
                 function check {
+                    execute if entity @s[tag=customTrait.SizeChange] run {
+                        execute if entity @s[tag=customTrait.SizeShrink] run data merge storage minecraft:custom {the_world:{flurry:{pitch:1.5}}}
+                        execute if entity @s[tag=customTrait.SizeGrowth] run data merge storage minecraft:custom {the_world:{flurry:{pitch:0.75}}}
+                    } else run {
+                        data merge storage minecraft:custom {the_world:{flurry:{pitch:1}}}
+                    }
                     execute store result storage minecraft:custom the_world.flurry.id int 1 run scoreboard players get @s customTheWorld.FlurryID
                     execute on attacker run block { with storage minecraft:custom the_world.flurry
                         tag @s add customTheWorld.FlurryAttacker
@@ -2048,8 +2104,8 @@ dir abilities {
                             tag @s remove customTheWorld.FlurryOffsetLimit
                         }
 
-                        execute at @s run {
-                            playsound minecraft:the_world.flurry.attacked player @a ~ ~ ~ 1
+                        execute at @s run block { with storage minecraft:custom the_world.flurry
+                            $playsound minecraft:the_world.flurry.attacked player @a ~ ~ ~ 1 $(pitch)
                             function custom:abilities/the_world/moves/4/knife/spawn
                         }
 
@@ -2120,10 +2176,13 @@ dir abilities {
                     block { with storage minecraft:custom universal.control
                         $execute as @a[tag=customAbility.TheWorld,scores={$(objective)=$(id)}] at @s run function custom:abilities/the_world/moves/reset/player
                         function animated_java:the_world/animations/hide_dio/play
-                        function animated_java:the_world/animations/idle/play
-                        scoreboard players reset @s customUniversal.TimeStopAnimation
+                        $function custom:universal/scale/rig_source {animation:"idle",mode:"play",what:"tag=customAbility.TheWorld",rig:"the_world",objective:"$(objective)"}
+                        tag @s remove customTrait.ShrinkraySizeLock
+                        scoreboard players reset @s customUniversal.AnimationID
+                        scoreboard players set @s customUniversal.AnimationID 2
                     }
                 }
+
                 function player {
                     perspective @s first
                     attribute @s minecraft:movement_speed base reset
@@ -2158,6 +2217,9 @@ dir abilities {
             scoreboard objectives add customPresident.SplitMove1Self_Kidnap dummy
             scoreboard objectives add customPresident.SplitMove2Shake_Key dummy
             scoreboard objectives add customPresident.SplitMove2Refreshments dummy
+
+            # Move Arguments #
+            scoreboard objectives add customPresident.Self_KidnapArguments dummy
 
             # General #
             scoreboard objectives add customPresident.PocketID dummy
@@ -2531,8 +2593,10 @@ dir abilities {
                 effect give @s minecraft:invisibility infinite 0 true
 
                 function custom:universal/armor/hide
-                $execute rotated ~ 0 run function animated_java:president/summon {args:{animation:'$(animation)', start_animation: true}}
+                execute rotated ~ 0 run function animated_java:president/summon {args:{}}
                 $function custom:universal/setup/rig {objective:"$(objective)",item:"president"}
+                $function custom:universal/control/mount/player {user:"customAbility.President",rig:"president",objective:"$(objective)"}
+                $function custom:universal/scale/player_source {animation:"$(animation)",mode:"$(mode)",rig:"president",objective:"$(objective)"}
 
                 $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.camera",objective:"$(objective)"}
                 $function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.president.locator.text_location",objective:"$(objective)"}
@@ -2757,7 +2821,7 @@ dir abilities {
 
                 dir self_kidnap {
                     function pass {
-                        function custom:abilities/president/moves/setup {animation:'self_kidnap',objective:"customUniversal.RigID"}
+                        function custom:abilities/president/moves/setup {animation:'self_kidnap',mode:"play",objective:"customUniversal.RigID"}
                         tag @s add customUniversal.Cancelable
                         scoreboard players set @s customUniversal.MoveLastUsed 1
                         scoreboard players set @s customUniversal.LastMoveState 2
@@ -2973,7 +3037,7 @@ dir abilities {
                     $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
                     block { with storage minecraft:custom universal.control
                         $execute as @a[tag=customAbility.President,scores={$(objective)=$(id)}] at @s run function custom:abilities/president/moves/reset/player
-                        scoreboard players reset @s customUniversal.TimeStopAnimation
+                        scoreboard players reset @s customUniversal.AnimationID
                         $function animated_java:$(rig)/remove/this
                     }
                 }
@@ -4547,7 +4611,18 @@ dir abilities {
 
                 dir shrink_self {
                     function core {
-                        say self
+                        execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        execute unless score @s customShrinkray.PassiveAmmo matches 1.. run function custom:universal/error_messages/find {error:18}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/shrinkray/moves/1/shrink_self/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Shrink Self"}
+                    }
+
+                    function pass {
+                        function custom:abilities/shrinkray/moves/setup {animation:'self_shrink',objective:"customUniversal.RigID"}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.shrinkray.locator.beam_position",objective:"customUniversal.RigID"}
                     }
                 }
             }
@@ -4592,7 +4667,7 @@ dir abilities {
                     $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
                     block { with storage minecraft:custom universal.control
                         $execute as @a[tag=customAbility.Shrinkray,scores={$(objective)=$(id)}] at @s run function custom:abilities/shrinkray/moves/reset/player
-                        scoreboard players reset @s customUniversal.TimeStopAnimation
+                        scoreboard players reset @s customUniversal.AnimationID
                         $function animated_java:$(rig)/remove/this
                     }
                 }
@@ -4622,7 +4697,7 @@ dir abilities {
                 data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
                 
                 execute if entity @s[tag=customShrinkray.ShrinkBeam] run data merge storage minecraft:custom {shrinkray:{beam:{type:"shrink",path:"Shrink"}}}
-                execute if entity @s[tag=customShrinkray.GrowBeam] run data merge storage minecraft:custom {shrinkray:{beam:{type:"grow",path:"Grow"}}}
+                execute if entity @s[tag=customShrinkray.GrowBeam] run data merge storage minecraft:custom {shrinkray:{beam:{type:"growth",path:"Growth"}}}
                 
                 execute store result storage minecraft:custom shrinkray.beam.id int 1 run scoreboard players get @s customUniversal.RigID
                 block { with storage minecraft:custom shrinkray.beam
@@ -4646,8 +4721,8 @@ dir abilities {
             function distance {
                 scoreboard players add @s customShrinkray.BeamDistance 1
 
-                $execute as @e[type=!#custom:not_mob,distance=..1.5] unless score @s customUniversal.RigID matches $(id) run block { with storage minecraft:custom shrinkray.beam
-                    $function custom:traits/apply_trait {amplifier:1,duration:20,what:"$(type)",path:"$(path)"}
+                $execute as @e[type=!#custom:not_mob,tag=!customTrait.Size$(path),distance=..1.5] unless score @s customUniversal.RigID matches $(id) run block { with storage minecraft:custom shrinkray.beam
+                    $function custom:traits/apply {amplifier:1,duration:20,what:"$(type)",path:"$(path)"}
                 }
 
                 execute if predicate custom:universal/0.1 run particle dust{color:[0.435,1.000,0.000],scale:1} ~ ~ ~ 0.5 0.5 0.5 0 1 force @a
@@ -4672,6 +4747,497 @@ dir abilities {
             }
         }
     }
+
+    dir eren {
+        function install {
+            # Moves #
+            scoreboard objectives add customEren.SplitMove1Transform dummy
+            scoreboard objectives add customEren.SplitMove1Blitz dummy
+
+            scoreboard objectives add customEren.TitanHeadRotationXCurrent dummy
+            scoreboard objectives add customEren.TitanHeadRotationYCurrent dummy
+            scoreboard objectives add customEren.TitanHeadRotationXPrevious dummy
+            scoreboard objectives add customEren.TitanHeadRotationYPrevious dummy
+            scoreboard objectives add customEren.TitanMovementState dummy
+            scoreboard objectives add customEren.TitanRotation dummy
+            scoreboard objectives add customEren.PassiveMeleeMode dummy
+            scoreboard objectives add customEren.TransformBloodProjectile dummy
+            scoreboard objectives add customEren.TransformDuration dummy
+
+            function custom:universal/cooldowns/10x {ability:"Eren_State1",storage:"eren",path:"1a",move:1,cooldown:120}
+            function custom:universal/cooldowns/10x {ability:"Eren_State2",storage:"eren",path:"1b",move:1,cooldown:24}
+        }
+        
+        dir tick {
+            function main {
+                execute if score @s customUniversal.Toggle matches 1 run {
+                    execute at @s run function custom:abilities/eren/active
+                }
+
+                REPEAT (1,3) as i {
+                    execute at @s if score @s customUniversal.Move<%i%>Trigger matches 1.. run {
+                        scoreboard players reset @s customUniversal.Move<%i%>Trigger
+                        execute if score @s customUniversal.Toggle matches 1 unless score @s customUniversal.ToggleCastDelay matches 1.. unless score @s customUniversal.MoveDelay matches 1.. run function custom:abilities/eren/moves/<%i%>/core
+                    }
+                }
+
+                execute unless entity @s[scores={customEren.TransformDuration=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                    execute if score @s customEren.TransformDuration matches 1.. run {
+                        scoreboard players remove @s customEren.TransformDuration 1
+                        function custom:abilities/eren/movement/main
+
+                        execute if score @s customEren.TransformDuration matches 0 run {
+                            attribute @s minecraft:scale modifier remove custom:eren.titan
+                            attribute @s minecraft:camera_distance modifier remove custom:eren.titan
+                            attribute @s minecraft:step_height modifier remove custom:eren.titan
+                        }
+                    }
+                    execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                    execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+                }
+            }
+        }
+        
+        function active {
+            function custom:universal/statistics/time {ability:"Eren",stat:"Playtime"}
+
+            function custom:abilities/eren/hotbar/main
+            # function custom:abilities/eren/passives/main
+        }
+
+        dir hotbar {
+            function main {
+                execute unless entity @s[tag=customEren.TitanForm] run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customEren.SplitMove1Transform
+                    function custom:abilities/eren/hotbar/progress with storage minecraft:custom eren.cooldowns.move1a
+                } else run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customEren.SplitMove1Blitz
+                    function custom:abilities/eren/hotbar/progress with storage minecraft:custom eren.cooldowns.move1b
+                }
+                
+                REPEAT (1,3) as i {
+                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                        function custom:universal/hotbar/time {ability:"eren",selected:<%i%>}
+                    }
+                }
+
+                execute unless entity @s[tag=customEren.TitanForm] run block { with storage minecraft:custom eren.hotbar
+                    $title @s actionbar [{"text":"\u10A0"},{"text":"\uF800\$(move1)"},{"text":"\uF800\u10A1"}]
+                }
+
+                execute if entity @s[tag=customEren.TitanForm] run {
+                    execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom eren.hotbar
+                        $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                    }
+
+                    execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom eren.hotbar
+                        $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                    }
+
+                    execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom eren.hotbar
+                        $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                    }
+                }
+            }
+
+            function progress {
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A2"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A3"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A4"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A5"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A6"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A7"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A8"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10A9"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10B1"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom eren.hotbar.move$(selection) set value "u10B2"
+
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+            }
+        }
+
+        dir movement {
+            function main {
+                execute store result storage minecraft:custom eren.id int 1 run scoreboard players get @s customUniversal.AbilityID
+
+                # Body and Head Rotation #
+                execute unless entity @s[tag=customEren.MovementMotion] unless entity @s[tag=customEren.PassivePunching] run {
+                    execute store result score @s customEren.TitanHeadRotationXCurrent run data get entity @s Rotation[0] 10
+                    execute store result score @s customEren.TitanHeadRotationYCurrent run data get entity @s Rotation[1] 10
+                    execute unless score @s customEren.TitanHeadRotationXCurrent = @s customEren.TitanHeadRotationXPrevious unless score @s customEren.TitanHeadRotationYCurrent = @s customEren.TitanHeadRotationYPrevious run function custom:abilities/eren/movement/rotation/start with storage minecraft:custom eren
+                    execute store result score @s customEren.TitanHeadRotationXPrevious run data get entity @s Rotation[0] 10
+                    execute store result score @s customEren.TitanHeadRotationYPrevious run data get entity @s Rotation[1] 10
+                }
+
+                # Movement Flags #
+                execute unless entity @s[tag=customEren.PassivePunching] run {
+                    execute if predicate custom:universal/forward unless predicate custom:universal/forward_right unless predicate custom:universal/forward_left unless entity @s[tag=customEren.MovementForward] run function custom:abilities/eren/movement/state/setup {type:"forward",animation:"Forward",variation:1}
+                    execute if predicate custom:universal/right unless predicate custom:universal/forward_right unless entity @s[tag=customEren.MovementRight] run function custom:abilities/eren/movement/state/setup {type:"strafe_right",animation:"Right",variation:2}
+                    execute if predicate custom:universal/left unless predicate custom:universal/forward_left unless entity @s[tag=customEren.MovementLeft] run function custom:abilities/eren/movement/state/setup {type:"strafe_left",animation:"Left",variation:3}
+
+                    execute if predicate custom:universal/forward_right unless entity @s[tag=customEren.MovementForwardRight] run function custom:abilities/eren/movement/state/setup {type:"forward_right",animation:"ForwardRight",variation:1}
+                    execute if predicate custom:universal/forward_left unless entity @s[tag=customEren.MovementForwardLeft] run function custom:abilities/eren/movement/state/setup {type:"forward_left",animation:"ForwardLeft",variation:1}
+                }
+
+                execute if entity @s[tag=customEren.MovementMotion] run {
+                    execute rotated as @s run block { with storage minecraft:custom eren
+                        $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] run rotate @s ~ 0
+                        $execute as @n[type=minecraft:item_display,tag=aj.heads.root,scores={customUniversal.AbilityID=$(id)}] run rotate @s ~ ~
+                    }
+
+                    execute unless entity @s[tag=customEren.PassivePunching] unless predicate custom:universal/forward unless predicate custom:universal/right unless predicate custom:universal/left unless predicate custom:universal/forward_right unless predicate custom:universal/forward_left run block { with storage minecraft:custom eren
+                        $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] run function animated_java:eren/animations/idle/tween {to_frame:1,duration:3}
+                        function custom:abilities/eren/movement/state/clear
+                    }
+                }
+
+                # Anchor & Interaction #
+                block { with storage minecraft:custom eren
+                    $execute as @s at @s run tp @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] ~ ~ ~
+                    $execute as @n[type=minecraft:interaction,tag=aj.eren.locator.interaction,scores={customUniversal.AbilityID=$(id)}] run function custom:abilities/eren/passives/melee/core with storage minecraft:custom eren
+                }
+            }
+
+            dir state {
+                function setup {
+                    $data merge storage minecraft:custom {eren:{movement:"$(type)",adjust:1}}
+                    $scoreboard players set .Current customEren.TitanMovementState $(variation)
+                    execute if score .Current customEren.TitanMovementState matches 1 run block { with storage minecraft:custom eren
+                        $execute if entity @s[tag=customEren.MovementForward] run function custom:abilities/eren/movement/state/adjust {objective:"forward",id:$(id)}
+                        $execute if entity @s[tag=customEren.MovementForwardRight] run function custom:abilities/eren/movement/state/adjust {objective:"forward_right",id:$(id)}
+                        $execute if entity @s[tag=customEren.MovementForwardLeft] run function custom:abilities/eren/movement/state/adjust {objective:"forward_left",id:$(id)}
+                    }
+                    block { with storage minecraft:custom eren
+                        $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] rotated as @p[tag=customAbility.Eren,scores={customUniversal.AbilityID=$(id)}] run block { with storage minecraft:custom eren
+                            $function animated_java:eren/animations/$(movement)/tween {to_frame:$(adjust),duration:3}
+                        }
+                    }
+                    function custom:abilities/eren/movement/state/clear
+                    $scoreboard players set @s customEren.TitanMovementState $(variation)
+                    $tag @s add customEren.Movement$(animation)
+                    tag @s add customEren.MovementMotion
+                }
+
+                function adjust {
+                    $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] run block { {objective:"$(objective)"}
+                        $scoreboard players add @s aj.$(objective).frame 2
+                        $execute store result storage minecraft:custom eren.adjust int 1 run scoreboard players get @s aj.$(objective).frame
+                    }
+                }
+
+                function clear {
+                    tag @s remove customEren.MovementMotion
+                    tag @s remove customEren.MovementForward
+                    tag @s remove customEren.MovementRight
+                    tag @s remove customEren.MovementLeft
+                    tag @s remove customEren.MovementForwardRight
+                    tag @s remove customEren.MovementForwardLeft
+
+                    tag @s remove customEren.MovementUndefined
+                }
+            }
+
+            dir rotation {
+                function start {
+                    # Store Head Rotation
+
+                    $execute store result entity @n[type=minecraft:item_display,tag=aj.eren.locator.head_offset,scores={customUniversal.AbilityID=$(id)}] Rotation[0] float 0.1 run scoreboard players get @s customEren.TitanHeadRotationXCurrent
+
+                    $execute store result entity @n[type=minecraft:item_display,tag=aj.heads.root,scores={customUniversal.AbilityID=$(id)}] Rotation[0] float 0.1 run scoreboard players get @s customEren.TitanHeadRotationXCurrent
+                    $execute store result entity @n[type=minecraft:item_display,tag=aj.heads.root,scores={customUniversal.AbilityID=$(id)}] Rotation[1] float 0.1 run scoreboard players get @s customEren.TitanHeadRotationYCurrent
+
+                    # Get Head and Body Rotation
+                    scoreboard players operation .Head customEren.TitanRotation = @s customEren.TitanHeadRotationXCurrent
+                    $execute store result score .Body customEren.TitanRotation run data get entity @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] Rotation[0] 10
+
+                    # Compute Rotation Difference
+                    scoreboard players operation .Difference customEren.TitanRotation = .Head customEren.TitanRotation
+                    scoreboard players operation .Difference customEren.TitanRotation -= .Body customEren.TitanRotation
+
+                    # Normalize the Difference (Fixing potential offsets and wraparound issues)
+                    # Check if the difference is greater than 180, and adjust by adding or subtracting 360 to wrap around.
+                    execute if score .Difference customEren.TitanRotation matches 1801.. run scoreboard players remove .Difference customEren.TitanRotation 3600
+                    execute if score .Difference customEren.TitanRotation matches ..-1801 run scoreboard players add .Difference customEren.TitanRotation 3600
+
+                    # Detect if the difference exceeds ±45 degrees (scaled to ±450 for smoother adjustments)
+                    execute if score .Difference customEren.TitanRotation matches 351.. unless entity @s[tag=temp] run function custom:abilities/eren/movement/rotation/adjust {operation:"remove"}
+                    execute if score .Difference customEren.TitanRotation matches ..-351 unless entity @s[tag=temp] run function custom:abilities/eren/movement/rotation/adjust {operation:"add"}
+                    tag @s remove temp
+
+                    # Apply the Adjustment (Rotate Body Closer to Head)
+
+                    # Update the Body's Rotation
+                    $execute store result entity @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] Rotation[0] float 0.1 run scoreboard players get .Body customEren.TitanRotation
+
+                    # Smooth Body Rotation Adjustment (incrementally rotate the body towards the head rotation)
+
+                    scoreboard players set .Adjust customEren.TitanRotation 0
+                    scoreboard players operation .Adjust customEren.TitanRotation = .Head customEren.TitanRotation
+
+                    # Incrementally rotate body closer to head with a smaller step for smoother transition (try 5 or 10)
+                    #scoreboard players add .Adjust customEren.TitanRotation 5
+
+                    # Ensure the body rotation stays within a valid range, making the transition smooth
+                    execute if score .Adjust customEren.TitanRotation matches 1801.. run scoreboard players set .Adjust customEren.TitanRotation 1800
+                    execute if score .Adjust customEren.TitanRotation matches ..-1801 run scoreboard players set .Adjust customEren.TitanRotation -1800
+
+                    # Apply Incremental Adjustment to Ensure Proper Body Rotation
+                    scoreboard players operation .Body customEren.TitanRotation = .Adjust customEren.TitanRotation
+                }
+
+                function adjust {
+                    scoreboard players set .Adjust customEren.TitanRotation 0
+                    scoreboard players operation .Adjust customEren.TitanRotation = .Head customEren.TitanRotation
+                    $scoreboard players $(operation) .Adjust customEren.TitanRotation 350 
+
+                    scoreboard players operation .Body customEren.TitanRotation = .Adjust customEren.TitanRotation
+                }
+            }
+        }
+
+        dir passives {
+            function main {
+
+            }
+
+            dir melee {
+                function core {
+                    # Right Swing #
+                    $execute on attacker run function custom:abilities/eren/passives/melee/check {interaction:0,id:$(id)}
+                    # Left Swing #
+                    $execute on target run function custom:abilities/eren/passives/melee/check {interaction:1,id:$(id)}
+                }
+
+                function check {
+                    $scoreboard players set @s customEren.PassiveMeleeMode $(interaction)
+                    $execute if entity @s[type=minecraft:player,scores={customUniversal.AbilityID=$(id)}] run {
+                        execute if score @s customEren.PassiveMeleeMode matches 0 run function custom:abilities/eren/passives/melee/left_punch with storage minecraft:custom eren
+                        execute if score @s customEren.PassiveMeleeMode matches 1 run function custom:abilities/eren/passives/melee/right_punch with storage minecraft:custom eren
+                    }
+
+                    $execute as @n[type=minecraft:interaction,tag=aj.eren.locator.interaction,scores={customUniversal.AbilityID=$(id)}] run {
+                        data remove entity @s interaction
+                        data remove entity @s attack
+                    }
+                }
+
+                function right_punch {
+                    function custom:abilities/eren/movement/state/setup {type:"punch_right",animation:"Undefined",variation:5}
+                    tag @s add customEren.PassivePunching
+                }
+
+                function left_punch {
+                    say left
+                }
+
+                function end {
+                    execute store result storage minecraft:custom eren.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                    block { with storage minecraft:custom eren
+                        $execute as @p[tag=customAbility.Eren,scores={customUniversal.AbilityID=$(id)}] run tag @s remove customEren.PassivePunching
+                    }
+                    function animated_java:eren/animations/idle/tween {to_frame:1,duration:3}
+                }
+            }
+        }
+
+        dir moves {
+            dir 1 {
+                function core {
+                    execute unless entity @s[tag=customEren.TitanForm] run function custom:abilities/eren/moves/1/transform/core
+                    execute if entity @s[tag=customEren.TitanForm] run function custom:abilities/eren/moves/1/blitz/core
+                }
+
+                dir transform {
+                    function core {
+                        scoreboard players set @s customUniversal.ActiveHotbar 1
+                        execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        function custom:universal/error_messages/universal
+
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/eren/moves/1/transform/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Transform"}
+                    }
+
+                    function pass {
+                        execute store result storage minecraft:custom eren.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                        gamemode spectator @s
+
+                        execute rotated ~ 0 run function animated_java:eren/summon {args:{}}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.root",objective:"customUniversal.AbilityID"}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.camera",objective:"customUniversal.AbilityID"}
+                        function custom:universal/setup/pair {type:"minecraft:interaction",what:"aj.eren.locator.interaction",objective:"customUniversal.AbilityID"}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.locator.head_anchor",objective:"customUniversal.AbilityID"}
+                        function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.locator.dripping_vfx",objective:"customUniversal.AbilityID"}
+                        block { with storage minecraft:custom eren
+                            $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] run function animated_java:eren/animations/transform/play
+                        }
+
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customEren.SplitMove1Transform = .Eren_State1Cooldown customUniversal.Move1Cooldown
+
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+                        scoreboard players set @s customUniversal.LastMoveState 1
+                        scoreboard players set @s customUniversal.MoveDelay 10
+                        scoreboard players add @s customEren.Statistics.Transform.Uses 1
+                        tag @s add customUniversal.Cancelable
+
+                        execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"eren",objective:"customUniversal.AbilityID"}
+                        execute if entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/skin {branch:"eren"}
+
+                        # attribute @s minecraft:movement_speed base set 0
+                        # attribute @s minecraft:jump_strength base set 0
+                    }
+
+                    function determine {
+                        execute store result storage minecraft:custom eren.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                        block { with storage minecraft:custom eren
+                            $execute as @p[tag=customAbility.Eren,scores={customUniversal.AbilityID=$(id)}] run {
+                                execute unless score @s customUI.SelectedOdds matches 2..3 if predicate custom:eren/transform run tag @s add temp
+                                execute if score @s customUI.SelectedOdds matches 2 run tag @s add temp
+
+                                execute unless entity @s[tag=temp] run block { with storage minecraft:custom eren
+                                    $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] run {
+                                        function animated_java:eren/animations/transform/stop
+                                        function animated_java:eren/animations/transform_fail/play
+                                    }
+                                }
+                                tag @s remove temp
+                            }
+                        }
+                    }
+
+                    function shift {
+                        data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                        data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                        data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                        execute rotated ~ 0 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"eren",animation:'transform',extra:"random value 1..2"}
+                    }
+
+                    dir blood_projectile {
+                        function spawn {
+                            data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                            data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                            data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                            execute positioned ^0.5 ^1 ^ rotated ~-90 25 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"eren",animation:'blood_projectile',extra:"random value 1..2"}
+                        }
+
+                        dir movement {
+                            function start {
+                                function custom:abilities/eren/moves/1/transform/blood_projectile/movement/recursive
+                                scoreboard players reset @s customEren.TransformBloodProjectile
+                                tag @s remove temp
+                            }
+
+                            function recursive {
+                                scoreboard players add @s customEren.TransformBloodProjectile 1
+
+                                execute if predicate custom:universal/0.1 run particle block{block_state:"minecraft:redstone_block"} ~ ~0.25 ~ 0.125 0.125 0.125 1 1 normal
+                                tp @s ~ ~ ~ ~ ~
+
+                                execute unless block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=temp] run {
+                                    function animated_java:eren_vfx/remove/this
+                                    particle block{block_state:"minecraft:redstone_block"} ~ ~0.25 ~ 0.25 0.25 0.25 1 15 normal
+                                    tag @s add temp
+                                }
+
+                                execute positioned ^ ^ ^0.1 rotated ~ ~0.5 unless score @s customEren.TransformBloodProjectile matches 7.. run function custom:abilities/eren/moves/1/transform/blood_projectile/movement/recursive
+                            }
+                        }
+                    }
+
+                    function dripping_blood {
+                        data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                        data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                        data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+
+                        execute store result storage minecraft:custom eren.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                        block { with storage minecraft:custom eren
+                            $function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"eren",animation:'dripping_blood',extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.eren.locator.dripping_vfx,scores={customUniversal.AbilityID=$(id)}]"}
+                        }
+                    }
+
+                    function static {
+                        data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                        data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:50,offsetYL:0,offsetYR:50,offsetZL:0,offsetZR:50}}}
+                        data merge storage minecraft:custom {universal:{vfx:{speedXL:1,speedXR:0,speedYL:1,speedYR:0,speedZL:1,speedZR:0}}}
+                        execute positioned ^0.5 ^1 ^ run function custom:universal/vfx/spawn {mode:1,speed:1,count:1,duration:10,branch:"eren",animation:'static',extra:"random value 1..2"}
+                    }
+                }
+            }
+
+            dir reset {
+                function persist {
+                    # function custom:abilities/eren/moves/reset/persist {objective:"customUniversal.AbilityID",rig:"eren"}
+                    $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+                    $data merge storage minecraft:custom {universal:{control:{objective:"$(objective)",rig:"$(rig)"}}}
+                    block { with storage minecraft:custom universal.control
+                        $execute as @a[tag=customAbility.Eren,scores={$(objective)=$(id)}] at @s run {
+                            tag @s remove customUniversal.Cancellable
+                            tag @s remove customUniversal.DisconnectCheck
+                            tag @s remove customUniversal.Animation
+
+                            execute unless score @s customEren.TransformDuration matches 1.. run block { with storage minecraft:custom universal.control
+                                gamemode survival @s
+                                $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={$(objective)=$(id)}] at @s rotated as @s run tp @p[tag=customAbility.Eren,scores={$(objective)=$(id)}] ~ ~ ~ ~ 0
+                                $execute as @n[type=minecraft:item_display,tag=aj.eren.locator.head_anchor,scores={$(objective)=$(id)}] at @s rotated ~ 0 run {
+                                    function animated_java:heads/summon {args:{}}
+                                    function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.heads.root",objective:"customUniversal.AbilityID"}
+                                    block { with storage minecraft:custom universal.control
+                                        $execute as @n[type=minecraft:item_display,tag=aj.heads.root,scores={customUniversal.AbilityID=$(id)}] run block { with storage minecraft:custom universal.control
+                                            $ride @s mount @n[type=minecraft:item_display,tag=aj.eren.locator.head_anchor,scores={$(objective)=$(id)}]
+                                            function animated_java:heads/variants/attack_titan/apply
+                                            function animated_java:heads/animations/attack_titan/play
+                                        }
+                                    }
+                                }
+                                attribute @s minecraft:scale modifier add custom:eren.titan 7 add_multiplied_total
+                                attribute @s minecraft:camera_distance modifier add custom:eren.titan 0.625 add_multiplied_total
+                                attribute @s minecraft:step_height modifier add custom:eren.titan 5.166666 add_multiplied_total
+                                scoreboard players set @s customEren.TransformDuration 20400
+                            }
+                        }
+                        function animated_java:eren/animations/idle/play
+                    }
+                }
+
+                function revert {
+                    # function custom:abilities/eren/moves/reset/revert {objective:"customUniversal.AbilityID",rig:"eren"}
+                    $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+                    $data merge storage minecraft:custom {universal:{control:{objective:"$(objective)",rig:"$(rig)"}}}
+                    block { with storage minecraft:custom universal.control
+                        $execute as @a[tag=customAbility.Eren,scores={$(objective)=$(id)}] at @s run block { with storage minecraft:custom universal.control
+                            gamemode survival @s
+                            $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] at @s rotated as @s run tp @p[tag=customAbility.Eren,scores={$(objective)=$(id)}] ~ ~ ~ ~ 0
+
+                            tag @s remove customUniversal.Cancellable
+                            tag @s remove customUniversal.DisconnectCheck
+                            tag @s remove customUniversal.Animation
+                        }
+                        $function animated_java:$(rig)/remove/this
+                    }
+                }
+            }
+        }
+
+        dir toggle {
+            function on {
+                playsound minecraft:president.toggle.enable player @s ~ ~ ~ 1
+                scoreboard players set @s customUniversal.ToggleDelay 20
+
+                execute unless entity @s[scores={customUniversal.AbilityID=1..}] run {
+                    scoreboard players add .global customUniversal.AbilityID 1
+                    scoreboard players operation @s customUniversal.AbilityID = .global customUniversal.AbilityID
+                }
+            }
+
+            function off {
+                title @s actionbar ""
+                playsound minecraft:president.toggle.withdraw player @s ~ ~ ~ 0.5
+
+                scoreboard players set @s customUniversal.ToggleDelay 10
+            }
+        }
+    }
 }
 
 dir traits {
@@ -4682,12 +5248,15 @@ dir traits {
 
         scoreboard objectives add customTrait.ShrinkAmplifier dummy
         scoreboard objectives add customTrait.ShrinkDuration dummy
+
+        scoreboard objectives add customTrait.GrowthAmplifier dummy
+        scoreboard objectives add customTrait.GrowthDuration dummy
     }
 
     function tick {
 
 
-        execute unless entity @s[scores={customTrait.BleedDuration=0,customTrait.ShrinkDuration=0}] run {
+        execute unless entity @s[scores={customTrait.BleedDuration=0,customTrait.ShrinkDuration=0,customTrait.GrowthDuration=0}] run {
             execute if score @s customTrait.BleedDuration matches 1.. run {
                 scoreboard players remove @s customTrait.BleedDuration 1
                 function custom:traits/type/bleed/main
@@ -4696,13 +5265,17 @@ dir traits {
                 scoreboard players remove @s customTrait.ShrinkDuration 1
                 function custom:traits/type/shrink/main
             }
+            execute if score @s customTrait.GrowthDuration matches 1.. run {
+                scoreboard players remove @s customTrait.GrowthDuration 1
+                function custom:traits/type/growth/main
+            }
         } else run {
             tag @s remove customTrait.ConstantTick
         }
     }
 
-    function apply_trait {
-        # function custom:traits/apply_trait {amplifier:1,duration:2,what:"bleed",path:"Bleed"}
+    function apply {
+        # function custom:traits/apply {amplifier:1,duration:2,what:"bleed",path:"Bleed"}
         $scoreboard players set .compare customTrait.$(path)Amplifier $(amplifier)
         $data merge storage minecraft:custom {trait:{universal:{duration:$(duration),what:"$(what)",path:"$(path)"}}}
         $execute unless score @s customTrait.$(path)Amplifier > .compare customTrait.$(path)Amplifier run block { with storage minecraft:custom trait.universal
@@ -4748,8 +5321,15 @@ dir traits {
         dir shrink {
             function apply {
                 scoreboard players operation @s customTrait.ShrinkAmplifier = @s customTrait.ShrinkAmplifier
+                execute if score @s customTrait.GrowthDuration matches 1.. run {
+                    scoreboard players reset @s customTrait.GrowthDuration
+                    function custom:traits/type/growth/end
+                }
                 $scoreboard players set @s customTrait.ShrinkDuration $(duration)
                 function custom:universal/math/multiply {multiply_value:20,score:"@s",objective:"customTrait.ShrinkDuration"}
+
+                tag @s add customTrait.SizeChange
+                tag @s add customTrait.SizeShrink
 
                 attribute @s minecraft:scale modifier add custom:ability/shrinkray -0.75 add_multiplied_total
                 attribute @s minecraft:movement_speed modifier add custom:ability/shrinkray 0.15 add_multiplied_total
@@ -4759,6 +5339,8 @@ dir traits {
                 attribute @s minecraft:entity_interaction_range modifier add custom:ability/shrinkray -0.33 add_multiplied_total
                 execute unless entity @s[type=minecraft:player] run {
                     attribute @s minecraft:jump_strength modifier add custom:ability/shrinkray -0.5 add_multiplied_total
+                } else run {
+                    function custom:traits/adjust_size/index {operation:2}
                 }
             }
 
@@ -4767,6 +5349,9 @@ dir traits {
             }
 
             function end {
+                tag @s remove customTrait.SizeChange
+                tag @s remove customTrait.SizeShrink
+
                 attribute @s minecraft:scale modifier remove custom:ability/shrinkray
                 attribute @s minecraft:movement_speed modifier remove custom:ability/shrinkray
                 attribute @s minecraft:safe_fall_distance modifier remove custom:ability/shrinkray
@@ -4775,6 +5360,139 @@ dir traits {
                 attribute @s minecraft:entity_interaction_range modifier remove custom:ability/shrinkray
                 
                 attribute @s minecraft:jump_strength modifier remove custom:ability/shrinkray
+
+                function custom:traits/adjust_size/index {operation:1}
+            }
+        }
+
+        dir growth {
+            function apply {
+                scoreboard players operation @s customTrait.GrowthAmplifier = @s customTrait.GrowthAmplifier
+                execute if score @s customTrait.ShrinkDuration matches 1.. run {
+                    scoreboard players reset @s customTrait.ShrinkDuration
+                    function custom:traits/type/shrink/end
+                }
+                $scoreboard players set @s customTrait.GrowthDuration $(duration)
+                function custom:universal/math/multiply {multiply_value:20,score:"@s",objective:"customTrait.GrowthDuration"}
+
+                tag @s add customTrait.SizeChange
+                tag @s add customTrait.SizeGrowth
+
+                attribute @s minecraft:scale modifier add custom:ability/shrinkray 0.5 add_multiplied_total
+                attribute @s minecraft:movement_speed modifier add custom:ability/shrinkray -0.35 add_multiplied_total
+                attribute @s minecraft:safe_fall_distance modifier add custom:ability/shrinkray 0.5 add_multiplied_total
+                attribute @s minecraft:max_health modifier add custom:ability/shrinkray 0.2 add_multiplied_total
+                attribute @s minecraft:block_interaction_range modifier add custom:ability/shrinkray 0.33 add_multiplied_total
+                attribute @s minecraft:entity_interaction_range modifier add custom:ability/shrinkray 0.33 add_multiplied_total
+                attribute @s minecraft:jump_strength modifier add custom:ability/shrinkray 0.5 add_multiplied_total
+                attribute @s minecraft:step_height modifier add custom:ability/shrinkray 1 add_multiplied_total
+                execute if entity @s[type=minecraft:player] run {
+                    function custom:traits/adjust_size/index {operation:3}
+                }
+            }
+
+            function main {
+                execute unless score @s customTrait.GrowthDuration matches 1.. run function custom:traits/type/growth/end
+            }
+
+            function end {
+                tag @s remove customTrait.SizeChange
+                tag @s remove customTrait.SizeGrowth
+
+                attribute @s minecraft:scale modifier remove custom:ability/shrinkray
+                attribute @s minecraft:movement_speed modifier remove custom:ability/shrinkray
+                attribute @s minecraft:safe_fall_distance modifier remove custom:ability/shrinkray
+                attribute @s minecraft:max_health modifier remove custom:ability/shrinkray
+                attribute @s minecraft:block_interaction_range modifier remove custom:ability/shrinkray
+                attribute @s minecraft:entity_interaction_range modifier remove custom:ability/shrinkray
+                attribute @s minecraft:jump_strength modifier remove custom:ability/shrinkray
+                attribute @s minecraft:step_height modifier remove custom:ability/shrinkray
+
+                function custom:traits/adjust_size/index {operation:1}
+            }
+        }
+    }
+
+    dir adjust_size {
+        function index {
+            $data merge storage minecraft:custom {universal:{size:{operation:$(operation)}}}
+            execute if score @s customUniversal.Toggle matches 1 run {
+                execute if entity @s[tag=customAbility.TheWorld] run {
+                    execute store result storage minecraft:custom universal.size.id int 1 run scoreboard players get @s customTheWorld.RigID
+                    block { with storage minecraft:custom universal.size
+                        $scoreboard players set .target customUniversal.ShrinkrayOperation $(operation)
+                        $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customTheWorld.RigID=$(id)}] run {
+                            function animated_java:the_world/animations/pause_all
+                            execute if score @s customUniversal.AnimationID matches 1 run function custom:traits/adjust_size/start {animation:"summon",rig:"the_world"}
+                            execute if score @s customUniversal.AnimationID matches 2 run function custom:traits/adjust_size/start {animation:"idle",rig:"the_world"}
+                            execute if score @s customUniversal.AnimationID matches 3 run function custom:traits/adjust_size/start {animation:"knife_throw",rig:"the_world"}
+                            execute if score @s customUniversal.AnimationID matches 4 run function custom:traits/adjust_size/start {animation:"barrage",rig:"the_world"}
+                            execute if score @s customUniversal.AnimationID matches 5 run function custom:traits/adjust_size/start {animation:"flurry",rig:"the_world"}
+                        }
+                    }
+                }
+                execute if entity @s[tag=customAbility.President] run {
+                    execute store result storage minecraft:custom universal.size.id int 1 run scoreboard players get @s customUniversal.GlobalCounter
+                    block { with storage minecraft:custom universal.size
+                        $scoreboard players set .target customUniversal.ShrinkrayOperation $(operation)
+                        $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.GlobalCounter=$(id)}] run {
+                            execute if score @s customUniversal.AnimationID matches 2 run function custom:traits/adjust_size/start {animation:"self_kidnap",rig:"president"}
+                        }
+                    }
+                }
+
+                execute if entity @s[tag=customSettings.DebugLog] run block { with storage minecraft:custom universal.size
+                    $tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Scale Trait(s)","color":"gold"},{"text":"\n"},{"text":"Rig: ","color":"gray"},{"text":"$(rig)","color":"yellow"},{"text":"\n"},{"text":"Animation: ","color":"gray"},{"text":"$(animation) $(frame)","color":"aqua"},{"text":"\n"},{"text":"Mode: ","color":"gray"},{"text":"$(extra)","color":"light_purple"}]
+                }
+            }
+        }
+
+        function start {
+            $data merge storage minecraft:custom {universal:{size:{animation:"$(animation)",rig:"$(rig)"}}}
+            execute if score .target customUniversal.ShrinkrayOperation matches 1 run data merge storage minecraft:custom {universal:{size:{extra:""}}}
+            execute if score .target customUniversal.ShrinkrayOperation matches 2 run data merge storage minecraft:custom {universal:{size:{extra:"_tiny"}}}
+            execute if score .target customUniversal.ShrinkrayOperation matches 3 run data merge storage minecraft:custom {universal:{size:{extra:"_giant"}}}
+
+            $function custom:traits/adjust_size/check {rig:"$(rig)",animation:"$(animation)",result:1}
+            $function custom:traits/adjust_size/check {rig:"$(rig)",animation:"$(animation)_tiny",result:2}
+            $function custom:traits/adjust_size/check {rig:"$(rig)",animation:"$(animation)_giant",result:3}
+
+            block { with storage minecraft:custom universal.size
+                $function animated_java:$(rig)/animations/pause_all
+                # $execute if score @p[tag=customAbility.TheWorld] customTheWorld.IdleMode matches 0 run function animated_java:the_world/animations/idle$(extra)/resume
+                $function animated_java:$(rig)/animations/$(animation)$(extra)/set_frame {frame:$(frame)}
+                $function animated_java:$(rig)/animations/$(animation)$(extra)/resume
+            }
+        }
+
+        function check {
+            $execute if entity @s[tag=aj.$(rig).animation.$(animation).playing] run block { {rig:"$(rig)",animation:"$(animation)",result:$(result)}
+                $scoreboard players set .current customUniversal.ShrinkrayOperation $(result)
+                $execute store result score @s customUniversal.ShrinkrayFrame run scoreboard players get @s aj.$(animation).frame
+                $function animated_java:$(rig)/animations/$(animation)/stop
+                execute if score .current customUniversal.ShrinkrayOperation matches 1 run {
+                    execute if score .target customUniversal.ShrinkrayOperation matches 2 run {
+                        function custom:universal/math/multiply {multiply_value:100,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                        function custom:universal/math/division {division_value:200,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                    }
+                    execute if score .target customUniversal.ShrinkrayOperation matches 3 run {
+                        function custom:universal/math/multiply {multiply_value:500,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                        function custom:universal/math/division {division_value:400,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                    }
+                }
+                execute if score .current customUniversal.ShrinkrayOperation matches 2 run {
+                    execute if score .target customUniversal.ShrinkrayOperation matches 1 run {
+                        function custom:universal/math/multiply {multiply_value:150,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                        function custom:universal/math/division {division_value:100,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                    }
+                }
+                execute if score .current customUniversal.ShrinkrayOperation matches 3 run {
+                    execute if score .target customUniversal.ShrinkrayOperation matches 1 run {
+                        function custom:universal/math/multiply {multiply_value:150,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                        function custom:universal/math/division {division_value:200,score:"@s",objective:"customUniversal.ShrinkrayFrame"}
+                    }
+                }
+                execute store result storage minecraft:custom universal.size.frame int 1 run scoreboard players get @s customUniversal.ShrinkrayFrame
             }
         }
     }
@@ -4785,6 +5503,43 @@ dir traits {
 }
 
 dir universal {
+    dir scale {
+        function rig_source {
+            # function custom:universal/scale/rig_source {animation:"summon",mode:"play",what:"tag=customAbility.TheWorld",rig:"the_world",objective:"customTheWorld.RigID"}
+            $execute store result storage minecraft:custom universal.size.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {universal:{size:{rig:"$(rig)",what:"$(what)",mode:"$(mode)",objective:"$(objective)",animation:"$(animation)"}}}
+            block { with storage minecraft:custom universal.size
+                $execute as @p[$(what),scores={$(objective)=$(id)}] at @s run {
+                    execute if entity @s[tag=customTrait.SizeChange] run block { with storage minecraft:custom universal.size
+                        $execute if entity @s[tag=customTrait.SizeShrink] run data merge storage minecraft:custom {universal:{size:{animation:"$(animation)_tiny"}}}
+                        $execute if entity @s[tag=customTrait.SizeGrowth] run data merge storage minecraft:custom {universal:{size:{animation:"$(animation)_giant"}}}
+                    }
+                }
+
+                block { with storage minecraft:custom universal.size
+                    # $say $(rig) $(animation) $(mode)
+                    $function animated_java:$(rig)/animations/$(animation)/$(mode)
+                }
+            }
+        }
+
+        function player_source {
+            # function custom:universal/scale/player_source {animation:"summon",mode:"play",rig:"the_world",objective:"customTheWorld.RigID"}
+            $execute store result storage minecraft:custom universal.size.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {universal:{size:{rig:"$(rig)",mode:"$(mode)",objective:"$(objective)",animation:"$(animation)"}}}
+            execute if entity @s[tag=customTrait.SizeChange] run block { with storage minecraft:custom universal.size
+                $execute if entity @s[tag=customTrait.SizeShrink] run data merge storage minecraft:custom {universal:{size:{animation:"$(animation)_tiny"}}}
+                $execute if entity @s[tag=customTrait.SizeGrowth] run data merge storage minecraft:custom {universal:{size:{animation:"$(animation)_giant"}}}
+            }
+            
+            block { with storage minecraft:custom universal.size
+                $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] at @s run block { with storage minecraft:custom universal.size
+                    $function animated_java:$(rig)/animations/$(animation)/$(mode)
+                }
+            }
+        }
+    }
+
     function join_game {
         recipe give @s custom:tome
     }
@@ -5339,6 +6094,30 @@ dir universal {
                 $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/the_world/toggle/off
             }
         }
+
+        function rotate {
+            # ex: function custom:universal/control/rotate {user:customAbility.TheWorld,rig:the_world,objective:customUniversal.RigID}
+            $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+            block { with storage minecraft:custom universal.control
+                $execute as @a[tag=$(user),scores={$(objective)=$(id)}] store result storage minecraft:custom universal.control.rotation float 0.1 run data get entity @s Rotation[0] 10
+                block { with storage minecraft:custom universal.control
+                    $data modify entity @s Rotation[0] set value $(rotation)
+                }
+                $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/$(rig)/toggle/off
+            }
+        }
+
+        dir mount {
+            function player {
+                # ex: function custom:universal/control/mount/player {user:customAbility.TheWorld,rig:the_world,objective:customUniversal.RigID}
+                $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+                $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+                block { with storage minecraft:custom universal.control
+                    $ride @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] mount @p[tag=$(user),scores={$(objective)=$(id)}]
+                }
+            }
+        }
     }
 
     dir damage {
@@ -5619,6 +6398,7 @@ dir universal {
                     execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/toggle/on
                     execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/toggle/on
                     execute if entity @s[tag=customAbility.Shrinkray] run function custom:abilities/shrinkray/toggle/on
+                    execute if entity @s[tag=customAbility.Eren] run function custom:abilities/eren/toggle/on
                 } else execute unless entity @s[tag=temp] run {
                     # Toggle OFF #
                     tag @s remove customAbility.Active
@@ -5632,6 +6412,7 @@ dir universal {
                     execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/toggle/off
                     execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/toggle/off
                     execute if entity @s[tag=customAbility.Shrinkray] run function custom:abilities/shrinkray/toggle/off
+                    execute if entity @s[tag=customAbility.Eren] run function custom:abilities/eren/toggle/off
                 }
                 tag @s remove temp
             } 
@@ -6495,7 +7276,7 @@ dir ui {
             dir selection {
                 dir mask {
                     function 1 {
-                        data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/avatar/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The past can be a great teacher."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/flip"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/billy/default_skin","minecraft:item_name":{"color":"aqua","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}}]
+                        data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/the_world/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/avatar/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The past can be a great teacher."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/avatar/flip"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/billy/default_skin","minecraft:item_name":{"color":"aqua","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/billy/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/eren/default_skin","minecraft:item_name":{"color":"red","italic":false,"text":"Eren Yeager"},"minecraft:lore":[{"color":"gray","italic":false,"text":"We're born to be free."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/eren/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/same"}}}}]
                     }
 
                     function 2 {
@@ -6657,6 +7438,7 @@ dir ui {
                             tag @s remove customAbility.TheWorld
                             tag @s remove customAbility.Billy
                             tag @s remove customAbility.President
+                            tag @s remove customAbility.Eren
                             tag @s remove customAbility.Avatar
                         }
 
@@ -6738,10 +7520,7 @@ dir ui {
                             item replace block 0 -63 0 container.0 with minecraft:air
                             $block { with storage minecraft:ui custom.selection.$(storage)
                                 $data merge storage minecraft:ui {custom:{selection:{$(storage):{$(product)_usernamecolor:"red"}}}}
-                                $execute if entity @s[tag=customSettings.DebugLog] run block { with storage minecraft:ui custom.selection.$(storage)
-                                    $tellraw @s "required username: $(username_required)"
-                                    $tellraw @s "provided username: $(username_current)"
-                                }
+                                $tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Username Query","color":"gold"},{"text":"\n"},{"text":"Provided Username: ","color":"gray"},{"text":"$(username_current)","color":"aqua"},{"text":"\n"},{"text":"Required Username: ","color":"gray"},{"text":"$(username_required)","color":"green"}]
                                 
                                 $execute store success score @s customUI.PurchaseUsername run data modify storage minecraft:ui custom.selection.$(storage).username_current set from storage minecraft:ui custom.selection.$(storage).username_required
                                 $execute if score @s customUI.PurchaseUsername matches 0 run block { with storage minecraft:ui custom.selection.$(storage)
@@ -7938,6 +8717,204 @@ dir ui {
                             execute at @s as @p run {
                                 tag @s remove customUniversal.SkinContext
                                 tag @s remove customAvatar.DefaultSkinBypass
+                            }
+                        }
+                    }
+                }
+
+                dir eren {
+                    function mask {
+                        $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[[{"text":"Unique secrets that you can find specific to this ability.","italic":false,"color":"gray"}],[{"text":"They can range anywhere from a simple change, to an","italic":false,"color":"gray"}],[{"text":"entirely different move. Hints are provided below.","italic":false,"color":"gray"}],[{"text":" ","color":"dark_purple"}],[{"text":"Interaction (1)","italic":false,"color":"gold"}],[{"text":"Colossal.","italic":false,"color":"gray"}],[{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/eren/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/eren/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Eren Yeager"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/eren/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Eren Yeager"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/eren/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Eren Yeager"},"minecraft:lore":[[{"text":"We're born to be free.","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/12 Turtle Scute(s)","italic":false,"color":"$(ability_item1color)"}],[{"text":"$(ability_item2count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item2color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids or Bastions","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Sneak 100 and Respecting the","italic":false,"color":"gray"}],[{"text":"Remnants","italic":false,"color":"gray"}],"",[{"text":"Bypass","italic":false,"color":"gold"}],[{"text":"BaconEater ","italic":false,"color":"$(ability_usernamecolor)"},{"text":"as your Mojang username","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/selection/eren/ability_price",name:"Eren Yeager",namespace:"eren",tag:"customEren.Ownership",toggle:"customAbility.Eren",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/selection/eren/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/eren/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/eren/same"}}}}]
+                    }
+
+                    function open {
+                        execute at @s as @p run function custom:ui/menu/pages/selection/eren/player
+
+                        function custom:ui/menu/pages/selection/eren/mask with storage minecraft:ui custom.selection.eren
+                        data modify storage ui current set from storage ui mask
+                        execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/eren/mask"
+                    }
+
+                    function same {
+                        execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                        function custom:ui/menu/pages/selection/eren/open
+                    }
+
+                    function passive {
+                        $data merge storage minecraft:ui $(open):[[{"text":"Freezer Room","italic":false,"color":"light_purple"},{"text":" activates upon walking against","italic":false,"color":"gray"}],[{"text":"the locked room inside ","italic":false,"color":"gray"},{"text":"your","italic":false,"color":"yellow"},{"text":" personal","italic":false,"color":"gray"},{"text":" Pocket","italic":false,"color":"aqua"}],[{"text":"Dimension.","italic":false,"color":"aqua"},{"text":" Gain access to ","italic":false,"color":"gray"},{"text":"3","italic":false,"color":"gold"},{"text":" personal chests","italic":false,"color":"gray"}],[{"text":"that can be accessed from anywhere.","italic":false,"color":"gray"}],"",[{"text":"Endure","italic":false,"color":"light_purple"},{"text":" gains a stack anytime damage is taken","italic":false,"color":"gray"}],[{"text":"whilst in ","italic":false,"color":"gray"},{"text":"Turtle Form.","italic":false,"color":"aqua"},{"text":" Casting moves with ","italic":false,"color":"gray"},{"text":"Endure","italic":false,"color":"light_purple"}],[{"text":"stacks will remove all stacks and enhance that","italic":false,"color":"gray"}],[{"text":"move. ","italic":false,"color":"gray"}],[{"text":" o Kidnap Range: ","italic":false,"color":"gray"},{"text":"0.2m per stack","italic":false,"color":"green"}],[{"text":" o Shake Damage: ","italic":false,"color":"gray"},{"text":"+1 per stack","italic":false,"color":"green"}],[{"text":" o Refreshments: ","italic":false,"color":"gray"},{"text":"+1 health per stack","italic":false,"color":"green"}],[{"text":" o Max Tokens: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"green"}]]$(end)
+                    }
+
+                    function flip {
+                        execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                        function custom:ui/menu/pages/selection/eren/open
+                    }
+
+                    function player {
+                        block {
+                            data merge storage minecraft:ui {custom:{selection:{eren:{equip_color:"red"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{equip_state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{ownership_color:"red"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{ownership_state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{secret_interaction1state:"No"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{secret_interaction1color:"red"}}}}
+                            function custom:ui/menu/pages/selection/eren/passive {open:"{custom:{selection:{eren:{passive",end:"}}}}"}
+                        }
+
+                        execute if entity @s[tag=customAbility.Eren] run {
+                            data merge storage minecraft:ui {custom:{selection:{eren:{equip_color:"green"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{equip_state:"Yes"}}}}
+                        }
+
+                        execute if entity @s[tag=customEren.Ownership] run {
+                            data merge storage minecraft:ui {custom:{selection:{eren:{ownership_color:"green"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{ownership_state:"Yes"}}}}
+                        }
+                        
+                        execute if entity @s[tag=customEren.SecretInteractionAscend] run {
+                            data merge storage minecraft:ui {custom:{selection:{eren:{secret_interaction1state:"Yes"}}}}
+                            data merge storage minecraft:ui {custom:{selection:{eren:{secret_interaction1color:"green"}}}}
+                        }
+
+                        function custom:ui/menu/pages/selection/eren/ability_price
+                    }
+
+                    function ability_price {
+                        data merge storage minecraft:ui {custom:{purchase:{type:"ability",clickID:1}}}
+
+                        
+                        # bypass #
+                        tag @s add customUI.BypassCheck
+                        function custom:ui/menu/pages/selection/purchase/check/username {product:"ability",storage:"eren",username:"BaconEater"}
+
+                        # scute x12 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {item:"minecraft:turtle_scute",number:1,required:12,product:"ability",storage:"eren",name:"Eren Yeager"}
+
+                        # mysterious arrow x1 #
+                        function custom:ui/menu/pages/selection/purchase/check/items {item:"minecraft:phantom_membrane[minecraft:custom_data={currency:1b,mysterious_arrow:1b}]",number:2,required:1,product:"ability",storage:"eren",name:"Eren Yeager"}
+
+                        tag @s add customUniversal.AdvancementCheck
+                        function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/avoid_vibration",product:"ability",storage:"eren",name:"Eren Yeager"}
+                        function custom:ui/menu/pages/selection/purchase/check/advancements {advancement:"minecraft:adventure/salvage_sherd",product:"ability",storage:"eren",name:"Eren Yeager"}
+                        execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{eren:{ability_advancement_color:"green"}}}}
+                        tag @s remove customUniversal.AdvancementCheck
+                    }
+
+                    dir moveset {
+                        function open {
+                            function custom:ui/menu/pages/selection/eren/moveset/data
+                            function custom:ui/menu/pages/selection/eren/moveset/mask with storage minecraft:ui custom.selection.president
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/president/moveset/mask"
+                        }
+
+                        function mask {
+                            $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Back"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Toji's overview"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(move1_model)","minecraft:item_name":{"color":"aqua","text":"$(move1_name)"},"minecraft:lore":$(move1_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/1"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(move2_model)","minecraft:item_name":{"color":"aqua","text":"$(move2_name)"},"minecraft:lore":$(move2_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/2"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/moveset/disguise","minecraft:item_name":{"color":"aqua","text":"Disguise"},"minecraft:lore":[[{"text":"Swap between ","italic":false,"color":"gray"},{"text":"Human ","italic":false,"color":"aqua"},{"text":"and ","italic":false,"color":"gray"},{"text":"Turtle form.","italic":false,"color":"aqua"},{"text":" Whilst","italic":false,"color":"gray"}],[{"text":"disguised as a ","italic":false,"color":"gray"},{"text":"Turtle,","italic":false,"color":"aqua"},{"text":" gain the following changes.","italic":false,"color":"gray"}],[{"text":"o Size: ","italic":false,"color":"gray"},{"text":"0.25x","italic":false,"color":"red"}],[{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.33x","italic":false,"color":"red"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Resistance II","italic":false,"color":"white"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"3s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}},{Slot:26b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:ui/custom/president/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/moveset/same"}}}}]
+                        }
+
+                        function data {
+                            execute unless score @s customUI.PresidentMove1 matches 1.. run scoreboard players set @s customUI.PresidentMove1 1
+                            execute unless score @s customUI.PresidentMove2 matches 1.. run scoreboard players set @s customUI.PresidentMove2 1
+
+                            execute if score @s customUI.PresidentMove1 matches 1 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_name:"Kidnap"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_lore:[[{"text":"Not Crouching ","italic":false,"color":"light_purple"},{"text":"whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in the user leaping slightly forward sending","italic":false,"color":"gray"}],[{"text":"anything in range to the ","italic":false,"color":"gray"},{"text":"pocket dimension.","italic":false,"color":"aqua"}],[{"text":"o Range: ","italic":false,"color":"gray"},{"text":"2.8m","italic":false,"color":"red"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Self-Kidnap","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"13s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_model:"minecraft:interactables/custom/president/moveset/kidnap"}}}}
+                            }
+
+                            execute if score @s customUI.PresidentMove1 matches 2 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_name:"Self-Kidnap"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_lore:[[{"text":"Crouching ","italic":false,"color":"light_purple"},{"text":"whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in the user being completely immobilized for ","italic":false,"color":"gray"},{"text":"5s,","italic":false,"color":"gold"}],[{"text":"initiating the process to enter their ","italic":false,"color":"gray"},{"text":"Pocket","italic":false,"color":"aqua"}],[{"text":"Dimension.","italic":false,"color":"aqua"},{"text":" The windup for this ability is neglected","italic":false,"color":"gray"}],[{"text":"whilst inside this space.","italic":false,"color":"gray"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Kidnap","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"24s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move1_model:"minecraft:interactables/custom/president/moveset/self_kidnap"}}}}
+                            }
+
+                            execute if score @s customUI.PresidentMove2 matches 1 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_name:"Shake Key"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_lore:[[{"text":"Not Crouching","italic":false,"color":"light_purple"},{"text":" whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in their key being ","italic":false,"color":"gray"},{"text":"violently shaked ","italic":false,"color":"red"},{"text":"damaging","italic":false,"color":"gray"}],[{"text":"anything inside the ","italic":false,"color":"gray"},{"text":"Pocket Dimension.","italic":false,"color":"aqua"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"8","italic":false,"color":"green"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Refreshments","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"8s","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"dark_red"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_model:"minecraft:interactables/custom/president/moveset/shake_key"}}}}
+                            }
+
+                            execute if score @s customUI.PresidentMove2 matches 2 run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_name:"Refreshments"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_lore:[[{"text":"Crouching","italic":false,"color":"light_purple"},{"text":" whilst casting this move results","italic":false,"color":"gray"}],[{"text":"in anything inside the room receiving healing","italic":false,"color":"gray"}],[{"text":"and ","italic":false,"color":"gray"},{"text":"b","italic":false,"color":"red"},{"text":"u","italic":false,"color":"gold"},{"text":"f","italic":false,"color":"yellow"},{"text":"f","italic":false,"color":"green"},{"text":"s","italic":false,"color":"blue"},{"text":".","italic":false,"color":"light_purple"}],[{"text":"o Healing: ","italic":false,"color":"gray"},{"text":"8","italic":false,"color":"green"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1m","italic":false,"color":"gold"}],[{"text":"-> Movement Speed: ","italic":false,"color":"gray"},{"text":"1.75x","italic":false,"color":"green"}],[{"text":"-> Jump Strength: ","italic":false,"color":"gray"},{"text":"1.5x","italic":false,"color":"green"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"30s","italic":false,"color":"gold"}],[{"text":"-> ","italic":false,"color":"gray"},{"text":"Haste II","italic":false,"color":"white"}],"",[{"text":"Click to view ","italic":false,"color":"gray"},{"text":"Shake Key","italic":false,"color":"light_purple"}],"",[{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"1m","italic":false,"color":"gold"}],[{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"green"}]]}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{move2_model:"minecraft:interactables/custom/president/moveset/refreshments"}}}}
+                            }
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+
+                        function 1 {
+                            scoreboard players add @s customUI.PresidentMove1 1
+                            execute if score @s customUI.PresidentMove1 matches 3.. run scoreboard players set @s customUI.PresidentMove1 1
+                            execute at @s as @p run playsound minecraft:entity.enderman.teleport player @a ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+
+                        function 2 {
+                            scoreboard players add @s customUI.PresidentMove2 1
+                            execute if score @s customUI.PresidentMove2 matches 3.. run scoreboard players set @s customUI.PresidentMove2 1
+                            execute at @s as @p run playsound minecraft:entity.enderman.teleport player @a ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/moveset/open
+                        }
+                    }
+
+                    dir skins {
+                        function open {
+                            execute at @s as @p run function custom:ui/menu/pages/selection/president/skins/player
+
+                            function custom:ui/menu/pages/selection/president/skins/mask with storage minecraft:ui custom.selection.president
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/selection/president/skins/mask"
+                        }
+
+                        function mask {
+                            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."},[{"color":"gray","italic":false,"text":"Rarity: "},{"color":"aqua","italic":false,"text":"Default"}],{"color":"gray","italic":false,"text":" "},[{"color":"gray","italic":false,"text":"Equipped: "},{"color":"$(default_equip_color)","italic":false,"text":"$(default_equip_state)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/default"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President Overview"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/president/skins","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/selection/president/skins/same"}}}}]
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/skins/open
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/selection/president/skins/open
+                        }
+
+                        function player {
+                            block {
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_color:"red"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_state:"No"}}}}
+                            }
+
+                            execute if entity @s[tag=customPresident.SkinDefault] run {
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_color:"green"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{president:{default_equip_state:"Yes"}}}}
+                            }
+                        }
+
+                        function default {
+                            execute at @s as @p run {
+                                tag @s add customUniversal.SkinContext
+                                tag @s add customPresident.DefaultSkinBypass
+                            }
+
+                            data merge storage minecraft:ui {custom:{purchase:{tag:"customPresident.DefaultSkinBypass"}}}
+                            data merge storage minecraft:ui {custom:{purchase:{toggle:"customPresident.SkinDefault"}}}
+                            data merge storage minecraft:ui {custom:{purchase:{context:"customPresident.SkinContext"}}}
+                            execute at @s as @p run function custom:ui/menu/pages/selection/purchase/main with storage minecraft:ui custom.purchase
+                            function custom:ui/menu/pages/selection/president/skins/open
+
+                            execute at @s as @p run {
+                                tag @s remove customUniversal.SkinContext
+                                tag @s remove customPresident.DefaultSkinBypass
                             }
                         }
                     }

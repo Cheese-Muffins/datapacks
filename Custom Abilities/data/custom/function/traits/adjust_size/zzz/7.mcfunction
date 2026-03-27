@@ -1,0 +1,3 @@
+# Generated with MC-Build
+
+$tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Scale Trait(s)","color":"gold"},{"text":"\n"},{"text":"Rig: ","color":"gray"},{"text":"$(rig)","color":"yellow"},{"text":"\n"},{"text":"Animation: ","color":"gray"},{"text":"$(animation) $(frame)","color":"aqua"},{"text":"\n"},{"text":"Mode: ","color":"gray"},{"text":"$(extra)","color":"light_purple"}]

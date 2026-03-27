@@ -4,3 +4,4 @@ ride @s mount @n[type=minecraft:item_display,tag=aj.the_world.locator.barrage_an
 $scoreboard players set @s customTheWorld.BarrageID $(id)
 $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.BarrageID=$(id)}] run function custom:abilities/the_world/moves/3/zzz/3
 function custom:abilities/the_world/moves/3/zzz/4 with storage minecraft:custom the_world.barrage
+$function custom:universal/scale/rig_source {animation:"barrage_$(arm)_$(variant)",mode:"play",what:"tag=customAbility.TheWorld",rig:"the_world_vfx",objective:"customTheWorld.BarrageID"}

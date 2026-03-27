@@ -36,4 +36,4 @@ execute on passengers if entity @s[tag=aj.president.node.leggings_upper_r] run d
 execute on passengers if entity @s[tag=aj.president.node.left_leg] run data merge entity @s { transformation: [-1f,0f,0f,0.125f,0f,1f,0f,0.75f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 execute on passengers if entity @s[tag=aj.president.node.player] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,1.4688f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 execute on passengers if entity @s[tag=aj.president.node.text_location_bone] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,3.0625f,0f,0f,-1f,-0.0625f,0f,0f,0f,1f], start_interpolation: -1 }
-execute on passengers if entity @s[tag=aj.president.node.grouped] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0.1875f,0f,0f,0f,1f], start_interpolation: -1 }
+execute on passengers if entity @s[tag=aj.president.node.scale] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }

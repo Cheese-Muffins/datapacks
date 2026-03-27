@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute rotated ~ ~ positioned ^$(offset) ^ ^ positioned ~ ~1.25 ~ run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"the_world",animation:'knife',extra:"scoreboard players set @s customTheWorld.KnifeThrowID $(id)"}
+particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
+$execute as @e[type=!#custom:not_mob,distance=..$(range)] unless entity @s[scores={customTheWorld.KnifeThrowID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:abilities/the_world/moves/2/zzz/3 with storage minecraft:custom the_world.temp

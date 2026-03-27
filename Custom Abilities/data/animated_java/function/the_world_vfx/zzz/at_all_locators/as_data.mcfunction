@@ -3,9 +3,9 @@ data modify storage animated_java:temp args merge from entity @s data.locators.c
 function animated_java:the_world_vfx/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.constant
 function animated_java:the_world_vfx/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
-data modify storage animated_java:temp args merge from entity @s data.locators.timestop
-function animated_java:the_world_vfx/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
-data modify storage animated_java:temp args merge from entity @s data.locators.left
+data modify storage animated_java:temp args merge from entity @s data.locators.global
 function animated_java:the_world_vfx/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.right
+function animated_java:the_world_vfx/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from entity @s data.locators.left
 function animated_java:the_world_vfx/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args

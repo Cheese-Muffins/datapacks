@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$tellraw @s "required username: $(username_required)"
-$tellraw @s "provided username: $(username_current)"
+$data merge storage minecraft:ui {custom:{selection:{$(storage):{$(product)_usernamecolor:"green"}}}}
+execute if entity @s[tag=customUI.BypassCheck] run tag @s add customUI.BypassRequirements

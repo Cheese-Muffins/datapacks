@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.KnifeThrowID",animation:'knife_throw',idle:0}
+function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.KnifeThrowID",animation:'knife_throw',mode:"resume",idle:0}
 visibility disable @n[type=minecraft:item_display,tag=aj.the_world.root] @s
 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .TheWorld_State1Cooldown customUniversal.Move2Cooldown
 function custom:universal/armor/hide

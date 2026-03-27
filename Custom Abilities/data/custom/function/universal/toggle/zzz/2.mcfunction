@@ -13,3 +13,4 @@ execute if entity @s[tag=customAbility.President] run function custom:abilities/
 execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/toggle/off
 execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/toggle/off
 execute if entity @s[tag=customAbility.Shrinkray] run function custom:abilities/shrinkray/toggle/off
+execute if entity @s[tag=customAbility.Eren] run function custom:abilities/eren/toggle/off

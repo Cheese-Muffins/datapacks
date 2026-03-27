@@ -57,5 +57,6 @@ execute on passengers if entity @s[tag=aj.the_world.node.left_arm_group] run dat
 execute on passengers if entity @s[tag=aj.the_world.node.chestplate_body] run data merge entity @s { transformation: [1.15f,0f,0f,0f,0f,1.15f,0f,1.6406f,0f,0f,1.15f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 execute on passengers if entity @s[tag=aj.the_world.node.leggings_pants] run data merge entity @s { transformation: [-1.1f,0f,0f,0f,0f,1.1f,0f,1.4531f,0f,0f,-1.1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 execute on passengers if entity @s[tag=aj.the_world.node.upper_body1] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0.75f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
-execute on passengers if entity @s[tag=aj.the_world.node.dio] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0.75f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
+execute on passengers if entity @s[tag=aj.the_world.node.dio] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 execute on passengers if entity @s[tag=aj.the_world.node.dynamic_hitbox] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
+execute on passengers if entity @s[tag=aj.the_world.node.scale] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }

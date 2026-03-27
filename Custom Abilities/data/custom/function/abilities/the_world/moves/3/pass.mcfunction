@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.BarrageID",animation:'barrage',idle:1}
+function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.BarrageID",animation:'barrage',mode:"resume",idle:1}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.locator.hitbox",objective:"customTheWorld.BarrageID"}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.locator.barrage_anchor",objective:"customTheWorld.BarrageID"}
 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .TheWorld_State1Cooldown customUniversal.Move3Cooldown

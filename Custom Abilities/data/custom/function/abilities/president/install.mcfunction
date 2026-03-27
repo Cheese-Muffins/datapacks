@@ -5,6 +5,8 @@ scoreboard objectives add customPresident.SplitMove1Kidnap dummy
 scoreboard objectives add customPresident.SplitMove1Self_Kidnap dummy
 scoreboard objectives add customPresident.SplitMove2Shake_Key dummy
 scoreboard objectives add customPresident.SplitMove2Refreshments dummy
+# Move Arguments #
+scoreboard objectives add customPresident.Self_KidnapArguments dummy
 # General #
 scoreboard objectives add customPresident.PocketID dummy
 scoreboard objectives add customPresident.KidnappedID dummy
