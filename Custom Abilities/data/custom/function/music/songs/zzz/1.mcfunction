@@ -1,3 +1,0 @@
-# Generated with MC-Build
-
-$data merge storage minecraft:ui {cassette:{collection:{slot$(number)_lore:[["",{"text":"$(artist) ","italic":false,"color":"gray"},{"text":"$(rating1)","italic":false,"color":"$(rating_color)"},{"text":"$(rating2)","italic":false,"color":"gray"}],"",[{"text":"Obtainment","italic":false,"color":"gold"}],["",{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"The City at the End of the Game","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}

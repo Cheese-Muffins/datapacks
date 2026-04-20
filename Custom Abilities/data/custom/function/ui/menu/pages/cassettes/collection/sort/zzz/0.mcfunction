@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-tag @s add cassetteSystem.GenerateLogic
-$function custom:music/songs/$(number)
+$data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
+function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
 function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
 function custom:ui/menu/pages/cassettes/collection/sort/zzz/1 with storage minecraft:custom cassette.fetch
