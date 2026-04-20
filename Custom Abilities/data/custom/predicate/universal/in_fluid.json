@@ -1,0 +1,16 @@
+{
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "location": {
+      "fluid": {
+        "fluids": [
+          "minecraft:flowing_water",
+          "minecraft:flowing_lava",
+          "minecraft:lava",
+          "minecraft:water"
+        ]
+      }
+    }
+  }
+}

@@ -6,7 +6,11 @@ scoreboard objectives remove aj.forward.frame
 scoreboard objectives remove aj.forward_right.frame
 scoreboard objectives remove aj.forward_left.frame
 scoreboard objectives remove aj.backward.frame
+scoreboard objectives remove aj.backward_right.frame
+scoreboard objectives remove aj.backward_left.frame
 scoreboard objectives remove aj.strafe_left.frame
 scoreboard objectives remove aj.strafe_right.frame
+scoreboard objectives remove aj.jump.frame
 scoreboard objectives remove aj.punch_right.frame
+scoreboard objectives remove aj.punch_left.frame
 tellraw @a [{color:'gray',text:'\n '},{color:'#00aced',text:'ᴀɴɪᴍᴀᴛᴇᴅ ᴊᴀᴠᴀ'},{color:'dark_gray',italic:true,text:'\n (animated_java:eren)'},'\n → ',{color:'green',text:'Successfully uninstalled '},{color:'yellow',text:'eren'},{color:'green',text:'!'},{color:'gray',italic:true,text:'\n If you have exported multiple times, you may have to remove objectives from previous exports manually, as Animated Java only knows about the objectives from the most recent export.'},'\n']

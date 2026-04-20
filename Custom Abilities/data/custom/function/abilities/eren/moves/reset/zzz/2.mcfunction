@@ -6,4 +6,6 @@ $execute as @n[type=minecraft:item_display,tag=aj.eren.locator.head_anchor,score
 attribute @s minecraft:scale modifier add custom:eren.titan 7 add_multiplied_total
 attribute @s minecraft:camera_distance modifier add custom:eren.titan 0.625 add_multiplied_total
 attribute @s minecraft:step_height modifier add custom:eren.titan 5.166666 add_multiplied_total
+attribute @s minecraft:jump_strength modifier add custom:eren.titan 2 add_multiplied_total
+attribute @s minecraft:safe_fall_distance modifier add custom:eren.titan 4 add_multiplied_total
 scoreboard players set @s customEren.TransformDuration 20400

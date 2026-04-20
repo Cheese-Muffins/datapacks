@@ -92,6 +92,7 @@ scoreboard objectives add customUniversal.AnimationID dummy
 # Statistics #
 scoreboard objectives add customUniversal.StatisticsPlayerKills dummy
 scoreboard objectives add customUniversal.StatisticsEntityKills dummy
+function custom:music/load
 function custom:traits/install
 function custom:consumables/install
 function custom:abilities/billy/install

@@ -9,7 +9,11 @@ data modify storage animated_java:temp args merge from entity @s data.locators.s
 function animated_java:eren/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.sfx
 function animated_java:eren/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from entity @s data.locators.right_fist
+function animated_java:eren/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.dripping_vfx
+function animated_java:eren/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from entity @s data.locators.left_fist
 function animated_java:eren/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.head_anchor
 function animated_java:eren/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args

@@ -5,6 +5,8 @@ gamemode spectator @s
 execute rotated ~ 0 run function animated_java:eren/summon {args:{}}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.root",objective:"customUniversal.AbilityID"}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.camera",objective:"customUniversal.AbilityID"}
+function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.locator.left_fist",objective:"customUniversal.AbilityID"}
+function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.locator.right_fist",objective:"customUniversal.AbilityID"}
 function custom:universal/setup/pair {type:"minecraft:interaction",what:"aj.eren.locator.interaction",objective:"customUniversal.AbilityID"}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.locator.head_anchor",objective:"customUniversal.AbilityID"}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.eren.locator.dripping_vfx",objective:"customUniversal.AbilityID"}

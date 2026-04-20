@@ -6,6 +6,10 @@ tag @s remove aj.eren.animation.forward.playing
 tag @s remove aj.eren.animation.forward_right.playing
 tag @s remove aj.eren.animation.forward_left.playing
 tag @s remove aj.eren.animation.backward.playing
+tag @s remove aj.eren.animation.backward_right.playing
+tag @s remove aj.eren.animation.backward_left.playing
 tag @s remove aj.eren.animation.strafe_left.playing
 tag @s remove aj.eren.animation.strafe_right.playing
+tag @s remove aj.eren.animation.jump.playing
 tag @s remove aj.eren.animation.punch_right.playing
+tag @s remove aj.eren.animation.punch_left.playing

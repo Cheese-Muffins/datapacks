@@ -4,6 +4,8 @@ function animated_java:eren/root/on_tick/select_locator_constant with entity @s 
 function animated_java:eren/root/on_tick/select_locator_global with entity @s data.locators.global
 function animated_java:eren/root/on_tick/select_locator_skins with entity @s data.locators.skins
 function animated_java:eren/root/on_tick/select_locator_sfx with entity @s data.locators.sfx
+function animated_java:eren/root/on_tick/select_locator_right_fist with entity @s data.locators.right_fist
 function animated_java:eren/root/on_tick/select_locator_dripping_vfx with entity @s data.locators.dripping_vfx
+function animated_java:eren/root/on_tick/select_locator_left_fist with entity @s data.locators.left_fist
 function animated_java:eren/root/on_tick/select_locator_head_anchor with entity @s data.locators.head_anchor
 function animated_java:eren/root/on_tick/select_locator_interaction with entity @s data.locators.interaction

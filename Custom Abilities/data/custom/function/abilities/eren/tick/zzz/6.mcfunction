@@ -3,3 +3,5 @@
 attribute @s minecraft:scale modifier remove custom:eren.titan
 attribute @s minecraft:camera_distance modifier remove custom:eren.titan
 attribute @s minecraft:step_height modifier remove custom:eren.titan
+attribute @s minecraft:jump_strength modifier remove custom:eren.titan
+attribute @s minecraft:safe_fall_distance modifier remove custom:eren.titan

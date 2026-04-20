@@ -4,7 +4,7 @@ execute store result storage minecraft:custom eren.id int 1 run scoreboard playe
 # Body and Head Rotation #
 execute unless entity @s[tag=customEren.MovementMotion] unless entity @s[tag=customEren.PassivePunching] run function custom:abilities/eren/movement/zzz/0
 # Movement Flags #
-execute unless entity @s[tag=customEren.PassivePunching] run function custom:abilities/eren/movement/zzz/1
-execute if entity @s[tag=customEren.MovementMotion] run function custom:abilities/eren/movement/zzz/2
+execute unless entity @s[tag=customEren.PassivePunching] unless entity @s[tag=customEren.MovementJump] run function custom:abilities/eren/movement/zzz/1
+execute if entity @s[tag=customEren.MovementMotion] run function custom:abilities/eren/movement/zzz/3
 # Anchor & Interaction #
-function custom:abilities/eren/movement/zzz/5 with storage minecraft:custom eren
+function custom:abilities/eren/movement/zzz/7 with storage minecraft:custom eren

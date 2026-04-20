@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players add @s aj.$(objective).frame 2
-$execute store result storage minecraft:custom eren.adjust int 1 run scoreboard players get @s aj.$(objective).frame
+$execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={customUniversal.AbilityID=$(id)}] rotated as @p[tag=customAbility.Eren,scores={customUniversal.AbilityID=$(id)}] run function custom:abilities/eren/movement/state/zzz/4 with storage minecraft:custom eren
