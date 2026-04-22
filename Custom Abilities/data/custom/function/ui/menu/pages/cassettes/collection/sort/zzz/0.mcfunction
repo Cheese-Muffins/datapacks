@@ -1,6 +1,5 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
-function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
-function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
-function custom:ui/menu/pages/cassettes/collection/sort/zzz/1 with storage minecraft:custom cassette.fetch
+scoreboard players add @s customUI.CollectionSort 1
+execute if score @s customUI.CollectionSort matches 7.. run scoreboard players set @s customUI.CollectionSort 1
+playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~ 0.5

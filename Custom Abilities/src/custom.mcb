@@ -5408,7 +5408,7 @@ dir music {
         data merge storage minecraft:custom {cassette:{index:{5:{obtainment:[[{"text":"Slay: ","italic":false,"color":"gray"},{"text":"100 ","italic":false,"color":"aqua"},{"text":"Monster(s)","italic":false,"color":"gray"}]]}}}}
 
         # 6 - Up From the Bottom
-        data merge storage minecraft:custom {cassette:{index:{6:{name:"Up From the Bottom",artist:"Linkin Park",duration:184,color:"light_purple",rating:1}}}}
+        data merge storage minecraft:custom {cassette:{index:{6:{name:"Up From the Bottom",artist:"Linkin Park",duration:183,color:"light_purple",rating:1}}}}
         data merge storage minecraft:custom {cassette:{index:{6:{obtainment:[[{"text":"Stare up from the bottom of the","italic":false,"color":"gray"}],[{"text":"Overworld ","italic":false,"color":"white"},{"text":"to exposed ","italic":false,"color":"gray"},{"text":"sunlight","italic":false,"color":"yellow"}]]}}}}
 
         # 7 - Enemy
@@ -5474,6 +5474,343 @@ dir music {
         # 22 - Funky Town
         data merge storage minecraft:custom {cassette:{index:{22:{name:"Funky Town",artist:"Lipps Inc.",duration:239,color:"light_purple",rating:2}}}}
         data merge storage minecraft:custom {cassette:{index:{22:{obtainment:[[{"text":"Sleep in a ","italic":false,"color":"gray"},{"text":"bed ","italic":false,"color":"yellow"},{"text":"after helping yourself to","italic":false,"color":"gray"}],[{"text":"some ","italic":false,"color":"gray"},{"text":"milk ","italic":false,"color":"light_purple"},{"text":"and ","italic":false,"color":"gray"},{"text":"cookies","italic":false,"color":"light_purple"}]]}}}}
+
+
+
+
+        # THE GREAT UNSORTED #
+
+        # 23 - Locked Out Of Heaven
+        data merge storage minecraft:custom {cassette:{index:{23:{name:"Locked Out Of Heaven",artist:"Bruno Mars",duration:233,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{23:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 24 - Zombie
+        data merge storage minecraft:custom {cassette:{index:{24:{name:"Zombie",artist:"The Cranberries",duration:307,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{24:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 25 - ???
+        data merge storage minecraft:custom {cassette:{index:{25:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{25:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 26 - Cities
+        data merge storage minecraft:custom {cassette:{index:{26:{name:"Cities",artist:"Throttle",duration:173,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{26:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 27 - ???
+        data merge storage minecraft:custom {cassette:{index:{27:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{27:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 28 - Adventure Of A Lifetime
+        data merge storage minecraft:custom {cassette:{index:{28:{name:"Adventure Of A Lifetime",artist:"Coldplay",duration:265,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{28:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 29 - Come As You Are
+        data merge storage minecraft:custom {cassette:{index:{29:{name:"Come As You Are",artist:"Nirvana",duration:220,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{29:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 30 - Megalovania
+        data merge storage minecraft:custom {cassette:{index:{30:{name:"Megalovania",artist:"Toby Fox",duration:315,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{30:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 31 - Hold Me Down
+        data merge storage minecraft:custom {cassette:{index:{31:{name:"Hold Me Down",artist:"Happy Fits",duration:225,color:"gold",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{31:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 32 - ???
+        data merge storage minecraft:custom {cassette:{index:{32:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{32:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 33 - Hold Me Down
+        data merge storage minecraft:custom {cassette:{index:{33:{name:"Car Radio",artist:"Twenty One Pilots",duration:270,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{33:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 34 - Hometown
+        data merge storage minecraft:custom {cassette:{index:{34:{name:"Hometown",artist:"Twenty One Pilots",duration:232,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{34:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 35 - Resentment
+        data merge storage minecraft:custom {cassette:{index:{35:{name:"Resentment",artist:"A Day To Remember",duration:227,color:"gold",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{35:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 36 - Monster
+        data merge storage minecraft:custom {cassette:{index:{36:{name:"Monster",artist:"Hands Like Houses",duration:214,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{36:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 37 - Me Against Myself
+        data merge storage minecraft:custom {cassette:{index:{37:{name:"Me Against Myself",artist:"Wage War",duration:234,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{37:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 38 - Sometimes You're The Hammer, Sometimes You're The Nail
+        data merge storage minecraft:custom {cassette:{index:{38:{name:"Sometimes You're The Hammer, Sometimes You're The Nail",artist:"A Day To Remember",duration:275,color:"gold",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{38:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 39 - Judgement Day
+        data merge storage minecraft:custom {cassette:{index:{39:{name:"Judgement Day",artist:"A Day To Remember",duration:169,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{39:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 40 - Judgement Day
+        data merge storage minecraft:custom {cassette:{index:{40:{name:"Running in the 90's",artist:"Max Coveri",duration:285,color:"red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{40:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 41 - Bad Things
+        data merge storage minecraft:custom {cassette:{index:{41:{name:"Bad Things",artist:"I Prevail",duration:229,color:"green",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{41:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 42 - Chlorine
+        data merge storage minecraft:custom {cassette:{index:{42:{name:"Chlorine",artist:"Twenty One Pilots",duration:321,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{42:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 43 - Buddy Holly
+        data merge storage minecraft:custom {cassette:{index:{43:{name:"Buddy Holly",artist:"Wheezer",duration:161,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{43:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 44 - Buddy Holly
+        data merge storage minecraft:custom {cassette:{index:{44:{name:"The Only Thing They Fear Is You",artist:"Mick Gordon",duration:411,color:"red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{44:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 45 - ???
+        data merge storage minecraft:custom {cassette:{index:{45:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{45:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 46 - ???
+        data merge storage minecraft:custom {cassette:{index:{46:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{46:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 47 - Tanjiro No Uta
+        data merge storage minecraft:custom {cassette:{index:{47:{name:"Tanjiro No Uta",artist:"Nami Nakagawa",duration:328,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{47:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 48 - Through The Fire And Flames
+        data merge storage minecraft:custom {cassette:{index:{48:{name:"Through The Fire And Flames",artist:"DragonForce",duration:304,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{48:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 49 - Leave Me Alone
+        data merge storage minecraft:custom {cassette:{index:{49:{name:"Leave Me Alone",artist:"NF",duration:305,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{49:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 50 - Jump
+        data merge storage minecraft:custom {cassette:{index:{50:{name:"Jump",artist:"Van Halen",duration:237,color:"aqua",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{50:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 51 - Kickback
+        data merge storage minecraft:custom {cassette:{index:{51:{name:"Kickback",artist:"Kenshi Yonezu",duration:195,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{51:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 52 - What You Gonna Do?
+        data merge storage minecraft:custom {cassette:{index:{52:{name:"What You Gonna Do?",artist:"Bastille",duration:143,color:"light_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{52:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 53 - Never Gonna Give You Up
+        data merge storage minecraft:custom {cassette:{index:{53:{name:"Never Gonna Give You Up",artist:"Rick Astley",duration:214,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{53:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 54 - All The Boys
+        data merge storage minecraft:custom {cassette:{index:{54:{name:"All The Boys",artist:"Panic! at The Disco",duration:189,color:"aqua",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{54:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 55 - Still Feel
+        data merge storage minecraft:custom {cassette:{index:{55:{name:"Still Feel",artist:"Half Alive",duration:248,color:"gold",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{55:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 56 - Burn The House Down
+        data merge storage minecraft:custom {cassette:{index:{56:{name:"Burn The House Down",artist:"AJR",duration:213,color:"dark_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{56:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 57 - My Blood
+        data merge storage minecraft:custom {cassette:{index:{57:{name:"My Blood",artist:"Twenty One Pilots",duration:233,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{57:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 58 - Eight Hours
+        data merge storage minecraft:custom {cassette:{index:{58:{name:"Eight Hours",artist:"Bastille",duration:208,color:"red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{58:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 59 - Look Better In Gold
+        data merge storage minecraft:custom {cassette:{index:{59:{name:"Look Better In Gold",artist:"Friday Pilot Club",duration:202,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{59:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 60 - Crab Rave
+        data merge storage minecraft:custom {cassette:{index:{60:{name:"Crab Rave",artist:"Noise Storm",duration:161,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{60:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 61 - All I Need
+        data merge storage minecraft:custom {cassette:{index:{61:{name:"All I Need",artist:"Slushii",duration:227,color:"dark_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{61:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 62 - You and I
+        data merge storage minecraft:custom {cassette:{index:{62:{name:"You and I",artist:"Barns Courtney",duration:180,color:"red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{62:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 63 - You and I
+        data merge storage minecraft:custom {cassette:{index:{63:{name:"Amongus Drip",artist:"Leonz",duration:75,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{63:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 64 - Baby Blue
+        data merge storage minecraft:custom {cassette:{index:{64:{name:"Baby Blue",artist:"Badfinger",duration:216,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{64:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 65 - RED
+        data merge storage minecraft:custom {cassette:{index:{65:{name:"RED",artist:"SiM",duration:234,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{65:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 66 - on the verge
+        data merge storage minecraft:custom {cassette:{index:{66:{name:"on the verge",artist:"thrown",duration:135,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{66:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 67 - Money Trees
+        data merge storage minecraft:custom {cassette:{index:{67:{name:"Money Trees",artist:"Kendrick Lamar",duration:350,color:"dark_green",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{67:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 68 - Mukanjyo
+        data merge storage minecraft:custom {cassette:{index:{68:{name:"Mukanjyo",artist:"Survive Said The Prophet",duration:187,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{68:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 69 - ???
+        data merge storage minecraft:custom {cassette:{index:{69:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{69:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 70 - ???
+        data merge storage minecraft:custom {cassette:{index:{70:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{70:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 71 - Cruel Angel's Thesis
+        data merge storage minecraft:custom {cassette:{index:{71:{name:"Cruel Angel's Thesis",artist:"Yoko Takahashi",duration:244,color:"aqua",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{71:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 72 - Paradise
+        data merge storage minecraft:custom {cassette:{index:{72:{name:"Paradise",artist:"Coldplay",duration:255,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{72:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 73 - Old Me
+        data merge storage minecraft:custom {cassette:{index:{73:{name:"Old Me",artist:"5 Seconds of Summer",duration:184,color:"aqua",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{73:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 74 - ???
+        data merge storage minecraft:custom {cassette:{index:{74:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{74:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 75 - ???
+        data merge storage minecraft:custom {cassette:{index:{75:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{75:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 76 - ???
+        data merge storage minecraft:custom {cassette:{index:{76:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{76:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 77 - Under the Tree
+        data merge storage minecraft:custom {cassette:{index:{77:{name:"Under the Tree",artist:"SiM",duration:270,color:"red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{77:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 78 - Red Swan
+        data merge storage minecraft:custom {cassette:{index:{78:{name:"Red Swan",artist:"YOSHIKI feat. HYDE",duration:270,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{78:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 79 - ???
+        data merge storage minecraft:custom {cassette:{index:{79:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{79:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 80 - American Idiot
+        data merge storage minecraft:custom {cassette:{index:{80:{name:"American Idiot",artist:"Green Day",duration:175,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{80:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 81 - K21
+        data merge storage minecraft:custom {cassette:{index:{81:{name:"K21",artist:"Hiroyuki Sawano",duration:203,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{81:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 82 - Mr. Brightside
+        data merge storage minecraft:custom {cassette:{index:{82:{name:"Mr. Brightside",artist:"The Killers",duration:224,color:"red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{82:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 83 - Give Me the Future
+        data merge storage minecraft:custom {cassette:{index:{83:{name:"Give Me the Future",artist:"Bastille",duration:220,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{83:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 84 - War!
+        data merge storage minecraft:custom {cassette:{index:{84:{name:"War!",artist:"Zach Callison",duration:286,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{84:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 85 - Run Into Trouble
+        data merge storage minecraft:custom {cassette:{index:{85:{name:"Run Into Trouble",artist:"Bastille",duration:184,color:"dark_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{85:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 86 - Good Grief
+        data merge storage minecraft:custom {cassette:{index:{86:{name:"Good Grief",artist:"Bastille",duration:210,color:"green",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{86:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 87 - ???
+        data merge storage minecraft:custom {cassette:{index:{87:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{87:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 88 - Of the Night
+        data merge storage minecraft:custom {cassette:{index:{88:{name:"Of the Night",artist:"Bastille",duration:217,color:"dark_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{88:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 89 - Sunflower
+        data merge storage minecraft:custom {cassette:{index:{89:{name:"Sunflower",artist:"Post Malone",duration:158,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{89:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 090 - ???
+        data merge storage minecraft:custom {cassette:{index:{90:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{90:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 091 - Lose Yourself
+        data merge storage minecraft:custom {cassette:{index:{91:{name:"Lose Yourself",artist:"Eminem",duration:322,color:"red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{91:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 092 - Me and My Broken Heart
+        data merge storage minecraft:custom {cassette:{index:{92:{name:"Me and My Broken Heart",artist:"Rixton",duration:196,color:"white",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{92:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 093 - ???
+        data merge storage minecraft:custom {cassette:{index:{93:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{93:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 094 - ???
+        data merge storage minecraft:custom {cassette:{index:{94:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{94:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 095 - Keep on Loving You
+        data merge storage minecraft:custom {cassette:{index:{95:{name:"Keep on Loving You",artist:"REO Speedwagon",duration:202,color:"light_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{95:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 096 - California Girls
+        data merge storage minecraft:custom {cassette:{index:{96:{name:"California Girls",artist:"Katy Perry",duration:236,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{96:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 097 - Whats up Danger?
+        data merge storage minecraft:custom {cassette:{index:{97:{name:"Whats up Danger?",artist:"Blackway",duration:219,color:"gold",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{97:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 098 - Gotta do Something
+        data merge storage minecraft:custom {cassette:{index:{98:{name:"Gotta do Something",artist:"flor",duration:148,color:"green",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{98:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 099 - All Star
+        data merge storage minecraft:custom {cassette:{index:{99:{name:"All Star",artist:"Smash Mouth",duration:198,color:"light_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{99:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 100 - Everytime We Touch
+        data merge storage minecraft:custom {cassette:{index:{100:{name:"Everytime We Touch",artist:"Cascada",duration:199,color:"dark_purple",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{100:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 101 - How Far We've Come
+        data merge storage minecraft:custom {cassette:{index:{101:{name:"How Far We've Come",artist:"Matchbox Twenty",duration:212,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{101:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 102 - Annihilate
+        data merge storage minecraft:custom {cassette:{index:{102:{name:"Annihilate",artist:"Metro Boomin",duration:234,color:"dark_red",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{102:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 103 - Ocean Man
+        data merge storage minecraft:custom {cassette:{index:{103:{name:"Ocean Man",artist:"Ween",duration:270,color:"blue",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{103:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 104 - Goofy Goober Rock
+        data merge storage minecraft:custom {cassette:{index:{104:{name:"Goofy Goober Rock",artist:"Jim Wise",duration:270,color:"green",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{104:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+
+        # 105 - Stadium Rave
+        data merge storage minecraft:custom {cassette:{index:{105:{name:"Stadium Rave",artist:"Mark Governor",duration:270,color:"yellow",rating:0}}}}
+        data merge storage minecraft:custom {cassette:{index:{105:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
     }
 }
 
@@ -7124,6 +7461,7 @@ dir ui {
 
         function ability_open {
             summon item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+            execute as @n[type=minecraft:item_display,tag=new] run visibility disable @s @ap
 
             scoreboard players add .global ui.id 1
             scoreboard players operation @s ui.id = .global ui.id
@@ -7138,6 +7476,7 @@ dir ui {
 
         function cassette_open {
             summon item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+            execute as @n[type=minecraft:item_display,tag=new] run visibility disable @s @a
 
             scoreboard players add .global ui.id 1
             scoreboard players operation @s ui.id = .global ui.id
@@ -9220,7 +9559,7 @@ dir ui {
 
                 dir collection {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:1b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot1_id)","minecraft:custom_model_data":{floats:[$(slot1_overlay)]},"minecraft:item_name":{"color":"$(slot1_color)","italic":false,"text":"$(slot1_name)"},"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot1_id)}}}},{Slot:2b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot2_id)","minecraft:custom_model_data":{floats:[$(slot2_overlay)]},"minecraft:item_name":{"color":"$(slot2_color)","italic":false,"text":"$(slot2_name)"},"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot2_id)}}}},{Slot:3b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot3_id)","minecraft:custom_model_data":{floats:[$(slot3_overlay)]},"minecraft:item_name":{"color":"$(slot3_color)","italic":false,"text":"$(slot3_name)"},"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot3_id)}}}},{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot4_id)","minecraft:custom_model_data":{floats:[$(slot4_overlay)]},"minecraft:item_name":{"color":"$(slot4_color)","italic":false,"text":"$(slot4_name)"},"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot4_id)}}}},{Slot:5b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot5_id)","minecraft:custom_model_data":{floats:[$(slot5_overlay)]},"minecraft:item_name":{"color":"$(slot5_color)","italic":false,"text":"$(slot5_name)"},"minecraft:lore":$(slot5_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot5_id)}}}},{Slot:6b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot6_id)","minecraft:custom_model_data":{floats:[$(slot6_overlay)]},"minecraft:item_name":{"color":"$(slot6_color)","italic":false,"text":"$(slot6_name)"},"minecraft:lore":$(slot6_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot6_id)}}}},{Slot:7b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot7_id)","minecraft:custom_model_data":{floats:[$(slot7_overlay)]},"minecraft:item_name":{"color":"$(slot7_color)","italic":false,"text":"$(slot7_name)"},"minecraft:lore":$(slot7_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot7_id)}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot8_id)","minecraft:custom_model_data":{floats:[$(slot8_overlay)]},"minecraft:item_name":{"color":"$(slot8_color)","italic":false,"text":"$(slot8_name)"},"minecraft:lore":$(slot8_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot8_id)}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot9_id)","minecraft:custom_model_data":{floats:[$(slot9_overlay)]},"minecraft:item_name":{"color":"$(slot9_color)","italic":false,"text":"$(slot9_name)"},"minecraft:lore":$(slot9_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot9_id)}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot10_id)","minecraft:custom_model_data":{floats:[$(slot10_overlay)]},"minecraft:item_name":{"color":"$(slot10_color)","italic":false,"text":"$(slot10_name)"},"minecraft:lore":$(slot10_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot10_id)}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot11_id)","minecraft:custom_model_data":{floats:[$(slot11_overlay)]},"minecraft:item_name":{"color":"$(slot11_color)","italic":false,"text":"$(slot11_name)"},"minecraft:lore":$(slot11_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot11_id)}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot12_id)","minecraft:custom_model_data":{floats:[$(slot12_overlay)]},"minecraft:item_name":{"color":"$(slot12_color)","italic":false,"text":"$(slot12_name)"},"minecraft:lore":$(slot12_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot12_id)}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot13_id)","minecraft:custom_model_data":{floats:[$(slot13_overlay)]},"minecraft:item_name":{"color":"$(slot13_color)","italic":false,"text":"$(slot13_name)"},"minecraft:lore":$(slot13_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot13_id)}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot14_id)","minecraft:custom_model_data":{floats:[$(slot14_overlay)]},"minecraft:item_name":{"color":"$(slot14_color)","italic":false,"text":"$(slot14_name)"},"minecraft:lore":$(slot14_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot14_id)}}}},{Slot:19b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot15_id)","minecraft:custom_model_data":{floats:[$(slot15_overlay)]},"minecraft:item_name":{"color":"$(slot15_color)","italic":false,"text":"$(slot15_name)"},"minecraft:lore":$(slot15_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot15_id)}}}},{Slot:20b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot16_id)","minecraft:custom_model_data":{floats:[$(slot16_overlay)]},"minecraft:item_name":{"color":"$(slot16_color)","italic":false,"text":"$(slot16_name)"},"minecraft:lore":$(slot16_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot16_id)}}}},{Slot:21b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot17_id)","minecraft:custom_model_data":{floats:[$(slot17_overlay)]},"minecraft:item_name":{"color":"$(slot17_color)","italic":false,"text":"$(slot17_name)"},"minecraft:lore":$(slot17_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot17_id)}}}},{Slot:22b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot18_id)","minecraft:custom_model_data":{floats:[$(slot18_overlay)]},"minecraft:item_name":{"color":"$(slot18_color)","italic":false,"text":"$(slot18_name)"},"minecraft:lore":$(slot18_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot18_id)}}}},{Slot:23b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot19_id)","minecraft:custom_model_data":{floats:[$(slot19_overlay)]},"minecraft:item_name":{"color":"$(slot19_color)","italic":false,"text":"$(slot19_name)"},"minecraft:lore":$(slot19_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot19_id)}}}},{Slot:24b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot20_id)","minecraft:custom_model_data":{floats:[$(slot20_overlay)]},"minecraft:item_name":{"color":"$(slot20_color)","italic":false,"text":"$(slot20_name)"},"minecraft:lore":$(slot20_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot20_id)}}}},{Slot:25b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot21_id)","minecraft:custom_model_data":{floats:[$(slot21_overlay)]},"minecraft:item_name":{"color":"$(slot21_color)","italic":false,"text":"$(slot21_name)"},"minecraft:lore":$(slot21_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot21_id)}}}},{Slot:9b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"$(previous_page_name)","italic":false,"color":"red"}],"minecraft:lore":$(previous_page_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/page/previous"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"$(next_page_name)","italic":false,"color":"green"}],"minecraft:lore":$(next_page_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/page/next"}}}},{Slot:18b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"text":"Operation Mode","italic":false,"color":"red"},"minecraft:lore":$(operation_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/operation/main"}}}},{Slot:26b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"So","italic":false,"color":"red"},{"text":"rt ","italic":false,"color":"yellow"},{"text":"Col","italic":false,"color":"green"},{"text":"lect","italic":false,"color":"aqua"},{"text":"ion","italic":false,"color":"light_purple"}],"minecraft:lore":[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization","italic":false,"color":"yellow"},{"text":" of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" ","italic":false,"color":"gray"},{"text":"Default","italic":false,"color":"green"}],[{"text":"[X] Locked","italic":false,"color":"gray"}],[{"text":"[X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Difficulty","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/sort/main"}}}},{Slot:8b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/collection","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:1b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot1_id)","minecraft:custom_model_data":{floats:[$(slot1_overlay)]},"minecraft:item_name":{"color":"$(slot1_color)","italic":false,"text":"$(slot1_name)"},"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot1_id)}}}},{Slot:2b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot2_id)","minecraft:custom_model_data":{floats:[$(slot2_overlay)]},"minecraft:item_name":{"color":"$(slot2_color)","italic":false,"text":"$(slot2_name)"},"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot2_id)}}}},{Slot:3b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot3_id)","minecraft:custom_model_data":{floats:[$(slot3_overlay)]},"minecraft:item_name":{"color":"$(slot3_color)","italic":false,"text":"$(slot3_name)"},"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot3_id)}}}},{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot4_id)","minecraft:custom_model_data":{floats:[$(slot4_overlay)]},"minecraft:item_name":{"color":"$(slot4_color)","italic":false,"text":"$(slot4_name)"},"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot4_id)}}}},{Slot:5b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot5_id)","minecraft:custom_model_data":{floats:[$(slot5_overlay)]},"minecraft:item_name":{"color":"$(slot5_color)","italic":false,"text":"$(slot5_name)"},"minecraft:lore":$(slot5_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot5_id)}}}},{Slot:6b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot6_id)","minecraft:custom_model_data":{floats:[$(slot6_overlay)]},"minecraft:item_name":{"color":"$(slot6_color)","italic":false,"text":"$(slot6_name)"},"minecraft:lore":$(slot6_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot6_id)}}}},{Slot:7b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot7_id)","minecraft:custom_model_data":{floats:[$(slot7_overlay)]},"minecraft:item_name":{"color":"$(slot7_color)","italic":false,"text":"$(slot7_name)"},"minecraft:lore":$(slot7_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot7_id)}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot8_id)","minecraft:custom_model_data":{floats:[$(slot8_overlay)]},"minecraft:item_name":{"color":"$(slot8_color)","italic":false,"text":"$(slot8_name)"},"minecraft:lore":$(slot8_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot8_id)}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot9_id)","minecraft:custom_model_data":{floats:[$(slot9_overlay)]},"minecraft:item_name":{"color":"$(slot9_color)","italic":false,"text":"$(slot9_name)"},"minecraft:lore":$(slot9_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot9_id)}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot10_id)","minecraft:custom_model_data":{floats:[$(slot10_overlay)]},"minecraft:item_name":{"color":"$(slot10_color)","italic":false,"text":"$(slot10_name)"},"minecraft:lore":$(slot10_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot10_id)}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot11_id)","minecraft:custom_model_data":{floats:[$(slot11_overlay)]},"minecraft:item_name":{"color":"$(slot11_color)","italic":false,"text":"$(slot11_name)"},"minecraft:lore":$(slot11_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot11_id)}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot12_id)","minecraft:custom_model_data":{floats:[$(slot12_overlay)]},"minecraft:item_name":{"color":"$(slot12_color)","italic":false,"text":"$(slot12_name)"},"minecraft:lore":$(slot12_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot12_id)}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot13_id)","minecraft:custom_model_data":{floats:[$(slot13_overlay)]},"minecraft:item_name":{"color":"$(slot13_color)","italic":false,"text":"$(slot13_name)"},"minecraft:lore":$(slot13_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot13_id)}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot14_id)","minecraft:custom_model_data":{floats:[$(slot14_overlay)]},"minecraft:item_name":{"color":"$(slot14_color)","italic":false,"text":"$(slot14_name)"},"minecraft:lore":$(slot14_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot14_id)}}}},{Slot:19b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot15_id)","minecraft:custom_model_data":{floats:[$(slot15_overlay)]},"minecraft:item_name":{"color":"$(slot15_color)","italic":false,"text":"$(slot15_name)"},"minecraft:lore":$(slot15_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot15_id)}}}},{Slot:20b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot16_id)","minecraft:custom_model_data":{floats:[$(slot16_overlay)]},"minecraft:item_name":{"color":"$(slot16_color)","italic":false,"text":"$(slot16_name)"},"minecraft:lore":$(slot16_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot16_id)}}}},{Slot:21b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot17_id)","minecraft:custom_model_data":{floats:[$(slot17_overlay)]},"minecraft:item_name":{"color":"$(slot17_color)","italic":false,"text":"$(slot17_name)"},"minecraft:lore":$(slot17_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot17_id)}}}},{Slot:22b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot18_id)","minecraft:custom_model_data":{floats:[$(slot18_overlay)]},"minecraft:item_name":{"color":"$(slot18_color)","italic":false,"text":"$(slot18_name)"},"minecraft:lore":$(slot18_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot18_id)}}}},{Slot:23b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot19_id)","minecraft:custom_model_data":{floats:[$(slot19_overlay)]},"minecraft:item_name":{"color":"$(slot19_color)","italic":false,"text":"$(slot19_name)"},"minecraft:lore":$(slot19_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot19_id)}}}},{Slot:24b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot20_id)","minecraft:custom_model_data":{floats:[$(slot20_overlay)]},"minecraft:item_name":{"color":"$(slot20_color)","italic":false,"text":"$(slot20_name)"},"minecraft:lore":$(slot20_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot20_id)}}}},{Slot:25b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:cassettes/$(slot21_id)","minecraft:custom_model_data":{floats:[$(slot21_overlay)]},"minecraft:item_name":{"color":"$(slot21_color)","italic":false,"text":"$(slot21_name)"},"minecraft:lore":$(slot21_lore),"minecraft:custom_data":{ui_item:{cassette_item:1b,song_id:$(slot21_id)}}}},{Slot:9b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"$(previous_page_name)","italic":false,"color":"red"}],"minecraft:lore":$(previous_page_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/page/previous"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"$(next_page_name)","italic":false,"color":"green"}],"minecraft:lore":$(next_page_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/page/next"}}}},{Slot:18b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"text":"Operation Mode","italic":false,"color":"red"},"minecraft:lore":$(operation_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/operation/main"}}}},{Slot:26b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"So","italic":false,"color":"red"},{"text":"rt ","italic":false,"color":"yellow"},{"text":"Col","italic":false,"color":"green"},{"text":"lect","italic":false,"color":"aqua"},{"text":"ion","italic":false,"color":"light_purple"}],"minecraft:lore":$(sort_lore),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/sort/main"}}}},{Slot:8b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/collection","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/same"}}}}]
                     }
 
                     function open {
@@ -9235,14 +9574,8 @@ dir ui {
                         execute unless score @s customUI.CollectionSort matches 1.. run scoreboard players set @s customUI.CollectionSort 1
                         execute unless score @s customUI.CollectionOperation matches 1.. run scoreboard players set @s customUI.CollectionOperation 1
                         function custom:ui/menu/pages/cassettes/collection/operation/load
+                        function custom:ui/menu/pages/cassettes/collection/sort/load
                         function custom:ui/menu/pages/cassettes/collection/page/display
-
-                        scoreboard players set .Slot customUI.Collection 0
-                        execute if score @s customUI.Collection matches 1 run scoreboard players set .Incremental customUI.Collection 0
-                        execute if score @s customUI.Collection matches 2 run scoreboard players set .Incremental customUI.Collection 21
-                        execute if score @s customUI.Collection matches 3 run scoreboard players set .Incremental customUI.Collection 42
-                        execute if score @s customUI.Collection matches 4 run scoreboard players set .Incremental customUI.Collection 63
-                        execute if score @s customUI.Collection matches 5 run scoreboard players set .Incremental customUI.Collection 84
 
                           #   Sort Styles   #
                         # ------------------- #
@@ -9255,7 +9588,7 @@ dir ui {
                         # 7 - Playlist 2      #
                           #                 #
 
-                        execute if score @s customUI.CollectionSort matches 1 run function custom:ui/menu/pages/cassettes/collection/sort/default
+                        function custom:ui/menu/pages/cassettes/collection/sort/initialize
                     }
 
                     dir page {
@@ -9268,9 +9601,12 @@ dir ui {
 
                         function previous {
                             execute at @s as @p run {
-                                scoreboard players remove @s customUI.Collection 1
+                                execute if score @s customUI.Collection matches 1 as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/menu/flip
+                                execute unless score @s customUI.Collection matches 1 run {
+                                    scoreboard players remove @s customUI.Collection 1
+                                    execute as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/collection/open
+                                }
                             }
-                            function custom:ui/menu/pages/cassettes/collection/open
                         }
 
                         function display {
@@ -9367,12 +9703,44 @@ dir ui {
                     }
 
                     dir sort {
-                        function default {
+                        function main {
+                            execute at @s as @p run {
+                                scoreboard players add @s customUI.CollectionSort 1
+                                execute if score @s customUI.CollectionSort matches 7.. run scoreboard players set @s customUI.CollectionSort 1
+
+                                playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~ 0.5
+                            }
+                            function custom:ui/menu/pages/cassettes/collection/open
+                        }
+
+                        function initialize {
+                            scoreboard players set .Slot customUI.Collection 0
+                            scoreboard players set .Incremental customUI.Collection 0
+                            scoreboard players set .RatingTarget customUI.Collection 0
+                            execute if score @s customUI.Collection matches 1 run scoreboard players set .Offset customUI.Collection 0
+                            execute if score @s customUI.Collection matches 2 run scoreboard players set .Offset customUI.Collection 21
+                            execute if score @s customUI.Collection matches 3 run scoreboard players set .Offset customUI.Collection 42
+                            execute if score @s customUI.Collection matches 4 run scoreboard players set .Offset customUI.Collection 63
+                            execute if score @s customUI.Collection matches 5 run scoreboard players set .Offset customUI.Collection 84
+                            function custom:ui/menu/pages/cassettes/collection/sort/all 
+                        }
+
+                        function all {
                             scoreboard players add .Slot customUI.Collection 1
-                            scoreboard players add .Incremental customUI.Collection 1
                             execute store result storage minecraft:custom cassette.fetch.slot int 1 run scoreboard players get .Slot customUI.Collection
+
+                            execute if score @s customUI.CollectionSort matches 1 run function custom:ui/menu/pages/cassettes/collection/sort/default
+                            execute if score @s customUI.CollectionSort matches 2 run function custom:ui/menu/pages/cassettes/collection/sort/locked
+                            execute if score @s customUI.CollectionSort matches 3 run function custom:ui/menu/pages/cassettes/collection/sort/unlocked
+                            execute if score @s customUI.CollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
+                            execute unless score .Slot customUI.Collection matches 21.. run function custom:ui/menu/pages/cassettes/collection/sort/all
+                            tag @s remove temp
+                        }
+
+                        function default {
+                            scoreboard players add .Incremental customUI.Collection 1
                             execute store result storage minecraft:custom cassette.fetch.lookup int 1 run scoreboard players get .Incremental customUI.Collection
-                            block { with storage minecraft:custom cassette.fetch
+                            execute unless score .Offset customUI.Collection matches 1.. run block { with storage minecraft:custom cassette.fetch
                                 $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                 function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
                                 function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
@@ -9381,7 +9749,96 @@ dir ui {
                                     $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(slot)_color:"green",slot$(slot)_overlay:0}}}
                                 }
                             }
-                            execute unless score .Slot customUI.Collection matches 21.. run function custom:ui/menu/pages/cassettes/collection/sort/default
+                            execute if score .Offset customUI.Collection matches 1.. run {
+                                scoreboard players remove .Offset customUI.Collection 1
+                                function custom:ui/menu/pages/cassettes/collection/sort/default
+                            }
+                        }
+
+                        function locked {
+                            scoreboard players add .Incremental customUI.Collection 1
+                            execute store result storage minecraft:custom cassette.fetch.lookup int 1 run scoreboard players get .Incremental customUI.Collection
+                            block { with storage minecraft:custom cassette.fetch
+                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=false}] run {
+                                    execute unless score .Offset customUI.Collection matches 1.. run block { with storage minecraft:custom cassette.fetch
+                                        $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
+                                        function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
+                                        function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
+                                        block { with storage minecraft:custom cassette.fetch
+                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(slot)_name:"$(name)",slot$(slot)_color:"red",slot$(slot)_id:$(lookup),slot$(slot)_overlay:1}}}
+                                        }  
+                                    }
+                                    execute if score .Offset customUI.Collection matches 1.. run {
+                                        scoreboard players remove .Offset customUI.Collection 1
+                                        function custom:ui/menu/pages/cassettes/collection/sort/locked
+                                    }
+                                }
+                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run function custom:ui/menu/pages/cassettes/collection/sort/locked
+                            }
+                        }
+
+                        function unlocked {
+                            scoreboard players add .Incremental customUI.Collection 1
+                            execute store result storage minecraft:custom cassette.fetch.lookup int 1 run scoreboard players get .Incremental customUI.Collection
+                            block { with storage minecraft:custom cassette.fetch
+                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=false}] run function custom:ui/menu/pages/cassettes/collection/sort/unlocked
+                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run {
+                                    execute unless score .Offset customUI.Collection matches 1.. run block { with storage minecraft:custom cassette.fetch
+                                        $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
+                                        function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
+                                        function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
+                                        block { with storage minecraft:custom cassette.fetch
+                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(slot)_name:"$(name)",slot$(slot)_color:"red",slot$(slot)_id:$(lookup),slot$(slot)_overlay:1}}}
+                                            $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(slot)_color:"green",slot$(slot)_overlay:0}}}
+                                        }  
+                                    }
+                                    execute if score .Offset customUI.Collection matches 1.. run {
+                                        scoreboard players remove .Offset customUI.Collection 1
+                                        function custom:ui/menu/pages/cassettes/collection/sort/unlocked
+                                    }
+                                }
+                            }
+                        }
+
+                        function rating {
+                            tag @s remove temp
+                            scoreboard players add .Incremental customUI.Collection 1
+                            execute store result storage minecraft:custom cassette.fetch.lookup int 1 run scoreboard players get .Incremental customUI.Collection
+                            block { with storage minecraft:custom cassette.fetch
+                                $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
+                                block { with storage minecraft:custom cassette.fetch
+                                    $scoreboard players set .Rating customUI.Collection $(rating)
+                                    execute if score .Rating customUI.Collection = .RatingTarget customUI.Collection run {
+                                        execute unless score .Offset customUI.Collection matches 1.. run {
+                                            function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
+                                            function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
+                                            block { with storage minecraft:custom cassette.fetch
+                                                $data merge storage minecraft:ui {cassette:{collection:{slot$(slot)_name:"$(name)",slot$(slot)_color:"red",slot$(slot)_id:$(lookup),slot$(slot)_overlay:1}}}
+                                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(slot)_color:"green",slot$(slot)_overlay:0}}}
+                                            }
+                                            tag @s add temp
+                                        }
+                                        execute if score .Offset customUI.Collection matches 1.. run scoreboard players remove .Offset customUI.Collection 1
+                                    }
+
+                                    execute unless entity @s[tag=temp] run {
+                                        execute if score .Incremental customUI.Collection matches 105.. run {
+                                            scoreboard players add .RatingTarget customUI.Collection 1
+                                            scoreboard players set .Incremental customUI.Collection 0
+                                        }
+                                        execute unless score .Slot customUI.Collection matches 22.. run function custom:ui/menu/pages/cassettes/collection/sort/rating
+                                    }
+                                }
+                            }
+                        }
+
+                        function load {
+                            execute if score @s customUI.CollectionSort matches 1 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" ","italic":false},{"text":"Default","italic":false,"color":"green"}],[{"text":"[X] Locked","italic":false,"color":"gray"}],[{"text":"[X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CollectionSort matches 2 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Locked","italic":false,"color":"green"}],[{"text":"[X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CollectionSort matches 3 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Unlocked","italic":false,"color":"green"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CollectionSort matches 4 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Rating","italic":false,"color":"green"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CollectionSort matches 5 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Rating","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Playlist #1","italic":false,"color":"green"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CollectionSort matches 6 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Rating","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Playlist #1","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Playlist #2","italic":false,"color":"green"}]]}}}
                         }
                     }
 
@@ -9391,7 +9848,10 @@ dir ui {
                     }
 
                     function flip {
-                        execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                        execute at @s as @p run {
+                            playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            scoreboard players set @s customUI.Collection 1
+                        }
                         function custom:ui/menu/pages/cassettes/collection/open
                     }
                 }
