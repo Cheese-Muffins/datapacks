@@ -1,3 +1,6 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ui {cassette:{collection:{slot$(slot)_name:"$(name)",slot$(slot)_color:"red",slot$(slot)_model:"minecraft:cassettes/$(lookup)",slot$(slot)_visibility:"false",slot$(slot)_id:$(lookup),slot$(slot)_overlay:1}}}
+scoreboard players add .cassetteSlot customUI.Collection 1
+execute store result storage minecraft:custom cassette.fetch.number int 1 run scoreboard players get .cassetteSlot customUI.Collection
+function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
+function custom:ui/menu/pages/cassettes/collection/sort/zzz/8 with storage minecraft:custom cassette.fetch

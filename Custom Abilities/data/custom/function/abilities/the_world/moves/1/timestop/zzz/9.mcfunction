@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
 tag @s remove customTheWorld.TimeLocked
-shader disable @s invert
+shader disable @s minecraft:timestop
 playsound minecraft:the_world.timestop.resume player @s ~ ~ ~
 attribute @s minecraft:movement_speed modifier remove custom:the_world.timestop
 attribute @s minecraft:jump_strength modifier remove custom:the_world.timestop

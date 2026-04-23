@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-scoreboard players remove .Offset customUI.Collection 1
-function custom:ui/menu/pages/cassettes/collection/sort/locked
+$data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}

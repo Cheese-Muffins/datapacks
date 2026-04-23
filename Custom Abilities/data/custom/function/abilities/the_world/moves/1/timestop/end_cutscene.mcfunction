@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
 gamemode survival @s
-shader enable @s invert
+shader enable @s minecraft:timestop
 tag @s add customUniversal.ConstantTick
 tag @s add customTheWorld.ConstantTick
 scoreboard players set @s customTheWorld.TimeStopDuration 180

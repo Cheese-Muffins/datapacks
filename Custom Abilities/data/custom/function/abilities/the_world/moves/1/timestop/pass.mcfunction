@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customUniversal.RigID",animation:'timestop',idle:1}
+function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customUniversal.RigID",animation:'timestop',mode:"resume",idle:1}
 function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.camera",objective:"customUniversal.RigID"}
 execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customTheWorld.SplitMove1Timestop = .TheWorld_State2Cooldown customUniversal.Move1Cooldown
 function custom:universal/armor/hide

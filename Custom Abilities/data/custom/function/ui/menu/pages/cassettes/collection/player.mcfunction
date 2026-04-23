@@ -4,7 +4,6 @@ execute unless score @s customUI.Collection matches 1.. run scoreboard players s
 execute unless score @s customUI.CollectionOperation matches 1.. run scoreboard players set @s customUI.CollectionOperation 1
 function custom:ui/menu/pages/cassettes/collection/operation/load
 function custom:ui/menu/pages/cassettes/collection/sort/load
-function custom:ui/menu/pages/cassettes/collection/page/display
 #   Sort Styles   #
 # ------------------- #
 # 1 - ID              #
@@ -16,3 +15,4 @@ function custom:ui/menu/pages/cassettes/collection/page/display
 # 7 - Playlist 2      #
 #                 #
 function custom:ui/menu/pages/cassettes/collection/sort/initialize
+function custom:ui/menu/pages/cassettes/collection/page/display

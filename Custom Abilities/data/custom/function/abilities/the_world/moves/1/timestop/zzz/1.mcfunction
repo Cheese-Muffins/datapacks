@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
 tag @s add customTheWorld.TimeLocked
-shader enable @s invert
+shader enable @s minecraft:timestop
 attribute @s minecraft:movement_speed modifier add custom:the_world.timestop -1 add_multiplied_total
 attribute @s minecraft:jump_strength modifier add custom:the_world.timestop -1 add_multiplied_total
 attribute @s minecraft:gravity modifier add custom:the_world.timestop -0.9 add_multiplied_total
