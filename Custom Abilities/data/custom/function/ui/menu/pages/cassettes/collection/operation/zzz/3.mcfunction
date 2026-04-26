@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+execute unless score @s customUI.CollectionOperation matches 4 run function custom:ui/menu/pages/cassettes/collection/operation/zzz/4
+execute if score @s customUI.CollectionOperation matches 4 run function custom:ui/menu/pages/cassettes/collection/operation/zzz/5

@@ -316,3 +316,17 @@ data merge storage minecraft:custom {cassette:{index:{104:{obtainment:[{"text":"
 # 105 - Stadium Rave
 data merge storage minecraft:custom {cassette:{index:{105:{name:"Stadium Rave",artist:"Mark Governor",duration:270,color:"yellow",rating:0}}}}
 data merge storage minecraft:custom {cassette:{index:{105:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+# BONUS SONGS!!! #
+# 106 - Vanilla Bundle #
+data merge storage minecraft:custom {cassette:{index:{106:{name:"Vanilla Bundle",artist:"Minecraft & C418",duration:0,color:"green",rating:4}}}}
+data merge storage minecraft:custom {cassette:{index:{106:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+# 107 - I Want it That Way #
+data merge storage minecraft:custom {cassette:{index:{107:{name:"I Want It That Way",artist:"Backstreet Boys",duration:215,color:"blue",rating:4}}}}
+data merge storage minecraft:custom {cassette:{index:{107:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+# VANILLA BUNDLE!!!! #
+# 121 - Aria Math #
+data merge storage minecraft:custom {cassette:{index:{121:{name:"Aria Math",artist:"C418",duration:310,color:"green",rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{121:{obtainment:[{"text":"V","italic":false,"color":"gray"}]}}}}
+# 122 - Aria Math (Piano Cover) #
+data merge storage minecraft:custom {cassette:{index:{122:{name:"Aria Math (Piano Cover)",artist:"Pianicam",duration:174,color:"green",rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{122:{obtainment:[{"text":"V","italic":false,"color":"gray"}]}}}}

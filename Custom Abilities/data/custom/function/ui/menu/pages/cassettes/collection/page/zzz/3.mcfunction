@@ -1,8 +1,4 @@
 # Generated with MC-Build
 
-# back arrow
-execute if score @s customUI.Collection matches 1 run data merge storage minecraft:ui {cassette:{collection:{previous_page_name:"Main Menu",previous_page_lore:[[{"text":"Return to the Home Page","italic":false,"color":"gray"}]]}}}
-$execute unless score @s customUI.Collection matches 1 run data merge storage minecraft:ui {cassette:{collection:{previous_page_name:"Previous Page",previous_page_lore:[[{"text":"$(page_before)","italic":false,"color":"gold"},{"text":"/","italic":false,"color":"dark_gray"},{"text":"$(page_maximum)","italic":false,"color":"gold"}]]}}}
-# next arrow
-$execute if score @s customUI.Collection matches $(page_maximum) run data merge storage minecraft:ui {cassette:{collection:{next_page_name:"Bonus Songs",next_page_lore:[[{"text":"Additional songs that ","italic":false,"color":"gray"},{"text":"DO NOT","italic":false,"color":"red"},{"text":" count","italic":false,"color":"gray"}],[{"text":"towards ","italic":false,"color":"gray"},{"text":"c","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":"m","italic":false,"color":"yellow"},{"text":"p","italic":false,"color":"green"},{"text":"l","italic":false,"color":"blue"},{"text":"e","italic":false,"color":"light_purple"},{"text":"t","italic":false,"color":"dark_purple"},{"text":"i","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":"n","italic":false,"color":"yellow"}]]}}}
-$execute unless score @s customUI.Collection matches $(page_maximum) run data merge storage minecraft:ui {cassette:{collection:{next_page_name:"Next Page",next_page_lore:[[{"text":"$(page_next)","italic":false,"color":"gold"},{"text":"/","italic":false,"color":"dark_gray"},{"text":"$(page_maximum)","italic":false,"color":"gold"}]]}}}
+scoreboard players remove @s customUI.Collection 1
+execute as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/collection/open

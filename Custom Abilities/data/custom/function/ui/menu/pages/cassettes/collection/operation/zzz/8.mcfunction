@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-$execute if entity @s[tag=customCassette.Playlist1_$(click_id)] run function custom:ui/menu/pages/cassettes/collection/operation/zzz/9 with storage minecraft:custom cassette.fetch
-$execute unless entity @s[tag=customCassette.Playlist1_$(click_id)] unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/collection/operation/zzz/10 with storage minecraft:custom cassette.fetch
-tag @s remove temp
+scoreboard players add @s customUI.CollectionOperation 1
+execute if score @s customUI.CollectionOperation matches 4.. run scoreboard players set @s customUI.CollectionOperation 1
+playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~ 0.5

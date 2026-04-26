@@ -35,3 +35,4 @@ execute if score @s customUI.CollectionSort matches 2 run function custom:ui/men
 execute if score @s customUI.CollectionSort matches 3 run function custom:ui/menu/pages/cassettes/collection/sort/unlocked
 execute if score @s customUI.CollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
 execute if score @s customUI.CollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
+execute if score @s customUI.CollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
