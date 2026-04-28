@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$execute as @e[type=!#custom:not_mob,distance=..$(range)] unless entity @s[scores={customTheWorld.BarrageID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:abilities/the_world/moves/3/zzz/9 with storage minecraft:custom the_world.barrage
+$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_arm_world,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_arm_lower,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.gear5,scores={customTheWorld.KnifeThrowID=$(id)}] @s

@@ -4,7 +4,7 @@ function animated_java:the_world/root/on_tick/select_locator_constant with entit
 function animated_java:the_world/root/on_tick/select_locator_global with entity @s data.locators.global
 function animated_java:the_world/root/on_tick/select_locator_skins with entity @s data.locators.skins
 function animated_java:the_world/root/on_tick/select_locator_sfx with entity @s data.locators.sfx
+function animated_java:the_world/root/on_tick/select_locator_dio_shoulder with entity @s data.locators.dio_shoulder
 function animated_java:the_world/root/on_tick/select_locator_right_hand_world with entity @s data.locators.right_hand_world
 function animated_java:the_world/root/on_tick/select_locator_barrage_anchor with entity @s data.locators.barrage_anchor
-function animated_java:the_world/root/on_tick/select_locator_dio_shoulder with entity @s data.locators.dio_shoulder
 function animated_java:the_world/root/on_tick/select_locator_hitbox with entity @s data.locators.hitbox

@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1 1.5
-execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1 1.5
+$execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customUniversal.AbilityID=$(id)}] run function custom:abilities/the_world/toggle/zzz/2

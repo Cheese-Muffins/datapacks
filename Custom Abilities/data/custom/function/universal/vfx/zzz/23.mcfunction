@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$function animated_java:$(particle_set)_vfx/variants/$(variant_pool)_$(random)/apply
+$execute store result storage minecraft:custom universal.vfx.random int 1 run random value 1..$(range)
+function custom:universal/vfx/zzz/24 with storage minecraft:custom universal.vfx

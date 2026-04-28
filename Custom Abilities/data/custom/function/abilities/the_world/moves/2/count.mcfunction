@@ -6,4 +6,4 @@ execute store result storage minecraft:custom the_world.knife_throw.spread_initi
 function custom:universal/math/multiply {multiply_value:2,score:"@s",objective:"customTheWorld.KnifeSpread"}
 execute unless entity @s[tag=customTheWorld.RageMode] run data merge storage minecraft:custom {the_world:{knife_throw:{count:3,div_value:2}}}
 execute if entity @s[tag=customTheWorld.RageMode] run data merge storage minecraft:custom {the_world:{knife_throw:{count:5,div_value:4}}}
-function custom:abilities/the_world/moves/2/zzz/0 with storage minecraft:custom the_world.knife_throw
+function custom:abilities/the_world/moves/2/zzz/1 with storage minecraft:custom the_world.knife_throw

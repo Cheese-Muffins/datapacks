@@ -3,23 +3,23 @@ data modify entity @s data.uuids append from storage animated_java:gu out
 function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.data_data set from storage animated_java:gu out
-summon minecraft:item_display ^-0.375 ^0.8125 ^0 {Tags:["aj.global.bone.right_arm_lower.child","aj.global.bone.right_arm_lower.child.locator","aj.global.bone.right_arm_lower.decendant","aj.global.bone.right_arm_lower.decendant.locator","aj.global.bone.right_arm_lower.tree","aj.global.bone.right_arm_world.decendant","aj.global.bone.right_arm_world.decendant.locator","aj.global.bone.right_arm_world.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.bone.the_world.decendant","aj.global.bone.the_world.decendant.locator","aj.global.bone.the_world.tree","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.right_hand_world","aj.new","aj.the_world.bone.right_arm_lower.child","aj.the_world.bone.right_arm_lower.child.locator","aj.the_world.bone.right_arm_lower.decendant","aj.the_world.bone.right_arm_lower.decendant.locator","aj.the_world.bone.right_arm_lower.tree","aj.the_world.bone.right_arm_world.decendant","aj.the_world.bone.right_arm_world.decendant.locator","aj.the_world.bone.right_arm_world.tree","aj.the_world.bone.scale.decendant","aj.the_world.bone.scale.decendant.locator","aj.the_world.bone.scale.tree","aj.the_world.bone.the_world.decendant","aj.the_world.bone.the_world.decendant.locator","aj.the_world.bone.the_world.tree","aj.the_world.bone.upper_body.decendant","aj.the_world.bone.upper_body.decendant.locator","aj.the_world.bone.upper_body.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.right_hand_world","aj.the_world.node","aj.the_world.node.right_hand_world"]}
-execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.right_hand_world, tag=aj.new, distance=..3 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/right_hand_world
+summon minecraft:item_display ^0.25 ^1.4375 ^-0.1875 {Tags:["aj.global.bone.dio.decendant","aj.global.bone.dio.decendant.locator","aj.global.bone.dio.tree","aj.global.bone.upper_body1.child","aj.global.bone.upper_body1.child.locator","aj.global.bone.upper_body1.decendant","aj.global.bone.upper_body1.decendant.locator","aj.global.bone.upper_body1.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.dio_shoulder","aj.new","aj.the_world.bone.dio.decendant","aj.the_world.bone.dio.decendant.locator","aj.the_world.bone.dio.tree","aj.the_world.bone.upper_body1.child","aj.the_world.bone.upper_body1.child.locator","aj.the_world.bone.upper_body1.decendant","aj.the_world.bone.upper_body1.decendant.locator","aj.the_world.bone.upper_body1.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.dio_shoulder","aj.the_world.node","aj.the_world.node.dio_shoulder"]}
+execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.dio_shoulder, tag=aj.new, distance=..2 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/dio_shoulder
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.locator_dio_shoulder set from storage animated_java:gu out
+data modify entity @s data.locators.dio_shoulder.uuid set from storage animated_java:gu out
+summon minecraft:item_display ^-0.375 ^0.8125 ^0 {Tags:["aj.global.bone.right_arm_lower.child","aj.global.bone.right_arm_lower.child.locator","aj.global.bone.right_arm_lower.decendant","aj.global.bone.right_arm_lower.decendant.locator","aj.global.bone.right_arm_lower.tree","aj.global.bone.right_arm_world.decendant","aj.global.bone.right_arm_world.decendant.locator","aj.global.bone.right_arm_world.tree","aj.global.bone.the_world.decendant","aj.global.bone.the_world.decendant.locator","aj.global.bone.the_world.tree","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.right_hand_world","aj.new","aj.the_world.bone.right_arm_lower.child","aj.the_world.bone.right_arm_lower.child.locator","aj.the_world.bone.right_arm_lower.decendant","aj.the_world.bone.right_arm_lower.decendant.locator","aj.the_world.bone.right_arm_lower.tree","aj.the_world.bone.right_arm_world.decendant","aj.the_world.bone.right_arm_world.decendant.locator","aj.the_world.bone.right_arm_world.tree","aj.the_world.bone.the_world.decendant","aj.the_world.bone.the_world.decendant.locator","aj.the_world.bone.the_world.tree","aj.the_world.bone.upper_body.decendant","aj.the_world.bone.upper_body.decendant.locator","aj.the_world.bone.upper_body.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.right_hand_world","aj.the_world.node","aj.the_world.node.right_hand_world"]}
+execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.right_hand_world, tag=aj.new, distance=..4 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/right_hand_world
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.locator_right_hand_world set from storage animated_java:gu out
 data modify entity @s data.locators.right_hand_world.uuid set from storage animated_java:gu out
-summon minecraft:item_display ^0 ^1.125 ^0 {Tags:["aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.bone.the_world.child","aj.global.bone.the_world.child.locator","aj.global.bone.the_world.decendant","aj.global.bone.the_world.decendant.locator","aj.global.bone.the_world.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.barrage_anchor","aj.new","aj.the_world.bone.scale.decendant","aj.the_world.bone.scale.decendant.locator","aj.the_world.bone.scale.tree","aj.the_world.bone.the_world.child","aj.the_world.bone.the_world.child.locator","aj.the_world.bone.the_world.decendant","aj.the_world.bone.the_world.decendant.locator","aj.the_world.bone.the_world.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.barrage_anchor","aj.the_world.node","aj.the_world.node.barrage_anchor"]}
+summon minecraft:item_display ^0 ^1.125 ^0 {Tags:["aj.global.bone.the_world.child","aj.global.bone.the_world.child.locator","aj.global.bone.the_world.decendant","aj.global.bone.the_world.decendant.locator","aj.global.bone.the_world.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.barrage_anchor","aj.new","aj.the_world.bone.the_world.child","aj.the_world.bone.the_world.child.locator","aj.the_world.bone.the_world.decendant","aj.the_world.bone.the_world.decendant.locator","aj.the_world.bone.the_world.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.barrage_anchor","aj.the_world.node","aj.the_world.node.barrage_anchor"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.barrage_anchor, tag=aj.new, distance=..3 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/barrage_anchor
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.locator_barrage_anchor set from storage animated_java:gu out
 data modify entity @s data.locators.barrage_anchor.uuid set from storage animated_java:gu out
-summon minecraft:item_display ^0.25 ^1.4375 ^-0.1875 {Tags:["aj.global.bone.dio.decendant","aj.global.bone.dio.decendant.locator","aj.global.bone.dio.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.bone.upper_body1.child","aj.global.bone.upper_body1.child.locator","aj.global.bone.upper_body1.decendant","aj.global.bone.upper_body1.decendant.locator","aj.global.bone.upper_body1.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.dio_shoulder","aj.new","aj.the_world.bone.dio.decendant","aj.the_world.bone.dio.decendant.locator","aj.the_world.bone.dio.tree","aj.the_world.bone.scale.decendant","aj.the_world.bone.scale.decendant.locator","aj.the_world.bone.scale.tree","aj.the_world.bone.upper_body1.child","aj.the_world.bone.upper_body1.child.locator","aj.the_world.bone.upper_body1.decendant","aj.the_world.bone.upper_body1.decendant.locator","aj.the_world.bone.upper_body1.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.dio_shoulder","aj.the_world.node","aj.the_world.node.dio_shoulder"]}
-execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.dio_shoulder, tag=aj.new, distance=..3 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/dio_shoulder
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.locator_dio_shoulder set from storage animated_java:gu out
-data modify entity @s data.locators.dio_shoulder.uuid set from storage animated_java:gu out
-summon minecraft:item_display ^0 ^0 ^0 {Tags:["aj.global.bone.dynamic_hitbox.child","aj.global.bone.dynamic_hitbox.child.locator","aj.global.bone.dynamic_hitbox.decendant","aj.global.bone.dynamic_hitbox.decendant.locator","aj.global.bone.dynamic_hitbox.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.hitbox","aj.new","aj.the_world.bone.dynamic_hitbox.child","aj.the_world.bone.dynamic_hitbox.child.locator","aj.the_world.bone.dynamic_hitbox.decendant","aj.the_world.bone.dynamic_hitbox.decendant.locator","aj.the_world.bone.dynamic_hitbox.tree","aj.the_world.bone.scale.decendant","aj.the_world.bone.scale.decendant.locator","aj.the_world.bone.scale.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.hitbox","aj.the_world.node","aj.the_world.node.hitbox"]}
-execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.hitbox, tag=aj.new, distance=..4 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/hitbox
+summon minecraft:item_display ^0 ^0 ^0 {Tags:["aj.global.bone.dynamic_hitbox.child","aj.global.bone.dynamic_hitbox.child.locator","aj.global.bone.dynamic_hitbox.decendant","aj.global.bone.dynamic_hitbox.decendant.locator","aj.global.bone.dynamic_hitbox.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.hitbox","aj.new","aj.the_world.bone.dynamic_hitbox.child","aj.the_world.bone.dynamic_hitbox.child.locator","aj.the_world.bone.dynamic_hitbox.decendant","aj.the_world.bone.dynamic_hitbox.decendant.locator","aj.the_world.bone.dynamic_hitbox.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.hitbox","aj.the_world.node","aj.the_world.node.hitbox"]}
+execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.hitbox, tag=aj.new, distance=..3 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/hitbox
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.locator_hitbox set from storage animated_java:gu out
 data modify entity @s data.locators.hitbox.uuid set from storage animated_java:gu out
@@ -28,63 +28,6 @@ execute as @n[ type=minecraft:item_display, tag=aj.the_world.camera.camera, tag=
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.camera_camera set from storage animated_java:gu out
 data modify entity @s data.cameras.camera.uuid set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.node] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_node set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.node2] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_node2 set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.head_world] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_head_world set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear4] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_gear4 set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_arm_lower] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_left_arm_lower set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_arm_world] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_left_arm_world set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear5] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_gear5 set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_arm_lower] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_right_arm_lower set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_arm_world] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_right_arm_world set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear1] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_gear1 set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.upper_body] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_upper_body set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear7] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_gear7 set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_leg_lower] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_right_leg_lower set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_leg_world] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_right_leg_world set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear6] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_gear6 set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_leg_lower] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_left_leg_lower set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_leg_world] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_left_leg_world set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear2] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_gear2 set from storage animated_java:gu out
-execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear3] run function animated_java:global/gu/get_entity_uuid_string
-data modify entity @s data.uuids append from storage animated_java:gu out
-data modify entity @s data.uuids_by_name.bone_gear3 set from storage animated_java:gu out
 execute on vehicle on passengers if entity @s[tag=aj.the_world.node.lower_left_leg] run function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.bone_lower_left_leg set from storage animated_java:gu out
@@ -187,3 +130,60 @@ data modify entity @s data.uuids_by_name.item_display_chestplate_body set from s
 execute on vehicle on passengers if entity @s[tag=aj.the_world.node.leggings_pants] run function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.item_display_leggings_pants set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.node] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_node set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.node2] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_node2 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.head_world] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_head_world set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear4] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_gear4 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_arm_lower] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_left_arm_lower set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_arm_world] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_left_arm_world set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear5] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_gear5 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_arm_lower] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_right_arm_lower set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_arm_world] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_right_arm_world set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear1] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_gear1 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.upper_body] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_upper_body set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear7] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_gear7 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_leg_lower] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_right_leg_lower set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.right_leg_world] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_right_leg_world set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear6] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_gear6 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_leg_lower] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_left_leg_lower set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_leg_world] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_left_leg_world set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear2] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_gear2 set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.gear3] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_gear3 set from storage animated_java:gu out

@@ -1120,7 +1120,10 @@ dir abilities {
             # Move Cooldowns #
             function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:"1a",move:1,cooldown:9}
             function custom:universal/cooldowns/10x {ability:"TheWorld_State2",storage:"the_world",path:"1b",move:1,cooldown:50}
+
             function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:2,move:2,cooldown:17}
+            data merge storage minecraft:custom {the_world:{knife_throw:{damage:10,speed:0.15,range:1.5}}}
+
             function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:3,move:3,cooldown:23}
             function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:4,move:4,cooldown:32}
             function custom:abilities/the_world/awakening/duration {duration:145}
@@ -1211,10 +1214,11 @@ dir abilities {
 
                     execute store result storage minecraft:custom the_world.flurry.id int 1 run scoreboard players get @s customTheWorld.FlurryID
                     execute if score @s customTheWorld.FlurryStun matches 100 run block { with storage minecraft:custom the_world.flurry
-                        $function custom:universal/damage/victim {id:"$(id)",damage:"6",type:"minecraft:arrow",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.FlurryID",first:"was impaled by",second:"using Flurry"}
+                        $function custom:universal/damage/victim {id:$(id),damage:6,type:"minecraft:arrow",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.FlurryID",first:"was impaled by",second:"using Flurry"}
                         attribute @s minecraft:movement_speed modifier remove custom:the_world.flurry_initial_stun
                         attribute @s minecraft:jump_strength modifier remove custom:the_world.flurry_stun
                         function custom:traits/apply {amplifier:3,duration:5,what:"bleed",path:"Bleed"}
+                        scoreboard players reset @s customTheWorld.FlurryID
                     }
 
                     execute unless score @s customTheWorld.FlurryStun matches 1.. run attribute @s minecraft:movement_speed modifier remove custom:the_world.flurry_post_stun
@@ -1267,29 +1271,17 @@ dir abilities {
 
         dir toggle {
             function on {
-                execute if entity @s[tag=customTrait.SizeChange] run {
-                    execute if entity @s[tag=customTrait.SizeShrink] run {
-                        execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1 1.5
-                        execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1 1.5
-                    }
-                    execute if entity @s[tag=customTrait.SizeGrowth] run {
-                        execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1 0.75
-                        execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1 0.75
-                    }
-                } else run {
-                    execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1
-                    execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
-                }
+                execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.spawn player @a ~ ~ ~ 1
+                execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
 
-                execute rotated ~ 0 run function animated_java:the_world/summon {args:{}}
-                execute as @n[type=minecraft:item_display,tag=aj.the_world.root,tag=!customTheWorld.IDAssigned] run {
-                    scoreboard players add .global customTheWorld.RigID 1
-                    scoreboard players operation @s customTheWorld.RigID = .global customTheWorld.RigID
-                    tag @s add customTheWorld.IDAssigned
+                execute rotated ~ 0 run function animated_java:the_world/summon {args:{animation: 'summon', start_animation: true}}
+                
+                execute store result storage minecraft:custom the_world.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                execute as @n[type=minecraft:item_display,tag=aj.the_world.root] unless score @s customUniversal.AbilityID matches 1.. run block { with storage minecraft:custom the_world
+                    $scoreboard players set @s customUniversal.AbilityID $(id)
                 }
-                scoreboard players operation @s customTheWorld.RigID = .global customTheWorld.RigID
-                function custom:universal/control/mount/player {user:"customAbility.TheWorld",rig:"the_world",objective:"customTheWorld.RigID"}
-                function custom:universal/scale/player_source {animation:"summon",mode:"play",rig:"the_world",objective:"customTheWorld.RigID"}
+                function custom:universal/control/mount/player {user:"customAbility.TheWorld",rig:"the_world",objective:"customUniversal.AbilityID"}
+                function custom:universal/control/visibility {target:"aj.the_world.root",objective:"customUniversal.AbilityID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
 
                 tag @s add customUniversal.HideUI
                 scoreboard players set @s customUniversal.ToggleCastDelay 10
@@ -1299,9 +1291,9 @@ dir abilities {
             function off {
                 title @s actionbar ""
                 playsound minecraft:the_world.toggle.withdraw player @a ~ ~ ~ 1
-                execute store result storage minecraft:custom the_world.id int 1 run scoreboard players get @s customTheWorld.RigID
+                execute store result storage minecraft:custom the_world.id int 1 run scoreboard players get @s customUniversal.AbilityID
                 block { with storage minecraft:custom the_world
-                    $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,tag=customTheWorld.IDAssigned,scores={customTheWorld.RigID=$(id)}] run {
+                    $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customUniversal.AbilityID=$(id)}] run {
                         function animated_java:the_world/remove/this
                     }
                 }
@@ -1515,20 +1507,18 @@ dir abilities {
 
                 $scoreboard players set @s customTheWorld.IdleMode $(idle)
 
-                # function custom:universal/armor/hide
-                $function custom:universal/setup/rig {objective:"$(objective)",item:"$(rig)"}
-                $execute store result storage minecraft:custom the_world.temp.id int 1 run scoreboard players get .global $(objective)
-                $data merge storage minecraft:custom {the_world:{temp:{objective:'$(objective)',animation:'$(animation)',mode:$(mode)}}}
-                block { with storage minecraft:custom the_world.temp
-                    $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={$(objective)=$(id)}] run block { with storage minecraft:custom the_world.temp
-                        tag @s add customTrait.ShrinkraySizeLock
+                $execute store result storage minecraft:custom the_world.setup.id int 1 run scoreboard players get @s $(objective)
+                $data merge storage minecraft:custom {the_world:{setup:{objective:'$(objective)',animation:'$(animation)'}}}
+                block { with storage minecraft:custom the_world.setup
+                    $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={$(objective)=$(id)}] run block { with storage minecraft:custom the_world.setup
                         execute if score @p[tag=customAbility.TheWorld] customTheWorld.IdleMode matches 1 run function animated_java:the_world/animations/idle/pause
 
                         $function animated_java:the_world/animations/$(animation)/set_frame {frame:0}
-                        $function custom:universal/scale/rig_source {animation:"$(animation)",mode:"$(mode)",what:"tag=customAbility.TheWorld",rig:"the_world",objective:"$(objective)"}
+                        $function animated_java:the_world/animations/$(animation)/resume
                     }
                 }
-                execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"the_world",objective:"customTheWorld.RigID"}
+                function custom:universal/control/visibility {target:"aj.the_world.root",objective:"customUniversal.AbilityID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+                execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"the_world",objective:"customUniversal.AbilityID"}
                 execute if entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/skin {branch:"the_world"}
             }
 
@@ -1563,15 +1553,7 @@ dir abilities {
 
                         tag @s add temp
                         playsound minecraft:the_world.timeskip.sfx player @a ~ ~ ~ 0.5
-
-                        execute if entity @s[tag=customTrait.SizeChange] run {
-                            execute if entity @s[tag=customTrait.SizeShrink] run data merge storage minecraft:custom {the_world:{timeskip:{range:52}}}
-                            execute if entity @s[tag=customTrait.SizeGrowth] run data merge storage minecraft:custom {the_world:{timeskip:{range:188}}}
-                        } else run {
-                            data merge storage minecraft:custom {the_world:{timeskip:{range:125}}}
-                        }
-
-                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/the_world/moves/1/timeskip/fire with storage minecraft:custom the_world.timeskip
+                        execute anchored eyes positioned ^ ^ ^ run function custom:abilities/the_world/moves/1/timeskip/fire
                         tag @s remove temp
                         scoreboard players reset .distance customTheWorld.TimeskipMovement
                     }
@@ -1580,13 +1562,13 @@ dir abilities {
                         scoreboard players add @s customTheWorld.Statistics.Timeskip.Distance 1
                         execute unless block ^ ^ ^.1 #custom:raycast_pass run function custom:abilities/the_world/moves/1/timeskip/hit
                         scoreboard players add .distance customTheWorld.TimeskipMovement 1
-                        $execute if score .distance customTheWorld.TimeskipMovement matches $(range) positioned ~ ~ ~ run function custom:abilities/the_world/moves/1/timeskip/hit
-                        $execute if score .distance customTheWorld.TimeskipMovement matches ..$(range) positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=temp2] run function custom:abilities/the_world/moves/1/timeskip/fire with storage minecraft:custom the_world.timeskip
+                        execute if score .distance customTheWorld.TimeskipMovement matches 125 positioned ~ ~ ~ run function custom:abilities/the_world/moves/1/timeskip/hit
+                        execute if score .distance customTheWorld.TimeskipMovement matches ..125 positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #custom:raycast_pass unless entity @s[tag=temp2] run function custom:abilities/the_world/moves/1/timeskip/fire
                         execute if entity @s[tag=temp2] run tag @s remove temp2
                     }
 
                     function hit {
-                        tp @s ^ ^ ^-0.3
+                        execute align y run tp @s ^ ^ ^-0.3
                         execute as @a[distance=..12] run {
                             shader enable @s invert
                             scoreboard players set @s customTheWorld.TimeSkipInvert 5
@@ -1812,35 +1794,59 @@ dir abilities {
 
             dir 2 {
                 function core {
+                    # hotbar slot
                     scoreboard players set @s customUniversal.ActiveHotbar 2
+
+                    # casting checks
                     execute unless score @s customUniversal.Move2Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
                     execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
                     function custom:universal/error_messages/universal
 
+                    # result(s)
                     execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/the_world/moves/2/pass
                     execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Knife Throw"}
                 }
 
                 function pass {
-                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.KnifeThrowID",animation:'knife_throw',mode:"resume",idle:0}
-                    visibility disable @n[type=minecraft:item_display,tag=aj.the_world.root] @s
+                    # move arguments
+                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customUniversal.AbilityID",animation:'knife_throw',idle:0}
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move2Cooldown = .TheWorld_State1Cooldown customUniversal.Move2Cooldown
+                    visibility disable @s @a ignore_perspective render_passengers
 
-                    function custom:universal/armor/hide
+                    # pairing
+                    scoreboard players operation @s customTheWorld.KnifeThrowID = @s customUniversal.AbilityID
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.root",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+
+                    # arm visibility
+                    execute store result storage minecraft:custom the_world.knife_throw.id int 1 run scoreboard players get @s customTheWorld.KnifeThrowID
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.right_arm_group",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.right_forearm_group",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.knife1",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.knife2",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.knife3",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    block { with storage minecraft:custom the_world.knife_throw
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_arm_group,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_forearm_group,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.knife1,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.knife2,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.knife3,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                    }
+
+                    # variable payload
                     scoreboard players set @s customUniversal.MoveLastUsed 4
                     scoreboard players set @s customUniversal.LastMoveState 1
                     scoreboard players set @s customUniversal.MoveDelay 10
                     scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Uses 1
-                    tag @s add customUniversal.Cancelable
 
+                    # restraints
+                    tag @s add customUniversal.Cancelable
                     attribute @s minecraft:movement_speed base set 0.025
                     attribute @s minecraft:jump_strength base set 0
-                    effect give @s minecraft:invisibility infinite 0 true
                 }
 
                 function voiceline {
-                    $execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.voiceline player @a ~ ~ ~ 0.5 $(speed)
-                    $execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.shadow_voiceline player @a ~ ~ ~ 0.5 $(speed)
+                    execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.voiceline player @a ~ ~ ~ 0.5
+                    execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:the_world.knife_throw.shadow_voiceline player @a ~ ~ ~ 0.5
                 }
 
                 function count {
@@ -1866,36 +1872,35 @@ dir abilities {
                     data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
 
                     execute store result storage minecraft:custom the_world.knife_throw.id int 1 run scoreboard players get @s customTheWorld.KnifeThrowID
-                    block { with storage minecraft:custom the_world.knife_throw
-                        $function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"the_world",animation:'knife',extra:"scoreboard players set @s customTheWorld.KnifeThrowID $(id)"}
-                        function custom:universal/scale/player_source {animation:"knife",mode:"play",rig:"the_world_vfx",objective:"customTheWorld.KnifeThrowID"}
-                    }
+                    function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"the_world",animation:'knife',extra:"function custom:abilities/the_world/moves/2/setup with storage minecraft:custom the_world.knife_throw"}
 
                     $execute positioned ^$(spread) ^ ^ unless score .count customTheWorld.KnifeSpread matches $(count).. run function custom:abilities/the_world/moves/2/spawn with storage minecraft:custom the_world.knife_throw
                 }
 
-                function movement {
-                    $data merge storage minecraft:custom {the_world:{temp:{range:$(range),damage:"$(damage)"}}}
-                    execute store result storage minecraft:custom the_world.temp.id int 1 run scoreboard players get @s customTheWorld.KnifeThrowID
+                function setup {
+                    $scoreboard players set @s customTheWorld.KnifeThrowID $(id)
+                    function animated_java:the_world_vfx/animations/knife/play
+                }
 
-                    $execute positioned ^ ^ ^ if entity @s[tag=customTheWorld.KnifeNotStuck] run function custom:abilities/the_world/moves/2/check {speed:$(speed)}
+                function movement {
+                    execute store result storage minecraft:custom the_world.knife_throw.id int 1 run scoreboard players get @s customTheWorld.KnifeThrowID
+                    execute positioned ^ ^ ^ if entity @s[tag=customTheWorld.KnifeNotStuck] run function custom:abilities/the_world/moves/2/check with storage minecraft:custom the_world.knife_throw
                     tag @s remove temp
 
-                    execute if entity @s[tag=customTheWorld.KnifeNotStuck] run block { with storage minecraft:custom the_world.temp
+                    execute if entity @s[tag=customTheWorld.KnifeNotStuck] run block { with storage minecraft:custom the_world.knife_throw
                         particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
-                        $execute as @e[type=!#custom:not_mob,distance=..$(range)] unless entity @s[scores={customTheWorld.KnifeThrowID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:custom the_world.temp
-                            $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.KnifeThrowID",first:"was skewered by",second:"using Knife Throw"}
-                            $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.KnifeThrowID=$(id)}] run block { with storage minecraft:custom the_world.temp
+                        $execute as @e[type=!#custom:not_mob,distance=..$(range)] unless entity @s[scores={customUniversal.AbilityID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:custom the_world.knife_throw
+                            $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
+                            $execute as @p[tag=customAbility.TheWorld,scores={customUniversal.AbilityID=$(id)}] run block { with storage minecraft:custom the_world.knife_throw
                                 function custom:abilities/the_world/passive/rage/gain {amount:10}
                                 $scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage $(damage)
                                 $execute if entity @s[tag=customSettings.DebugLog] run tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Knife Throw","color":"gold"},{"text":"\n"},{"text":"Damage: ","color":"gray"},{"text":"$(damage)","color":"red"}]
                             }
-                            $execute as @n[type=minecraft:item_display,tag=aj.the_world_vfx.root,scores={customTheWorld.KnifeThrowID=$(id)}] run function animated_java:the_world_vfx/remove/this
+                            $execute as @n[type=minecraft:item_display,tag=aj.the_world_vfx.root,scores={customUniversal.AbilityID=$(id)}] run function animated_java:the_world_vfx/remove/this
                         }
                     }
 
                     scoreboard players reset @s customTheWorld.KnifeMovement
-                    data remove storage minecraft:custom the_world.temp
                 }
 
                 function check {
@@ -1919,29 +1924,38 @@ dir abilities {
 
             dir 3 {
                 function core {
+                    # hotbar slot
                     scoreboard players set @s customUniversal.ActiveHotbar 3
+
+                    # casting checks
                     execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
                     execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
                     function custom:universal/error_messages/universal
 
+                    # result(s)
                     execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/the_world/moves/3/pass
                     execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A0",move:"Barrage"}
                 }
 
                 function pass {
-                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.BarrageID",animation:'barrage',mode:"resume",idle:1}
-                    function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.locator.hitbox",objective:"customTheWorld.BarrageID"}
-                    function custom:universal/setup/pair {type:"minecraft:item_display",what:"aj.the_world.locator.barrage_anchor",objective:"customTheWorld.BarrageID"} 
+                    # move arguments
+                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customUniversal.AbilityID",animation:'barrage',idle:1}
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .TheWorld_State1Cooldown customUniversal.Move3Cooldown
+
+                    # pairing
+                    scoreboard players operation @s customTheWorld.BarrageID = @s customUniversal.AbilityID
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.root",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.BarrageID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.hitbox",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.BarrageID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.barrage_anchor",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.BarrageID"}
+
+                    # variable payload
                     scoreboard players set @s customUniversal.MoveLastUsed 3
                     scoreboard players set @s customUniversal.LastMoveState 1
                     scoreboard players set @s customUniversal.MoveDelay 10
                     scoreboard players add @s customTheWorld.Statistics.Barrage.Uses 1
-                    perspective @s second
+
+                    # restraints
                     tag @s add customUniversal.Cancelable
-
-                    effect clear @s minecraft:invisibility
-
                     attribute @s minecraft:movement_speed base set 0.05
                     attribute @s minecraft:jump_strength base set 0
                 }
@@ -2013,6 +2027,19 @@ dir abilities {
                     }
                 }
 
+                function arm_visibility {
+                    # arm visibility
+                    execute store result storage minecraft:custom the_world.knife_throw.id int 1 run scoreboard players get @s customTheWorld.KnifeThrowID
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.right_arm_world",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.right_arm_lower",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.bone.gear5",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.KnifeThrowID"}
+                    block { with storage minecraft:custom the_world.knife_throw
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_arm_world,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_arm_lower,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                        $visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.gear5,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+                    }
+                }
+
                 function final_hit {
                     $data merge storage minecraft:custom {the_world:{barrage:{range:$(range),damage:"$(damage)"}}}
                     execute store result storage minecraft:custom the_world.barrage.id int 1 run scoreboard players get @s customTheWorld.BarrageID
@@ -2030,30 +2057,39 @@ dir abilities {
 
             dir 4 {
                 function core {
+                    # hotbar slot
                     scoreboard players set @s customUniversal.ActiveHotbar 4
+
+                    # casting checks
                     execute unless score @s customUniversal.Move4Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
                     execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
                     function custom:universal/error_messages/universal
 
+                    # result(s)
                     execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/the_world/moves/4/pass
                     execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Flurry"}
                 }
 
                 function pass {
-                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customTheWorld.FlurryID",animation:'flurry',mode:"play",idle:1}
+                    # move arguments
+                    function custom:abilities/the_world/moves/setup {rig:"the_world",objective:"customUniversal.AbilityID",animation:'flurry',idle:1}
                     execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move4Cooldown = .TheWorld_State1Cooldown customUniversal.Move4Cooldown
+                    visibility disable @s @a ignore_perspective render_passengers
 
-                    function custom:universal/armor/hide
+                    # pairing
+                    scoreboard players operation @s customTheWorld.FlurryID = @s customUniversal.AbilityID
+                    function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.root",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.FlurryID"}
+
+                    # variable payload
                     scoreboard players set @s customUniversal.MoveLastUsed 4
                     scoreboard players set @s customUniversal.LastMoveState 1
                     scoreboard players set @s customUniversal.MoveDelay 10
                     scoreboard players add @s customTheWorld.Statistics.Flurry.Uses 1
-                    tag @s add customUniversal.Cancelable
-                    perspective @s third
 
+                    # restraints
+                    tag @s add customUniversal.Cancelable
                     attribute @s minecraft:movement_speed base set 0
                     attribute @s minecraft:jump_strength base set 0
-                    effect give @s minecraft:invisibility infinite 0 true
                 }
 
                 function enable {
@@ -2072,18 +2108,11 @@ dir abilities {
 
                 function star {
                     $scoreboard players set @s customTheWorld.FlurryID $(id)
-
                     ride @s mount @n[type=minecraft:item_display,tag=aj.the_world.locator.dio_shoulder]
-                    function custom:universal/scale/rig_source {animation:"flurry",mode:"play",what:"tag=customAbility.TheWorld",rig:"the_world_vfx",objective:"customTheWorld.FlurryID"}
+                    function animated_java:the_world_vfx/animations/flurry/play
                 }
 
                 function check {
-                    execute if entity @s[tag=customTrait.SizeChange] run {
-                        execute if entity @s[tag=customTrait.SizeShrink] run data merge storage minecraft:custom {the_world:{flurry:{pitch:1.5}}}
-                        execute if entity @s[tag=customTrait.SizeGrowth] run data merge storage minecraft:custom {the_world:{flurry:{pitch:0.75}}}
-                    } else run {
-                        data merge storage minecraft:custom {the_world:{flurry:{pitch:1}}}
-                    }
                     execute store result storage minecraft:custom the_world.flurry.id int 1 run scoreboard players get @s customTheWorld.FlurryID
                     execute on attacker run block { with storage minecraft:custom the_world.flurry
                         tag @s add customTheWorld.FlurryAttacker
@@ -2112,8 +2141,8 @@ dir abilities {
                             tag @s remove customTheWorld.FlurryOffsetLimit
                         }
 
-                        execute at @s run block { with storage minecraft:custom the_world.flurry
-                            $playsound minecraft:the_world.flurry.attacked player @a ~ ~ ~ 1 $(pitch)
+                        execute at @s run {
+                            playsound minecraft:the_world.flurry.attacked player @a ~ ~ ~ 1 1
                             function custom:abilities/the_world/moves/4/knife/spawn
                         }
 
@@ -2125,10 +2154,10 @@ dir abilities {
                         attribute @s minecraft:jump_strength modifier add custom:the_world.flurry_stun -1 add_multiplied_total
 
                         tag @s add customUniversal.ConstantTick
-                        tag @s add customUniversal.TheWorldTick
+                        tag @s add customTheWorld.ConstantTick
                         scoreboard players set @s customTheWorld.FlurryStun 110
 
-                        $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customTheWorld.FlurryID=$(id)}] run function custom:abilities/the_world/moves/reset/all {user:"customAbility.TheWorld",objective:"customTheWorld.RigID",rig:"the_world"}
+                        $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customTheWorld.FlurryID=$(id)}] run function custom:abilities/the_world/moves/reset/all {user:"customAbility.TheWorld",objective:"customTheWorld.FlurryID",rig:"the_world"}
                     }
                 }
 
@@ -2159,7 +2188,7 @@ dir abilities {
                     }
 
                     function position {
-                        function custom:universal/vfx/random_rotation
+                        function custom:universal/vfx/random_rotation_top
                         execute at @s run tp @s ^ ^ ^-8
                     }
                 }
@@ -2184,15 +2213,13 @@ dir abilities {
                     block { with storage minecraft:custom universal.control
                         $execute as @a[tag=customAbility.TheWorld,scores={$(objective)=$(id)}] at @s run function custom:abilities/the_world/moves/reset/player
                         function animated_java:the_world/animations/hide_dio/play
-                        $function custom:universal/scale/rig_source {animation:"idle",mode:"play",what:"tag=customAbility.TheWorld",rig:"the_world",objective:"$(objective)"}
-                        tag @s remove customTrait.ShrinkraySizeLock
-                        scoreboard players reset @s customUniversal.AnimationID
-                        scoreboard players set @s customUniversal.AnimationID 2
+                        function animated_java:the_world/animations/idle/play
+                        scoreboard players reset @s customUniversal.TimeStopAnimation
                     }
                 }
 
                 function player {
-                    perspective @s first
+                    visibility enable @s @a ignore_perspective render_passengers
                     attribute @s minecraft:movement_speed base reset
                     attribute @s minecraft:jump_strength base reset
                     attribute @s minecraft:gravity base reset
@@ -2201,7 +2228,6 @@ dir abilities {
                     effect clear @s minecraft:invisibility
                     ride @s dismount
 
-                    # item modify entity @s hotbar.8 custom:gojo/base
                     function custom:universal/armor/reveal
 
                     tag @s remove customUniversal.Cancellable
@@ -5303,11 +5329,6 @@ dir abilities {
             function on {
                 playsound minecraft:president.toggle.enable player @s ~ ~ ~ 1
                 scoreboard players set @s customUniversal.ToggleDelay 20
-
-                execute unless entity @s[scores={customUniversal.AbilityID=1..}] run {
-                    scoreboard players add .global customUniversal.AbilityID 1
-                    scoreboard players operation @s customUniversal.AbilityID = .global customUniversal.AbilityID
-                }
             }
 
             function off {
@@ -6601,6 +6622,14 @@ dir universal {
             }
         }
 
+        function random_rotation_top {
+            execute store result storage minecraft:custom universal.vfx.rotationX int 1 run random value -180..180
+            execute store result storage minecraft:custom universal.vfx.rotationY int 1 run random value 0..90
+            block { with storage minecraft:custom universal.vfx
+                $rotate @s $(rotationX) $(rotationY)
+            }
+        }
+
         function random_rotation {
             execute store result storage minecraft:custom universal.vfx.rotationX int 1 run random value -180..180
             execute store result storage minecraft:custom universal.vfx.rotationY int 1 run random value -90..90
@@ -6694,6 +6723,23 @@ dir universal {
     }
 
     dir control {
+        function score {
+            # ex: function custom:universal/control/score {target:"type=minecraft:item_display,tag=aj.the_world.root",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.FlurryID"}
+            $data merge storage minecraft:custom {universal:{control:{target:"$(target)",objective_before:"$(objective_before)",objective_target:"$(objective_target)"}}}
+            block { with storage minecraft:custom universal.control
+                $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
+            }
+        }
+
+        function visibility {
+            # ex: function custom:universal/control/visibility {target:"aj.the_world.root",objective:"customUniversal.AbilityID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+            $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {universal:{control:{objective:"$(objective)",target:"$(target)",state:"$(state)",perspective:"$(perspective)",mounted:"$(mounted)"}}}
+            block { with storage minecraft:custom universal.control
+                $visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
+            }
+        }
+
         function spectate_camera {
             # ex:
             # function custom:universal/control/spectate_camera {storage:"the_world",objective:"customTheWorld.ImpaleID",spectator:"customTheWorld.ImpaleCutscene",camera:"aj.the_world_cutscenes.camera"}
@@ -6710,7 +6756,7 @@ dir universal {
             $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
             block { with storage minecraft:custom universal.control
                 $execute as @a[tag=$(user),scores={$(objective)=$(id)}] at @s run tp @n[type=minecraft:item_display,tag=$(rig),scores={$(objective)=$(id)}] ~ ~ ~ ~ 0
-                $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/the_world/toggle/off
+                # $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/the_world/toggle/off
             }
         }
 
@@ -6723,7 +6769,7 @@ dir universal {
                 block { with storage minecraft:custom universal.control
                     $data modify entity @s Rotation[0] set value $(rotation)
                 }
-                $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/$(rig)/toggle/off
+                # $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/$(rig)/toggle/off
             }
         }
 
@@ -6940,8 +6986,13 @@ dir universal {
             $scoreboard players operation @s $(objective) = .global $(objective)
             $execute store result score @n[type=minecraft:item_display,tag=aj.$(item).root] $(objective) run scoreboard players get @s $(objective)
         }
+
         function pair {
-            $execute store result score @n[type=$(type),tag=$(what)] $(objective) run scoreboard players get @s $(objective)
+            # ex: function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.the_world.root",objective_before:"customUniversal.AbilityID",objective_target:"customTheWorld.FlurryID"}
+            $data merge storage minecraft:custom {universal:{control:{target:"$(target)",objective_before:"$(objective_before)",objective_target:"$(objective_target)"}}}
+            block { with storage minecraft:custom universal.control
+                $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
+            }
         }
     }
 
@@ -7008,6 +7059,14 @@ dir universal {
                     tag @s add customAbility.Active
                     tag @s add temp
                     scoreboard players set @s customUniversal.Toggle 1
+                    execute unless entity @s[scores={customUniversal.AbilityID=1..}] run {
+                        scoreboard players add .global customUniversal.AbilityID 1
+                        scoreboard players operation @s customUniversal.AbilityID = .global customUniversal.AbilityID
+                        function custom:universal/fetch_username {path:"ability"}
+                        block { with storage minecraft:custom ability
+                            $scoreboard players display name @s customUniversal.AbilityID {"color":"aqua","text":"$(username)"}
+                        }
+                    }
                     execute if entity @s[tag=customAbility.Gojo] run function custom:abilities/gojo/toggle/on
                     execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/toggle/on
                     execute if entity @s[tag=customAbility.Dice] run function custom:abilities/dice/toggle/on

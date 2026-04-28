@@ -35,6 +35,7 @@ scoreboard objectives add customTheWorld.AwakeningDuration dummy
 function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:"1a",move:1,cooldown:9}
 function custom:universal/cooldowns/10x {ability:"TheWorld_State2",storage:"the_world",path:"1b",move:1,cooldown:50}
 function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:2,move:2,cooldown:17}
+data merge storage minecraft:custom {the_world:{knife_throw:{damage:10,speed:0.15,range:1.5}}}
 function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:3,move:3,cooldown:23}
 function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:4,move:4,cooldown:32}
 function custom:abilities/the_world/awakening/duration {duration:145}

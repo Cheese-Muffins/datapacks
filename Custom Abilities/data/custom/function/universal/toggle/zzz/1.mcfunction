@@ -5,6 +5,7 @@ scoreboard players set #ifelse mcb.internal 1
 tag @s add customAbility.Active
 tag @s add temp
 scoreboard players set @s customUniversal.Toggle 1
+execute unless entity @s[scores={customUniversal.AbilityID=1..}] run function custom:universal/toggle/zzz/2
 execute if entity @s[tag=customAbility.Gojo] run function custom:abilities/gojo/toggle/on
 execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/toggle/on
 execute if entity @s[tag=customAbility.Dice] run function custom:abilities/dice/toggle/on

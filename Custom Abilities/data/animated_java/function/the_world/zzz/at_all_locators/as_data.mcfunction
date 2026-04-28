@@ -9,11 +9,11 @@ data modify storage animated_java:temp args merge from entity @s data.locators.s
 function animated_java:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.sfx
 function animated_java:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from entity @s data.locators.dio_shoulder
+function animated_java:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.right_hand_world
 function animated_java:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.barrage_anchor
-function animated_java:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
-data modify storage animated_java:temp args merge from entity @s data.locators.dio_shoulder
 function animated_java:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.hitbox
 function animated_java:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args

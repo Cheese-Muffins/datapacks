@@ -1,4 +1,6 @@
 # Generated with MC-Build
 
-scoreboard players set #ifelse mcb.internal 1
-data merge storage minecraft:custom {the_world:{flurry:{pitch:1}}}
+shader enable @s invert
+scoreboard players set @s customTheWorld.TimeSkipInvert 5
+tag @s add customUniversal.ConstantTick
+tag @s add customTheWorld.ConstantTick
