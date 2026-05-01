@@ -14,10 +14,12 @@ $data merge entity $(item_display_chestplate_arm_r) {transformation: [-0.8676f,-
 $data merge entity $(bone_right_arm_group) {transformation: [-0.5255f,-0.3932f,-0.7545f,-0.375f,0.8499f,-0.282f,-0.4451f,1.3601f,-0.0378f,-0.8751f,0.4824f,0.1359f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_arm) {transformation: [-0.9085f,-0.197f,0.3686f,0.375f,-0.1869f,0.9803f,0.0633f,1.3601f,-0.3738f,-0.0114f,-0.9274f,0.1359f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm) {transformation: [-0.9085f,-0.0412f,0.4159f,0.4291f,-0.1869f,0.9301f,-0.3162f,1.1134f,-0.3738f,-0.365f,-0.8526f,0.1277f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_knife4) {transformation: [0f,0f,0f,0.4425f,0f,0f,0f,0.8521f,0f,0f,0f,0.23f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm_group) {transformation: [-0.9085f,-0.0412f,0.4159f,0.4304f,-0.1869f,0.9301f,-0.3162f,1.0843f,-0.3738f,-0.365f,-0.8526f,0.1391f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_arm_l) {transformation: [-0.4239f,-0.2266f,-1.0447f,0.2857f,-0.0728f,1.1274f,-0.2149f,1.8043f,1.0665f,-0.0131f,-0.4299f,0.1307f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_arm_group) {transformation: [-0.9085f,-0.197f,0.3686f,0.375f,-0.1869f,0.9803f,0.0633f,1.3601f,-0.3738f,-0.0114f,-0.9274f,0.1359f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_body) {transformation: [1.15f,0f,0f,0f,0f,1.1225f,-0.25f,1.6193f,0f,0.25f,1.1225f,0.1936f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_leggings_pants) {transformation: [-1.1f,0f,0f,0f,0f,1.0737f,0.2391f,1.4363f,0f,0.2391f,-1.0737f,0.1528f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world/animations/timestop/zzz/frames/1_locator_constant
+execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world/animations/timestop/zzz/frames/1_locator_sfx
 data modify entity @s data merge value {"cameras":{},"locators":{"dio_shoulder":{"px":0.25,"py":1.461818408980518,"pz":-0.03357160461526937,"ry":0,"rx":12.55486968449931}}}

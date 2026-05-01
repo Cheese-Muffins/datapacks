@@ -1,9 +1,10 @@
 # Generated with MC-Build
 
 gamemode survival @s
-shader enable @s minecraft:timestop
+shader disable @s minecraft:cinematic_bars true out
 tag @s add customUniversal.ConstantTick
 tag @s add customTheWorld.ConstantTick
-scoreboard players set @s customTheWorld.TimeStopDuration 180
-execute store result storage minecraft:custom timestop.id int 1 run scoreboard players get @s customUniversal.RigID
-function custom:abilities/the_world/moves/1/timestop/zzz/19 with storage minecraft:custom timestop
+scoreboard players set @s customTheWorld.TimeStopDuration 190
+execute store result storage minecraft:custom the_world.timestop.id int 1 run scoreboard players get @s customUniversal.AbilityID
+function custom:abilities/the_world/moves/1/timestop/zzz/7 with storage minecraft:custom the_world.timestop
+function custom:universal/control/mount/player {user:"customAbility.TheWorld",rig:"the_world",objective:"customUniversal.AbilityID"}

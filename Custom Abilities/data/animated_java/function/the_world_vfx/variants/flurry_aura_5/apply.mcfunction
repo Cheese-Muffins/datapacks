@@ -4,4 +4,5 @@ execute on passengers if entity @s[tag=aj.the_world_vfx.node.knife] at @s run fu
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.aura] at @s run function animated_java:the_world_vfx/variants/flurry_aura_5/zzz/apply_to_node_aura
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.rage_mode] at @s run function animated_java:the_world_vfx/variants/flurry_aura_5/zzz/apply_to_node_rage_mode
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.arm_left] at @s run function animated_java:the_world_vfx/variants/flurry_aura_5/zzz/apply_to_node_arm_left
+execute on passengers if entity @s[tag=aj.the_world_vfx.node.timestop_wind] at @s run function animated_java:the_world_vfx/variants/flurry_aura_5/zzz/apply_to_node_timestop_wind
 return 1

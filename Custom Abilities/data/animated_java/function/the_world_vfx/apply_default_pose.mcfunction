@@ -6,3 +6,4 @@ execute on passengers if entity @s[tag=aj.the_world_vfx.node.aura] run data merg
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.star] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.rage_mode] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,-0.0312f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.arm_left] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,0f,-1f,-0.0312f,0f,-1f,0f,0.0813f,0f,0f,0f,1f], start_interpolation: 0 }
+execute on passengers if entity @s[tag=aj.the_world_vfx.node.timestop_wind] run data merge entity @s { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }

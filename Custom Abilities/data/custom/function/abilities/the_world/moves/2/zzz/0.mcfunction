@@ -1,7 +1,4 @@
 # Generated with MC-Build
 
-$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_arm_group,scores={customTheWorld.KnifeThrowID=$(id)}] @s
-$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.right_forearm_group,scores={customTheWorld.KnifeThrowID=$(id)}] @s
-$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.knife1,scores={customTheWorld.KnifeThrowID=$(id)}] @s
-$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.knife2,scores={customTheWorld.KnifeThrowID=$(id)}] @s
-$visibility enable @n[type=minecraft:item_display,tag=aj.the_world.bone.knife3,scores={customTheWorld.KnifeThrowID=$(id)}] @s
+execute unless entity @s[tag=customTheWorld.RageMode] run data merge storage minecraft:custom {the_world:{knife_throw:{count:3,div_value:2}}}
+execute if entity @s[tag=customTheWorld.RageMode] run data merge storage minecraft:custom {the_world:{knife_throw:{count:5,div_value:4}}}

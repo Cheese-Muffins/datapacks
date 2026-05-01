@@ -1,6 +1,7 @@
 # Generated with MC-Build
 
 function custom:abilities/the_world/moves/4/offset/recursive
+perspective @s first
 execute as @a[distance=..12] run function custom:abilities/the_world/moves/4/zzz/3
 function custom:abilities/the_world/passive/rage/gain {amount:10}
 scoreboard players add @s customTheWorld.Statistics.Flurry.Triggered 1

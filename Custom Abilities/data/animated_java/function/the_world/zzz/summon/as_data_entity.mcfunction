@@ -9,7 +9,7 @@ data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.locator_dio_shoulder set from storage animated_java:gu out
 data modify entity @s data.locators.dio_shoulder.uuid set from storage animated_java:gu out
 summon minecraft:item_display ^-0.375 ^0.8125 ^0 {Tags:["aj.global.bone.right_arm_lower.child","aj.global.bone.right_arm_lower.child.locator","aj.global.bone.right_arm_lower.decendant","aj.global.bone.right_arm_lower.decendant.locator","aj.global.bone.right_arm_lower.tree","aj.global.bone.right_arm_world.decendant","aj.global.bone.right_arm_world.decendant.locator","aj.global.bone.right_arm_world.tree","aj.global.bone.the_world.decendant","aj.global.bone.the_world.decendant.locator","aj.global.bone.the_world.tree","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.right_hand_world","aj.new","aj.the_world.bone.right_arm_lower.child","aj.the_world.bone.right_arm_lower.child.locator","aj.the_world.bone.right_arm_lower.decendant","aj.the_world.bone.right_arm_lower.decendant.locator","aj.the_world.bone.right_arm_lower.tree","aj.the_world.bone.right_arm_world.decendant","aj.the_world.bone.right_arm_world.decendant.locator","aj.the_world.bone.right_arm_world.tree","aj.the_world.bone.the_world.decendant","aj.the_world.bone.the_world.decendant.locator","aj.the_world.bone.the_world.tree","aj.the_world.bone.upper_body.decendant","aj.the_world.bone.upper_body.decendant.locator","aj.the_world.bone.upper_body.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.right_hand_world","aj.the_world.node","aj.the_world.node.right_hand_world"]}
-execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.right_hand_world, tag=aj.new, distance=..4 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/right_hand_world
+execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.right_hand_world, tag=aj.new, distance=..3 ] run function animated_java:the_world/zzz/summon/as_data_entity/as_locator/right_hand_world
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.locator_right_hand_world set from storage animated_java:gu out
 data modify entity @s data.locators.right_hand_world.uuid set from storage animated_java:gu out
@@ -115,6 +115,9 @@ data modify entity @s data.uuids_by_name.bone_left_arm set from storage animated
 execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_forearm] run function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.bone_left_forearm set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world.node.knife4] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_knife4 set from storage animated_java:gu out
 execute on vehicle on passengers if entity @s[tag=aj.the_world.node.left_forearm_group] run function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.bone_left_forearm_group set from storage animated_java:gu out

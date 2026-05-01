@@ -1,11 +1,11 @@
 # Generated with MC-Build
 
-$execute if score @s customTheWorld.TimeStopDuration matches 160 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute if score @s customTheWorld.TimeStopDuration matches 140 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute if score @s customTheWorld.TimeStopDuration matches 120 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute if score @s customTheWorld.TimeStopDuration matches 100 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute if score @s customTheWorld.TimeStopDuration matches 80 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute if score @s customTheWorld.TimeStopDuration matches 60 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute if score @s customTheWorld.TimeStopDuration matches 40 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute if score @s customTheWorld.TimeStopDuration matches 20 as @a[scores={customTheWorld.TimeStopID=$(id)}] run playsound minecraft:the_world.timestop.tick player @s ~ ~ ~ 100
-$execute as @e[type=!#custom:not_mob,tag=customTheWorld.TimeLocked,scores={customTheWorld.TimeStopID=$(id)}] run function custom:abilities/the_world/moves/1/timestop/zzz/5
+$execute as @p[tag=customAbility.TheWorld,scores={customUniversal.AbilityID=$(id)}] run scoreboard players add @s customTheWorld.Statistics.Timestop.Damage 5
+$function custom:universal/damage/victim {id:$(id),damage:5,type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customUniversal.AbilityID",first:"was torn apart by",second:"during Timestop"}
+particle minecraft:smoke ~ ~1 ~ 0 0 0 0.5 8 force @a
+particle minecraft:flame ~ ~1 ~ 0 0 0 0.5 2 force @a
+playsound minecraft:the_world.timestop.hurt player @a ~ ~ ~ 1
+execute store result storage minecraft:custom the_world.timestop.launchX double 0.01 run random value -30..30
+execute store result storage minecraft:custom the_world.timestop.launchY double 0.01 run random value 0..15
+execute store result storage minecraft:custom the_world.timestop.launchZ double 0.01 run random value -30..30
+function custom:abilities/the_world/moves/1/timestop/zzz/5 with storage minecraft:custom the_world.timestop

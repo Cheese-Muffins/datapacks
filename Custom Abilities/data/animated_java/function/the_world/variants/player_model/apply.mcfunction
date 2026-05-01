@@ -20,6 +20,7 @@ execute on passengers if entity @s[tag=aj.the_world.node.right_forearm_group] at
 execute on passengers if entity @s[tag=aj.the_world.node.right_arm_group] at @s run function animated_java:the_world/variants/player_model/zzz/apply_to_node_right_arm_group
 execute on passengers if entity @s[tag=aj.the_world.node.left_arm] at @s run function animated_java:the_world/variants/player_model/zzz/apply_to_node_left_arm
 execute on passengers if entity @s[tag=aj.the_world.node.left_forearm] at @s run function animated_java:the_world/variants/player_model/zzz/apply_to_node_left_forearm
+execute on passengers if entity @s[tag=aj.the_world.node.knife4] at @s run function animated_java:the_world/variants/player_model/zzz/apply_to_node_knife4
 execute on passengers if entity @s[tag=aj.the_world.node.left_forearm_group] at @s run function animated_java:the_world/variants/player_model/zzz/apply_to_node_left_forearm_group
 execute on passengers if entity @s[tag=aj.the_world.node.left_arm_group] at @s run function animated_java:the_world/variants/player_model/zzz/apply_to_node_left_arm_group
 return 1

@@ -1,6 +1,7 @@
 # Generated with MC-Build
 
 visibility enable @s @a ignore_perspective render_passengers
+execute if entity @s[tag=customUniversal.PerspectiveReset] run function custom:abilities/the_world/moves/reset/zzz/1
 attribute @s minecraft:movement_speed base reset
 attribute @s minecraft:jump_strength base reset
 attribute @s minecraft:gravity base reset

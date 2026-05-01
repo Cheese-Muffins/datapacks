@@ -28,6 +28,7 @@ $data merge entity $(item_display_chestplate_arm_r) {transformation: [0f,0f,1.15
 $data merge entity $(bone_right_arm_group) {transformation: [-1f,0f,0f,-0.375f,0f,1f,0f,1.375f,0f,0f,-1f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_arm) {transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.375f,0f,0f,-1f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm) {transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.125f,0f,0f,-1f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_knife4) {transformation: [0f,0f,0f,0.3766f,0f,0f,0f,0.844f,0f,0f,0f,-0.0009f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_forearm_group) {transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.0938f,0f,0f,-1f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(item_display_chestplate_arm_l) {transformation: [0f,0f,-1.15f,0.375f,0f,1.15f,0f,1.8281f,1.15f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_left_arm_group) {transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.375f,0f,0f,-1f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
@@ -54,5 +55,4 @@ $data merge entity $(bone_gear2) {transformation: [0f,0f,0f,0.625f,0f,0f,0f,1.43
 $data merge entity $(bone_gear3) {transformation: [0f,0f,0f,0.625f,0f,0f,0f,1.4375f,0f,0f,0f,-0.5625f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world/animations/flurry/zzz/frames/0_locator_constant
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world/animations/flurry/zzz/frames/0_locator_global
-execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world/animations/flurry/zzz/frames/0_locator_sfx
 data modify entity @s data merge value {"cameras":{"camera":{"px":0,"py":0,"pz":0,"ry":0,"rx":0}},"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"global":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"skins":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"sfx":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"dio_shoulder":{"px":0.25,"py":1.4375,"pz":-0.18749999999999997,"ry":0,"rx":0},"right_hand_world":{"px":0.6249962500000001,"py":1.4374974999999999,"pz":-0.5624999999999999,"ry":180,"rx":0},"barrage_anchor":{"px":0.6250000000000001,"py":1.437500625,"pz":-0.5624999999999999,"ry":0,"rx":0},"hitbox":{"px":0,"py":0,"pz":0,"ry":0,"rx":0}}}

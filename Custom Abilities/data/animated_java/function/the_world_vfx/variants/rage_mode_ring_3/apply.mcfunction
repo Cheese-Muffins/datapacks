@@ -5,4 +5,5 @@ execute on passengers if entity @s[tag=aj.the_world_vfx.node.aura] at @s run fun
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.star] at @s run function animated_java:the_world_vfx/variants/rage_mode_ring_3/zzz/apply_to_node_star
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.rage_mode] at @s run function animated_java:the_world_vfx/variants/rage_mode_ring_3/zzz/apply_to_node_rage_mode
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.arm_left] at @s run function animated_java:the_world_vfx/variants/rage_mode_ring_3/zzz/apply_to_node_arm_left
+execute on passengers if entity @s[tag=aj.the_world_vfx.node.timestop_wind] at @s run function animated_java:the_world_vfx/variants/rage_mode_ring_3/zzz/apply_to_node_timestop_wind
 return 1

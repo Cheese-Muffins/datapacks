@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$tp @s $(x) $(y) $(z) $(rotation_x) $(rotation_y)
+$execute at @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customUniversal.AbilityID=$(id)}] run tp @s ~ ~ ~ ~ 0

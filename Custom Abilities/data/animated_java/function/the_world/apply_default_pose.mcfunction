@@ -29,6 +29,7 @@ execute on passengers if entity @s[tag=aj.the_world.node.chestplate_arm_r] run d
 execute on passengers if entity @s[tag=aj.the_world.node.right_arm_group] run data merge entity @s { transformation: [-1f,0f,0f,-0.375f,0f,1f,0f,1.375f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }
 execute on passengers if entity @s[tag=aj.the_world.node.left_arm] run data merge entity @s { transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.375f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }
 execute on passengers if entity @s[tag=aj.the_world.node.left_forearm] run data merge entity @s { transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.125f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }
+execute on passengers if entity @s[tag=aj.the_world.node.knife4] run data merge entity @s { transformation: [-1f,0f,0f,0.3766f,0f,1f,0f,0.844f,0f,0f,-1f,-0.0009f,0f,0f,0f,1f], start_interpolation: 0 }
 execute on passengers if entity @s[tag=aj.the_world.node.left_forearm_group] run data merge entity @s { transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.0938f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }
 execute on passengers if entity @s[tag=aj.the_world.node.chestplate_arm_l] run data merge entity @s { transformation: [0f,0f,-1.15f,0.375f,0f,1.15f,0f,1.8281f,1.15f,0f,0f,0f,0f,0f,0f,1f], start_interpolation: 0 }
 execute on passengers if entity @s[tag=aj.the_world.node.left_arm_group] run data merge entity @s { transformation: [-1f,0f,0f,0.375f,0f,1f,0f,1.375f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: 0 }

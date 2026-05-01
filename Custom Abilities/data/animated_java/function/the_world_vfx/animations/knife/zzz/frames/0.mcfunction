@@ -3,8 +3,9 @@ $data merge entity $(bone_arm_right) {transformation: [0f,0f,0f,0f,0f,0f,0f,-0.0
 $data merge entity $(bone_knife) {transformation: [-1f,0f,0f,0f,0f,1f,0f,-0.006f,0f,0f,-1f,-0.0009f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_aura) {transformation: [0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_star) {transformation: [0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(bone_rage_mode) {transformation: [-1f,0f,0f,0f,0f,1f,0f,-0.0312f,0f,0f,-1f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_rage_mode) {transformation: [0f,0f,0f,0f,0f,0f,0f,-0.0312f,0f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(bone_arm_left) {transformation: [0f,0f,0f,0f,0f,0f,0f,-0.0312f,0f,0f,0f,0.0813f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(bone_timestop_wind) {transformation: [0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world_vfx/animations/knife/zzz/frames/0_locator_commands
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world_vfx/animations/knife/zzz/frames/0_locator_constant
 execute on vehicle unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function animated_java:the_world_vfx/animations/knife/zzz/frames/0_locator_global

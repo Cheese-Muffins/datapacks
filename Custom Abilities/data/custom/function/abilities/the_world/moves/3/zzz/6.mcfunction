@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
+attack disable @s
 $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customTheWorld.BarrageID",first:"was pummeled",second:"using Barrage Rush"}
 $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.BarrageID=$(id)}] run function custom:abilities/the_world/moves/3/zzz/7 with storage minecraft:custom the_world.barrage
 scoreboard players set @s customTheWorld.BarrageStun 15

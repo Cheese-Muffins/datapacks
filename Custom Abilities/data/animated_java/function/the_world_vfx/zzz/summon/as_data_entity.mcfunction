@@ -31,3 +31,6 @@ data modify entity @s data.uuids_by_name.bone_rage_mode set from storage animate
 execute on vehicle on passengers if entity @s[tag=aj.the_world_vfx.node.arm_left] run function animated_java:global/gu/get_entity_uuid_string
 data modify entity @s data.uuids append from storage animated_java:gu out
 data modify entity @s data.uuids_by_name.bone_arm_left set from storage animated_java:gu out
+execute on vehicle on passengers if entity @s[tag=aj.the_world_vfx.node.timestop_wind] run function animated_java:global/gu/get_entity_uuid_string
+data modify entity @s data.uuids append from storage animated_java:gu out
+data modify entity @s data.uuids_by_name.bone_timestop_wind set from storage animated_java:gu out

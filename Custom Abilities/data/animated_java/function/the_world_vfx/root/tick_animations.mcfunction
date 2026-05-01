@@ -9,3 +9,5 @@ execute if entity @s[tag=aj.the_world_vfx.animation.barrage_left_2.playing] run 
 execute if entity @s[tag=aj.the_world_vfx.animation.barrage_left_3.playing] run function animated_java:the_world_vfx/animations/barrage_left_3/zzz/on_tick
 execute if entity @s[tag=aj.the_world_vfx.animation.barrage_right_1.playing] run function animated_java:the_world_vfx/animations/barrage_right_1/zzz/on_tick
 execute if entity @s[tag=aj.the_world_vfx.animation.barrage_right_2.playing] run function animated_java:the_world_vfx/animations/barrage_right_2/zzz/on_tick
+execute if entity @s[tag=aj.the_world_vfx.animation.timestop_wind.playing] run function animated_java:the_world_vfx/animations/timestop_wind/zzz/on_tick
+execute if entity @s[tag=aj.the_world_vfx.animation.timestopping_knife.playing] run function animated_java:the_world_vfx/animations/timestopping_knife/zzz/on_tick
