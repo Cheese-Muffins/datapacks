@@ -5,6 +5,7 @@ tag @s remove customTheWorld.StoppingTime
 shader disable @s minecraft:timestop
 # as victims(s)?
 function custom:abilities/the_world/moves/1/timestop/unfreeze/entity with storage minecraft:custom the_world.timestop
+function custom:abilities/the_world/moves/1/timestop/unfreeze/projectiles/cleanup with storage minecraft:custom the_world.timestop
 # $execute as @e[type=minecraft:item_display,tag=customTheWorld.TimeLocked,tag=aj.global.root] if score @s customTheWorld.TimeStopID matches $(id) at @s run {
 #     tag @s remove customTheWorld.TimeLocked
 #     scoreboard players reset @s customTheWorld.TimeStopID

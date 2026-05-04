@@ -1122,7 +1122,7 @@ dir abilities {
             function custom:universal/cooldowns/10x {ability:"TheWorld_State2",storage:"the_world",path:"1b",move:1,cooldown:50}
 
             function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:2,move:2,cooldown:17}
-            data merge storage minecraft:custom {the_world:{knife_throw:{damage:10,speed:0.15,range:2}}}
+            data merge storage minecraft:custom {the_world:{knife_throw:{damage:10,speed:0.15,range:2.5}}}
 
             function custom:universal/cooldowns/10x {ability:"TheWorld_State1",storage:"the_world",path:3,move:3,cooldown:23}
             data merge storage minecraft:custom {the_world:{barrage:{damage:3,range:2.5}}}
@@ -1749,9 +1749,9 @@ dir abilities {
                         dir projectile {
                             function check {
                                 execute as @e[type=#custom:projectiles,tag=!customTheWorld.TimeLocked,distance=..40] at @s run block { with storage minecraft:custom the_world.timestop
-                                    execute store result score @s customTheWorld.TimeStopX run data get entity @s Motion[0] 10
-                                    execute store result score @s customTheWorld.TimeStopY run data get entity @s Motion[1] 10
-                                    execute store result score @s customTheWorld.TimeStopZ run data get entity @s Motion[2] 10
+                                    execute store result score @s customTheWorld.TimeStopX run data get entity @s Motion[0] 1000
+                                    execute store result score @s customTheWorld.TimeStopY run data get entity @s Motion[1] 1000
+                                    execute store result score @s customTheWorld.TimeStopZ run data get entity @s Motion[2] 1000
                                     data merge entity @s {NoGravity:1b}
 
                                     $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.TimeStopID=$(id)}] run {
@@ -1775,11 +1775,11 @@ dir abilities {
 
                             function slow {
                                 $execute as @e[type=#custom:projectiles,tag=customTheWorld.TimeLocked,scores={customTheWorld.TimeStopID=$(id)}] at @s unless score @s customUniversal.AbilityID matches $(id) if score @s customTheWorld.TimestopProjectileSlow matches 1.. run {
-                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 5 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.05}
-                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 4 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.01}
-                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 3 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.0025}
-                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 2 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.001}
-                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 1 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.0001}
+                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 5 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.0005}
+                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 4 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.0001}
+                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 3 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.000025}
+                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 2 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.00001}
+                                    execute if score @s customTheWorld.TimestopProjectileSlow matches 1 run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/math {scale:0.000001}
                                     scoreboard players remove @s customTheWorld.TimestopProjectileSlow 1
                                 }
                             }
@@ -1844,6 +1844,7 @@ dir abilities {
 
                                 # as victims(s)?
                                 function custom:abilities/the_world/moves/1/timestop/unfreeze/entity with storage minecraft:custom the_world.timestop
+                                function custom:abilities/the_world/moves/1/timestop/unfreeze/projectiles/cleanup with storage minecraft:custom the_world.timestop
 
                                 # $execute as @e[type=minecraft:item_display,tag=customTheWorld.TimeLocked,tag=aj.global.root] if score @s customTheWorld.TimeStopID matches $(id) at @s run {
 
@@ -1917,24 +1918,32 @@ dir abilities {
                     dir unfreeze {
                         dir projectiles {
                             function apply {
-                                $execute as @e[type=#custom:projectiles,tag=customTheWorld.TimeLocked] if score @s customTheWorld.TimeStopID matches $(id) run {
-                                    execute if entity @s[type=minecraft:item_display,tag=aj.the_world_vfx.root,tag=customTheWorld.FrozenKnife] run function animated_java:the_world_vfx/animations/knife/play
-
-                                    execute unless entity @s[type=minecraft:item_display] run {
-                                        execute store result storage minecraft:custom the_world.timestop.x double 0.1 run scoreboard players get @s customTheWorld.TimeStopX
-                                        execute store result storage minecraft:custom the_world.timestop.y double 0.1 run scoreboard players get @s customTheWorld.TimeStopY
-                                        execute store result storage minecraft:custom the_world.timestop.z double 0.1 run scoreboard players get @s customTheWorld.TimeStopZ
+                                $execute as @e[scores={customTheWorld.TimeStopID=$(id)}] run {
+                                    # arrows, trident, etc.
+                                    execute if entity @s[type=#custom:projectiles,tag=customTheWorld.TimeLocked] run {
+                                        execute store result storage minecraft:custom the_world.timestop.motionX double 0.001 run scoreboard players get @s customTheWorld.TimeStopX
+                                        execute store result storage minecraft:custom the_world.timestop.motionY double 0.001 run scoreboard players get @s customTheWorld.TimeStopY
+                                        execute store result storage minecraft:custom the_world.timestop.motionZ double 0.001 run scoreboard players get @s customTheWorld.TimeStopZ
                                         block { with storage minecraft:custom the_world.timestop
-                                            $data merge entity @s {NoGravity:0b,Motion:[$(x),$(y),$(z)]}
+                                            $data merge entity @s {NoGravity:0b,Motion:[$(motionX),$(motionY),$(motionZ)]}
                                         }
                                         tag @s add customTheWorld.TimestopProjectileCollisionCheck
                                         tag @s remove customTheWorld.TimeLocked
                                     }
-                                }
-                                $execute as @e[type=minecraft:item_display,tag=customUniversal.IgnoreTimestop,tag=customTheWorld.TimestopWind] if score @s customTheWorld.TimeStopID matches $(id) run {
-                                    execute if entity @s[tag=customTheWorld.TimestopWindProjectile] run function animated_java:the_world_vfx/remove/this
-                                    execute if entity @s[tag=customTheWorld.TimestopWindEntity] run {
-                                        function animated_java:the_world_vfx/animations/entity_wind_end/play
+
+                                    # wind vfx
+                                    execute if entity @s[type=minecraft:item_display,tag=customUniversal.IgnoreTimestop,tag=customTheWorld.TimestopWind] run {
+                                        execute if entity @s[tag=customTheWorld.TimestopWindProjectile] run function animated_java:the_world_vfx/remove/this
+                                        execute if entity @s[tag=customTheWorld.TimestopWindEntity] run {
+                                            function animated_java:the_world_vfx/animations/entity_wind_end/play
+                                        }
+                                    }
+
+                                    # knives
+                                    execute if entity @s[type=minecraft:item_display,tag=aj.the_world_vfx.root,tag=customTheWorld.TimeLocked,tag=customTheWorld.FrozenKnife] run {
+                                        function animated_java:the_world_vfx/animations/knife/play
+                                        tag @s remove customTheWorld.TimeLocked
+                                        tag @s remove customTheWorld.FrozenKnife
                                     }
                                 }
                             }
@@ -1948,8 +1957,16 @@ dir abilities {
                                         $execute as @n[type=#custom:projectiles,tag=customTheWorld.TimestopProjectileCollisionCheck] if score @s customTheWorld.TimeStopID matches $(id) run {
                                             execute if entity @s[type=minecraft:arrow] run kill @s
                                             tag @s remove customTheWorld.TimestopProjectileCollisionCheck
+                                            scoreboard players reset @s customTheWorld.TimeStopID
                                         }
                                     }
+                                }
+                            }
+
+                            function cleanup {
+                                $execute as @e[type=#custom:projectiles,tag=customTheWorld.TimestopProjectileCollisionCheck] at @s if score @s customTheWorld.TimeStopID matches $(id) run block { with storage minecraft:custom the_world.timestop
+                                    tag @s remove customTheWorld.TimestopProjectileCollisionCheck
+                                    scoreboard players reset @s customTheWorld.TimeStopID
                                 }
                             }
                         }
@@ -2017,6 +2034,10 @@ dir abilities {
                         execute store result storage minecraft:custom the_world.timestop.id int 1 run scoreboard players get @s customUniversal.AbilityID
                         block { with storage minecraft:custom the_world.timestop
                             $execute at @n[type=minecraft:item_display,tag=aj.the_world.root,scores={customUniversal.AbilityID=$(id)}] run tp @s ~ ~ ~ ~ 0
+                            $scoreboard players reset @n[type=minecraft:item_display,tag=aj.the_world.bone.right_arm_group,scores={customTheWorld.TimeStopID=$(id)}] customTheWorld.TimeStopID
+                            $scoreboard players reset @n[type=minecraft:item_display,tag=aj.the_world.bone.right_forearm_group,scores={customTheWorld.TimeStopID=$(id)}] customTheWorld.TimeStopID
+                            $scoreboard players reset @n[type=minecraft:item_display,tag=aj.the_world.bone.left_arm_group,scores={customTheWorld.TimeStopID=$(id)}] customTheWorld.TimeStopID
+                            $scoreboard players reset @n[type=minecraft:item_display,tag=aj.the_world.bone.left_forearm_group,scores={customTheWorld.TimeStopID=$(id)}] customTheWorld.TimeStopID
                         }
                         function custom:universal/control/mount/player {user:"customAbility.TheWorld",rig:"the_world",objective:"customUniversal.AbilityID"}
                     }
@@ -2070,12 +2091,15 @@ dir abilities {
                     execute if entity @s[tag=customTheWorld.KnifeNotStuck] run block { with storage minecraft:custom the_world.knife_throw
                         particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
                         $execute as @e[type=!#custom:not_mob,distance=..$(range)] unless entity @s[scores={customUniversal.AbilityID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:custom the_world.knife_throw
-                            $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
-                            $execute as @p[tag=customAbility.TheWorld,scores={customUniversal.AbilityID=$(id)}] run block { with storage minecraft:custom the_world.knife_throw
-                                function custom:abilities/the_world/passive/rage/gain {amount:10}
-                                $scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage $(damage)
-                                $execute if entity @s[tag=customSettings.DebugLog] run tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Knife Throw","color":"gold"},{"text":"\n"},{"text":"Damage: ","color":"gray"},{"text":"$(damage)","color":"red"}]
+                            execute unless entity @s[tag=customTheWorld.TimeLocked] run block { with storage minecraft:custom the_world.knife_throw
+                                $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
+                                $execute as @p[tag=customAbility.TheWorld,scores={customUniversal.AbilityID=$(id)}] run block { with storage minecraft:custom the_world.knife_throw
+                                    function custom:abilities/the_world/passive/rage/gain {amount:10}
+                                    $scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage $(damage)
+                                    $execute if entity @s[tag=customSettings.DebugLog] run tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Knife Throw","color":"gold"},{"text":"\n"},{"text":"Damage: ","color":"gray"},{"text":"$(damage)","color":"red"}]
+                                }
                             }
+                            execute if entity @s[tag=customTheWorld.TimeLocked] run scoreboard players add @s customTheWorld.TimeStopVictimHit 1
                             $execute as @n[type=minecraft:item_display,tag=aj.the_world_vfx.root,scores={customTheWorld.KnifeThrowID=$(id)}] run function animated_java:the_world_vfx/remove/this
                         }
                     }
@@ -2533,6 +2557,7 @@ dir abilities {
 
                 function player {
                     visibility enable @s @a ignore_perspective render_passengers
+                    function custom:universal/control/visibility {target:"aj.the_world.root",objective:"customUniversal.AbilityID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
                     execute if entity @s[tag=customUniversal.PerspectiveReset] run {
                         perspective @s first
                         tag @s remove customUniversal.PerspectiveReset
@@ -2542,10 +2567,7 @@ dir abilities {
                     attribute @s minecraft:gravity base reset
                     particle minecraft:snowflake ~ ~1 ~ 0 0 0 0.35 20
 
-                    effect clear @s minecraft:invisibility
                     ride @s dismount
-
-                    function custom:universal/armor/reveal
 
                     tag @s remove customUniversal.Cancellable
                     tag @s remove customUniversal.DisconnectCheck

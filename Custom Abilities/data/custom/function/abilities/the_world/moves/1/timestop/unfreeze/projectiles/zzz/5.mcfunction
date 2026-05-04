@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$execute as @e[type=!#custom:not_mob,tag=customTheWorld.TimeLocked,distance=..2.5] if score @s customTheWorld.TimeStopID matches $(id) run function custom:abilities/the_world/moves/1/timestop/unfreeze/projectiles/zzz/6 with storage minecraft:custom the_world.timestop
+function animated_java:the_world_vfx/animations/knife/play
+tag @s remove customTheWorld.TimeLocked
+tag @s remove customTheWorld.FrozenKnife

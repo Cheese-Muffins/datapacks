@@ -1,6 +1,4 @@
 # Generated with MC-Build
 
-scoreboard players set #ifelse mcb.internal 1
-tag @s remove customTheWorld.KnifeNotStuck
-tp @s ~ ~ ~
-playsound minecraft:the_world.knife_throw.terrain player @a ~ ~ ~ 0.5
+scoreboard players add @s customTheWorld.KnifeMovement 1
+execute unless score @s customTheWorld.KnifeMovement matches 15 run tag @s add temp

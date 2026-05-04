@@ -1,8 +1,8 @@
 # Generated with MC-Build
 
-execute store result score @s customTheWorld.TimeStopX run data get entity @s Motion[0] 10
-execute store result score @s customTheWorld.TimeStopY run data get entity @s Motion[1] 10
-execute store result score @s customTheWorld.TimeStopZ run data get entity @s Motion[2] 10
+execute store result score @s customTheWorld.TimeStopX run data get entity @s Motion[0] 1000
+execute store result score @s customTheWorld.TimeStopY run data get entity @s Motion[1] 1000
+execute store result score @s customTheWorld.TimeStopZ run data get entity @s Motion[2] 1000
 data merge entity @s {NoGravity:1b}
 $execute as @p[tag=customAbility.TheWorld,scores={customTheWorld.TimeStopID=$(id)}] run function custom:abilities/the_world/moves/1/timestop/freeze/projectile/zzz/1
 $scoreboard players set @s customTheWorld.TimeStopID $(id)

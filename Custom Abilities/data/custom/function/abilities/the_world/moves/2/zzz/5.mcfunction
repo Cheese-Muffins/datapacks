@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-scoreboard players add @s customTheWorld.KnifeMovement 1
-execute unless score @s customTheWorld.KnifeMovement matches 15 run tag @s add temp
+function custom:abilities/the_world/passive/rage/gain {amount:10}
+$scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage $(damage)
+$execute if entity @s[tag=customSettings.DebugLog] run tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Knife Throw","color":"gold"},{"text":"\n"},{"text":"Damage: ","color":"gray"},{"text":"$(damage)","color":"red"}]

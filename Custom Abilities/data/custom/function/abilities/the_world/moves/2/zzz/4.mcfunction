@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-function custom:abilities/the_world/passive/rage/gain {amount:10}
-$scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage $(damage)
-$execute if entity @s[tag=customSettings.DebugLog] run tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Knife Throw","color":"gold"},{"text":"\n"},{"text":"Damage: ","color":"gray"},{"text":"$(damage)","color":"red"}]
+$function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
+$execute as @p[tag=customAbility.TheWorld,scores={customUniversal.AbilityID=$(id)}] run function custom:abilities/the_world/moves/2/zzz/5 with storage minecraft:custom the_world.knife_throw
