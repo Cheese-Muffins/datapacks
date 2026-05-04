@@ -9,5 +9,7 @@ tag @s remove aj.the_world_vfx.animation.barrage_left_2.playing
 tag @s remove aj.the_world_vfx.animation.barrage_left_3.playing
 tag @s remove aj.the_world_vfx.animation.barrage_right_1.playing
 tag @s remove aj.the_world_vfx.animation.barrage_right_2.playing
-tag @s remove aj.the_world_vfx.animation.timestop_wind.playing
+tag @s remove aj.the_world_vfx.animation.entity_wind_start.playing
+tag @s remove aj.the_world_vfx.animation.entity_wind_end.playing
+tag @s remove aj.the_world_vfx.animation.projectile_wind.playing
 tag @s remove aj.the_world_vfx.animation.timestopping_knife.playing

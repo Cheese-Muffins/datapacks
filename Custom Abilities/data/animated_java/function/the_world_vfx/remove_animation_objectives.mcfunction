@@ -9,6 +9,8 @@ scoreboard objectives remove aj.barrage_left_2.frame
 scoreboard objectives remove aj.barrage_left_3.frame
 scoreboard objectives remove aj.barrage_right_1.frame
 scoreboard objectives remove aj.barrage_right_2.frame
-scoreboard objectives remove aj.timestop_wind.frame
+scoreboard objectives remove aj.entity_wind_start.frame
+scoreboard objectives remove aj.entity_wind_end.frame
+scoreboard objectives remove aj.projectile_wind.frame
 scoreboard objectives remove aj.timestopping_knife.frame
 tellraw @a [{color:'gray',text:'\n '},{color:'#00aced',text:'ᴀɴɪᴍᴀᴛᴇᴅ ᴊᴀᴠᴀ'},{color:'dark_gray',italic:true,text:'\n (animated_java:the_world_vfx)'},'\n → ',{color:'green',text:'Successfully uninstalled '},{color:'yellow',text:'the_world_vfx'},{color:'green',text:'!'},{color:'gray',italic:true,text:'\n If you have exported multiple times, you may have to remove objectives from previous exports manually, as Animated Java only knows about the objectives from the most recent export.'},'\n']

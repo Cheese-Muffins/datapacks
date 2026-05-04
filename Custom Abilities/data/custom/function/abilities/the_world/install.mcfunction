@@ -28,6 +28,7 @@ scoreboard objectives add customTheWorld.TimeStopY dummy
 scoreboard objectives add customTheWorld.TimeStopZ dummy
 scoreboard objectives add customTheWorld.TimeStopRotationX dummy
 scoreboard objectives add customTheWorld.TimeStopRotationY dummy
+scoreboard objectives add customTheWorld.TimestopProjectileSlow dummy
 # Awakening #
 scoreboard objectives add customTheWorld.AwakeningDuration dummy
 # Move Cooldowns #
