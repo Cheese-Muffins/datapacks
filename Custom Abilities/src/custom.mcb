@@ -82,6 +82,7 @@ function on_load {
 
     function custom:abilities/billy/install
     function custom:abilities/toji/install
+    function custom:abilities/yuji/install
     function custom:abilities/president/install
     function custom:abilities/the_world/install
     function custom:abilities/avatar/install
@@ -94,6 +95,7 @@ function tick {
         execute if entity @s[tag=customAbility.User] as @s run {
             execute if entity @s[tag=customAbility.Billy] run function custom:abilities/billy/tick/main
             execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/tick/main
+            execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/tick/main
             execute if entity @s[tag=customAbility.Toji] run function custom:abilities/toji/tick/main
             execute if entity @s[tag=customAbility.President] run function custom:abilities/president/tick/main
             execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/tick/main
@@ -3427,6 +3429,751 @@ dir abilities {
                     function custom:universal/armor/reveal
 
                     tag @s remove customPresident.EnteringRoom
+                    tag @s remove customUniversal.Cancelable
+                    tag @s remove customUniversal.DisconnectCheck
+                    tag @s remove customUniversal.Animation
+                }
+            }
+        }
+
+        function disconnect {
+            # disconnected with billy active
+            execute if entity @s[tag=customAbility.President] if entity @s[tag=customPresident.Disguised] run function custom:abilities/president/moves/3/pass
+        }
+    }
+
+    dir yuji {
+        function install {
+            # Moves #
+            scoreboard objectives add customYuji.SplitMove1Natural_Talent dummy
+            scoreboard objectives add customYuji.SplitMove1King_of_Curses dummy
+            scoreboard objectives add customYuji.SplitMove1Fuga dummy
+            scoreboard objectives add customYuji.SplitMove2Majin_Kick dummy
+            scoreboard objectives add customYuji.SplitMove2Cleave dummy
+            scoreboard objectives add customYuji.SplitMove3Black_Flash_Assault dummy
+            scoreboard objectives add customYuji.SplitMove3Dismantle dummy
+
+            # General #
+            scoreboard objectives add customYuji.NaturalTalentID dummy
+            scoreboard objectives add customYuji.MajinKickID dummy
+            scoreboard objectives add customYuji.MajinKickMovement dummy
+            scoreboard objectives add customYuji.MajinKickGravity dummy
+            scoreboard objectives add customYuji.MajinKickAltitude dummy
+
+
+            scoreboard objectives add customYuji.MajinKickAcceleration dummy
+            scoreboard objectives add customYuji.MajinKickTime dummy
+            scoreboard objectives add customYuji.MajinKickVelocityY dummy
+            scoreboard objectives add customYuji.MajinKickVelocityX dummy
+
+
+            # Move Cooldowns #
+            function custom:universal/cooldowns/10x {ability:"Yuji_State1",storage:"yuji",path:"1a",move:1,cooldown:120}
+            function custom:universal/cooldowns/10x {ability:"Yuji_State2",storage:"yuji",path:"1b",move:1,cooldown:120}
+            function custom:universal/cooldowns/10x {ability:"Yuji_State3",storage:"yuji",path:"1c",move:1,cooldown:1}
+
+            function custom:universal/cooldowns/10x {ability:"Yuji_State1",storage:"yuji",path:"2a",move:2,cooldown:13}
+            function custom:universal/cooldowns/10x {ability:"Yuji_State2",storage:"yuji",path:"2b",move:2,cooldown:19}
+
+            function custom:universal/cooldowns/10x {ability:"Yuji_State1",storage:"yuji",path:"3a",move:3,cooldown:22}
+            function custom:universal/cooldowns/10x {ability:"Yuji_State2",storage:"yuji",path:"3b",move:3,cooldown:16}
+
+            function custom:universal/cooldowns/10x {ability:"Yuji_State1",storage:"yuji",path:4,move:4,cooldown:62}
+
+            # Statistics #
+
+        }
+
+        dir tick {
+            function main {
+                execute if score @s customUniversal.Toggle matches 1 run {
+                    execute at @s run function custom:abilities/yuji/active
+                }
+
+                REPEAT (1,3) as i {
+                    execute at @s if score @s customUniversal.Move<%i%>Trigger matches 1.. run {
+                        scoreboard players reset @s customUniversal.Move<%i%>Trigger
+                        execute if score @s customUniversal.Toggle matches 1 unless score @s customUniversal.ToggleCastDelay matches 1.. unless score @s customUniversal.MoveDelay matches 1.. run function custom:abilities/yuji/moves/<%i%>/core
+                    }
+                }
+
+                execute unless entity @s[scores={customYuji.SplitMove1Natural_Talent=0,customUniversal.MoveDelay=0,customUniversal.ToggleDelay=0}] run {
+                    execute if score @s customUniversal.ToggleDelay matches 1.. run scoreboard players remove @s customUniversal.ToggleDelay 1
+                    execute if score @s customUniversal.MoveDelay matches 1.. run scoreboard players remove @s customUniversal.MoveDelay 1
+                }
+            }
+
+            dir scenario {
+                function a {
+                    say b
+                }
+            }
+        }
+
+        dir toggle {
+            function on {
+                playsound minecraft:yuji.toggle.enable player @s ~ ~ ~ 1
+                scoreboard players set @s customUniversal.ToggleDelay 20
+            }
+
+            function off {
+                title @s actionbar ""
+                playsound minecraft:yuji.toggle.withdraw player @s ~ ~ ~ 0.5
+
+                scoreboard players set @s customUniversal.ToggleDelay 10
+            }
+        }
+
+        dir hotbar {
+            function main {
+                execute unless predicate custom:universal/sneak run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customPresident.SplitMove1Kidnap
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customPresident.SplitMove2Shake_Key
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move1a
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move2a
+                } else run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customPresident.SplitMove1Self_Kidnap
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customPresident.SplitMove2Refreshments
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move1b
+                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move2b
+                }
+                function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move3
+                
+                REPEAT (1,3) as i {
+                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                        function custom:universal/hotbar/time {ability:"president",selected:<%i%>}
+                    }
+                }
+
+                execute unless score @s customPresident.PassiveEndure matches 1.. run scoreboard players set @s customPresident.PassiveEndure 0
+                execute store result storage minecraft:custom president.hotbar.endure_string int 1 run scoreboard players get @s customPresident.PassiveEndure
+                block { with storage minecraft:custom president.hotbar
+                    $execute if score @s customPresident.PassiveEndure matches 10..99 run data merge storage minecraft:custom {president:{hotbar:{endure:"$(endure_string)"}}}
+                    $execute if score @s customPresident.PassiveEndure matches 0..9 run data merge storage minecraft:custom {president:{hotbar:{endure:"0$(endure_string)"}}}
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom president.hotbar
+                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom president.hotbar
+                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+
+                execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom president.hotbar
+                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+            }
+
+            function progress {
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A3"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A4"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A5"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A6"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A7"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A8"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A9"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B0"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B1"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B2"
+                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B3"
+
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+            }
+        }
+
+        dir hotbar {
+            function main {
+                function custom:abilities/yuji/hotbar/meter with storage minecraft:custom yuji.awakening
+
+                # base mode
+                execute unless entity @s[tag=customYuji.Sukuna] run {
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customYuji.SplitMove1Natural_Talent
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customYuji.SplitMove2Majin_Kick
+                    scoreboard players operation @s customUniversal.Move3Cooldown = @s customYuji.SplitMove3Black_Flash_Assault
+                    function custom:abilities/yuji/hotbar/slot/1 with storage minecraft:custom yuji.cooldowns.move1a
+                    function custom:abilities/yuji/hotbar/slot/2 with storage minecraft:custom yuji.cooldowns.move2a
+                    function custom:abilities/yuji/hotbar/slot/3 with storage minecraft:custom yuji.cooldowns.move3a
+
+                    REPEAT (1,3) as i {
+                        execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                            function custom:universal/hotbar/time {ability:"yuji",selected:<%i%>}
+                        }
+                    }
+
+                    block { with storage minecraft:custom yuji.hotbar
+                        $title @s actionbar [{"text":"\uF802\uF807\u02A0"},{"text":"\uF839\uF816"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF838\$(awakening)"},{"text":"\uF820\u02A1"},{"text":"\uF806\u02A3"},{"text":"\uF808$(time)","color":"yellow"}]
+                    }
+                }
+
+                # sukuna mode
+                execute if entity @s[tag=customYuji.Sukuna] run {
+                    say c
+                }
+            }
+
+            dir slot {
+                function 1 {
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D1"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D2"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D3"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D4"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D5"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D6"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D7"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D8"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02D9"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E0"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E1"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+
+                function 2 {
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E2"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E3"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E4"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E5"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E6"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E7"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E8"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02E9"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F0"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F1"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F2"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+
+                function 3 {
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F3"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F4"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F5"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F6"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F7"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F8"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F9"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0200"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0201"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0202"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0203"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+            }
+
+            function meter {
+                $execute if score @s customUniversal.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B9"
+                $execute if score @s customUniversal.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B8"
+                $execute if score @s customUniversal.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B7"
+                $execute if score @s customUniversal.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B6"
+                $execute if score @s customUniversal.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B5"
+                $execute if score @s customUniversal.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B4"
+                $execute if score @s customUniversal.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B3"
+                $execute if score @s customUniversal.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B2"
+                $execute if score @s customUniversal.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B1"
+                $execute if score @s customUniversal.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02B0"
+                $execute if score @s customUniversal.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A9"
+                $execute if score @s customUniversal.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A8"
+                $execute if score @s customUniversal.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A7"
+                $execute if score @s customUniversal.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A6"
+                $execute if score @s customUniversal.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A5"
+                execute unless score @s customUniversal.AwakeningDuration matches 1.. run {
+                    data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A4"
+                    tag @s remove customGojo.Awakening
+                }
+            }
+        }
+
+        function active {
+            # function custom:universal/statistics/time {ability:"President",stat:"Playtime"}
+
+            function custom:abilities/yuji/hotbar/main
+            function custom:abilities/yuji/passives/main
+        }
+
+        dir passives {
+            function main {
+                execute if entity @s[tag=customPresident.InsideRoom] at @s run function custom:abilities/president/passives/freezer
+            }
+
+            function freezer {
+                execute store result storage minecraft:custom president.room.id int 1 run scoreboard players get @s customPresident.PocketID
+                block { with storage minecraft:custom president.room
+                    $execute at @e[type=minecraft:marker,tag=customPresident.FreezerGate,tag=assigned,distance=..1,scores={customPresident.PocketID=$(id)}] rotated ~ 0 run {
+                        execute unless entity @s[tag=customPresident.PassiveFreezer] run {
+                            tp @s ^ ^ ^-1.5
+                            tag @s add customPresident.PassiveFreezer
+                            tag @s add temp
+                        }
+                        execute if entity @s[tag=customPresident.PassiveFreezer] unless entity @s[tag=temp] run {
+                            tp @s ^ ^ ^1.5
+                            tag @s remove customPresident.PassiveFreezer
+                        }
+                        tag @s remove temp
+                        playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
+                    }
+                }
+            }
+
+            dir endure {
+                function damaged {
+                    execute store result storage minecraft:custom president.disguised.id int 1 run scoreboard players get @s customUniversal.RigID
+                    block { with storage minecraft:custom president.disguised
+                        $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run function animated_java:president/variants/turtle_hurt/apply
+                    }
+                    scoreboard players set @s customPresident.DisguisedDamagedTint 10
+
+                    execute unless score @s customPresident.PassiveEndure matches 10.. run {
+                        scoreboard players add @s customPresident.PassiveEndure 1
+                        scoreboard players add @s customPresident.Statistics.Endure.Stacks 1
+                        
+                        execute store result storage minecraft:custom president.disguised.pitch double 0.1 run scoreboard players get @s customPresident.PassiveEndure
+                        block { with storage minecraft:custom president.disguised
+                            $playsound minecraft:item.shield.block player @a ~ ~ ~ 0.5 $(pitch)
+                        }
+                    }
+                }
+
+                function consume {
+                    execute store result storage minecraft:custom president.kidnap.id int 1 run scoreboard players get @s customUniversal.RigID
+                    execute store result storage minecraft:custom president.kidnap.endure int 1 run scoreboard players get @s customPresident.PassiveEndure
+                    $data merge storage minecraft:custom {president:{kidnap:{statistic:"$(statistic)"}}}
+                    block { with storage minecraft:custom president.kidnap
+                        $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run scoreboard players set @s customPresident.PassiveEndure $(endure)
+                        $scoreboard players add @s $(statistic) $(endure)
+                    }
+                    scoreboard players reset @s customPresident.PassiveEndure
+                }
+            }
+        }
+
+        dir moves {
+            function setup {
+                tag @s add customUniversal.Animation
+                tag @s add customUniversal.DisconnectCheck
+
+                visibility disable @s @a ignore_perspective render_passengers
+                execute rotated ~ 0 run function animated_java:yuji/summon {args:{}}
+
+                execute store result storage minecraft:custom yuji.setup.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                $data merge storage minecraft:custom {yuji:{setup:{animation:'$(animation)'}}}
+                execute as @n[type=minecraft:item_display,tag=aj.yuji.root] unless score @s customUniversal.AbilityID matches 1.. run block { with storage minecraft:custom yuji.setup
+                    $scoreboard players set @s customUniversal.AbilityID $(id)
+                    $function animated_java:yuji/animations/$(animation)/play
+                }
+
+                function custom:universal/control/mount/player {user:"customAbility.Yuji",rig:"yuji",objective:"customUniversal.AbilityID"}
+                function custom:universal/control/visibility {target:"aj.yuji.root",objective:"customUniversal.AbilityID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+                execute unless entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/model {branch:"yuji",objective:"customUniversal.AbilityID"}
+                execute if entity @s[tag=customSettings.DisplayState] run function custom:universal/stable_player_display/state/skin {branch:"yuji"}
+
+                scoreboard players add .global customUniversal.GlobalCounter 1
+                scoreboard players operation @s customUniversal.GlobalCounter = .global customUniversal.GlobalCounter
+            }
+
+            dir 1 {
+                function core {
+                    execute unless entity @s[tag=customYuji.Sukuna] run function custom:abilities/yuji/moves/1/natural_talent/core
+                    execute if entity @s[tag=customYuji.Sukuna] run function custom:abilities/yuji/moves/1/king_of_curses/core
+                }
+                
+                dir natural_talent {
+                    function core {
+                        # hotbar slot
+                        scoreboard players set @s customUniversal.ActiveHotbar 1
+
+                        # casting checks
+                        execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        function custom:universal/error_messages/universal
+
+                        # result(s)
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/yuji/moves/1/natural_talent/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"Natural Talent"}
+                    }
+
+                    function pass {
+                        # move arguments
+                        function custom:abilities/yuji/moves/setup {animation:'natural_talent'}
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customYuji.SplitMove1Natural_Talent = .Yuji_State1Cooldown customUniversal.Move1Cooldown
+                        visibility disable @s @a ignore_perspective render_passengers
+
+                        # pairing
+                        scoreboard players operation @s customYuji.NaturalTalentID = @s customUniversal.AbilityID
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.root",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.NaturalTalentID"}
+
+                        # arm visibility
+                        execute store result storage minecraft:custom yuji.natural_talent.id int 1 run scoreboard players get @s customYuji.NaturalTalentID
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.right_arm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.NaturalTalentID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.right_forearm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.NaturalTalentID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.left_arm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.NaturalTalentID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.left_forearm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.NaturalTalentID"}
+                        block { with storage minecraft:custom yuji.natural_talent
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.right_arm_group,scores={customYuji.NaturalTalentID=$(id)}] @s
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.right_forearm_group,scores={customYuji.NaturalTalentID=$(id)}] @s
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.left_arm_group,scores={customYuji.NaturalTalentID=$(id)}] @s
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.left_forearm_group,scores={customYuji.NaturalTalentID=$(id)}] @s
+                        }
+
+                        # variable payload
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+                        scoreboard players set @s customUniversal.LastMoveState 2
+                        scoreboard players set @s customUniversal.MoveDelay 10
+
+                        # restraints
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
+                    }
+                }
+            }
+
+            dir 2 {
+                function core {
+                    execute unless entity @s[tag=customYuji.Sukuna] run function custom:abilities/yuji/moves/2/majin_kick/core
+                    execute if entity @s[tag=customYuji.Sukuna] run function custom:abilities/yuji/moves/2/king_of_curses/core
+                }
+
+                dir majin_kick {
+                    function core {
+                        # hotbar slot
+                        scoreboard players set @s customUniversal.ActiveHotbar 1
+
+                        # casting checks
+                        execute unless score @s customUniversal.Move2Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        function custom:universal/error_messages/universal
+
+                        # result(s)
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/yuji/moves/2/majin_kick/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:2,unicode:"u50A0",move:"Majin Kick"}
+                    }
+
+                    function pass {
+                        # move arguments
+                        function custom:abilities/yuji/moves/setup {animation:'majin_kick'}
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customYuji.SplitMove2Majin_Kick = .Yuji_State1Cooldown customUniversal.Move2Cooldown
+                        visibility disable @s @a ignore_perspective render_passengers
+
+                        # pairing
+                        scoreboard players operation @s customYuji.MajinKickID = @s customUniversal.AbilityID
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.root",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.MajinKickID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.locator.mount",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.MajinKickID"}
+
+                        # variable payload
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+                        scoreboard players set @s customUniversal.LastMoveState 2
+                        scoreboard players set @s customUniversal.MoveDelay 10
+
+                        # restraints
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
+                    }
+
+                    function swap {
+                        execute store result storage minecraft:custom yuji.majin_kick.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                        block { with storage minecraft:custom yuji.majin_kick
+                            $execute as @n[type=minecraft:item_display,tag=aj.yuji.root,scores={customUniversal.AbilityID=$(id)}] run {
+                                tag @s add customYuji.MajinKickBurst
+                                ride @s dismount
+                            }
+                            $ride @s mount @n[type=minecraft:item_display,tag=aj.yuji.locator.mount,scores={customYuji.MajinKickID=$(id)}]
+                        }
+                    }
+
+                    function check_fall {
+                        tag @s remove customYuji.MajinKickBurst
+                        execute if block ~ ~-0.5 ~ #custom:raycast_pass unless entity @s[tag=customYuji.MajinKickFalling] run {
+                            function animated_java:yuji/animations/majin_kick_fall/tween {to_frame:1,duration:3}
+                            tag @s add customYuji.MajinKickFalling
+                        }
+                    }
+
+                    dir movement {
+                        function main {
+                            # start out by determining a base velocity. ideally it should start out with with a vertical velocity of +1m/s
+                            execute rotated ~ 0 at @s unless entity @s[tag=customYuji.MajinKickEnd] run function custom:abilities/yuji/moves/2/majin_kick/movement/tick
+                        }
+
+                        function tick {
+                            scoreboard players reset .Recursions customYuji.MajinKickVelocityX
+                            # data merge storage minecraft:custom {yuji:{majin_kick:{velocityX:0,velocityY:0}}}
+
+                            function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/determine
+                            function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/determine
+
+                            function custom:abilities/yuji/moves/2/majin_kick/movement/apply with storage minecraft:custom yuji.majin_kick
+
+                            execute unless block ~ ~-0.5 ~ #custom:raycast_pass if entity @s[tag=customYuji.MajinKickFalling] run {
+                                tag @s add customYuji.MajinKickEnd
+                                function animated_java:yuji/animations/majin_kick/tween {to_frame:26,duration:3}
+                            }
+                        }
+
+                        dir velocity_x {
+                            function determine {
+                                scoreboard players reset .Recursions customYuji.MajinKickVelocityX
+                                scoreboard players reset .Multiplier customYuji.MajinKickVelocityX
+                                execute unless entity @s[tag=customYuji.MajinKickBurst] run data merge storage minecraft:custom {yuji:{majin_kick:{segment_velocityX:0.04,multiplierX:5}}}
+                                execute if entity @s[tag=customYuji.MajinKickBurst] run data merge storage minecraft:custom {yuji:{majin_kick:{segment_velocityX:0.1,multiplierX:20}}}
+                                execute positioned ~ ~0.1 ~ run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:custom yuji.majin_kick
+                                function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/export
+                            }
+
+                            function check {
+                                $execute positioned ^ ^ ^$(segment_velocityX) run {
+                                    scoreboard players add .Recursions customYuji.MajinKickVelocityX 1
+
+                                    execute if block ~ ~ ~ #custom:raycast_pass run {
+                                        scoreboard players add .Multiplier customYuji.MajinKickVelocityX 1
+                                        execute unless score .Recursions customYuji.MajinKickVelocityX matches 10.. run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:custom yuji.majin_kick
+                                    }
+
+                                    execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add customYuji.MajinKickCollision
+                                }
+                            }
+
+                            function export {
+                                execute store result score .Result customYuji.MajinKickVelocityX run data get storage minecraft:custom yuji.majin_kick.segment_velocityX 1000000
+                                execute store result storage minecraft:custom yuji.majin_kick.multiplier_velocityX int 1 run scoreboard players get .Multiplier customYuji.MajinKickVelocityX
+                                
+                                block { with storage minecraft:custom yuji.majin_kick
+                                    $function custom:universal/math/multiply {multiply_value:$(multiplier_velocityX),score:".Result",objective:"customYuji.MajinKickVelocityX"}
+                                    execute store result storage minecraft:custom yuji.majin_kick.velocityX double 0.000001 run scoreboard players get .Result customYuji.MajinKickVelocityX
+                                }
+                            }
+                        }
+
+                        dir velocity_y {
+                            function determine {
+                                scoreboard players reset .Recursions customYuji.MajinKickVelocityY
+                                scoreboard players reset .Multiplier customYuji.MajinKickVelocityY
+                                scoreboard players set @s customYuji.MajinKickAcceleration -18
+                                scoreboard players add @s customYuji.MajinKickTime 1
+
+                                scoreboard players operation @s customYuji.MajinKickAcceleration *= @s customYuji.MajinKickTime
+
+                                scoreboard players set @s customYuji.MajinKickVelocityY 125
+                                scoreboard players operation @s customYuji.MajinKickVelocityY += @s customYuji.MajinKickAcceleration
+
+                                # execute store result storage minecraft:custom yuji.majin_kick.velocityY double 0.002 run scoreboard players get @s customYuji.MajinKickVelocityY
+                                execute store result storage minecraft:custom yuji.majin_kick.segment_velocityY double 0.0004 run scoreboard players get @s customYuji.MajinKickVelocityY
+                                function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/check with storage minecraft:custom yuji.majin_kick
+                                function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/export
+                            }
+
+                            function check {
+                                $execute positioned ~ ~$(segment_velocityY) ~ run {
+                                    scoreboard players add .Recursions customYuji.MajinKickVelocityY 1
+
+                                    execute if block ~ ~ ~ #custom:raycast_pass run {
+                                        scoreboard players add .Multiplier customYuji.MajinKickVelocityY 1
+                                        execute unless score .Recursions customYuji.MajinKickVelocityY matches 5.. run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/check with storage minecraft:custom yuji.majin_kick
+                                    }
+
+                                    execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add customYuji.MajinKickCollision
+                                }
+                            }
+
+                            function export {
+                                execute store result score .Result customYuji.MajinKickVelocityY run data get storage minecraft:custom yuji.majin_kick.segment_velocityY 1000000
+                                execute store result storage minecraft:custom yuji.majin_kick.multiplier_velocityY int 1 run scoreboard players get .Multiplier customYuji.MajinKickVelocityY
+                                
+                                block { with storage minecraft:custom yuji.majin_kick
+                                    $function custom:universal/math/multiply {multiply_value:$(multiplier_velocityY),score:".Result",objective:"customYuji.MajinKickVelocityY"}
+                                    execute store result storage minecraft:custom yuji.majin_kick.velocityY double 0.000001 run scoreboard players get .Result customYuji.MajinKickVelocityY
+                                }
+                            }
+                        }
+
+                        function adjust_y {
+                            execute positioned ~ ~0.05 ~ run {
+                                execute if block ~ ~ ~ #custom:raycast_pass run tp @s ~ ~ ~
+                                execute unless block ~ ~ ~ #custom:raycast_pass run function custom:abilities/yuji/moves/2/majin_kick/movement/adjust_y
+                            }
+                        }
+
+                        function apply {
+                            $tp @s ^ ^$(velocityY) ^$(velocityX)
+                        }
+                    }
+
+                    dir movement_old {
+                        function decide {
+                            execute unless entity @s[tag=customYuji.MajinKickEnd] run function animated_java:yuji/animations/majin_kick_hold/play
+                            execute if entity @s[tag=customYuji.MajinKickEnd,tag=!customYuji.MajinKickEndPlayed] run {
+                                tag @s add customYuji.MajinKickEndPlayed
+                                function animated_java:yuji/animations/majin_kick_end/play
+                            }
+                        }
+
+                        function main {
+                            scoreboard players set .speed customYuji.MajinKickMovement 160
+                            execute store result storage minecraft:custom yuji.majin_kick.speed double 0.001 run scoreboard players get .speed customYuji.MajinKickMovement
+
+                            scoreboard players reset .step customYuji.MajinKickMovement
+                            scoreboard players reset .correction customYuji.MajinKickMovement
+
+                            execute unless entity @s[tag=customYuji.MajinKickRise] run scoreboard players add @s customYuji.MajinKickMovement 1
+                            execute unless entity @s[tag=customYuji.MajinKickRise] run scoreboard players set @s customYuji.MajinKickAltitude 10
+
+                            execute if score @s customYuji.MajinKickMovement matches 5.. run {
+                                tag @s add customYuji.MajinKickRise
+                                scoreboard players reset @s customYuji.MajinKickMovement
+                            }
+
+                            execute if entity @s[tag=customYuji.MajinKickRise] run {
+                                scoreboard players remove @s customYuji.MajinKickAltitude 6
+                                execute if score @s customYuji.MajinKickAltitude matches ..-80 run scoreboard players set @s customYuji.MajinKickAltitude -80
+                            }
+
+                            execute store result storage minecraft:custom yuji.majin_kick.altitude double 0.002 run scoreboard players get @s customYuji.MajinKickAltitude
+
+                            execute at @s rotated ~ 0 run function custom:abilities/yuji/moves/2/majin_kick/movement/tick with storage minecraft:custom yuji.majin_kick
+
+                            execute if entity @s[tag=customYuji.MajinKickEnd,tag=!customYuji.MajinKickEndPlayed] run {
+                                tag @s add customYuji.MajinKickEndPlayed
+                                function animated_java:yuji/animations/majin_kick_end/play
+                            }
+
+                            data remove storage minecraft:custom yuji.majin_kick.altitude
+                        }
+
+                        function tick {
+                            scoreboard players add .step customYuji.MajinKickMovement 1
+
+                            execute at @s rotated ~ 0 run function custom:abilities/yuji/moves/2/majin_kick/movement/vertical with storage minecraft:custom yuji.majin_kick
+                            execute at @s rotated ~ 0 unless entity @s[tag=customYuji.MajinKickEnd] run function custom:abilities/yuji/moves/2/majin_kick/movement/forward with storage minecraft:custom yuji.majin_kick
+
+                            execute if score .step customYuji.MajinKickMovement matches ..4 at @s rotated ~ 0 unless entity @s[tag=customYuji.MajinKickEnd] run function custom:abilities/yuji/moves/2/majin_kick/movement/tick with storage minecraft:custom yuji.majin_kick
+                        }
+
+                        function vertical {
+                            block { with storage minecraft:custom yuji.majin_kick
+                                $execute if score @s customYuji.MajinKickAltitude matches 1.. positioned ~ ~$(altitude) ~ run function custom:abilities/yuji/moves/2/majin_kick/movement/vertical_check
+                                $execute if score @s customYuji.MajinKickAltitude matches ..-1 positioned ~ ~$(altitude) ~ run function custom:abilities/yuji/moves/2/majin_kick/movement/vertical_check
+                            }
+                        }
+
+                        function vertical_check {
+                            execute if block ~ ~ ~ #custom:raycast_pass if block ~ ~1 ~ #custom:raycast_pass run tp @s ~ ~ ~
+
+                            execute unless block ~ ~ ~ #custom:raycast_pass run {
+                                execute if score @s customYuji.MajinKickAltitude matches ..-1 run function custom:abilities/yuji/moves/2/majin_kick/movement/land
+                                execute if score @s customYuji.MajinKickAltitude matches 1.. run function custom:abilities/yuji/moves/2/majin_kick/movement/ceiling
+                            }
+
+                            execute if block ~ ~ ~ #custom:raycast_pass unless block ~ ~1 ~ #custom:raycast_pass run function custom:abilities/yuji/moves/2/majin_kick/movement/ceiling
+                        }
+
+                        function land {
+                            scoreboard players reset @s customYuji.MajinKickAltitude
+                            execute positioned ~ ~0.01 ~ if block ~ ~ ~ #custom:raycast_pass run tp @s ~ ~ ~
+                            execute if entity @s[tag=customYuji.MajinKickStop] run tag @s add customYuji.MajinKickEnd
+                        }
+
+                        function ceiling {
+                            tag @s add customYuji.MajinKickRise
+                            scoreboard players reset @s customYuji.MajinKickAltitude
+                        }
+
+                        function forward {
+                            block { with storage minecraft:custom yuji.majin_kick
+                                $execute positioned ^ ^ ^$(speed) run function custom:abilities/yuji/moves/2/majin_kick/movement/forward_check
+                            }
+                        }
+
+                        function forward_check {
+                            # normal forward movement
+                            execute if block ~ ~ ~ #custom:raycast_pass if block ~ ~1 ~ #custom:raycast_pass run tp @s ~ ~ ~
+
+                            # step up one block
+                            execute unless block ~ ~ ~ #custom:raycast_pass if block ~ ~1 ~ #custom:raycast_pass if block ~ ~2 ~ #custom:raycast_pass positioned ~ ~1 ~ run {
+                                tp @s ~ ~ ~
+                                scoreboard players reset @s customYuji.MajinKickAltitude
+                            }
+
+                            # wall / blocked head space
+                            execute unless block ~ ~ ~ #custom:raycast_pass unless block ~ ~1 ~ #custom:raycast_pass run tag @s add customYuji.MajinKickEnd
+                        }
+                    }
+                }
+            }
+
+            dir 3 {
+                function core {
+                    execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                    function custom:universal/error_messages/universal
+                    
+                    scoreboard players set @s customUniversal.ActiveHotbar 3
+                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/3/pass
+                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A2",move:"Disguise"}
+                }
+
+                function pass {
+                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .President_State1Cooldown customUniversal.Move3Cooldown
+                    scoreboard players set @s customUniversal.MoveDelay 10
+                    scoreboard players set @s customUniversal.MoveLastUsed 3
+                    scoreboard players add @s customPresident.Statistics.Disguise.Uses 1
+
+                    playsound minecraft:entity.zombie_villager.converted player @a ~ ~ ~ 0.5 2
+
+                    execute unless entity @s[tag=customPresident.Disguised] run {
+                        attribute @s minecraft:scale modifier add custom:president.disguise -0.5 add_multiplied_base
+                        attribute @s minecraft:movement_speed modifier add custom:president.disguise -0.66 add_multiplied_base
+                        attribute @s minecraft:jump_strength modifier add custom:president.disguise -0.25 add_multiplied_base
+                        effect give @s minecraft:resistance infinite 1 true
+                        effect give @s minecraft:weakness infinite 255 true
+                        function custom:abilities/president/moves/setup {animation:'turtle_idle',objective:"customUniversal.RigID"}
+                        tag @s remove customUniversal.Animation
+                        perspective @s second
+
+                        tag @s add customPresident.Disguised
+                        tag @s add temp
+                    }
+                    execute if entity @s[tag=customPresident.Disguised] unless entity @s[tag=temp] run {
+                        attribute @s minecraft:scale modifier remove custom:president.disguise
+                        attribute @s minecraft:movement_speed modifier remove custom:president.disguise
+                        attribute @s minecraft:jump_strength modifier remove custom:president.disguise
+                        effect clear @s minecraft:resistance
+                        effect clear @s minecraft:weakness
+                        
+                        execute store result storage minecraft:custom president.disguised.id int 1 run scoreboard players get @s customUniversal.RigID
+                        block { with storage minecraft:custom president.disguised
+                            $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run function custom:abilities/president/moves/reset/all {user:"customAbility.President",objective:"customUniversal.RigID",rig:"president"}
+                        }
+
+                        tag @s remove customPresident.Disguised
+                    }
+                    tag @s remove temp
+                }
+            }
+
+            dir reset {
+                function all {
+                    $execute store result storage minecraft:custom universal.control.id int 1 run scoreboard players get @s $(objective)
+                    $data merge storage minecraft:custom {universal:{control:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+                    block { with storage minecraft:custom universal.control
+                        $execute as @a[tag=customAbility.Yuji,scores={$(objective)=$(id)}] at @s run function custom:abilities/yuji/moves/reset/player
+                        scoreboard players reset @s customUniversal.AnimationID
+                        $function animated_java:$(rig)/remove/this
+                    }
+                }
+
+                function player {
+                    visibility enable @s @a ignore_perspective render_passengers
+                    function custom:universal/control/visibility {target:"aj.yuji.root",objective:"customUniversal.AbilityID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+                    attribute @s minecraft:movement_speed base reset
+                    attribute @s minecraft:jump_strength base reset
+                    attribute @s minecraft:gravity base reset
+
+                    ride @s dismount
+
                     tag @s remove customUniversal.Cancelable
                     tag @s remove customUniversal.DisconnectCheck
                     tag @s remove customUniversal.Animation
@@ -8037,6 +8784,16 @@ dir ui {
                             data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/abilities/selection/avatar/skins/flip"}}}
                             function custom:ui/menu/pages/abilities/selection/avatar/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
                         }
+
+                        execute if entity @s[tag=customAbility.Yuji] run {
+                            data merge storage minecraft:ui {custom:{menu:{ability_name:"Yuji Itadori"}}}
+                            data merge storage minecraft:ui {custom:{menu:{ability_description:"The Vessel"}}}
+                            data merge storage minecraft:ui {custom:{menu:{ability_item_model:"minecraft:interactables/custom/yuji/default_skin"}}}
+                            data merge storage minecraft:ui {custom:{menu:{ability_selection_page:"function custom:ui/menu/pages/abilities/selection/yuji/flip"}}}
+                            data merge storage minecraft:ui {custom:{menu:{ability_moveset_page:"function custom:ui/menu/pages/abilities/selection/yuji/moveset/flip"}}}
+                            data merge storage minecraft:ui {custom:{menu:{ability_skin_page:"function custom:ui/menu/pages/abilities/selection/yuji/skins/flip"}}}
+                            function custom:ui/menu/pages/abilities/selection/yuji/passive {open:"{custom:{menu:{ability_passive",end:"}}}"}
+                        }
                     }
                 }
 
@@ -8326,7 +9083,7 @@ dir ui {
                 dir selection {
                     dir mask {
                         function 1 {
-                            data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/president/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/the_world/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/avatar/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The past can be a great teacher."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/avatar/flip"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/billy/default_skin","minecraft:item_name":{"color":"aqua","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/billy/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/eren/default_skin","minecraft:item_name":{"color":"red","italic":false,"text":"Eren Yeager"},"minecraft:lore":[{"color":"gray","italic":false,"text":"We're born to be free."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/eren/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/same"}}}}]
+                            data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/president/default_skin","minecraft:item_name":{"color":"gold","italic":false,"text":"Mr. President"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I'll fulfill my promise."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/president/flip"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/the_world/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The World"},"minecraft:lore":[{"color":"gray","italic":false,"text":"I Reject My Humanity, Jojo!"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/the_world/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/avatar/default_skin","minecraft:item_name":{"color":"yellow","italic":false,"text":"The Avatar"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The past can be a great teacher."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/avatar/flip"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/billy/default_skin","minecraft:item_name":{"color":"aqua","italic":false,"text":"Billy"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Main Character"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/billy/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/eren/default_skin","minecraft:item_name":{"color":"red","italic":false,"text":"Eren Yeager"},"minecraft:lore":[{"color":"gray","italic":false,"text":"We're born to be free."}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/eren/flip"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:interactables/custom/yuji/default_skin","minecraft:item_name":{"color":"red","italic":false,"text":"Yuji Itadori"},"minecraft:lore":[{"color":"gray","italic":false,"text":"The Vessel"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/yuji/flip"}}}},{Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Next Page"},"minecraft:lore":[{"color":"gray","italic":false,"text":"(2/3)"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/same"}}}}]
                         }
 
                         function 2 {
@@ -8485,6 +9242,7 @@ dir ui {
                                 tag @s remove customAbility.User
                                 tag @s remove customAbility.Gojo
                                 tag @s remove customAbility.Toji
+                                tag @s remove customAbility.Yuji
                                 tag @s remove customAbility.TheWorld
                                 tag @s remove customAbility.Billy
                                 tag @s remove customAbility.President
@@ -8768,6 +9526,95 @@ dir ui {
                                 data merge storage minecraft:ui {custom:{purchase:{clickID:8310301}}}
                                 function custom:ui/menu/pages/abilities/selection/inventory/check {item:"minecraft:dirt",required:12,number:1,product:"beach",storage:"gojo",name:"Satoru Gojo"}
                             }
+                        }
+                    }
+
+                    dir yuji {
+                        function mask {
+                            $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","text":"Secret Interaction(s)"},"minecraft:lore":[["",{"text":"Certain ","italic":false,"color":"gray"},{"text":"abilities","italic":false,"color":"yellow"},{"text":" have unique secrets to be","italic":false,"color":"gray"}],["",{"text":"discovered ","italic":false,"color":"gray"},{"text":"which can be anything from a ","italic":false,"color":"gray"},{"text":"simple","italic":false,"color":"green"}],["",{"text":"change","italic":false,"color":"green"},{"text":" to an","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"entirely different move.","italic":false,"color":"aqua"}],"",[{"text":"Clues for finding them are provided below...","italic":false,"color":"light_purple"}],["",{"text":"(","italic":false,"color":"gray"},{"text":"1","italic":false,"color":"$(secret_interaction1color)"},{"text":") What kind of woman is your type?","italic":false,"color":"gray"}],["",{"text":"     Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction1state)","italic":false,"color":"$(secret_interaction1color)"}],["",{"text":"(","italic":false,"color":"gray"},{"text":"2","italic":false,"color":"$(secret_interaction2color)"},{"text":") You need to enter the zone.","italic":false,"color":"gray"}],["",{"text":"     ","italic":false},{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction2state)","italic":false,"color":"$(secret_interaction2color)"}],["",{"text":"(","italic":false,"color":"gray"},{"text":"3","italic":false,"color":"$(secret_interaction3color)"},{"text":") Chant a very specific phrase.","italic":false,"color":"gray"}],["",{"text":"     ","italic":false},{"text":"Discovered: ","italic":false,"color":"gray"},{"text":"$(secret_interaction3state)","italic":false,"color":"$(secret_interaction3color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/yuji/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","text":"Passive(s)"},"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/yuji/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Moveset"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Description of all availible moves for Yuji Itadori"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/yuji/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"yellow","italic":false,"text":"Skin(s)"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Modify the appearance of Yuji Itadori"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/yuji/skins/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Yuji Itadori"},"minecraft:lore":[[{"text":"The Vessel","italic":false,"color":"gray"}],"",[{"text":"Ability Cost","italic":false,"color":"gold"}],[{"text":"$(ability_item1count)/1 Mysterious Arrow(s)","italic":false,"color":"$(ability_item1color)"},{"text":" can be discovered in","italic":false,"color":"gray"}],[{"text":"Desert Pyramids or Bastions","italic":false,"color":"gray"}],[{"text":"$(ability_item2count)/8 Time Fragment(s)","italic":false,"color":"$(ability_item2color)"},{"text":" Rarely dropped from killing ","italic":false,"color":"gray"}],[{"text":"Endermen","italic":false,"color":"gray"}],[{"text":"Advancements:","italic":false,"color":"$(ability_advancement_color)"},{"text":" Into Fire and Hired Help","italic":false,"color":"gray"}],"",[{"text":"Unlocked: ","italic":false,"color":"gray"},{"text":"$(ownership_state)","italic":false,"color":"$(ownership_color)"}],[{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_state)","italic":false,"color":"$(equip_color)"}]],"minecraft:custom_data":{ui_item:{purchaseable_item:1b,price:"function custom:ui/menu/pages/abilities/selection/yuji/ability_price",name:"Yuji Itadori",namespace:"yuji",tag:"customYuji.Ownership",toggle:"customAbility.Yuji",context:"customUniversal.AbilityContext",cmd:"function custom:ui/menu/pages/abilities/selection/yuji/open"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/custom/yuji/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/yuji/same"}}}}]
+                        }
+
+                        function open {
+                            execute at @s as @p run function custom:ui/menu/pages/abilities/selection/yuji/player
+
+                            function custom:ui/menu/pages/abilities/selection/yuji/mask with storage minecraft:ui custom.selection.yuji
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/abilities/selection/yuji/mask"
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/abilities/selection/yuji/open
+                        }
+
+                        function passive {
+                            $data merge storage minecraft:ui $(open):[["",{"text":"Black Flash","italic":false,"color":"light_purple"},{"text":" can be activated whilst ","italic":false,"color":"gray"},{"text":"Yuji Itadori","italic":false,"color":"yellow"}],["",{"text":"is in control with a ","italic":false,"color":"gray"},{"text":"5.0% chance","italic":false,"color":"gold"},{"text":" of activating","italic":false,"color":"gray"}],["",{"text":"on any type of melee attack ","italic":false,"color":"gray"},{"text":"doubling the damage","italic":false,"color":"red"}],[{"text":"of that attack. For each one landed the chance of","italic":false,"color":"gray"}],["",{"text":"landing an additional increases the odds by ","italic":false,"color":"gray"},{"text":"2x","italic":false,"color":"gold"}],["",{"text":"with a maximum chain limit of ","italic":false,"color":"gray"},{"text":"5.","italic":false,"color":"gold"}],"",["",{"text":"Binding Vow","italic":false,"color":"light_purple"},{"text":" can be activated whilst ","italic":false,"color":"gray"},{"text":"Ryomen Sukuna","italic":false,"color":"yellow"}],["",{"text":"is in control reaching ","italic":false,"color":"gray"},{"text":"4 health or less","italic":false,"color":"red"},{"text":" will disable","italic":false,"color":"gray"}],["",{"text":"Cleave","italic":false,"color":"aqua"},{"text":" for ","italic":false,"color":"gray"},{"text":"60s","italic":false,"color":"gold"},{"text":" in exchange for an instantenous","italic":false,"color":"gray"}],[{"text":"health boost.","italic":false,"color":"gray"}],"",[{"text":"Awakening: Ryomen Sukuna","italic":false,"color":"gold"}],["",{"text":"Yuji Itadori's","italic":false,"color":"yellow"},{"text":" body is taken over replacing his","italic":false,"color":"gray"}],["",{"text":"moveset ","italic":false,"color":"aqua"},{"text":"and ","italic":false,"color":"gray"},{"text":"passive","italic":false,"color":"light_purple"},{"text":" with something much more","italic":false,"color":"gray"}],[{"text":"deadly.","italic":false,"color":"gray"}],["",{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"3m 17s","italic":false,"color":"green"}],["",{"text":"- Move #1: ","italic":false,"color":"gray"},{"text":"Natural Talent","italic":false,"color":"red"}],["",{"text":"- Move #2: ","italic":false,"color":"gray"},{"text":"Majin Kick","italic":false,"color":"red"}],["",{"text":"- Move #3: ","italic":false,"color":"gray"},{"text":"Black Flash Assault","italic":false,"color":"red"}],["",{"text":"- Passive: ","italic":false,"color":"gray"},{"text":"Black Flash","italic":false,"color":"red"}],["",{"text":"+ Move #1: ","italic":false,"color":"gray"},{"text":"King of Curses / Fuga","italic":false,"color":"green"}],["",{"text":"+ Move #2: ","italic":false,"color":"gray"},{"text":"Cleave","italic":false,"color":"green"}],["",{"text":"+ Move #3: ","italic":false,"color":"gray"},{"text":"Dismantle","italic":false,"color":"green"}],["",{"text":"+ Move #4: ","italic":false,"color":"gray"},{"text":"Domain Expansion - Malevolent Shrine","italic":false,"color":"green"}],["",{"text":"+ Passive: ","italic":false,"color":"gray"},{"text":"Binding Vow","italic":false,"color":"green"}]]$(end)
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/abilities/selection/yuji/open
+                        }
+
+                        function player {
+                            block {
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{equip_color:"red"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{equip_state:"No"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{ownership_color:"red"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{ownership_state:"No"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction1state:"No"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction1color:"red"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction2state:"No"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction2color:"red"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction3state:"No"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction3color:"red"}}}}
+                                function custom:ui/menu/pages/abilities/selection/yuji/passive {open:"{custom:{selection:{yuji:{passive",end:"}}}}"}
+                            }
+
+                            execute if entity @s[tag=customAbility.Yuji] run {
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{equip_color:"green"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{equip_state:"Yes"}}}}
+                            }
+
+                            execute if entity @s[tag=customYuji.Ownership] run {
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{ownership_color:"green"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{ownership_state:"Yes"}}}}
+                            }
+                            
+                            execute if entity @s[tag=customYuji.SecretInteractionTodo] run {
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction1state:"Yes"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction1color:"green"}}}}
+                            }
+
+                            execute if entity @s[tag=customYuji.SecretInteractionBlackFlash] run {
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction2state:"Yes"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction2color:"green"}}}}
+                            }
+
+                            execute if entity @s[tag=customYuji.SecretInteractionWorldCuttingSlash] run {
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction3state:"Yes"}}}}
+                                data merge storage minecraft:ui {custom:{selection:{yuji:{secret_interaction3color:"green"}}}}
+                            }
+
+                            function custom:ui/menu/pages/abilities/selection/yuji/ability_price
+                        }
+
+                        function ability_price {
+                            data merge storage minecraft:ui {custom:{purchase:{type:"ability",clickID:1}}}
+
+                            tag @s add customUI.BypassCheck
+
+                            # mysterious arrow x1 #
+                            function custom:ui/menu/pages/abilities/selection/purchase/check/items {item:"phantom_membrane[minecraft:custom_data={currency:1b,mysterious_arrow:1b}]",number:1,required:1,product:"ability",storage:"yuji",name:"Yuji Itadori"}
+
+                            # time fragment x8 #
+                            function custom:ui/menu/pages/abilities/selection/purchase/check/items {item:"phantom_membrane[minecraft:custom_data={currency:1b,time_fragment:1b}]",number:2,required:8,product:"ability",storage:"yuji",name:"Yuji Itadori"}
+
+                            tag @s add customUniversal.AdvancementCheck
+                            function custom:ui/menu/pages/abilities/selection/purchase/check/advancements {advancement:"minecraft:nether/obtain_blaze_rod",product:"ability",storage:"yuji",name:"Yuji Itadori"}
+                            function custom:ui/menu/pages/abilities/selection/purchase/check/advancements {advancement:"minecraft:adventure/summon_iron_golem",product:"ability",storage:"yuji",name:"Yuji Itadori"}
+                            execute if entity @s[tag=customUniversal.AdvancementCheck] unless entity @s[tag=clickEvent] run data merge storage minecraft:ui {custom:{selection:{yuji:{ability_advancement_color:"green"}}}}
+                            tag @s remove customUniversal.AdvancementCheck
                         }
                     }
 
@@ -9139,7 +9986,7 @@ dir ui {
                         }
 
                         function passive {
-                            $data merge storage minecraft:ui $(open):[[{"text":"Rage","italic":false,"color":"light_purple"},{"text":" gains a stack anytime ","italic":false,"color":"gray"},{"text":"damage ","italic":false,"color":"red"},{"text":"is dealt to an","italic":false,"color":"gray"}],[{"text":"entity using one of ","italic":false,"color":"gray"},{"text":"The World's","italic":false,"color":"yellow"},{"text":" moves. Failing to","italic":false,"color":"gray"}],[{"text":"deal damage to anything after ","italic":false,"color":"gray"},{"text":"60s","italic":false,"color":"gold"},{"text":" will start to","italic":false,"color":"gray"}],[{"text":"drain ","italic":false,"color":"red"},{"text":"your stacks. Reaching a total of ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"gold"},{"text":" ","italic":false,"color":"gray"},{"text":"stacks","italic":false,"color":"gold"}],[{"text":"will activate ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"light_purple"}],"",[{"text":"Awakening: Rage Mode","italic":false,"color":"gold"}],[{"text":"The World replaces ","italic":false,"color":"gray"},{"text":"Time Skip","italic":false,"color":"aqua"},{"text":" with the ability to","italic":false,"color":"gray"}],[{"text":"completely ","italic":false,"color":"gray"},{"text":"freeze","italic":false,"color":"blue"},{"text":" time around the player for ","italic":false,"color":"gray"},{"text":"9s.","italic":false,"color":"gold"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"2m 25s","italic":false,"color":"green"}],[{"text":"- Move #1: ","italic":false,"color":"gray"},{"text":"Time Skip","italic":false,"color":"red"}],[{"text":"+ Move #1: ","italic":false,"color":"gray"},{"text":"The World","italic":false,"color":"green"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Regeneration I","italic":false,"color":"dark_red"}],[{"text":"o ","italic":false,"color":"gray"},{"text":"Health Boost I","italic":false,"color":"dark_red"}]]$(end)
+                            $data merge storage minecraft:ui $(open):[["",{"text":"Rage","italic":false,"color":"light_purple"},{"text":" gains a stack anytime ","italic":false,"color":"gray"},{"text":"damage ","italic":false,"color":"red"},{"text":"is dealt to an","italic":false,"color":"gray"}],["",{"text":"entity using one of ","italic":false,"color":"gray"},{"text":"The World's","italic":false,"color":"yellow"},{"text":" moves. Failing to","italic":false,"color":"gray"}],["",{"text":"deal damage to anything after ","italic":false,"color":"gray"},{"text":"60s","italic":false,"color":"gold"},{"text":" will start to","italic":false,"color":"gray"}],["",{"text":"drain ","italic":false,"color":"red"},{"text":"your stacks. Reaching a total of ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"gold"},{"text":" ","italic":false,"color":"gray"},{"text":"stacks","italic":false,"color":"gold"}],["",{"text":"will activate ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"light_purple"}],"",["",{"text":"Reflex","italic":false,"color":"light_purple"},{"text":" activates automatically whenever any","italic":false,"color":"gray"}],["",{"text":"type of ","italic":false,"color":"gray"},{"text":"projectile","italic":false,"color":"blue"},{"text":" is about to strike the user,","italic":false,"color":"gray"}],["",{"text":"launching it towards the ","italic":false,"color":"gray"},{"text":"original attacker.","italic":false,"color":"red"}],["",{"text":"o Cooldown: ","italic":false,"color":"gray"},{"text":"12s","italic":false,"color":"green"}],"",[{"text":"Awakening: Rage Mode","italic":false,"color":"gold"}],["",{"text":"The World replaces ","italic":false,"color":"gray"},{"text":"Time Skip","italic":false,"color":"aqua"},{"text":" with the ability to","italic":false,"color":"gray"}],["",{"text":"completely ","italic":false,"color":"gray"},{"text":"freeze","italic":false,"color":"blue"},{"text":" time around the player for ","italic":false,"color":"gray"},{"text":"9s.","italic":false,"color":"gold"}],["",{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"2m 25s","italic":false,"color":"green"}],["",{"text":"- Move #1: ","italic":false,"color":"gray"},{"text":"Time Skip","italic":false,"color":"red"}],["",{"text":"+ Move #1: ","italic":false,"color":"gray"},{"text":"The World","italic":false,"color":"green"}],["",{"text":"o ","italic":false,"color":"gray"},{"text":"Regeneration I","italic":false,"color":"dark_red"}],["",{"text":"o ","italic":false,"color":"gray"},{"text":"Health Boost I","italic":false,"color":"dark_red"}]]$(end)
                         }
 
                         function flip {

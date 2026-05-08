@@ -7,3 +7,4 @@ execute if entity @s[tag=customAbility.Billy] run function custom:ui/menu/pages/
 execute if entity @s[tag=customAbility.Toji] run function custom:ui/menu/pages/abilities/menu/zzz/4
 execute if entity @s[tag=customAbility.President] run function custom:ui/menu/pages/abilities/menu/zzz/5
 execute if entity @s[tag=customAbility.Avatar] run function custom:ui/menu/pages/abilities/menu/zzz/6
+execute if entity @s[tag=customAbility.Yuji] run function custom:ui/menu/pages/abilities/menu/zzz/7

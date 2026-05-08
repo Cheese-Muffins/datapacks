@@ -2,6 +2,7 @@
 
 execute if entity @s[tag=customAbility.Billy] run function custom:abilities/billy/tick/main
 execute if entity @s[tag=customAbility.TheWorld] run function custom:abilities/the_world/tick/main
+execute if entity @s[tag=customAbility.Yuji] run function custom:abilities/yuji/tick/main
 execute if entity @s[tag=customAbility.Toji] run function custom:abilities/toji/tick/main
 execute if entity @s[tag=customAbility.President] run function custom:abilities/president/tick/main
 execute if entity @s[tag=customAbility.Avatar] run function custom:abilities/avatar/tick/main

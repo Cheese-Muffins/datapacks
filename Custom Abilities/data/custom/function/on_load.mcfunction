@@ -98,6 +98,7 @@ function custom:traits/install
 function custom:consumables/install
 function custom:abilities/billy/install
 function custom:abilities/toji/install
+function custom:abilities/yuji/install
 function custom:abilities/president/install
 function custom:abilities/the_world/install
 function custom:abilities/avatar/install
