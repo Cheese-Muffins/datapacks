@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
 scoreboard players add .Recursions customYuji.MajinKickVelocityY 1
-execute if block ~ ~ ~ #custom:raycast_pass run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/zzz/1
-execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add customYuji.MajinKickCollision
+execute if score @s customYuji.MajinKickVelocityY matches ..-1 unless block ~ ~ ~ #custom:yuji/majin_kick run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/zzz/1
+execute if block ~ ~ ~ #custom:yuji/majin_kick run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/zzz/3

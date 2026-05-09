@@ -3,6 +3,8 @@ data modify storage animated_java:temp args merge from entity @s data.locators.c
 function animated_java:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.constant
 function animated_java:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from entity @s data.locators.skins
+function animated_java:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.sfx
 function animated_java:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from entity @s data.locators.mount

@@ -13,3 +13,4 @@ execute if entity @s[tag=aj.yuji.animation.black_flash_assault.playing] run func
 execute if entity @s[tag=aj.yuji.animation.black_flash_assault2.playing] run function animated_java:yuji/animations/black_flash_assault2/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.black_flash_assault3.playing] run function animated_java:yuji/animations/black_flash_assault3/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.domain_expansion.playing] run function animated_java:yuji/animations/domain_expansion/zzz/on_tick
+execute if entity @s[tag=aj.yuji.animation.cleave_old.playing] run function animated_java:yuji/animations/cleave_old/zzz/on_tick

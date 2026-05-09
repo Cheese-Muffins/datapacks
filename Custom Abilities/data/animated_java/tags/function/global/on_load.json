@@ -17,6 +17,7 @@
 		"animated_java:the_world/on_load",
 		"animated_java:toji_vfx/on_load",
 		"animated_java:toji/on_load",
+		"animated_java:yuji_vfx/on_load",
 		"animated_java:yuji/on_load"
 	]
 }

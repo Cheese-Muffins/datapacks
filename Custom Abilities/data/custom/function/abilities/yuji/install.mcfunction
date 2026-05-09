@@ -11,13 +11,13 @@ scoreboard objectives add customYuji.SplitMove3Dismantle dummy
 # General #
 scoreboard objectives add customYuji.NaturalTalentID dummy
 scoreboard objectives add customYuji.MajinKickID dummy
-scoreboard objectives add customYuji.MajinKickMovement dummy
-scoreboard objectives add customYuji.MajinKickGravity dummy
-scoreboard objectives add customYuji.MajinKickAltitude dummy
 scoreboard objectives add customYuji.MajinKickAcceleration dummy
 scoreboard objectives add customYuji.MajinKickTime dummy
 scoreboard objectives add customYuji.MajinKickVelocityY dummy
 scoreboard objectives add customYuji.MajinKickVelocityX dummy
+scoreboard objectives add customYuji.KingOfCursesID dummy
+scoreboard objectives add customYuji.DismantleID dummy
+scoreboard objectives add customYuji.DismantleMovement dummy
 # Move Cooldowns #
 function custom:universal/cooldowns/10x {ability:"Yuji_State1",storage:"yuji",path:"1a",move:1,cooldown:120}
 function custom:universal/cooldowns/10x {ability:"Yuji_State2",storage:"yuji",path:"1b",move:1,cooldown:120}

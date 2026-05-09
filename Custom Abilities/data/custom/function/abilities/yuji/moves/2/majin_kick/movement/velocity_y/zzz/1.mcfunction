@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-scoreboard players add .Multiplier customYuji.MajinKickVelocityY 1
-execute unless score .Recursions customYuji.MajinKickVelocityY matches 5.. run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/check with storage minecraft:custom yuji.majin_kick
+tag @s add customYuji.MajinKickEnd
+execute if score @s customYuji.MajinKickVelocityY matches ..-200 at @s run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/zzz/2
+function animated_java:yuji/animations/majin_kick/tween {to_frame:26,duration:3}

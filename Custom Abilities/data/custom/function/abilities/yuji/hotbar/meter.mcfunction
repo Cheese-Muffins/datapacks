@@ -15,4 +15,4 @@ $execute if score @s customUniversal.AwakeningDuration matches $(4a)..$(5b) run 
 $execute if score @s customUniversal.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A7"
 $execute if score @s customUniversal.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A6"
 $execute if score @s customUniversal.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.awakening set value "u02A5"
-execute unless score @s customUniversal.AwakeningDuration matches 1.. run function custom:abilities/yuji/hotbar/zzz/6
+execute unless score @s customUniversal.AwakeningDuration matches 1.. run function custom:abilities/yuji/hotbar/zzz/10

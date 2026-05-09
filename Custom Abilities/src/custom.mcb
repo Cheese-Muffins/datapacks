@@ -3456,15 +3456,13 @@ dir abilities {
             # General #
             scoreboard objectives add customYuji.NaturalTalentID dummy
             scoreboard objectives add customYuji.MajinKickID dummy
-            scoreboard objectives add customYuji.MajinKickMovement dummy
-            scoreboard objectives add customYuji.MajinKickGravity dummy
-            scoreboard objectives add customYuji.MajinKickAltitude dummy
-
-
             scoreboard objectives add customYuji.MajinKickAcceleration dummy
             scoreboard objectives add customYuji.MajinKickTime dummy
             scoreboard objectives add customYuji.MajinKickVelocityY dummy
             scoreboard objectives add customYuji.MajinKickVelocityX dummy
+            scoreboard objectives add customYuji.KingOfCursesID dummy
+            scoreboard objectives add customYuji.DismantleID dummy
+            scoreboard objectives add customYuji.DismantleMovement dummy
 
 
             # Move Cooldowns #
@@ -3524,62 +3522,16 @@ dir abilities {
             }
         }
 
-        dir hotbar {
-            function main {
-                execute unless predicate custom:universal/sneak run {
-                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customPresident.SplitMove1Kidnap
-                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customPresident.SplitMove2Shake_Key
-                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move1a
-                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move2a
-                } else run {
-                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customPresident.SplitMove1Self_Kidnap
-                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customPresident.SplitMove2Refreshments
-                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move1b
-                    function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move2b
-                }
-                function custom:abilities/president/hotbar/progress with storage minecraft:custom president.cooldowns.move3
-                
-                REPEAT (1,3) as i {
-                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
-                        function custom:universal/hotbar/time {ability:"president",selected:<%i%>}
+        function skin {
+            $execute store result storage minecraft:custom yuji.skin.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:custom {yuji:{skin:{rig:"$(rig)",objective:"$(objective)"}}}
+            block { with storage minecraft:custom yuji.skin
+                $execute as @p[tag=customAbility.Yuji,scores={$(objective)=$(id)}] run {
+                    execute if entity @s[tag=customYuji.SkinDefault] run block { with storage minecraft:custom yuji.skin
+                        $execute unless entity @s[tag=customYuji.Sukuna] as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] run function animated_java:$(rig)/variants/default/apply
+                        $execute if entity @s[tag=customYuji.Sukuna] as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] run function animated_java:$(rig)/variants/sukuna/apply
                     }
                 }
-
-                execute unless score @s customPresident.PassiveEndure matches 1.. run scoreboard players set @s customPresident.PassiveEndure 0
-                execute store result storage minecraft:custom president.hotbar.endure_string int 1 run scoreboard players get @s customPresident.PassiveEndure
-                block { with storage minecraft:custom president.hotbar
-                    $execute if score @s customPresident.PassiveEndure matches 10..99 run data merge storage minecraft:custom {president:{hotbar:{endure:"$(endure_string)"}}}
-                    $execute if score @s customPresident.PassiveEndure matches 0..9 run data merge storage minecraft:custom {president:{hotbar:{endure:"0$(endure_string)"}}}
-                }
-
-                execute if score @s customUniversal.ActiveHotbar matches 1 run block { with storage minecraft:custom president.hotbar
-                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
-                }
-
-                execute if score @s customUniversal.ActiveHotbar matches 2 run block { with storage minecraft:custom president.hotbar
-                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
-                }
-
-                execute if score @s customUniversal.ActiveHotbar matches 3 run block { with storage minecraft:custom president.hotbar
-                    $title @s actionbar [{"text":"\uF817\u08B4"},{"text":"\uF826$(endure)","color":"yellow"},{"text":"\uF819\u08A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\u08A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
-                }
-            }
-
-            function progress {
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A3"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A4"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A5"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A6"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A7"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A8"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08A9"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B0"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B1"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B2"
-                $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom president.hotbar.move$(selection) set value "u08B3"
-
-                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
-                $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
             }
         }
 
@@ -3594,7 +3546,7 @@ dir abilities {
                     scoreboard players operation @s customUniversal.Move3Cooldown = @s customYuji.SplitMove3Black_Flash_Assault
                     function custom:abilities/yuji/hotbar/slot/1 with storage minecraft:custom yuji.cooldowns.move1a
                     function custom:abilities/yuji/hotbar/slot/2 with storage minecraft:custom yuji.cooldowns.move2a
-                    function custom:abilities/yuji/hotbar/slot/3 with storage minecraft:custom yuji.cooldowns.move3a
+                    function custom:abilities/yuji/hotbar/slot/3a with storage minecraft:custom yuji.cooldowns.move3a
 
                     REPEAT (1,3) as i {
                         execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
@@ -3603,13 +3555,29 @@ dir abilities {
                     }
 
                     block { with storage minecraft:custom yuji.hotbar
-                        $title @s actionbar [{"text":"\uF802\uF807\u02A0"},{"text":"\uF839\uF816"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF838\$(awakening)"},{"text":"\uF820\u02A1"},{"text":"\uF806\u02A3"},{"text":"\uF808$(time)","color":"yellow"}]
+                        $title @s actionbar [{"text":"\uF842\uF807\u02A0"},{"text":"\uF839\uF816"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF838\$(awakening)"},{"text":"\uF820\u02A1"},{"text":"\uF806\u02A3"},{"text":"\uF808$(time)","color":"yellow"}]
                     }
                 }
 
                 # sukuna mode
                 execute if entity @s[tag=customYuji.Sukuna] run {
-                    say c
+                    scoreboard players operation @s customUniversal.Move1Cooldown = @s customYuji.SplitMove1King_of_Curses
+                    scoreboard players operation @s customUniversal.Move2Cooldown = @s customYuji.SplitMove2Cleave
+                    scoreboard players operation @s customUniversal.Move3Cooldown = @s customYuji.SplitMove3Dismantle
+                    function custom:abilities/yuji/hotbar/slot/1 with storage minecraft:custom yuji.cooldowns.move1b
+                    function custom:abilities/yuji/hotbar/slot/2 with storage minecraft:custom yuji.cooldowns.move2b
+                    function custom:abilities/yuji/hotbar/slot/3b with storage minecraft:custom yuji.cooldowns.move3b
+                    function custom:abilities/yuji/hotbar/slot/4 with storage minecraft:custom yuji.cooldowns.move4
+
+                    REPEAT (1,3) as i {
+                        execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                            function custom:universal/hotbar/time {ability:"yuji",selected:<%i%>}
+                        }
+                    }
+
+                    block { with storage minecraft:custom yuji.hotbar
+                        $title @s actionbar [{"text":"\uF820\uF807\u02A0"},{"text":"\uF839\uF816"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF840\$(awakening)"},{"text":"\uF841\u02A1"},{"text":"\uF806\u02A3"},{"text":"\uF808$(time)","color":"yellow"}]
+                    }
                 }
             }
 
@@ -3648,7 +3616,7 @@ dir abilities {
                     $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
                 }
 
-                function 3 {
+                function 3a {
                     $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F3"
                     $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F4"
                     $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u02F5"
@@ -3660,6 +3628,40 @@ dir abilities {
                     $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0201"
                     $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0202"
                     $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0203"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+
+                function 3b {
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0204"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0205"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0206"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0207"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0208"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0209"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0210"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0211"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0212"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0213"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0214"
+
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
+                    $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
+                }
+
+                function 4 {
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(10a)..$(11) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0215"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(9a)..$(10b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0216"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(8a)..$(9b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0217"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(7a)..$(8b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0218"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(6a)..$(7b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0219"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(5a)..$(6b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0220"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(4a)..$(5b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0221"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(3a)..$(4b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0222"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(2a)..$(3b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0223"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches $(1)..$(2b) run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0224"
+                    $execute if score @s customUniversal.Move$(selection)Cooldown matches 0 run data modify storage minecraft:custom yuji.hotbar.move$(selection) set value "u0225"
 
                     $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted = @s customUniversal.Move$(selection)Cooldown
                     $scoreboard players operation @s customUniversal.Move$(selection)CooldownConverted /= div20 customUniversal.CooldownMath
@@ -3830,6 +3832,55 @@ dir abilities {
                         attribute @s minecraft:jump_strength base set 0
                     }
                 }
+
+                dir king_of_curses {
+                    function core {
+                        # hotbar slot
+                        scoreboard players set @s customUniversal.ActiveHotbar 1
+
+                        # casting checks
+                        execute unless score @s customUniversal.Move1Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        function custom:universal/error_messages/universal
+
+                        # result(s)
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/yuji/moves/1/king_of_curses/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:1,unicode:"u50A0",move:"King of Curses"}
+                    }
+
+                    function pass {
+                        # move arguments
+                        function custom:abilities/yuji/moves/setup {animation:'king_of_curses'}
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customYuji.SplitMove1King_of_Curses = .Yuji_State1Cooldown customUniversal.Move1Cooldown
+                        visibility disable @s @a ignore_perspective render_passengers
+
+                        # pairing
+                        scoreboard players operation @s customYuji.KingOfCursesID = @s customUniversal.AbilityID
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.root",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.KingOfCursesID"}
+
+                        # arm visibility
+                        execute store result storage minecraft:custom yuji.king_of_curses.id int 1 run scoreboard players get @s customYuji.KingOfCursesID
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.right_arm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.KingOfCursesID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.right_forearm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.KingOfCursesID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.left_arm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.KingOfCursesID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.left_forearm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.KingOfCursesID"}
+                        block { with storage minecraft:custom yuji.king_of_curses
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.right_arm_group,scores={customYuji.KingOfCursesID=$(id)}] @s
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.right_forearm_group,scores={customYuji.KingOfCursesID=$(id)}] @s
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.left_arm_group,scores={customYuji.KingOfCursesID=$(id)}] @s
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.left_forearm_group,scores={customYuji.KingOfCursesID=$(id)}] @s
+                        }
+
+                        # variable payload
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+                        scoreboard players set @s customUniversal.LastMoveState 2
+                        scoreboard players set @s customUniversal.MoveDelay 10
+
+                        # restraints
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
+                    }
+                }
             }
 
             dir 2 {
@@ -3887,10 +3938,7 @@ dir abilities {
 
                     function check_fall {
                         tag @s remove customYuji.MajinKickBurst
-                        execute if block ~ ~-0.5 ~ #custom:raycast_pass unless entity @s[tag=customYuji.MajinKickFalling] run {
-                            function animated_java:yuji/animations/majin_kick_fall/tween {to_frame:1,duration:3}
-                            tag @s add customYuji.MajinKickFalling
-                        }
+                        function animated_java:yuji/animations/majin_kick_fall/tween {to_frame:1,duration:3}
                     }
 
                     dir movement {
@@ -3901,17 +3949,12 @@ dir abilities {
 
                         function tick {
                             scoreboard players reset .Recursions customYuji.MajinKickVelocityX
-                            # data merge storage minecraft:custom {yuji:{majin_kick:{velocityX:0,velocityY:0}}}
 
+                            execute store result storage minecraft:custom yuji.majin_kick.id int 1 run scoreboard players get @s customUniversal.AbilityID
                             function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/determine
                             function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/determine
 
                             function custom:abilities/yuji/moves/2/majin_kick/movement/apply with storage minecraft:custom yuji.majin_kick
-
-                            execute unless block ~ ~-0.5 ~ #custom:raycast_pass if entity @s[tag=customYuji.MajinKickFalling] run {
-                                tag @s add customYuji.MajinKickEnd
-                                function animated_java:yuji/animations/majin_kick/tween {to_frame:26,duration:3}
-                            }
                         }
 
                         dir velocity_x {
@@ -3920,7 +3963,7 @@ dir abilities {
                                 scoreboard players reset .Multiplier customYuji.MajinKickVelocityX
                                 execute unless entity @s[tag=customYuji.MajinKickBurst] run data merge storage minecraft:custom {yuji:{majin_kick:{segment_velocityX:0.04,multiplierX:5}}}
                                 execute if entity @s[tag=customYuji.MajinKickBurst] run data merge storage minecraft:custom {yuji:{majin_kick:{segment_velocityX:0.1,multiplierX:20}}}
-                                execute positioned ~ ~0.1 ~ run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:custom yuji.majin_kick
+                                execute positioned ~ ~0.1 ~ positioned ^ ^ ^0.35 run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:custom yuji.majin_kick
                                 function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/export
                             }
 
@@ -3928,13 +3971,43 @@ dir abilities {
                                 $execute positioned ^ ^ ^$(segment_velocityX) run {
                                     scoreboard players add .Recursions customYuji.MajinKickVelocityX 1
 
-                                    execute if block ~ ~ ~ #custom:raycast_pass run {
-                                        scoreboard players add .Multiplier customYuji.MajinKickVelocityX 1
-                                        execute unless score .Recursions customYuji.MajinKickVelocityX matches 10.. run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:custom yuji.majin_kick
+                                    execute if block ~ ~ ~ #custom:yuji/majin_kick run block { with storage minecraft:custom yuji.majin_kick
+                                        $execute rotated ~ -15 if entity @s[tag=customYuji.MajinKickBurst] as @n[type=!#custom:not_mob,distance=..1.5] unless score @s customYuji.MajinKickID matches $(id) run block { with storage minecraft:custom yuji.majin_kick
+                                            $function custom:universal/damage/victim {id:"$(id)",damage:"13",type:"custom:bypass_immunity",attacker:"tag=customAbility.Yuji",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
+                                            playsound minecraft:yuji.majin.kick player @a ~ ~ ~
+                                            launch @s looking 2
+
+                                            $execute as @n[type=minecraft:item_display,tag=aj.yuji.root,scores={customUniversal.AbilityID=$(id)}] run tag @s add customYuji.MajinKickMotionEndX
+                                        }
+
+                                        execute unless entity @s[tag=customYuji.MajinKickMotionEndX] run {
+                                            scoreboard players add .Multiplier customYuji.MajinKickVelocityX 1
+                                            execute unless score .Recursions customYuji.MajinKickVelocityX matches 10.. run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:custom yuji.majin_kick
+                                        }
                                     }
 
-                                    execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add customYuji.MajinKickCollision
+                                    execute unless block ~ ~ ~ #custom:yuji/majin_kick unless entity @s[tag=customYuji.MajinKickMotionEndX] run {
+                                        execute if entity @s[tag=customYuji.MajinKickBurst] run {
+                                            execute summon minecraft:area_effect_cloud align xyz positioned ~.5 ~.5 ~.5 facing entity @s feet summon minecraft:area_effect_cloud positioned ^ ^ ^-0.7071 align xyz positioned ~.5 ~.5 ~.5 facing entity @s feet positioned as @s positioned ^ ^ ^.5 run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/face
+
+                                            playsound minecraft:yuji.majin.punch player @a ~ ~ ~
+                                        }
+                                        tag @s add customYuji.MajinKickMotionEndX
+                                    }
                                 }
+                            }
+
+                            function face {
+                                data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                                data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                                data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                                tp @s ~ ~ ~ ~ ~
+                                
+                                execute if entity @s[y_rotation=-1..1] rotated 0 0 positioned ^ ^ ^0.05 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                                execute if entity @s[y_rotation=89..91] rotated 90 0 positioned ^ ^ ^0.05 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                                execute if entity @s[y_rotation=179..181] rotated 180 0 positioned ^ ^ ^0.05 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                                execute if entity @s[y_rotation=269..271] rotated 270 0 positioned ^ ^ ^0.05 run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                                kill @e[type=minecraft:area_effect_cloud,sort=nearest,limit=2]
                             }
 
                             function export {
@@ -3970,12 +4043,19 @@ dir abilities {
                                 $execute positioned ~ ~$(segment_velocityY) ~ run {
                                     scoreboard players add .Recursions customYuji.MajinKickVelocityY 1
 
-                                    execute if block ~ ~ ~ #custom:raycast_pass run {
+                                    execute if score @s customYuji.MajinKickVelocityY matches ..-1 unless block ~ ~ ~ #custom:yuji/majin_kick run {
+                                        tag @s add customYuji.MajinKickEnd
+                                        execute if score @s customYuji.MajinKickVelocityY matches ..-200 at @s run {
+                                            playsound minecraft:yuji.majin.land player @a ~ ~ ~
+                                            function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'land',extra:"random value 1..2"}
+                                        }
+                                        function animated_java:yuji/animations/majin_kick/tween {to_frame:26,duration:3}
+                                    }
+
+                                    execute if block ~ ~ ~ #custom:yuji/majin_kick run {
                                         scoreboard players add .Multiplier customYuji.MajinKickVelocityY 1
                                         execute unless score .Recursions customYuji.MajinKickVelocityY matches 5.. run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_y/check with storage minecraft:custom yuji.majin_kick
                                     }
-
-                                    execute unless block ~ ~ ~ #custom:raycast_pass run tag @s add customYuji.MajinKickCollision
                                 }
                             }
 
@@ -3990,115 +4070,16 @@ dir abilities {
                             }
                         }
 
-                        function adjust_y {
-                            execute positioned ~ ~0.05 ~ run {
-                                execute if block ~ ~ ~ #custom:raycast_pass run tp @s ~ ~ ~
-                                execute unless block ~ ~ ~ #custom:raycast_pass run function custom:abilities/yuji/moves/2/majin_kick/movement/adjust_y
-                            }
-                        }
-
                         function apply {
                             $tp @s ^ ^$(velocityY) ^$(velocityX)
                         }
                     }
 
-                    dir movement_old {
-                        function decide {
-                            execute unless entity @s[tag=customYuji.MajinKickEnd] run function animated_java:yuji/animations/majin_kick_hold/play
-                            execute if entity @s[tag=customYuji.MajinKickEnd,tag=!customYuji.MajinKickEndPlayed] run {
-                                tag @s add customYuji.MajinKickEndPlayed
-                                function animated_java:yuji/animations/majin_kick_end/play
-                            }
-                        }
-
-                        function main {
-                            scoreboard players set .speed customYuji.MajinKickMovement 160
-                            execute store result storage minecraft:custom yuji.majin_kick.speed double 0.001 run scoreboard players get .speed customYuji.MajinKickMovement
-
-                            scoreboard players reset .step customYuji.MajinKickMovement
-                            scoreboard players reset .correction customYuji.MajinKickMovement
-
-                            execute unless entity @s[tag=customYuji.MajinKickRise] run scoreboard players add @s customYuji.MajinKickMovement 1
-                            execute unless entity @s[tag=customYuji.MajinKickRise] run scoreboard players set @s customYuji.MajinKickAltitude 10
-
-                            execute if score @s customYuji.MajinKickMovement matches 5.. run {
-                                tag @s add customYuji.MajinKickRise
-                                scoreboard players reset @s customYuji.MajinKickMovement
-                            }
-
-                            execute if entity @s[tag=customYuji.MajinKickRise] run {
-                                scoreboard players remove @s customYuji.MajinKickAltitude 6
-                                execute if score @s customYuji.MajinKickAltitude matches ..-80 run scoreboard players set @s customYuji.MajinKickAltitude -80
-                            }
-
-                            execute store result storage minecraft:custom yuji.majin_kick.altitude double 0.002 run scoreboard players get @s customYuji.MajinKickAltitude
-
-                            execute at @s rotated ~ 0 run function custom:abilities/yuji/moves/2/majin_kick/movement/tick with storage minecraft:custom yuji.majin_kick
-
-                            execute if entity @s[tag=customYuji.MajinKickEnd,tag=!customYuji.MajinKickEndPlayed] run {
-                                tag @s add customYuji.MajinKickEndPlayed
-                                function animated_java:yuji/animations/majin_kick_end/play
-                            }
-
-                            data remove storage minecraft:custom yuji.majin_kick.altitude
-                        }
-
-                        function tick {
-                            scoreboard players add .step customYuji.MajinKickMovement 1
-
-                            execute at @s rotated ~ 0 run function custom:abilities/yuji/moves/2/majin_kick/movement/vertical with storage minecraft:custom yuji.majin_kick
-                            execute at @s rotated ~ 0 unless entity @s[tag=customYuji.MajinKickEnd] run function custom:abilities/yuji/moves/2/majin_kick/movement/forward with storage minecraft:custom yuji.majin_kick
-
-                            execute if score .step customYuji.MajinKickMovement matches ..4 at @s rotated ~ 0 unless entity @s[tag=customYuji.MajinKickEnd] run function custom:abilities/yuji/moves/2/majin_kick/movement/tick with storage minecraft:custom yuji.majin_kick
-                        }
-
-                        function vertical {
-                            block { with storage minecraft:custom yuji.majin_kick
-                                $execute if score @s customYuji.MajinKickAltitude matches 1.. positioned ~ ~$(altitude) ~ run function custom:abilities/yuji/moves/2/majin_kick/movement/vertical_check
-                                $execute if score @s customYuji.MajinKickAltitude matches ..-1 positioned ~ ~$(altitude) ~ run function custom:abilities/yuji/moves/2/majin_kick/movement/vertical_check
-                            }
-                        }
-
-                        function vertical_check {
-                            execute if block ~ ~ ~ #custom:raycast_pass if block ~ ~1 ~ #custom:raycast_pass run tp @s ~ ~ ~
-
-                            execute unless block ~ ~ ~ #custom:raycast_pass run {
-                                execute if score @s customYuji.MajinKickAltitude matches ..-1 run function custom:abilities/yuji/moves/2/majin_kick/movement/land
-                                execute if score @s customYuji.MajinKickAltitude matches 1.. run function custom:abilities/yuji/moves/2/majin_kick/movement/ceiling
-                            }
-
-                            execute if block ~ ~ ~ #custom:raycast_pass unless block ~ ~1 ~ #custom:raycast_pass run function custom:abilities/yuji/moves/2/majin_kick/movement/ceiling
-                        }
-
-                        function land {
-                            scoreboard players reset @s customYuji.MajinKickAltitude
-                            execute positioned ~ ~0.01 ~ if block ~ ~ ~ #custom:raycast_pass run tp @s ~ ~ ~
-                            execute if entity @s[tag=customYuji.MajinKickStop] run tag @s add customYuji.MajinKickEnd
-                        }
-
-                        function ceiling {
-                            tag @s add customYuji.MajinKickRise
-                            scoreboard players reset @s customYuji.MajinKickAltitude
-                        }
-
-                        function forward {
-                            block { with storage minecraft:custom yuji.majin_kick
-                                $execute positioned ^ ^ ^$(speed) run function custom:abilities/yuji/moves/2/majin_kick/movement/forward_check
-                            }
-                        }
-
-                        function forward_check {
-                            # normal forward movement
-                            execute if block ~ ~ ~ #custom:raycast_pass if block ~ ~1 ~ #custom:raycast_pass run tp @s ~ ~ ~
-
-                            # step up one block
-                            execute unless block ~ ~ ~ #custom:raycast_pass if block ~ ~1 ~ #custom:raycast_pass if block ~ ~2 ~ #custom:raycast_pass positioned ~ ~1 ~ run {
-                                tp @s ~ ~ ~
-                                scoreboard players reset @s customYuji.MajinKickAltitude
-                            }
-
-                            # wall / blocked head space
-                            execute unless block ~ ~ ~ #custom:raycast_pass unless block ~ ~1 ~ #custom:raycast_pass run tag @s add customYuji.MajinKickEnd
+                    function end {
+                        ride @s dismount
+                        execute store result storage minecraft:custom yuji.majin_kick.id int 1 run scoreboard players get @s customUniversal.AbilityID
+                        block { with storage minecraft:custom yuji.majin_kick
+                            $execute at @n[type=minecraft:item_display,tag=aj.yuji.root,scores={customUniversal.AbilityID=$(id)}] run tp @s ~ ~ ~
                         }
                     }
                 }
@@ -4106,51 +4087,102 @@ dir abilities {
 
             dir 3 {
                 function core {
-                    execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
-                    execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
-                    function custom:universal/error_messages/universal
-                    
-                    scoreboard players set @s customUniversal.ActiveHotbar 3
-                    execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/president/moves/3/pass
-                    execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A2",move:"Disguise"}
+                    execute unless entity @s[tag=customYuji.Sukuna] run function custom:abilities/yuji/moves/3/black_flash_assault/core
+                    execute if entity @s[tag=customYuji.Sukuna] run function custom:abilities/yuji/moves/3/dismantle/core
                 }
 
-                function pass {
-                    execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customUniversal.Move3Cooldown = .President_State1Cooldown customUniversal.Move3Cooldown
-                    scoreboard players set @s customUniversal.MoveDelay 10
-                    scoreboard players set @s customUniversal.MoveLastUsed 3
-                    scoreboard players add @s customPresident.Statistics.Disguise.Uses 1
+                dir dismantle {
+                    function core {
+                        # hotbar slot
+                        scoreboard players set @s customUniversal.ActiveHotbar 1
 
-                    playsound minecraft:entity.zombie_villager.converted player @a ~ ~ ~ 0.5 2
+                        # casting checks
+                        execute unless score @s customUniversal.Move3Cooldown matches 0 run function custom:universal/error_messages/find {error:1}
+                        execute if entity @s[tag=customUniversal.Animation] run function custom:universal/error_messages/find {error:2}
+                        function custom:universal/error_messages/universal
 
-                    execute unless entity @s[tag=customPresident.Disguised] run {
-                        attribute @s minecraft:scale modifier add custom:president.disguise -0.5 add_multiplied_base
-                        attribute @s minecraft:movement_speed modifier add custom:president.disguise -0.66 add_multiplied_base
-                        attribute @s minecraft:jump_strength modifier add custom:president.disguise -0.25 add_multiplied_base
-                        effect give @s minecraft:resistance infinite 1 true
-                        effect give @s minecraft:weakness infinite 255 true
-                        function custom:abilities/president/moves/setup {animation:'turtle_idle',objective:"customUniversal.RigID"}
-                        tag @s remove customUniversal.Animation
-                        perspective @s second
-
-                        tag @s add customPresident.Disguised
-                        tag @s add temp
+                        # result(s)
+                        execute unless score @s customUniversal.FailReturn matches 1 run function custom:abilities/yuji/moves/3/dismantle/pass
+                        execute if score @s customUniversal.FailReturn matches 1 run function custom:universal/error_messages/fail {number:3,unicode:"u50A0",move:"Dismantle"}
                     }
-                    execute if entity @s[tag=customPresident.Disguised] unless entity @s[tag=temp] run {
-                        attribute @s minecraft:scale modifier remove custom:president.disguise
-                        attribute @s minecraft:movement_speed modifier remove custom:president.disguise
-                        attribute @s minecraft:jump_strength modifier remove custom:president.disguise
-                        effect clear @s minecraft:resistance
-                        effect clear @s minecraft:weakness
-                        
-                        execute store result storage minecraft:custom president.disguised.id int 1 run scoreboard players get @s customUniversal.RigID
-                        block { with storage minecraft:custom president.disguised
-                            $execute as @n[type=minecraft:item_display,tag=aj.president.root,scores={customUniversal.RigID=$(id)}] run function custom:abilities/president/moves/reset/all {user:"customAbility.President",objective:"customUniversal.RigID",rig:"president"}
+
+                    function pass {
+                        # move arguments
+                        function custom:abilities/yuji/moves/setup {animation:'dismantle'}
+                        execute unless entity @s[tag=customSettings.NoCooldowns] run scoreboard players operation @s customYuji.SplitMove3Dismantle = .Yuji_State1Cooldown customUniversal.Move1Cooldown
+                        visibility disable @s @a ignore_perspective render_passengers
+
+                        # pairing
+                        scoreboard players operation @s customYuji.DismantleID = @s customUniversal.AbilityID
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.root",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.DismantleID"}
+
+                        # arm visibility
+                        execute store result storage minecraft:custom yuji.dismantle.id int 1 run scoreboard players get @s customYuji.DismantleID
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.right_arm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.DismantleID"}
+                        function custom:universal/setup/pair {target:"type=minecraft:item_display,tag=aj.yuji.bone.right_forearm_group",objective_before:"customUniversal.AbilityID",objective_target:"customYuji.DismantleID"}
+                        block { with storage minecraft:custom yuji.dismantle
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.right_arm_group,scores={customYuji.DismantleID=$(id)}] @s
+                            $visibility enable @n[type=minecraft:item_display,tag=aj.yuji.bone.right_forearm_group,scores={customYuji.DismantleID=$(id)}] @s
                         }
 
-                        tag @s remove customPresident.Disguised
+                        # variable payload
+                        scoreboard players set @s customUniversal.MoveLastUsed 1
+                        scoreboard players set @s customUniversal.LastMoveState 2
+                        scoreboard players set @s customUniversal.MoveDelay 10
+
+                        # restraints
+                        attribute @s minecraft:movement_speed base set 0
+                        attribute @s minecraft:jump_strength base set 0
                     }
-                    tag @s remove temp
+
+                    function spawn {
+                        execute store result storage minecraft:custom yuji.dismantle.id int 1 run scoreboard players get @s customYuji.DismantleID
+                        data merge storage minecraft:custom {universal:{vfx:{notation:"~"}}}
+                        data merge storage minecraft:custom {universal:{vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}}
+                        data merge storage minecraft:custom {universal:{vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}}
+                        execute rotated ~ ~ anchored eyes positioned ^ ^ ^ run function custom:universal/vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'dismantle',extra:"function custom:abilities/yuji/moves/3/dismantle/setup with storage minecraft:custom yuji.dismantle"}
+                    }
+
+                    function setup {
+                        $scoreboard players set @s customYuji.DismantleID $(id)
+                    }
+
+                    function delete {
+                        execute store result storage minecraft:custom yuji.dismantle.id int 1 run scoreboard players get @s customYuji.DismantleID
+                        block { with storage minecraft:custom yuji.dismantle
+                            $execute as @e[type=!#custom:not_mob] if score @s customYuji.DismantleID matches $(id) unless score @s customUniversal.AbilityID matches $(id) run scoreboard players reset @s customYuji.DismantleID
+                        }
+                        playsound minecraft:yuji.dismantle.wall player @a ~ ~ ~
+                        function animated_java:yuji_vfx/remove/this
+                    }
+
+                    dir movement {
+                        function main {
+                            execute store result storage minecraft:custom yuji.dismantle.id int 1 run scoreboard players get @s customYuji.DismantleID
+                            function custom:abilities/yuji/moves/3/dismantle/movement/recursive 
+                            scoreboard players reset .Recursions customYuji.DismantleMovement
+                        }
+
+                        function recursive {
+                            scoreboard players add .Recursions customYuji.DismantleMovement 1
+                            execute positioned ^ ^ ^0.1 run {
+                                # air
+                                execute if block ~ ~ ~ #custom:yuji/majin_kick run block { with storage minecraft:custom yuji.dismantle
+                                    tp @s ~ ~ ~
+
+                                    $execute as @n[type=!#custom:not_mob,distance=..2] unless score @s customYuji.DismantleID matches $(id) run block { with storage minecraft:custom yuji.dismantle
+                                        $function custom:universal/damage/victim {id:"$(id)",damage:"12",type:"custom:bypass_immunity",attacker:"tag=customAbility.Yuji",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
+                                        $scoreboard players set @s customYuji.DismantleID $(id)
+                                        playsound minecraft:yuji.dismantle.slash player @a ~ ~ ~
+                                    }
+                                    execute unless score .Recursions customYuji.DismantleMovement matches 20.. run function custom:abilities/yuji/moves/3/dismantle/movement/recursive 
+                                }
+
+                                # block
+                                execute unless block ~ ~ ~ #custom:yuji/majin_kick run function custom:abilities/yuji/moves/3/dismantle/delete 
+                            }
+                        }
+                    }
                 }
             }
 
@@ -4171,8 +4203,6 @@ dir abilities {
                     attribute @s minecraft:movement_speed base reset
                     attribute @s minecraft:jump_strength base reset
                     attribute @s minecraft:gravity base reset
-
-                    ride @s dismount
 
                     tag @s remove customUniversal.Cancelable
                     tag @s remove customUniversal.DisconnectCheck

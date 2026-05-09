@@ -13,3 +13,4 @@ tag @s remove aj.yuji.animation.black_flash_assault.playing
 tag @s remove aj.yuji.animation.black_flash_assault2.playing
 tag @s remove aj.yuji.animation.black_flash_assault3.playing
 tag @s remove aj.yuji.animation.domain_expansion.playing
+tag @s remove aj.yuji.animation.cleave_old.playing

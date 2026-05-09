@@ -5,7 +5,6 @@ function custom:universal/control/visibility {target:"aj.yuji.root",objective:"c
 attribute @s minecraft:movement_speed base reset
 attribute @s minecraft:jump_strength base reset
 attribute @s minecraft:gravity base reset
-ride @s dismount
 tag @s remove customUniversal.Cancelable
 tag @s remove customUniversal.DisconnectCheck
 tag @s remove customUniversal.Animation

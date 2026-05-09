@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-scoreboard players add .Multiplier customYuji.MajinKickVelocityX 1
-execute unless score .Recursions customYuji.MajinKickVelocityX matches 10.. run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:custom yuji.majin_kick
+$execute rotated ~ -15 if entity @s[tag=customYuji.MajinKickBurst] as @n[type=!#custom:not_mob,distance=..1.5] unless score @s customYuji.MajinKickID matches $(id) run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/zzz/2 with storage minecraft:custom yuji.majin_kick
+execute unless entity @s[tag=customYuji.MajinKickMotionEndX] run function custom:abilities/yuji/moves/2/majin_kick/movement/velocity_x/zzz/3

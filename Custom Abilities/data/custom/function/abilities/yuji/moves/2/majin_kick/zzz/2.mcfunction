@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-function animated_java:yuji/animations/majin_kick_fall/tween {to_frame:1,duration:3}
-tag @s add customYuji.MajinKickFalling
+$execute at @n[type=minecraft:item_display,tag=aj.yuji.root,scores={customUniversal.AbilityID=$(id)}] run tp @s ~ ~ ~
