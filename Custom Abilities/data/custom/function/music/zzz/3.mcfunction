@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-$advancement grant @s only custom:cassettes/$(id)
+$advancement grant @s only custom:cassettes/ownership/$(id)
 $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(id)
 function custom:music/zzz/4 with storage minecraft:custom cassette.fetch
 playsound minecraft:block.note_block.bell record @s ~ ~ ~ 0.5

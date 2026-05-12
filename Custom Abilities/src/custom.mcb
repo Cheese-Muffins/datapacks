@@ -4,7 +4,7 @@ function on_load {
 
     execute as @a run {
         REPEAT (1,105) as i {
-            advancement grant @s only custom:cassettes/<%i%>
+            advancement grant @s only custom:cassettes/ownership/<%i%>
         }
     }
 
@@ -108,6 +108,8 @@ function tick {
 
         execute at @s run {
             function custom:ui/player/tick
+            function custom:music/award/challenge/main
+            execute if entity @s[tag=customCassette.ConstantTick] run function custom:music/constant_tick/main
             execute if entity @s[tag=customConsumables.ConstantTick] run function custom:consumables/tick
             execute if score @s customUniversal.Disconnected matches 1.. run function custom:universal/disconnect/self/main
         }
@@ -6464,6 +6466,17 @@ dir music {
         }
     }
 
+    dir constant_tick {
+        function main {
+            execute unless entity @s[scores={customCassette.ChallengeConsumeCookie=0,customCassette.ChallengeConsumeMilk=0}] run {
+                execute if score @s customCassette.ChallengeConsumeCookie matches 1.. run scoreboard players remove @s customCassette.ChallengeConsumeCookie 1
+                execute if score @s customCassette.ChallengeConsumeMilk matches 1.. run scoreboard players remove @s customCassette.ChallengeConsumeMilk 1
+            } else run {
+                tag @s remove customCassette.ConstantTick
+            }
+        }
+    }
+
     function load {
         scoreboard objectives add customUI.SelectedHotbarPrevious dummy
         scoreboard objectives add customUI.SelectedHotbarCurrent dummy
@@ -6475,6 +6488,11 @@ dir music {
         scoreboard objectives add customCassette.PlayID dummy
         scoreboard objectives add customCassette.PlayLast dummy
         scoreboard objectives add customCassette.PlayIncremental dummy
+
+
+        scoreboard objectives add customCassette.ChallengeConsumeCookie dummy
+        scoreboard objectives add customCassette.ChallengeConsumeMilk dummy
+        scoreboard objectives add customCassette.ChallengeSlayMonster dummy
 
         function custom:music/song_index
     }
@@ -6511,19 +6529,46 @@ dir music {
                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_lore:$(built_lore)}}}
             }
         }
+
+        function hover {
+            data remove storage minecraft:custom cassette.fetch.built_hover
+
+            execute if score .Rating customUI.Collection matches 0..2 run data merge storage minecraft:custom {cassette:{fetch:{targeted_color:"green",sfx:"minecraft:cassette.award.easy"}}}
+            execute if score .Rating customUI.Collection matches 3..4 run data merge storage minecraft:custom {cassette:{fetch:{targeted_color:"dark_purple",sfx:"minecraft:cassette.award.medium"}}}
+            execute if score .Rating customUI.Collection matches 5 run data merge storage minecraft:custom {cassette:{fetch:{targeted_color:"yellow",sfx:"minecraft:cassette.award.hard"}}}
+
+            block { with storage minecraft:custom cassette.fetch
+                $data modify storage minecraft:custom cassette.fetch.built_hover set value ["",{"text":"$(name)","italic":false,"color":"$(targeted_color)"},"\n",{"text":"$(artist) ","italic":false,"color":"gray"},{"text":"$(rating1)","italic":false,"color":"$(rating_color)"},{"text":"$(rating2)","italic":false,"color":"gray"},"\n","\n",{"text":"Obtainment","italic":false,"color":"gold"}]
+            }
+
+            execute if data storage minecraft:custom cassette.fetch.obtainment[0] run {
+                data modify storage minecraft:custom cassette.fetch.built_hover append value "\n"
+                data modify storage minecraft:custom cassette.fetch.built_hover append from storage minecraft:custom cassette.fetch.obtainment[0]
+            }
+
+            execute if data storage minecraft:custom cassette.fetch.obtainment[1] run {
+                data modify storage minecraft:custom cassette.fetch.built_hover append value "\n"
+                data modify storage minecraft:custom cassette.fetch.built_hover append from storage minecraft:custom cassette.fetch.obtainment[1]
+            }
+
+            execute if data storage minecraft:custom cassette.fetch.obtainment[2] run {
+                data modify storage minecraft:custom cassette.fetch.built_hover append value "\n"
+                data modify storage minecraft:custom cassette.fetch.built_hover append from storage minecraft:custom cassette.fetch.obtainment[2]
+            }
+        }
     }
 
     function consume {
         execute store result storage minecraft:custom cassette.fetch.id int 1 run data get entity @s SelectedItem.components."minecraft:custom_data".id
         execute unless score @s customCassette.ErrorDelay matches 1.. run block { with storage minecraft:custom cassette.fetch
-            $execute if entity @s[advancements={custom:cassettes/$(id)=true}] run {
+            $execute if entity @s[advancements={custom:cassettes/ownership/$(id)=true}] run {
                 tellraw @s ["",{"text":"Cassette Player","color":"gold"},{"text":"\n"},{"text":"You've already ","color":"gray"},{"text":"claimed","color":"red"},{"text":" this song!","color":"gray"}]
                 playsound minecraft:block.anvil.land record @s ~ ~ ~ 0.5
                 scoreboard players set @s customCassette.ErrorDelay 10
             }
         
-            $execute if entity @s[advancements={custom:cassettes/$(id)=false}] run block { with storage minecraft:custom cassette.fetch
-                $advancement grant @s only custom:cassettes/$(id)
+            $execute if entity @s[advancements={custom:cassettes/ownership/$(id)=false}] run block { with storage minecraft:custom cassette.fetch
+                $advancement grant @s only custom:cassettes/ownership/$(id)
 
                 $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(id)
                 block { with storage minecraft:custom cassette.fetch
@@ -6534,6 +6579,78 @@ dir music {
             }
         }
         advancement revoke @s only custom:cassettes/click
+    }
+
+    dir award {
+        function reset {
+            $tag @s remove customCassette.Unlocked$(id)
+            $advancement revoke @s only $(advancement)
+            $advancement grant @s only $(advancement)
+        }
+
+        function advancement {
+            # YOUSEEBIGGIRL/T:T
+            execute if entity @s[advancements={minecraft:nether/root=true}] unless entity @s[tag=customCassette.Unlocked1] run function custom:music/award/give {id:1}
+
+            # Fallen Kingdom
+            execute if entity @s[advancements={minecraft:end/find_end_city=true}] unless entity @s[tag=customCassette.Unlocked2] run function custom:music/award/give {id:2}
+
+            # Ascending Dawn
+            execute if entity @s[advancements={minecraft:adventure/revaulting=true}] unless entity @s[tag=customCassette.Unlocked3] run function custom:music/award/give {id:3}
+
+            # Enemy
+            execute if entity @s[advancements={minecraft:adventure/kill_a_mob=true}] unless entity @s[tag=customCassette.Unlocked7] run function custom:music/award/give {id:7}
+        }
+
+        dir challenge {
+            function main {
+                # Sweet Dreams
+                execute if entity @s[nbt={SleepTimer:100s}] if score @s customCassette.ChallengeConsumeCookie matches 1.. if score @s customCassette.ChallengeConsumeMilk matches 1.. unless entity @s[tag=customCassette.Unlocked4] run function custom:music/award/give {id:4}
+
+                # Take On Me
+                execute if score @s customCassette.ChallengeSlayMonster matches 100.. unless entity @s[tag=customCassette.Unlocked5] run function custom:music/award/give {id:5}
+
+                # Up From The Bottom
+                execute if dimension minecraft:overworld if entity @s[y=-59,dy=-64] if entity @s[x_rotation=-90] if predicate custom:cassette/challenge/exposed_to_sky unless entity @s[tag=customCassette.Unlocked6] run function custom:music/award/give {id:6}
+            }
+
+            function consume_cookie {
+                tag @s add customCassette.ConstantTick
+                scoreboard players set @s customCassette.ChallengeConsumeCookie 400
+                advancement revoke @s only custom:cassettes/challenge/consume_cookie
+            }
+
+            function consume_milk {
+                tag @s add customCassette.ConstantTick
+                scoreboard players set @s customCassette.ChallengeConsumeMilk 400
+                advancement revoke @s only custom:cassettes/challenge/consume_milk
+            }
+
+            function slay_monster {
+                scoreboard players add @s customCassette.ChallengeSlayMonster 1
+                advancement revoke @s only custom:cassettes/challenge/slay_monster
+            }
+        }
+
+        function give {
+            data merge storage minecraft:custom {cassette:{fetch:{number:""}}}
+
+            $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(id)
+            function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
+            function custom:music/calculate/hover with storage minecraft:custom cassette.fetch
+            function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
+            
+            data modify storage minecraft:custom cassette.fetch.lore set from storage minecraft:ui cassette.collection.slot_lore
+
+            block { with storage minecraft:custom cassette.fetch
+                $playsound $(sfx) player @s ~ ~ ~
+                $tellraw @s ["",{"selector":"@s"},{"text":" has collected the cassette "},{"text":"[$(name)]","color":"$(targeted_color)","hover_event":{"action":"show_text","value":$(built_hover)}}]
+                $give @s minecraft:phantom_membrane[lore=$(lore),item_name=[{"text":"$(name)","color":"$(color)","italic":false}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:999999},max_stack_size=1,item_model="minecraft:cassettes/$(id)",custom_model_data={floats:[0]},custom_data={cassette_tape:1b,id:$(click_id)}]
+            }
+
+
+            $tag @s add customCassette.Unlocked$(id)
+        }
     }
 
     function song_index {
@@ -10907,7 +11024,7 @@ dir ui {
                                 execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayID
                                 execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
                                 block { with storage minecraft:custom cassette.play
-                                    $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run block { with storage minecraft:custom cassette.play
+                                    $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run block { with storage minecraft:custom cassette.play
                                         $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
                                         function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play
                                     }
@@ -10926,7 +11043,7 @@ dir ui {
                                 execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayID
                                 execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
                                 block { with storage minecraft:custom cassette.play
-                                    $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run block { with storage minecraft:custom cassette.play
+                                    $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run block { with storage minecraft:custom cassette.play
                                         $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
                                         function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play
                                     }
@@ -11016,7 +11133,7 @@ dir ui {
                                     function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                     block { with storage minecraft:custom cassette.fetch
                                         $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
-                                        $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
+                                        $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                             $execute if score @s customUI.CollectionOperation matches 2 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
                                             $execute if score @s customUI.CollectionOperation matches 3 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
@@ -11071,7 +11188,7 @@ dir ui {
                                         function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
-                                            $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
+                                            $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
                                                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                                 $execute if score @s customUI.CollectionOperation matches 3 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
                                                 $execute if score @s customUI.CollectionOperation matches 4 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
@@ -11184,8 +11301,8 @@ dir ui {
                             # vanilla bundle check #
                             execute if score .clickReturn customUI.CollectionOperation matches 106 unless score .clickReturn customUI.CollectionOperation matches 121.. run {
                                 execute unless score @s customUI.CollectionOperation matches 4 run {
-                                    execute if entity @s[advancements={custom:cassettes/106=true}] as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/collection/bonus/vanilla/flip
-                                    execute if entity @s[advancements={custom:cassettes/106=false}] as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/collection/bonus/same
+                                    execute if entity @s[advancements={custom:cassettes/ownership/106=true}] as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/collection/bonus/vanilla/flip
+                                    execute if entity @s[advancements={custom:cassettes/ownership/106=false}] as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/collection/bonus/same
                                 }
                                 execute if score @s customUI.CollectionOperation matches 4 run {
                                     function custom:ui/menu/pages/cassettes/collection/operation/extract with storage minecraft:custom cassette.fetch
@@ -11244,13 +11361,13 @@ dir ui {
                         }
 
                         function play {
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
                                 stopsound @s record
                                 playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~ 0.5
                                 $playsound minecraft:cassette.$(click_id) record @s ~ ~ ~ 999999999999999999999999999999999
                             }
 
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=false}] run {
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=false}] run {
                                 playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
                             }
                         }
@@ -11262,11 +11379,11 @@ dir ui {
                         }
 
                         function extract {
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=false}] run {
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=false}] run {
                                 playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
                             }
 
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
                                 data merge storage minecraft:custom {cassette:{fetch:{number:""}}}
 
                                 $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(click_id)
@@ -11278,18 +11395,18 @@ dir ui {
                                     $give @s minecraft:phantom_membrane[lore=$(lore),item_name=[{"text":"$(name)","color":"$(color)","italic":false}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:999999},max_stack_size=1,item_model="minecraft:cassettes/$(click_id)",custom_model_data={floats:[0]},custom_data={cassette_tape:1b,id:$(click_id)}]
                                 }
                                 
-                                $advancement revoke @s only custom:cassettes/$(click_id)
+                                $advancement revoke @s only custom:cassettes/ownership/$(click_id)
                                 playsound minecraft:item.bundle.drop_contents record @s ~ ~ ~ 1
                                 $stopsound @s record minecraft:cassette.$(click_id)
                             }
                         }
 
                         function playlist1 {
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=false}] run {
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=false}] run {
                                 playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
                             }
 
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
                                 $execute if entity @s[tag=customCassette.Playlist1_$(click_id)] run block { with storage minecraft:custom cassette.fetch
                                     playsound minecraft:entity.enderman.teleport record @s ~ ~ ~ 0.5
                                     $tag @s remove customCassette.Playlist1_$(click_id)
@@ -11304,11 +11421,11 @@ dir ui {
                         }
 
                         function playlist2 {
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=false}] run {
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=false}] run {
                                 playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
                             }
 
-                            $execute if entity @s[advancements={custom:cassettes/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
+                            $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
                                 $execute if entity @s[tag=customCassette.Playlist2_$(click_id)] run block { with storage minecraft:custom cassette.fetch
                                     playsound minecraft:entity.enderman.teleport record @s ~ ~ ~ 0.5
                                     $tag @s remove customCassette.Playlist2_$(click_id)
@@ -11403,7 +11520,7 @@ dir ui {
                                     function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                     block { with storage minecraft:custom cassette.fetch
                                         $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
-                                        $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
+                                        $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                             $execute if score @s customUI.CollectionOperation matches 2 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
                                             $execute if score @s customUI.CollectionOperation matches 3 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
@@ -11423,7 +11540,7 @@ dir ui {
                             scoreboard players add .incrementIndex customUI.Collection 1
                             execute store result storage minecraft:custom cassette.fetch.lookup int 1 run scoreboard players get .incrementIndex customUI.Collection
                             execute unless score .indexOffset customUI.Collection matches 1.. run block { with storage minecraft:custom cassette.fetch
-                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=false}] run {
+                                $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=false}] run {
                                     scoreboard players add .totalEntries customUI.Collection 1
                                     execute unless score .cassetteSlot customUI.Collection matches 21.. run {
                                         scoreboard players add .cassetteSlot customUI.Collection 1
@@ -11439,7 +11556,7 @@ dir ui {
 
                             # searching for right page
                             execute if score .indexOffset customUI.Collection matches 1.. run block { with storage minecraft:custom cassette.fetch
-                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=false}] run {
+                                $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=false}] run {
                                     scoreboard players add .totalEntries customUI.Collection 1
                                     scoreboard players remove .indexOffset customUI.Collection 1
                                 }
@@ -11453,7 +11570,7 @@ dir ui {
                             scoreboard players add .incrementIndex customUI.Collection 1
                             execute store result storage minecraft:custom cassette.fetch.lookup int 1 run scoreboard players get .incrementIndex customUI.Collection
                             execute unless score .indexOffset customUI.Collection matches 1.. run block { with storage minecraft:custom cassette.fetch
-                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run {
+                                $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run {
                                     scoreboard players add .totalEntries customUI.Collection 1
                                     execute unless score .cassetteSlot customUI.Collection matches 21.. run {
                                         scoreboard players add .cassetteSlot customUI.Collection 1
@@ -11471,7 +11588,7 @@ dir ui {
 
                             # searching for right page
                             execute if score .indexOffset customUI.Collection matches 1.. run block { with storage minecraft:custom cassette.fetch
-                                $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run {
+                                $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run {
                                     scoreboard players add .totalEntries customUI.Collection 1
                                     scoreboard players remove .indexOffset customUI.Collection 1
                                 }
@@ -11498,7 +11615,7 @@ dir ui {
                                         function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
-                                            $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
+                                            $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
                                                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                                 $execute if score @s customUI.CollectionOperation matches 3 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
                                                 $execute if score @s customUI.CollectionOperation matches 4 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
@@ -11540,7 +11657,7 @@ dir ui {
                                         function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
-                                            $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
+                                            $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                         }
                                     }
                                 }
@@ -11571,7 +11688,7 @@ dir ui {
                                         function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
-                                            $execute if entity @s[advancements={custom:cassettes/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
+                                            $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                         }
                                     }
                                 }

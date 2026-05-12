@@ -10,4 +10,7 @@ scoreboard objectives add customCassette.ErrorDelay dummy
 scoreboard objectives add customCassette.PlayID dummy
 scoreboard objectives add customCassette.PlayLast dummy
 scoreboard objectives add customCassette.PlayIncremental dummy
+scoreboard objectives add customCassette.ChallengeConsumeCookie dummy
+scoreboard objectives add customCassette.ChallengeConsumeMilk dummy
+scoreboard objectives add customCassette.ChallengeSlayMonster dummy
 function custom:music/song_index
