@@ -66,19 +66,19 @@ data merge storage minecraft:custom {cassette:{index:{21:{obtainment:[[{"text":"
 # 22 - Funky Town
 data merge storage minecraft:custom {cassette:{index:{22:{name:"Funky Town",artist:"Lipps Inc.",duration:239,color:"light_purple",rating:3,song_id:22}}}}
 data merge storage minecraft:custom {cassette:{index:{22:{obtainment:[[{"text":"Stand nearby a ","italic":false,"color":"gray"},{"text":"parrot","italic":false,"color":"green"},{"text":" ","italic":false,"color":"gray"},{"text":"dancing ","italic":false,"color":"yellow"},{"text":"on","italic":false,"color":"gray"}],[{"text":"top of a ","italic":false,"color":"gray"},{"text":"jukebox","italic":false,"color":"light_purple"}]]}}}}
-# THE GREAT UNSORTED #
 # 23 - Locked Out Of Heaven
-data merge storage minecraft:custom {cassette:{index:{23:{name:"Locked Out Of Heaven",artist:"Bruno Mars",duration:233,color:"yellow",rating:0}}}}
-data merge storage minecraft:custom {cassette:{index:{23:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{23:{name:"Locked Out Of Heaven",artist:"Bruno Mars",duration:233,color:"yellow",rating:4,song_id:23}}}}
+data merge storage minecraft:custom {cassette:{index:{23:{obtainment:[[{"text":"Reach a ","italic":false,"color":"gray"},{"text":"height ","italic":false,"color":"yellow"},{"text":"not even the ","italic":false,"color":"gray"},{"text":"Overworld","italic":false,"color":"white"}],[{"text":"thought was possible","italic":false,"underlined":true,"color":"dark_aqua"}]]}}}}
 # 24 - Zombie
-data merge storage minecraft:custom {cassette:{index:{24:{name:"Zombie",artist:"The Cranberries",duration:307,color:"gray",rating:0}}}}
-data merge storage minecraft:custom {cassette:{index:{24:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{24:{name:"Zombie",artist:"The Cranberries",duration:307,color:"green",rating:4,song_id:24}}}}
+data merge storage minecraft:custom {cassette:{index:{24:{obtainment:[[{"text":"Slay: ","italic":false,"color":"gray"},{"text":"100 Zombie(s)","italic":false,"color":"aqua"},{"text":" ","italic":false,"color":"light_purple"},{"text":"in a ","italic":false,"color":"gray"},{"text":"single night","italic":false,"color":"yellow"}]]}}}}
+# THE GREAT UNSORTED #
 # 25 - ???
-data merge storage minecraft:custom {cassette:{index:{25:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{25:{name:"???",artist:"???",duration:0,color:"gray",rating:0,song_id:25}}}}
 data merge storage minecraft:custom {cassette:{index:{25:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 26 - Cities
-data merge storage minecraft:custom {cassette:{index:{26:{name:"Cities",artist:"Throttle",duration:173,color:"blue",rating:0}}}}
-data merge storage minecraft:custom {cassette:{index:{26:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{26:{name:"Cities",artist:"Throttle",duration:173,color:"blue",rating:0,song_id:26}}}}
+data merge storage minecraft:custom {cassette:{index:{26:{obtainment:[[{"text":"Discover: ","italic":false,"color":"gray"},{"text":"Ancient City","italic":false,"color":"blue"}]]}}}}
 # 27 - ???
 data merge storage minecraft:custom {cassette:{index:{27:{name:"???",artist:"???",duration:0,color:"gray",rating:0}}}}
 data merge storage minecraft:custom {cassette:{index:{27:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}

@@ -16,4 +16,5 @@ scoreboard objectives add customCassette.ChallengeSlayMonster dummy
 scoreboard objectives add customCassette.ChallengeNearbyPlayer dummy
 scoreboard objectives add customCassette.ChallengeDamageTaken minecraft.custom:minecraft.damage_taken
 scoreboard objectives add customCassette.ChallengeBlackholeSun dummy
+scoreboard objectives add customCassette.ChallengeDefeatZombies dummy
 function custom:music/song_index
