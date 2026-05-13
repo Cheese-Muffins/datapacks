@@ -25,7 +25,7 @@ data merge storage minecraft:custom {cassette:{index:{7:{obtainment:[[{"text":"C
 data merge storage minecraft:custom {cassette:{index:{8:{name:"Fireflies",artist:"Owl City",duration:225,color:"blue",rating:3}}}}
 data merge storage minecraft:custom {cassette:{index:{8:{obtainment:[[{"text":"Capture an ","italic":false,"color":"gray"},{"text":"adult frog","italic":false,"color":"green"},{"text":" on a ","italic":false,"color":"gray"},{"text":"lead ","italic":false,"color":"light_purple"},{"text":"and","italic":false,"color":"gray"}],[{"text":"g","italic":false,"color":"gray"},{"text":"iv","italic":false,"color":"gray"},{"text":"e","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"it ","italic":false,"color":"gray"},{"text":"what it was deprived","italic":false,"underlined":true,"color":"dark_aqua"},{"text":" of...","italic":false,"color":"gray"}]]}}}}
 # 9 - Everybody Talks
-data merge storage minecraft:custom {cassette:{index:{9:{name:"Everybody Talks",artist:"Neon Trees",duration:195,color:"red",rating:2}}}}
+data merge storage minecraft:custom {cassette:{index:{9:{name:"Everybody Talks",artist:"Neon Trees",duration:195,color:"red",rating:4}}}}
 data merge storage minecraft:custom {cassette:{index:{9:{obtainment:[[{"text":"Shepherd Villagers","italic":false,"color":"green"},{"text":" have a chance to","italic":false,"color":"gray"}],[{"text":"trade ","italic":false,"color":"yellow"},{"text":"this song to the player","italic":false,"color":"gray"}]]}}}}
 # 10 - Tell Me You Know
 data merge storage minecraft:custom {cassette:{index:{10:{name:"Tell Me You Know",artist:"Good Kid",duration:198,color:"blue",rating:0}}}}

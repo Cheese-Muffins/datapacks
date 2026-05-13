@@ -6493,6 +6493,7 @@ dir music {
         scoreboard objectives add customCassette.ChallengeConsumeCookie dummy
         scoreboard objectives add customCassette.ChallengeConsumeMilk dummy
         scoreboard objectives add customCassette.ChallengeSlayMonster dummy
+        scoreboard objectives add customCassette.ChallengeNearbyPlayer dummy
 
         function custom:music/song_index
     }
@@ -6512,7 +6513,9 @@ dir music {
             data remove storage minecraft:custom cassette.fetch.built_lore
             data modify storage minecraft:custom cassette.fetch.built_lore set value []
 
-            $data modify storage minecraft:custom cassette.fetch.built_lore append value ["",{"text":"$(artist) ","italic":false,"color":"gray"},{"text":"$(rating1)","italic":false,"color":"$(rating_color)"},{"text":"$(rating2)","italic":false,"color":"gray"}]
+            $execute unless entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:custom cassette.fetch.built_lore append value ["",{"text":"$(artist) ","italic":false,"color":"gray"},{"text":"$(rating1)","italic":false,"color":"$(rating_color)"},{"text":"$(rating2)","italic":false,"color":"gray"}]
+
+            $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:custom cassette.fetch.built_lore append value ["",{"text":"$(artist) ","italic":false,"color":"gray"},{"text":"$(rating1)","italic":false,"color":"$(rating_color)"},{"text":"$(rating2)","italic":false,"color":"gray"}]
 
             execute unless score .incrementIndex customUI.Collection matches 121.. run {
                 data modify storage minecraft:custom cassette.fetch.built_lore append value ""
@@ -6600,6 +6603,12 @@ dir music {
 
             # Enemy
             execute if entity @s[advancements={minecraft:adventure/kill_a_mob=true}] unless entity @s[tag=customCassette.Unlocked7] run function custom:music/award/give {id:7}
+
+            # Everybody Talks
+            execute if entity @s[advancements={custom:cassettes/challenge/hold/everybody_talks=true}] unless entity @s[tag=customCassette.Unlocked9] run function custom:music/award/announce {id:9}
+
+            # Club 57
+            execute if entity @s[advancements={custom:cassettes/challenge/hold/club57=true}] unless entity @s[tag=customCassette.Unlocked11] run function custom:music/award/announce {id:11}
         }
 
         dir challenge {
@@ -6612,6 +6621,12 @@ dir music {
 
                 # Up From The Bottom
                 execute if dimension minecraft:overworld if entity @s[y=-59,dy=-64] if entity @s[x_rotation=-90] if predicate custom:cassette/challenge/exposed_to_sky unless entity @s[tag=customCassette.Unlocked6] run function custom:music/award/give {id:6}
+
+                # Fireflies
+                execute as @n[type=minecraft:frog,distance=..10] at @s if data entity @s leash if block ~ ~ ~ minecraft:firefly_bush on leasher if entity @s[type=minecraft:player] unless entity @s[tag=customCassette.Unlocked8] run function custom:music/award/give {id:8}
+
+                # Tell Me You Know
+                execute if entity @a[distance=0.1..7] unless entity @s[tag=customCassette.Unlocked10] run function custom:music/award/challenge/nearby_player 
             }
 
             function consume_cookie {
@@ -6630,6 +6645,11 @@ dir music {
                 scoreboard players add @s customCassette.ChallengeSlayMonster 1
                 advancement revoke @s only custom:cassettes/challenge/slay_monster
             }
+
+            function nearby_player {
+                scoreboard players add @s customCassette.ChallengeNearbyPlayer 1
+                execute if score @s customCassette.ChallengeNearbyPlayer matches 2400.. run function custom:music/award/give {id:10}
+            }
         }
 
         function give {
@@ -6644,11 +6664,22 @@ dir music {
 
             block { with storage minecraft:custom cassette.fetch
                 $playsound $(sfx) player @s ~ ~ ~
-                $tellraw @s ["",{"selector":"@s"},{"text":" has collected the cassette "},{"text":"[$(name)]","color":"$(targeted_color)","hover_event":{"action":"show_text","value":$(built_hover)}}]
-                $give @s minecraft:phantom_membrane[lore=$(lore),item_name=[{"text":"$(name)","color":"$(color)","italic":false}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:999999},max_stack_size=1,item_model="minecraft:cassettes/$(id)",custom_model_data={floats:[0]},custom_data={cassette_tape:1b,id:$(click_id)}]
+                $tellraw @a ["",{"selector":"@s"},{"text":" has collected the cassette "},{"text":"[$(name)]","color":"$(targeted_color)","hover_event":{"action":"show_text","value":$(built_hover)}}]
+                $give @s minecraft:phantom_membrane[lore=$(lore),item_name=[{"text":"$(name)","color":"$(color)","italic":false}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:999999},max_stack_size=1,item_model="minecraft:cassettes/$(id)",custom_model_data={floats:[0]},custom_data={cassette_tape:1b,id:$(id)}]
             }
+            $tag @s add customCassette.Unlocked$(id)
+        }
 
+        function announce {
+            data merge storage minecraft:custom {cassette:{fetch:{number:""}}}
 
+            $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(id)
+            function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
+            function custom:music/calculate/hover with storage minecraft:custom cassette.fetch
+            block { with storage minecraft:custom cassette.fetch
+                $playsound $(sfx) player @s ~ ~ ~
+                $tellraw @a ["",{"selector":"@s"},{"text":" has collected the cassette "},{"text":"[$(name)]","color":"$(targeted_color)","hover_event":{"action":"show_text","value":$(built_hover)}}]
+            }
             $tag @s add customCassette.Unlocked$(id)
         }
     }
@@ -6687,7 +6718,7 @@ dir music {
         data merge storage minecraft:custom {cassette:{index:{8:{obtainment:[[{"text":"Capture an ","italic":false,"color":"gray"},{"text":"adult frog","italic":false,"color":"green"},{"text":" on a ","italic":false,"color":"gray"},{"text":"lead ","italic":false,"color":"light_purple"},{"text":"and","italic":false,"color":"gray"}],[{"text":"g","italic":false,"color":"gray"},{"text":"iv","italic":false,"color":"gray"},{"text":"e","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"it ","italic":false,"color":"gray"},{"text":"what it was deprived","italic":false,"underlined":true,"color":"dark_aqua"},{"text":" of...","italic":false,"color":"gray"}]]}}}}
 
         # 9 - Everybody Talks
-        data merge storage minecraft:custom {cassette:{index:{9:{name:"Everybody Talks",artist:"Neon Trees",duration:195,color:"red",rating:2}}}}
+        data merge storage minecraft:custom {cassette:{index:{9:{name:"Everybody Talks",artist:"Neon Trees",duration:195,color:"red",rating:4}}}}
         data merge storage minecraft:custom {cassette:{index:{9:{obtainment:[[{"text":"Shepherd Villagers","italic":false,"color":"green"},{"text":" have a chance to","italic":false,"color":"gray"}],[{"text":"trade ","italic":false,"color":"yellow"},{"text":"this song to the player","italic":false,"color":"gray"}]]}}}}
 
         # 10 - Tell Me You Know
@@ -11519,7 +11550,10 @@ dir ui {
 
                                     function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                     block { with storage minecraft:custom cassette.fetch
-                                        $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
+                                        $execute unless entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)"}}}
+                                        $execute if entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name): $(lookup)"}}}
+
+                                        $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
                                         $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                             $execute if score @s customUI.CollectionOperation matches 2 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
@@ -11548,7 +11582,10 @@ dir ui {
 
                                         function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
-                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
+                                            $execute unless entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)"}}}
+                                            $execute if entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name): $(lookup)"}}}
+
+                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
                                         }
                                     }
                                 }
@@ -11578,7 +11615,10 @@ dir ui {
 
                                         function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
-                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"green",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:0}}}
+                                            $execute unless entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)"}}}
+                                            $execute if entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name): $(lookup)"}}}
+
+                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:0}}}
                                             $execute if score @s customUI.CollectionOperation matches 2 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
                                             $execute if score @s customUI.CollectionOperation matches 3 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
                                         }
@@ -11614,7 +11654,10 @@ dir ui {
                                         function custom:music/calculate/rating with storage minecraft:custom cassette.fetch
                                         function custom:music/calculate/lore with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
-                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
+                                            $execute unless entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)"}}}
+                                            $execute if entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name): $(lookup)"}}}
+
+                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
                                             $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run block { with storage minecraft:custom cassette.fetch
                                                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                                 $execute if score @s customUI.CollectionOperation matches 3 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
@@ -11656,7 +11699,10 @@ dir ui {
 
                                         function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
-                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
+                                            $execute unless entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)"}}}
+                                            $execute if entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name): $(lookup)"}}}
+
+                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
                                             $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                         }
                                     }
@@ -11687,7 +11733,10 @@ dir ui {
 
                                         function custom:ui/menu/pages/cassettes/collection/sort/create_entry with storage minecraft:custom cassette.fetch
                                         block { with storage minecraft:custom cassette.fetch
-                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)",slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
+                                            $execute unless entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name)"}}}
+                                            $execute if entity @s[tag=customSettings.CassetteShowID] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_name:"$(name): $(lookup)"}}}
+
+                                            $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
                                             $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
                                         }
                                     }
