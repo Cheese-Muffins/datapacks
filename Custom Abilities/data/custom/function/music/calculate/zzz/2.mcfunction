@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:custom cassette.fetch.built_hover set value ["",{"text":"$(name)","italic":false,"color":"$(targeted_color)"},"\n",{"text":"$(artist) ","italic":false,"color":"gray"},{"text":"$(rating1)","italic":false,"color":"$(rating_color)"},{"text":"$(rating2)","italic":false,"color":"gray"},"\n","\n",{"text":"Obtainment","italic":false,"color":"gold"}]
+$data modify storage minecraft:custom cassette.index.$(song_id).built_hover append value "\n"
+$data modify storage minecraft:custom cassette.index.$(song_id).built_hover append from storage minecraft:custom cassette.index.$(song_id).obtainment[0]

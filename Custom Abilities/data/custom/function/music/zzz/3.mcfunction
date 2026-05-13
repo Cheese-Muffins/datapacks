@@ -1,7 +1,3 @@
 # Generated with MC-Build
 
-$advancement grant @s only custom:cassettes/ownership/$(id)
-$data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(id)
-function custom:music/zzz/4 with storage minecraft:custom cassette.fetch
-playsound minecraft:block.note_block.bell record @s ~ ~ ~ 0.5
-item replace entity @s weapon.mainhand with minecraft:air
+$toast @s minecraft:phantom_membrane[minecraft:item_model="minecraft:cassettes/$(id)",minecraft:custom_model_data={floats:[2]}] [{"text":"$(name)","italic":false,"color":"$(color)"}] [{"text":"$(artist)","italic":false,"color":"gray"}]

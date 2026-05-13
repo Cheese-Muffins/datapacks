@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$execute if entity @s[advancements={custom:cassettes/ownership/$(id)=true}] run function custom:music/zzz/2
-$execute if entity @s[advancements={custom:cassettes/ownership/$(id)=false}] run function custom:music/zzz/3 with storage minecraft:custom cassette.fetch
+tellraw @s ["",{"text":"Cassette Player","color":"gold"},{"text":"\n"},{"text":"You've already ","color":"gray"},{"text":"claimed","color":"red"},{"text":" this song!","color":"gray"}]
+playsound minecraft:block.anvil.land record @s ~ ~ ~ 0.5
+scoreboard players set @s customCassette.ErrorDelay 10

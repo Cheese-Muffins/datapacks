@@ -1,5 +1,7 @@
 # Generated with MC-Build
 
-tellraw @s ["",{"text":"Cassette Player","color":"gold"},{"text":"\n"},{"text":"You've already ","color":"gray"},{"text":"claimed","color":"red"},{"text":" this song!","color":"gray"}]
-playsound minecraft:block.anvil.land record @s ~ ~ ~ 0.5
-scoreboard players set @s customCassette.ErrorDelay 10
+$advancement grant @s only custom:cassettes/ownership/$(id)
+$data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(id)
+function custom:music/zzz/3 with storage minecraft:custom cassette.fetch
+playsound minecraft:block.note_block.bell record @s ~ ~ ~ 0.5
+item replace entity @s weapon.mainhand with minecraft:air

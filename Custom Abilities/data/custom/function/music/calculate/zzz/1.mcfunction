@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ui {cassette:{collection:{slot$(number)_lore:$(built_lore)}}}
+$data modify storage minecraft:custom cassette.index.$(song_id).built_hover set value ["",{"text":"$(name)","italic":false,"color":"$(targeted_color)"},"\n",{"text":"$(artist) ","italic":false,"color":"gray"},{"text":"$(rating1)","italic":false,"color":"$(rating_color)"},{"text":"$(rating2)","italic":false,"color":"gray"},"\n","\n",{"text":"Obtainment","italic":false,"color":"gold"}]

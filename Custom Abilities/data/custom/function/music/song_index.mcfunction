@@ -1,71 +1,71 @@
 # Generated with MC-Build
 
 # 1 - YOUSEEBIGGIRL/T:T
-data merge storage minecraft:custom {cassette:{index:{1:{name:"YOUSEEBIGGIRL/T:T",artist:"Hiroyuki Sawano",duration:163,color:"green",rating:1}}}}
+data merge storage minecraft:custom {cassette:{index:{1:{name:"YOUSEEBIGGIRL/T:T",artist:"Hiroyuki Sawano",duration:163,color:"green",rating:1,song_id:1}}}}
 data merge storage minecraft:custom {cassette:{index:{1:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"We Need to Go Deeper","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 2 - Fallen Kingdom
-data merge storage minecraft:custom {cassette:{index:{2:{name:"Fallen Kingdom",artist:"TryHardNinja",duration:254,color:"dark_green",rating:3}}}}
+data merge storage minecraft:custom {cassette:{index:{2:{name:"Fallen Kingdom",artist:"TryHardNinja",duration:254,color:"dark_green",rating:3,song_id:2}}}}
 data merge storage minecraft:custom {cassette:{index:{2:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"The City at the End of the Game","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 3 - Ascending Dawn
-data merge storage minecraft:custom {cassette:{index:{3:{name:"Ascending Dawn",artist:"Emile Van Krieken",duration:350,color:"yellow",rating:3}}}}
+data merge storage minecraft:custom {cassette:{index:{3:{name:"Ascending Dawn",artist:"Emile Van Krieken",duration:350,color:"yellow",rating:3,song_id:3}}}}
 data merge storage minecraft:custom {cassette:{index:{3:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Revaulting","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 4 - Sweet Dreams
-data merge storage minecraft:custom {cassette:{index:{4:{name:"Sweet Dreams",artist:"SiM",duration:212,color:"red",rating:2}}}}
+data merge storage minecraft:custom {cassette:{index:{4:{name:"Sweet Dreams",artist:"SiM",duration:212,color:"red",rating:2,song_id:4}}}}
 data merge storage minecraft:custom {cassette:{index:{4:{obtainment:[[{"text":"Sleep ","italic":false,"color":"yellow"},{"text":"in a ","italic":false,"color":"gray"},{"text":"bed ","italic":false,"color":"light_purple"},{"text":"after helping yourself to","italic":false,"color":"gray"}],[{"text":"some ","italic":false,"color":"gray"},{"text":"milk ","italic":false,"color":"light_purple"},{"text":"and ","italic":false,"color":"gray"},{"text":"cookies","italic":false,"color":"light_purple"}]]}}}}
 # 5 - Take On Me
-data merge storage minecraft:custom {cassette:{index:{5:{name:"Take On Me",artist:"A-ha",duration:224,color:"gray",rating:1}}}}
+data merge storage minecraft:custom {cassette:{index:{5:{name:"Take On Me",artist:"A-ha",duration:224,color:"gray",rating:1,song_id:5}}}}
 data merge storage minecraft:custom {cassette:{index:{5:{obtainment:[[{"text":"Slay: ","italic":false,"color":"gray"},{"text":"100 ","italic":false,"color":"aqua"},{"text":"Monster(s)","italic":false,"color":"gray"}]]}}}}
 # 6 - Up From the Bottom
-data merge storage minecraft:custom {cassette:{index:{6:{name:"Up From the Bottom",artist:"Linkin Park",duration:183,color:"light_purple",rating:1}}}}
+data merge storage minecraft:custom {cassette:{index:{6:{name:"Up From the Bottom",artist:"Linkin Park",duration:183,color:"light_purple",rating:1,song_id:6}}}}
 data merge storage minecraft:custom {cassette:{index:{6:{obtainment:[[{"text":"Stare up from the bottom of the","italic":false,"color":"gray"}],[{"text":"Overworld ","italic":false,"color":"white"},{"text":"to exposed ","italic":false,"color":"gray"},{"text":"sunlight","italic":false,"color":"yellow"}]]}}}}
 # 7 - Enemy
-data merge storage minecraft:custom {cassette:{index:{7:{name:"Enemy",artist:"Imagine Dragons",duration:171,color:"light_purple",rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{7:{name:"Enemy",artist:"Imagine Dragons",duration:171,color:"light_purple",rating:0,song_id:7}}}}
 data merge storage minecraft:custom {cassette:{index:{7:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Monster Hunter","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 8 - Fireflies
-data merge storage minecraft:custom {cassette:{index:{8:{name:"Fireflies",artist:"Owl City",duration:225,color:"blue",rating:3}}}}
+data merge storage minecraft:custom {cassette:{index:{8:{name:"Fireflies",artist:"Owl City",duration:225,color:"blue",rating:3,song_id:8}}}}
 data merge storage minecraft:custom {cassette:{index:{8:{obtainment:[[{"text":"Capture an ","italic":false,"color":"gray"},{"text":"adult frog","italic":false,"color":"green"},{"text":" on a ","italic":false,"color":"gray"},{"text":"lead ","italic":false,"color":"light_purple"},{"text":"and","italic":false,"color":"gray"}],[{"text":"g","italic":false,"color":"gray"},{"text":"iv","italic":false,"color":"gray"},{"text":"e","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"it ","italic":false,"color":"gray"},{"text":"what it was deprived","italic":false,"underlined":true,"color":"dark_aqua"},{"text":" of...","italic":false,"color":"gray"}]]}}}}
 # 9 - Everybody Talks
-data merge storage minecraft:custom {cassette:{index:{9:{name:"Everybody Talks",artist:"Neon Trees",duration:195,color:"red",rating:4}}}}
+data merge storage minecraft:custom {cassette:{index:{9:{name:"Everybody Talks",artist:"Neon Trees",duration:195,color:"red",rating:4,song_id:9}}}}
 data merge storage minecraft:custom {cassette:{index:{9:{obtainment:[[{"text":"Shepherd Villagers","italic":false,"color":"green"},{"text":" have a chance to","italic":false,"color":"gray"}],[{"text":"trade ","italic":false,"color":"yellow"},{"text":"this song to the player","italic":false,"color":"gray"}]]}}}}
 # 10 - Tell Me You Know
-data merge storage minecraft:custom {cassette:{index:{10:{name:"Tell Me You Know",artist:"Good Kid",duration:198,color:"blue",rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{10:{name:"Tell Me You Know",artist:"Good Kid",duration:198,color:"blue",rating:0,song_id:10}}}}
 data merge storage minecraft:custom {cassette:{index:{10:{obtainment:[[{"text":"Stand nearby another ","italic":false,"color":"gray"},{"text":"player","italic":false,"color":"green"},{"text":" for at","italic":false,"color":"gray"}],[{"text":"least ","italic":false,"color":"gray"},{"text":"2 minutes","italic":false,"color":"aqua"}]]}}}}
 # 11 - Club 57
-data merge storage minecraft:custom {cassette:{index:{11:{name:"Club 57",artist:"Bastille",duration:296,color:"gold",rating:1}}}}
+data merge storage minecraft:custom {cassette:{index:{11:{name:"Club 57",artist:"Bastille",duration:296,color:"gold",rating:2,song_id:11}}}}
 data merge storage minecraft:custom {cassette:{index:{11:{obtainment:[[{"text":"Chest Loot: ","italic":false,"color":"gray"},{"text":"Nether Fortress","italic":false,"color":"blue"}]]}}}}
 # 12 - Antidote
-data merge storage minecraft:custom {cassette:{index:{12:{name:"Antidote",artist:"We Are The Empty",duration:213,color:"blue",rating:3}}}}
+data merge storage minecraft:custom {cassette:{index:{12:{name:"Antidote",artist:"We Are The Empty",duration:213,color:"blue",rating:2,song_id:12}}}}
 data merge storage minecraft:custom {cassette:{index:{12:{obtainment:[[{"text":"Drink a ","italic":false,"color":"gray"},{"text":"bucket of milk","italic":false,"color":"light_purple"},{"text":" whilst affected by","italic":false,"color":"gray"}],[{"text":"any level of ","italic":false,"color":"gray"},{"text":"poison","italic":false,"color":"dark_green"}]]}}}}
 # 13 - Seperate Ways
-data merge storage minecraft:custom {cassette:{index:{13:{name:"Seperate Ways",artist:"Journey",duration:266,color:"blue",rating:3}}}}
+data merge storage minecraft:custom {cassette:{index:{13:{name:"Seperate Ways",artist:"Journey",duration:266,color:"blue",rating:3,song_id:13}}}}
 data merge storage minecraft:custom {cassette:{index:{13:{obtainment:[[{"text":"Mob Loot: ","italic":false,"color":"gray"},{"text":"Baby Slimes","italic":false,"color":"green"},{"text":" with a ","italic":false,"color":"gray"},{"text":"1.00%","italic":false,"color":"aqua"}],[{"text":"chance","italic":false,"color":"aqua"},{"text":" upon death","italic":false,"color":"gray"}]]}}}}
 # 14 - Popular Monster
-data merge storage minecraft:custom {cassette:{index:{14:{name:"Popular Monster",artist:"Falling In Reverse",duration:222,color:"dark_red",rating:2}}}}
+data merge storage minecraft:custom {cassette:{index:{14:{name:"Popular Monster",artist:"Falling In Reverse",duration:222,color:"dark_red",rating:2,song_id:14}}}}
 data merge storage minecraft:custom {cassette:{index:{14:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Hero of the Village","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 15 - Pesché Rap
-data merge storage minecraft:custom {cassette:{index:{15:{name:"Pesché Rap",artist:"Cheese Muffins",duration:81,color:"gold",rating:4}}}}
+data merge storage minecraft:custom {cassette:{index:{15:{name:"Pesché Rap",artist:"Cheese Muffins",duration:81,color:"gold",rating:5,song_id:15}}}}
 data merge storage minecraft:custom {cassette:{index:{15:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Smithing with Style","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 16 - Rumbling
-data merge storage minecraft:custom {cassette:{index:{16:{name:"Rumbling",artist:"SiM",duration:221,color:"red",rating:3}}}}
-data merge storage minecraft:custom {cassette:{index:{16:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Is It a Plane?","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
+data merge storage minecraft:custom {cassette:{index:{16:{name:"Rumbling",artist:"SiM",duration:221,color:"red",rating:3,song_id:16}}}}
+data merge storage minecraft:custom {cassette:{index:{16:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Withering Heights","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 17 - Scars
-data merge storage minecraft:custom {cassette:{index:{17:{name:"Scars",artist:"I Prevail",duration:231,color:"light_purple",rating:2}}}}
+data merge storage minecraft:custom {cassette:{index:{17:{name:"Scars",artist:"I Prevail",duration:231,color:"light_purple",rating:2,song_id:17}}}}
 data merge storage minecraft:custom {cassette:{index:{17:{obtainment:[[{"text":"Endure at least ","italic":false,"color":"gray"},{"text":"500 hearts","italic":false,"color":"aqua"},{"text":" of ","italic":false,"color":"gray"},{"text":"damage","italic":false,"color":"yellow"}]]}}}}
 # 18 - Quarter Past Midnight
-data merge storage minecraft:custom {cassette:{index:{18:{name:"Quarter Past Midnight",artist:"Bastille",duration:205,color:"gray",rating:2}}}}
+data merge storage minecraft:custom {cassette:{index:{18:{name:"Quarter Past Midnight",artist:"Bastille",duration:205,color:"gray",rating:2,song_id:18}}}}
 data merge storage minecraft:custom {cassette:{index:{18:{obtainment:[[{"text":"Sleep ","italic":false,"color":"yellow"},{"text":"in a ","italic":false,"color":"gray"},{"text":"bed ","italic":false,"color":"light_purple"},{"text":"a ","italic":false,"color":"gray"},{"text":"Quarter Past Midnight","italic":false,"underlined":true,"color":"dark_aqua"}]]}}}}
 # 19 - Quarter Past Midnight
-data merge storage minecraft:custom {cassette:{index:{19:{name:"Mikasa",artist:"Veil of Maya",duration:190,color:"dark_red",rating:4}}}}
+data merge storage minecraft:custom {cassette:{index:{19:{name:"Mikasa",artist:"Veil of Maya",duration:190,color:"dark_red",rating:4,song_id:19}}}}
 data merge storage minecraft:custom {cassette:{index:{19:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Over-Overkill","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}}
 # 20 - Lucid Dreams
-data merge storage minecraft:custom {cassette:{index:{20:{name:"Lucid Dreams",artist:"Juice WRLD",duration:239,color:"aqua",rating:2}}}}
+data merge storage minecraft:custom {cassette:{index:{20:{name:"Lucid Dreams",artist:"Juice WRLD",duration:239,color:"aqua",rating:2,song_id:20}}}}
 data merge storage minecraft:custom {cassette:{index:{20:{obtainment:[[{"text":"Return from ","italic":false,"color":"gray"},{"text":"The End","italic":false,"color":"white"}]]}}}}
 # 21 - Blackhole Sun
-data merge storage minecraft:custom {cassette:{index:{21:{name:"Blackhole Sun",artist:"Soundgarden",duration:318,color:"gold",rating:5}}}}
-data merge storage minecraft:custom {cassette:{index:{21:{obtainment:[[{"text":"i do","italic":false,"color":"gray"},{"text":"nt ","italic":false,"color":"gray"},{"text":"k","italic":false,"color":"gray"},{"text":"n","italic":false,"color":"gray"},{"text":"ow","italic":false,"color":"gray"}]]}}}}
+data merge storage minecraft:custom {cassette:{index:{21:{name:"Blackhole Sun",artist:"Soundgarden",duration:318,color:"gold",rating:4,song_id:21}}}}
+data merge storage minecraft:custom {cassette:{index:{21:{obtainment:[[{"text":"Throw a ","italic":false,"color":"gray"},{"text":"sunflower ","italic":false,"color":"light_purple"},{"text":"on top of a fully","italic":false,"color":"gray"}],[{"text":"charged ","italic":false,"color":"gray"},{"text":"respawn anchor","italic":false,"color":"light_purple"},{"text":" in the","italic":false,"color":"gray"}],[{"text":"Overworld","italic":false,"color":"white"},{"text":" at ","italic":false,"color":"gray"},{"text":"noon","italic":false,"color":"dark_aqua"}]]}}}}
 # 22 - Funky Town
-data merge storage minecraft:custom {cassette:{index:{22:{name:"Funky Town",artist:"Lipps Inc.",duration:239,color:"light_purple",rating:2}}}}
-data merge storage minecraft:custom {cassette:{index:{22:{obtainment:[[{"text":"Sleep in a ","italic":false,"color":"gray"},{"text":"bed ","italic":false,"color":"yellow"},{"text":"after helping yourself to","italic":false,"color":"gray"}],[{"text":"some ","italic":false,"color":"gray"},{"text":"milk ","italic":false,"color":"light_purple"},{"text":"and ","italic":false,"color":"gray"},{"text":"cookies","italic":false,"color":"light_purple"}]]}}}}
+data merge storage minecraft:custom {cassette:{index:{22:{name:"Funky Town",artist:"Lipps Inc.",duration:239,color:"light_purple",rating:3,song_id:22}}}}
+data merge storage minecraft:custom {cassette:{index:{22:{obtainment:[[{"text":"Stand nearby a ","italic":false,"color":"gray"},{"text":"parrot","italic":false,"color":"green"},{"text":" ","italic":false,"color":"gray"},{"text":"dancing ","italic":false,"color":"yellow"},{"text":"on","italic":false,"color":"gray"}],[{"text":"top of a ","italic":false,"color":"gray"},{"text":"jukebox","italic":false,"color":"light_purple"}]]}}}}
 # THE GREAT UNSORTED #
 # 23 - Locked Out Of Heaven
 data merge storage minecraft:custom {cassette:{index:{23:{name:"Locked Out Of Heaven",artist:"Bruno Mars",duration:233,color:"yellow",rating:0}}}}
@@ -330,3 +330,138 @@ data merge storage minecraft:custom {cassette:{index:{121:{obtainment:[{"text":"
 # 122 - Aria Math (Piano Cover) #
 data merge storage minecraft:custom {cassette:{index:{122:{name:"Aria Math (Piano Cover)",artist:"Pianicam",duration:174,color:"green",rating:0}}}}
 data merge storage minecraft:custom {cassette:{index:{122:{obtainment:[{"text":"V","italic":false,"color":"gray"}]}}}}
+function custom:music/calculate/main with storage minecraft:custom cassette.index.1
+function custom:music/calculate/main with storage minecraft:custom cassette.index.2
+function custom:music/calculate/main with storage minecraft:custom cassette.index.3
+function custom:music/calculate/main with storage minecraft:custom cassette.index.4
+function custom:music/calculate/main with storage minecraft:custom cassette.index.5
+function custom:music/calculate/main with storage minecraft:custom cassette.index.6
+function custom:music/calculate/main with storage minecraft:custom cassette.index.7
+function custom:music/calculate/main with storage minecraft:custom cassette.index.8
+function custom:music/calculate/main with storage minecraft:custom cassette.index.9
+function custom:music/calculate/main with storage minecraft:custom cassette.index.10
+function custom:music/calculate/main with storage minecraft:custom cassette.index.11
+function custom:music/calculate/main with storage minecraft:custom cassette.index.12
+function custom:music/calculate/main with storage minecraft:custom cassette.index.13
+function custom:music/calculate/main with storage minecraft:custom cassette.index.14
+function custom:music/calculate/main with storage minecraft:custom cassette.index.15
+function custom:music/calculate/main with storage minecraft:custom cassette.index.16
+function custom:music/calculate/main with storage minecraft:custom cassette.index.17
+function custom:music/calculate/main with storage minecraft:custom cassette.index.18
+function custom:music/calculate/main with storage minecraft:custom cassette.index.19
+function custom:music/calculate/main with storage minecraft:custom cassette.index.20
+function custom:music/calculate/main with storage minecraft:custom cassette.index.21
+function custom:music/calculate/main with storage minecraft:custom cassette.index.22
+function custom:music/calculate/main with storage minecraft:custom cassette.index.23
+function custom:music/calculate/main with storage minecraft:custom cassette.index.24
+function custom:music/calculate/main with storage minecraft:custom cassette.index.25
+function custom:music/calculate/main with storage minecraft:custom cassette.index.26
+function custom:music/calculate/main with storage minecraft:custom cassette.index.27
+function custom:music/calculate/main with storage minecraft:custom cassette.index.28
+function custom:music/calculate/main with storage minecraft:custom cassette.index.29
+function custom:music/calculate/main with storage minecraft:custom cassette.index.30
+function custom:music/calculate/main with storage minecraft:custom cassette.index.31
+function custom:music/calculate/main with storage minecraft:custom cassette.index.32
+function custom:music/calculate/main with storage minecraft:custom cassette.index.33
+function custom:music/calculate/main with storage minecraft:custom cassette.index.34
+function custom:music/calculate/main with storage minecraft:custom cassette.index.35
+function custom:music/calculate/main with storage minecraft:custom cassette.index.36
+function custom:music/calculate/main with storage minecraft:custom cassette.index.37
+function custom:music/calculate/main with storage minecraft:custom cassette.index.38
+function custom:music/calculate/main with storage minecraft:custom cassette.index.39
+function custom:music/calculate/main with storage minecraft:custom cassette.index.40
+function custom:music/calculate/main with storage minecraft:custom cassette.index.41
+function custom:music/calculate/main with storage minecraft:custom cassette.index.42
+function custom:music/calculate/main with storage minecraft:custom cassette.index.43
+function custom:music/calculate/main with storage minecraft:custom cassette.index.44
+function custom:music/calculate/main with storage minecraft:custom cassette.index.45
+function custom:music/calculate/main with storage minecraft:custom cassette.index.46
+function custom:music/calculate/main with storage minecraft:custom cassette.index.47
+function custom:music/calculate/main with storage minecraft:custom cassette.index.48
+function custom:music/calculate/main with storage minecraft:custom cassette.index.49
+function custom:music/calculate/main with storage minecraft:custom cassette.index.50
+function custom:music/calculate/main with storage minecraft:custom cassette.index.51
+function custom:music/calculate/main with storage minecraft:custom cassette.index.52
+function custom:music/calculate/main with storage minecraft:custom cassette.index.53
+function custom:music/calculate/main with storage minecraft:custom cassette.index.54
+function custom:music/calculate/main with storage minecraft:custom cassette.index.55
+function custom:music/calculate/main with storage minecraft:custom cassette.index.56
+function custom:music/calculate/main with storage minecraft:custom cassette.index.57
+function custom:music/calculate/main with storage minecraft:custom cassette.index.58
+function custom:music/calculate/main with storage minecraft:custom cassette.index.59
+function custom:music/calculate/main with storage minecraft:custom cassette.index.60
+function custom:music/calculate/main with storage minecraft:custom cassette.index.61
+function custom:music/calculate/main with storage minecraft:custom cassette.index.62
+function custom:music/calculate/main with storage minecraft:custom cassette.index.63
+function custom:music/calculate/main with storage minecraft:custom cassette.index.64
+function custom:music/calculate/main with storage minecraft:custom cassette.index.65
+function custom:music/calculate/main with storage minecraft:custom cassette.index.66
+function custom:music/calculate/main with storage minecraft:custom cassette.index.67
+function custom:music/calculate/main with storage minecraft:custom cassette.index.68
+function custom:music/calculate/main with storage minecraft:custom cassette.index.69
+function custom:music/calculate/main with storage minecraft:custom cassette.index.70
+function custom:music/calculate/main with storage minecraft:custom cassette.index.71
+function custom:music/calculate/main with storage minecraft:custom cassette.index.72
+function custom:music/calculate/main with storage minecraft:custom cassette.index.73
+function custom:music/calculate/main with storage minecraft:custom cassette.index.74
+function custom:music/calculate/main with storage minecraft:custom cassette.index.75
+function custom:music/calculate/main with storage minecraft:custom cassette.index.76
+function custom:music/calculate/main with storage minecraft:custom cassette.index.77
+function custom:music/calculate/main with storage minecraft:custom cassette.index.78
+function custom:music/calculate/main with storage minecraft:custom cassette.index.79
+function custom:music/calculate/main with storage minecraft:custom cassette.index.80
+function custom:music/calculate/main with storage minecraft:custom cassette.index.81
+function custom:music/calculate/main with storage minecraft:custom cassette.index.82
+function custom:music/calculate/main with storage minecraft:custom cassette.index.83
+function custom:music/calculate/main with storage minecraft:custom cassette.index.84
+function custom:music/calculate/main with storage minecraft:custom cassette.index.85
+function custom:music/calculate/main with storage minecraft:custom cassette.index.86
+function custom:music/calculate/main with storage minecraft:custom cassette.index.87
+function custom:music/calculate/main with storage minecraft:custom cassette.index.88
+function custom:music/calculate/main with storage minecraft:custom cassette.index.89
+function custom:music/calculate/main with storage minecraft:custom cassette.index.90
+function custom:music/calculate/main with storage minecraft:custom cassette.index.91
+function custom:music/calculate/main with storage minecraft:custom cassette.index.92
+function custom:music/calculate/main with storage minecraft:custom cassette.index.93
+function custom:music/calculate/main with storage minecraft:custom cassette.index.94
+function custom:music/calculate/main with storage minecraft:custom cassette.index.95
+function custom:music/calculate/main with storage minecraft:custom cassette.index.96
+function custom:music/calculate/main with storage minecraft:custom cassette.index.97
+function custom:music/calculate/main with storage minecraft:custom cassette.index.98
+function custom:music/calculate/main with storage minecraft:custom cassette.index.99
+function custom:music/calculate/main with storage minecraft:custom cassette.index.100
+function custom:music/calculate/main with storage minecraft:custom cassette.index.101
+function custom:music/calculate/main with storage minecraft:custom cassette.index.102
+function custom:music/calculate/main with storage minecraft:custom cassette.index.103
+function custom:music/calculate/main with storage minecraft:custom cassette.index.104
+function custom:music/calculate/main with storage minecraft:custom cassette.index.105
+function custom:music/calculate/main with storage minecraft:custom cassette.index.106
+function custom:music/calculate/main with storage minecraft:custom cassette.index.107
+function custom:music/calculate/main with storage minecraft:custom cassette.index.108
+function custom:music/calculate/main with storage minecraft:custom cassette.index.109
+function custom:music/calculate/main with storage minecraft:custom cassette.index.110
+function custom:music/calculate/main with storage minecraft:custom cassette.index.111
+function custom:music/calculate/main with storage minecraft:custom cassette.index.112
+function custom:music/calculate/main with storage minecraft:custom cassette.index.113
+function custom:music/calculate/main with storage minecraft:custom cassette.index.114
+function custom:music/calculate/main with storage minecraft:custom cassette.index.115
+function custom:music/calculate/main with storage minecraft:custom cassette.index.116
+function custom:music/calculate/main with storage minecraft:custom cassette.index.117
+function custom:music/calculate/main with storage minecraft:custom cassette.index.118
+function custom:music/calculate/main with storage minecraft:custom cassette.index.119
+function custom:music/calculate/main with storage minecraft:custom cassette.index.120
+function custom:music/calculate/main with storage minecraft:custom cassette.index.121
+function custom:music/calculate/main with storage minecraft:custom cassette.index.122
+function custom:music/calculate/main with storage minecraft:custom cassette.index.123
+function custom:music/calculate/main with storage minecraft:custom cassette.index.124
+function custom:music/calculate/main with storage minecraft:custom cassette.index.125
+function custom:music/calculate/main with storage minecraft:custom cassette.index.126
+function custom:music/calculate/main with storage minecraft:custom cassette.index.127
+function custom:music/calculate/main with storage minecraft:custom cassette.index.128
+function custom:music/calculate/main with storage minecraft:custom cassette.index.129
+function custom:music/calculate/main with storage minecraft:custom cassette.index.130
+function custom:music/calculate/main with storage minecraft:custom cassette.index.131
+function custom:music/calculate/main with storage minecraft:custom cassette.index.132
+function custom:music/calculate/main with storage minecraft:custom cassette.index.133
+function custom:music/calculate/main with storage minecraft:custom cassette.index.134
+function custom:music/calculate/main with storage minecraft:custom cassette.index.135

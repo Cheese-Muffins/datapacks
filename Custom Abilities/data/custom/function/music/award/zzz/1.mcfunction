@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-$playsound $(sfx) player @s ~ ~ ~
-$tellraw @a ["",{"selector":"@s"},{"text":" has collected the cassette "},{"text":"[$(name)]","color":"$(targeted_color)","hover_event":{"action":"show_text","value":$(built_hover)}}]
+$summon item ~ ~ ~ {Item:{id:"minecraft:phantom_membrane",count:1,components:{"minecraft:item_name":{"color":"$(color)","text":"$(name)","italic":false},"minecraft:food":{nutrition:0,saturation:0,can_always_eat:true},"minecraft:consumable":{consume_seconds:999999},"minecraft:max_stack_size":1,"minecraft:item_model":"minecraft:cassettes/$(song_id)","minecraft:custom_model_data":{floats:[0]},"minecraft:custom_data":{cassette_tape:1b,id:$(song_id)},"minecraft:lore":$(built_lore)}}}

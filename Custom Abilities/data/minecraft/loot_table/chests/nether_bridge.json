@@ -158,20 +158,6 @@
           "conditions": [],
           "functions": [
             {
-              "function": "minecraft:set_lore",
-              "entity": "this",
-              "lore": [
-                {
-                  "nbt": "cassette.index.11.name",
-                  "storage": "minecraft:custom",
-                  "source": "storage",
-                  "type": "nbt",
-                  "interpret": true
-                }
-              ],
-              "mode": "replace_all"
-            },
-            {
               "function": "minecraft:set_components",
               "components": {
                 "minecraft:item_name": {
@@ -196,6 +182,41 @@
                 },
                 "minecraft:custom_data": "{cassette_tape:1b,id:11}"
               }
+            },
+            {
+              "function": "minecraft:set_lore",
+              "entity": "this",
+              "lore": [
+                {
+                  "type": "nbt",
+                  "source": "storage",
+                  "storage": "minecraft:custom",
+                  "nbt": "cassette.index.11.built_lore[0]",
+                  "interpret": true
+                },
+                {
+                  "type": "nbt",
+                  "source": "storage",
+                  "storage": "minecraft:custom",
+                  "nbt": "cassette.index.11.built_lore[1]",
+                  "interpret": true
+                },
+                {
+                  "type": "nbt",
+                  "source": "storage",
+                  "storage": "minecraft:custom",
+                  "nbt": "cassette.index.11.built_lore[2]",
+                  "interpret": true
+                },
+                {
+                  "type": "nbt",
+                  "source": "storage",
+                  "storage": "minecraft:custom",
+                  "nbt": "cassette.index.11.built_lore[3]",
+                  "interpret": true
+                }
+              ],
+              "mode": "replace_all"
             }
           ]
         }

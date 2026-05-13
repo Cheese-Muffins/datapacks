@@ -1,7 +1,6 @@
 # Generated with MC-Build
 
-function custom:ui/player/tick
-function custom:music/award/challenge/main
-execute if entity @s[tag=customCassette.ConstantTick] run function custom:music/constant_tick/main
-execute if entity @s[tag=customConsumables.ConstantTick] run function custom:consumables/tick
-execute if score @s customUniversal.Disconnected matches 1.. run function custom:universal/disconnect/self/main
+execute if entity @s[tag=customUniversal.ConstantTick] run function custom:universal/constant_tick/main
+execute if entity @s[tag=customCassette.ConstantTick] run function custom:music/tick/scenario/all
+execute if entity @s[tag=customTrait.ConstantTick] run function custom:traits/tick
+execute as @s[type=chest_minecart,tag=ui] run function custom:ui/minecart/tick

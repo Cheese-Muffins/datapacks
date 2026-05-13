@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "player": {},
+        "items": [
+          {
+            "items": "minecraft:phantom_membrane",
+            "components": {
+              "minecraft:custom_data": "{cassette_tape:1b,id:13}"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ],
+  "rewards": {
+    "function": "custom:music/award/advancement"
+  },
+  "sends_telemetry_event": true
+}
