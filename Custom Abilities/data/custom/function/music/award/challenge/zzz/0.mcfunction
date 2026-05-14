@@ -5,5 +5,5 @@ tag @s add customCassette.ChallengeBlackholeSunTransforming
 scoreboard players set @s customCassette.ChallengeBlackholeSun 100
 setblock ~ ~ ~ minecraft:respawn_anchor[charges=0]
 playsound minecraft:block.respawn_anchor.deplete player @a ~ ~ ~ 0.5
-data merge entity @s {NoGravity:1b,PickupDelay:120,Motion:[0.0,0.0,0.0],Item:{components:{"minecraft:item_model":"minecraft:misc/blackhole_sun"}}}
-execute at @s align xyz positioned ~0.5 ~0.5 ~0.5 run tp @s ~ ~ ~
+kill @s[type=minecraft:item]
+execute at @s align xyz positioned ~0.5 ~ ~0.5 run function custom:music/award/challenge/zzz/1

@@ -5,6 +5,7 @@
 		"animated_java:billy_cutscenes/on_load",
 		"animated_java:billy_vfx/on_load",
 		"animated_java:billy/on_load",
+		"animated_java:cassette/on_load",
 		"animated_java:eren_vfx/on_load",
 		"animated_java:eren/on_load",
 		"animated_java:heads/on_load",

@@ -28,3 +28,7 @@ execute if entity @s[advancements={minecraft:adventure/overoverkill=true}] unles
 execute if entity @s[advancements={custom:cassettes/challenge/end_to_overworld=true}] unless entity @s[tag=customCassette.Unlocked20] run function custom:music/award/give {id:20}
 # Blackhole Sun
 execute if entity @s[advancements={custom:cassettes/challenge/hold/blackhole_sun=true}] unless entity @s[tag=customCassette.Unlocked21] run function custom:music/award/announce {id:21}
+# Adventure Of A Lifetime
+execute if entity @s[advancements={minecraft:adventure/adventuring_time=true}] unless entity @s[tag=customCassette.Unlocked28] run function custom:music/award/give {id:28}
+# Megalovania
+execute if entity @s[advancements={custom:cassettes/challenge/slay_sans=true}] unless entity @s[tag=customCassette.Unlocked30] run function custom:music/award/give {id:30}

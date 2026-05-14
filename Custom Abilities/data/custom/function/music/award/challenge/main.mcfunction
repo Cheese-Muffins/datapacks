@@ -24,3 +24,7 @@ execute if dimension minecraft:overworld if entity @s[y=500,dy=600] unless entit
 execute if score @s customCassette.ChallengeDefeatZombies matches 1.. if predicate custom:cassette/challenge/day unless entity @s[tag=customCassette.Unlocked24] run scoreboard players reset @s customCassette.ChallengeDefeatZombies
 # Cities
 execute if predicate custom:cassette/challenge/ancient_city unless entity @s[tag=customCassette.Unlocked26] run function custom:music/award/give {id:26}
+# Come As You Are
+execute if entity @n[type=#custom:monsters,distance=..7] if predicate custom:cassette/challenge/empty_inventory unless entity @s[tag=customCassette.Unlocked29] run function custom:music/award/challenge/come_as_you_are
+# Sometimes You're The Hammer, Sometimes You're The Nail
+execute if score @s customCassette.ChallengeUsedAnvil matches 1.. unless entity @s[tag=customCassette.Unlocked38] run function custom:music/award/challenge/hammer

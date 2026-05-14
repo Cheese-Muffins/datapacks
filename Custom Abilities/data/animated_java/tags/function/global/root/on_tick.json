@@ -5,6 +5,7 @@
 		"animated_java:billy_cutscenes/root/on_tick",
 		"animated_java:billy_vfx/root/on_tick",
 		"animated_java:billy/root/on_tick",
+		"animated_java:cassette/root/on_tick",
 		"animated_java:eren_vfx/root/on_tick",
 		"animated_java:eren/root/on_tick",
 		"animated_java:heads/root/on_tick",
