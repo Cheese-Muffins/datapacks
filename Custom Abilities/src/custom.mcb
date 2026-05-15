@@ -6515,6 +6515,7 @@ dir music {
         scoreboard objectives add customUI.CollectionSort dummy
         scoreboard objectives add customUI.CollectionOperation dummy
         scoreboard objectives add customUI.CollectionMaximumPage dummy
+        scoreboard objectives add customUI.Party dummy
         scoreboard objectives add customCassette.ErrorDelay dummy
         scoreboard objectives add customCassette.PlayID dummy
         scoreboard objectives add customCassette.PlayLast dummy
@@ -11403,7 +11404,7 @@ dir ui {
             dir cassettes {
                 dir menu {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Play Cassette(s)"},"minecraft:lore":[[{"text":"Listen to music from your own","italic":false,"color":"gray"}],["",{"text":"c","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":"l","italic":false,"color":"yellow"},{"text":"l","italic":false,"color":"green"},{"text":"e","italic":false,"color":"blue"},{"text":"c","italic":false,"color":"light_purple"},{"text":"t","italic":false,"color":"dark_purple"},{"text":"i","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":"n","italic":false,"color":"yellow"}],"",[{"text":"Behavior Style","italic":false,"color":"gold"}],["",{"text":"Playing from: ","italic":false,"color":"gray"},{"text":"$(play_type)","italic":false,"color":"green"}],["",{"text":"Feedback: ","italic":false,"color":"gray"},{"text":"Search","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/play/main"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Stop Cassette(s)"},"minecraft:lore":[[{"text":"Pause all feedback from the","italic":false,"color":"gray"}],[{"text":"cassette ","italic":false,"color":"gold"},{"text":"player ","italic":false,"color":"gold"},{"text":"and ongoing","italic":false,"color":"gray"}],[{"text":"songs","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/stop"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Collection"},"minecraft:lore":[[{"text":"The complete list of all ","italic":false,"color":"gray"},{"text":"obtainable ","italic":false,"color":"green"},{"text":"cassettes.","italic":false,"color":"gray"}],[{"text":"View ","italic":false,"color":"gray"},{"text":"obtainments,","italic":false,"color":"dark_aqua"},{"text":" create ","italic":false,"color":"gray"},{"text":"playlists","italic":false,"color":"light_purple"},{"text":", or browse","italic":false,"color":"gray"}],[{"text":"bonus","italic":false,"color":"yellow"},{"text":" songs","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/flip"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Listening Parties"},"minecraft:lore":[[{"text":"Create ","italic":false,"color":"green"},{"text":"or ","italic":false,"color":"gray"},{"text":"join ","italic":false,"color":"green"},{"text":"ongoing parties to showoff","italic":false,"color":"gray"}],[{"text":"your collection to friends","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/selection/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Observe various sets of data such as","italic":false,"color":"gray"}],[{"text":"collection progress","italic":false,"color":"gold"},{"text":",","italic":false,"color":"gold"},{"text":" ","italic":false,"color":"gray"},{"text":"playlist information,","italic":false,"color":"light_purple"},{"text":" ","italic":false,"color":"gray"}],[{"text":"or the ","italic":false,"color":"gray"},{"text":"server leaderboard","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"green","italic":false,"text":"Play Cassette(s)"},"minecraft:lore":[[{"text":"Listen to music from your own","italic":false,"color":"gray"}],["",{"text":"c","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":"l","italic":false,"color":"yellow"},{"text":"l","italic":false,"color":"green"},{"text":"e","italic":false,"color":"blue"},{"text":"c","italic":false,"color":"light_purple"},{"text":"t","italic":false,"color":"dark_purple"},{"text":"i","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":"n","italic":false,"color":"yellow"}],"",[{"text":"Behavior Style","italic":false,"color":"gold"}],["",{"text":"Playing from: ","italic":false,"color":"gray"},{"text":"$(play_type)","italic":false,"color":"green"}],["",{"text":"Feedback: ","italic":false,"color":"gray"},{"text":"Search","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/play/main"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Stop Cassette(s)"},"minecraft:lore":[[{"text":"Pause all feedback from the","italic":false,"color":"gray"}],[{"text":"cassette ","italic":false,"color":"gold"},{"text":"player ","italic":false,"color":"gold"},{"text":"and ongoing","italic":false,"color":"gray"}],[{"text":"songs","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/stop"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"gold","italic":false,"text":"Collection"},"minecraft:lore":[[{"text":"The complete list of all ","italic":false,"color":"gray"},{"text":"obtainable ","italic":false,"color":"green"},{"text":"cassettes.","italic":false,"color":"gray"}],[{"text":"View ","italic":false,"color":"gray"},{"text":"obtainments,","italic":false,"color":"dark_aqua"},{"text":" create ","italic":false,"color":"gray"},{"text":"playlists","italic":false,"color":"light_purple"},{"text":", or browse","italic":false,"color":"gray"}],[{"text":"bonus","italic":false,"color":"yellow"},{"text":" songs","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/flip"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Listening Parties"},"minecraft:lore":[[{"text":"Create ","italic":false,"color":"green"},{"text":"or ","italic":false,"color":"gray"},{"text":"join ","italic":false,"color":"green"},{"text":"ongoing parties to showoff","italic":false,"color":"gray"}],[{"text":"your collection to friends","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Observe various sets of data such as","italic":false,"color":"gray"}],[{"text":"collection progress","italic":false,"color":"gold"},{"text":",","italic":false,"color":"gold"},{"text":" ","italic":false,"color":"gray"},{"text":"playlist information,","italic":false,"color":"light_purple"},{"text":" ","italic":false,"color":"gray"}],[{"text":"or the ","italic":false,"color":"gray"},{"text":"server leaderboard","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/same"}}}}]
                     }
 
                     function open {
@@ -11502,9 +11503,18 @@ dir ui {
                             $stopsound @s record minecraft:cassette.$(last_played)
                             $playsound minecraft:cassette.$(lookup) record @s
 
+                            execute if entity @s[tag=customCassette.PartyHost] run function custom:ui/menu/pages/cassettes/menu/play/party
+
                             $tag @s add customCassette.Played_$(lookup)
                             $scoreboard players set @s customCassette.PlayLast $(lookup)
                             tag @s add temp
+                        }
+
+                        function party {
+                            execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
+                            block { with storage minecraft:custom cassette.party
+                                $say $(id)
+                            }
                         }
                     }
                 }
@@ -12181,6 +12191,91 @@ dir ui {
                         function custom:ui/menu/pages/cassettes/collection/open
                     }
                 }
+
+                dir party {
+                    function mask {
+                        $data modify storage ui mask set value [{Slot:3b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#04d600"},{"text":"a","italic":false,"color":"#04cf00"},{"text":"r","italic":false,"color":"#04c700"},{"text":"t","italic":false,"color":"#04c000"},{"text":"y","italic":false,"color":"#03b900"},{"text":" ","italic":false,"color":"#03b200"},{"text":"#","italic":false,"color":"#03aa00"},{"text":"1","italic":false,"color":"#03a300"}],"minecraft:lore":$(party1_lore),"minecraft:custom_data":{ui_item:{party_item:1b,party_id:1}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Main Menu","italic":false,"color":"gold"}],"minecraft:lore":[[{"text":"Return to the ","italic":false,"color":"gray"},{"text":"M","italic":false,"color":"gray"},{"text":"ain Page","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#24ff70"},{"text":"a","italic":false,"color":"#21f76b"},{"text":"r","italic":false,"color":"#1eef67"},{"text":"t","italic":false,"color":"#1be762"},{"text":"y","italic":false,"color":"#18df5d"},{"text":" ","italic":false,"color":"#15d758"},{"text":"D","italic":false,"color":"#12cf54"},{"text":"e","italic":false,"color":"#0fc64f"},{"text":"t","italic":false,"color":"#0cbe4a"},{"text":"a","italic":false,"color":"#09b645"},{"text":"i","italic":false,"color":"#06ae41"},{"text":"l","italic":false,"color":"#03a63c"},{"text":"s","italic":false,"color":"#009e37"}],"minecraft:lore":$(party_details),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/party","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/same"}}}}]
+                    }
+
+                    function open {
+                        execute at @s as @p run function custom:ui/menu/pages/cassettes/party/player
+                        function custom:ui/menu/pages/cassettes/party/mask with storage minecraft:ui cassette.party
+                        data modify storage ui current set from storage ui mask
+                        execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/cassettes/party/mask"
+                    }
+
+                    function player {
+                        scoreboard players reset .Incremental customUI.Party
+                        function custom:ui/menu/pages/cassettes/party/generate_slot
+                    }
+
+                    dir interact {
+                        function main {
+                            item replace block 0 -64 0 container.0 from entity @s player.cursor
+                            data modify storage minecraft:custom cassette.fetch.id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.party_id
+                            block { with storage minecraft:custom cassette.fetch
+                                $scoreboard players set @s customUI.Party $(id)
+
+                                $execute if score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/join with storage minecraft:custom cassette.fetch
+                                $execute unless score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/create with storage minecraft:custom cassette.fetch
+                            }
+
+                            execute as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/party/open
+                        }
+
+                        function join {
+                            say me in
+                        }
+
+                        function create {
+                            say me make
+
+                            tag @s add customCassette.PartyUser
+                            $tag @s add customCassette.Party$(id)Host
+                            $scoreboard players set .Party$(id) customUI.Party 1
+                        }
+                    }
+
+                    function generate_slot {
+                        scoreboard players add .Incremental customUI.Party 1
+                        execute store result storage minecraft:custom cassette.party.increment int 1 run scoreboard players get .Incremental customUI.Party
+                        block { with storage minecraft:custom cassette.party
+                            $data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"Start a party that ","italic":false,"color":"gray"},{"text":"others can join","italic":false,"color":"aqua"}]]}}}
+                            $execute if score .Party$(increment) customUI.Party matches 1.. run block { with storage minecraft:custom cassette.party
+                                $execute as @a[tag=customCassette.Party$(increment)Host] run {
+                                    execute store result storage minecraft:custom cassette.party.listeningID int 1 run scoreboard players get @s customCassette.PlayID
+                                    block { with storage minecraft:custom cassette.party
+                                        $data modify storage minecraft:custom cassette.party.name set from storage minecraft:custom cassette.index.$(listeningID).name
+                                        $data modify storage minecraft:custom cassette.party.artist set from storage minecraft:custom cassette.index.$(listeningID).artist
+                                        data modify storage minecraft:custom cassette.party.song_line set value [""]
+                                        data modify storage minecraft:custom cassette.party.song_line append from storage minecraft:custom cassette.party.name[]
+
+                                        block { with storage minecraft:custom cassette.party
+                                            $data modify storage minecraft:custom cassette.party.song_line append value [{"text":" by ","italic":false,"color":"gray"},{"text":"$(artist)","italic":false,"color":"yellow"}]
+                                        }
+                                    }
+                                    function custom:universal/fetch_username {path:"cassette.party"}
+                                }
+                                block { with storage minecraft:custom cassette.party
+                                    $data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],[{"text":"Members:","italic":false,"color":"gray"},{"text":" 1","italic":false,"color":"green"}]]}}}
+                                    $data merge storage minecraft:ui {cassette:{party:{party_details:[["",{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],["",{"text":"Members:","italic":false,"color":"gray"},{"text":" 1","italic":false,"color":"green"}],"",["",{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"et","italic":false,"color":"yellow"},{"text":"te","italic":false,"color":"green"},{"text":" S","italic":false,"color":"blue"},{"text":"on","italic":false,"color":"light_purple"},{"text":"g","italic":false,"color":"dark_purple"}],$(song_line)]}}}
+                                }
+                            }
+                        }
+                    }
+
+                    function same {
+                        execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
+                        function custom:ui/menu/pages/cassettes/party/open
+                    }
+
+                    function flip {
+                        execute at @s as @p run {
+                            playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                        }
+                        function custom:ui/menu/pages/cassettes/party/open
+                    }
+                }
             }
         }
 
@@ -12273,6 +12368,10 @@ dir ui {
                 execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function custom:ui/menu/pages/cassettes/collection/operation/main
                 execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function custom:ui/menu/pages/cassettes/collection/operation/main
                 execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function custom:ui/menu/pages/cassettes/collection/operation/main
+
+                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function custom:ui/menu/pages/cassettes/party/interact/main
+                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function custom:ui/menu/pages/cassettes/party/interact/main
+                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function custom:ui/menu/pages/cassettes/party/interact/main
 
                 execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchaseable_item:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/minecart/click/shop
                 execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/abilities/settings/default/flip
