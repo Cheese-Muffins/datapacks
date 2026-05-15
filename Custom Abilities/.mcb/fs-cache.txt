@@ -971,7 +971,7 @@ data\custom\function\music\award\zzz\1.mcfunction:aa8fa9bbda4a25f6e9761ea18a6bb5
 data\custom\function\music\award\summon.mcfunction:8451a1b7f99c68a7bf1f2a4bb6dc7a2c89746b06
 data\custom\function\music\award\zzz\2.mcfunction:7bf6ff9fd52b0225fedce94be4bcc5e1283353fe
 data\custom\function\music\award\announce.mcfunction:9d950e708c211e287b926dddc9da78daa87f730e
-data\custom\function\music\song_index.mcfunction:e8cd5c0fc67182dfed9e960dea05022970b5f11e
+data\custom\function\music\song_index.mcfunction:b802e98e8d2900ceab8c0e8f16f89711d59a6d17
 data\custom\function\traits\install.mcfunction:7fb14795f401bd2889483ad93f7dd6dbcb63cc76
 data\custom\function\traits\zzz\1.mcfunction:80e8b4a3b8dae73d9c191555a0929ae1429944ad
 data\custom\function\traits\zzz\2.mcfunction:c23312bcaaacca005b6e979a56d355c383e449a7
