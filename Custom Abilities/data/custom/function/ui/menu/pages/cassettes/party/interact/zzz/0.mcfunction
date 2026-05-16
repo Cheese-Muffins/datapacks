@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-$scoreboard players set @s customUI.Party $(id)
-$execute if score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/join with storage minecraft:custom cassette.fetch
-$execute unless score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/create with storage minecraft:custom cassette.fetch
+tellraw @s ["",{"text":"Cassette Player","color":"gold"},{"text":"\n"},{"text":"You're ","color":"gray"},{"text":"already ","color":"red"},{"text":"in a party!","color":"gray"}]
+playsound minecraft:block.anvil.land player @s ~ ~ ~ 0.5

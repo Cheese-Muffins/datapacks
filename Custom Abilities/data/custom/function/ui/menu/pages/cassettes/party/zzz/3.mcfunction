@@ -1,7 +1,8 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:custom cassette.party.name set from storage minecraft:custom cassette.index.$(listeningID).name
-$data modify storage minecraft:custom cassette.party.artist set from storage minecraft:custom cassette.index.$(listeningID).artist
-data modify storage minecraft:custom cassette.party.song_line set value [""]
-data modify storage minecraft:custom cassette.party.song_line append from storage minecraft:custom cassette.party.name[]
-function custom:ui/menu/pages/cassettes/party/zzz/4 with storage minecraft:custom cassette.party
+say member
+playsound minecraft:cassette.party.kick record @s ~ ~ ~ 1
+tag @s remove customCassette.PartyMember
+$tag @s remove customCassette.Party$(id)Member
+tag @s remove customCassette.PartyUser
+scoreboard players reset @s customUI.Party

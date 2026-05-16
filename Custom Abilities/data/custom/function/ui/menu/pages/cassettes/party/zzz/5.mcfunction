@@ -1,4 +1,6 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],[{"text":"Members:","italic":false,"color":"gray"},{"text":" 1","italic":false,"color":"green"}]]}}}
-$data merge storage minecraft:ui {cassette:{party:{party_details:[["",{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],["",{"text":"Members:","italic":false,"color":"gray"},{"text":" 1","italic":false,"color":"green"}],"",["",{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"et","italic":false,"color":"yellow"},{"text":"te","italic":false,"color":"green"},{"text":" S","italic":false,"color":"blue"},{"text":"on","italic":false,"color":"light_purple"},{"text":"g","italic":false,"color":"dark_purple"}],$(song_line)]}}}
+$data merge storage minecraft:ui {cassette:{party:{party$(increment)_item:"minecraft:cassettes/add"}}}
+$data merge storage minecraft:ui {cassette:{party:{party$(increment)_profile:""}}}
+$data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"This ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"},{"text":" is available","italic":false,"color":"gray"}]]}}}
+$execute if score .Party$(increment) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/zzz/6 with storage minecraft:custom cassette.party
