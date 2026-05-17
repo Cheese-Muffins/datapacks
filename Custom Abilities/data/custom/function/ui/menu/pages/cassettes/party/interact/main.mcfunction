@@ -6,4 +6,4 @@ data modify storage minecraft:custom cassette.fetch.id set from block 0 -64 0 It
 execute if entity @s[tag=customCassette.PartyUser] run function custom:ui/menu/pages/cassettes/party/interact/zzz/0
 # not in a party
 execute unless entity @s[tag=customCassette.PartyUser] run function custom:ui/menu/pages/cassettes/party/interact/zzz/1 with storage minecraft:custom cassette.fetch
-execute as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/party/open
+execute as @e[type=minecraft:chest_minecart,tag=ui,tag=customCassette.PartyMenu] at @s run function custom:ui/menu/pages/cassettes/party/interact/zzz/2

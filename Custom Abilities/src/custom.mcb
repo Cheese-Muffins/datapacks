@@ -11539,7 +11539,6 @@ dir ui {
 
                         function party {
                             execute as @e[type=minecraft:chest_minecart,tag=ui,tag=customCassette.PartyMenu] at @s run {
-                                summon cow ~ ~ ~
                                 function custom:ui/menu/pages/cassettes/party/open
                                 function custom:ui/menu/on_input
                             }
@@ -12239,8 +12238,8 @@ dir ui {
 
                     function player {
                         scoreboard players reset .Incremental customUI.Party
-                        data merge storage minecraft:ui {cassette:{party:{party_details:[[{"text":"You're ","italic":false,"color":"gray"},{"text":"not","italic":false,"color":"red"},{"text":" in a party","italic":false,"color":"gray"}]]}}}
-                        function custom:ui/menu/pages/cassettes/party/generate_slot
+                        function custom:ui/menu/pages/cassettes/party/generate/slot
+                        function custom:ui/menu/pages/cassettes/party/generate/details
                     }
 
                     function reconnect {
@@ -12286,12 +12285,13 @@ dir ui {
                     function leave {
                         execute at @s as @p run {
                             execute if entity @s[tag=customCassette.PartyUser] run {
+                                function custom:universal/fetch_username {path:"cassette.party"}
                                 execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
 
                                 # as host
                                 execute if entity @s[tag=customCassette.PartyHost] run block { with storage minecraft:custom cassette.party
-                                    $execute as @a[tag=customCassette.PartyMember] at @s if score @s customUI.Party matches $(id) run {
-                                        say member
+                                    $execute as @a[tag=customCassette.PartyMember,scores={customUI.Party=$(id)}] at @s run block { with storage minecraft:custom cassette.party
+                                        $toast @s minecraft:player_head[minecraft:profile="$(username)",minecraft:tooltip_display={hidden_components:["minecraft:profile"]}] [[{"text":"P","italic":false,"color":"#ffc72e"},{"text":"a","italic":false,"color":"#ffcb2f"},{"text":"r","italic":false,"color":"#ffcf2f"},{"text":"t","italic":false,"color":"#ffd330"},{"text":"y ","italic":false,"color":"#ffd831"},{"text":"#","italic":false,"color":"#ffe032"},{"text":"1","italic":false,"color":"#ffe433"}]] [[{"text":"Has been ","italic":false,"color":"gray"},{"text":"d","italic":false,"color":"#ff4242"},{"text":"i","italic":false,"color":"#f43a3a"},{"text":"s","italic":false,"color":"#e83232"},{"text":"b","italic":false,"color":"#dd2929"},{"text":"a","italic":false,"color":"#d12121"},{"text":"n","italic":false,"color":"#c61919"},{"text":"d","italic":false,"color":"#ba1111"},{"text":"e","italic":false,"color":"#af0808"},{"text":"d","italic":false,"color":"#a30000"}]]
                                         playsound minecraft:cassette.party.kick record @s ~ ~ ~ 1
                                         tag @s remove customCassette.PartyMember
                                         $tag @s remove customCassette.Party$(id)Member
@@ -12305,6 +12305,13 @@ dir ui {
 
                                 # as member
                                 execute if entity @s[tag=customCassette.PartyMember] run block { with storage minecraft:custom cassette.party
+                                    tag @s add temp
+                                    $execute as @a[scores={customUI.Party=$(id)}] at @s run block { with storage minecraft:custom cassette.party
+                                        playsound minecraft:cassette.party.leave record @s ~ ~ ~ 1
+                                        $execute unless entity @s[tag=temp] run toast @s minecraft:player_head[minecraft:profile="$(username)",minecraft:tooltip_display={hidden_components:["minecraft:profile"]}] [[{"text":"$(username)","italic":false,"color":"aqua"}]] [[{"text":"Left the ","italic":false,"color":"gray"},{"text":"P","italic":false,"color":"red"},{"text":"a","italic":false,"color":"gold"},{"text":"r","italic":false,"color":"yellow"},{"text":"t","italic":false,"color":"green"},{"text":"y","italic":false,"color":"blue"}]]
+                                    }
+                                    tag @s remove temp
+
                                     tag @s remove customCassette.PartyMember
                                     $tag @s remove customCassette.Party$(id)Member
                                     $scoreboard players remove .Party$(id) customUI.Party 1
@@ -12315,7 +12322,10 @@ dir ui {
                                 playsound minecraft:cassette.party.leave record @s ~ ~ ~ 1
                             }
                         }
-                        function custom:ui/menu/pages/cassettes/party/open
+                        execute as @e[type=minecraft:chest_minecart,tag=ui,tag=customCassette.PartyMenu] at @s run {
+                            function custom:ui/menu/pages/cassettes/party/open
+                            function custom:ui/menu/on_input
+                        }
                     }
 
                     dir interact {
@@ -12338,11 +12348,20 @@ dir ui {
                                 tag @s add customCassette.PartyUser
                             }
 
-                            execute as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/party/open
+                            execute as @e[type=minecraft:chest_minecart,tag=ui,tag=customCassette.PartyMenu] at @s run {
+                                function custom:ui/menu/pages/cassettes/party/open
+                                function custom:ui/menu/on_input
+                            }
                         }
 
                         function join {
-                            playsound minecraft:cassette.party.host record @s ~ ~ ~ 1
+                            tag @s add temp
+                            function custom:universal/fetch_username {path:"cassette.party"}
+                            $execute as @a[scores={customUI.Party=$(id)}] at @s run block { with storage minecraft:custom cassette.party
+                                $execute unless entity @s[tag=temp] run toast @s minecraft:player_head[minecraft:profile="$(username)",minecraft:tooltip_display={hidden_components:["minecraft:profile"]}] [[{"text":"$(username)","italic":false,"color":"aqua"}]] [[{"text":"Joined the ","italic":false,"color":"gray"},{"text":"P","italic":false,"color":"red"},{"text":"a","italic":false,"color":"gold"},{"text":"r","italic":false,"color":"yellow"},{"text":"t","italic":false,"color":"green"},{"text":"y","italic":false,"color":"blue"}]]
+                                playsound minecraft:cassette.party.host record @s ~ ~ ~ 1
+                            }
+                            tag @s remove temp
 
                             tag @s add customCassette.PartyMember
                             $tag @s add customCassette.Party$(id)Member
@@ -12358,20 +12377,41 @@ dir ui {
                         }
                     }
 
-                    function generate_slot {
-                        scoreboard players add .Incremental customUI.Party 1
-                        execute store result storage minecraft:custom cassette.party.increment int 1 run scoreboard players get .Incremental customUI.Party
-                        block { with storage minecraft:custom cassette.party
-                            $data merge storage minecraft:ui {cassette:{party:{party$(increment)_item:"minecraft:cassettes/add"}}}
-                            $data merge storage minecraft:ui {cassette:{party:{party$(increment)_profile:""}}}
-                            $data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"This ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"},{"text":" is available","italic":false,"color":"gray"}]]}}}
-                            
-                            $execute if score .Party$(increment) customUI.Party matches 1.. run block { with storage minecraft:custom cassette.party
-                                $execute as @a[tag=customCassette.Party$(increment)Host] run {
+                    dir generate {
+                        function slot {
+                            scoreboard players add .Incremental customUI.Party 1
+                            execute store result storage minecraft:custom cassette.party.increment int 1 run scoreboard players get .Incremental customUI.Party
+                            block { with storage minecraft:custom cassette.party
+                                $data merge storage minecraft:ui {cassette:{party:{party$(increment)_item:"minecraft:cassettes/add"}}}
+                                $data merge storage minecraft:ui {cassette:{party:{party$(increment)_profile:""}}}
+                                $data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"This ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"},{"text":" is available","italic":false,"color":"gray"}]]}}}
+                                
+                                $execute if score .Party$(increment) customUI.Party matches 1.. run block { with storage minecraft:custom cassette.party
+                                    $execute as @a[tag=customCassette.Party$(increment)Host] run block { with storage minecraft:custom cassette.party
+                                        function custom:universal/fetch_username {path:"cassette.party"}
+                                        $execute store result storage minecraft:custom cassette.party.member_count int 1 run scoreboard players get .Party$(increment) customUI.Party
+
+                                        block { with storage minecraft:custom cassette.party
+                                            $data merge storage minecraft:ui {cassette:{party:{party$(increment)_item:"minecraft:player_head"}}}
+                                            $data merge storage minecraft:ui {cassette:{party:{party$(increment)_profile:',"minecraft:profile":"$(username)","minecraft:tooltip_display":{hidden_components:["minecraft:profile"]}'}}}
+                                            $data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],[{"text":"Members:","italic":false,"color":"gray"},{"text":" $(member_count)","italic":false,"color":"green"}]]}}}
+                                        }
+                                    }
+                                }
+                            }
+                            execute unless score .Incremental customUI.Party matches 9.. run function custom:ui/menu/pages/cassettes/party/generate/slot
+                        }
+
+                        function details {
+                            data merge storage minecraft:ui {cassette:{party:{party_details:[[{"text":"You're ","italic":false,"color":"gray"},{"text":"not","italic":false,"color":"red"},{"text":" in a party","italic":false,"color":"gray"}]]}}}
+
+                            execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
+                            block { with storage minecraft:custom cassette.party
+                                $execute as @a[tag=customCassette.Party$(id)Host] run {
                                     function custom:universal/fetch_username {path:"cassette.party"}
                                     execute store result storage minecraft:custom cassette.party.listeningID int 1 run scoreboard players get @s customCassette.PlayID
                                     block { with storage minecraft:custom cassette.party
-                                        $execute store result storage minecraft:custom cassette.party.member_count int 1 run scoreboard players get .Party$(increment) customUI.Party
+                                        $execute store result storage minecraft:custom cassette.party.member_count int 1 run scoreboard players get .Party$(id) customUI.Party
                                         $data modify storage minecraft:custom cassette.party.name set from storage minecraft:custom cassette.index.$(listeningID).name
                                         $data modify storage minecraft:custom cassette.party.artist set from storage minecraft:custom cassette.index.$(listeningID).artist
                                         data modify storage minecraft:custom cassette.party.song_line set value [""]
@@ -12385,15 +12425,8 @@ dir ui {
                                         }
                                     }
                                 }
-
-                                block { with storage minecraft:custom cassette.party
-                                    $data merge storage minecraft:ui {cassette:{party:{party$(increment)_item:"minecraft:player_head"}}}
-                                    $data merge storage minecraft:ui {cassette:{party:{party$(increment)_profile:',"minecraft:profile":"$(username)","minecraft:tooltip_display":{hidden_components:["minecraft:profile"]}'}}}
-                                    $data merge storage minecraft:ui {cassette:{party:{party$(increment)_lore:[[{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],[{"text":"Members:","italic":false,"color":"gray"},{"text":" $(member_count)","italic":false,"color":"green"}]]}}}
-                                }
                             }
                         }
-                        execute unless score .Incremental customUI.Party matches 9.. run function custom:ui/menu/pages/cassettes/party/generate_slot
                     }
 
                     function same {

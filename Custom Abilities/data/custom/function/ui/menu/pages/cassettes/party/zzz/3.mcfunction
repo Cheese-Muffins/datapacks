@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
+function custom:universal/fetch_username {path:"cassette.party"}
 execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
 # as host
 execute if entity @s[tag=customCassette.PartyHost] run function custom:ui/menu/pages/cassettes/party/zzz/4 with storage minecraft:custom cassette.party
