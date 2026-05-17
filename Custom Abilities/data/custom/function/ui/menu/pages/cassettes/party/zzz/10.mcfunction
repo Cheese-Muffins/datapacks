@@ -1,3 +1,8 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ui {cassette:{party:{party_details:[["",{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],["",{"text":"Members:","italic":false,"color":"gray"},{"text":" $(member_count)","italic":false,"color":"green"}],"",["",{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"et","italic":false,"color":"yellow"},{"text":"te","italic":false,"color":"green"},{"text":" S","italic":false,"color":"blue"},{"text":"on","italic":false,"color":"light_purple"},{"text":"g","italic":false,"color":"dark_purple"}],$(song_line)]}}}
+$execute store result storage minecraft:custom cassette.party.member_count int 1 run scoreboard players get .Party$(increment) customUI.Party
+$data modify storage minecraft:custom cassette.party.name set from storage minecraft:custom cassette.index.$(listeningID).name
+$data modify storage minecraft:custom cassette.party.artist set from storage minecraft:custom cassette.index.$(listeningID).artist
+data modify storage minecraft:custom cassette.party.song_line set value [""]
+data modify storage minecraft:custom cassette.party.song_line append from storage minecraft:custom cassette.party.name[]
+function custom:ui/menu/pages/cassettes/party/zzz/11 with storage minecraft:custom cassette.party

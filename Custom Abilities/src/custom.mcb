@@ -6455,10 +6455,16 @@ dir abilities {
 dir music {
     dir tick {
         function main {
+            scoreboard players operation .Previous customCassette.PartyDisconnected = .Players customCassette.PartyDisconnected
+            execute store result score .Players customCassette.PartyDisconnected if entity @a[tag=customCassette.PartyUser]
+            execute if score .Previous customCassette.PartyDisconnected > .Players customCassette.PartyDisconnected run function custom:ui/menu/pages/cassettes/party/disconnect/main
+
             execute unless entity @s[scores={customCassette.ErrorDelay=0}] run {
                 execute if score @s customCassette.ErrorDelay matches 1.. run scoreboard players remove @s customCassette.ErrorDelay 1
             }
             execute at @s run function custom:music/award/challenge/main
+
+            execute if score @s customCassette.PartyDisconnected matches 1.. run function custom:ui/menu/pages/cassettes/party/reconnect
         }
 
         dir scenario {
@@ -6520,6 +6526,7 @@ dir music {
         scoreboard objectives add customCassette.PlayID dummy
         scoreboard objectives add customCassette.PlayLast dummy
         scoreboard objectives add customCassette.PlayIncremental dummy
+        scoreboard objectives add customCassette.PartyDisconnected minecraft.custom:minecraft.leave_game
 
 
         scoreboard objectives add customCassette.ChallengeConsumeCookie dummy
@@ -11512,7 +11519,6 @@ dir ui {
                         }
 
                         function reshuffle {
-                            say refresh
                             scoreboard players reset @s customCassette.PlayIncremental
                             REPEAT (1,105) as i {
                                 tag @s remove customCassette.Played_<%i%>
@@ -11539,7 +11545,7 @@ dir ui {
                             }
                             execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
                             block { with storage minecraft:custom cassette.party
-                                $say $(id)
+                                # $say $(id)
                             }
                         }
                     }
@@ -12224,7 +12230,6 @@ dir ui {
                     }
 
                     function open {
-                        say opened?
                         tag @s add customCassette.PartyMenu
                         execute at @s as @p run function custom:ui/menu/pages/cassettes/party/player
                         function custom:ui/menu/pages/cassettes/party/mask with storage minecraft:ui cassette.party
@@ -12236,6 +12241,46 @@ dir ui {
                         scoreboard players reset .Incremental customUI.Party
                         data merge storage minecraft:ui {cassette:{party:{party_details:[[{"text":"You're ","italic":false,"color":"gray"},{"text":"not","italic":false,"color":"red"},{"text":" in a party","italic":false,"color":"gray"}]]}}}
                         function custom:ui/menu/pages/cassettes/party/generate_slot
+                    }
+
+                    function reconnect {
+                        execute if entity @s[tag=customCassette.PartyUser] run {
+                            execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
+                            block { with storage minecraft:custom cassette.party
+                                tag @s remove customCassette.PartyMember
+                                $tag @s remove customCassette.Party$(id)Member
+                                tag @s remove customCassette.PartyHost
+                                $tag @s remove customCassette.Party$(id)Host
+                                tag @s remove customCassette.PartyUser
+                                scoreboard players reset @s customUI.Party
+                            }
+                        }
+                        scoreboard players reset @s customCassette.PartyDisconnected
+                    }
+
+                    dir disconnect {
+                        function main {
+                            scoreboard players reset .Incremental customUI.Party
+                            function custom:ui/menu/pages/cassettes/party/disconnect/incremental
+                        }
+
+                        function incremental {
+                            scoreboard players add .Incremental customUI.Party 1
+                            execute store result storage minecraft:custom cassette.party.increment int 1 run scoreboard players get .Incremental customUI.Party
+                            block { with storage minecraft:custom cassette.party
+                                $execute if score .Party$(increment) customUI.Party matches 1.. unless entity @a[tag=customCassette.Party$(increment)Host] run block { with storage minecraft:custom cassette.party
+                                    $execute as @a[tag=customCassette.Party$(id)Member] at @s run block { with storage minecraft:custom cassette.party
+                                        playsound minecraft:cassette.party.kick record @s ~ ~ ~ 1
+                                        tag @s remove customCassette.PartyMember
+                                        $tag @s remove customCassette.Party$(id)Member
+                                        tag @s remove customCassette.PartyUser
+                                        scoreboard players reset @s customUI.Party
+                                    }
+                                    $scoreboard players reset .Party$(increment) customUI.Party
+                                }
+                            }
+                            execute unless score .Incremental customUI.Party matches 9.. run function custom:ui/menu/pages/cassettes/party/disconnect/incremental
+                        }
                     }
 
                     function leave {
@@ -12326,7 +12371,6 @@ dir ui {
                                     function custom:universal/fetch_username {path:"cassette.party"}
                                     execute store result storage minecraft:custom cassette.party.listeningID int 1 run scoreboard players get @s customCassette.PlayID
                                     block { with storage minecraft:custom cassette.party
-                                        $say $(listeningID)
                                         $execute store result storage minecraft:custom cassette.party.member_count int 1 run scoreboard players get .Party$(increment) customUI.Party
                                         $data modify storage minecraft:custom cassette.party.name set from storage minecraft:custom cassette.index.$(listeningID).name
                                         $data modify storage minecraft:custom cassette.party.artist set from storage minecraft:custom cassette.index.$(listeningID).artist

@@ -1,6 +1,5 @@
 # Generated with MC-Build
 
-say refresh
 scoreboard players reset @s customCassette.PlayIncremental
 tag @s remove customCassette.Played_1
 tag @s remove customCassette.Played_2

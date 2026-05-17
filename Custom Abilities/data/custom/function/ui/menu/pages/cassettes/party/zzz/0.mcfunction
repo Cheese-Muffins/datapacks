@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-execute if entity @s[tag=customCassette.PartyUser] run function custom:ui/menu/pages/cassettes/party/zzz/1
+execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
+function custom:ui/menu/pages/cassettes/party/zzz/1 with storage minecraft:custom cassette.party
