@@ -6463,6 +6463,7 @@ dir music {
                 execute if score @s customCassette.ErrorDelay matches 1.. run scoreboard players remove @s customCassette.ErrorDelay 1
             }
             execute at @s run function custom:music/award/challenge/main
+            execute if entity @s[tag=customCassette.PlayingSong] run function custom:music/playing/main
 
             execute if score @s customCassette.PartyDisconnected matches 1.. run function custom:ui/menu/pages/cassettes/party/reconnect
         }
@@ -6525,6 +6526,8 @@ dir music {
         scoreboard objectives add customCassette.ErrorDelay dummy
         scoreboard objectives add customCassette.PlayID dummy
         scoreboard objectives add customCassette.PlayLast dummy
+        scoreboard objectives add customCassette.PlayDuration dummy
+        scoreboard objectives add customCassette.PlayDurationMax dummy
         scoreboard objectives add customCassette.PlayIncremental dummy
         scoreboard objectives add customCassette.PartyDisconnected minecraft.custom:minecraft.leave_game
 
@@ -6544,11 +6547,22 @@ dir music {
         function custom:music/song_index
     }
 
+    dir playing {
+        function main {
+            scoreboard players add @s customCassette.PlayDuration 1
+            execute if score @s customCassette.PlayDuration >= @s customCassette.PlayDurationMax run {
+                # play styles
+                function custom:ui/menu/pages/cassettes/menu/play/main
+            }
+        }
+    }
+
     dir calculate {
         function main {
             $function custom:music/calculate/rating with storage minecraft:custom cassette.index.$(song_id)
             $function custom:music/calculate/lore with storage minecraft:custom cassette.index.$(song_id)
             $function custom:music/calculate/hover with storage minecraft:custom cassette.index.$(song_id)
+            $function custom:music/calculate/real_time with storage minecraft:custom cassette.index.$(song_id)
         }
 
         function rating {
@@ -6619,6 +6633,10 @@ dir music {
                 $data modify storage minecraft:custom cassette.index.$(song_id).built_hover append value "\n"
                 $data modify storage minecraft:custom cassette.index.$(song_id).built_hover append from storage minecraft:custom cassette.index.$(song_id).obtainment[2]
             }
+        }
+
+        function real_time {
+            $execute store result storage minecraft:custom cassette.index.$(song_id).real_duration int 20 run data get storage minecraft:custom cassette.index.$(song_id).duration
         }
     }
 
@@ -11444,7 +11462,17 @@ dir ui {
                     function stop {
                         execute at @s as @p run {
                             stopsound @s record
+                            tag @s remove customCassette.PlayingSong
+                            scoreboard players reset @s customCassette.PlayDuration
+                            scoreboard players reset @s customCassette.PlayID
                             playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~ 0.5
+
+                            execute if entity @s[tag=customCassette.PartyHost] run {
+                                execute as @e[type=minecraft:chest_minecart,tag=ui,tag=customCassette.PartyMenu] at @s run {
+                                    function custom:ui/menu/pages/cassettes/party/open
+                                    function custom:ui/menu/on_input
+                                }
+                            }
                         }
                         function custom:ui/menu/pages/cassettes/menu/open
                     }
@@ -11452,6 +11480,7 @@ dir ui {
                     dir play {
                         function main {
                             execute at @s as @p run {
+                                scoreboard players reset @s customCassette.PlayDuration
                                 scoreboard players reset @s customCassette.PlayIncremental
                                 playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~ 0.5
                                 execute if score @s customUI.CollectionSort matches 1..4 run function custom:ui/menu/pages/cassettes/menu/play/all
@@ -11527,8 +11556,10 @@ dir ui {
                         }
 
                         function found {
+                            $scoreboard players set @s customCassette.PlayDurationMax $(real_duration)
                             $stopsound @s record minecraft:cassette.$(last_played)
                             $playsound minecraft:cassette.$(lookup) record @s
+                            tag @s add customCassette.PlayingSong
 
                             execute if entity @s[tag=customCassette.PartyHost] run function custom:ui/menu/pages/cassettes/menu/play/party
 
@@ -11542,9 +11573,13 @@ dir ui {
                                 function custom:ui/menu/pages/cassettes/party/open
                                 function custom:ui/menu/on_input
                             }
-                            execute store result storage minecraft:custom cassette.party.id int 1 run scoreboard players get @s customUI.Party
-                            block { with storage minecraft:custom cassette.party
-                                # $say $(id)
+
+                            execute store result storage minecraft:custom cassette.play.partyID int 1 run scoreboard players get @s customUI.Party
+                            block { with storage minecraft:custom cassette.play
+                                $execute as @a[tag=customCassette.Party$(partyID)Member] at @s run block { with storage minecraft:custom cassette.play
+                                    $stopsound @s record minecraft:cassette.$(last_played)
+                                    $playsound minecraft:cassette.$(lookup) record @s ~ ~ ~ 9999999999999
+                                }
                             }
                         }
                     }
@@ -11836,10 +11871,14 @@ dir ui {
                         }
 
                         function play {
+                            execute store result storage minecraft:custom cassette.fetch.last_played int 1 run scoreboard players get @s customCassette.PlayLast
                             $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=true}] run block { with storage minecraft:custom cassette.fetch
-                                stopsound @s record
+                                $stopsound @s record minecraft:cassette.$(last_played)
                                 playsound minecraft:entity.experience_orb.pickup record @s ~ ~ ~ 0.5
                                 $playsound minecraft:cassette.$(click_id) record @s ~ ~ ~ 999999999999999999999999999999999
+                                $scoreboard players set @s customCassette.PlayLast $(click_id)
+                                $scoreboard players set @s customCassette.PlayID $(click_id)
+                                execute if entity @s[tag=customCassette.PartyHost] run function custom:ui/menu/pages/cassettes/menu/play/party
                             }
 
                             $execute if entity @s[advancements={custom:cassettes/ownership/$(click_id)=false}] run {
@@ -12225,7 +12264,7 @@ dir ui {
 
                 dir party {
                     function mask {
-                        $data modify storage ui mask set value [{Slot:3b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(party1_item)","minecraft:item_name":[{"text":"P","italic":false,"color":"#ffc72e"},{"text":"a","italic":false,"color":"#ffcb2f"},{"text":"r","italic":false,"color":"#ffcf2f"},{"text":"t","italic":false,"color":"#ffd330"},{"text":"y","italic":false,"color":"#ffd831"},{"text":" ","italic":false,"color":"#ffdc32"},{"text":"#","italic":false,"color":"#ffe032"},{"text":"1","italic":false,"color":"#ffe433"}],"minecraft:lore":$(party1_lore)$(party1_profile),"minecraft:custom_data":{ui_item:{party_item:1b,party_id:1}}}},{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(party2_item)","minecraft:item_name":[{"text":"P","italic":false,"color":"#ffc72e"},{"text":"a","italic":false,"color":"#ffcb2f"},{"text":"r","italic":false,"color":"#ffcf2f"},{"text":"t","italic":false,"color":"#ffd330"},{"text":"y","italic":false,"color":"#ffd831"},{"text":" ","italic":false,"color":"#ffdc32"},{"text":"#","italic":false,"color":"#ffe032"},{"text":"2","italic":false,"color":"#ffe433"}],"minecraft:lore":$(party2_lore)$(party2_profile),"minecraft:custom_data":{ui_item:{party_item:1b,party_id:2}}}},{Slot:7b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"L","italic":false,"color":"#ff4242"},{"text":"e","italic":false,"color":"#f63b3b"},{"text":"a","italic":false,"color":"#ed3535"},{"text":"v","italic":false,"color":"#e32e2e"},{"text":"e","italic":false,"color":"#da2828"},{"text":" ","italic":false,"color":"#d12121"},{"text":"P","italic":false,"color":"#c81a1a"},{"text":"a","italic":false,"color":"#bf1414"},{"text":"r","italic":false,"color":"#b50d0d"},{"text":"t","italic":false,"color":"#ac0707"},{"text":"y","italic":false,"color":"#a30000"}],"minecraft:lore":[["",{"text":"Disconnect","italic":false,"color":"white"},{"text":" ","italic":false,"color":"white"},{"text":"from the ongoing","italic":false,"color":"gray"}],["",{"text":"party, stopping ","italic":false,"color":"gray"},{"text":"ongoing songs","italic":false,"color":"yellow"}],"",["",{"text":"WARNING:","italic":false,"color":"dark_red"},{"text":" Leaving as a ","italic":false,"color":"gray"},{"text":"host","italic":false,"color":"aqua"},{"text":" will","italic":false,"color":"gray"}],["",{"text":"remove","italic":false,"color":"white"},{"text":" ","italic":false,"color":"white"},{"text":"everyone else from","italic":false,"color":"gray"}],["",{"text":"the ","italic":false,"color":"gray"},{"text":"ongoing party","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/leave"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Main Menu","italic":false,"color":"gold"}],"minecraft:lore":[[{"text":"Return to the ","italic":false,"color":"gray"},{"text":"M","italic":false,"color":"gray"},{"text":"ain Page","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#24ff70"},{"text":"a","italic":false,"color":"#21f76b"},{"text":"r","italic":false,"color":"#1eef67"},{"text":"t","italic":false,"color":"#1be762"},{"text":"y","italic":false,"color":"#18df5d"},{"text":" ","italic":false,"color":"#15d758"},{"text":"D","italic":false,"color":"#12cf54"},{"text":"e","italic":false,"color":"#0fc64f"},{"text":"t","italic":false,"color":"#0cbe4a"},{"text":"a","italic":false,"color":"#09b645"},{"text":"i","italic":false,"color":"#06ae41"},{"text":"l","italic":false,"color":"#03a63c"},{"text":"s","italic":false,"color":"#009e37"}],"minecraft:lore":$(party_details),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/party","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/same"}}}}]
+                        $data modify storage ui mask set value [{Slot:3b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(party1_item)","minecraft:item_name":[{"text":"P","italic":false,"color":"#ffc72e"},{"text":"a","italic":false,"color":"#ffcb2f"},{"text":"r","italic":false,"color":"#ffcf2f"},{"text":"t","italic":false,"color":"#ffd330"},{"text":"y","italic":false,"color":"#ffd831"},{"text":" ","italic":false,"color":"#ffdc32"},{"text":"#","italic":false,"color":"#ffe032"},{"text":"1","italic":false,"color":"#ffe433"}],"minecraft:lore":$(party1_lore)$(party1_profile),"minecraft:custom_data":{ui_item:{party_item:1b,party_id:1}}}},{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(party2_item)","minecraft:item_name":[{"text":"P","italic":false,"color":"#ffc72e"},{"text":"a","italic":false,"color":"#ffcb2f"},{"text":"r","italic":false,"color":"#ffcf2f"},{"text":"t","italic":false,"color":"#ffd330"},{"text":"y","italic":false,"color":"#ffd831"},{"text":" ","italic":false,"color":"#ffdc32"},{"text":"#","italic":false,"color":"#ffe032"},{"text":"2","italic":false,"color":"#ffe433"}],"minecraft:lore":$(party2_lore)$(party2_profile),"minecraft:custom_data":{ui_item:{party_item:1b,party_id:2}}}},{Slot:5b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(party3_item)","minecraft:item_name":[{"text":"P","italic":false,"color":"#ffc72e"},{"text":"a","italic":false,"color":"#ffcb2f"},{"text":"r","italic":false,"color":"#ffcf2f"},{"text":"t","italic":false,"color":"#ffd330"},{"text":"y","italic":false,"color":"#ffd831"},{"text":" ","italic":false,"color":"#ffdc32"},{"text":"#","italic":false,"color":"#ffe032"},{"text":"3","italic":false,"color":"#ffe433"}],"minecraft:lore":$(party3_lore)$(party3_profile),"minecraft:custom_data":{ui_item:{party_item:1b,party_id:3}}}},{Slot:7b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"L","italic":false,"color":"#ff4242"},{"text":"e","italic":false,"color":"#f63b3b"},{"text":"a","italic":false,"color":"#ed3535"},{"text":"v","italic":false,"color":"#e32e2e"},{"text":"e","italic":false,"color":"#da2828"},{"text":" ","italic":false,"color":"#d12121"},{"text":"P","italic":false,"color":"#c81a1a"},{"text":"a","italic":false,"color":"#bf1414"},{"text":"r","italic":false,"color":"#b50d0d"},{"text":"t","italic":false,"color":"#ac0707"},{"text":"y","italic":false,"color":"#a30000"}],"minecraft:lore":[["",{"text":"Disconnect","italic":false,"color":"white"},{"text":" ","italic":false,"color":"white"},{"text":"from the ongoing","italic":false,"color":"gray"}],["",{"text":"party, stopping ","italic":false,"color":"gray"},{"text":"ongoing songs","italic":false,"color":"yellow"}],"",["",{"text":"WARNING:","italic":false,"color":"dark_red"},{"text":" Leaving as a ","italic":false,"color":"gray"},{"text":"host","italic":false,"color":"aqua"},{"text":" will","italic":false,"color":"gray"}],["",{"text":"remove","italic":false,"color":"white"},{"text":" ","italic":false,"color":"white"},{"text":"everyone else from","italic":false,"color":"gray"}],["",{"text":"the ","italic":false,"color":"gray"},{"text":"ongoing party","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/leave"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Main Menu","italic":false,"color":"gold"}],"minecraft:lore":[[{"text":"Return to the ","italic":false,"color":"gray"},{"text":"M","italic":false,"color":"gray"},{"text":"ain Page","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#24ff70"},{"text":"a","italic":false,"color":"#21f76b"},{"text":"r","italic":false,"color":"#1eef67"},{"text":"t","italic":false,"color":"#1be762"},{"text":"y","italic":false,"color":"#18df5d"},{"text":" ","italic":false,"color":"#15d758"},{"text":"D","italic":false,"color":"#12cf54"},{"text":"e","italic":false,"color":"#0fc64f"},{"text":"t","italic":false,"color":"#0cbe4a"},{"text":"a","italic":false,"color":"#09b645"},{"text":"i","italic":false,"color":"#06ae41"},{"text":"l","italic":false,"color":"#03a63c"},{"text":"s","italic":false,"color":"#009e37"}],"minecraft:lore":$(party_details),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/same"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/party","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/same"}}}}]
                     }
 
                     function open {
@@ -12310,11 +12349,21 @@ dir ui {
                                         playsound minecraft:cassette.party.leave record @s ~ ~ ~ 1
                                         $execute unless entity @s[tag=temp] run toast @s minecraft:player_head[minecraft:profile="$(username)",minecraft:tooltip_display={hidden_components:["minecraft:profile"]}] [[{"text":"$(username)","italic":false,"color":"aqua"}]] [[{"text":"Left the ","italic":false,"color":"gray"},{"text":"P","italic":false,"color":"red"},{"text":"a","italic":false,"color":"gold"},{"text":"r","italic":false,"color":"yellow"},{"text":"t","italic":false,"color":"green"},{"text":"y","italic":false,"color":"blue"}]]
                                     }
-                                    tag @s remove temp
+
+                                    $execute as @a[tag=customCassette.Party$(id)Host] run {
+                                        execute if entity @s[tag=customCassette.PlayingSong] run block { with storage minecraft:custom cassette.party
+                                            execute store result storage minecraft:custom cassette.party.lookup int 1 run scoreboard players get @s customCassette.PlayID
+                                            $execute as @a[tag=customCassette.Party$(id)Member,tag=temp] run block { with storage minecraft:custom cassette.party
+                                                $stopsound @s record minecraft:cassette.$(lookup)
+                                            }
+                                        }
+                                    }
 
                                     tag @s remove customCassette.PartyMember
                                     $tag @s remove customCassette.Party$(id)Member
                                     $scoreboard players remove .Party$(id) customUI.Party 1
+
+                                    tag @s remove temp
                                 }
 
                                 tag @s remove customCassette.PartyUser
@@ -12331,19 +12380,19 @@ dir ui {
                     dir interact {
                         function main {
                             item replace block 0 -64 0 container.0 from entity @s player.cursor
-                            data modify storage minecraft:custom cassette.fetch.id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.party_id
+                            data modify storage minecraft:custom cassette.party.id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.party_id
                             # already in party
                             execute if entity @s[tag=customCassette.PartyUser] run {
                                 tellraw @s ["",{"text":"Cassette Player","color":"gold"},{"text":"\n"},{"text":"You're ","color":"gray"},{"text":"already ","color":"red"},{"text":"in a party!","color":"gray"}]
-                                playsound minecraft:block.anvil.land player @s ~ ~ ~ 0.5
+                                playsound minecraft:block.anvil.land record @s ~ ~ ~ 0.5
                             }
 
                             # not in a party
-                            execute unless entity @s[tag=customCassette.PartyUser] run block { with storage minecraft:custom cassette.fetch
+                            execute unless entity @s[tag=customCassette.PartyUser] run block { with storage minecraft:custom cassette.party
                                 $scoreboard players set @s customUI.Party $(id)
 
-                                $execute if score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/join with storage minecraft:custom cassette.fetch
-                                $execute unless score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/create with storage minecraft:custom cassette.fetch
+                                $execute if score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/join with storage minecraft:custom cassette.party
+                                $execute unless score .Party$(id) customUI.Party matches 1.. run function custom:ui/menu/pages/cassettes/party/interact/create with storage minecraft:custom cassette.party
 
                                 tag @s add customCassette.PartyUser
                             }
@@ -12361,11 +12410,28 @@ dir ui {
                                 $execute unless entity @s[tag=temp] run toast @s minecraft:player_head[minecraft:profile="$(username)",minecraft:tooltip_display={hidden_components:["minecraft:profile"]}] [[{"text":"$(username)","italic":false,"color":"aqua"}]] [[{"text":"Joined the ","italic":false,"color":"gray"},{"text":"P","italic":false,"color":"red"},{"text":"a","italic":false,"color":"gold"},{"text":"r","italic":false,"color":"yellow"},{"text":"t","italic":false,"color":"green"},{"text":"y","italic":false,"color":"blue"}]]
                                 playsound minecraft:cassette.party.host record @s ~ ~ ~ 1
                             }
-                            tag @s remove temp
 
                             tag @s add customCassette.PartyMember
                             $tag @s add customCassette.Party$(id)Member
                             $scoreboard players add .Party$(id) customUI.Party 1
+
+                            $execute as @a[tag=customCassette.Party$(id)Host] run {
+                                execute if entity @s[tag=customCassette.PlayingSong] run block { with storage minecraft:custom cassette.party
+                                    scoreboard players operation .Multiplied customCassette.PlayDuration = @s customCassette.PlayDuration
+                                    function custom:universal/math/division {division_value:20,score:".Multiplied",objective:"customCassette.PlayDuration"}
+                                    execute store result storage minecraft:custom cassette.party.songOffset int 1 run scoreboard players get .Multiplied customCassette.PlayDuration
+                                    execute store result storage minecraft:custom cassette.party.lookup int 1 run scoreboard players get @s customCassette.PlayID
+                                    $execute as @a[tag=customCassette.Party$(id)Member,tag=temp] run block { with storage minecraft:custom cassette.party
+                                        execute store result storage minecraft:custom cassette.party.last_played int 1 run scoreboard players get @s customCassette.PlayLast
+                                        block { with storage minecraft:custom cassette.party
+                                            $stopsound @s record minecraft:cassette.$(last_played)
+                                            $playsound minecraft:cassette.$(lookup) record @s ~ ~ ~ 9999999999999 1 $(songOffset)
+                                        }
+                                    }
+                                }
+                            }
+
+                            tag @s remove temp
                         }
 
                         function create {
@@ -12412,15 +12478,20 @@ dir ui {
                                     execute store result storage minecraft:custom cassette.party.listeningID int 1 run scoreboard players get @s customCassette.PlayID
                                     block { with storage minecraft:custom cassette.party
                                         $execute store result storage minecraft:custom cassette.party.member_count int 1 run scoreboard players get .Party$(id) customUI.Party
-                                        $data modify storage minecraft:custom cassette.party.name set from storage minecraft:custom cassette.index.$(listeningID).name
-                                        $data modify storage minecraft:custom cassette.party.artist set from storage minecraft:custom cassette.index.$(listeningID).artist
-                                        data modify storage minecraft:custom cassette.party.song_line set value [""]
-                                        data modify storage minecraft:custom cassette.party.song_line append from storage minecraft:custom cassette.party.name[]
+                                        execute unless score @s customCassette.PlayID matches 1.. run block { with storage minecraft:custom cassette.party
+                                            $data merge storage minecraft:ui {cassette:{party:{party_details:[["",{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],["",{"text":"Members:","italic":false,"color":"gray"},{"text":" $(member_count)","italic":false,"color":"green"}],"",["",{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"et","italic":false,"color":"yellow"},{"text":"te","italic":false,"color":"green"},{"text":" S","italic":false,"color":"blue"},{"text":"on","italic":false,"color":"light_purple"},{"text":"g","italic":false,"color":"dark_purple"}],[{"text":"N","italic":false,"color":"#9e9e9e"},{"text":"o","italic":false,"color":"#919191"},{"text":"t","italic":false,"color":"#858585"},{"text":"h","italic":false,"color":"#787878"},{"text":"i","italic":false,"color":"#6b6b6b"},{"text":"n","italic":false,"color":"#5e5e5e"},{"text":"g","italic":false,"color":"#525252"},{"text":" :(","italic":false,"color":"#454545"}]]}}}
+                                        }
+                                        execute if score @s customCassette.PlayID matches 1.. run block { with storage minecraft:custom cassette.party
+                                            $data modify storage minecraft:custom cassette.party.name set from storage minecraft:custom cassette.index.$(listeningID).name
+                                            $data modify storage minecraft:custom cassette.party.artist set from storage minecraft:custom cassette.index.$(listeningID).artist
+                                            data modify storage minecraft:custom cassette.party.song_line set value [""]
+                                            data modify storage minecraft:custom cassette.party.song_line append from storage minecraft:custom cassette.party.name[]
 
-                                        block { with storage minecraft:custom cassette.party
-                                            $data modify storage minecraft:custom cassette.party.song_line append value [{"text":" by ","italic":false,"color":"gray"},{"text":"$(artist)","italic":false,"color":"yellow"}]
                                             block { with storage minecraft:custom cassette.party
-                                                $data merge storage minecraft:ui {cassette:{party:{party_details:[["",{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],["",{"text":"Members:","italic":false,"color":"gray"},{"text":" $(member_count)","italic":false,"color":"green"}],"",["",{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"et","italic":false,"color":"yellow"},{"text":"te","italic":false,"color":"green"},{"text":" S","italic":false,"color":"blue"},{"text":"on","italic":false,"color":"light_purple"},{"text":"g","italic":false,"color":"dark_purple"}],$(song_line)]}}}
+                                                $data modify storage minecraft:custom cassette.party.song_line append value [{"text":" by ","italic":false,"color":"gray"},{"text":"$(artist)","italic":false,"color":"yellow"}]
+                                                block { with storage minecraft:custom cassette.party
+                                                    $data merge storage minecraft:ui {cassette:{party:{party_details:[["",{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],["",{"text":"Members:","italic":false,"color":"gray"},{"text":" $(member_count)","italic":false,"color":"green"}],"",["",{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"et","italic":false,"color":"yellow"},{"text":"te","italic":false,"color":"green"},{"text":" S","italic":false,"color":"blue"},{"text":"on","italic":false,"color":"light_purple"},{"text":"g","italic":false,"color":"dark_purple"}],$(song_line)]}}}
+                                                }
                                             }
                                         }
                                     }

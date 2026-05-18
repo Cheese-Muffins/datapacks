@@ -10,6 +10,8 @@ scoreboard objectives add customUI.Party dummy
 scoreboard objectives add customCassette.ErrorDelay dummy
 scoreboard objectives add customCassette.PlayID dummy
 scoreboard objectives add customCassette.PlayLast dummy
+scoreboard objectives add customCassette.PlayDuration dummy
+scoreboard objectives add customCassette.PlayDurationMax dummy
 scoreboard objectives add customCassette.PlayIncremental dummy
 scoreboard objectives add customCassette.PartyDisconnected minecraft.custom:minecraft.leave_game
 scoreboard objectives add customCassette.ChallengeConsumeCookie dummy

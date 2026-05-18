@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-function custom:ui/menu/pages/cassettes/party/open
-function custom:ui/menu/on_input
+execute if entity @s[tag=customCassette.PlayingSong] run function custom:ui/menu/pages/cassettes/party/zzz/9 with storage minecraft:custom cassette.party
