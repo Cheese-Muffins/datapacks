@@ -3,4 +3,4 @@
 playsound minecraft:cassette.party.host record @s ~ ~ ~ 1
 tag @s add customCassette.PartyHost
 $tag @s add customCassette.Party$(id)Host
-$scoreboard players set .Party$(id) customUI.Party 1
+$scoreboard players set .Party$(id) customUI.CassetteParty 1

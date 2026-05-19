@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
-execute unless score @s customUI.Collection matches 1.. run scoreboard players set @s customUI.Collection 1
-execute unless score @s customUI.CollectionOperation matches 1.. run scoreboard players set @s customUI.CollectionOperation 1
+execute unless score @s customUI.CassetteCollection matches 1.. run scoreboard players set @s customUI.CassetteCollection 1
+execute unless score @s customUI.CassetteCollectionOperation matches 1.. run scoreboard players set @s customUI.CassetteCollectionOperation 1
 function custom:ui/menu/pages/cassettes/collection/operation/load
 function custom:ui/menu/pages/cassettes/collection/sort/load
 #   Sort Styles   #

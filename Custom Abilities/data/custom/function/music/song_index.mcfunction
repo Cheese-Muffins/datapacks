@@ -238,202 +238,206 @@ data merge storage minecraft:custom {cassette:{index:{59:{artist:"Friday Pilot C
 data merge storage minecraft:custom {cassette:{index:{59:{name:[{"text":"Look Better In Gold","italic":false,"color":"yellow"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{59:{obtainment:[[{"text":"Equip an entire set of ","italic":false,"color":"gray"},{"text":"golden armor","italic":false,"color":"light_purple"}],[{"text":"trimmed","italic":false,"color":"yellow"},{"text":" with any kind of ","italic":false,"color":"gray"},{"text":"golden trim","italic":false,"color":"light_purple"}]]}}}}
 # 60 - Crab Rave
-data merge storage minecraft:custom {cassette:{index:{60:{artist:"Noise Storm",duration:161,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{60:{artist:"Noise Storm",duration:161,rating:0,song_id:60}}}}
 data merge storage minecraft:custom {cassette:{index:{60:{name:[{"text":"Crab Rave","italic":false,"color":"dark_red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{60:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 61 - All I Need
-data merge storage minecraft:custom {cassette:{index:{61:{artist:"Slushii",duration:227,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{61:{artist:"Slushii",duration:227,rating:0,song_id:61}}}}
 data merge storage minecraft:custom {cassette:{index:{61:{name:[{"text":"All I Need","italic":false,"color":"dark_purple"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{61:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 62 - You and I
-data merge storage minecraft:custom {cassette:{index:{62:{artist:"Barns Courtney",duration:180,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{62:{artist:"Barns Courtney",duration:180,rating:0,song_id:62}}}}
 data merge storage minecraft:custom {cassette:{index:{62:{name:[{"text":"You and I","italic":false,"color":"red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{62:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 63 - Amongus Drip
-data merge storage minecraft:custom {cassette:{index:{63:{artist:"Leonz",duration:75,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{63:{artist:"Leonz",duration:75,rating:0,song_id:63}}}}
 data merge storage minecraft:custom {cassette:{index:{63:{name:[{"text":"Amongus Drip","italic":false,"color":"dark_red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{63:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 64 - Baby Blue
-data merge storage minecraft:custom {cassette:{index:{64:{artist:"Badfinger",duration:216,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{64:{artist:"Badfinger",duration:216,rating:0,song_id:64}}}}
 data merge storage minecraft:custom {cassette:{index:{64:{name:[{"text":"Baby Blue","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{64:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 65 - RED
-data merge storage minecraft:custom {cassette:{index:{65:{artist:"SiM",duration:234,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{65:{artist:"SiM",duration:234,rating:0,song_id:65}}}}
 data merge storage minecraft:custom {cassette:{index:{65:{name:[{"text":"RED","italic":false,"color":"dark_red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{65:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 66 - on the verge
-data merge storage minecraft:custom {cassette:{index:{66:{artist:"thrown",duration:135,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{66:{artist:"thrown",duration:135,rating:0,song_id:66}}}}
 data merge storage minecraft:custom {cassette:{index:{66:{name:[{"text":"on the verge","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{66:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 67 - Money Trees
-data merge storage minecraft:custom {cassette:{index:{67:{artist:"Kendrick Lamar",duration:350,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{67:{artist:"Kendrick Lamar",duration:350,rating:0,song_id:67}}}}
 data merge storage minecraft:custom {cassette:{index:{67:{name:[{"text":"Money Trees","italic":false,"color":"dark_green"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{67:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 68 - Mukanjyo
-data merge storage minecraft:custom {cassette:{index:{68:{artist:"Survive Said The Prophet",duration:187,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{68:{artist:"Survive Said The Prophet",duration:187,rating:0,song_id:68}}}}
 data merge storage minecraft:custom {cassette:{index:{68:{name:[{"text":"Mukanjyo","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{68:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 69 - ???
-data merge storage minecraft:custom {cassette:{index:{69:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{69:{artist:"???",duration:0,rating:0,song_id:69}}}}
 data merge storage minecraft:custom {cassette:{index:{69:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{69:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 70 - ???
-data merge storage minecraft:custom {cassette:{index:{70:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{70:{artist:"???",duration:0,rating:0,song_id:70}}}}
 data merge storage minecraft:custom {cassette:{index:{70:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{70:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 71 - Cruel Angel's Thesis
-data merge storage minecraft:custom {cassette:{index:{71:{artist:"Yoko Takahashi",duration:244,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{71:{artist:"Yoko Takahashi",duration:244,rating:0,song_id:71}}}}
 data merge storage minecraft:custom {cassette:{index:{71:{name:[{"text":"Cruel Angel's Thesis","italic":false,"color":"aqua"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{71:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 72 - Paradise
-data merge storage minecraft:custom {cassette:{index:{72:{artist:"Coldplay",duration:255,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{72:{artist:"Coldplay",duration:255,rating:0,song_id:72}}}}
 data merge storage minecraft:custom {cassette:{index:{72:{name:[{"text":"Paradise","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{72:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 73 - Old Me
-data merge storage minecraft:custom {cassette:{index:{73:{artist:"5 Seconds of Summer",duration:184,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{73:{artist:"5 Seconds of Summer",duration:184,rating:0,song_id:73}}}}
 data merge storage minecraft:custom {cassette:{index:{73:{name:[{"text":"Old Me","italic":false,"color":"aqua"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{73:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 74 - ???
-data merge storage minecraft:custom {cassette:{index:{74:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{74:{artist:"???",duration:0,rating:0,song_id:74}}}}
 data merge storage minecraft:custom {cassette:{index:{74:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{74:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 75 - ???
-data merge storage minecraft:custom {cassette:{index:{75:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{75:{artist:"???",duration:0,rating:0,song_id:75}}}}
 data merge storage minecraft:custom {cassette:{index:{75:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{75:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 76 - ???
-data merge storage minecraft:custom {cassette:{index:{76:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{76:{artist:"???",duration:0,rating:0,song_id:76}}}}
 data merge storage minecraft:custom {cassette:{index:{76:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{76:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 77 - Under the Tree
-data merge storage minecraft:custom {cassette:{index:{77:{artist:"SiM",duration:270,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{77:{artist:"SiM",duration:270,rating:0,song_id:77}}}}
 data merge storage minecraft:custom {cassette:{index:{77:{name:[{"text":"Under the Tree","italic":false,"color":"red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{77:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 78 - Red Swan
-data merge storage minecraft:custom {cassette:{index:{78:{artist:"YOSHIKI feat. HYDE",duration:270,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{78:{artist:"YOSHIKI feat. HYDE",duration:270,rating:0,song_id:78}}}}
 data merge storage minecraft:custom {cassette:{index:{78:{name:[{"text":"Red Swan","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{78:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 79 - ???
-data merge storage minecraft:custom {cassette:{index:{79:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{79:{artist:"???",duration:0,rating:0,song_id:79}}}}
 data merge storage minecraft:custom {cassette:{index:{79:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{79:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 80 - American Idiot
-data merge storage minecraft:custom {cassette:{index:{80:{artist:"Green Day",duration:175,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{80:{artist:"Green Day",duration:175,rating:0,song_id:80}}}}
 data merge storage minecraft:custom {cassette:{index:{80:{name:[{"text":"American Idiot","italic":false,"color":"yellow"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{80:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 81 - K21
-data merge storage minecraft:custom {cassette:{index:{81:{artist:"Hiroyuki Sawano",duration:203,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{81:{artist:"Hiroyuki Sawano",duration:203,rating:0,song_id:81}}}}
 data merge storage minecraft:custom {cassette:{index:{81:{name:[{"text":"K21","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{81:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 82 - Mr. Brightside
-data merge storage minecraft:custom {cassette:{index:{82:{artist:"The Killers",duration:224,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{82:{artist:"The Killers",duration:224,rating:0,song_id:82}}}}
 data merge storage minecraft:custom {cassette:{index:{82:{name:[{"text":"Mr. Brightside","italic":false,"color":"red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{82:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 83 - Give Me the Future
-data merge storage minecraft:custom {cassette:{index:{83:{artist:"Bastille",duration:220,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{83:{artist:"Bastille",duration:220,rating:0,song_id:83}}}}
 data merge storage minecraft:custom {cassette:{index:{83:{name:[{"text":"Give Me the Future","italic":false,"color":"yellow"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{83:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 84 - War!
-data merge storage minecraft:custom {cassette:{index:{84:{artist:"Zach Callison",duration:286,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{84:{artist:"Zach Callison",duration:286,rating:0,song_id:84}}}}
 data merge storage minecraft:custom {cassette:{index:{84:{name:[{"text":"War!","italic":false,"color":"dark_red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{84:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 85 - Run Into Trouble
-data merge storage minecraft:custom {cassette:{index:{85:{artist:"Bastille",duration:184,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{85:{artist:"Bastille",duration:184,rating:0,song_id:85}}}}
 data merge storage minecraft:custom {cassette:{index:{85:{name:[{"text":"Run Into Trouble","italic":false,"color":"dark_purple"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{85:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 86 - Good Grief
-data merge storage minecraft:custom {cassette:{index:{86:{artist:"Bastille",duration:210,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{86:{artist:"Bastille",duration:210,rating:0,song_id:86}}}}
 data merge storage minecraft:custom {cassette:{index:{86:{name:[{"text":"Good Grief","italic":false,"color":"green"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{86:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 87 - ???
-data merge storage minecraft:custom {cassette:{index:{87:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{87:{artist:"???",duration:0,rating:0,song_id:87}}}}
 data merge storage minecraft:custom {cassette:{index:{87:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{87:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 88 - Of the Night
-data merge storage minecraft:custom {cassette:{index:{88:{artist:"Bastille",duration:217,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{88:{artist:"Bastille",duration:217,rating:0,song_id:88}}}}
 data merge storage minecraft:custom {cassette:{index:{88:{name:[{"text":"Of the Night","italic":false,"color":"dark_purple"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{88:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 89 - Sunflower
-data merge storage minecraft:custom {cassette:{index:{89:{artist:"Post Malone",duration:158,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{89:{artist:"Post Malone",duration:158,rating:0,song_id:89}}}}
 data merge storage minecraft:custom {cassette:{index:{89:{name:[{"text":"Sunflower","italic":false,"color":"yellow"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{89:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 090 - ???
-data merge storage minecraft:custom {cassette:{index:{90:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{90:{artist:"???",duration:0,rating:0,song_id:90}}}}
 data merge storage minecraft:custom {cassette:{index:{90:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{90:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 091 - Lose Yourself
-data merge storage minecraft:custom {cassette:{index:{91:{artist:"Eminem",duration:322,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{91:{artist:"Eminem",duration:322,rating:0,song_id:91}}}}
 data merge storage minecraft:custom {cassette:{index:{91:{name:[{"text":"Lose Yourself","italic":false,"color":"red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{91:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 092 - Me and My Broken Heart
-data merge storage minecraft:custom {cassette:{index:{92:{artist:"Rixton",duration:196,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{92:{artist:"Rixton",duration:196,rating:0,song_id:92}}}}
 data merge storage minecraft:custom {cassette:{index:{92:{name:[{"text":"Me and My Broken Heart","italic":false,"color":"white"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{92:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 093 - ???
-data merge storage minecraft:custom {cassette:{index:{93:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{93:{artist:"???",duration:0,rating:0,song_id:93}}}}
 data merge storage minecraft:custom {cassette:{index:{93:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{93:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 094 - ???
-data merge storage minecraft:custom {cassette:{index:{94:{artist:"???",duration:0,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{94:{artist:"???",duration:0,rating:0,song_id:94}}}}
 data merge storage minecraft:custom {cassette:{index:{94:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{94:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 095 - Keep on Loving You
-data merge storage minecraft:custom {cassette:{index:{95:{artist:"REO Speedwagon",duration:202,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{95:{artist:"REO Speedwagon",duration:202,rating:0,song_id:95}}}}
 data merge storage minecraft:custom {cassette:{index:{95:{name:[{"text":"Keep on Loving You","italic":false,"color":"light_purple"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{95:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 096 - California Girls
-data merge storage minecraft:custom {cassette:{index:{96:{artist:"Katy Perry",duration:236,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{96:{artist:"Katy Perry",duration:236,rating:0,song_id:96}}}}
 data merge storage minecraft:custom {cassette:{index:{96:{name:[{"text":"California Girls","italic":false,"color":"yellow"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{96:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 097 - Whats up Danger?
-data merge storage minecraft:custom {cassette:{index:{97:{artist:"Blackway",duration:219,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{97:{artist:"Blackway",duration:219,rating:0,song_id:97}}}}
 data merge storage minecraft:custom {cassette:{index:{97:{name:[{"text":"Whats up Danger?","italic":false,"color":"gold"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{97:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 098 - Gotta do Something
-data merge storage minecraft:custom {cassette:{index:{98:{artist:"flor",duration:148,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{98:{artist:"flor",duration:148,rating:0,song_id:98}}}}
 data merge storage minecraft:custom {cassette:{index:{98:{name:[{"text":"Gotta do Something","italic":false,"color":"green"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{98:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 099 - All Star
-data merge storage minecraft:custom {cassette:{index:{99:{artist:"Smash Mouth",duration:198,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{99:{artist:"Smash Mouth",duration:198,rating:0,song_id:99}}}}
 data merge storage minecraft:custom {cassette:{index:{99:{name:[{"text":"All Star","italic":false,"color":"light_purple"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{99:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 100 - Everytime We Touch
-data merge storage minecraft:custom {cassette:{index:{100:{artist:"Cascada",duration:199,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{100:{artist:"Cascada",duration:199,rating:0,song_id:100}}}}
 data merge storage minecraft:custom {cassette:{index:{100:{name:[{"text":"Everytime We Touch","italic":false,"color":"dark_purple"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{100:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 101 - How Far We've Come
-data merge storage minecraft:custom {cassette:{index:{101:{artist:"Matchbox Twenty",duration:212,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{101:{artist:"Matchbox Twenty",duration:212,rating:0,song_id:101}}}}
 data merge storage minecraft:custom {cassette:{index:{101:{name:[{"text":"How Far We've Come","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{101:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 102 - Annihilate
-data merge storage minecraft:custom {cassette:{index:{102:{artist:"Metro Boomin",duration:234,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{102:{artist:"Metro Boomin",duration:234,rating:0,song_id:102}}}}
 data merge storage minecraft:custom {cassette:{index:{102:{name:[{"text":"Annihilate","italic":false,"color":"dark_red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{102:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 103 - Ocean Man
-data merge storage minecraft:custom {cassette:{index:{103:{artist:"Ween",duration:270,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{103:{artist:"Ween",duration:270,rating:0,song_id:103}}}}
 data merge storage minecraft:custom {cassette:{index:{103:{name:[{"text":"Ocean Man","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{103:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 104 - Goofy Goober Rock
-data merge storage minecraft:custom {cassette:{index:{104:{artist:"Jim Wise",duration:270,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{104:{artist:"Jim Wise",duration:270,rating:0,song_id:104}}}}
 data merge storage minecraft:custom {cassette:{index:{104:{name:[{"text":"Goofy Goober Rock","italic":false,"color":"green"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{104:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 105 - Stadium Rave
-data merge storage minecraft:custom {cassette:{index:{105:{artist:"Mark Governor",duration:270,rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{105:{artist:"Mark Governor",duration:270,rating:0,song_id:105}}}}
 data merge storage minecraft:custom {cassette:{index:{105:{name:[{"text":"Stadium Rave","italic":false,"color":"yellow"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{105:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # BONUS SONGS!!! #
 # 106 - Vanilla Bundle #
-data merge storage minecraft:custom {cassette:{index:{106:{name:"Vanilla Bundle",artist:"Minecraft & C418",duration:0,color:"green",rating:4}}}}
+data merge storage minecraft:custom {cassette:{index:{106:{artist:"Minecraft",duration:0,rating:4,song_id:106}}}}
+data merge storage minecraft:custom {cassette:{index:{106:{name:[{"text":"Vanilla Bundle","italic":false,"color":"green"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{106:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 107 - I Want it That Way #
-data merge storage minecraft:custom {cassette:{index:{107:{name:"I Want It That Way",artist:"Backstreet Boys",duration:215,color:"blue",rating:4}}}}
+data merge storage minecraft:custom {cassette:{index:{107:{artist:"Backstreet Boys",duration:10,rating:4,song_id:107}}}}
+data merge storage minecraft:custom {cassette:{index:{107:{name:[{"text":"I Want It That Way","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{107:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # VANILLA BUNDLE!!!! #
 # 121 - Aria Math #
-data merge storage minecraft:custom {cassette:{index:{121:{name:"Aria Math",artist:"C418",duration:310,color:"green",rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{121:{artist:"C418",duration:310,rating:0,song_id:121}}}}
+data merge storage minecraft:custom {cassette:{index:{121:{name:[{"text":"Aria Math","italic":false,"color":"green"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{121:{obtainment:[{"text":"V","italic":false,"color":"gray"}]}}}}
 # 122 - Aria Math (Piano Cover) #
-data merge storage minecraft:custom {cassette:{index:{122:{name:"Aria Math (Piano Cover)",artist:"Pianicam",duration:174,color:"green",rating:0}}}}
+data merge storage minecraft:custom {cassette:{index:{122:{artist:"Pianicam",duration:174,rating:0,song_id:122}}}}
+data merge storage minecraft:custom {cassette:{index:{122:{name:[{"text":"Aria Math (Piano Cover)","italic":false,"color":"green"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{122:{obtainment:[{"text":"V","italic":false,"color":"gray"}]}}}}
 function custom:music/calculate/main with storage minecraft:custom cassette.index.1
 function custom:music/calculate/main with storage minecraft:custom cassette.index.2

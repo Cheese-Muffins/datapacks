@@ -1,14 +1,14 @@
 # Generated with MC-Build
 
-scoreboard players reset .cassetteSlot customUI.Collection
-scoreboard players reset .incrementIndex customUI.Collection
-scoreboard players reset .totalEntries customUI.Collection
-scoreboard players set .targetedRating customUI.Collection 0
-execute if score @s customUI.Collection matches 1 run scoreboard players reset .indexOffset customUI.Collection
-execute if score @s customUI.Collection matches 2 run scoreboard players set .indexOffset customUI.Collection 21
-execute if score @s customUI.Collection matches 3 run scoreboard players set .indexOffset customUI.Collection 42
-execute if score @s customUI.Collection matches 4 run scoreboard players set .indexOffset customUI.Collection 63
-execute if score @s customUI.Collection matches 5 run scoreboard players set .indexOffset customUI.Collection 84
+scoreboard players reset .cassetteSlot customUI.CassetteCollection
+scoreboard players reset .incrementIndex customUI.CassetteCollection
+scoreboard players reset .totalEntries customUI.CassetteCollection
+scoreboard players set .targetedRating customUI.CassetteCollection 0
+execute if score @s customUI.CassetteCollection matches 1 run scoreboard players reset .indexOffset customUI.CassetteCollection
+execute if score @s customUI.CassetteCollection matches 2 run scoreboard players set .indexOffset customUI.CassetteCollection 21
+execute if score @s customUI.CassetteCollection matches 3 run scoreboard players set .indexOffset customUI.CassetteCollection 42
+execute if score @s customUI.CassetteCollection matches 4 run scoreboard players set .indexOffset customUI.CassetteCollection 63
+execute if score @s customUI.CassetteCollection matches 5 run scoreboard players set .indexOffset customUI.CassetteCollection 84
 data merge storage minecraft:ui {cassette:{collection:{slot1_model:"minecraft:empty",slot1_visibility:"true",slot1_id:0}}}
 data merge storage minecraft:ui {cassette:{collection:{slot2_model:"minecraft:empty",slot2_visibility:"true",slot2_id:0}}}
 data merge storage minecraft:ui {cassette:{collection:{slot3_model:"minecraft:empty",slot3_visibility:"true",slot3_id:0}}}
@@ -30,9 +30,9 @@ data merge storage minecraft:ui {cassette:{collection:{slot18_model:"minecraft:e
 data merge storage minecraft:ui {cassette:{collection:{slot19_model:"minecraft:empty",slot19_visibility:"true",slot19_id:0}}}
 data merge storage minecraft:ui {cassette:{collection:{slot20_model:"minecraft:empty",slot20_visibility:"true",slot20_id:0}}}
 data merge storage minecraft:ui {cassette:{collection:{slot21_model:"minecraft:empty",slot21_visibility:"true",slot21_id:0}}}
-execute if score @s customUI.CollectionSort matches 1 run function custom:ui/menu/pages/cassettes/collection/sort/default
-execute if score @s customUI.CollectionSort matches 2 run function custom:ui/menu/pages/cassettes/collection/sort/locked
-execute if score @s customUI.CollectionSort matches 3 run function custom:ui/menu/pages/cassettes/collection/sort/unlocked
-execute if score @s customUI.CollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
-execute if score @s customUI.CollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
-execute if score @s customUI.CollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
+execute if score @s customUI.CassetteCollectionSort matches 1 run function custom:ui/menu/pages/cassettes/collection/sort/default
+execute if score @s customUI.CassetteCollectionSort matches 2 run function custom:ui/menu/pages/cassettes/collection/sort/locked
+execute if score @s customUI.CassetteCollectionSort matches 3 run function custom:ui/menu/pages/cassettes/collection/sort/unlocked
+execute if score @s customUI.CassetteCollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
+execute if score @s customUI.CassetteCollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
+execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2

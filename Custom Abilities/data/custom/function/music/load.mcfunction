@@ -2,11 +2,12 @@
 
 scoreboard objectives add customUI.SelectedHotbarPrevious dummy
 scoreboard objectives add customUI.SelectedHotbarCurrent dummy
-scoreboard objectives add customUI.Collection dummy
-scoreboard objectives add customUI.CollectionSort dummy
-scoreboard objectives add customUI.CollectionOperation dummy
-scoreboard objectives add customUI.CollectionMaximumPage dummy
-scoreboard objectives add customUI.Party dummy
+scoreboard objectives add customUI.CassetteCollection dummy
+scoreboard objectives add customUI.CassetteCollectionSort dummy
+scoreboard objectives add customUI.CassetteCollectionOperation dummy
+scoreboard objectives add customUI.CassetteCollectionMaximumPage dummy
+scoreboard objectives add customUI.CassetteParty dummy
+scoreboard objectives add customUI.SettingsFeedback dummy
 scoreboard objectives add customCassette.ErrorDelay dummy
 scoreboard objectives add customCassette.PlayID dummy
 scoreboard objectives add customCassette.PlayLast dummy
