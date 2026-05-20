@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-execute if score @s customUI.CassetteCollection matches 1 as @n[type=minecraft:chest_minecart,tag=ui] run function custom:ui/menu/pages/cassettes/menu/flip
-execute unless score @s customUI.CassetteCollection matches 1 run function custom:ui/menu/pages/cassettes/collection/page/zzz/3
+scoreboard players add @s customUI.CassetteCollection 1
+playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5

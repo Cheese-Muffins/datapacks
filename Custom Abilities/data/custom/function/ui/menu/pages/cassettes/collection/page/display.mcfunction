@@ -14,4 +14,4 @@ execute store result storage minecraft:ui cassette.collection.page_current int 1
 execute store result storage minecraft:ui cassette.collection.page_maximum int 1 run scoreboard players get @s customUI.CassetteCollectionMaximumPage
 execute store result storage minecraft:ui cassette.collection.page_before int 1 run scoreboard players get .pageBefore customUI.CassetteCollection
 execute store result storage minecraft:ui cassette.collection.page_next int 1 run scoreboard players get .pageNext customUI.CassetteCollection
-function custom:ui/menu/pages/cassettes/collection/page/zzz/4 with storage minecraft:ui cassette.collection
+function custom:ui/menu/pages/cassettes/collection/page/zzz/5 with storage minecraft:ui cassette.collection

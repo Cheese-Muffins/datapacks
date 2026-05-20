@@ -8,6 +8,7 @@ scoreboard objectives add customUI.CassetteCollectionOperation dummy
 scoreboard objectives add customUI.CassetteCollectionMaximumPage dummy
 scoreboard objectives add customUI.CassetteParty dummy
 scoreboard objectives add customUI.SettingsFeedback dummy
+scoreboard objectives add customUI.SettingsParty dummy
 scoreboard objectives add customCassette.ErrorDelay dummy
 scoreboard objectives add customCassette.PlayID dummy
 scoreboard objectives add customCassette.PlayLast dummy
