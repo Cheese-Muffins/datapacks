@@ -4,7 +4,7 @@ execute store result storage minecraft:custom cassette.play.last_played int 1 ru
 scoreboard players reset @s customCassette.PlayDuration
 playsound minecraft:cassette.menu.play record @s ~ ~ ~
 # increment change
-$execute if score @s customUI.SettingsFeedback matches 2 run scoreboard players set @s customCassette.PlayFeedbackIncrementValue $(click_id)
+$execute if score @s customUI.SettingsFeedback matches 2 run scoreboard players set @s customCassette.PlayFeedbackIncrementValue $(slot_entry)
 # actually play
 $data merge storage minecraft:custom {cassette:{play:{lookup:$(click_id)}}}
 $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(click_id)

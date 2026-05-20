@@ -1,6 +1,4 @@
 # Generated with MC-Build
 
-scoreboard players add .cassetteSlot customUI.CassetteCollection 1
-execute store result storage minecraft:custom cassette.fetch.number int 1 run scoreboard players get .cassetteSlot customUI.CassetteCollection
-$data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
-function custom:ui/menu/pages/cassettes/collection/sort/zzz/3 with storage minecraft:custom cassette.fetch
+scoreboard players add .totalPassed customUI.CassetteCollection 1
+execute if entity @s[tag=customCassette.PlayFeedbackIncrementSearching] if score @s customCassette.PlayFeedbackIncrementValue = .totalPassed customUI.CassetteCollection run function custom:ui/menu/pages/cassettes/collection/sort/zzz/3 with storage minecraft:custom cassette.fetch

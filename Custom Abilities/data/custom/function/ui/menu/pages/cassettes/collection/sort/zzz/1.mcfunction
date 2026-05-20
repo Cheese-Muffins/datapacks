@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-execute unless score .cassetteSlot customUI.CassetteCollection matches 21.. run function custom:ui/menu/pages/cassettes/collection/sort/zzz/2 with storage minecraft:custom cassette.fetch
+$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/2
