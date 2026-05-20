@@ -1585,7 +1585,7 @@ data\custom\function\ui\menu\pages\abilities\selection\eren\skins\player.mcfunct
 data\custom\function\ui\menu\pages\abilities\selection\eren\skins\zzz\2.mcfunction:f2959b5f0a094b8d43edbabe619b812393858a77
 data\custom\function\ui\menu\pages\abilities\selection\eren\skins\zzz\3.mcfunction:c75039e61c0cf549b9fc85fdb3d1ec5be1cfd241
 data\custom\function\ui\menu\pages\abilities\selection\eren\skins\default.mcfunction:1013e43bd8123d31793b5e2eae12ef5bfe43642f
-data\custom\function\ui\menu\pages\cassettes\menu\mask.mcfunction:3f4c9efd5d6e5bbd51ed3ce10b0733171739e233
+data\custom\function\ui\menu\pages\cassettes\menu\mask.mcfunction:a5c1acf40f56bd392978f099e107444f3a5fde4f
 data\custom\function\ui\menu\pages\cassettes\menu\open.mcfunction:f1ba086de88ffea80fc8b4100ccb99923db639ed
 data\custom\function\ui\menu\pages\cassettes\menu\player.mcfunction:c2b3f9d29b19cf788a941d220126fc2d2970aceb
 data\custom\function\ui\menu\pages\cassettes\menu\same.mcfunction:76f9904e9e8caa179f8951a75a08e2fa1bfab605
