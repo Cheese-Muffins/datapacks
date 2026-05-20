@@ -11,6 +11,8 @@ scoreboard objectives add customUI.SettingsFeedback dummy
 scoreboard objectives add customUI.SettingsParty dummy
 scoreboard objectives add customCassette.ErrorDelay dummy
 scoreboard objectives add customCassette.PlayID dummy
+scoreboard objectives add customCassette.PlayFeedbackIncrementValue dummy
+scoreboard objectives add customCassette.PlayFeedbackIncrementReturn dummy
 scoreboard objectives add customCassette.PlayLast dummy
 scoreboard objectives add customCassette.PlayDuration dummy
 scoreboard objectives add customCassette.PlayDurationMax dummy

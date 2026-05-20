@@ -1,4 +1,6 @@
 # Generated with MC-Build
 
-$execute store result score .ratingLookup customUI.CassetteCollection run data get storage minecraft:custom cassette.index.$(lookup).rating
-execute if score .ratingLookup customUI.CassetteCollection = .targetedRating customUI.CassetteCollection run function custom:ui/menu/pages/cassettes/collection/sort/zzz/23
+scoreboard players add .cassetteSlot customUI.CassetteCollection 1
+execute store result storage minecraft:custom cassette.fetch.number int 1 run scoreboard players get .cassetteSlot customUI.CassetteCollection
+$data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
+function custom:ui/menu/pages/cassettes/collection/sort/zzz/23 with storage minecraft:custom cassette.fetch

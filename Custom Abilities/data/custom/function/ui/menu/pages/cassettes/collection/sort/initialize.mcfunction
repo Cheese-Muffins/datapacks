@@ -3,6 +3,7 @@
 scoreboard players reset .cassetteSlot customUI.CassetteCollection
 scoreboard players reset .incrementIndex customUI.CassetteCollection
 scoreboard players reset .totalEntries customUI.CassetteCollection
+scoreboard players reset .totalPassed customUI.CassetteCollection
 scoreboard players set .targetedRating customUI.CassetteCollection 0
 execute if score @s customUI.CassetteCollection matches 1 run scoreboard players reset .indexOffset customUI.CassetteCollection
 execute if score @s customUI.CassetteCollection matches 2 run scoreboard players set .indexOffset customUI.CassetteCollection 21

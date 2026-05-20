@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=false}] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/6
+say going
+$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/6

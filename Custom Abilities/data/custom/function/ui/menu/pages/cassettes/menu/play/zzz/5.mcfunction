@@ -1,9 +1,3 @@
 # Generated with MC-Build
 
-scoreboard players set #ifelse mcb.internal 1
-execute store result score @s customCassette.PlayID run random value 1..105
-execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayID
-execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
-function custom:ui/menu/pages/cassettes/menu/play/zzz/6 with storage minecraft:custom cassette.play
-execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/playlist1
-tag @s remove temp
+$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/zzz/6 with storage minecraft:custom cassette.play

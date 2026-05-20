@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/zzz/7 with storage minecraft:custom cassette.play
+$data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
+function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play

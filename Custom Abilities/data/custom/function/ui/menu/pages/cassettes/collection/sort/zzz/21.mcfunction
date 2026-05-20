@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
-$execute if score @s customUI.CassetteCollectionOperation matches 2 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
-$execute if score @s customUI.CassetteCollectionOperation matches 3 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
+scoreboard players add .totalEntries customUI.CassetteCollection 1
+execute unless score .cassetteSlot customUI.CassetteCollection matches 21.. run function custom:ui/menu/pages/cassettes/collection/sort/zzz/22 with storage minecraft:custom cassette.fetch
