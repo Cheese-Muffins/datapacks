@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute if entity @s[tag=customCassette.Playlist2_$(lookup)] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/38
+scoreboard players reset .incrementIndex customUI.CassetteCollection
+scoreboard players add .targetedRating customUI.CassetteCollection 1

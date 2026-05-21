@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/19
+scoreboard players add .totalPassed customUI.CassetteCollection 1
+execute if entity @s[tag=customCassette.PlayFeedbackIncrementSearching] if score @s customCassette.PlayFeedbackIncrementValue = .totalPassed customUI.CassetteCollection run function custom:ui/menu/pages/cassettes/collection/sort/zzz/19 with storage minecraft:custom cassette.fetch

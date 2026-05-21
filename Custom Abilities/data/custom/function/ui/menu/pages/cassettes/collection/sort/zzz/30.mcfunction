@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-scoreboard players reset .incrementIndex customUI.CassetteCollection
-scoreboard players add .targetedRating customUI.CassetteCollection 1
+execute if score .ratingLookup customUI.CassetteCollection = .targetedRating customUI.CassetteCollection run function custom:ui/menu/pages/cassettes/collection/sort/zzz/31

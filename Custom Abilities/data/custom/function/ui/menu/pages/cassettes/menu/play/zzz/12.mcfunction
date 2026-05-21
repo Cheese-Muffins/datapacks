@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-function custom:ui/menu/pages/cassettes/party/open
-function custom:ui/menu/on_input
+$stopsound @s record minecraft:cassette.$(last_played)
+$playsound minecraft:cassette.$(lookup) record @s ~ ~ ~ 9999999999999
