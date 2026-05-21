@@ -1,5 +1,7 @@
 # Generated with MC-Build
 
-scoreboard players add @s customCassette.PlayIncremental 1
-execute unless score @s customCassette.PlayIncremental matches 200.. run function custom:ui/menu/pages/cassettes/menu/play/zzz/4
-execute if score @s customCassette.PlayIncremental matches 200.. run function custom:ui/menu/pages/cassettes/menu/play/zzz/5
+$data modify storage minecraft:ui cassette.menu.name set from storage minecraft:custom cassette.index.$(lookup).name
+$data modify storage minecraft:ui cassette.menu.artist set from storage minecraft:custom cassette.index.$(lookup).artist
+data modify storage minecraft:ui cassette.menu.song_line set value [""]
+data modify storage minecraft:ui cassette.menu.song_line append from storage minecraft:ui cassette.menu.name[]
+function custom:ui/menu/pages/cassettes/menu/play/zzz/4 with storage minecraft:ui cassette.menu

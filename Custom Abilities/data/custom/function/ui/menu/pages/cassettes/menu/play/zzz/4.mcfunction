@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
-execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/all
-tag @s remove temp
+$data modify storage minecraft:ui cassette.menu.song_line append value [{"text":" by ","italic":false,"color":"gray"},{"text":"$(artist)","italic":false,"color":"yellow"}]
+function custom:ui/menu/pages/cassettes/menu/play/zzz/5 with storage minecraft:ui cassette.menu

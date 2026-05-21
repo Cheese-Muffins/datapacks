@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:custom cassette.play.song_line append value [{"text":" by ","italic":false,"color":"gray"},{"text":"$(artist)","italic":false,"color":"yellow"}]
+execute store result storage minecraft:ui cassette.menu.lookup int 1 run scoreboard players get @s customCassette.PlayID
+function custom:ui/menu/pages/cassettes/menu/play/zzz/3 with storage minecraft:ui cassette.menu

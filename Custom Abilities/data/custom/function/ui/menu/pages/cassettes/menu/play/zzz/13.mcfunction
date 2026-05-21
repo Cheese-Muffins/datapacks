@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$execute as @a[tag=customCassette.Party$(partyID)Member] at @s run function custom:ui/menu/pages/cassettes/menu/play/zzz/14 with storage minecraft:custom cassette.play
+function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
+execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/all
+tag @s remove temp

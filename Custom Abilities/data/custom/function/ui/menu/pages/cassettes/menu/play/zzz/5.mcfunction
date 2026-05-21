@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-function custom:ui/menu/pages/cassettes/menu/play/reshuffle {style:"all"}
+$data merge storage minecraft:ui {cassette:{menu:{play_display:[[{"text":"Listen to songs from your","italic":false,"color":"gray"}],{"text":"current collection","italic":false,"color":"gray"},"",[{"text":"Behavior Style","italic":false,"color":"gold"}],["",{"text":"Song: ","italic":false,"color":"gray"},$(song_line)],["",{"text":"Playing from: ","italic":false,"color":"gray"},{"text":"$(play_type)","italic":false,"color":"green"}],["",{"text":"Feedback: ","italic":false,"color":"gray"},{"text":"$(feedback_type)","italic":false,"color":"green"}]]}}}
