@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$execute store result score .ratingLookup customUI.CassetteCollection run data get storage minecraft:custom cassette.index.$(lookup).rating
-execute if score .ratingLookup customUI.CassetteCollection = .targetedRating customUI.CassetteCollection run function custom:ui/menu/pages/cassettes/collection/sort/zzz/27 with storage minecraft:custom cassette.fetch
+scoreboard players add .totalPassed customUI.CassetteCollection 1
+execute if entity @s[tag=customCassette.PlayFeedbackIncrementSearching] if score @s customCassette.PlayFeedbackIncrementValue = .totalPassed customUI.CassetteCollection run function custom:ui/menu/pages/cassettes/collection/sort/zzz/27 with storage minecraft:custom cassette.fetch

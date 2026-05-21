@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players set @s customCassette.PlayFeedbackIncrementReturn $(lookup)
+$execute if entity @s[tag=customCassette.Playlist1_$(lookup)] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/43

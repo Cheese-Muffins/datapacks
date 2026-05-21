@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/25
+$execute store result score .ratingLookup customUI.CassetteCollection run data get storage minecraft:custom cassette.index.$(lookup).rating
