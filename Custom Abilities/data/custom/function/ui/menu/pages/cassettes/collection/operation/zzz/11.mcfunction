@@ -7,5 +7,6 @@ playsound minecraft:cassette.menu.play record @s ~ ~ ~
 $execute if score @s customUI.SettingsFeedback matches 2 run scoreboard players set @s customCassette.PlayFeedbackIncrementValue $(slot_entry)
 # actually play
 $data merge storage minecraft:custom {cassette:{play:{lookup:$(click_id)}}}
+$scoreboard players set @s customCassette.PlayID $(click_id)
 $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(click_id)
 function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play

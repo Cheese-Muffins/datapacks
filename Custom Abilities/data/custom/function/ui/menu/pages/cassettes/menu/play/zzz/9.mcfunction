@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-function custom:ui/menu/pages/cassettes/menu/play/reshuffle {style:"playlist2"}
+scoreboard players add @s customCassette.PlayIncremental 1
+execute unless score @s customCassette.PlayIncremental matches 200.. run function custom:ui/menu/pages/cassettes/menu/play/zzz/10
+execute if score @s customCassette.PlayIncremental matches 200.. run function custom:ui/menu/pages/cassettes/menu/play/zzz/11
