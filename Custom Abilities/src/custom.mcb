@@ -7628,35 +7628,66 @@ dir music {
         const byId = new Map();
 
         for (const match of songIndexSource.matchAll(/^\s*#\s*0*(\d+)\s*-\s*(.+?)(?:\s*#)?\s*$/gm)) {
-        const id = Number(match[1]);
-        const name = match[2].trim();
+            const id = Number(match[1]);
+            const name = match[2].trim();
 
-        if (id >= 1 && id <= 105) {
-            byId.set(id, { id, name });
+            if (id >= 1 && id <= 105) {
+                byId.set(id, { id, name, artist: "???" });
+            }
         }
+
+        for (const match of songIndexSource.matchAll(/cassette:\{index:\{(\d+):\{artist:"((?:\\"|[^"])*)"/g)) {
+            const id = Number(match[1]);
+            const song = byId.get(id);
+
+            if (song) {
+                song.artist = match[2].replace(/\\"/g, '"');
+            }
         }
 
-        const songs = [...byId.values()];
-
-        songs.sort((a, b) => {
-        const aUnknown = a.name === "???";
-        const bUnknown = b.name === "???";
-
-        if (aUnknown && !bUnknown) return 1;
-        if (!aUnknown && bUnknown) return -1;
-
-        return a.name.localeCompare(b.name, undefined, {
+        const compareText = (a, b) => a.localeCompare(b, undefined, {
             sensitivity: "base",
             numeric: true
         });
+
+        const compareUnknownLast = (a, b, key) => {
+            const aUnknown = a[key] === "???";
+            const bUnknown = b[key] === "???";
+
+            if (aUnknown && !bUnknown) return 1;
+            if (!aUnknown && bUnknown) return -1;
+
+            return compareText(a[key], b[key]);
+        };
+
+        const songs = [...byId.values()];
+
+        const alphabetical = [...songs].sort((a, b) =>
+            compareUnknownLast(a, b, "name")
+        );
+
+        const artist = [...songs].sort((a, b) => {
+            const artistResult = compareUnknownLast(a, b, "artist");
+
+            if (artistResult !== 0) {
+                return artistResult;
+            }
+
+            return compareUnknownLast(a, b, "name");
         });
 
-        emit("data remove storage minecraft:custom cassette.alphabetical");
-        emit(`scoreboard players set .alphabeticalTotal customUI.CassetteCollection ${songs.length}`);
+        const emitOrder = (path, list) => {
+            emit(`data remove storage minecraft:custom cassette.${path}`);
 
-        for (let i = 0; i < songs.length; i++) {
-        emit(`data merge storage minecraft:custom {cassette:{alphabetical:{${i + 1}:{id:${songs[i].id}}}}}`);
-        }
+            for (let i = 0; i < list.length; i++) {
+                emit(`data merge storage minecraft:custom {cassette:{${path}:{${i + 1}:{id:${list[i].id}}}}}`);
+            }
+        };
+
+        emit(`scoreboard players set .alphabeticalTotal customUI.CassetteCollection ${alphabetical.length}`);
+        emit(`scoreboard players set .artistTotal customUI.CassetteCollection ${artist.length}`);
+        emitOrder("alphabetical", alphabetical);
+        emitOrder("artist", artist);
         %%>
 
 
@@ -11613,9 +11644,9 @@ dir ui {
                                 scoreboard players reset @s customCassette.PlayDuration
                                 scoreboard players reset @s customCassette.PlayIncremental
                                 playsound minecraft:cassette.menu.play record @s ~ ~ ~
-                                execute if score @s customUI.CassetteCollectionSort matches 1..5 run function custom:ui/menu/pages/cassettes/menu/play/all
-                                execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
-                                execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
+                                execute if score @s customUI.CassetteCollectionSort matches 1..6 run function custom:ui/menu/pages/cassettes/menu/play/all
+                                execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+                                execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
                             }
                             function custom:ui/menu/pages/cassettes/menu/open
                         }
@@ -11628,11 +11659,11 @@ dir ui {
                                     execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
 
                                     block { with storage minecraft:custom cassette.play
-                                        $execute if score @s customUI.CassetteCollectionSort matches 1..5 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                                        $execute if score @s customUI.CassetteCollectionSort matches 1..6 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
 
-                                        $execute if score @s customUI.CassetteCollectionSort matches 6 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                                        $execute if score @s customUI.CassetteCollectionSort matches 7 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
 
-                                        $execute if score @s customUI.CassetteCollectionSort matches 7 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist2_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                                        $execute if score @s customUI.CassetteCollectionSort matches 8 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist2_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
                                     }
                                 }
 
@@ -11659,8 +11690,9 @@ dir ui {
                                 execute if score @s customUI.CassetteCollectionSort matches 1..3 run function custom:ui/menu/pages/cassettes/collection/sort/default
                                 execute if score @s customUI.CassetteCollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
                                 execute if score @s customUI.CassetteCollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/alphabetical
-                                execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
-                                execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
+                                execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/artist
+                                execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
+                                execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
                                 tag @s remove customCassette.PlayFeedbackIncrementSearching
 
                                 execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayFeedbackIncrementReturn
@@ -12244,7 +12276,7 @@ dir ui {
                             execute at @s as @p run {
                                 scoreboard players set @s customUI.CassetteCollection 1
                                 scoreboard players add @s customUI.CassetteCollectionSort 1
-                                execute if score @s customUI.CassetteCollectionSort matches 8.. run scoreboard players set @s customUI.CassetteCollectionSort 1
+                                execute if score @s customUI.CassetteCollectionSort matches 9.. run scoreboard players set @s customUI.CassetteCollectionSort 1
 
                                 playsound minecraft:cassette.ui.cycle record @s ~ ~ ~ 1
                             }
@@ -12272,8 +12304,9 @@ dir ui {
                             execute if score @s customUI.CassetteCollectionSort matches 3 run function custom:ui/menu/pages/cassettes/collection/sort/unlocked
                             execute if score @s customUI.CassetteCollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
                             execute if score @s customUI.CassetteCollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/alphabetical
-                            execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
-                            execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
+                            execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/artist
+                            execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
+                            execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
                         }
 
                         function default {
@@ -12508,6 +12541,49 @@ dir ui {
                             execute unless score .incrementIndex customUI.CassetteCollection matches 105.. run function custom:ui/menu/pages/cassettes/collection/sort/alphabetical
                         }
 
+                        function artist {
+                            # found correct page
+                            scoreboard players add .totalEntries customUI.CassetteCollection 1
+                            scoreboard players add .incrementIndex customUI.CassetteCollection 1
+
+                            execute store result storage minecraft:custom cassette.fetch.increment int 1 run scoreboard players get .incrementIndex customUI.CassetteCollection
+                            block { with storage minecraft:custom cassette.fetch
+                                $execute store result storage minecraft:custom cassette.fetch.lookup int 1 run data get storage minecraft:custom cassette.artist.$(increment).id
+                                block { with storage minecraft:custom cassette.fetch
+                                    $execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run {
+                                        scoreboard players add .totalPassed customUI.CassetteCollection 1
+                                        execute if entity @s[tag=customCassette.PlayFeedbackIncrementSearching] if score @s customCassette.PlayFeedbackIncrementValue = .totalPassed customUI.CassetteCollection run block { with storage minecraft:custom cassette.fetch
+                                            $scoreboard players set @s customCassette.PlayFeedbackIncrementReturn $(lookup)
+                                        }
+                                    }
+                                }
+                            }
+
+                            execute store result storage minecraft:custom cassette.fetch.entry int 1 run scoreboard players get .totalPassed customUI.CassetteCollection
+                            execute unless score .indexOffset customUI.CassetteCollection matches 1.. run {
+                                execute unless score .cassetteSlot customUI.CassetteCollection matches 21.. run block { with storage minecraft:custom cassette.fetch
+                                    scoreboard players add .cassetteSlot customUI.CassetteCollection 1
+                                    execute store result storage minecraft:custom cassette.fetch.number int 1 run scoreboard players get .cassetteSlot customUI.CassetteCollection
+
+                                    $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
+                                    block { with storage minecraft:custom cassette.fetch
+                                        $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
+                                        $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+
+                                        $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
+                                        $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:0}}}
+                                        $execute if score @s customUI.CassetteCollectionOperation matches 2 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
+                                        $execute if score @s customUI.CassetteCollectionOperation matches 3 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
+                                    }
+                                }
+                            }
+
+                            # searching for right page
+                            execute if score .indexOffset customUI.CassetteCollection matches 1.. run scoreboard players remove .indexOffset customUI.CassetteCollection 1
+                            # continue the search
+                            execute unless score .incrementIndex customUI.CassetteCollection matches 105.. run function custom:ui/menu/pages/cassettes/collection/sort/artist
+                        }
+
                         function playlist1 {
                             # found correct page
                             scoreboard players add .incrementIndex customUI.CassetteCollection 1
@@ -12604,13 +12680,14 @@ dir ui {
                         }
 
                         function load {
-                            execute if score @s customUI.CassetteCollectionSort matches 1 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" ","italic":false},{"text":"Default","italic":false,"color":"green"}],[{"text":"[X] Locked","italic":false,"color":"gray"}],[{"text":"[X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 2 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Locked","italic":false,"color":"green"}],[{"text":"[X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 3 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Unlocked","italic":false,"color":"green"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 4 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Rating","italic":false,"color":"green"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 5 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Alphabetical","italic":false,"color":"green"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 6 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Playlist #1","italic":false,"color":"green"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 7 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Playlist #1","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Playlist #2","italic":false,"color":"green"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 1 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" ","italic":false},{"text":"Default","italic":false,"color":"green"}],[{"text":"[X] Locked","italic":false,"color":"gray"}],[{"text":"[X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Artist","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 2 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Locked","italic":false,"color":"green"}],[{"text":"[X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Artist","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 3 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Unlocked","italic":false,"color":"green"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Artist","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 4 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Rating","italic":false,"color":"green"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Artist","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 5 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Alphabetical","italic":false,"color":"green"}],[{"text":"[X] Artist","italic":false,"color":"gray"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 6 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],[{"text":"[X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Artist","italic":false,"color":"green"}],[{"text":"[X] Playlist #1","italic":false,"color":"gray"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 7 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Artist","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Playlist #1","italic":false,"color":"green"}],[{"text":"[X] Playlist #2","italic":false,"color":"gray"}]]}}}
+                            execute if score @s customUI.CassetteCollectionSort matches 8 run data merge storage minecraft:ui {cassette:{collection:{sort_lore:[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"organization ","italic":false,"color":"yellow"},{"text":"of the collection","italic":false,"color":"gray"}],[{"text":"menu depending on the following options...","italic":false,"color":"gray"}],"",[{"text":"Sorting Variations","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X]","italic":false,"color":"gray"},{"text":" Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Locked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Unlocked","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Rating","italic":false,"color":"gray"}],[{"text":"[X] Alphabetical","italic":false,"color":"gray"}],[{"text":"[X] Artist","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Playlist #1","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"] ","italic":false,"color":"dark_green"},{"text":"Playlist #2","italic":false,"color":"green"}]]}}}
                         }
                     }
 

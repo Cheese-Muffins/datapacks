@@ -15,8 +15,9 @@ execute if score @s customUI.CassetteCollection matches 5 run scoreboard players
 execute if score @s customUI.CassetteCollectionSort matches 1..3 run function custom:ui/menu/pages/cassettes/collection/sort/default
 execute if score @s customUI.CassetteCollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
 execute if score @s customUI.CassetteCollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/alphabetical
-execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
-execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
+execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/artist
+execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
+execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
 tag @s remove customCassette.PlayFeedbackIncrementSearching
 execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayFeedbackIncrementReturn
 execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast

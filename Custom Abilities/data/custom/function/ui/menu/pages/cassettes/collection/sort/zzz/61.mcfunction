@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-scoreboard players add .totalEntries customUI.CassetteCollection 1
-scoreboard players remove .indexOffset customUI.CassetteCollection 1
+$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/62

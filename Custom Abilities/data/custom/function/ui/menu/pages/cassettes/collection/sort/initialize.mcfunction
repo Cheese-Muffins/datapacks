@@ -36,5 +36,6 @@ execute if score @s customUI.CassetteCollectionSort matches 2 run function custo
 execute if score @s customUI.CassetteCollectionSort matches 3 run function custom:ui/menu/pages/cassettes/collection/sort/unlocked
 execute if score @s customUI.CassetteCollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
 execute if score @s customUI.CassetteCollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/alphabetical
-execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
-execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
+execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/artist
+execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
+execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2

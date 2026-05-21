@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players set @s customCassette.PlayFeedbackIncrementReturn $(lookup)
+execute unless score .cassetteSlot customUI.CassetteCollection matches 21.. run function custom:ui/menu/pages/cassettes/collection/sort/zzz/47 with storage minecraft:custom cassette.fetch
