@@ -6525,6 +6525,7 @@ dir music {
         scoreboard objectives add customUI.CassetteParty dummy
         scoreboard objectives add customUI.SettingsFeedback dummy
         scoreboard objectives add customUI.SettingsParty dummy
+        scoreboard objectives add customUI.SettingsTargeting dummy
         scoreboard objectives add customCassette.ErrorDelay dummy
         scoreboard objectives add customCassette.PlayID dummy
         scoreboard objectives add customCassette.PlayFeedbackIncrementValue dummy
@@ -11597,6 +11598,9 @@ dir ui {
                     }
 
                     function player {
+                        execute unless score @s customUI.SettingsFeedback matches 1.. run scoreboard players set @s customUI.SettingsFeedback 1
+                        execute unless score @s customUI.SettingsParty matches 1.. run scoreboard players set @s customUI.SettingsParty 1
+                        execute unless score @s customUI.SettingsTargeting matches 1.. run scoreboard players set @s customUI.SettingsTargeting 1
                         execute unless score @s customUI.CassetteCollectionSort matches 1.. run scoreboard players set @s customUI.CassetteCollectionSort 1
                         execute unless score @s customCassette.PlayLast matches 1.. run scoreboard players set @s customCassette.PlayLast 1
 
@@ -11638,17 +11642,27 @@ dir ui {
                                 scoreboard players reset @s customCassette.PlayDuration
                                 scoreboard players reset @s customCassette.PlayIncremental
                                 playsound minecraft:cassette.menu.play record @s ~ ~ ~
-                                execute if score @s customUI.CassetteCollectionSort matches 1..6 run function custom:ui/menu/pages/cassettes/menu/play/all
-                                execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
-                                execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
+                                execute if score @s customUI.SettingsTargeting matches 1 run {
+                                    execute if score @s customUI.CassetteCollectionSort matches 1..6 run function custom:ui/menu/pages/cassettes/menu/play/all
+                                    execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+                                    execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
+                                }
+                                execute if score @s customUI.SettingsTargeting matches 2 run function custom:ui/menu/pages/cassettes/menu/play/all
+                                execute if score @s customUI.SettingsTargeting matches 3 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+                                execute if score @s customUI.SettingsTargeting matches 4 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
                             }
                             function custom:ui/menu/pages/cassettes/menu/open
                         }
 
                         function display {
-                            execute if score @s customUI.CassetteCollectionSort matches 1..4 run data merge storage minecraft:ui {cassette:{menu:{play_type:"All"}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 5 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #1"}}}
-                            execute if score @s customUI.CassetteCollectionSort matches 6 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #2"}}}
+                            execute if score @s customUI.SettingsTargeting matches 1 run {
+                                execute if score @s customUI.CassetteCollectionSort matches 1..6 run data merge storage minecraft:ui {cassette:{menu:{play_type:"All"}}}
+                                execute if score @s customUI.CassetteCollectionSort matches 7 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #1"}}}
+                                execute if score @s customUI.CassetteCollectionSort matches 8 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #2"}}}
+                            }
+                            execute if score @s customUI.SettingsTargeting matches 2 run data merge storage minecraft:ui {cassette:{menu:{play_type:"All"}}}
+                            execute if score @s customUI.SettingsTargeting matches 3 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #1"}}}
+                            execute if score @s customUI.SettingsTargeting matches 4 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #2"}}}
 
                             execute if score @s customUI.SettingsFeedback matches 1 run data merge storage minecraft:ui {cassette:{menu:{feedback_type:"Random"}}}
                             execute if score @s customUI.SettingsFeedback matches 2 run data merge storage minecraft:ui {cassette:{menu:{feedback_type:"Increment"}}}
@@ -11682,12 +11696,19 @@ dir ui {
                                     execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayID
                                     execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
 
-                                    block { with storage minecraft:custom cassette.play
+                                    execute if score @s customUI.SettingsTargeting matches 1 run block { with storage minecraft:custom cassette.play
                                         $execute if score @s customUI.CassetteCollectionSort matches 1..6 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
 
                                         $execute if score @s customUI.CassetteCollectionSort matches 7 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
 
                                         $execute if score @s customUI.CassetteCollectionSort matches 8 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist2_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                                    }
+                                    execute if score @s customUI.SettingsTargeting matches 2..4 run block { with storage minecraft:custom cassette.play
+                                        $execute if score @s customUI.SettingsTargeting matches 2 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+
+                                        $execute if score @s customUI.SettingsTargeting matches 3 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+
+                                        $execute if score @s customUI.SettingsTargeting matches 4 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist2_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
                                     }
                                 }
 
@@ -11719,12 +11740,18 @@ dir ui {
                                 execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
                                 tag @s remove customCassette.PlayFeedbackIncrementSearching
 
-                                execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayFeedbackIncrementReturn
-                                execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
-                                block { with storage minecraft:custom cassette.play
-                                    $scoreboard players set @s customCassette.PlayID $(lookup)
-                                    $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
-                                    function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play
+                                execute if score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run {
+                                    execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayFeedbackIncrementReturn
+                                    execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
+                                    block { with storage minecraft:custom cassette.play
+                                        $scoreboard players set @s customCassette.PlayID $(lookup)
+                                        $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
+                                        function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play
+                                    }
+                                }
+                                execute unless score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run {
+                                    scoreboard players reset @s customCassette.PlayFeedbackIncrementValue
+                                    function custom:ui/menu/pages/cassettes/menu/play/reshuffle {style:"all"}
                                 }
                                 scoreboard players reset @s customCassette.PlayFeedbackIncrementReturn
                             }
@@ -11756,7 +11783,7 @@ dir ui {
                                 execute unless score @s customCassette.PlayIncremental matches 200.. run {
                                     function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
 
-                                    execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/all
+                                    execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/playlist1
                                     tag @s remove temp
                                 }
                                 execute if score @s customCassette.PlayIncremental matches 200.. run {
@@ -11775,7 +11802,7 @@ dir ui {
                                 execute unless score @s customCassette.PlayIncremental matches 200.. run {
                                     function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
 
-                                    execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/all
+                                    execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/playlist2
                                     tag @s remove temp
                                 }
                                 execute if score @s customCassette.PlayIncremental matches 200.. run {
@@ -11828,7 +11855,7 @@ dir ui {
                 dir settings {
                     dir default {
                         function mask {
-                            $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"blue","italic":false,"text":"Feedback Style"},"minecraft:lore":$(feedback_style),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/feedback"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Party Behavior"},"minecraft:lore":$(party_behavior),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/party"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/default_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/same"}}}}]
+                            $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"blue","italic":false,"text":"Feedback Style"},"minecraft:lore":$(feedback_style),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/feedback"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Party Behavior"},"minecraft:lore":$(party_behavior),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/party"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Targeting ","italic":false,"color":"red"},{"text":"Style","italic":false,"color":"white"}],"minecraft:lore":$(targeting_style),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/targeting"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/default_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/same"}}}}]
                         }
 
                         function open {
@@ -11839,9 +11866,6 @@ dir ui {
                         }
 
                         function player {
-                            execute unless score @s customUI.SettingsFeedback matches 1.. run scoreboard players set @s customUI.SettingsFeedback 1
-                            execute unless score @s customUI.SettingsParty matches 1.. run scoreboard players set @s customUI.SettingsParty 1
-
                             # Feedback
                             data merge storage minecraft:ui {cassette:{settings:{default:{feedback_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"behaves","italic":false,"color":"yellow"},{"text":" following the ","italic":false,"color":"gray"},{"text":"ending","italic":false,"color":"red"},{"text":" of a","italic":false,"color":"gray"}],[{"text":"song","italic":false,"color":"gray"}],"",[{"text":"Feedback Variation","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Randomize Song","italic":false,"color":"green"}],[{"text":"[X] Increment Song","italic":false,"color":"gray"}],[{"text":"[X] Loop Song","italic":false,"color":"gray"}]]}}}}
                             execute if score @s customUI.SettingsFeedback matches 2 run data merge storage minecraft:ui {cassette:{settings:{default:{feedback_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"behaves","italic":false,"color":"yellow"},{"text":" following the ","italic":false,"color":"gray"},{"text":"ending","italic":false,"color":"red"},{"text":" of a","italic":false,"color":"gray"}],[{"text":"song","italic":false,"color":"gray"}],"",[{"text":"Feedback Variation","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Randomize Song","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Increment Song","italic":false,"color":"green"}],[{"text":"[X] Loop Song","italic":false,"color":"gray"}]]}}}}
@@ -11852,6 +11876,12 @@ dir ui {
                             execute if score @s customUI.SettingsParty matches 2 run data merge storage minecraft:ui {cassette:{settings:{default:{party_behavior:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"notifies","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"yellow"},{"text":"the user about ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"}],[{"text":"changes","italic":false,"color":"aqua"}],"",[{"text":"Party Behavior","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Disable Toast Notifications","italic":false,"color":"green"}],[{"text":"[X] Disable Party SFX","italic":false,"color":"gray"}],[{"text":"[X] Disable All","italic":false,"color":"gray"}]]}}}}
                             execute if score @s customUI.SettingsParty matches 3 run data merge storage minecraft:ui {cassette:{settings:{default:{party_behavior:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"notifies","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"yellow"},{"text":"the user about ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"}],[{"text":"changes","italic":false,"color":"aqua"}],"",[{"text":"Party Behavior","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Disable Toast Notifications","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Disable Party SFX","italic":false,"color":"green"}],[{"text":"[X] Disable All","italic":false,"color":"gray"}]]}}}}
                             execute if score @s customUI.SettingsParty matches 4 run data merge storage minecraft:ui {cassette:{settings:{default:{party_behavior:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"notifies","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"yellow"},{"text":"the user about ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"}],[{"text":"changes","italic":false,"color":"aqua"}],"",[{"text":"Party Behavior","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Disable Toast Notifications","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Disable Party SFX","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Disable All","italic":false,"color":"green"}]]}}}}
+
+                            # Targeting
+                            data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Sorting Control","italic":false,"color":"green"}],[{"text":"[X] All Songs","italic":false,"color":"gray"}],[{"text":"[X] Playlist 1","italic":false,"color":"gray"}],[{"text":"[X] Playlist 2","italic":false,"color":"gray"}]]}}}}
+                            execute if score @s customUI.SettingsTargeting matches 2 run data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Sorting Control","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" All Songs","italic":false,"color":"green"}],[{"text":"[X] Playlist 1","italic":false,"color":"gray"}],[{"text":"[X] Playlist 2","italic":false,"color":"gray"}]]}}}}
+                            execute if score @s customUI.SettingsTargeting matches 3 run data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Sorting Control","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] All Songs","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Playlist 1","italic":false,"color":"green"}],[{"text":"[X] Playlist 2","italic":false,"color":"gray"}]]}}}}
+                            execute if score @s customUI.SettingsTargeting matches 4 run data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Sorting Control","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] All Songs","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Playlist 1","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Playlist 2","italic":false,"color":"green"}]]}}}}
                         }
 
                         function same {
@@ -11880,6 +11910,16 @@ dir ui {
                             execute at @s as @p run {
                                 scoreboard players add @s customUI.SettingsParty 1
                                 execute if score @s customUI.SettingsParty matches 5.. run scoreboard players set @s customUI.SettingsParty 1
+
+                                playsound minecraft:cassette.ui.cycle record @s ~ ~ ~
+                            }
+                            function custom:ui/menu/pages/cassettes/settings/default/open
+                        }
+
+                        function targeting {
+                            execute at @s as @p run {
+                                scoreboard players add @s customUI.SettingsTargeting 1
+                                execute if score @s customUI.SettingsTargeting matches 5.. run scoreboard players set @s customUI.SettingsTargeting 1
 
                                 playsound minecraft:cassette.ui.cycle record @s ~ ~ ~
                             }

@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-execute store result storage minecraft:ui cassette.menu.lookup int 1 run scoreboard players get @s customCassette.PlayID
-function custom:ui/menu/pages/cassettes/menu/play/zzz/3 with storage minecraft:ui cassette.menu
+execute if score @s customUI.CassetteCollectionSort matches 1..6 run data merge storage minecraft:ui {cassette:{menu:{play_type:"All"}}}
+execute if score @s customUI.CassetteCollectionSort matches 7 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #1"}}}
+execute if score @s customUI.CassetteCollectionSort matches 8 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #2"}}}

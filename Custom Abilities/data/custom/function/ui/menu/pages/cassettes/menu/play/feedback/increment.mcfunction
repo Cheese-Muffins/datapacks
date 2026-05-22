@@ -19,7 +19,6 @@ execute if score @s customUI.CassetteCollectionSort matches 6 run function custo
 execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
 execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
 tag @s remove customCassette.PlayFeedbackIncrementSearching
-execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayFeedbackIncrementReturn
-execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
-function custom:ui/menu/pages/cassettes/menu/play/feedback/zzz/0 with storage minecraft:custom cassette.play
+execute if score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run function custom:ui/menu/pages/cassettes/menu/play/feedback/zzz/0
+execute unless score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run function custom:ui/menu/pages/cassettes/menu/play/feedback/zzz/2
 scoreboard players reset @s customCassette.PlayFeedbackIncrementReturn

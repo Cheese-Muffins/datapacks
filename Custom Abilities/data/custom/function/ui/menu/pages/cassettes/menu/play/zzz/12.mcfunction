@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-scoreboard players add @s customCassette.PlayIncremental 1
-execute unless score @s customCassette.PlayIncremental matches 200.. run function custom:ui/menu/pages/cassettes/menu/play/zzz/13
-execute if score @s customCassette.PlayIncremental matches 200.. run function custom:ui/menu/pages/cassettes/menu/play/zzz/14
+function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
+execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+tag @s remove temp

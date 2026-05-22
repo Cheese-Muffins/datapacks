@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ui {cassette:{menu:{play_display:[[{"text":"Listen to songs from your","italic":false,"color":"gray"}],{"text":"current collection","italic":false,"color":"gray"},"",[{"text":"Behavior Style","italic":false,"color":"gold"}],["",{"text":"Song: ","italic":false,"color":"gray"},{"text":"N","italic":false,"color":"#9e9e9e"},{"text":"o","italic":false,"color":"#919191"},{"text":"t","italic":false,"color":"#858585"},{"text":"h","italic":false,"color":"#787878"},{"text":"i","italic":false,"color":"#6b6b6b"},{"text":"n","italic":false,"color":"#5e5e5e"},{"text":"g","italic":false,"color":"#525252"},{"text":" :(","italic":false,"color":"#454545"}],["",{"text":"Playing from: ","italic":false,"color":"gray"},{"text":"$(play_type)","italic":false,"color":"green"}],["",{"text":"Feedback: ","italic":false,"color":"gray"},{"text":"$(feedback_type)","italic":false,"color":"green"}]]}}}
-execute if entity @s[tag=customCassette.PlayingSong] run function custom:ui/menu/pages/cassettes/menu/play/zzz/2
+execute if score @s customUI.CassetteCollectionSort matches 1..6 run function custom:ui/menu/pages/cassettes/menu/play/all
+execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
