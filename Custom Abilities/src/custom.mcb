@@ -11936,6 +11936,55 @@ dir ui {
                             function custom:ui/menu/pages/cassettes/settings/default/open
                         }
                     }
+
+                    dir administrator {
+                        function mask {
+                            $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Show Collection ID"},"minecraft:lore":[["",{"text":"Toggle the presence of ","italic":false,"color":"gray"},{"text":"IDs","italic":false,"color":"yellow"},{"text":" in the","italic":false,"color":"gray"}],[{"text":"collection menu","italic":false,"color":"gray"}],"",["",{"text":"Collection IDs: ","italic":false,"color":"gray"},{"text":"$(collection_id_state)","italic":false,"color":"$(collection_id_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/administrator/collection_id"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/administrator_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/same"}}}}]
+                        }
+
+                        function open {
+                            execute at @s as @p run function custom:ui/menu/pages/cassettes/settings/administrator/player
+                            function custom:ui/menu/pages/cassettes/settings/administrator/mask with storage minecraft:ui cassette.settings.administrator
+                            data modify storage ui current set from storage ui mask
+                            execute on passengers run data modify entity @s data.page.mask set value "function custom:ui/menu/pages/cassettes/settings/administrator/mask"
+                        }
+
+                        function player {
+                            data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_state:"Disabled"}}}}
+                            data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_color:"red"}}}}
+                            
+                            execute if entity @s[tag=customSettings.ShowCollectionID] run {
+                                data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_state:"Enabled"}}}}
+                                data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_color:"green"}}}}
+                            }
+                        }
+
+                        function same {
+                            execute at @s as @p run playsound minecraft:cassette.ui.error record @s ~ ~ ~
+                            function custom:ui/menu/pages/cassettes/settings/administrator/open
+                        }
+
+                        function flip {
+                            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                            function custom:ui/menu/pages/cassettes/settings/administrator/open
+                        }
+
+                        function collection_id {
+                            execute at @s as @p run {
+                                execute unless entity @s[tag=customSettings.ShowCollectionID] run {
+                                    tag @s add customSettings.ShowCollectionID
+                                    tag @s add temp
+                                }
+
+                                execute if entity @s[tag=customSettings.ShowCollectionID] unless entity @s[tag=temp] run {
+                                    tag @s remove customSettings.ShowCollectionID
+                                }
+
+                                tag @s remove temp
+                            }
+                            function custom:ui/menu/pages/cassettes/settings/administrator/open
+                        }
+                    }
                 }
 
                 dir collection {
@@ -11996,7 +12045,7 @@ dir ui {
                                     $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                     block { with storage minecraft:custom cassette.fetch
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                        $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                        $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                         $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
@@ -12055,7 +12104,7 @@ dir ui {
                                         $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                         block { with storage minecraft:custom cassette.fetch
                                             $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                            $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                            $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                             $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_overlay:1}}}
@@ -12410,7 +12459,7 @@ dir ui {
                                     $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                     block { with storage minecraft:custom cassette.fetch
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                        $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                        $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                         $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
@@ -12451,7 +12500,7 @@ dir ui {
                                             $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                             block { with storage minecraft:custom cassette.fetch
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                                $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                                $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
@@ -12494,7 +12543,7 @@ dir ui {
                                             $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                             block { with storage minecraft:custom cassette.fetch
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                                $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                                $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:0}}}
@@ -12544,7 +12593,7 @@ dir ui {
                                         $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                         block { with storage minecraft:custom cassette.fetch
                                             $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                            $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                            $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                             $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                             $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
@@ -12603,7 +12652,7 @@ dir ui {
                                     $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                     block { with storage minecraft:custom cassette.fetch
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                        $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                        $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                         $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
@@ -12649,7 +12698,7 @@ dir ui {
                                     $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                     block { with storage minecraft:custom cassette.fetch
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                        $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                        $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                         $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                         $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
@@ -12693,7 +12742,7 @@ dir ui {
                                             $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                             block { with storage minecraft:custom cassette.fetch
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                                $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                                $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
@@ -12741,7 +12790,7 @@ dir ui {
                                             $data modify storage minecraft:custom cassette.fetch merge from storage minecraft:custom cassette.index.$(lookup)
                                             block { with storage minecraft:custom cassette.fetch
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:custom cassette.index.$(lookup).name
-                                                $execute if entity @s[tag=customSettings.CassetteShowID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
+                                                $execute if entity @s[tag=customSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
 
                                                 $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:custom cassette.fetch.built_lore
                                                 $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
@@ -13118,8 +13167,7 @@ dir ui {
 
                 function admin_cassettes {
                     execute if entity @p[tag=customUI.AdminAccess] run {
-                        say e
-                        # function custom:ui/menu/pages/cassettes/settings/administrator/flip
+                        function custom:ui/menu/pages/cassettes/settings/administrator/flip
                     } else run {
                         execute at @s as @p run {
                             playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
