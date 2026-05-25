@@ -174,9 +174,9 @@ data merge storage minecraft:custom {cassette:{index:{43:{artist:"Wheezer",durat
 data merge storage minecraft:custom {cassette:{index:{43:{name:[{"text":"Buddy Holly","italic":false,"color":"blue"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{43:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 44 - The Only Thing They Fear Is You
-data merge storage minecraft:custom {cassette:{index:{44:{artist:"Mick Gordon",duration:411,rating:0,song_id:44}}}}
-data merge storage minecraft:custom {cassette:{index:{44:{name:[{"text":"The Only Thing They Fear Is You","italic":false,"color":"red"}]}}}}
-data merge storage minecraft:custom {cassette:{index:{44:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{44:{artist:"Mick Gordon",duration:411,rating:5,song_id:44}}}}
+data merge storage minecraft:custom {cassette:{index:{44:{name:[{"text":"T","italic":false,"color":"#fffbbd"},{"text":"h","italic":false,"color":"#ffefa9"},{"text":"e","italic":false,"color":"#ffe496"},{"text":" ","italic":false,"color":"#ffd882"},{"text":"O","italic":false,"color":"#ffcd6e"},{"text":"n","italic":false,"color":"#ffc15a"},{"text":"l","italic":false,"color":"#ffb647"},{"text":"y ","italic":false,"color":"#ffaa33"},{"text":"T","italic":false,"color":"#ffa72c"},{"text":"h","italic":false,"color":"#ffa424"},{"text":"i","italic":false,"color":"#ffa11d"},{"text":"n","italic":false,"color":"#ff9e16"},{"text":"g","italic":false,"color":"#ff9b0f"},{"text":" ","italic":false,"color":"#ff9807"},{"text":"Th","italic":false,"color":"#ff9500"},{"text":"e","italic":false,"color":"#ff8b0c"},{"text":"y","italic":false,"color":"#ff8217"},{"text":" ","italic":false,"color":"#ff7823"},{"text":"F","italic":false,"color":"#ff6f2f"},{"text":"e","italic":false,"color":"#ff653b"},{"text":"a","italic":false,"color":"#ff5c46"},{"text":"r ","italic":false,"color":"#ff5252"},{"text":"I","italic":false,"color":"#ff4646"},{"text":"s","italic":false,"color":"#ff3a3a"},{"text":" ","italic":false,"color":"#ff2e2e"},{"text":"Y","italic":false,"color":"#ff2222"},{"text":"o","italic":false,"color":"#ff1616"},{"text":"u","italic":false,"color":"#ff0a0a"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{44:{obtainment:[[{"text":"Slay: ","italic":false,"color":"gray"},{"text":"500 Monster(s)","italic":false,"color":"aqua"},{"text":" in a ","italic":false,"color":"gray"},{"text":"single night","italic":false,"color":"yellow"}]]}}}}
 # 45 - ???
 data merge storage minecraft:custom {cassette:{index:{45:{artist:"???",duration:0,rating:0,song_id:45}}}}
 data merge storage minecraft:custom {cassette:{index:{45:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
@@ -186,24 +186,24 @@ data merge storage minecraft:custom {cassette:{index:{46:{artist:"???",duration:
 data merge storage minecraft:custom {cassette:{index:{46:{name:[{"text":"???","italic":false,"color":"gray"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{46:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 47 - Tanjiro No Uta
-data merge storage minecraft:custom {cassette:{index:{47:{artist:"Nami Nakagawa",duration:328,rating:0,song_id:47}}}}
-data merge storage minecraft:custom {cassette:{index:{47:{name:[{"text":"Tanjiro No Uta","italic":false,"color":"dark_red"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{47:{artist:"Nami Nakagawa",duration:328,rating:3,song_id:47}}}}
+data merge storage minecraft:custom {cassette:{index:{47:{name:[{"text":"Ta","italic":false,"color":"gray"},{"text":"n","italic":false,"color":"red"},{"text":"j","italic":false,"color":"gold"},{"text":"i","italic":false,"color":"yellow"},{"text":"ro ","italic":false,"color":"gray"},{"text":"N","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":" Ut","italic":false,"color":"gray"},{"text":"a","italic":false,"color":"red"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{47:{obtainment:[[{"text":"Wield an ","italic":false,"color":"gray"},{"text":"enchanted book","italic":false,"color":"light_purple"},{"text":" with both","italic":false,"color":"gray"}],[{"text":"Depth Strider","italic":false,"color":"dark_green"},{"text":" and ","italic":false,"color":"gray"},{"text":"Fire Aspect","italic":false,"color":"dark_green"}],[{"text":"inscribed in it","italic":false,"color":"gray"}]]}}}}
 # 48 - Through The Fire And Flames
 data merge storage minecraft:custom {cassette:{index:{48:{artist:"DragonForce",duration:304,rating:0,song_id:48}}}}
 data merge storage minecraft:custom {cassette:{index:{48:{name:[{"text":"Through The Fire And Flames","italic":false,"color":"yellow"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{48:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 49 - Leave Me Alone
-data merge storage minecraft:custom {cassette:{index:{49:{artist:"NF",duration:305,rating:0,song_id:49}}}}
-data merge storage minecraft:custom {cassette:{index:{49:{name:[{"text":"Leave Me Alone","italic":false,"color":"gray"}]}}}}
-data merge storage minecraft:custom {cassette:{index:{49:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{49:{artist:"NF",duration:305,rating:3,song_id:49}}}}
+data merge storage minecraft:custom {cassette:{index:{49:{name:[{"text":"Leave Me ","italic":false,"color":"#a1a1a1"},{"text":"A","italic":false,"underlined":true,"color":"#cfcfcf"},{"text":"l","italic":false,"underlined":true,"color":"#dbdbdb"},{"text":"o","italic":false,"underlined":true,"color":"#e7e7e7"},{"text":"n","italic":false,"underlined":true,"color":"#f3f3f3"},{"text":"e","italic":false,"underlined":true,"color":"white"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{49:{obtainment:[[{"text":"Be under attack by ","italic":false,"color":"gray"},{"text":"8","italic":false,"color":"aqua"},{"text":" different","italic":false,"color":"gray"}],[{"text":"Monster(s)","italic":false,"color":"green"},{"text":" at the same time","italic":false,"color":"gray"}]]}}}}
 # 50 - Jump
-data merge storage minecraft:custom {cassette:{index:{50:{artist:"Van Halen",duration:237,rating:0,song_id:50}}}}
-data merge storage minecraft:custom {cassette:{index:{50:{name:[{"text":"Jump","italic":false,"color":"aqua"}]}}}}
-data merge storage minecraft:custom {cassette:{index:{50:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{50:{artist:"Van Halen",duration:237,rating:2,song_id:50}}}}
+data merge storage minecraft:custom {cassette:{index:{50:{name:[{"text":"J","italic":false,"color":"#8fbfff"},{"text":"u","italic":false,"color":"#7bb4ff"},{"text":"m","italic":false,"color":"#66a8ff"},{"text":"p","italic":false,"color":"#529dff"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{50:{obtainment:[[{"text":"Jump","italic":false,"color":"yellow"},{"text":" at least ","italic":false,"color":"gray"},{"text":"1000","italic":false,"color":"aqua"},{"text":" times","italic":false,"color":"gray"}]]}}}}
 # 51 - Kickback
 data merge storage minecraft:custom {cassette:{index:{51:{artist:"Kenshi Yonezu",duration:195,rating:0,song_id:51}}}}
-data merge storage minecraft:custom {cassette:{index:{51:{name:[{"text":"Kickback","italic":false,"color":"dark_red"}]}}}}
+data merge storage minecraft:custom {cassette:{index:{51:{name:[{"text":"K","italic":false,"color":"#d10000"},{"text":"i","italic":false,"color":"#8b3807"},{"text":"c","italic":false,"color":"#46700d"},{"text":"k","italic":false,"color":"#00a814"},{"text":"b","italic":false,"color":"#00a814"},{"text":"a","italic":false,"color":"#46700d"},{"text":"c","italic":false,"color":"#8b3807"},{"text":"k","italic":false,"color":"#d10000"}]}}}}
 data merge storage minecraft:custom {cassette:{index:{51:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}}
 # 52 - What You Gonna Do?
 data merge storage minecraft:custom {cassette:{index:{52:{artist:"Bastille",duration:143,rating:0,song_id:52}}}}

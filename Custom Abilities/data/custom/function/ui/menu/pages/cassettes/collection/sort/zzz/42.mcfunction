@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$execute store result storage minecraft:custom cassette.fetch.lookup int 1 run data get storage minecraft:custom cassette.artist.$(increment).id
-function custom:ui/menu/pages/cassettes/collection/sort/zzz/43 with storage minecraft:custom cassette.fetch
+$data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
+$execute if score @s customUI.CassetteCollectionOperation matches 2 if entity @s[tag=customCassette.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
+$execute if score @s customUI.CassetteCollectionOperation matches 3 if entity @s[tag=customCassette.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}

@@ -30,4 +30,5 @@ scoreboard objectives add customCassette.ChallengeComeAsYouAre dummy
 scoreboard objectives add customCassette.ChallengeUsedAnvil minecraft.custom:minecraft.interact_with_anvil
 scoreboard objectives add customCassette.ChallengeHammerRotationX dummy
 scoreboard objectives add customCassette.ChallengeHammerRotationY dummy
+scoreboard objectives add customCassette.ChallengeSlayMonsterNight dummy
 function custom:music/song_index

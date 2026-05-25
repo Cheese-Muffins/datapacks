@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players set @s customCassette.PlayFeedbackIncrementReturn $(lookup)
+$execute if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] run function custom:ui/menu/pages/cassettes/collection/sort/zzz/64

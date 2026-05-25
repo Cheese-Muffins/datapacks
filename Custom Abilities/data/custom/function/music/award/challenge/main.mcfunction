@@ -28,3 +28,5 @@ execute if predicate custom:cassette/challenge/ancient_city unless entity @s[tag
 execute if entity @n[type=#custom:monsters,distance=..7] if predicate custom:cassette/challenge/empty_inventory unless entity @s[tag=customCassette.Unlocked29] run function custom:music/award/challenge/come_as_you_are
 # Sometimes You're The Hammer, Sometimes You're The Nail
 execute if score @s customCassette.ChallengeUsedAnvil matches 1.. unless entity @s[tag=customCassette.Unlocked38] run function custom:music/award/challenge/hammer
+# The Only Thing They Fear Is You
+execute if score @s customCassette.ChallengeSlayMonsterNight matches 1.. if predicate custom:cassette/challenge/day unless entity @s[tag=customCassette.Unlocked44] run scoreboard players reset @s customCassette.ChallengeSlayMonsterNight
