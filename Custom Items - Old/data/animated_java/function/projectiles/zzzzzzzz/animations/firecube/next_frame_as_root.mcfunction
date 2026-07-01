@@ -1,1 +1,0 @@
-function animated_java:projectiles/zzzzzzzz/animations/firecube/tick_animation

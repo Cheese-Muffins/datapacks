@@ -1,1 +1,0 @@
-$execute as @e[type=minecraft:item_display,$(tags),scores={$(objective)=$(id)}] at @s run function $(path)

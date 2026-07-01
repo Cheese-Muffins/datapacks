@@ -1,2 +1,0 @@
-$kill @n[type=minecraft:item_display,tag=aj.world.camera.camera,scores={customUniversal_RigID=$(rig)}]
-$execute as @n[type=minecraft:item_display,tag=aj.world.root,scores={customUniversal_RigID=$(rig)}] run function animated_java:world/remove/this

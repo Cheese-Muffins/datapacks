@@ -1,4 +1,0 @@
-# Generated with MC-Build
-
-tag @s add customUI.AdminAccess
-tellraw @s ["",{"text":"Custom Abilities","color":"gold"},{"text":"\n"},{"text":"You now have complete ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"a","color":"gold"},{"text":"t","color":"yellow"},{"text":"o","color":"green"},{"text":"r","color":"blue"},{"text":" access to everything relating to ","color":"gray"},{"text":"Custom Abilities!","color":"aqua"}]

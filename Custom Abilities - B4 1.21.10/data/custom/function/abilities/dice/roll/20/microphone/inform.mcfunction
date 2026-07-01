@@ -1,5 +1,0 @@
-# Generated with MC-Build
-
-function custom:abilities/dice/roll/20/microphone/description
-function custom:abilities/dice/roll/20/announce with storage minecraft:custom dice.roll
-give @p bowl[max_stack_size=1,max_damage=3,item_name={"color":"aqua","italic":false,"text":"Microphone"},lore=[{"color":"gray","italic":false,"text":"Miku Miku BEAMMMMM!"}," ",[{"color":"gray","italic":false,"text":"Click to "},{"color":"red","italic":false,"text":"fire "},{"color":"gray","italic":false,"text":"a Miku Beam"}],[{"color":"gold","italic":false,"text":"3"},{"color":"gray","italic":false,"text":"/"},{"color":"gold","italic":false,"text":"3 "},{"color":"gray","italic":false,"text":"Beams Left"}]],damage=0,food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:8888888},item_model="minecraft:interactables/microphone",custom_data={beams:3}] 1

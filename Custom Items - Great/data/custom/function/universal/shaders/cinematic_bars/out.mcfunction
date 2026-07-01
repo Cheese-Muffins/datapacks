@@ -1,1 +1,0 @@
-particle minecraft:entity_effect{color:[0.996078431372549, 0.9882352941176471, 0.0, 0.984313725490196],scale:1f} ~ ~ ~ 0 0 0 1 1 force @s

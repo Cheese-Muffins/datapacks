@@ -1,2 +1,0 @@
-$execute at @s as @p if entity @s[advancements={cassette:$(id)=false}] run data merge storage minecraft:ui {cassette:{page_goal_text1:"Collect $(page_goal_remaining) more song(s) on this page to unlock",page_goal_text2:"$(name)",page_goal_text2_color:"$(color)",page_goal_color:"red"}}
-$execute at @s as @p if entity @s[advancements={cassette:$(id)=true}] run data merge storage minecraft:ui {cassette:{page_goal_text1:"Click to view",page_goal_text2:"$(name)",page_goal_text2_color:"$(color)",page_goal_color:"green"}}

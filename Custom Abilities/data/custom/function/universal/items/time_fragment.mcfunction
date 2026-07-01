@@ -1,3 +1,0 @@
-# Generated with MC-Build
-
-$give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Time Fragment","italic":false,"color":"aqua"}],item_model="minecraft:currencies/time_fragment",custom_data={currency:1b,time_fragment:1b}] $(count)

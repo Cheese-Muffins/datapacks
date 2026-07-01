@@ -1,3 +1,0 @@
-execute store result storage minecraft:cassette song.party int 1 run scoreboard players get @s cassetteParty.Number
-$execute if entity @s[advancements={cassette:$(id)=true}] unless entity @s[tag=Cassette_Song.$(id)] run function cassette:music/load/$(id) {storage:"cassette",path:"song",namepath:"name",obtainment_path:"obtainment",extra:"tag @s add Cassette_Selected"}
-$execute if entity @s[tag=Cassette_Selected] unless entity @s[tag=Cassette_Song.$(id)] run function cassette:music/core/found with storage minecraft:cassette song

@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:projectiles/zzzzzzzz/animations/lapis_blue/tree/leaf_90_as_bone

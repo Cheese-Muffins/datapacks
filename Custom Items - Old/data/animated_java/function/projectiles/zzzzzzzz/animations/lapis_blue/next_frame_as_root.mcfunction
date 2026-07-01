@@ -1,1 +1,0 @@
-function animated_java:projectiles/zzzzzzzz/animations/lapis_blue/tick_animation

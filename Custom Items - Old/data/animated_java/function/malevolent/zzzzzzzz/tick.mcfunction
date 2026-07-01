@@ -1,1 +1,0 @@
-execute if entity @s[tag=aj.malevolent.root] run function animated_java:malevolent/zzzzzzzz/tick_as_root

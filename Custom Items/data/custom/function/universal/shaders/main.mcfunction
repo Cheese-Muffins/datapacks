@@ -1,5 +1,0 @@
-$scoreboard players set .mode customUniversal_ShaderBehavior $(mode)
-$execute if score .mode customUniversal_ShaderBehavior matches 0 run function $(shader)
-$execute if score .mode customUniversal_ShaderBehavior matches 1 as @a[scores={customUniversal_RigID=$(id)}] at @s run function $(shader)
-$execute if score .mode customUniversal_ShaderBehavior matches 2 as @a[scores={customGojo_DomainID=$(id)}] at @s run function $(shader)
-$execute if score .mode customUniversal_ShaderBehavior matches 3 as @a[scores={customEren.TitanID=$(id)}] at @s run function $(shader)

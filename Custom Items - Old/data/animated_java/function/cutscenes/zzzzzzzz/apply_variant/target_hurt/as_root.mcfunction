@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:cutscenes/zzzzzzzz/apply_variant/target_hurt/as_bone

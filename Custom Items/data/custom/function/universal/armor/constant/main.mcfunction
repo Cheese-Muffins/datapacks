@@ -1,2 +1,0 @@
-execute if items entity @s inventory.* *[minecraft:custom_data={customLock:Armor}] run function custom:universal/armor/constant/inventory
-execute if items entity @s hotbar.* *[minecraft:custom_data={customLock:Armor}] run function custom:universal/armor/constant/hotbar

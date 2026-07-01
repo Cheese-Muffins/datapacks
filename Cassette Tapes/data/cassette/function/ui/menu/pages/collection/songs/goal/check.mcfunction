@@ -1,1 +1,0 @@
-$execute if entity @p[advancements={cassette:$(goal)=true}] run scoreboard players add .Total cassetteCollection.Goal 1

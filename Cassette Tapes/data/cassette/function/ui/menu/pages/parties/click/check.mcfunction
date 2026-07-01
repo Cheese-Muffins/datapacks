@@ -1,2 +1,0 @@
-execute if entity @s[tag=cassetteParty.Joined] run function cassette:ui/menu/pages/parties/click/fail
-execute unless entity @s[tag=cassetteParty.Joined] run function cassette:ui/menu/pages/parties/click/pass with storage minecraft:ui cassette

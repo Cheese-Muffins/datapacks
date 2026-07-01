@@ -1,1 +1,0 @@
-execute unless score @s cassetteCollection.Slot matches 22.. run function cassette:ui/menu/pages/collection/songs/load/data/found with storage minecraft:ui cassette

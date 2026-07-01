@@ -1,1 +1,0 @@
-$execute as @n[type=minecraft:item_display,tag=customEren.PlayerMount,scores={customEren.TitanID=$(id)}] at @n[type=minecraft:item_display,tag=aj.eren.locator.user_anchor,scores={customEren.TitanID=$(id)}] run tp @s ~ ~ ~

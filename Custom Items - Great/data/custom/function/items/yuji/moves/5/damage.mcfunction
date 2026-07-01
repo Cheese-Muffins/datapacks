@@ -1,1 +1,0 @@
-$execute as @e[type=!#custom:not_mob,distance=..2] if entity @s[scores={customYuji_CleaveID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"7",type:"minecraft:generic",ability:"Yuji",objective:"customYuji_CleaveID",first:"was slashed by",second:"using Cleave"}

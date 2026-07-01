@@ -1,6 +1,0 @@
-execute at @s rotated ~ 0 run function custom:items/gojo/moves/rigsetup
-tellraw @s ["",{"text":"Gojo Satoru","color":"gold"},{"text":"\n"},{"text":"Awakening chance ","color":"gray"},{"text":"passed","color":"aqua"}]
-scoreboard players set @s customAwakenedCooldown 18000
-execute as @n[tag=aj.satoru.root] run function animated_java:satoru/animations/honored/play
-gamemode spectator @s
-spectate @n[tag=aj.satoru.camera.camera]

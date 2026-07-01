@@ -1,3 +1,0 @@
-# Generated with MC-Build
-
-$give @s minecraft:phantom_membrane[lore=[[{"text":"Can be used to buy specific custom abilities","italic":false,"color":"gray"}],[{"text":"or skins.","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Gem Cluster","italic":false,"color":"dark_aqua"}],item_model="minecraft:currencies/gem_cluster",custom_data={currency:1b,gem_cluster:1b}] $(count)

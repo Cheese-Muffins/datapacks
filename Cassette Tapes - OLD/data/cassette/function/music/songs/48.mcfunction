@@ -1,2 +1,0 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"Through The Fire And Flames",duration:"6080",artist:"DragonForce",obtainment:"Drops from the Ender Dragon (40%)",color:"yellow",id:"48"}}$(eparen)
-$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

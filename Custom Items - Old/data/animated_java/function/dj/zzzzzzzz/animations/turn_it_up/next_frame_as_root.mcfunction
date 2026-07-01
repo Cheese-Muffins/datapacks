@@ -1,1 +1,0 @@
-function animated_java:dj/zzzzzzzz/animations/turn_it_up/tick_animation

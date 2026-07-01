@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"Fireflies",duration:"4500",artist:"Owl City",$(obtainment_path):"Complete the Advancement: Great View From Up Here",color:"blue",id:"8"}}
-$$(extra)

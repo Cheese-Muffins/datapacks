@@ -1,1 +1,0 @@
-scoreboard objectives add enchantment_LullabyCD dummy

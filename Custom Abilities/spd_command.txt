@@ -1,2 +1,0 @@
-python aj-convert.py rig -split
-a

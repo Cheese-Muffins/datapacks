@@ -1,9 +1,0 @@
-scoreboard players set @s customMove1Cooldown 0
-scoreboard players set @s customMove2Cooldown 0
-scoreboard players set @s customMove3Cooldown 0
-scoreboard players set @s customMove4Cooldown 0
-scoreboard players set @s customMove5Cooldown 0
-scoreboard players set @s customMove6Cooldown 0
-scoreboard players set @s customParticleDelay 0
-scoreboard players set @s customToggleDelay 0
-scoreboard players set @s customToggle 2

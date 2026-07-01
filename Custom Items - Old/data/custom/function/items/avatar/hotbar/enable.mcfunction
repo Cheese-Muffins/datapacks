@@ -1,8 +1,0 @@
-data modify storage minecraft:custom avatar.ui.m1T set value "000"
-data modify storage minecraft:custom avatar.ui.m2T set value "000"
-data modify storage minecraft:custom avatar.ui.m3T set value "000"
-data modify storage minecraft:custom avatar.ui.m4T set value "000"
-data modify storage minecraft:custom avatar.ui.m1 set value "uEA10"
-data modify storage minecraft:custom avatar.ui.m2 set value "uEA10"
-data modify storage minecraft:custom avatar.ui.m3 set value "uEA10"
-data modify storage minecraft:custom avatar.ui.m4 set value "uEA10"

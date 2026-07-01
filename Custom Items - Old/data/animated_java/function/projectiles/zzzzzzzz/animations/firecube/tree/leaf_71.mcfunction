@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:projectiles/zzzzzzzz/animations/firecube/tree/leaf_71_as_bone

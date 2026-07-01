@@ -1,2 +1,0 @@
-$execute as @e[type=minecraft:item,tag=customYuji.MajinMotion,scores={customUniversal_RigID=$(id)}] at @s run tp @e[type=minecraft:item_display,tag=customYuji.MajinMount,scores={customUniversal_RigID=$(id)}] ~ ~ ~
-$execute as @e[type=!#custom:not_mob,distance=..3.5] unless entity @s[scores={customUniversal_RigID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"17",type:"minecraft:generic",ability:"Yuji",objective:"customUniversal_RigID",first:"was kicked by",second:"using Majin Kick"}

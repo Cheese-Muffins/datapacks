@@ -1,1 +1,0 @@
-$summon item ~ ~ ~ {Item:{id:"minecraft:carrot_on_a_stick",count:1,components:{"minecraft:custom_name":'{"text":"$(name)","color":"$(color)","italic":false}',"minecraft:lore":['{"text":"By: $(artist)","color":"gray","italic":false}'],"minecraft:custom_model_data":$(cmd),"minecraft:custom_data":{cassette:redeem}}}}

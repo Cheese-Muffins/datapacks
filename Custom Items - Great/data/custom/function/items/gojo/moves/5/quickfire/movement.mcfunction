@@ -1,2 +1,0 @@
-tp @s ^ ^ ^1.5
-$execute as @e[type=!#custom:not_mob,distance=..4.5] unless entity @s[scores={customGojo_PurpleQuickfireID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"21",type:"minecraft:generic",ability:"Gojo",objective:"customGojo_PurpleQuickfireID",first:"was deleted by",second:"using Hollow Purple: Quickfire"}

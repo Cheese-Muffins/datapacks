@@ -1,2 +1,0 @@
-execute at @s run particle dust{color:[0.671,0.000,0.000],scale:1} ~ ~ ~ 0.25 0.25 0.25 0 20 force @a
-execute at @s run particle dust{color:[0.059,0.000,0.000],scale:1} ~ ~ ~ 0.25 0.25 0.25 0 5 force @a

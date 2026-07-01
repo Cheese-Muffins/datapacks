@@ -1,2 +1,0 @@
-$execute as @a[tag=ErenUser,scores={$(objective)=$(id)}] at @s run function custom:items/eren/moves/reset/player {objective:"$(objective)",rig:"$(rig)",id:$(id)}
-$function animated_java:$(rig)/remove/this

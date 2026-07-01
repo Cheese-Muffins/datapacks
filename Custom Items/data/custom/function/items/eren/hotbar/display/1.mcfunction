@@ -1,1 +1,0 @@
-$title @s actionbar [{"text":"\u03A0","color":"#4e5c24"},{"text":"\uF800\$(move1)","color":"#4e5c24"},{"text":"\uF800\u03A1","color":"#4e5c24"}]

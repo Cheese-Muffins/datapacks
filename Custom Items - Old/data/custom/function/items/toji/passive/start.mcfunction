@@ -1,1 +1,0 @@
-execute as @n[nbt={HurtTime:10s}] at @s unless entity @s[tag=tojiMarked] unless entity @s[tag=TojiUser] run function custom:items/toji/passive/mark

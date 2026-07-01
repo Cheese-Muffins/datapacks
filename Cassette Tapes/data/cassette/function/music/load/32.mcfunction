@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"The Mask",duration:"3500",artist:"Dream",$(obtainment_path):"Equip a Turtle Helmet whilst having the Darkness & Glowing effects",color:"green",id:"32"}}
-$$(extra)

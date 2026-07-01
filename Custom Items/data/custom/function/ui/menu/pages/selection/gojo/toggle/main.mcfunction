@@ -1,2 +1,0 @@
-execute if entity @s[tag=customYuji.Ownership] run function custom:ui/menu/pages/selection/yuji/toggle/owned/main
-execute unless entity @s[tag=customYuji.Ownership] run function custom:ui/menu/pages/selection/yuji/toggle/unowned/main

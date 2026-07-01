@@ -1,2 +1,0 @@
-execute store result storage minecraft:custom gojo.domain.id int 1 run scoreboard players get @s customGojo_DomainID
-function custom:items/gojo/moves/6/timer/find/post with storage minecraft:custom gojo.domain

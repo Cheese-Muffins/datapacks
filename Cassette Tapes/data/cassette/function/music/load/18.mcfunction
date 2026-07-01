@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"Quarter Past Midnight",duration:"4100",artist:"Bastille",$(obtainment_path):"Sleep in a Bed a Quarter Past Midnight",color:"gray",id:"18"}}
-$$(extra)

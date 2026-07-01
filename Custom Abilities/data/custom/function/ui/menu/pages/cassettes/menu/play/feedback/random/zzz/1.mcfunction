@@ -1,5 +1,0 @@
-# Generated with MC-Build
-
-$execute if score @s customUI.SettingsTargeting matches 2 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
-$execute if score @s customUI.SettingsTargeting matches 3 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
-$execute if score @s customUI.SettingsTargeting matches 4 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist2_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play

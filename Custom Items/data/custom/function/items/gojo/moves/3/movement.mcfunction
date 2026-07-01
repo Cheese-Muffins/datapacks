@@ -1,2 +1,0 @@
-tp @s ^ ^ ^1.5
-$execute as @e[type=!#custom:not_mob,distance=..3] unless entity @s[scores={customGojo_RedID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"12",type:"minecraft:generic",ability:"Gojo",objective:"customGojo_RedID",first:"was vaporized by",second:"using Reversal Red"}

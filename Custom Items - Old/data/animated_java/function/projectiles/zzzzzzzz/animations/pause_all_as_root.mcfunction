@@ -1,4 +1,0 @@
-function animated_java:projectiles/zzzzzzzz/animations/reversal_red/pause_as_root
-function animated_java:projectiles/zzzzzzzz/animations/lapis_blue/pause_as_root
-function animated_java:projectiles/zzzzzzzz/animations/hollow_purple/pause_as_root
-function animated_java:projectiles/zzzzzzzz/animations/firecube/pause_as_root

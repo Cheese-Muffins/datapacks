@@ -1,2 +1,0 @@
-tellraw @s ["",{"text":"Custom Abilities (Yuji)","color":"gold"},{"text":"\n"},{"text":"You do ","color":"gray"},{"text":"NOT ","color":"red"},{"text":"meet the requirements to purchase ","color":"gray"},{"text":"Yuji Itadori","color":"aqua"}]
-playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5

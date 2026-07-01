@@ -1,5 +1,0 @@
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.head from entity @s armor.head
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.chest from entity @s armor.chest
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.legs from entity @s armor.legs
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run item replace entity @a[tag=CustomItemHolder,scores={customIDStore=$(id)}] armor.feet from entity @s armor.feet
-$execute as @n[type=minecraft:armor_stand,tag=customArmorStore,scores={customIDStore=$(id)}] run kill @s[type=minecraft:armor_stand]

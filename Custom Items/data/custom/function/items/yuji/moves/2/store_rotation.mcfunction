@@ -1,2 +1,0 @@
-execute store result storage minecraft:custom yuji.moves.RX float 1 run data get entity @s Rotation[0] 1
-execute store result storage minecraft:custom yuji.moves.RY float 1 run data get entity @s Rotation[1] 1

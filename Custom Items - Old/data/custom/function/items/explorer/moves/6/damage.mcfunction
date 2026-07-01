@@ -1,2 +1,0 @@
-$execute at @n[type=minecraft:item_display,tag=aj.projectiles.locator.chestdrop] as @e[type=!#custom:not_mob,type=!minecraft:player,distance=..$(range)] run damage @s $(damageE) minecraft:generic_kill
-$execute at @n[type=minecraft:item_display,tag=aj.projectiles.locator.chestdrop] as @a[distance=..$(range)] unless score @s customMoveID = @n[type=minecraft:item_display,tag=aj.projectiles.root] customMoveID run damage @s $(damageP) minecraft:generic

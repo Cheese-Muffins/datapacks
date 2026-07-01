@@ -1,2 +1,0 @@
-tellraw @s ["",{"text":"Custom Item Tome","color":"gold"},{"text":"\n"},{"text":"You cannot equip ","color":"gray"},{"text":"Gojo Satoru","color":"aqua"},{"text":" because haven't ","color":"gray"},{"text":"unlocked ","color":"red"},{"text":"it yet!","color":"gray"}]
-playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5

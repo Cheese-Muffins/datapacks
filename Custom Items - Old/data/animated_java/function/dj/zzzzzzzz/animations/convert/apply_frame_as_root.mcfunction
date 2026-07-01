@@ -1,1 +1,0 @@
-execute if score @s aj.anim_time matches 0..45 run function animated_java:dj/zzzzzzzz/animations/convert/tree/branch_0_45

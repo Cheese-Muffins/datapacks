@@ -1,1 +1,0 @@
-execute if entity @s[tag=aj.cutscenes.animation.assasinate] run function animated_java:cutscenes/zzzzzzzz/animations/assasinate/tick

@@ -1,2 +1,0 @@
-execute if items entity @s weapon minecraft:carrot[minecraft:custom_model_data,count=64] if items entity @s weapon.offhand minecraft:carrot[minecraft:custom_model_data,count=64] run advancement grant @s only server:drug_lord
-advancement revoke @s only server:drug_lord_check

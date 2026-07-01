@@ -1,2 +1,0 @@
-execute if entity @s[tag=GojoUser] run function custom:universal/scores/cooldowns/main {item:"gojo"}
-execute if entity @s[tag=WorldUser] run function custom:universal/scores/cooldowns/main {item:"world"}

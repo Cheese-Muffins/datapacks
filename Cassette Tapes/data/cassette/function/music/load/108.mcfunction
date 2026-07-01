@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"Otonoke",duration:"3720",artist:"Creepy Nuts",$(obtainment_path):"Collect every song on Page 3 of the Collection Menu",color:"gold",id:"108"}}
-$$(extra)

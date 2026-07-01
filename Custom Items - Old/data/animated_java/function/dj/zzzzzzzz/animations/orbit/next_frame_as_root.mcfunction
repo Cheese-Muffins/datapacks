@@ -1,1 +1,0 @@
-function animated_java:dj/zzzzzzzz/animations/orbit/tick_animation

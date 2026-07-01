@@ -1,5 +1,0 @@
-tag @s add customUniversal_DisconnectCheck
-execute store result score @s customYuji.RepetitiveBlackFlash_X run data get entity @s Pos[0]
-execute store result score @s customYuji.RepetitiveBlackFlash_Y run data get entity @s Pos[1]
-execute store result score @s customYuji.RepetitiveBlackFlash_Z run data get entity @s Pos[2]
-gamemode spectator @s

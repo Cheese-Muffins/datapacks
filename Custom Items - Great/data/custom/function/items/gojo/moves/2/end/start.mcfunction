@@ -1,1 +1,0 @@
-$execute as @e[type=!#custom:not_mob,tag=customGojo_BluePickedUp,tag=customGojo_Blue$(id)] at @s run function custom:items/gojo/moves/2/end/post {id:"$(id)"}

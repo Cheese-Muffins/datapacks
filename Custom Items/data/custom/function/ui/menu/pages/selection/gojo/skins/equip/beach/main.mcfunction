@@ -1,2 +1,0 @@
-data merge storage minecraft:ui {custom:{purchase:{ownership:"customGojo.BeachUnlocked",equipped:"customGojo.BeachSkin",ability_path:"gojo",skin_path:"beach",ability_name:"Gojo",skin_name:"Beach"}}}
-function custom:ui/menu/pages/selection/purchase/start with storage minecraft:ui custom.purchase

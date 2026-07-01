@@ -1,3 +1,0 @@
-execute if score @s aj.dj.animation.turn_it_up.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:dj/zzzzzzzz/animations/turn_it_up/end_loop
-execute if score @s aj.dj.animation.turn_it_up.loop_mode = $aj.loop_mode.once aj.i run function animated_java:dj/animations/turn_it_up/stop
-execute if score @s aj.dj.animation.turn_it_up.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:dj/animations/turn_it_up/pause

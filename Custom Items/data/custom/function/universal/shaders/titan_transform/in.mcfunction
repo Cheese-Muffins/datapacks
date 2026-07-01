@@ -1,1 +1,0 @@
-particle minecraft:entity_effect{color:[0.996078431372549, 0.984313725, 0.25098039215686274, 0.780392157],scale:1f}

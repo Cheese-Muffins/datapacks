@@ -1,2 +1,0 @@
-$execute unless items entity @s inventory.$(slot) * run tag @s add customUniversal.ReturnItemTEMP
-execute if entity @s[tag=customUniversal.ReturnItemTEMP] run function custom:universal/return_item/inventory/replace with storage minecraft:custom universal.return_item

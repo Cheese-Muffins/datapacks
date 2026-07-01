@@ -1,5 +1,0 @@
-execute as @s[nbt={Inventory:[{Slot:102b,components:{"minecraft:enchantments":{levels:{"minecraft:lullaby":1}}}}]}] at @s run function enchantments:lullaby/logic/level {radius:"8",cd:"60"}
-execute as @s[nbt={Inventory:[{Slot:102b,components:{"minecraft:enchantments":{levels:{"minecraft:lullaby":2}}}}]}] at @s run function enchantments:lullaby/logic/level {radius:"12",cd:"40"}
-execute as @s[nbt={Inventory:[{Slot:102b,components:{"minecraft:enchantments":{levels:{"minecraft:lullaby":3}}}}]}] at @s run function enchantments:lullaby/logic/level {radius:"16",cd:"20"}
-execute as @s[nbt={Inventory:[{Slot:102b,components:{"minecraft:enchantments":{levels:{"minecraft:lullaby":4}}}}]}] at @s run function enchantments:lullaby/logic/level {radius:"20",cd:"0"}
-execute if score @s enchantment_LullabyCD matches 1.. run scoreboard players remove @s enchantment_LullabyCD 1

@@ -1,1 +1,0 @@
-function animated_java:heads/zzzzzzzz/apply_variant/yujihurt/as_bone

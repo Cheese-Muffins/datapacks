@@ -1,1 +1,0 @@
-execute as @e[type=#interactables:wand,team=Mysterious_Wand] at @s unless entity @a[scores={Mysterious_Selected=1..},sort=nearest,limit=1,distance=..3] run function interactables:wand/remove

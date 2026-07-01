@@ -1,1 +1,0 @@
-$playsound minecraft:cassette.$(id) record @s

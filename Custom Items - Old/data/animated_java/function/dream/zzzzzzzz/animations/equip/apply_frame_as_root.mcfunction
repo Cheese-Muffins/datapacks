@@ -1,1 +1,0 @@
-execute if score @s aj.anim_time matches 0..15 run function animated_java:dream/zzzzzzzz/animations/equip/tree/branch_0_15

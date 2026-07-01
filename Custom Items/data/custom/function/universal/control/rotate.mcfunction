@@ -1,1 +1,0 @@
-$execute rotated ~ ~ run rotate @n[type=$(type),$(what),scores={$(objective)=$(id)}] ~-30 ~

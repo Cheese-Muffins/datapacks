@@ -1,1 +1,0 @@
-execute on passengers run function animated_java:malevolent/zzzzzzzz/animations/grow/tree/leaf_10_as_bone

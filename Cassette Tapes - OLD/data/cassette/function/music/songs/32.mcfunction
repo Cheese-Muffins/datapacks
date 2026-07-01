@@ -1,2 +1,0 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"The Mask",duration:"3500",artist:"Dream",obtainment:"Equip a Turtle Helmet whilst having the Darkness & Glowing effects",color:"green",id:"32"}}$(eparen)
-$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

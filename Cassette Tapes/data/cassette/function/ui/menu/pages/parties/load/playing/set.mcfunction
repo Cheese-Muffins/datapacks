@@ -1,1 +1,0 @@
-$data merge storage minecraft:ui {cassette:{party_listening_name:"$(name)",party_listening_color:"$(color)"}}

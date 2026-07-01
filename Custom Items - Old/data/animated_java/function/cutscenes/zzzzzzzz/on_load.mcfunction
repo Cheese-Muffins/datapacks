@@ -1,2 +1,0 @@
-scoreboard players set @s aj.cutscenes.rig_loaded 1
-execute unless score @s aj.cutscenes.export_version = aj.cutscenes.export_version aj.i at @s run function animated_java:cutscenes/zzzzzzzz/mark_outdated_rig

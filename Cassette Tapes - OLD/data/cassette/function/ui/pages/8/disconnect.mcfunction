@@ -1,9 +1,0 @@
-execute unless entity @a[tag=ListeningParty_1Host] as @a[tag=ListeningParty_1Member] at @s run function cassette:ui/pages/8/kick {party:"1"}
-execute unless entity @a[tag=ListeningParty_2Host] as @a[tag=ListeningParty_2Member] at @s run function cassette:ui/pages/8/kick {party:"2"}
-execute unless entity @a[tag=ListeningParty_3Host] as @a[tag=ListeningParty_3Member] at @s run function cassette:ui/pages/8/kick {party:"3"}
-execute unless entity @a[tag=ListeningParty_4Host] as @a[tag=ListeningParty_4Member] at @s run function cassette:ui/pages/8/kick {party:"4"}
-execute unless entity @a[tag=ListeningParty_5Host] as @a[tag=ListeningParty_5Member] at @s run function cassette:ui/pages/8/kick {party:"5"}
-execute unless entity @a[tag=ListeningParty_6Host] as @a[tag=ListeningParty_6Member] at @s run function cassette:ui/pages/8/kick {party:"6"}
-execute unless entity @a[tag=ListeningParty_7Host] as @a[tag=ListeningParty_7Member] at @s run function cassette:ui/pages/8/kick {party:"7"}
-execute unless entity @a[tag=ListeningParty_8Host] as @a[tag=ListeningParty_8Member] at @s run function cassette:ui/pages/8/kick {party:"8"}
-execute unless entity @a[tag=ListeningParty_9Host] as @a[tag=ListeningParty_9Member] at @s run function cassette:ui/pages/8/kick {party:"9"}

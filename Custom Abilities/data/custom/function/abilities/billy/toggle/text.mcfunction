@@ -1,9 +1,0 @@
-# Generated with MC-Build
-
-$execute if score @s customBilly.ToggleOnText matches 54 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"red","italic":false,"text":"Billy"}}
-$execute if score @s customBilly.ToggleOnText matches 44 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"gold","italic":false,"text":"Demetrius"}}
-execute if score @s customBilly.ToggleOnText matches 35 run function custom:abilities/billy/toggle/zzz/3 with storage minecraft:custom billy
-$execute if score @s customBilly.ToggleOnText matches 25 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"green","italic":false,"text":"Bartholomew"}}
-$execute if score @s customBilly.ToggleOnText matches 15 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"blue","italic":false,"text":"James"}}
-$execute if score @s customBilly.ToggleOnText matches 8 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"light_purple","italic":false,"text":"the"}}
-$execute if score @s customBilly.ToggleOnText matches 1 run function custom:universal/text {type:"billy",y_offset:0,extra:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={customBilly.RigID=$(id)}]",what:{"color":"dark_purple","italic":false,"text":"III"}}

@@ -1,2 +1,0 @@
-playsound minecraft:entity.villager.work_cartographer player @s ~ ~ ~
-$function cassette:music/load/$(id) {storage:"minecraft:cassette",extra:"function cassette:music/developer/output with storage minecraft:cassette song"}

@@ -1,1 +1,0 @@
-function animated_java:malevolent/zzzzzzzz/animations/disappear/tick_animation

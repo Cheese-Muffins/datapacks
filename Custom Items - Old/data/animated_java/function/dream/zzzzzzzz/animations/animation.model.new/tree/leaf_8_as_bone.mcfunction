@@ -1,3 +1,0 @@
-execute if entity @s[tag=aj.dream.bone.bone13] run data modify entity @s {} merge value {transformation:[-1f,0f,1.2246467991473532e-16f,0.12499999999999997f,0f,1f,0f,0.5475f,-1.2246467991473532e-16f,0f,-1f,0.21000000000000002f,0f,0f,0f,1f],start_interpolation:0}
-execute if entity @s[tag=aj.dream.bone.bone12] run data modify entity @s {} merge value {transformation:[-1f,4.188538737676991e-17f,1.1507915602278503e-16f,0.12500000000000003f,0f,0.9396926207859084f,-0.34202014332566866f,0.75f,-1.2246467991473532e-16f,-0.34202014332566866f,-0.9396926207859084f,-0.12499999999999999f,0f,0f,0f,1f],start_interpolation:0}
-execute if entity @s[tag=aj.dream.camera_origin.camera] at @s on origin run tp @s ^0 ^-1.62 ^0 ~0 ~0

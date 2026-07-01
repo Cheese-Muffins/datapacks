@@ -1,1 +1,0 @@
-$execute as @n[tag=aj.projectiles.root$(extra),scores={$(objective)=$(id)}] run function $(animation)

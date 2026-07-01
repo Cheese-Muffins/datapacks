@@ -1,8 +1,0 @@
-scoreboard players set @s customShrinkTick 30
-tag @s add shrinkHit
-tag @s remove shrinkGrow
-tag @s add shrinkSmall
-attribute @s minecraft:generic.scale base set 0.25
-execute if entity @s[type=minecraft:creeper] run data merge entity @s {ExplosionRadius:1b}
-execute if entity @s[type=minecraft:player] run function custom:items/shrinkray/shrink/raycast/player
-particle dust{color:[0.361,0.741,0.380],scale:1} ~ ~ ~ 0.5 0.5 0.5 100 25 force @a

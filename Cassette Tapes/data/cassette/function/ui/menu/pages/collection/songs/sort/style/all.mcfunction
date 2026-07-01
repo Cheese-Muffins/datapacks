@@ -1,1 +1,0 @@
-$function cassette:ui/menu/pages/collection/songs/load/$(path)/check with storage minecraft:ui cassette

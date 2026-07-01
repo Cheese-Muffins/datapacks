@@ -1,3 +1,0 @@
-# Generated with MC-Build
-
-$give @s minecraft:phantom_membrane[lore=[[{"text":"Say hello to my little friend","italic":false,"color":"gray"}],"",[{"text":"Server Exclusive 2025","italic":false,"color":"gold"}]],item_name=[{"text":"Cocaine","italic":false,"color":"white"}],food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:0.7},item_model="minecraft:consumables/cocaine",custom_data={consumable:1b,cocaine:1b}] $(count)

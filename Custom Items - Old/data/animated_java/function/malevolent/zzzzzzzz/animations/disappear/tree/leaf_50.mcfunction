@@ -1,2 +1,0 @@
-execute on passengers run function animated_java:malevolent/zzzzzzzz/animations/disappear/tree/leaf_50_as_bone
-execute unless entity @s[tag=aj.malevolent.disable_command_keyframes] at @s run function animated_java:malevolent/remove/this

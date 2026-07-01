@@ -1,3 +1,0 @@
-# Generated with MC-Build
-
-$data merge storage minecraft:ui {cassette:{party:{party_details:[["",{"text":"Hosted by: ","italic":false,"color":"gray"},{"text":"$(username)","italic":false,"color":"aqua"}],["",{"text":"Members:","italic":false,"color":"gray"},{"text":" $(member_count)","italic":false,"color":"green"}],"",["",{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"et","italic":false,"color":"yellow"},{"text":"te","italic":false,"color":"green"},{"text":" S","italic":false,"color":"blue"},{"text":"on","italic":false,"color":"light_purple"},{"text":"g","italic":false,"color":"dark_purple"}],$(song_line)]}}}

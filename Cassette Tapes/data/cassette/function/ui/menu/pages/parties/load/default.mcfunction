@@ -1,1 +1,0 @@
-$data merge storage minecraft:ui {cassette:{party_item$(party):"arrow",party_cmd$(party):"2",party_name$(party):"men",party$(party)_title:"Party #$(party)",party$(party)_color:"red",party$(party)_desc:"Click to join this party!"}}

@@ -1,2 +1,0 @@
-tellraw @s ["",{"text":"George","color":"gold"},{"text":"\n"},{"text":"You're already at the ","color":"gray"},{"text":"maximum temperature!","color":"red"}]
-playsound minecraft:entity.villager.no player @s ~ ~ ~ 1

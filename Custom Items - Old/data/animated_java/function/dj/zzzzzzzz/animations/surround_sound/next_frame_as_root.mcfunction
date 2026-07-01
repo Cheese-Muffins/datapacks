@@ -1,1 +1,0 @@
-function animated_java:dj/zzzzzzzz/animations/surround_sound/tick_animation

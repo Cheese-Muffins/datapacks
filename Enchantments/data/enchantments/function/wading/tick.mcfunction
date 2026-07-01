@@ -1,3 +1,0 @@
-execute positioned ~ ~-1 ~ if block ~ ~ ~ minecraft:lava unless entity @n[type=minecraft:item_frame,tag=lava,distance=..1] run function enchantments:wading/lava
-execute positioned ~ ~-1 ~ if block ~ ~ ~ minecraft:barrier unless entity @n[type=minecraft:item_frame,tag=lava,distance=..0.7] run function enchantments:wading/barrier
-execute as @e[type=minecraft:item_frame,tag=lava] at @s unless entity @p[nbt={Inventory:[{Slot:100b,components:{"minecraft:enchantments":{levels:{"minecraft:lava_wading":1}}}}]},distance=..2] unless predicate enchantments:sneak run function enchantments:wading/kill

@@ -1,1 +1,0 @@
-execute if score @s aj.anim_time matches 0..110 run function animated_java:projectiles/zzzzzzzz/animations/lapis_blue/tree/branch_0_110

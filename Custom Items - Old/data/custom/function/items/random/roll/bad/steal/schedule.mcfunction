@@ -1,1 +1,0 @@
-execute as @a[tag=RandomUser] run function custom:items/random/roll/bad/steal/return

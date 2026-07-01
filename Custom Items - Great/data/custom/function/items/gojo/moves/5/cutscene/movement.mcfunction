@@ -1,2 +1,0 @@
-tp @s ^ ^ ^1.75
-$execute as @e[type=!#custom:not_mob,distance=..7] unless entity @s[scores={customGojo_PurpleCutsceneID=$(id)}] unless entity @s[tag=customSettings_Immunity] run function custom:universal/hurt/start {id:"$(id)",damage:"31",type:"minecraft:generic",ability:"Gojo",objective:"customGojo_PurpleCutsceneID",first:"was removed from existance by",second:"using Hollow Purple: Cutscene"}

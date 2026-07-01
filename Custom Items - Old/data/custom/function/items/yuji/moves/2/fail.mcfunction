@@ -1,1 +1,0 @@
-scoreboard players set @s aj.yuji.animation.divergent_fist.local_anim_time 45

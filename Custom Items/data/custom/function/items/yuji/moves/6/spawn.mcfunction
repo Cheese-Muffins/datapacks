@@ -1,3 +1,0 @@
-$execute as @n[type=minecraft:item_display,tag=aj.yuji.root,scores={customUniversal_RigID=$(id)}] at @s rotated ~ ~ positioned ^-0.4 ^.6 ^0.85 run execute run function animated_java:projectiles/summon {args:{}}
-data merge storage minecraft:custom {yuji:{moves:{type:"minecraft:item_display",what:"tag=aj.projectiles.root",objective:"customYuji.DismantleID",animation:"animated_java:projectiles/animations/dismantle/play"}}}
-function custom:universal/setup/attack/new with storage minecraft:custom yuji.moves

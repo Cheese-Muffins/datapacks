@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"Enemy",duration:"3420",artist:"Imagine Dragons",$(obtainment_path):"Complete the Advancement: Over-Overkill",color:"light_purple",id:"7"}}
-$$(extra)

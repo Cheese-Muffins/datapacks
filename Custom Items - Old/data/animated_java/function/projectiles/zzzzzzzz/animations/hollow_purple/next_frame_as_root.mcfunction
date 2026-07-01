@@ -1,1 +1,0 @@
-function animated_java:projectiles/zzzzzzzz/animations/hollow_purple/tick_animation

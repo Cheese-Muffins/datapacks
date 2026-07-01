@@ -1,2 +1,0 @@
-$data merge storage minecraft:$(storage) {$(path):{name:"Stadium Rave",duration:"5400",artist:"Mark Governor",obtainment:"Found in Mineshafts",id:"105"}}$(eparen)
-$execute if entity @s[type=minecraft:player] run tag @s add $(tag)

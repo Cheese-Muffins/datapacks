@@ -1,3 +1,0 @@
-# Generated with MC-Build
-
-$title @s actionbar [{"text":"\uF802\uF807\u02A0","color":"#4e5c24"},{"text":"\uF817\u02A2\uF818\uF816","color":"#4e5c24"},{"text":"\uF800\$(move1)","color":"#4e5c24"},{"text":"\uF800\$(move2)","color":"#4e5c24"},{"text":"\uF800\$(move3)","color":"#4e5c24"},{"text":"\uF827\$(awakening)","color":"#4e5c24"},{"text":"\uF806\u02A1","color":"#4e5c24"},{"text":"\uF806\u02A3"},{"text":"\uF808$(time)","color":"yellow"}]

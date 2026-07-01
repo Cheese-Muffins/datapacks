@@ -1,2 +1,0 @@
-execute if score @s customHotBarSelected matches 1 run title @s actionbar [{"text":"\u4F01"},{"text":"\uF800\u4F04\uF806\u4F03"},{"text":"\uF8101\uF802","color":"black"},{"text":"\uF800\u4F04"},{"text":"\uF8102\uF802","color":"black"},{"text":"\uF800\u4F02"}]
-execute if score @s customHotBarSelected matches 2 run title @s actionbar [{"text":"\u4F01"},{"text":"\uF800\u4F04"},{"text":"\uF8101\uF802","color":"black"},{"text":"\uF800\u4F04\uF806\u4F03"},{"text":"\uF8102\uF802","color":"black"},{"text":"\uF800\u4F02"}]

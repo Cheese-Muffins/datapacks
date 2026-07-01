@@ -1,1 +1,0 @@
-execute if block ~ ~ ~ lava unless block ~ ~ ~ lava run function enchantments:wading/effect

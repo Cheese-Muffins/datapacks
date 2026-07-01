@@ -1,1 +1,0 @@
-$scoreboard players set @n[type=minecraft:marker,tag=InfiniteBackshotsAnchor,scores={customUniversal_RigID=$(rig)}] customGojo_DomainTimer 200

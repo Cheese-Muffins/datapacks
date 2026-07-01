@@ -1,1 +1,0 @@
-$execute store result score @n[type=$(type),tag=$(what)] customYuji.PactID run scoreboard players get @s customYuji.PactID

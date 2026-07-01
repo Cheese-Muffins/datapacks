@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"Popular Monster",duration:"4440",artist:"Falling In Reverse",$(obtainment_path):"Complete the Advancement: Hero of the Village",color:"dark_red",id:"14"}}
-$$(extra)

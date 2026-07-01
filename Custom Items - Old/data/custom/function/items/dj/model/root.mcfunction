@@ -1,1 +1,0 @@
-execute as @s[tag=anim_finished] run function custom:items/dj/model/resume

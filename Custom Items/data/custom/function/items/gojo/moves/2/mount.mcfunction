@@ -1,1 +1,0 @@
-ride @s mount @n[tag=aj.projectiles.root]

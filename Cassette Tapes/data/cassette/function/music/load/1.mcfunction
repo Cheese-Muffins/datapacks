@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"YOUSEEBIGGIRL/T:T",duration:"3260",artist:"Hiroyuki Sawano",$(obtainment_path):"Complete the Advancement: We Need to Go Deeper",color:"green",id:"1"}}
-$$(extra)

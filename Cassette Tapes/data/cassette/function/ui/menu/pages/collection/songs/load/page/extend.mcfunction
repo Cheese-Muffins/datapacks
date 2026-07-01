@@ -1,3 +1,0 @@
-$execute if score @s cassetteCollection.Page matches 1 run data merge storage minecraft:ui {cassette:{back_value:"Return Home",back_desc:"Flips back to the Main Menu",next_value:"Next Page",next_desc:"($(page_pos_forward)/$(max))"}}
-$execute if score @s cassetteCollection.Page matches 2..$(max) run data merge storage minecraft:ui {cassette:{back_value:"Previous Page",back_desc:"($(page_pos_back)/$(max))",next_value:"Next Page",next_desc:"($(page_pos_forward)/$(max))"}}
-$execute if score @s cassetteCollection.Page matches $(max) run data merge storage minecraft:ui {cassette:{back_value:"Previous Page",back_desc:"($(page_pos_back)/$(max))",next_value:"Bonus Songs",next_desc:"Do NOT count towards completion"}}

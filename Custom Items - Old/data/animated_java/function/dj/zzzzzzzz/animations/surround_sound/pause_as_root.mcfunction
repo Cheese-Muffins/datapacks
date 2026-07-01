@@ -1,1 +1,0 @@
-tag @s remove aj.dj.animation.surround_sound

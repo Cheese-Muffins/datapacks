@@ -1,1 +1,0 @@
-$execute rotated ~ 0 positioned ^ ^ ^1.25 run tp @n[type=item_display,tag=aj.world.root,scores={customUniversal_RigID=$(rig)}] ~ ~ ~ ~ ~

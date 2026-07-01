@@ -1,2 +1,0 @@
-summon item_display ~ ~1.5 ~ {teleport_duration:1,item_display:"head",Tags:["presidentKidnap"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0f,0f],scale:[4f,4f,4f]},item:{id:"minecraft:pink_dye",count:1,components:{"minecraft:custom_model_data":588}}}
-execute as @n[type=item_display,tag=presidentKidnap] at @s rotated as @p[tag=PresidentUser] run tp @s ~ ~ ~ ~ ~

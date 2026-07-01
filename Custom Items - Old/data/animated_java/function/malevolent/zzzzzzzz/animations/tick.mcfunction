@@ -1,2 +1,0 @@
-execute if entity @s[tag=aj.malevolent.animation.grow] run function animated_java:malevolent/zzzzzzzz/animations/grow/tick
-execute if entity @s[tag=aj.malevolent.animation.disappear] run function animated_java:malevolent/zzzzzzzz/animations/disappear/tick

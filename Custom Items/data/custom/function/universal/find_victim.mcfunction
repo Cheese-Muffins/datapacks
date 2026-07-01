@@ -1,1 +1,0 @@
-$execute as @a[$(tags),scores={$(objective)=$(id)}] at @s run function $(path)

@@ -1,1 +1,0 @@
-$function cassette:music/load/$(id) {storage:"ui",path:"cassette",namepath:"name",obtainment_path:"obtainment",extra:"random value 1..2"}

@@ -1,1 +1,0 @@
-execute if score @s aj.anim_time matches 0..80 run function animated_java:projectiles/zzzzzzzz/animations/firecube/tree/branch_0_80

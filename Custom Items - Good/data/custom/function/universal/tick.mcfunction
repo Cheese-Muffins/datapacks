@@ -1,1 +1,0 @@
-execute if entity @s[tag=GojoUser] run function custom:items/gojo/tick

@@ -1,2 +1,0 @@
-execute positioned ~ ~ ~ rotated ~ 0 run function animated_java:herobrine/summon {args:{}}
-execute as @n[type=minecraft:item_display,tag=aj.herobrine.root] unless score @s bossHerobrine_RigID matches 1.. run function boss:herobrine/summon/id

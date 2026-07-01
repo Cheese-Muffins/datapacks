@@ -1,2 +1,0 @@
-execute unless entity @s[tag=cassetteParty.Joined] run function cassette:ui/menu/pages/parties/disconnect/fail
-execute if entity @s[tag=cassetteParty.Joined] run function cassette:ui/menu/pages/parties/disconnect/pass with storage minecraft:ui cassette

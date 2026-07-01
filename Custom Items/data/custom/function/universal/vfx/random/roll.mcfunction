@@ -1,1 +1,0 @@
-$function animated_java:particles/variants/$(variant_pool)_$(roll)/apply

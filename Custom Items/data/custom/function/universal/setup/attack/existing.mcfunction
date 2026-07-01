@@ -1,2 +1,0 @@
-$execute as @n[type=$(type),$(what),tag=!playing] unless score @s $(objective) matches 1.. store result score @s $(objective) run scoreboard players set @s $(objective) $(id)
-function custom:universal/setup/attack/play with storage minecraft:custom yuji.moves

@@ -1,1 +1,0 @@
-data modify storage minecraft:ui data.stats.name1 set string block 0 -62 0 Items[0].components."minecraft:profile".name

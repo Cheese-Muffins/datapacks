@@ -1,2 +1,0 @@
-$tellraw @s ["",{"text":"The Explorer","color":"gold"},{"text":"\n"},{"text":"Searching for a nearby ","color":"gray"},{"text":"$(structure)","color":"green"},{"text":" click again to search for ","color":"gray"},{"text":"something else!","color":"red"}]
-tag @s add dcheck

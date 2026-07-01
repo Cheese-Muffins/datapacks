@@ -1,1 +1,0 @@
-$execute store result score @n[type=$(type),tag=$(what)] $(objective) run scoreboard players get @s $(objective)

@@ -1,1 +1,0 @@
-$function custom:items/$(item)/hotbar/moves/$(move)

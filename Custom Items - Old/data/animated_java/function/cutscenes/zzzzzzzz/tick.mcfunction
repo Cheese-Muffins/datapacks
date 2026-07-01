@@ -1,1 +1,0 @@
-execute if entity @s[tag=aj.cutscenes.root] run function animated_java:cutscenes/zzzzzzzz/tick_as_root

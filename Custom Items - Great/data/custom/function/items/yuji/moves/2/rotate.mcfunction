@@ -1,1 +1,0 @@
-$data modify entity @n[type=minecraft:item_display,tag=aj.yuji.root,scores={customUniversal_RigID=$(id)}] Rotation[0] set from entity @s Rotation[0]

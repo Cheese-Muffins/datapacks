@@ -1,1 +1,0 @@
-tag @s remove aj.projectiles.animation.lapis_blue

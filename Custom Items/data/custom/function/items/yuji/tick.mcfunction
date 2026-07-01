@@ -1,6 +1,0 @@
-execute if score @s customToggle matches 1 run function custom:items/yuji/active
-
-execute if entity @s[tag=customUniversal.LockArmor] run function custom:universal/armor/constant/main {item:"yuji"}
-
-execute unless items entity @s hotbar.8 minecraft:bowl[minecraft:custom_data={CustomAbility:1b}] run function custom:items/yuji/handheld
-execute unless entity @s[scores={customYuji.BindingVow_Cooldown=0,customMove1Cooldown=0,customMove2Cooldown=0,customMove3Cooldown=0,customMove4Cooldown=0,customMove5Cooldown=0,customMove6Cooldown=0,customMove7Cooldown=0,customMove8Cooldown=0,customMove9Cooldown=0,customDelay5=0,customDelay7=0,customAwakening=0,customMoveSpamDelay=0,customToggleDelay=0,customToggle=1..}] run function custom:items/yuji/scores/main

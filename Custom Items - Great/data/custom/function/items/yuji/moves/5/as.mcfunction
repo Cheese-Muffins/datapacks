@@ -1,3 +1,0 @@
-$execute as @e[type=!#custom:not_mob,tag=customYuji.Move.CleaveVictim,scores={customYuji_CleaveID=$(id)}] at @s run function custom:items/yuji/moves/5/spawn {id:"$(id)"}
-$execute if score @s customDelay5 matches 1 run tag @e[type=!#custom:not_mob,tag=customYuji.Move.CleaveVictim,scores={customYuji_CleaveID=$(id)}] remove customYuji.Move.CleaveVictim
-execute if score @s customDelay5 matches 1 run tag @s remove customYuji.Move.CleaveUser

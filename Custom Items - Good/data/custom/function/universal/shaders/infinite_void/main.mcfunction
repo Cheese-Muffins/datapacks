@@ -1,2 +1,0 @@
-$execute if entity @s[tag=customGojo_InfiniteVoiding$(id)] run function custom:universal/shaders/infinite_void/user
-$execute if entity @s[tag=customGojo_InfiniteVoided$(id)] run function custom:universal/shaders/infinite_void/victim

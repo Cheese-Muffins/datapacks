@@ -1,1 +1,0 @@
-$execute as @a[tag=$(user)User,scores={customUniversal_RigID=$(rig)}] at @s run function $(path)

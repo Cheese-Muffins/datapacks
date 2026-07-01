@@ -1,4 +1,0 @@
-# Generated with MC-Build
-
-tag @s add customBilly.SecretInteractionDevour
-function custom:universal/secret_interaction_notify {description:["",{"text":"Devour","color":"gold"},{"text":"\n"},{"text":"Everytime ","color":"gray"},{"text":"Maul ","color":"yellow"},{"text":"is activated, there is a ","color":"gray"},{"text":"0.5% chance","color":"green"},{"text":" that Billy plays a cutscene version of the passive instead.","color":"gray"},{"text":"\n"},{"text":"-> Damage: ","color":"gray"},{"text":"30","color":"red"},{"text":"\n"},{"text":"-> Victim Movement Speed: ","color":"gray"},{"text":"0.75x","color":"red"},{"text":"\n"},{"text":"-> Victim Jump Strength: ","color":"gray"},{"text":"0.5x","color":"red"},{"text":"\n"},{"text":"-> Effect Duration:","color":"gray"},{"text":" 15s","color":"yellow"}]}

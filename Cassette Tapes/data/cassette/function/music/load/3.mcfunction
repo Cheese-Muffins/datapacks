@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"Ascending Dawn",duration:"7000",artist:"Emile Van Krieken",$(obtainment_path):"Complete the Advancement: Revaulting",color:"yellow",id:"3"}}
-$$(extra)

@@ -1,3 +1,0 @@
-execute if score @s aj.dj.animation.convert.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:dj/zzzzzzzz/animations/convert/end_loop
-execute if score @s aj.dj.animation.convert.loop_mode = $aj.loop_mode.once aj.i run function animated_java:dj/animations/convert/stop
-execute if score @s aj.dj.animation.convert.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:dj/animations/convert/pause

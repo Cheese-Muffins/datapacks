@@ -1,4 +1,0 @@
-# Generated with MC-Build
-
-playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
-tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"You're not an ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"r","color":"gold"},{"text":"a","color":"yellow"},{"text":"t","color":"green"},{"text":"o","color":"blue"},{"text":"r","color":"light_purple"},{"text":",","color":"dark_purple"},{"text":" and ","color":"gray"},{"text":"cannot","color":"red"},{"text":" access this page.","color":"gray"}]

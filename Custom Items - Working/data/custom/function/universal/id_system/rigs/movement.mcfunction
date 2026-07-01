@@ -1,1 +1,0 @@
-$tp @n[type=item_display,tag=aj.satoru.root,scores={customUniversal_RigID=$(rig)}] ~ ~ ~ ~ 0

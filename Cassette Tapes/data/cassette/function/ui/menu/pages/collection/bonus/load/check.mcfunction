@@ -1,5 +1,0 @@
-$data merge storage minecraft:ui {cassette:{cmd_$(slot):"1000",color_$(slot):"red",playlist1_$(slot)_sign:"❌",playlist1_$(slot)_color:"red",playlist2_$(slot)_sign:"❌",playlist2_$(slot)_color:"red"}}
-$function cassette:music/load/$(id) {storage:"ui",path:"cassette",namepath:"slot_$(slot)",obtainment_path:"obtainment_$(slot)",extra:"random value 1..2"}
-$execute if entity @p[advancements={cassette:$(id)=true}] run data merge storage minecraft:ui {cassette:{cmd_$(slot):"$(id)",color_$(slot):"green"}}
-$execute if entity @p[tag=Cassette_Playlist1.$(id)] run data merge storage minecraft:ui {cassette:{playlist1_$(slot)_sign:"✔",playlist1_$(slot)_color:"green"}}
-$execute if entity @p[tag=Cassette_Playlist2.$(id)] run data merge storage minecraft:ui {cassette:{playlist2_$(slot)_sign:"✔",playlist2_$(slot)_color:"green"}}

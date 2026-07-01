@@ -1,2 +1,0 @@
-$data merge storage $(storage) {$(path):{$(namepath):"Fallen Kingdom",duration:"5080",artist:"TryHardNinja",$(obtainment_path):"Complete the Advancement: The City at the End of the Game",color:"dark_green",id:"2"}}
-$$(extra)

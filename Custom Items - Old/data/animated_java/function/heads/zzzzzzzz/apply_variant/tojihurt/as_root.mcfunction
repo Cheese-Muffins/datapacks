@@ -1,1 +1,0 @@
-function animated_java:heads/zzzzzzzz/apply_variant/tojihurt/as_bone

@@ -1,3 +1,0 @@
-execute if score @s aj.malevolent.animation.disappear.loop_mode = $aj.loop_mode.loop aj.i run function animated_java:malevolent/zzzzzzzz/animations/disappear/end_loop
-execute if score @s aj.malevolent.animation.disappear.loop_mode = $aj.loop_mode.once aj.i run function animated_java:malevolent/animations/disappear/stop
-execute if score @s aj.malevolent.animation.disappear.loop_mode = $aj.loop_mode.hold aj.i run function animated_java:malevolent/animations/disappear/pause

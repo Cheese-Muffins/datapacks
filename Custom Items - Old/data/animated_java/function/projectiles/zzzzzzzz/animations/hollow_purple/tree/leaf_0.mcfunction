@@ -1,2 +1,0 @@
-execute on passengers run function animated_java:projectiles/zzzzzzzz/animations/hollow_purple/tree/leaf_0_as_bone
-function animated_java:projectiles/zzzzzzzz/apply_variant/purple/as_root

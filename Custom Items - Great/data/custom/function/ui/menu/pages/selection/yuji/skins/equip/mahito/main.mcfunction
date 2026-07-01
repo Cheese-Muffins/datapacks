@@ -1,2 +1,0 @@
-data merge storage minecraft:ui {custom:{purchase:{ownership:"customYuji.MahitoUnlocked",equipped:"customYuji.MahitoSkin",ability_path:"yuji",skin_path:"mahito",ability_name:"Yuji",skin_name:"Mahito"}}}
-function custom:ui/menu/pages/selection/purchase/start with storage minecraft:ui custom.purchase

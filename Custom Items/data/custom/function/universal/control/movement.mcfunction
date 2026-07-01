@@ -1,1 +1,0 @@
-$tp @n[type=item_display,tag=$(rig),scores={$(objective)=$(id)}] ~ ~ ~ ~ 0

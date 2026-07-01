@@ -1,1 +1,0 @@
-execute as @n[type=!#custom:not_mob,tag=!lockOnMiss] run function custom:items/explorer/moves/5/entity with storage minecraft:custom explorer.wormhole

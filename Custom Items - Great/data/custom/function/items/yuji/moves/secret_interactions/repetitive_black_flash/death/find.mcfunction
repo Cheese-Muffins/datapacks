@@ -1,1 +1,0 @@
-$execute as @e[type=minecraft:item_display,tag=aj.yuji_cutscene.locator.victim,scores={customUniversal_RigID=$(id)}] at @s run function custom:items/yuji/moves/secret_interactions/repetitive_black_flash/death/particles

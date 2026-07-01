@@ -1,5 +1,0 @@
-function animated_java:dj/zzzzzzzz/animations/orbit/pause_as_root
-function animated_java:dj/zzzzzzzz/animations/turn_it_up/pause_as_root
-function animated_java:dj/zzzzzzzz/animations/surround_sound/pause_as_root
-function animated_java:dj/zzzzzzzz/animations/sound_waves/pause_as_root
-function animated_java:dj/zzzzzzzz/animations/convert/pause_as_root
