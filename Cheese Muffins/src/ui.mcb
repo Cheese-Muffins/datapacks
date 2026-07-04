@@ -1,0 +1,235 @@
+function on_load minecraft:load{
+    scoreboard objectives add uiLogic.Broad dummy
+    scoreboard objectives add uiLogic.ID dummy
+}
+
+dir logic {
+    dir player {
+        function tick {
+            execute if items entity @s weapon.* *[minecraft:custom_data~{custom_ui:1b}] run function ui:logic/player/teleport
+            execute unless items entity @s weapon.* *[minecraft:custom_data~{custom_ui:1b}] if score @s uiLogic.ID matches 0.. run function ui:logic/player/close
+        }
+
+        function close {
+            scoreboard players operation #search uiLogic.ID = @s uiLogic.ID
+            execute as @e[type=chest_minecart,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run data remove entity @s Items
+            execute as @e[tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run kill @s
+            scoreboard players reset @s uiLogic.ID
+            function ui:logic/minecart/cleanup
+        }
+
+        function teleport {
+            function ui:logic/player/check_swap
+            execute if items entity @s weapon.* *[minecraft:custom_data~{ability_tome:1b}] unless score @s uiLogic.ID matches 0.. run function ui:logic/player/ability_open
+            execute if items entity @s weapon.* *[minecraft:custom_data~{cassette_player:1b}] unless score @s uiLogic.ID matches 0.. run function ui:logic/player/cassette_open
+
+            scoreboard players operation #search uiLogic.ID = @s uiLogic.ID
+            execute at @s as @e[type=item_display,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run tp @s ~ ~1 ~
+        }
+
+        function check_swap {
+            execute store result score @s customUI.SelectedHotbarCurrent run data get entity @s SelectedItemSlot
+            # tellraw @s ["",{"text":"cur: "},{"score":{"name":"@s","objective":"customUI.SelectedHotbarCurrent"}},{"text":"\npre: "},{"score":{"name":"@s","objective":"customUI.SelectedHotbarPrevious"}}]
+            execute unless score @s customUI.SelectedHotbarCurrent = @s customUI.SelectedHotbarPrevious if score @s uiLogic.ID matches 0.. run function ui:logic/player/close
+            execute store result score @s customUI.SelectedHotbarPrevious run data get entity @s SelectedItemSlot
+        }
+
+        function ability_open {
+            summon item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+            execute as @n[type=minecraft:item_display,tag=new] run visibility disable @s @a
+
+            scoreboard players add .global uiLogic.ID 1
+            scoreboard players operation @s uiLogic.ID = .global uiLogic.ID
+            scoreboard players operation @e[tag=new] uiLogic.ID = .global uiLogic.ID
+
+            scoreboard players set .type uiLogic.Broad 1
+            execute as @e[type=chest_minecart,tag=new] run function ui:logic/menu/pages/abilities/menu/open
+            execute as @e[type=chest_minecart,tag=new] run function ui:logic/minecart/load_page
+
+            tag @e remove new
+        }
+
+        function cassette_open {
+            summon item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+            execute as @n[type=minecraft:item_display,tag=new] run visibility disable @s @a
+
+            scoreboard players add .global uiLogic.ID 1
+            scoreboard players operation @s uiLogic.ID = .global uiLogic.ID
+            scoreboard players operation @e[tag=new] uiLogic.ID = .global uiLogic.ID
+
+            scoreboard players set .type uiLogic.Broad 1
+            execute as @e[type=chest_minecart,tag=new] run function ui:logic/menu/pages/cassettes/menu/open
+            execute as @e[type=chest_minecart,tag=new] run function ui:logic/minecart/load_page
+
+            tag @e remove new
+        }
+
+        function return {
+            data remove block 0 -64 0 Items
+            data modify block 0 -64 0 Items set from storage ui in
+            loot give @s mine 0 -64 0 stick[minecraft:custom_data={drop_contents:1b}]
+            item replace block 0 -64 0 container.0 with air
+            data remove storage minecraft:ui current
+            data remove storage minecraft:ui in
+        }
+    }
+
+    dir minecart {
+        dir click {
+            function shop {
+                execute at @s as @p in minecraft:overworld run {
+                    item replace block 0 -64 0 container.0 from entity @s player.cursor
+                    data modify storage minecraft:ui custom.purchase.price set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.price
+                    data modify storage minecraft:ui custom.purchase.context set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.context
+                    data modify storage minecraft:ui custom.purchase.name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.name
+                    data modify storage minecraft:ui custom.purchase.tag set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.tag
+                    data modify storage minecraft:ui custom.purchase.toggle set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.toggle
+                    data modify storage minecraft:ui custom.purchase.namespace set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.namespace
+                }
+
+                execute at @s as @p run function ui:logic/menu/pages/abilities/selection/purchase/main with storage minecraft:ui custom.purchase
+            }
+
+            dir settings {
+                function admin_abilities {
+                    execute if entity @p[tag=customUI.AdminAccess] run {
+                        function ui:logic/menu/pages/abilities/settings/administrator/flip
+                    } else run {
+                        execute at @s as @p run {
+                            playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
+                            tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"You're not an ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"r","color":"gold"},{"text":"a","color":"yellow"},{"text":"t","color":"green"},{"text":"o","color":"blue"},{"text":"r","color":"light_purple"},{"text":",","color":"dark_purple"},{"text":" and ","color":"gray"},{"text":"cannot","color":"red"},{"text":" access this page.","color":"gray"}]
+                        }
+                        function ui:logic/player/close
+                    }
+                }
+
+                function admin_cassettes {
+                    execute if entity @p[tag=customUI.AdminAccess] run {
+                        function ui:logic/menu/pages/cassettes/settings/administrator/flip
+                    } else run {
+                        execute at @s as @p run {
+                            playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
+                            tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"You're not an ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"r","color":"gold"},{"text":"a","color":"yellow"},{"text":"t","color":"green"},{"text":"o","color":"blue"},{"text":"r","color":"light_purple"},{"text":",","color":"dark_purple"},{"text":" and ","color":"gray"},{"text":"cannot","color":"red"},{"text":" access this page.","color":"gray"}]
+                        }
+                        function ui:logic/player/close
+                    }
+                }
+            }
+        }
+
+        function cleanup {
+            data remove storage minecraft:ui current
+            data remove storage minecraft:ui previous
+            data remove storage minecraft:ui temp
+            data remove storage minecraft:ui in
+            data remove storage minecraft:ui mask
+            data remove storage minecraft:ui custom
+        }
+
+        function load_page {
+            data modify entity @s Items set from storage ui current
+
+            data modify storage ui current set from entity @s Items
+            execute on passengers run data modify entity @s data.previous set from storage ui current
+        }
+
+        function on_change {
+            execute at @s as @p run {
+                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/menu/pages/cassettes/settings/default/flip
+                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_cassettes
+                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_cassettes
+
+                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
+                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
+                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
+
+                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
+                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
+                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
+
+                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchaseable_item:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/shop
+
+                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/menu/pages/abilities/settings/default/flip
+                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_abilities
+                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_abilities
+
+                scoreboard players reset @s[tag=!customUI.TempClick] customUI.PurchaseConfirm
+                tag @s remove customUI.TempClick
+            }
+            clear @a *[minecraft:custom_data~{ui_item:{}}]
+            kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{ui_item:{}}}}}]
+            execute positioned ~ ~-1 ~ run {
+                execute positioned ~1 ~ ~ if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+                execute positioned ~-1 ~ ~ if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+                execute positioned ~ ~ ~1 if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+                execute positioned ~ ~ ~-1 if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+
+                execute positioned ~1 ~ ~1 if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+                execute positioned ~-1 ~ ~1 if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+                execute positioned ~1 ~ ~-1 if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+                execute positioned ~-1 ~ ~-1 if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
+            }
+
+            data remove storage minecraft:ui custom
+
+            scoreboard players set .type uiLogic.Broad 1
+
+            data modify storage ui in set from storage ui current
+            data remove storage ui in[{components:{"minecraft:custom_data":{ui_item:{}}}}]
+            execute if data storage ui in[0] run return run function ui:logic/menu/on_input
+
+            data modify storage ui temp set from storage ui previous
+            data modify storage ui temp[].components."minecraft:custom_data" merge value {prev:1b}
+            data modify entity @s Items insert 0 from storage ui temp[]
+            data remove storage ui temp
+            data modify storage ui temp append from entity @s Items[{components:{"minecraft:custom_data":{prev:1b}}}]
+            data remove storage ui in
+            data modify storage ui in append from storage ui temp[{components:{"minecraft:custom_data":{ui_item:{}}}}]
+            execute if data storage ui in[0].components."minecraft:custom_data".ui_item.empty run data remove storage ui in[0]
+            execute if data storage ui in[0] unless data storage ui in[1] run return run function ui:logic/menu/on_click
+
+            function ui:logic/menu/refresh
+        }
+
+        function clear_hopper {
+            data remove block ~ ~ ~ Items[{components:{"minecraft:custom_data":{ui_item:{}}}}]
+        }
+
+        function tick {
+            data modify storage ui current set from entity @s Items
+            execute on passengers run data modify storage ui previous set from entity @s data.previous
+            
+            execute on passengers store result score #bool ui run data modify entity @s data.previous set from storage ui current
+
+            execute if score #bool uiLogic.Broad matches 1 run function ui:logic/minecart/on_change
+            # why r u down here bro
+        }
+        # im gonna blow up
+    }
+}
+
+dir ability {
+
+}
+
+dir cassette {
+    dir menu {
+
+    }
+
+    dir settings {
+
+    }
+
+    dir collection {
+
+    }
+
+    dir party {
+
+    }
+
+    dir statistics {
+
+    }
+}

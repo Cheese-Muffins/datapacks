@@ -2,5 +2,163 @@ function on_load minecraft:load{
     # you can use MC-Build without its internal scoreboard but this will limit the available features
     scoreboard objectives add mcb.internal dummy
 
-    say Hello World from Universal!
+    scoreboard objectives add universalMove.CooldownMath dummy
+    scoreboard objectives add universalDebug.Duration dummy
+    REPEAT (1,8) as i {
+        scoreboard objectives add universalMove.Cooldown<%i%> dummy
+    }
+}
+
+dir tick {
+    function main {
+        execute as @a at @s run {
+            function ui:logic/player/tick
+            execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
+        }
+
+        execute as @e[type=!#universal:not_mob] at @s run {
+            execute as @s[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/tick
+        }
+    }
+
+    dir scenario {
+        function main {
+            # scenario ticking relevant specifically to this compiler
+            execute if entity @s[tag=scenarioTick.Universal] run {
+                function universal:tick/scenario/debug
+            }
+
+            execute unless entity @s[tag=scenarioTick.Universal] run tag @s remove scenarioTick.Enable
+        }
+
+        function debug {
+            execute if score @s universalDebug.Duration matches 1.. run {
+                scoreboard players remove @s universalDebug.Duration 1
+            } else run {
+                scoreboard players reset @s universalDebug.Duration
+                tag @s remove scenarioTick.Universal
+            }
+        }
+    }
+}
+
+dir error_messages {
+    function universal {
+        execute if entity @s[tag=customGojo.RidingBlue] run function custom:universal/error_messages/find {error:100}
+        execute if entity @s[tag=customGojo.InfiniteVoided] run function custom:universal/error_messages/find {error:101}
+        execute if entity @s[tag=customTheWorld.TimeLocked] run function custom:universal/error_messages/find {error:102}
+        execute if score @s customTheWorld.BarrageStun matches 1.. run function custom:universal/error_messages/find {error:103}
+    }
+
+    function setup {
+        # function universal:error_messages/setup {error:1}
+        $tag @s add universalErrorLog.$(error)
+        scoreboard players set @s universalErrorLog.FailReturn 1
+    }
+
+    function display {
+        # function universal:error_messages/display {number:1,unicode:"u50A0",move:"Blitz"}
+        $scoreboard players operation @s universalMove.CooldownMath = @s universalMove.Cooldown$(number)
+        # function universal:math/divide {value:20,score:"@s",objective:"universalMove.CooldownMath"}
+        $execute unless entity @s[tag=universalErrorLog.Hide] run block { {unicode:"$(unicode)",move:"$(move)"}
+            $tellraw @s ["",{"text":"\n\$(unicode) ","color":"white"},{"text":" $(move)","color":"gold"}]
+            execute if entity @s[tag=universalErrorLog.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" ","color":"blue"},{"score":{"name":"@s","objective":"universalMove.CooldownMath"},"color":"red"},{"text":"s","color":"red"}]
+            execute if entity @s[tag=universalErrorLog.2] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Another move is ","color":"gray"},{"text":"currently casting!","color":"blue"}]
+            execute if entity @s[tag=universalErrorLog.3] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]
+            execute if entity @s[tag=universalErrorLog.4] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"be looking at an entity to use ","color":"gray"},{"text":"this ","color":"aqua"},{"text":"move!","color":"gray"}]
+            execute if entity @s[tag=universalErrorLog.5] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use ","color":"gray"},{"text":"Domain Expansion","color":"dark_purple"},{"text":" - ","color":"gray"},{"text":"Infinite Void","color":"light_purple"},{"text":" whilst nearby someone ","color":"gray"},{"text":"currently using","color":"gold"},{"text":" or ","color":"red"},{"text":"performing ","color":"gold"},{"text":"this move!","color":"gray"}]
+            execute if entity @s[tag=universalErrorLog.6] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You must be on ","color":"gray"},{"text":"solid ground ","color":"green"},{"text":"to cast this ","color":"gray"},{"text":"move!","color":"gold"}]
+            execute if entity @s[tag=universalErrorLog.7] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use this attack whilst it's ","color":"gray"},{"text":"currently casting!","color":"aqua"}]
+            execute if entity @s[tag=universalErrorLog.8] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T","color":"red"},{"text":" use this move whilst being targeted by ","color":"gray"},{"text":"Pact!","color":"aqua"}]
+
+            execute if entity @s[tag=universalErrorLog.9] run {
+                scoreboard players operation @s universalMove.CooldownMath = @s customEren.ShiftCooldown
+                scoreboard players operation @s universalMove.CooldownMath /= #divide universalMove.CooldownMath
+                tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't attempt to ","color":"gray"},{"text":"shift","color":"gold"},{"text":" into the ","color":"gray"},{"text":"Attack Titan","color":"aqua"},{"text":" for another ","color":"gray"},{"score":{"name":"@s","objective":"universalMove.CooldownMath"},"color":"red"},{"text":"s!","color":"red"}]
+            }
+
+            execute if entity @s[tag=universalErrorLog.10] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"roll the dice before ","color":"gray"},{"text":"storing ","color":"aqua"},{"text":"a move!","color":"gray"}]
+            execute if entity @s[tag=universalErrorLog.11] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be looking at a ","color":"gray"},{"text":"block in range","color":"aqua"},{"text":" in order to use ","color":"gray"},{"text":"Acrobatics","color":"light_purple"}]
+            execute if entity @s[tag=universalErrorLog.12] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You've reached the ","color":"gray"},{"text":"maximum ","color":"red"},{"text":"number of ","color":"gray"},{"text":"traps!","color":"aqua"}]
+            execute if entity @s[tag=universalErrorLog.13] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Traps must be spaced ","color":"gray"},{"text":"at least 4 meters apart","color":"light_purple"},{"text":" from eachother!","color":"gray"}]
+            execute if entity @s[tag=universalErrorLog.14] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"cast this move inside the ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
+            execute if entity @s[tag=universalErrorLog.15] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves while ","color":"gray"},{"text":"disguised","color":"light_purple"},{"text":" as a ","color":"gray"},{"text":"Turtle!","color":"green"}]
+            execute if entity @s[tag=universalErrorLog.16] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
+            execute if entity @s[tag=universalErrorLog.17] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be holding a valid ","color":"gray"},{"text":"tool ","color":"gold"},{"text":"to use this move!","color":"gray"}]
+            execute if entity @s[tag=universalErrorLog.18] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"have ","color":"gray"},{"text":"ammo ","color":"gold"},{"text":"to fire the ","color":"gray"},{"text":"Shrinkray!","color":"green"}]
+
+            execute if entity @s[tag=universalErrorLog.100] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
+            execute if entity @s[tag=universalErrorLog.101] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
+            execute if entity @s[tag=universalErrorLog.102] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use moves when ","color":"gray"},{"text":"frozen ","color":"red"},{"text":"in ","color":"gray"},{"text":"time!","color":"aqua"}]
+            execute if entity @s[tag=universalErrorLog.103] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves whilst being ","color":"gray"},{"text":"barraged!","color":"aqua"}]
+            playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5
+            tellraw @s ""
+        }
+
+        REPEAT (1,102) as i {
+            tag @s remove universalErrorLog.<%i%>
+        }
+
+        tag @s remove universalErrorLog.Hide
+        
+        scoreboard players set @s universalMove.Delay 10
+        scoreboard players set @s universalErrorLog.FailReturn 0
+    }
+}
+
+dir debug_log {
+    function create {
+        # function universal:debug/create {duration:10,text:"Math"}
+        $tellraw @s {"text":"$(text) Debug","color":"gold"}
+        tag @s add scenarioTick.Enable
+        tag @s add scenarioTick.Universal
+        $scoreboard players set @s universalDebug.Duration $(duration)
+    }
+
+    function text {
+        $tellraw @s {"text":"$(text)","color":"$(color)"}
+    }
+
+    dir entry {
+        function score {
+            $tellraw @s ["",{"text":"$(text)","color":"gray"},{"score":{"name":"$(score)","objective":"$(objective)"},"color":"yellow"}]
+        }
+    }
+
+    function skip_line {
+        tellraw @s {"text":""}
+    }
+}
+
+dir math {
+    function multiply {
+        # function universal:math/multiply {value:3,score:"@s",objective:"abilityEren.ShiftDuration"}
+        function universal:debug_log/create {duration:1,text:"Math"}
+        function universal:debug_log/text {text:"Mode: Multiplication",color:"white"}
+        $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+        $scoreboard players set .operation $(objective) $(value)
+        $scoreboard players operation $(score) $(objective) *= .operation $(objective)
+        $scoreboard players reset .operation $(objective)
+        $function universal:debug_log/entry/score {text:"Result: ",score:"$(score)",objective:"$(objective)"}
+    }
+
+    function divide {
+        # function universal:math/divide {value:2,score:"@s",objective:"abilityEren.ShiftDuration"}
+        function universal:debug_log/create {duration:1,text:"Math"}
+        function universal:debug_log/text {text:"Mode: Division",color:"white"}
+        $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+        $scoreboard players set .operation $(objective) $(value)
+        $scoreboard players operation $(score) $(objective) /= .operation $(objective)
+        $scoreboard players reset .operation $(objective)
+        $function universal:debug_log/entry/score {text:"Result: ",score:"$(score)",objective:"$(objective)"}
+    }
+
+    function square_root {
+        # function universal:math/square_root {score:"@s",objective:"abilityEren.ShiftDuration"}
+        function universal:debug_log/create {duration:1,text:"Math"}
+        function universal:debug_log/text {text:"Mode: Square Root",color:"white"}
+        $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+        
+        # lol not adding ts yet
+    }
 }
