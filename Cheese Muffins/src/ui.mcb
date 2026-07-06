@@ -1,6 +1,8 @@
 function on_load minecraft:load{
     scoreboard objectives add uiLogic.Broad dummy
     scoreboard objectives add uiLogic.ID dummy
+    scoreboard objectives add uiLogic.CurrentHotbar dummy
+    scoreboard objectives add uiLogic.PreviousHotbar dummy
 }
 
 dir logic {
@@ -12,7 +14,7 @@ dir logic {
 
         function close {
             scoreboard players operation #search uiLogic.ID = @s uiLogic.ID
-            execute as @e[type=chest_minecart,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run data remove entity @s Items
+            execute as @e[type=minecraft:chest_minecart,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run data remove entity @s Items
             execute as @e[tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run kill @s
             scoreboard players reset @s uiLogic.ID
             function ui:logic/minecart/cleanup
@@ -24,18 +26,17 @@ dir logic {
             execute if items entity @s weapon.* *[minecraft:custom_data~{cassette_player:1b}] unless score @s uiLogic.ID matches 0.. run function ui:logic/player/cassette_open
 
             scoreboard players operation #search uiLogic.ID = @s uiLogic.ID
-            execute at @s as @e[type=item_display,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run tp @s ~ ~1 ~
+            execute at @s as @e[type=minecraft:item_display,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run tp @s ~ ~1 ~
         }
 
         function check_swap {
-            execute store result score @s customUI.SelectedHotbarCurrent run data get entity @s SelectedItemSlot
-            # tellraw @s ["",{"text":"cur: "},{"score":{"name":"@s","objective":"customUI.SelectedHotbarCurrent"}},{"text":"\npre: "},{"score":{"name":"@s","objective":"customUI.SelectedHotbarPrevious"}}]
-            execute unless score @s customUI.SelectedHotbarCurrent = @s customUI.SelectedHotbarPrevious if score @s uiLogic.ID matches 0.. run function ui:logic/player/close
-            execute store result score @s customUI.SelectedHotbarPrevious run data get entity @s SelectedItemSlot
+            execute store result score @s uiLogic.CurrentHotbar run data get entity @s SelectedItemSlot
+            execute unless score @s uiLogic.CurrentHotbar = @s uiLogic.PreviousHotbar if score @s uiLogic.ID matches 0.. run function ui:logic/player/close
+            execute store result score @s uiLogic.PreviousHotbar run data get entity @s SelectedItemSlot
         }
 
         function ability_open {
-            summon item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+            summon minecraft:item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
             execute as @n[type=minecraft:item_display,tag=new] run visibility disable @s @a
 
             scoreboard players add .global uiLogic.ID 1
@@ -43,9 +44,10 @@ dir logic {
             scoreboard players operation @e[tag=new] uiLogic.ID = .global uiLogic.ID
 
             scoreboard players set .type uiLogic.Broad 1
-            execute as @e[type=chest_minecart,tag=new] run function ui:logic/menu/pages/abilities/menu/open
-            execute as @e[type=chest_minecart,tag=new] run function ui:logic/minecart/load_page
-
+            execute as @e[type=minecraft:chest_minecart,tag=new] run {
+                function ui:ability/menu/open
+                function ui:logic/minecart/load_page
+            }
             tag @e remove new
         }
 
@@ -58,9 +60,10 @@ dir logic {
             scoreboard players operation @e[tag=new] uiLogic.ID = .global uiLogic.ID
 
             scoreboard players set .type uiLogic.Broad 1
-            execute as @e[type=chest_minecart,tag=new] run function ui:logic/menu/pages/cassettes/menu/open
-            execute as @e[type=chest_minecart,tag=new] run function ui:logic/minecart/load_page
-
+            execute as @e[type=minecraft:chest_minecart,tag=new] run {
+                function ui:cassette/menu/open
+                function ui:logic/minecart/load_page
+            }
             tag @e remove new
         }
 
@@ -206,6 +209,32 @@ dir logic {
         }
         # im gonna blow up
     }
+
+    dir load {
+        function get_mask {
+            $$(mask)
+        }
+
+        function on_click {
+            function custom:ui/run_cmd with storage ui in[0].components."minecraft:custom_data".ui_item
+
+            execute if score .type ui matches 1 run function ui:logic/minecart/load_page
+        }
+
+        function on_input {
+            execute as @p run function custom:ui/player/return
+
+            function ui:logic/load/refresh
+        }
+
+        function refresh {
+            data modify storage ui mask set from storage ui current
+            execute on passengers run function ui:logic/load/get_mask with entity @s data.page
+            data modify storage ui current set from storage ui mask
+
+            execute if score .type ui matches 1 run function ui:logic/minecart/load_page
+        }
+    }
 }
 
 dir ability {
@@ -214,7 +243,271 @@ dir ability {
 
 dir cassette {
     dir menu {
+        function mask {
+            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#00cc4e"},{"text":"l","italic":false,"color":"#00c645"},{"text":"a","italic":false,"color":"#00bf3c"},{"text":"y","italic":false,"color":"#00b933"},{"text":" ","italic":false,"color":"#00b32a"},{"text":"S","italic":false,"color":"#00ac20"},{"text":"o","italic":false,"color":"#00a617"},{"text":"n","italic":false,"color":"#009f0e"},{"text":"g","italic":false,"color":"#009905"}],"minecraft:lore":$(play_display),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/play/main"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"S","italic":false,"color":"#ff6666"},{"text":"t","italic":false,"color":"#f6595e"},{"text":"o","italic":false,"color":"#ec4d56"},{"text":"p","italic":false,"color":"#e3404d"},{"text":" ","italic":false,"color":"#d93345"},{"text":"S","italic":false,"color":"#d0263d"},{"text":"o","italic":false,"color":"#c61a35"},{"text":"n","italic":false,"color":"#bd0d2c"},{"text":"g","italic":false,"color":"#b30024"}],"minecraft:lore":[[{"text":"Cease all ","italic":false,"color":"gray"},{"text":"feedback","italic":false,"color":"yellow"},{"text":" from the","italic":false,"color":"gray"}],[{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/stop"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"C","italic":false,"color":"#4a4a4a"},{"text":"o","italic":false,"color":"#a5a12f"},{"text":"nfig ","italic":false,"color":"#fff714"},{"text":"M","italic":false,"color":"#e8e473"},{"text":"en","italic":false,"color":"#d1d1d1"},{"text":"u","italic":false,"color":"#ff5cdc"}],"minecraft:lore":[[{"text":"Customize various ","italic":false,"color":"gray"},{"text":"behaviors","italic":false,"color":"yellow"}],[{"text":"of the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],"",["",{"text":"Click","italic":false,"color":"blue"},{"text":" for ","italic":false,"color":"gray"},{"text":"Generic","italic":false,"color":"green"},{"text":" access","italic":false,"color":"gray"}],["",{"text":"Shift-Click","italic":false,"color":"blue"},{"text":" with ","italic":false,"color":"gray"},{"text":"OP","italic":false,"color":"yellow"},{"text":" for ","italic":false,"color":"gray"},{"text":"A","italic":false,"color":"red"},{"text":"d","italic":false,"color":"#ff802b"},{"text":"mi","italic":false,"color":"gold"},{"text":"ni","italic":false,"color":"yellow"},{"text":"st","italic":false,"color":"green"},{"text":"ra","italic":false,"color":"blue"},{"text":"to","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"},{"text":" access","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cassette_settings:1b,empty:1b}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"C","italic":false,"color":"red"},{"text":"ol","italic":false,"color":"gold"},{"text":"le","italic":false,"color":"yellow"},{"text":"ct","italic":false,"color":"green"},{"text":"io","italic":false,"color":"blue"},{"text":"n","italic":false,"color":"light_purple"}],"minecraft:lore":[[{"text":"Browse the ","italic":false,"color":"gray"},{"text":"complete list","italic":false,"color":"aqua"},{"text":" of all","italic":false,"color":"gray"}],[{"text":"obtainable ","italic":false,"color":"gray"},{"text":"cassettes","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/collection/flip"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Listening Parties"},"minecraft:lore":[[{"text":"Share unlocked ","italic":false,"color":"gray"},{"text":"songs ","italic":false,"color":"yellow"},{"text":"with other","italic":false,"color":"gray"}],[{"text":"players by ","italic":false,"color":"gray"},{"text":"creating ","italic":false,"color":"green"},{"text":"a ","italic":false,"color":"gray"},{"text":"party ","italic":false,"color":"aqua"},{"text":"or","italic":false,"color":"gray"}],[{"text":"joining ","italic":false,"color":"green"},{"text":"an ongoing one","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/party/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Monitor the ","italic":false,"color":"gray"},{"text":"remainder ","italic":false,"color":"aqua"},{"text":"of ","italic":false,"color":"gray"},{"text":"cassettes","italic":false,"color":"yellow"}],[{"text":"required for ","italic":false,"color":"gray"},{"text":"completion","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/menu/same"}}}}]
+        }
 
+        function open {
+            tag @s remove uiCassette.PartyMenu
+            execute at @s as @p run function ui:cassette/menu/player
+            function ui:cassette/menu/mask with storage minecraft:ui cassette.menu
+            data modify storage ui current set from storage ui mask
+            execute on passengers run data modify entity @s data.page.mask set value "function ui:cassette/menu/mask"
+        }
+
+        function player {
+            execute unless score @s customUI.SettingsFeedback matches 1.. run scoreboard players set @s customUI.SettingsFeedback 1
+            execute unless score @s customUI.SettingsParty matches 1.. run scoreboard players set @s customUI.SettingsParty 1
+            execute unless score @s customUI.SettingsTargeting matches 1.. run scoreboard players set @s customUI.SettingsTargeting 1
+            execute unless score @s customUI.CassetteCollectionSort matches 1.. run scoreboard players set @s customUI.CassetteCollectionSort 1
+            execute unless score @s customCassette.PlayLast matches 1.. run scoreboard players set @s customCassette.PlayLast 1
+
+            function custom:ui/menu/pages/cassettes/menu/play/display     
+        }
+
+        function same {
+            execute at @s as @p run playsound minecraft:cassette.ui.error record @s ~ ~ ~
+            function custom:ui/menu/pages/cassettes/menu/open
+        }
+
+        function flip {
+            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+            function custom:ui/menu/pages/cassettes/menu/open
+        }
+
+        function stop {
+            execute at @s as @p run {
+                stopsound @s record
+                tag @s remove customCassette.PlayingSong
+                scoreboard players reset @s customCassette.PlayDuration
+                scoreboard players reset @s customCassette.PlayID
+                scoreboard players reset @s customCassette.PlayFeedbackIncrementValue
+                playsound minecraft:cassette.menu.stop record @s ~ ~ ~
+
+                execute if entity @s[tag=customCassette.PartyHost] run {
+                    execute as @e[type=minecraft:chest_minecart,tag=ui,tag=uiCassette.PartyMenu] at @s run {
+                        function custom:ui/menu/pages/cassettes/party/open
+                        function custom:ui/menu/on_input
+                    }
+                }
+            }
+            function custom:ui/menu/pages/cassettes/menu/open
+        }
+        
+        dir play {
+            function main {
+                execute at @s as @p run {
+                    scoreboard players reset @s customCassette.PlayDuration
+                    scoreboard players reset @s customCassette.PlayIncremental
+                    playsound minecraft:cassette.menu.play record @s ~ ~ ~
+                    execute if score @s customUI.SettingsTargeting matches 1 run {
+                        execute if score @s customUI.CassetteCollectionSort matches 1..6 run function custom:ui/menu/pages/cassettes/menu/play/all
+                        execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+                        execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
+                    }
+                    execute if score @s customUI.SettingsTargeting matches 2 run function custom:ui/menu/pages/cassettes/menu/play/all
+                    execute if score @s customUI.SettingsTargeting matches 3 run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+                    execute if score @s customUI.SettingsTargeting matches 4 run function custom:ui/menu/pages/cassettes/menu/play/playlist2
+                }
+                function custom:ui/menu/pages/cassettes/menu/open
+            }
+
+            function display {
+                execute if score @s customUI.SettingsTargeting matches 1 run {
+                    execute if score @s customUI.CassetteCollectionSort matches 1..6 run data merge storage minecraft:ui {cassette:{menu:{play_type:"All"}}}
+                    execute if score @s customUI.CassetteCollectionSort matches 7 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #1"}}}
+                    execute if score @s customUI.CassetteCollectionSort matches 8 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #2"}}}
+                }
+                execute if score @s customUI.SettingsTargeting matches 2 run data merge storage minecraft:ui {cassette:{menu:{play_type:"All"}}}
+                execute if score @s customUI.SettingsTargeting matches 3 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #1"}}}
+                execute if score @s customUI.SettingsTargeting matches 4 run data merge storage minecraft:ui {cassette:{menu:{play_type:"Playlist #2"}}}
+
+                execute if score @s customUI.SettingsFeedback matches 1 run data merge storage minecraft:ui {cassette:{menu:{feedback_type:"Random"}}}
+                execute if score @s customUI.SettingsFeedback matches 2 run data merge storage minecraft:ui {cassette:{menu:{feedback_type:"Increment"}}}
+                execute if score @s customUI.SettingsFeedback matches 3 run data merge storage minecraft:ui {cassette:{menu:{feedback_type:"Loop"}}}
+
+                block { with storage minecraft:ui cassette.menu
+                    $data merge storage minecraft:ui {cassette:{menu:{play_display:[[{"text":"Listen to songs from your","italic":false,"color":"gray"}],{"text":"current collection","italic":false,"color":"gray"},"",[{"text":"Behavior Style","italic":false,"color":"gold"}],["",{"text":"Song: ","italic":false,"color":"gray"},{"text":"N","italic":false,"color":"#9e9e9e"},{"text":"o","italic":false,"color":"#919191"},{"text":"t","italic":false,"color":"#858585"},{"text":"h","italic":false,"color":"#787878"},{"text":"i","italic":false,"color":"#6b6b6b"},{"text":"n","italic":false,"color":"#5e5e5e"},{"text":"g","italic":false,"color":"#525252"},{"text":" :(","italic":false,"color":"#454545"}],["",{"text":"Playing from: ","italic":false,"color":"gray"},{"text":"$(play_type)","italic":false,"color":"green"}],["",{"text":"Feedback: ","italic":false,"color":"gray"},{"text":"$(feedback_type)","italic":false,"color":"green"}]]}}}
+
+                    execute if entity @s[tag=customCassette.PlayingSong] run {
+                        execute store result storage minecraft:ui cassette.menu.lookup int 1 run scoreboard players get @s customCassette.PlayID
+                        block { with storage minecraft:ui cassette.menu
+                            $data modify storage minecraft:ui cassette.menu.name set from storage minecraft:custom cassette.index.$(lookup).name
+                            $data modify storage minecraft:ui cassette.menu.artist set from storage minecraft:custom cassette.index.$(lookup).artist
+                            data modify storage minecraft:ui cassette.menu.song_line set value [""]
+                            data modify storage minecraft:ui cassette.menu.song_line append from storage minecraft:ui cassette.menu.name[]
+                            block { with storage minecraft:ui cassette.menu
+                                $data modify storage minecraft:ui cassette.menu.song_line append value [{"text":" by ","italic":false,"color":"gray"},{"text":"$(artist)","italic":false,"color":"yellow"}]
+                                block { with storage minecraft:ui cassette.menu
+                                    $data merge storage minecraft:ui {cassette:{menu:{play_display:[[{"text":"Listen to songs from your","italic":false,"color":"gray"}],{"text":"current collection","italic":false,"color":"gray"},"",[{"text":"Behavior Style","italic":false,"color":"gold"}],["",{"text":"Song: ","italic":false,"color":"gray"},$(song_line)],["",{"text":"Playing from: ","italic":false,"color":"gray"},{"text":"$(play_type)","italic":false,"color":"green"}],["",{"text":"Feedback: ","italic":false,"color":"gray"},{"text":"$(feedback_type)","italic":false,"color":"green"}]]}}}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            dir feedback {
+                dir random {
+                    function main {
+                        execute store result score @s customCassette.PlayID run random value 1..105
+                        execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayID
+                        execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
+
+                        execute if score @s customUI.SettingsTargeting matches 1 run block { with storage minecraft:custom cassette.play
+                            $execute if score @s customUI.CassetteCollectionSort matches 1..6 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+
+                            $execute if score @s customUI.CassetteCollectionSort matches 7 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+
+                            $execute if score @s customUI.CassetteCollectionSort matches 8 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist2_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                        }
+                        execute if score @s customUI.SettingsTargeting matches 2..4 run block { with storage minecraft:custom cassette.play
+                            $execute if score @s customUI.SettingsTargeting matches 2 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+
+                            $execute if score @s customUI.SettingsTargeting matches 3 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist1_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+
+                            $execute if score @s customUI.SettingsTargeting matches 4 if entity @s[advancements={custom:cassettes/ownership/$(lookup)=true}] if entity @s[tag=customCassette.Playlist2_$(lookup)] unless entity @s[tag=customCassette.Played_$(lookup)] run function custom:ui/menu/pages/cassettes/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                        }
+                    }
+
+                    function found {
+                        $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
+                        function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play
+                    }
+                }
+
+                function increment {
+                    tag @s add customCassette.PlayFeedbackIncrementSearching
+                    scoreboard players add @s customCassette.PlayFeedbackIncrementValue 1
+                    scoreboard players reset .cassetteSlot customUI.CassetteCollection
+                    scoreboard players reset .incrementIndex customUI.CassetteCollection
+                    scoreboard players reset .totalEntries customUI.CassetteCollection
+                    scoreboard players reset .totalPassed customUI.CassetteCollection
+                    scoreboard players set .targetedRating customUI.CassetteCollection 0
+                    execute if score @s customUI.CassetteCollection matches 1 run scoreboard players reset .indexOffset customUI.CassetteCollection
+                    execute if score @s customUI.CassetteCollection matches 2 run scoreboard players set .indexOffset customUI.CassetteCollection 21
+                    execute if score @s customUI.CassetteCollection matches 3 run scoreboard players set .indexOffset customUI.CassetteCollection 42
+                    execute if score @s customUI.CassetteCollection matches 4 run scoreboard players set .indexOffset customUI.CassetteCollection 63
+                    execute if score @s customUI.CassetteCollection matches 5 run scoreboard players set .indexOffset customUI.CassetteCollection 84
+                    
+                    execute if score @s customUI.CassetteCollectionSort matches 1..3 run function custom:ui/menu/pages/cassettes/collection/sort/default
+                    execute if score @s customUI.CassetteCollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
+                    execute if score @s customUI.CassetteCollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/alphabetical
+                    execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/artist
+                    execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
+                    execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
+                    tag @s remove customCassette.PlayFeedbackIncrementSearching
+
+                    execute if score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run {
+                        execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s customCassette.PlayFeedbackIncrementReturn
+                        execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s customCassette.PlayLast
+                        block { with storage minecraft:custom cassette.play
+                            $scoreboard players set @s customCassette.PlayID $(lookup)
+                            $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
+                            function custom:ui/menu/pages/cassettes/menu/play/found with storage minecraft:custom cassette.play
+                        }
+                    }
+                    execute unless score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run {
+                        scoreboard players reset @s customCassette.PlayFeedbackIncrementValue
+                        function custom:ui/menu/pages/cassettes/menu/play/reshuffle {style:"all"}
+                    }
+                    scoreboard players reset @s customCassette.PlayFeedbackIncrementReturn
+                }
+            }
+
+            function all {
+                # random search
+                execute if score @s customUI.SettingsFeedback matches 1 run {
+                    scoreboard players add @s customCassette.PlayIncremental 1
+                    execute unless score @s customCassette.PlayIncremental matches 200.. run {
+                        function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
+
+                        execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/all
+                        tag @s remove temp
+                    }
+                    execute if score @s customCassette.PlayIncremental matches 200.. run {
+                        function custom:ui/menu/pages/cassettes/menu/play/reshuffle {style:"all"}
+                    }
+                }
+
+                # increment search
+                execute if score @s customUI.SettingsFeedback matches 2 run function custom:ui/menu/pages/cassettes/menu/play/feedback/increment
+            }
+
+            function playlist1 {
+                # random search
+                execute if score @s customUI.SettingsFeedback matches 1 run {
+                    scoreboard players add @s customCassette.PlayIncremental 1
+                    execute unless score @s customCassette.PlayIncremental matches 200.. run {
+                        function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
+
+                        execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/playlist1
+                        tag @s remove temp
+                    }
+                    execute if score @s customCassette.PlayIncremental matches 200.. run {
+                        function custom:ui/menu/pages/cassettes/menu/play/reshuffle {style:"playlist1"}
+                    }
+                }
+
+                # increment search
+                execute if score @s customUI.SettingsFeedback matches 2 run function custom:ui/menu/pages/cassettes/menu/play/feedback/increment
+            }
+
+            function playlist2 {
+                # random search
+                execute if score @s customUI.SettingsFeedback matches 1 run {
+                    scoreboard players add @s customCassette.PlayIncremental 1
+                    execute unless score @s customCassette.PlayIncremental matches 200.. run {
+                        function custom:ui/menu/pages/cassettes/menu/play/feedback/random/main
+
+                        execute unless entity @s[tag=temp] run function custom:ui/menu/pages/cassettes/menu/play/playlist2
+                        tag @s remove temp
+                    }
+                    execute if score @s customCassette.PlayIncremental matches 200.. run {
+                        function custom:ui/menu/pages/cassettes/menu/play/reshuffle {style:"playlist2"}
+                    }
+                }
+
+                # increment search
+                execute if score @s customUI.SettingsFeedback matches 2 run function custom:ui/menu/pages/cassettes/menu/play/feedback/increment
+            }
+
+            function reshuffle {
+                scoreboard players reset @s customCassette.PlayIncremental
+                REPEAT (1,105) as i {
+                    tag @s remove customCassette.Played_<%i%>
+                }
+                $function custom:ui/menu/pages/cassettes/menu/play/$(style)
+            }
+
+            function found {
+                $scoreboard players set @s customCassette.PlayDurationMax $(real_duration)
+                $stopsound @s record minecraft:cassette.$(last_played)
+                $playsound minecraft:cassette.$(lookup) record @s
+                tag @s add customCassette.PlayingSong
+
+                execute if entity @s[tag=customCassette.PartyHost] run function custom:ui/menu/pages/cassettes/menu/play/party
+
+                $tag @s add customCassette.Played_$(lookup)
+                $scoreboard players set @s customCassette.PlayLast $(lookup)
+                tag @s add temp
+            }
+
+            function party {
+                execute as @e[type=minecraft:chest_minecart,tag=ui,tag=uiCassette.PartyMenu] at @s run {
+                    function custom:ui/menu/pages/cassettes/party/open
+                    function custom:ui/menu/on_input
+                }
+
+                execute store result storage minecraft:custom cassette.play.partyID int 1 run scoreboard players get @s customUI.CassetteParty
+                block { with storage minecraft:custom cassette.play
+                    $execute as @a[tag=customCassette.Party$(partyID)Member] at @s run block { with storage minecraft:custom cassette.play
+                        $stopsound @s record minecraft:cassette.$(last_played)
+                        $playsound minecraft:cassette.$(lookup) record @s ~ ~ ~ 9999999999999
+                    }
+                }
+            }
+        }
     }
 
     dir settings {
