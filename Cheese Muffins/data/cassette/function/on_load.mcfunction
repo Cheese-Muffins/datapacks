@@ -10,3 +10,4 @@ scoreboard objectives add cassettePlay.MaxDuration dummy
 scoreboard objectives add cassetteParty.Disconnected dummy
 # Error #
 scoreboard objectives add cassetteError.Delay dummy
+function cassette:generate_index

@@ -346,8 +346,8 @@ dir cassette {
                     execute if entity @s[tag=cassettePlayed.Song] run {
                         execute store result storage minecraft:ui cassette.menu.lookup int 1 run scoreboard players get @s cassettePlay.ID
                         block { with storage minecraft:ui cassette.menu
-                            $data modify storage minecraft:ui cassette.menu.name set from storage minecraft:custom cassette.index.$(lookup).name
-                            $data modify storage minecraft:ui cassette.menu.artist set from storage minecraft:custom cassette.index.$(lookup).artist
+                            $data modify storage minecraft:ui cassette.menu.name set from storage minecraft:cassette index.$(lookup).name
+                            $data modify storage minecraft:ui cassette.menu.artist set from storage minecraft:cassette index.$(lookup).artist
                             data modify storage minecraft:ui cassette.menu.song_line set value [""]
                             data modify storage minecraft:ui cassette.menu.song_line append from storage minecraft:ui cassette.menu.name[]
                             block { with storage minecraft:ui cassette.menu
@@ -365,28 +365,28 @@ dir cassette {
                 dir random {
                     function main {
                         execute store result score @s cassettePlay.ID run random value 1..105
-                        execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s cassettePlay.ID
-                        execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s cassettePlay.Last
+                        execute store result storage minecraft:cassette play.lookup int 1 run scoreboard players get @s cassettePlay.ID
+                        execute store result storage minecraft:cassette play.last_played int 1 run scoreboard players get @s cassettePlay.Last
 
-                        execute if score @s uiCassette.SettingsTargeting matches 1 run block { with storage minecraft:custom cassette.play
-                            $execute if score @s uiCassette.CollectionSort matches 1..6 if entity @s[advancements={cassette:ownership/$(lookup)=true}] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                        execute if score @s uiCassette.SettingsTargeting matches 1 run block { with storage minecraft:cassette play
+                            $execute if score @s uiCassette.CollectionSort matches 1..6 if entity @s[advancements={cassette:ownership/$(lookup)=true}] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:cassette play
 
-                            $execute if score @s uiCassette.CollectionSort matches 7 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist1_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                            $execute if score @s uiCassette.CollectionSort matches 7 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist1_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:cassette play
 
-                            $execute if score @s uiCassette.CollectionSort matches 8 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist2_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                            $execute if score @s uiCassette.CollectionSort matches 8 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist2_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:cassette play
                         }
-                        execute if score @s uiCassette.SettingsTargeting matches 2..4 run block { with storage minecraft:custom cassette.play
-                            $execute if score @s uiCassette.SettingsTargeting matches 2 if entity @s[advancements={cassette:ownership/$(lookup)=true}] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                        execute if score @s uiCassette.SettingsTargeting matches 2..4 run block { with storage minecraft:cassette play
+                            $execute if score @s uiCassette.SettingsTargeting matches 2 if entity @s[advancements={cassette:ownership/$(lookup)=true}] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:cassette play
 
-                            $execute if score @s uiCassette.SettingsTargeting matches 3 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist1_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                            $execute if score @s uiCassette.SettingsTargeting matches 3 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist1_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:cassette play
 
-                            $execute if score @s uiCassette.SettingsTargeting matches 4 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist2_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:custom cassette.play
+                            $execute if score @s uiCassette.SettingsTargeting matches 4 if entity @s[advancements={cassette:ownership/$(lookup)=true}] if entity @s[tag=cassettePlayed.Playlist2_$(lookup)] unless entity @s[tag=cassettePlayed.$(lookup)] run function ui:cassette/menu/play/feedback/random/found with storage minecraft:cassette play
                         }
                     }
 
                     function found {
-                        $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
-                        function ui:cassette/menu/play/found with storage minecraft:custom cassette.play
+                        $data modify storage minecraft:cassette play merge from storage minecraft:cassette index.$(lookup)
+                        function ui:cassette/menu/play/found with storage minecraft:cassette play
                     }
                 }
 
@@ -413,12 +413,12 @@ dir cassette {
                     tag @s remove cassettePlay.FeedbackIncrementing
 
                     execute if score @s cassettePlay.FeedbackReturn matches 1.. run {
-                        execute store result storage minecraft:custom cassette.play.lookup int 1 run scoreboard players get @s cassettePlay.FeedbackReturn
-                        execute store result storage minecraft:custom cassette.play.last_played int 1 run scoreboard players get @s cassettePlay.Last
-                        block { with storage minecraft:custom cassette.play
+                        execute store result storage minecraft:cassette play.lookup int 1 run scoreboard players get @s cassettePlay.FeedbackReturn
+                        execute store result storage minecraft:cassette play.last_played int 1 run scoreboard players get @s cassettePlay.Last
+                        block { with storage minecraft:cassette play
                             $scoreboard players set @s cassettePlay.ID $(lookup)
-                            $data modify storage minecraft:custom cassette.play merge from storage minecraft:custom cassette.index.$(lookup)
-                            function ui:cassette/menu/play/found with storage minecraft:custom cassette.play
+                            $data modify storage minecraft:cassette play merge from storage minecraft:cassette index.$(lookup)
+                            function ui:cassette/menu/play/found with storage minecraft:cassette play
                         }
                     }
                     execute unless score @s cassettePlay.FeedbackReturn matches 1.. run {
@@ -515,9 +515,9 @@ dir cassette {
                     function custom:ui/menu/on_input
                 }
 
-                execute store result storage minecraft:custom cassette.play.partyID int 1 run scoreboard players get @s customUI.CassetteParty
-                block { with storage minecraft:custom cassette.play
-                    $execute as @a[tag=customCassette.Party$(partyID)Member] at @s run block { with storage minecraft:custom cassette.play
+                execute store result storage minecraft:cassette play.partyID int 1 run scoreboard players get @s customUI.CassetteParty
+                block { with storage minecraft:cassette play
+                    $execute as @a[tag=customCassette.Party$(partyID)Member] at @s run block { with storage minecraft:cassette play
                         $stopsound @s record minecraft:cassette.$(last_played)
                         $playsound minecraft:cassette.$(lookup) record @s ~ ~ ~ 9999999999999
                     }
