@@ -96,29 +96,34 @@ dir logic {
             execute if score #bool uiLogic.Broad matches 1 run function ui:logic/minecart/on_change
         }
 
+        function enhanced_button {
+            # cassette settings check
+            execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] run function ui:cassette/settings/enhanced_button
+            execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] run function ui:cassette/settings/enhanced_button
+
+            # execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
+            # execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
+            # execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
+
+            # execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
+            # execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
+            # execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
+
+            # execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchaseable_item:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/shop
+
+            # execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/menu/pages/abilities/settings/default/flip
+            # execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_abilities
+            # execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_abilities
+
+            # scoreboard players reset @s[tag=!customUI.TempClick] customUI.PurchaseConfirm
+            # tag @s remove customUI.TempClick
+        }
+
         function on_change {
-            # broad button links
+            # enhanced button check
             execute at @s as @p run {
-                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/menu/pages/cassettes/settings/default/flip
-                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_cassettes
-                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_cassettes
-
-                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
-                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
-                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
-
-                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
-                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
-                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{party_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/party/interact/main
-
-                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchaseable_item:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/shop
-
-                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/menu/pages/abilities/settings/default/flip
-                execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_abilities
-                execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/click/settings/admin_abilities
-
-                scoreboard players reset @s[tag=!customUI.TempClick] customUI.PurchaseConfirm
-                tag @s remove customUI.TempClick
+                execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{enhanced_button:1b}}] run function ui:logic/minecart/enhanced_button
+                execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{enhanced_button:1b}}] run function ui:logic/minecart/enhanced_button
             }
 
             clear @a *[minecraft:custom_data~{ui_item:{}}]
@@ -137,7 +142,7 @@ dir logic {
                 execute positioned ~-1 ~ ~-1 if block ~ ~ ~ minecraft:hopper run function ui:logic/minecart/clear_hopper
             }
 
-            data remove storage minecraft:ui custom
+            # data remove storage minecraft:ui
             scoreboard players set .type uiLogic.Broad 1
 
             data modify storage ui in set from storage ui current
@@ -161,20 +166,20 @@ dir logic {
             function shop {
                 execute at @s as @p in minecraft:overworld run {
                     item replace block 0 -64 0 container.0 from entity @s player.cursor
-                    data modify storage minecraft:ui custom.purchase.price set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.price
-                    data modify storage minecraft:ui custom.purchase.context set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.context
-                    data modify storage minecraft:ui custom.purchase.name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.name
-                    data modify storage minecraft:ui custom.purchase.tag set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.tag
-                    data modify storage minecraft:ui custom.purchase.toggle set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.toggle
-                    data modify storage minecraft:ui custom.purchase.namespace set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.namespace
+                    data modify storage minecraft:ui purchase.price set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.price
+                    data modify storage minecraft:ui purchase.context set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.context
+                    data modify storage minecraft:ui purchase.name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.name
+                    data modify storage minecraft:ui purchase.tag set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.tag
+                    data modify storage minecraft:ui purchase.toggle set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.toggle
+                    data modify storage minecraft:ui purchase.namespace set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.namespace
                 }
 
-                execute at @s as @p run function ui:logic/menu/pages/abilities/selection/purchase/main with storage minecraft:ui custom.purchase
+                execute at @s as @p run function ui:logic/menu/pages/abilities/selection/purchase/main with storage minecraft:ui purchase
             }
 
             dir settings {
                 function admin_abilities {
-                    execute if entity @p[tag=customUI.AdminAccess] run {
+                    execute if entity @p[tag=uiAdministrator.Access] run {
                         function ui:logic/menu/pages/abilities/settings/administrator/flip
                     } else run {
                         execute at @s as @p run {
@@ -185,8 +190,8 @@ dir logic {
                     }
                 }
 
-                function admin_cassettes {
-                    execute if entity @p[tag=customUI.AdminAccess] run {
+                function cassette_admin {
+                    execute if entity @p[tag=uiAdministrator.Access] run {
                         function ui:logic/menu/pages/cassettes/settings/administrator/flip
                     } else run {
                         execute at @s as @p run {
@@ -216,7 +221,6 @@ dir logic {
             data remove storage minecraft:ui temp
             data remove storage minecraft:ui in
             data remove storage minecraft:ui mask
-            data remove storage minecraft:ui custom
         }
     }
 
@@ -258,7 +262,7 @@ dir ability {
 dir cassette {
     dir menu {
         function mask {
-            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#00cc4e"},{"text":"l","italic":false,"color":"#00c645"},{"text":"a","italic":false,"color":"#00bf3c"},{"text":"y","italic":false,"color":"#00b933"},{"text":" ","italic":false,"color":"#00b32a"},{"text":"S","italic":false,"color":"#00ac20"},{"text":"o","italic":false,"color":"#00a617"},{"text":"n","italic":false,"color":"#009f0e"},{"text":"g","italic":false,"color":"#009905"}],"minecraft:lore":$(play_display),"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/play/main"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"S","italic":false,"color":"#ff6666"},{"text":"t","italic":false,"color":"#f6595e"},{"text":"o","italic":false,"color":"#ec4d56"},{"text":"p","italic":false,"color":"#e3404d"},{"text":" ","italic":false,"color":"#d93345"},{"text":"S","italic":false,"color":"#d0263d"},{"text":"o","italic":false,"color":"#c61a35"},{"text":"n","italic":false,"color":"#bd0d2c"},{"text":"g","italic":false,"color":"#b30024"}],"minecraft:lore":[[{"text":"Cease all ","italic":false,"color":"gray"},{"text":"feedback","italic":false,"color":"yellow"},{"text":" from the","italic":false,"color":"gray"}],[{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/stop"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"C","italic":false,"color":"#4a4a4a"},{"text":"o","italic":false,"color":"#a5a12f"},{"text":"nfig ","italic":false,"color":"#fff714"},{"text":"M","italic":false,"color":"#e8e473"},{"text":"en","italic":false,"color":"#d1d1d1"},{"text":"u","italic":false,"color":"#ff5cdc"}],"minecraft:lore":[[{"text":"Customize various ","italic":false,"color":"gray"},{"text":"behaviors","italic":false,"color":"yellow"}],[{"text":"of the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],"",["",{"text":"Click","italic":false,"color":"blue"},{"text":" for ","italic":false,"color":"gray"},{"text":"Generic","italic":false,"color":"green"},{"text":" access","italic":false,"color":"gray"}],["",{"text":"Shift-Click","italic":false,"color":"blue"},{"text":" with ","italic":false,"color":"gray"},{"text":"OP","italic":false,"color":"yellow"},{"text":" for ","italic":false,"color":"gray"},{"text":"A","italic":false,"color":"red"},{"text":"d","italic":false,"color":"#ff802b"},{"text":"mi","italic":false,"color":"gold"},{"text":"ni","italic":false,"color":"yellow"},{"text":"st","italic":false,"color":"green"},{"text":"ra","italic":false,"color":"blue"},{"text":"to","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"},{"text":" access","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cassette_settings:1b,empty:1b}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"C","italic":false,"color":"red"},{"text":"ol","italic":false,"color":"gold"},{"text":"le","italic":false,"color":"yellow"},{"text":"ct","italic":false,"color":"green"},{"text":"io","italic":false,"color":"blue"},{"text":"n","italic":false,"color":"light_purple"}],"minecraft:lore":[[{"text":"Browse the ","italic":false,"color":"gray"},{"text":"complete list","italic":false,"color":"aqua"},{"text":" of all","italic":false,"color":"gray"}],[{"text":"obtainable ","italic":false,"color":"gray"},{"text":"cassettes","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui:cassette/collection/flip"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Listening Parties"},"minecraft:lore":[[{"text":"Share unlocked ","italic":false,"color":"gray"},{"text":"songs ","italic":false,"color":"yellow"},{"text":"with other","italic":false,"color":"gray"}],[{"text":"players by ","italic":false,"color":"gray"},{"text":"creating ","italic":false,"color":"green"},{"text":"a ","italic":false,"color":"gray"},{"text":"party ","italic":false,"color":"aqua"},{"text":"or","italic":false,"color":"gray"}],[{"text":"joining ","italic":false,"color":"green"},{"text":"an ongoing one","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/party/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Monitor the ","italic":false,"color":"gray"},{"text":"remainder ","italic":false,"color":"aqua"},{"text":"of ","italic":false,"color":"gray"},{"text":"cassettes","italic":false,"color":"yellow"}],[{"text":"required for ","italic":false,"color":"gray"},{"text":"completion","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/same"}}}}]
+            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#00cc4e"},{"text":"l","italic":false,"color":"#00c645"},{"text":"a","italic":false,"color":"#00bf3c"},{"text":"y","italic":false,"color":"#00b933"},{"text":" ","italic":false,"color":"#00b32a"},{"text":"S","italic":false,"color":"#00ac20"},{"text":"o","italic":false,"color":"#00a617"},{"text":"n","italic":false,"color":"#009f0e"},{"text":"g","italic":false,"color":"#009905"}],"minecraft:lore":$(play_display),"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/play/main"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"S","italic":false,"color":"#ff6666"},{"text":"t","italic":false,"color":"#f6595e"},{"text":"o","italic":false,"color":"#ec4d56"},{"text":"p","italic":false,"color":"#e3404d"},{"text":" ","italic":false,"color":"#d93345"},{"text":"S","italic":false,"color":"#d0263d"},{"text":"o","italic":false,"color":"#c61a35"},{"text":"n","italic":false,"color":"#bd0d2c"},{"text":"g","italic":false,"color":"#b30024"}],"minecraft:lore":[[{"text":"Cease all ","italic":false,"color":"gray"},{"text":"feedback","italic":false,"color":"yellow"},{"text":" from the","italic":false,"color":"gray"}],[{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/stop"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"C","italic":false,"color":"#4a4a4a"},{"text":"o","italic":false,"color":"#a5a12f"},{"text":"nfig ","italic":false,"color":"#fff714"},{"text":"M","italic":false,"color":"#e8e473"},{"text":"en","italic":false,"color":"#d1d1d1"},{"text":"u","italic":false,"color":"#ff5cdc"}],"minecraft:lore":[[{"text":"Customize various ","italic":false,"color":"gray"},{"text":"behaviors","italic":false,"color":"yellow"}],[{"text":"of the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],"",["",{"text":"Click","italic":false,"color":"blue"},{"text":" for ","italic":false,"color":"gray"},{"text":"Generic","italic":false,"color":"green"},{"text":" access","italic":false,"color":"gray"}],["",{"text":"Shift-Click","italic":false,"color":"blue"},{"text":" with ","italic":false,"color":"gray"},{"text":"OP","italic":false,"color":"yellow"},{"text":" for ","italic":false,"color":"gray"},{"text":"A","italic":false,"color":"red"},{"text":"d","italic":false,"color":"#ff802b"},{"text":"mi","italic":false,"color":"gold"},{"text":"ni","italic":false,"color":"yellow"},{"text":"st","italic":false,"color":"green"},{"text":"ra","italic":false,"color":"blue"},{"text":"to","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"},{"text":" access","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{enhanced_button:1b,cassette_settings:1b}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"C","italic":false,"color":"red"},{"text":"ol","italic":false,"color":"gold"},{"text":"le","italic":false,"color":"yellow"},{"text":"ct","italic":false,"color":"green"},{"text":"io","italic":false,"color":"blue"},{"text":"n","italic":false,"color":"light_purple"}],"minecraft:lore":[[{"text":"Browse the ","italic":false,"color":"gray"},{"text":"complete list","italic":false,"color":"aqua"},{"text":" of all","italic":false,"color":"gray"}],[{"text":"obtainable ","italic":false,"color":"gray"},{"text":"cassettes","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/collection/flip"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Listening Parties"},"minecraft:lore":[[{"text":"Share unlocked ","italic":false,"color":"gray"},{"text":"songs ","italic":false,"color":"yellow"},{"text":"with other","italic":false,"color":"gray"}],[{"text":"players by ","italic":false,"color":"gray"},{"text":"creating ","italic":false,"color":"green"},{"text":"a ","italic":false,"color":"gray"},{"text":"party ","italic":false,"color":"aqua"},{"text":"or","italic":false,"color":"gray"}],[{"text":"joining ","italic":false,"color":"green"},{"text":"an ongoing one","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/party/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Monitor the ","italic":false,"color":"gray"},{"text":"remainder ","italic":false,"color":"aqua"},{"text":"of ","italic":false,"color":"gray"},{"text":"cassettes","italic":false,"color":"yellow"}],[{"text":"required for ","italic":false,"color":"gray"},{"text":"completion","italic":false,"color":"green"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/statistics/flip"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/same"}}}}]
         }
 
         function open {
@@ -527,7 +531,150 @@ dir cassette {
     }
 
     dir settings {
+        dir default {
+            function mask {
+                $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"blue","italic":false,"text":"Feedback Style"},"minecraft:lore":$(feedback_style),"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/settings/default/feedback"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Targeting ","italic":false,"color":"red"},{"text":"Style","italic":false,"color":"white"}],"minecraft:lore":$(targeting_style),"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/settings/default/targeting"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Party Behavior"},"minecraft:lore":$(party_behavior),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/cassettes/settings/default/party"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/default_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/settings/default/same"}}}}]
+            }
 
+            function open {
+                execute at @s as @p run function ui:cassette/settings/default/player
+                function ui:cassette/settings/default/mask with storage minecraft:ui cassette.settings.default
+                data modify storage ui current set from storage ui mask
+                execute on passengers run data modify entity @s data.page.mask set value "function ui:cassette/settings/default/mask"
+            }
+
+            function player {
+                # Feedback
+                data merge storage minecraft:ui {cassette:{settings:{default:{feedback_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"behaves","italic":false,"color":"yellow"},{"text":" following the ","italic":false,"color":"gray"},{"text":"ending","italic":false,"color":"red"},{"text":" of a","italic":false,"color":"gray"}],[{"text":"song","italic":false,"color":"gray"}],"",[{"text":"Feedback Variation","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Randomize Song","italic":false,"color":"green"}],[{"text":"[X] Increment Song","italic":false,"color":"gray"}],[{"text":"[X] Loop Song","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsFeedback matches 2 run data merge storage minecraft:ui {cassette:{settings:{default:{feedback_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"behaves","italic":false,"color":"yellow"},{"text":" following the ","italic":false,"color":"gray"},{"text":"ending","italic":false,"color":"red"},{"text":" of a","italic":false,"color":"gray"}],[{"text":"song","italic":false,"color":"gray"}],"",[{"text":"Feedback Variation","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Randomize Song","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Increment Song","italic":false,"color":"green"}],[{"text":"[X] Loop Song","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsFeedback matches 3 run data merge storage minecraft:ui {cassette:{settings:{default:{feedback_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"behaves","italic":false,"color":"yellow"},{"text":" following the ","italic":false,"color":"gray"},{"text":"ending","italic":false,"color":"red"},{"text":" of a","italic":false,"color":"gray"}],[{"text":"song","italic":false,"color":"gray"}],"",[{"text":"Feedback Variation","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Randomize Song","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Increment Song","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Loop Song","italic":false,"color":"green"}]]}}}}
+
+                # Party
+                data merge storage minecraft:ui {cassette:{settings:{default:{party_behavior:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"notifies","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"yellow"},{"text":"the user about ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"}],[{"text":"changes","italic":false,"color":"aqua"}],"",[{"text":"Party Behavior","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Default","italic":false,"color":"green"}],[{"text":"[X] Disable Toast Notifications","italic":false,"color":"gray"}],["",{"text":"[X] Disable P","italic":false,"color":"gray"},{"text":"a","italic":false,"color":"gray"},{"text":"r","italic":false,"color":"gray"},{"text":"t","italic":false,"color":"gray"},{"text":"y","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"SFX","italic":false,"color":"gray"}],[{"text":"[X] Disable All","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsParty matches 2 run data merge storage minecraft:ui {cassette:{settings:{default:{party_behavior:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"notifies","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"yellow"},{"text":"the user about ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"}],[{"text":"changes","italic":false,"color":"aqua"}],"",[{"text":"Party Behavior","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Disable Toast Notifications","italic":false,"color":"green"}],[{"text":"[X] Disable Party SFX","italic":false,"color":"gray"}],[{"text":"[X] Disable All","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsParty matches 3 run data merge storage minecraft:ui {cassette:{settings:{default:{party_behavior:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"notifies","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"yellow"},{"text":"the user about ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"}],[{"text":"changes","italic":false,"color":"aqua"}],"",[{"text":"Party Behavior","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Disable Toast Notifications","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Disable Party SFX","italic":false,"color":"green"}],[{"text":"[X] Disable All","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsParty matches 4 run data merge storage minecraft:ui {cassette:{settings:{default:{party_behavior:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"notifies","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"yellow"},{"text":"the user about ","italic":false,"color":"gray"},{"text":"party","italic":false,"color":"aqua"}],[{"text":"changes","italic":false,"color":"aqua"}],"",[{"text":"Party Behavior","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Default","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Disable Toast Notifications","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Disable Party SFX","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Disable All","italic":false,"color":"green"}]]}}}}
+
+                # Targeting
+                data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Sorting Control","italic":false,"color":"green"}],[{"text":"[X] All Songs","italic":false,"color":"gray"}],[{"text":"[X] Playlist 1","italic":false,"color":"gray"}],[{"text":"[X] Playlist 2","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsTargeting matches 2 run data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Sorting Control","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" All Songs","italic":false,"color":"green"}],[{"text":"[X] Playlist 1","italic":false,"color":"gray"}],[{"text":"[X] Playlist 2","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsTargeting matches 3 run data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Sorting Control","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] All Songs","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Playlist 1","italic":false,"color":"green"}],[{"text":"[X] Playlist 2","italic":false,"color":"gray"}]]}}}}
+                execute if score @s uiCassette.SettingsTargeting matches 4 run data merge storage minecraft:ui {cassette:{settings:{default:{targeting_style:[["",{"text":"Determine how the ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"red"},{"text":"a","italic":false,"color":"#ff802b"},{"text":"ss","italic":false,"color":"gold"},{"text":"e","italic":false,"color":"#ffd52b"},{"text":"tt","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"#aaff55"},{"text":" P","italic":false,"color":"green"},{"text":"la","italic":false,"color":"blue"},{"text":"ye","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"}],["",{"text":"targets","italic":false,"color":"yellow"},{"text":" songs either by ","italic":false,"color":"gray"},{"text":"sorting","italic":false,"color":"aqua"}],["",{"text":"or a ","italic":false,"color":"gray"},{"text":"dedicated setting","italic":false,"color":"aqua"}],"",[{"text":"Targeting Method","italic":false,"color":"gold"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Sorting Control","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] All Songs","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"gray"},{"text":"X] Playlist 1","italic":false,"color":"gray"}],["",{"text":"[","italic":false,"color":"dark_green"},{"text":"X","italic":false,"color":"green"},{"text":"]","italic":false,"color":"dark_green"},{"text":" Playlist 2","italic":false,"color":"green"}]]}}}}
+            }
+
+            function same {
+                execute at @s as @p run playsound minecraft:cassette.ui.error record @s ~ ~ ~
+                function ui:cassette/settings/default/open
+            }
+
+            function flip {
+                execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                function ui:cassette/settings/default/open
+            }
+
+            function feedback {
+                execute at @s as @p run {
+                    scoreboard players add @s uiCassette.SettingsFeedback 1
+                    scoreboard players reset @s cassettePlay.ID
+                    scoreboard players reset @s cassettePlay.FeedbackStyle
+                    execute if score @s uiCassette.SettingsFeedback matches 4.. run scoreboard players set @s uiCassette.SettingsFeedback 1
+
+                    playsound minecraft:cassette.ui.cycle record @s ~ ~ ~
+                }
+                function ui:cassette/settings/default/open
+            }
+
+            function party {
+                execute at @s as @p run {
+                    scoreboard players add @s uiCassette.SettingsParty 1
+                    execute if score @s uiCassette.SettingsParty matches 5.. run scoreboard players set @s uiCassette.SettingsParty 1
+
+                    playsound minecraft:cassette.ui.cycle record @s ~ ~ ~
+                }
+                function ui:cassette/settings/default/open
+            }
+
+            function targeting {
+                execute at @s as @p run {
+                    scoreboard players add @s uiCassette.SettingsTargeting 1
+                    execute if score @s uiCassette.SettingsTargeting matches 5.. run scoreboard players set @s uiCassette.SettingsTargeting 1
+
+                    playsound minecraft:cassette.ui.cycle record @s ~ ~ ~
+                }
+                function ui:cassette/settings/default/open
+            }
+        }
+
+        dir administrator {
+            function mask {
+                $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Main Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to Main Menu"}],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/menu/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"dark_aqua","italic":false,"text":"Show Collection ID"},"minecraft:lore":[["",{"text":"Toggle the presence of ","italic":false,"color":"gray"},{"text":"IDs","italic":false,"color":"yellow"},{"text":" in the","italic":false,"color":"gray"}],[{"text":"collection menu","italic":false,"color":"gray"}],"",["",{"text":"Collection IDs: ","italic":false,"color":"gray"},{"text":"$(collection_id_state)","italic":false,"color":"$(collection_id_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/settings/administrator/collection_id"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/cassette/administrator_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:cassette/settings/default/same"}}}}]
+            }
+
+            function open {
+                execute at @s as @p run function ui:cassette/settings/administrator/player
+                function ui:cassette/settings/administrator/mask with storage minecraft:ui cassette.settings.administrator
+                data modify storage ui current set from storage ui mask
+                execute on passengers run data modify entity @s data.page.mask set value "function ui:cassette/settings/administrator/mask"
+            }
+
+            function player {
+                data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_state:"Disabled"}}}}
+                data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_color:"red"}}}}
+                
+                execute if entity @s[tag=cassetteSettings.ShowCollectionID] run {
+                    data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_state:"Enabled"}}}}
+                    data merge storage minecraft:ui {cassette:{settings:{administrator:{collection_id_color:"green"}}}}
+                }
+            }
+
+            function same {
+                execute at @s as @p run playsound minecraft:cassette.ui.error record @s ~ ~ ~
+                function ui:cassette/settings/administrator/open
+            }
+
+            function flip {
+                execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                function ui:cassette/settings/administrator/open
+            }
+
+            function collection_id {
+                execute at @s as @p run {
+                    execute unless entity @s[tag=cassetteSettings.ShowCollectionID] run {
+                        tag @s add cassetteSettings.ShowCollectionID
+                        tag @s add temp
+                    }
+
+                    execute if entity @s[tag=cassetteSettings.ShowCollectionID] unless entity @s[tag=temp] run {
+                        tag @s remove cassetteSettings.ShowCollectionID
+                    }
+
+                    tag @s remove temp
+                }
+                function ui:cassette/settings/administrator/open
+            }
+
+            function check_permissions {
+                execute if entity @p[tag=uiAdministrator.Access] run {
+                    function ui:logic/menu/pages/cassettes/settings/administrator/flip
+                } else run {
+                    execute at @s as @p run {
+                        playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
+                        tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"You're not an ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"r","color":"gold"},{"text":"a","color":"yellow"},{"text":"t","color":"green"},{"text":"o","color":"blue"},{"text":"r","color":"light_purple"},{"text":",","color":"dark_purple"},{"text":" and ","color":"gray"},{"text":"cannot","color":"red"},{"text":" access this page.","color":"gray"}]
+                    }
+                    function ui:logic/player/close
+                }
+            }
+        }
+
+        function enhanced_button {
+            say ?
+            # default settings
+            execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:cassette/settings/default/flip
+
+            # administrator settings
+            execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:cassette/settings/administrator/check_permissions
+            execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:cassette/settings/administrator/check_permissions
+        }
     }
 
     dir collection {
