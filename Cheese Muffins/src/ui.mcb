@@ -14,6 +14,12 @@ function on_load minecraft:load{
     scoreboard objectives add uiCassette.SettingsParty dummy
 }
 
+function administrator_access {
+    tag @s add uiAdministrator.Access
+    playsound minecraft:cassette.award.hard player @s ~ ~ ~
+    tellraw @s ["",{"text":"Custom Abilities","color":"gold"},{"text":"\n"},{"text":"You now have complete ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"a","color":"gold"},{"text":"t","color":"yellow"},{"text":"o","color":"green"},{"text":"r","color":"blue"},{"text":" access to everything relating to ","color":"gray"},{"text":"Custom Abilities!","color":"aqua"}]
+}
+
 dir logic {
     dir player {
         function tick {
@@ -126,6 +132,7 @@ dir logic {
                 execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{enhanced_button:1b}}] run function ui:logic/minecart/enhanced_button
             }
 
+            # removal of ui elements in the physical world
             clear @a *[minecraft:custom_data~{ui_item:{}}]
             kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{ui_item:{}}}}}]
 
@@ -175,32 +182,6 @@ dir logic {
                 }
 
                 execute at @s as @p run function ui:logic/menu/pages/abilities/selection/purchase/main with storage minecraft:ui purchase
-            }
-
-            dir settings {
-                function admin_abilities {
-                    execute if entity @p[tag=uiAdministrator.Access] run {
-                        function ui:logic/menu/pages/abilities/settings/administrator/flip
-                    } else run {
-                        execute at @s as @p run {
-                            playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
-                            tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"You're not an ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"r","color":"gold"},{"text":"a","color":"yellow"},{"text":"t","color":"green"},{"text":"o","color":"blue"},{"text":"r","color":"light_purple"},{"text":",","color":"dark_purple"},{"text":" and ","color":"gray"},{"text":"cannot","color":"red"},{"text":" access this page.","color":"gray"}]
-                        }
-                        function ui:logic/player/close
-                    }
-                }
-
-                function cassette_admin {
-                    execute if entity @p[tag=uiAdministrator.Access] run {
-                        function ui:logic/menu/pages/cassettes/settings/administrator/flip
-                    } else run {
-                        execute at @s as @p run {
-                            playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
-                            tellraw @s ["",{"text":"Custom Ability Tome","color":"gold"},{"text":"\n"},{"text":"You're not an ","color":"gray"},{"text":"A","color":"red"},{"text":"d","color":"gold"},{"text":"m","color":"yellow"},{"text":"i","color":"green"},{"text":"n","color":"blue"},{"text":"i","color":"light_purple"},{"text":"s","color":"dark_purple"},{"text":"t","color":"red"},{"text":"r","color":"gold"},{"text":"a","color":"yellow"},{"text":"t","color":"green"},{"text":"o","color":"blue"},{"text":"r","color":"light_purple"},{"text":",","color":"dark_purple"},{"text":" and ","color":"gray"},{"text":"cannot","color":"red"},{"text":" access this page.","color":"gray"}]
-                        }
-                        function ui:logic/player/close
-                    }
-                }
             }
         }
 
@@ -655,7 +636,7 @@ dir cassette {
 
             function check_permissions {
                 execute if entity @p[tag=uiAdministrator.Access] run {
-                    function ui:logic/menu/pages/cassettes/settings/administrator/flip
+                    function ui:cassette/settings/administrator/flip
                 } else run {
                     execute at @s as @p run {
                         playsound minecraft:entity.enderman.teleport player @s ~ ~ ~ 0.5
@@ -667,7 +648,6 @@ dir cassette {
         }
 
         function enhanced_button {
-            say ?
             # default settings
             execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:cassette/settings/default/flip
 

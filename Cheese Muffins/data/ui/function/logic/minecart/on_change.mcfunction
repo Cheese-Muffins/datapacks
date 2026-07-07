@@ -2,6 +2,7 @@
 
 # enhanced button check
 execute at @s as @p run function ui:logic/minecart/zzz/0
+# removal of ui elements in the physical world
 clear @a *[minecraft:custom_data~{ui_item:{}}]
 kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{ui_item:{}}}}}]
 # hopper flow prevention
