@@ -1,9 +1,10 @@
 # Generated with MC-Build
 
+# broad button links
 execute at @s as @p run function ui:logic/minecart/zzz/0
-say e
 clear @a *[minecraft:custom_data~{ui_item:{}}]
 kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{ui_item:{}}}}}]
+# hopper flow prevention
 execute positioned ~ ~-1 ~ run function ui:logic/minecart/zzz/1
 data remove storage minecraft:ui custom
 scoreboard players set .type uiLogic.Broad 1

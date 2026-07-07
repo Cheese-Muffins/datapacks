@@ -13,6 +13,7 @@ dir tick {
     function main {
         execute as @a at @s run {
             function ui:logic/player/tick
+            function cassette:tick/main
             execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
         }
 
@@ -159,6 +160,6 @@ dir math {
         function universal:debug_log/text {text:"Mode: Square Root",color:"white"}
         $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
         
-        # lol not adding ts yet
+        # not adding ts yet
     }
 }

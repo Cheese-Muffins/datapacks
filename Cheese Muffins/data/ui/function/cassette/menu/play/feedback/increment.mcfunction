@@ -1,24 +1,24 @@
 # Generated with MC-Build
 
-tag @s add customCassette.PlayFeedbackIncrementSearching
-scoreboard players add @s customCassette.PlayFeedbackIncrementValue 1
-scoreboard players reset .cassetteSlot customUI.CassetteCollection
-scoreboard players reset .incrementIndex customUI.CassetteCollection
-scoreboard players reset .totalEntries customUI.CassetteCollection
-scoreboard players reset .totalPassed customUI.CassetteCollection
-scoreboard players set .targetedRating customUI.CassetteCollection 0
-execute if score @s customUI.CassetteCollection matches 1 run scoreboard players reset .indexOffset customUI.CassetteCollection
-execute if score @s customUI.CassetteCollection matches 2 run scoreboard players set .indexOffset customUI.CassetteCollection 21
-execute if score @s customUI.CassetteCollection matches 3 run scoreboard players set .indexOffset customUI.CassetteCollection 42
-execute if score @s customUI.CassetteCollection matches 4 run scoreboard players set .indexOffset customUI.CassetteCollection 63
-execute if score @s customUI.CassetteCollection matches 5 run scoreboard players set .indexOffset customUI.CassetteCollection 84
-execute if score @s customUI.CassetteCollectionSort matches 1..3 run function custom:ui/menu/pages/cassettes/collection/sort/default
-execute if score @s customUI.CassetteCollectionSort matches 4 run function custom:ui/menu/pages/cassettes/collection/sort/rating
-execute if score @s customUI.CassetteCollectionSort matches 5 run function custom:ui/menu/pages/cassettes/collection/sort/alphabetical
-execute if score @s customUI.CassetteCollectionSort matches 6 run function custom:ui/menu/pages/cassettes/collection/sort/artist
-execute if score @s customUI.CassetteCollectionSort matches 7 run function custom:ui/menu/pages/cassettes/collection/sort/playlist1
-execute if score @s customUI.CassetteCollectionSort matches 8 run function custom:ui/menu/pages/cassettes/collection/sort/playlist2
-tag @s remove customCassette.PlayFeedbackIncrementSearching
-execute if score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run function ui:cassette/menu/play/feedback/zzz/0
-execute unless score @s customCassette.PlayFeedbackIncrementReturn matches 1.. run function ui:cassette/menu/play/feedback/zzz/2
-scoreboard players reset @s customCassette.PlayFeedbackIncrementReturn
+tag @s add cassettePlay.FeedbackIncrementing
+scoreboard players add @s cassettePlay.FeedbackStyle 1
+scoreboard players reset .cassetteSlot uiCassette.CollectionBroad
+scoreboard players reset .incrementIndex uiCassette.CollectionBroad
+scoreboard players reset .totalEntries uiCassette.CollectionBroad
+scoreboard players reset .totalPassed uiCassette.CollectionBroad
+scoreboard players set .targetedRating uiCassette.CollectionBroad 0
+execute if score @s uiCassette.CollectionBroad matches 1 run scoreboard players reset .indexOffset uiCassette.CollectionBroad
+execute if score @s uiCassette.CollectionBroad matches 2 run scoreboard players set .indexOffset uiCassette.CollectionBroad 21
+execute if score @s uiCassette.CollectionBroad matches 3 run scoreboard players set .indexOffset uiCassette.CollectionBroad 42
+execute if score @s uiCassette.CollectionBroad matches 4 run scoreboard players set .indexOffset uiCassette.CollectionBroad 63
+execute if score @s uiCassette.CollectionBroad matches 5 run scoreboard players set .indexOffset uiCassette.CollectionBroad 84
+execute if score @s uiCassette.CollectionSort matches 1..3 run function ui:cassette/collection/sort/default
+execute if score @s uiCassette.CollectionSort matches 4 run function ui:cassette/collection/sort/rating
+execute if score @s uiCassette.CollectionSort matches 5 run function ui:cassette/collection/sort/alphabetical
+execute if score @s uiCassette.CollectionSort matches 6 run function ui:cassette/collection/sort/artist
+execute if score @s uiCassette.CollectionSort matches 7 run function ui:cassette/collection/sort/playlist1
+execute if score @s uiCassette.CollectionSort matches 8 run function ui:cassette/collection/sort/playlist2
+tag @s remove cassettePlay.FeedbackIncrementing
+execute if score @s cassettePlay.FeedbackReturn matches 1.. run function ui:cassette/menu/play/feedback/zzz/0
+execute unless score @s cassettePlay.FeedbackReturn matches 1.. run function ui:cassette/menu/play/feedback/zzz/2
+scoreboard players reset @s cassettePlay.FeedbackReturn
