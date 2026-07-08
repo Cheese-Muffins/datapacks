@@ -18,7 +18,7 @@ data\cassette\function\calculate\zzz\3.mcfunction:94f81680ab8e808ca37b746a995f42
 data\cassette\function\calculate\zzz\4.mcfunction:aec0028c071f3aa8a718557cc819365846cb2fae
 data\cassette\function\calculate\hover.mcfunction:708d15360d3276941373ae8d364965c0763c6b64
 data\cassette\function\calculate\real_time.mcfunction:481d099f5c244d5cd9fad6a41e599cf8dc3f38fe
-data\cassette\function\generate_index.mcfunction:973cd0cd77c54b24fd4f47d5aa0b1e7bbd883799
+data\cassette\function\generate_index.mcfunction:d60898ea95237282eed1c5eae4a54961292d799f
 data\ui\function\on_load.mcfunction:6a3968c3ff430f650fdb64a75cbc6cdd103573c0
 data\ui\function\administrator_access.mcfunction:718240e3fa7c843c8d94638356d728f97a9c1c64
 data\ui\function\logic\player\tick.mcfunction:060c3d6d323daf3f99efffc503d89db457efe6f7
@@ -236,7 +236,7 @@ data\ui\function\cassette\collection\sort\rating.mcfunction:31eabb37cd1a65d78f02
 data\ui\function\cassette\collection\sort\zzz\38.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
 data\ui\function\cassette\collection\sort\zzz\37.mcfunction:364226dfcef1cbea243a00292554e305757a108e
 data\ui\function\cassette\collection\sort\zzz\36.mcfunction:dbc2a3692565bb63fa060475808ee6fd15b5ec29
-data\ui\function\cassette\collection\sort\zzz\35.mcfunction:752ac4e0bc0aa14729928cb0a5d599bacdc89395
+data\ui\function\cassette\collection\sort\zzz\35.mcfunction:1c1150b2c758870c715c453b668835532a7d0cf3
 data\ui\function\cassette\collection\sort\zzz\42.mcfunction:4e5a04135af1990bfb4b66127deeda40c5c7c7d8
 data\ui\function\cassette\collection\sort\zzz\41.mcfunction:6b20be7289fccd7872327531c7a34958da08a32c
 data\ui\function\cassette\collection\sort\zzz\40.mcfunction:764de82b4e678736f8bdefc502d350202ed31fdd
@@ -245,7 +245,7 @@ data\ui\function\cassette\collection\sort\alphabetical.mcfunction:0177c3d758d23a
 data\ui\function\cassette\collection\sort\zzz\46.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
 data\ui\function\cassette\collection\sort\zzz\45.mcfunction:8460e802ee222649fcc1097b98faa2651aa9dbde
 data\ui\function\cassette\collection\sort\zzz\44.mcfunction:91278dca822ed6fec0e388276c77fb454405ecef
-data\ui\function\cassette\collection\sort\zzz\43.mcfunction:0b73d77bb641e4251e7dbc513880c8a600c0d5cb
+data\ui\function\cassette\collection\sort\zzz\43.mcfunction:67e64b52249944f0c432dab9d279ea54adf33698
 data\ui\function\cassette\collection\sort\zzz\50.mcfunction:4e5a04135af1990bfb4b66127deeda40c5c7c7d8
 data\ui\function\cassette\collection\sort\zzz\49.mcfunction:fc028a586967cc730b316ffa087f91252c68fdae
 data\ui\function\cassette\collection\sort\zzz\48.mcfunction:ffacba39441bb395b33358da8976c675c143d599

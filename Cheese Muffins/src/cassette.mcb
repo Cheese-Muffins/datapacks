@@ -732,12 +732,12 @@ function generate_index {
     data merge storage minecraft:cassette {index:{105:{name:[{"text":"Stadium Rave","italic":false,"color":"yellow"}]}}}
     data merge storage minecraft:cassette {index:{105:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
 
-    # generate alphabetical data #
+    # generate special data #
     <%%
     const fs = require("fs");
     const source = fs.readFileSync("src/cassette.mcb", "utf8");
 
-    const start = source.indexOf("function song_index");
+    const start = source.indexOf("function generate_index");
     const end = source.indexOf("# BONUS SONGS!!!", start);
     const songIndexSource = source.slice(start, end);
 
@@ -752,7 +752,7 @@ function generate_index {
         }
     }
 
-    for (const match of songIndexSource.matchAll(/cassette:\{index:\{(\d+):\{artist:"((?:\\"|[^"])*)"/g)) {
+    for (const match of songIndexSource.matchAll(/index:\{(\d+):\{artist:"((?:\\"|[^"])*)"/g)) {
         const id = Number(match[1]);
         const song = byId.get(id);
 
@@ -793,10 +793,10 @@ function generate_index {
     });
 
     const emitOrder = (path, list) => {
-        emit(`data remove storage minecraft:cassette ${path}`);
+        emit(`data remove storage minecraft:cassette index.${path}`);
 
         for (let i = 0; i < list.length; i++) {
-            emit(`data merge storage minecraft:cassette {${path}:{${i + 1}:{id:${list[i].id}}}`);
+            emit(`data merge storage minecraft:cassette {index:{${path}:{${i + 1}:{id:${list[i].id}}}}}`);
         }
     };
 
