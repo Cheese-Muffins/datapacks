@@ -2,7 +2,12 @@ data\abilities\function\on_load.mcfunction:30516cecba479df4dc6e94d4a24c06b1842f2
 data\abilities\function\tick.mcfunction:cc5b0961e2b534c9a0e6e14f29535dc9ae99b399
 data\cassette\function\on_load.mcfunction:f1c2cde1edaeccc10a48f6f9b044c1c51fa91a49
 data\cassette\function\tick\zzz\0.mcfunction:feb637352bc165202957eb0f186b167a0227fc93
-data\cassette\function\tick\main.mcfunction:9edb884c5c209e9dac7cb202f9d02d22a5e6b984
+data\cassette\function\tick\main.mcfunction:43fd8830941b0fa88e07d9aab274b0fbc8ae31e4
+data\cassette\function\zzz\1.mcfunction:62ff46beb6f496119267cf6fddc69637a14d3c3a
+data\cassette\function\zzz\3.mcfunction:853efef71631b5dd6c2495b9ce650985d39872bb
+data\cassette\function\zzz\2.mcfunction:b6898205a5ff3e98041154904d5c6f9b9fa21a6d
+data\cassette\function\zzz\0.mcfunction:76323bb727fc4e45f454403585508ba8af68c00e
+data\cassette\function\consume.mcfunction:d43920498e3fac607cca463bbecdcb088dc7573f
 data\cassette\function\playing\zzz\0.mcfunction:2740068471dac387e9c8150ba379513c84cfce49
 data\cassette\function\playing\main.mcfunction:929508cb18df26e2cd077a97d537fb21245454ca
 data\cassette\function\playing\zzz\1.mcfunction:dae2174ed02a777917beea5aafa3b3d47babf547
