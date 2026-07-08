@@ -3,6 +3,9 @@
 # cassette settings check
 execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] run function ui:cassette/settings/enhanced_button
 execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_settings:1b}}] run function ui:cassette/settings/enhanced_button
+# cassette collection entries #
+execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{collection_entry:1b}}] run function ui:cassette/collection/operation/main
+execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{collection_entry:1b}}] run function ui:cassette/collection/operation/main
 # execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
 # execute if items entity @s inventory.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
 # execute if items entity @s hotbar.* minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
