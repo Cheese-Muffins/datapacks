@@ -26,6 +26,8 @@ execute if score @s cassetteChallenge.DefeatZombies matches 1.. if predicate cas
 execute if predicate cassette:challenge/ancient_city unless entity @s[tag=cassetteUnlocked.Song26] run function cassette:award/give {id:26}
 # Come As You Are
 execute if entity @n[type=#universal:monsters,distance=..7] if predicate cassette:challenge/empty_inventory unless entity @s[tag=cassetteUnlocked.Song29] run function cassette:award/challenge/come_as_you_are
+# Megalovania
+execute if entity @s[scores={cassetteChallenge.KilledSkeleton=500..,cassetteChallenge.KilledWitherSkeleton=100..,cassetteChallenge.KilledStray=25..,cassetteChallenge.KilledParched=25..,cassetteChallenge.KilledBogged=10..,cassetteChallenge.KilledWither=1..}] if entity @s[tag=cassetteChallenge.KilledSpiderJockey] unless entity @s[tag=cassetteUnlocked.Song30] run function cassette:award/give {id:30}
 # Sometimes You're The Hammer, Sometimes You're The Nail
 execute if score @s cassetteChallenge.UsedAnvil matches 1.. unless entity @s[tag=cassetteUnlocked.Song38] run function cassette:award/challenge/hammer
 # The Only Thing They Fear Is You

@@ -23,4 +23,10 @@ scoreboard objectives add cassetteChallenge.UsedAnvil minecraft.custom:minecraft
 scoreboard objectives add cassetteChallenge.HammerRotationX dummy
 scoreboard objectives add cassetteChallenge.HammerRotationY dummy
 scoreboard objectives add cassetteChallenge.SlayMonsterNight dummy
+scoreboard objectives add cassetteChallenge.KilledSkeleton minecraft.killed:minecraft.skeleton
+scoreboard objectives add cassetteChallenge.KilledWitherSkeleton minecraft.killed:minecraft.wither_skeleton
+scoreboard objectives add cassetteChallenge.KilledStray minecraft.killed:minecraft.stray
+scoreboard objectives add cassetteChallenge.KilledParched minecraft.killed:minecraft.parched
+scoreboard objectives add cassetteChallenge.KilledBogged minecraft.killed:minecraft.bogged
+scoreboard objectives add cassetteChallenge.KilledWither minecraft.killed:minecraft.wither
 function cassette:generate_index

@@ -1,6 +1,8 @@
 {
-	"pack":{
+	"pack": {
 		"pack_format": 109,
-		"description": "Universal Made with MC-Build!"
+		"description": "Universal Made with MC-Build!",
+		"min_format": 107,
+		"max_format": 107
 	}
 }

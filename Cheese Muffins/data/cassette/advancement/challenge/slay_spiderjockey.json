@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "kill_skeleton": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "minecraft:entity_type": "minecraft:skeleton",
+          "minecraft:vehicle": {
+            "minecraft:entity_type": "minecraft:spider"
+          }
+        }
+      }
+    },
+    "kill_spider": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "minecraft:entity_type": "minecraft:spider",
+          "minecraft:passenger": {
+            "minecraft:entity_type": "minecraft:skeleton"
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_skeleton",
+      "kill_spider"
+    ]
+  ],
+  "rewards": {
+    "function": "cassette:award/challenge/slay_spiderjockey"
+  },
+  "sends_telemetry_event": true
+}

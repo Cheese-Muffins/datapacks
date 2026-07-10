@@ -30,5 +30,3 @@ execute if entity @s[advancements={cassette:challenge/end_to_overworld=true}] un
 execute if entity @s[advancements={cassette:challenge/hold/blackhole_sun=true}] unless entity @s[tag=cassetteUnlocked.Song21] run function cassette:award/announce {id:21}
 # Adventure Of A Lifetime
 execute if entity @s[advancements={minecraft:adventure/adventuring_time=true}] unless entity @s[tag=cassetteUnlocked.Song28] run function cassette:award/give {id:28}
-# Megalovania
-execute if entity @s[advancements={cassette:challenge/slay_sans=true}] unless entity @s[tag=cassetteUnlocked.Song30] run function cassette:award/give {id:30}

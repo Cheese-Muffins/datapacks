@@ -1,1 +1,4 @@
-{"values":["universal:tick/main"]}
+{
+	"replace": false,
+	"values": ["animated_java:global/data_manager/on_tick", "universal:tick/main", "animated_java:global/on_tick"]
+}

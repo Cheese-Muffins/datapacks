@@ -6,8 +6,8 @@
         "damage": {
           "type": {
             "direct_entity": {
-              "type": "minecraft:player",
-              "equipment": {
+              "minecraft:entity_type": "minecraft:player",
+              "minecraft:equipment": {
                 "mainhand": {
                   "items": "minecraft:mace"
                 }
@@ -34,7 +34,6 @@
     },
     "frame": "challenge",
     "icon": {
-      "count": 1,
       "id": "minecraft:mace"
     },
     "title": {
@@ -47,8 +46,8 @@
     ]
   ],
   "rewards": {
-    "experience": 50,
-    "function": "cassette:award/advancement"
+    "function": "cassette:award/advancement",
+    "experience": 50
   },
   "sends_telemetry_event": true
 }
