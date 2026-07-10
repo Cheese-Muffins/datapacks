@@ -821,24 +821,24 @@ function generate_index {
     data merge storage minecraft:cassette {index:{38:{obtainment:[[{"text":"Get ","italic":false,"color":"gray"},{"text":"squished ","italic":false,"color":"yellow"},{"text":"by an ","italic":false,"color":"gray"},{"text":"anvil","italic":false,"color":"light_purple"},{"text":" when already ","italic":false,"color":"gray"},{"text":"interacting with","italic":false,"color":"gray"}],[{"text":"an ","italic":false,"color":"gray"},{"text":"anvil","italic":false,"color":"light_purple"},{"text":" at the","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"same time","italic":false,"color":"gray"}]]}}}
 
     # 39 - Judgement Day
-    data merge storage minecraft:cassette {index:{39:{artist:"A Day To Remember",duration:169,rating:0,song_id:39}}}
+    data merge storage minecraft:cassette {index:{39:{artist:"A Day To Remember",duration:169,rating:2,song_id:39}}}
     data merge storage minecraft:cassette {index:{39:{name:[{"text":"J","italic":false,"color":"#605e7d"},{"text":"u","italic":false,"color":"#536286"},{"text":"d","italic":false,"color":"#46668f"},{"text":"g","italic":false,"color":"#3a6a99"},{"text":"e","italic":false,"color":"#2d6ea2"},{"text":"m","italic":false,"color":"#2072ab"},{"text":"en","italic":false,"color":"#1376b4"},{"text":"t","italic":false,"color":"#2271a9"},{"text":" ","italic":false,"color":"#326c9e"},{"text":"D","italic":false,"color":"#416893"},{"text":"a","italic":false,"color":"#516388"},{"text":"y","italic":false,"color":"#605e7d"}]}}}
-    data merge storage minecraft:cassette {index:{39:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{39:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"The End","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
 
     # 40 - Running in the 90's
-    data merge storage minecraft:cassette {index:{40:{artist:"Max Coveri",duration:285,rating:0,song_id:40}}}
+    data merge storage minecraft:cassette {index:{40:{artist:"Max Coveri",duration:285,rating:3,song_id:40}}}
     data merge storage minecraft:cassette {index:{40:{name:[{"text":"R","italic":false,"color":"#29a2ff"},{"text":"u","italic":false,"color":"#5f8bd1"},{"text":"n","italic":false,"color":"#9475a3"},{"text":"n","italic":false,"color":"#ca5e75"},{"text":"in","italic":false,"color":"#ff4747"},{"text":"g","italic":false,"color":"#ff6e42"},{"text":" ","italic":false,"color":"#ff963d"},{"text":"i","italic":false,"color":"#ffbd38"},{"text":"n ","italic":false,"color":"#ffe433"},{"text":"t","italic":false,"color":"#e3cf4a"},{"text":"h","italic":false,"color":"#c7ba61"},{"text":"e","italic":false,"color":"#aba478"},{"text":" 90's","italic":false,"color":"#8f8f8f"}]}}}
-    data merge storage minecraft:cassette {index:{40:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{40:{obtainment:[[{"text":"Sprint ","italic":false,"color":"yellow"},{"text":"a combined total of ","italic":false,"color":"gray"},{"text":"5000m","italic":false,"color":"aqua"}]]}}}
 
     # 41 - Bad Things
-    data merge storage minecraft:cassette {index:{41:{artist:"I Prevail",duration:229,rating:0,song_id:41}}}
+    data merge storage minecraft:cassette {index:{41:{artist:"I Prevail",duration:229,rating:1,song_id:41}}}
     data merge storage minecraft:cassette {index:{41:{name:[{"text":"B","italic":false,"color":"#865f5f"},{"text":"a","italic":false,"color":"#a45e64"},{"text":"d","italic":false,"color":"#c35e6a"},{"text":" ","italic":false,"color":"#e15d6f"},{"text":"Th","italic":false,"color":"#ff5c74"},{"text":"i","italic":false,"color":"#e15d6f"},{"text":"n","italic":false,"color":"#c35e6a"},{"text":"g","italic":false,"color":"#a45e64"},{"text":"s","italic":false,"color":"#865f5f"}]}}}
-    data merge storage minecraft:cassette {index:{41:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{41:{obtainment:[["",{"text":"Stand in ","italic":false,"color":"gray"},{"text":"complete darkness","italic":false,"color":"yellow"},{"text":" and use","italic":false,"color":"gray"}],["",{"text":"any","color":"green"},{"text":" type of ","italic":false,"color":"gray"},{"text":"drug","italic":false,"color":"light_purple"}]]}}}
 
     # 42 - Chlorine
     data merge storage minecraft:cassette {index:{42:{artist:"Twenty One Pilots",duration:321,rating:0,song_id:42}}}
     data merge storage minecraft:cassette {index:{42:{name:[{"text":"C","italic":false,"color":"#dbd400"},{"text":"hlor","italic":false,"color":"#dbd400"},{"text":"i","italic":false,"color":"#c3bf31"},{"text":"n","italic":false,"color":"#aca963"},{"text":"e","italic":false,"color":"#949494"}]}}}
-    data merge storage minecraft:cassette {index:{42:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{42:{obtainment:[[{"text":"Take ","italic":false,"color":"gray"},{"text":"damage","italic":false,"color":"red"},{"text":" from a ","italic":false,"color":"gray"},{"text":"Pufferfish","italic":false,"color":"yellow"}]]}}}
 
     # 43 - Buddy Holly
     data merge storage minecraft:cassette {index:{43:{artist:"Wheezer",duration:161,rating:0,song_id:43}}}
