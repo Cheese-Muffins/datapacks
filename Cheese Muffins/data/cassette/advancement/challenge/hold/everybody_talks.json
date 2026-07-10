@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "player": {},
+        "items": [
+          {
+            "items": "minecraft:phantom_membrane",
+            "components": {
+              "minecraft:custom_data": "{cassette_tape:1b,id:9}"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ],
+  "rewards": {
+    "function": "cassette:award/advancement"
+  },
+  "sends_telemetry_event": true
+}

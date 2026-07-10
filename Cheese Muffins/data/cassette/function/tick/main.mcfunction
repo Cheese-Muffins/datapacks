@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
 scoreboard players operation .Previous cassetteParty.Disconnected = .Players cassetteParty.Disconnected
-execute store result score .Players cassetteParty.Disconnected if entity @a[tag=customCassette.PartyUser]
+execute store result score .Players cassetteParty.Disconnected if entity @a[tag=cassetteParty.User]
 execute if score .Previous cassetteParty.Disconnected > .Players cassetteParty.Disconnected run function ui:cassette/party/disconnect/main
 execute unless entity @s[scores={cassetteError.Delay=0}] run function cassette:tick/zzz/0
 function cassette:award/challenge/main

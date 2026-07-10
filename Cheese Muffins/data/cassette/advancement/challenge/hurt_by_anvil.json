@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "hit_by_anvil": {
+      "trigger": "minecraft:entity_hurt_player",
+      "conditions": {
+        "damage": {
+          "source_entity": {
+            "type": "minecraft:falling_block",
+            "nbt": "{BlockState:{Name:\"minecraft:anvil\"}}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "cassette:award/challenge/hurt_by_anvil"
+  }
+}

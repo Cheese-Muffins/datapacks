@@ -1,0 +1,164 @@
+{
+  "gives": {
+    "id": "minecraft:phantom_membrane",
+    "components": {
+      "minecraft:item_name": [
+        {
+          "text": "E",
+          "italic": false,
+          "color": "#ff2e2e"
+        },
+        {
+          "text": "v",
+          "italic": false,
+          "color": "#ff3838"
+        },
+        {
+          "text": "e",
+          "italic": false,
+          "color": "#ff4343"
+        },
+        {
+          "text": "r",
+          "italic": false,
+          "color": "#ff4d4d"
+        },
+        {
+          "text": "yb",
+          "italic": false,
+          "color": "#ff5757"
+        },
+        {
+          "text": "o",
+          "italic": false,
+          "color": "#ff4949"
+        },
+        {
+          "text": "d",
+          "italic": false,
+          "color": "#ff3c3c"
+        },
+        {
+          "text": "y",
+          "italic": false,
+          "color": "#ff2e2e"
+        },
+        {
+          "text": " ",
+          "italic": false,
+          "color": "#9e9eff"
+        },
+        {
+          "text": "T",
+          "italic": false,
+          "color": "#c8d600"
+        },
+        {
+          "text": "a",
+          "italic": false,
+          "color": "#cfdd09"
+        },
+        {
+          "text": "lk",
+          "italic": false,
+          "color": "#d6e411"
+        },
+        {
+          "text": "s",
+          "italic": false,
+          "color": "#c8d600"
+        }
+      ],
+      "minecraft:lore": [
+        {
+          "extra": [
+            {
+              "italic": false,
+              "text": "Neon Trees ",
+              "color": "gray"
+            },
+            {
+              "italic": false,
+              "text": "⭐⭐⭐⭐",
+              "color": "light_purple"
+            },
+            {
+              "italic": false,
+              "text": "",
+              "color": "gray"
+            }
+          ],
+          "text": ""
+        },
+        "",
+        {
+          "extra": [
+            {
+              "italic": false,
+              "text": "Obtainment",
+              "color": "gold"
+            }
+          ],
+          "text": ""
+        },
+        {
+          "extra": [
+            {
+              "italic": false,
+              "color": "green",
+              "text": "Shepherd Villagers"
+            },
+            {
+              "italic": false,
+              "color": "gray",
+              "text": " have a chance to"
+            }
+          ],
+          "text": ""
+        },
+        {
+          "extra": [
+            {
+              "italic": false,
+              "color": "yellow",
+              "text": "trade "
+            },
+            {
+              "italic": false,
+              "color": "gray",
+              "text": "this song to the player"
+            }
+          ],
+          "text": ""
+        }
+      ],
+      "minecraft:food": {
+        "nutrition": 0,
+        "saturation": 0,
+        "can_always_eat": true
+      },
+      "minecraft:consumable": {
+        "consume_seconds": 999999
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:item_model": "minecraft:cassettes/9",
+      "minecraft:custom_model_data": {
+        "floats": [
+          0
+        ]
+      },
+      "minecraft:custom_data": "{cassette_tape:1b,id:9}"
+    }
+  },
+  "max_uses": 1,
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": {
+      "type": "minecraft:uniform",
+      "min": 12,
+      "max": 16
+    },
+    "id": "minecraft:emerald"
+  },
+  "xp": 10
+}

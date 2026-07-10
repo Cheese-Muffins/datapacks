@@ -1,0 +1,17 @@
+{
+  "criteria": {
+    "dealt_damage": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "damage": {
+          "dealt": {
+            "min": 0.01
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "cassette:award/challenge/dealt_damage"
+  }
+}

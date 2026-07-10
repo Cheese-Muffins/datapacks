@@ -12,6 +12,20 @@ function on_load minecraft:load{
     # Error #
     scoreboard objectives add cassetteError.Delay dummy
 
+    # Challenge #
+    scoreboard objectives add cassetteChallenge.ConsumeCookie dummy
+    scoreboard objectives add cassetteChallenge.ConsumeMilk dummy
+    scoreboard objectives add cassetteChallenge.SlayMonster dummy
+    scoreboard objectives add cassetteChallenge.NearbyPlayer dummy
+    scoreboard objectives add cassetteChallenge.DamageTaken minecraft.custom:minecraft.damage_taken
+    scoreboard objectives add cassetteChallenge.BlackholeSun dummy
+    scoreboard objectives add cassetteChallenge.DefeatZombies dummy
+    scoreboard objectives add cassetteChallenge.ComeAsYouAre dummy
+    scoreboard objectives add cassetteChallenge.UsedAnvil minecraft.custom:minecraft.interact_with_anvil
+    scoreboard objectives add cassetteChallenge.HammerRotationX dummy
+    scoreboard objectives add cassetteChallenge.HammerRotationY dummy
+    scoreboard objectives add cassetteChallenge.SlayMonsterNight dummy
+
 
     function cassette:generate_index
 }
@@ -19,7 +33,7 @@ function on_load minecraft:load{
 dir tick {
     function main {
         scoreboard players operation .Previous cassetteParty.Disconnected = .Players cassetteParty.Disconnected
-        execute store result score .Players cassetteParty.Disconnected if entity @a[tag=customCassette.PartyUser]
+        execute store result score .Players cassetteParty.Disconnected if entity @a[tag=cassetteParty.User]
         execute if score .Previous cassetteParty.Disconnected > .Players cassetteParty.Disconnected run function ui:cassette/party/disconnect/main
 
         execute unless entity @s[scores={cassetteError.Delay=0}] run {
@@ -30,6 +44,35 @@ dir tick {
         execute if entity @s[tag=cassettePlayed.Song] run function cassette:playing/main
 
         execute if score @s cassetteParty.Disconnected matches 1.. run function ui:cassette/party/reconnect
+    }
+
+    dir scenario {
+        function core {
+            execute if score @s cassetteChallenge.ConsumeCookie matches 1.. run scoreboard players remove @s cassetteChallenge.ConsumeCookie 1
+            execute if score @s cassetteChallenge.ConsumeMilk matches 1.. run scoreboard players remove @s cassetteChallenge.ConsumeMilk 1
+            execute if entity @s[tag=cassetteChallenge.ComeAsYouAre] run function cassette:tick/scenario/come_as_you_are/main
+            execute if entity @s[tag=cassetteChallenge.Hammer] run function cassette:tick/scenario/hammer/main
+
+            execute unless entity @s[tag=cassetteChallenge.ComeAsYouAre,tag=cassetteChallenge.Hammer,scores={cassetteChallenge.ConsumeCookie=0,cassetteChallenge.ConsumeMilk=0}] run tag @s remove scenarioTick.Cassette
+        }
+
+        dir come_as_you_are {
+            function main {
+                scoreboard players add @s cassetteChallenge.ComeAsYouAre 1
+                execute if score @s cassetteChallenge.ComeAsYouAre matches 300.. run {
+                    function cassette:award/give {id:29}
+                    tag @s remove cassetteChallenge.ComeAsYouAre
+                }
+
+                execute unless entity @n[type=#universal:monsters,distance=..7] run function cassette:tick/scenario/come_as_you_are/fail
+                execute unless predicate cassette:challenge/empty_inventory run function cassette:tick/scenario/come_as_you_are/fail
+            }
+
+            function fail {
+                scoreboard players reset @s cassetteChallenge.ComeAsYouAre
+                tag @s remove cassetteChallenge.ComeAsYouAre
+            }
+        }
     }
 }
 
@@ -54,6 +97,363 @@ function consume {
         }
     }
     advancement revoke @s only cassette:click
+}
+
+dir award {
+    function reset {
+        $tag @s remove cassetteUnlocked.Song$(id)
+        $advancement revoke @s only $(advancement)
+        $advancement grant @s only $(advancement)
+    }
+
+    function advancement {
+        # YOUSEEBIGGIRL/T:T
+        execute if entity @s[advancements={minecraft:nether/root=true}] unless entity @s[tag=cassetteUnlocked.Song1] run function cassette:award/give {id:1}
+
+        # Fallen Kingdom
+        execute if entity @s[advancements={minecraft:end/find_end_city=true}] unless entity @s[tag=cassetteUnlocked.Song2] run function cassette:award/give {id:2}
+
+        # Ascending Dawn
+        execute if entity @s[advancements={minecraft:adventure/revaulting=true}] unless entity @s[tag=cassetteUnlocked.Song3] run function cassette:award/give {id:3}
+
+        # Enemy
+        execute if entity @s[advancements={minecraft:adventure/kill_a_mob=true}] unless entity @s[tag=cassetteUnlocked.Song7] run function cassette:award/give {id:7}
+
+        # Everybody Talks
+        execute if entity @s[advancements={cassette:challenge/hold/everybody_talks=true}] unless entity @s[tag=cassetteUnlocked.Song9] run function cassette:award/announce {id:9}
+
+        # Club 57
+        execute if entity @s[advancements={cassette:challenge/hold/club57=true}] unless entity @s[tag=cassetteUnlocked.Song11] run function cassette:award/announce {id:11}
+
+        # Antidote
+        execute if entity @s[advancements={cassette:challenge/cure_poison=true}] unless entity @s[tag=cassetteUnlocked.Song12] run function cassette:award/give {id:12}
+
+        # Seperate Ways
+        execute if entity @s[advancements={cassette:challenge/hold/seperate_ways=true}] unless entity @s[tag=cassetteUnlocked.Song13] run function cassette:award/announce {id:13}
+
+        # Popular Monster
+        execute if entity @s[advancements={minecraft:adventure/hero_of_the_village=true}] unless entity @s[tag=cassetteUnlocked.Song14] run function cassette:award/give {id:14}
+
+        # Pesché Rap
+        execute if entity @s[advancements={minecraft:adventure/trim_with_all_exclusive_armor_patterns=true}] unless entity @s[tag=cassetteUnlocked.Song15] run function cassette:award/give {id:15}
+
+        # Rumbling
+        execute if entity @s[advancements={minecraft:nether/summon_wither=true}] unless entity @s[tag=cassetteUnlocked.Song16] run function cassette:award/give {id:16}
+
+        # Mikasa
+        execute if entity @s[advancements={minecraft:adventure/overoverkill=true}] unless entity @s[tag=cassetteUnlocked.Song19] run function cassette:award/give {id:19}
+
+        # Lucid Dreams
+        execute if entity @s[advancements={cassette:challenge/end_to_overworld=true}] unless entity @s[tag=cassetteUnlocked.Song20] run function cassette:award/give {id:20}
+
+        # Blackhole Sun
+        execute if entity @s[advancements={cassette:challenge/hold/blackhole_sun=true}] unless entity @s[tag=cassetteUnlocked.Song21] run function cassette:award/announce {id:21}
+
+        # Adventure Of A Lifetime
+        execute if entity @s[advancements={minecraft:adventure/adventuring_time=true}] unless entity @s[tag=cassetteUnlocked.Song28] run function cassette:award/give {id:28}
+
+        # Megalovania
+        execute if entity @s[advancements={cassette:challenge/slay_sans=true}] unless entity @s[tag=cassetteUnlocked.Song30] run function cassette:award/give {id:30}
+    }
+
+    dir challenge {
+        function main {
+            # Sweet Dreams
+            execute if entity @s[nbt={SleepTimer:100s}] if score @s cassetteChallenge.ConsumeCookie matches 1.. if score @s cassetteChallenge.ConsumeMilk matches 1.. unless entity @s[tag=cassetteUnlocked.Song4] run function cassette:award/give {id:4}
+
+            # Take On Me
+            execute if score @s cassetteChallenge.SlayMonster matches 100.. unless entity @s[tag=cassetteUnlocked.Song5] run function cassette:award/give {id:5}
+
+            # Up From The Bottom
+            execute if dimension minecraft:overworld if entity @s[y=-59,dy=-64] if entity @s[x_rotation=-90] if predicate cassette:challenge/exposed_to_sky unless entity @s[tag=cassetteUnlocked.Song6] run function cassette:award/give {id:6}
+
+            # Fireflies
+            execute as @n[type=minecraft:frog,distance=..7] at @s if data entity @s leash if block ~ ~ ~ minecraft:firefly_bush on leasher if entity @s[type=minecraft:player] unless entity @s[tag=cassetteUnlocked.Song8] run function cassette:award/give {id:8}
+
+            # Tell Me You Know
+            execute if entity @a[distance=0.1..7] unless entity @s[tag=cassetteUnlocked.Song10] run function cassette:award/challenge/nearby_player
+
+            # Scars
+            execute if score @s cassetteChallenge.DamageTaken matches 5000.. unless entity @s[tag=cassetteUnlocked.Song17] run function cassette:award/give {id:17}
+
+            # Quarter Past Midnight
+            execute if entity @s[nbt={SleepTimer:100s}] if predicate cassette:challenge/quarter_past_midnight unless entity @s[tag=cassetteUnlocked.Song18] run function cassette:award/give {id:18}
+
+            # Blackhole Sun
+            execute as @n[type=item,distance=..7,nbt={Item:{id:"minecraft:sunflower",count:1}}] if predicate cassette:challenge/noon unless entity @s[tag=cassetteChallenge.BlackholeSunTransforming] at @s run function cassette:award/challenge/blackhole_sun
+
+            # Funky Town
+            execute as @n[type=minecraft:parrot,distance=..7] at @s if block ~ ~-0.5 ~ minecraft:jukebox[has_record=true] as @a[distance=..7] unless entity @s[tag=cassetteUnlocked.Song22] run function cassette:award/give {id:22}
+
+            # Locked Out Of Heaven
+            execute if dimension minecraft:overworld if entity @s[y=500,dy=600] unless entity @s[tag=cassetteUnlocked.Song23] run function cassette:award/give {id:23}
+
+            # Zombie
+            execute if score @s cassetteChallenge.DefeatZombies matches 1.. if predicate cassette:challenge/day unless entity @s[tag=cassetteUnlocked.Song24] run scoreboard players reset @s cassetteChallenge.DefeatZombies
+
+            # Cities
+            execute if predicate cassette:challenge/ancient_city unless entity @s[tag=cassetteUnlocked.Song26] run function cassette:award/give {id:26}
+
+            # Come As You Are
+            execute if entity @n[type=#universal:monsters,distance=..7] if predicate cassette:challenge/empty_inventory unless entity @s[tag=cassetteUnlocked.Song29] run function cassette:award/challenge/come_as_you_are
+
+            # Sometimes You're The Hammer, Sometimes You're The Nail
+            execute if score @s cassetteChallenge.UsedAnvil matches 1.. unless entity @s[tag=cassetteUnlocked.Song38] run function cassette:award/challenge/hammer
+
+            # The Only Thing They Fear Is You
+            execute if score @s cassetteChallenge.SlayMonsterNight matches 1.. if predicate cassette:challenge/day unless entity @s[tag=cassetteUnlocked.Song44] run scoreboard players reset @s cassetteChallenge.SlayMonsterNight
+        }
+
+        function consume_cookie {
+            tag @s add scenarioTick.Enable
+            tag @s add scenarioTick.Cassette
+            scoreboard players set @s cassetteChallenge.ConsumeCookie 400
+            advancement revoke @s only cassette:challenge/consume_cookie
+        }
+
+        function consume_milk {
+            tag @s add scenarioTick.Enable
+            tag @s add scenarioTick.Cassette
+            scoreboard players set @s cassetteChallenge.ConsumeMilk 400
+            advancement revoke @s only cassette:challenge/consume_milk
+        }
+
+        function slay_monster {
+            scoreboard players add @s cassetteChallenge.SlayMonster 1
+            execute unless predicate cassette:challenge/day run function cassette:award/challenge/slay_monster_night 
+            advancement revoke @s only cassette:challenge/slay_monster
+        }
+
+        function nearby_player {
+            scoreboard players add @s cassetteChallenge.NearbyPlayer 1
+            execute if score @s cassetteChallenge.NearbyPlayer matches 2400.. run function cassette:award/give {id:10}
+        }
+
+        function blackhole_sun {
+            execute positioned ~ ~-0.5 ~ if block ~ ~ ~ minecraft:respawn_anchor[charges=4] run {
+                tag @s add scenarioTick.Enable
+                tag @s add scenarioTick.Cassette
+                tag @s add cassetteChallenge.BlackholeSunTransforming
+                scoreboard players set @s cassetteChallenge.BlackholeSun 100
+                setblock ~ ~ ~ minecraft:respawn_anchor[charges=0]
+                playsound minecraft:block.respawn_anchor.deplete player @a ~ ~ ~ 0.5
+                kill @s[type=minecraft:item]
+
+                execute at @s align xyz positioned ~0.5 ~ ~0.5 run {
+                    execute rotated 0 0 run function animated_java:cassette/summon {args:{animation:'blackhole_sun',start_animation:true}}
+                    execute positioned ~ ~-0.5 ~ run {
+                        # Bottom square
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.4 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.3 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.2 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.1 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~ ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.1 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.2 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.3 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.4 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.4 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.3 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.2 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.1 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~ ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.1 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.2 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.3 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.4 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~ 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~-0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~-0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~-0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~-0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~ 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.5 0 0 0 0 1 force
+
+                        # Top square
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.4 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.3 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.2 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.1 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~ ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.1 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.2 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.3 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.4 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~-0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.4 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.3 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.2 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.1 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~ ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.1 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.2 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.3 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.4 ~0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~ 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~-0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~-0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~-0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~-0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~ 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.1 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.2 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.3 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.4 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.5 0 0 0 0 1 force
+
+                        # Vertical edges
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.4 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.3 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.2 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.1 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~ ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.1 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.2 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.3 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.4 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.4 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.3 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.2 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.1 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~ ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.1 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.2 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.3 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.4 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.4 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.3 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.2 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.1 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~ ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.1 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.2 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.3 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.4 ~-0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~-0.5 0 0 0 0 1 force
+
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.4 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.3 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.2 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.1 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~ ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.1 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.2 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.3 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.4 ~0.5 0 0 0 0 1 force
+                        particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.5 0 0 0 0 1 force
+                    }
+                }
+            }
+        }
+
+        function slay_zombie {
+            scoreboard players add @s cassetteChallenge.DefeatZombies 1
+            execute if score @s cassetteChallenge.DefeatZombies matches 100.. run function cassette:award/give {id:24}
+            advancement revoke @s only cassette:challenge/slay_zombie
+        }
+
+        function come_as_you_are {
+            tag @s add scenarioTick.Enable
+            tag @s add scenarioTick.Cassette
+            tag @s add cassetteChallenge.ComeAsYouAre
+        }
+
+        function dealt_damage {
+            execute if entity @s[tag=cassetteChallenge.ComeAsYouAre] run function cassette:tick/scenario/come_as_you_are/fail
+            advancement revoke @s only cassette:challenge/dealt_damage
+        }
+
+        function hammer {
+            tag @s add scenarioTick.Enable
+            tag @s add scenarioTick.Cassette
+            tag @s add cassetteChallenge.Hammer
+            execute store result score @s cassetteChallenge.HammerRotationX run data get entity @s Rotation[0] 10
+            execute store result score @s cassetteChallenge.HammerRotationY run data get entity @s Rotation[1] 10
+            scoreboard players reset @s cassetteChallenge.UsedAnvil
+        }
+
+        function hurt_by_anvil {
+            execute if entity @s[tag=cassetteChallenge.Hammer] unless entity @s[tag=cassetteUnlocked.Song38] run function cassette:award/give {id:38}
+            advancement revoke @s only cassette:challenge/hurt_by_anvil
+        }
+
+        function slay_monster_night {
+            scoreboard players add @s cassetteChallenge.SlayMonsterNight 1
+            execute if score @s cassetteChallenge.SlayMonsterNight matches 500.. unless entity @s[tag=cassetteUnlocked.Song44] run function cassette:award/give {id:44}
+        }
+    }
+
+    function give {
+        $block { with storage minecraft:cassette index.$(id)
+            $playsound $(sfx) player @s ~ ~ ~
+            $tellraw @a ["",{"selector":"@s"},{"text":" has collected the cassette "},{"text":"","color":"$(targeted_color)","extra":$(built_announce_name),"hover_event":{"action":"show_text","value":$(built_hover)}}]
+            $give @s minecraft:phantom_membrane[lore=$(built_lore),item_name=$(name),food={nutrition:0,saturation:0,can_always_eat:1b},consumable={consume_seconds:999999},max_stack_size=1,item_model="minecraft:cassettes/$(song_id)",custom_model_data={floats:[0]},custom_data={cassette_tape:1b,id:$(song_id)}]
+        }
+        $tag @s add cassetteUnlocked.Song$(id)
+    }
+
+    function summon {
+        $block { with storage minecraft:cassette index.$(id)
+            $summon item ~ ~ ~ {Item:{id:"minecraft:phantom_membrane",count:1,components:{"minecraft:item_name":$(name),"minecraft:food":{nutrition:0,saturation:0,can_always_eat:true},"minecraft:consumable":{consume_seconds:999999},"minecraft:max_stack_size":1,"minecraft:item_model":"minecraft:cassettes/$(song_id)","minecraft:custom_model_data":{floats:[0]},"minecraft:custom_data":{cassette_tape:1b,id:$(song_id)},"minecraft:lore":$(built_lore)}}}
+        }
+        $tag @s add cassetteUnlocked.Song$(id)
+    }
+
+    function announce {
+        $data modify storage minecraft:cassette fetch merge from storage minecraft:cassette index.$(id)
+        block { with storage minecraft:cassette fetch
+            $playsound $(sfx) player @s ~ ~ ~
+            $tellraw @a ["",{"selector":"@s"},{"text":" has collected the cassette "},{"text":"","color":"$(targeted_color)","extra":$(built_announce_name),"hover_event":{"action":"show_text","value":$(built_hover)}}]
+        }
+        $tag @s add cassetteUnlocked.Song$(id)
+    }
 }
 
 dir playing {
@@ -203,19 +603,11 @@ dir calculate {
             $data modify storage minecraft:cassette index.$(song_id).built_announce_name[0].color set value "$(targeted_color)"
         }
 
-        $execute if data storage minecraft:cassette index.$(song_id).obtainment[0] run block { with storage minecraft:cassette index.$(song_id)
-            $data modify storage minecraft:cassette index.$(song_id).built_hover append value "\n"
-            $data modify storage minecraft:cassette index.$(song_id).built_hover append from storage minecraft:cassette index.$(song_id).obtainment[0]
-        }
-
-        $execute if data storage minecraft:cassette index.$(song_id).obtainment[1] run block { with storage minecraft:cassette index.$(song_id)
-            $data modify storage minecraft:cassette index.$(song_id).built_hover append value "\n"
-            $data modify storage minecraft:cassette index.$(song_id).built_hover append from storage minecraft:cassette index.$(song_id).obtainment[1]
-        }
-
-        $execute if data storage minecraft:cassette index.$(song_id).obtainment[2] run block { with storage minecraft:cassette index.$(song_id)
-            $data modify storage minecraft:cassette index.$(song_id).built_hover append value "\n"
-            $data modify storage minecraft:cassette index.$(song_id).built_hover append from storage minecraft:cassette index.$(song_id).obtainment[2]
+        REPEAT (1,20) as i {
+            $execute if data storage minecraft:cassette index.$(song_id).obtainment[<%i%>] run block { with storage minecraft:cassette index.$(song_id)
+                $data modify storage minecraft:cassette index.$(song_id).built_hover append value "\n"
+                $data modify storage minecraft:cassette index.$(song_id).built_hover append from storage minecraft:cassette index.$(song_id).obtainment[<%i%>]
+            }
         }
     }
 
@@ -491,7 +883,7 @@ function generate_index {
     # 53 - Never Gonna Give You Up
     data merge storage minecraft:cassette {index:{53:{artist:"Rick Astley",duration:214,rating:5,song_id:53}}}
     data merge storage minecraft:cassette {index:{53:{name:[{"text":"N","italic":false,"color":"#9a57ff"},{"text":"e","italic":false,"color":"#a358fd"},{"text":"v","italic":false,"color":"#ac59fa"},{"text":"e","italic":false,"color":"#b65af8"},{"text":"r","italic":false,"color":"#bf5bf6"},{"text":" ","italic":false,"color":"#c85cf3"},{"text":"G","italic":false,"color":"#d15cf1"},{"text":"o","italic":false,"color":"#da5dee"},{"text":"n","italic":false,"color":"#e35eec"},{"text":"n","italic":false,"color":"#ed5fea"},{"text":"a","italic":false,"color":"#f660e7"},{"text":" G","italic":false,"color":"#ff61e5"},{"text":"i","italic":false,"color":"#fa6ce3"},{"text":"v","italic":false,"color":"#f677e1"},{"text":"e","italic":false,"color":"#f183df"},{"text":" ","italic":false,"color":"#ed8edd"},{"text":"Y","italic":false,"color":"#e899db"},{"text":"o","italic":false,"color":"#e3a4d9"},{"text":"u","italic":false,"color":"#dfafd7"},{"text":" ","italic":false,"color":"#dabbd5"},{"text":"U","italic":false,"color":"#d6c6d3"},{"text":"p","italic":false,"color":"#d1d1d1"}]}}}
-    data merge storage minecraft:cassette {index:{53:{obtainment:[["",{"text":"Good Luck, ","italic":false,"color":"gray"},{"text":"VICTIM","italic":false,"color":"dark_red","obfuscated":true}],["",{"text":"0. Obtain at least ","italic":false,"color":"gray"},{"text":"50 Cassette(s)","italic":false,"color":"aqua"}],[{"text":"Note: This is an elaborate riddle,","color":"gray"}],[{"text":"and as such, you'll need to follow","color":"gray"}],[{"text":"the steps below to reach the end.","color":"gray"}],[{"text":"You'll be notified in chat if you","color":"gray"}],[{"text":"complete one of the steps...","color":"gray"}],"",["",{"text":"1. Bring ","italic":false,"color":"gray"},{"text":"sixteen treasures","italic":false,"color":"light_purple"},{"text":" forged beneath","italic":false,"color":"gray"}],["",{"text":"the earth, and offer them ","italic":false,"color":"gray"},{"text":"beneath","italic":false,"underlined":true,"color":"white"},{"text":" the blossoms.","italic":false,"color":"white"}],["",{"text":"2. Descend to the halls of endless ","italic":false,"color":"gray"},{"text":"Valhalla.","italic":false,"color":"red"}],["",{"text":"3. Find one whose thoughts wander ","italic":false,"color":"gray"},{"text":"nowhere","italic":false,"color":"aqua"}],["",{"text":"at all,","color":"aqua"},{"text":" and ","italic":false,"color":"gray"},{"text":"speak.","italic":false,"color":"yellow"}],["",{"text":"4. It ","italic":false,"color":"gray"},{"text":"cannot see,","italic":false,"color":"aqua"},{"text":" it ","italic":false,"color":"gray"},{"text":"does not speak.","italic":false,"color":"aqua"},{"text":" Nevertheless,","italic":false,"color":"gray"}],["",{"text":"attempt for ","italic":false,"color":"gray"},{"text":"peace.","italic":false,"color":"light_purple"}],["",{"text":"5. Let ","italic":false,"color":"gray"},{"text":"admiration","italic":false,"color":"dark_aqua"},{"text":" echo through stone.","italic":false,"color":"gray"}],[{"text":"6. The world has heard your voice. Now call","italic":false,"color":"gray"}],["",{"text":"together those who have not. Let the ","italic":false,"color":"gray"},{"text":"signal ring.","italic":false,"color":"yellow"}]]}}}
+    data merge storage minecraft:cassette {index:{53:{obtainment:[["",{"text":"Good Luck, ","italic":false,"color":"gray"},{"text":"VICTIM","italic":false,"color":"dark_red","obfuscated":true}],[{"text":"Note: This is an elaborate riddle,","color":"gray"}],[{"text":"and as such you'll need to follow","color":"gray"}],[{"text":"the steps below to reach the end.","color":"gray"}],[{"text":"You'll be notified in chat if you","color":"gray"}],[{"text":"complete one of the steps...","color":"gray"}],"",["",{"text":"1. Bring ","italic":false,"color":"gray"},{"text":"sixteen treasures","italic":false,"color":"light_purple"},{"text":" forged beneath","italic":false,"color":"gray"}],["",{"text":"the earth, and offer them ","italic":false,"color":"gray"},{"text":"beneath","italic":false,"underlined":true,"color":"white"},{"text":" the blossoms.","italic":false,"color":"white"}],["",{"text":"2. Descend to the halls of endless ","italic":false,"color":"gray"},{"text":"Valhalla.","italic":false,"color":"red"}],["",{"text":"3. Find one whose thoughts wander ","italic":false,"color":"gray"},{"text":"nowhere","color":"aqua"}],["",{"text":"at all,","color":"aqua"},{"text":" and ","italic":false,"color":"gray"},{"text":"speak.","italic":false,"color":"yellow"}],["",{"text":"4. It ","italic":false,"color":"gray"},{"text":"cannot see,","italic":false,"color":"aqua"},{"text":" it ","italic":false,"color":"gray"},{"text":"does not speak.","italic":false,"color":"aqua"},{"text":" Nevertheless,","italic":false,"color":"gray"}],["",{"text":"attempt for ","italic":false,"color":"gray"},{"text":"peace.","italic":false,"color":"light_purple"}],["",{"text":"5. Let ","italic":false,"color":"gray"},{"text":"admiration","italic":false,"color":"dark_aqua"},{"text":" echo through stone.","italic":false,"color":"gray"}],[{"text":"6. The world has heard your voice. Now call","italic":false,"color":"gray"}],["",{"text":"together those who have not. Let the ","italic":false,"color":"gray"},{"text":"signal ring.","italic":false,"color":"yellow"}]]}}}
 
     # 54 - All The Boys
     data merge storage minecraft:cassette {index:{54:{artist:"Panic! at The Disco",duration:189,rating:0,song_id:54}}}
