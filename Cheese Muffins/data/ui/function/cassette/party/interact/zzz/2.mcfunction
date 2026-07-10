@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
 function ui:cassette/party/open
-function custom:ui/menu/on_input
+function ui:logic/load/on_input
