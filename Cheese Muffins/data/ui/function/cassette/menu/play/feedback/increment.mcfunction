@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
 tag @s add cassettePlay.FeedbackIncrementing
-scoreboard players add @s cassettePlay.FeedbackStyle 1
+scoreboard players add @s cassettePlay.FeedbackIncrement 1
 scoreboard players reset .cassetteSlot uiCassette.CollectionBroad
 scoreboard players reset .incrementIndex uiCassette.CollectionBroad
 scoreboard players reset .totalEntries uiCassette.CollectionBroad

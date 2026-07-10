@@ -1,6 +1,6 @@
 data\abilities\function\on_load.mcfunction:30516cecba479df4dc6e94d4a24c06b1842f2866
 data\abilities\function\tick.mcfunction:cc5b0961e2b534c9a0e6e14f29535dc9ae99b399
-data\cassette\function\on_load.mcfunction:d2e1cb2ddedb9cd8eeff83fa925eacafa1bcf7e3
+data\cassette\function\on_load.mcfunction:baa448228d1ec4273b19290a7e07355d89fcfb3e
 data\cassette\function\tick\zzz\0.mcfunction:feb637352bc165202957eb0f186b167a0227fc93
 data\cassette\function\tick\main.mcfunction:9be9a054340144adbffa057907495d9e4e790ebb
 data\cassette\function\tick\scenario\core.mcfunction:ec9b2fc3903bfc75cc5ebc171916dd3954cb8e09
@@ -104,7 +104,7 @@ data\ui\function\cassette\menu\same.mcfunction:4b656c7c55cf1028ff5208fb7800862d1
 data\ui\function\cassette\menu\flip.mcfunction:b657dad43a68097f41fcb2c6a4752ffc12ada065
 data\ui\function\cassette\menu\zzz\2.mcfunction:95b9e751a79fa82ccbc1e2c1db7416eed4d98b38
 data\ui\function\cassette\menu\zzz\1.mcfunction:a8690cb83c692b6b9348062325c23c39ca547569
-data\ui\function\cassette\menu\zzz\0.mcfunction:6bce723b9e2a32417fcb42e2ad8d99abfa1f5be5
+data\ui\function\cassette\menu\zzz\0.mcfunction:62daecb848b8aee835dbdc625c33a2a04d43aa45
 data\ui\function\cassette\menu\stop.mcfunction:2e623f82d349e65b488f4a61dd01f0c43a943217
 data\ui\function\cassette\menu\play\zzz\1.mcfunction:69e6e3e3878fe615ec04338d1d614067ed5317c1
 data\ui\function\cassette\menu\play\zzz\0.mcfunction:40be402312c030ec611a13c270de5b2dc65169b9
@@ -114,7 +114,7 @@ data\ui\function\cassette\menu\play\zzz\7.mcfunction:0df7e783f5724ceeaf2da41b7b6
 data\ui\function\cassette\menu\play\zzz\6.mcfunction:829fe956bfc6e1bcf90d389e5ef6898bf56596ef
 data\ui\function\cassette\menu\play\zzz\5.mcfunction:fec3c7cb834d9dcb734d959f2886e3e0ffa5b6b1
 data\ui\function\cassette\menu\play\zzz\4.mcfunction:e1d83e57ae2e6775c065f540b94a8b0eb2fbd0f1
-data\ui\function\cassette\menu\play\zzz\3.mcfunction:07af6c4eb0b34751cbfa80a38b05ffebd6e845c8
+data\ui\function\cassette\menu\play\zzz\3.mcfunction:7bce9ed3db04d4aa6f7590e379853003f823b205
 data\ui\function\cassette\menu\play\display.mcfunction:144b9618457b10832a7a98bd6dddada230182216
 data\ui\function\cassette\menu\play\feedback\random\zzz\0.mcfunction:333752e8aa731401423b677bf7da98a544b1a5c5
 data\ui\function\cassette\menu\play\feedback\random\zzz\1.mcfunction:bf3b305a66342336a4fc39af732d1232ba7d00c4
@@ -122,8 +122,8 @@ data\ui\function\cassette\menu\play\feedback\random\main.mcfunction:3ef605c7ad2a
 data\ui\function\cassette\menu\play\feedback\random\found.mcfunction:48e66d228bace94fb597f25bca7e89c4dd932ec9
 data\ui\function\cassette\menu\play\feedback\zzz\1.mcfunction:71f99848b0eea462191c4832fd5bdb91e48caddf
 data\ui\function\cassette\menu\play\feedback\zzz\0.mcfunction:5e3fbecb91fee5cf7375fee7108c74ecb0d6458f
-data\ui\function\cassette\menu\play\feedback\zzz\2.mcfunction:3dceef6addf4f7aee8a24f033e9cefedb4d7f4e6
-data\ui\function\cassette\menu\play\feedback\increment.mcfunction:9593a58f3e6213995d1551912cb19558d85a5475
+data\ui\function\cassette\menu\play\feedback\zzz\2.mcfunction:19d8fc428012d07d6305898d3c0b84bd4bc5f576
+data\ui\function\cassette\menu\play\feedback\increment.mcfunction:f5607221f0214f0336b84815183ca06d43373081
 data\ui\function\cassette\menu\play\target\zzz\1.mcfunction:f9c7c5943cb03b641bcb690c28638ea4af1c937b
 data\ui\function\cassette\menu\play\target\zzz\2.mcfunction:e95fa039288f63acb61d37c1b1bfe77f244e8ddc
 data\ui\function\cassette\menu\play\target\zzz\0.mcfunction:e9140124fe6cf579984030810fa4051829a8314f
@@ -147,7 +147,7 @@ data\ui\function\cassette\settings\default\open.mcfunction:925676bb8e1312ce91600
 data\ui\function\cassette\settings\default\player.mcfunction:3d0fc38c027c54b805c519097a61da5da9816052
 data\ui\function\cassette\settings\default\same.mcfunction:0a7bf5caed29d38310df6a33abed19599e622b98
 data\ui\function\cassette\settings\default\flip.mcfunction:dfa0626f735de9c711656703081c7dfb49aa20b2
-data\ui\function\cassette\settings\default\zzz\0.mcfunction:0aa722c0269f21adadde9f34095eaf71af782e20
+data\ui\function\cassette\settings\default\zzz\0.mcfunction:acf4f06e418e0525e88c3e2ff50f3564d7f161d3
 data\ui\function\cassette\settings\default\feedback.mcfunction:6aa8e67dd25d125db25126ede540963c745dc716
 data\ui\function\cassette\settings\default\zzz\1.mcfunction:6f66d813cdf4c4d2e2f78a5f85bfd08c8bf82caa
 data\ui\function\cassette\settings\default\party.mcfunction:5372a1d9b563bd8b657572f108dfead11ca09ef9
@@ -219,7 +219,7 @@ data\ui\function\cassette\collection\operation\zzz\9.mcfunction:ff4d6bfe0680aa38
 data\ui\function\cassette\collection\operation\load.mcfunction:515fa506362624ebdca96e14d8fab17c74c3863b
 data\ui\function\cassette\collection\operation\zzz\10.mcfunction:25f584abb3dbad6f4e9cba9cdf60321042993ab5
 data\ui\function\cassette\collection\operation\load_vanilla.mcfunction:de0d38a5d2ab6df4b42813cbdeb6a622c93eb962
-data\ui\function\cassette\collection\operation\zzz\11.mcfunction:eafa0b05598de031526b0b9eff9ac9506ea585c4
+data\ui\function\cassette\collection\operation\zzz\11.mcfunction:82b4479767eff6f0de831e5b7730525d4d951cb9
 data\ui\function\cassette\collection\operation\zzz\12.mcfunction:4e7487f4b4bb0e1373c45ed11e27462c5cadb66d
 data\ui\function\cassette\collection\operation\play.mcfunction:271d48ff18c220f0b06bf35037758c6eab10264b
 data\ui\function\cassette\collection\operation\play_vanilla.mcfunction:e0818197b964340d036c43f4643b50b1d6fff479
@@ -247,7 +247,7 @@ data\ui\function\cassette\collection\sort\zzz\0.mcfunction:ad54774cdd7bc2cbc7c03
 data\ui\function\cassette\collection\sort\main.mcfunction:f98f954b03791afdf9c99ea56795162785786cd2
 data\ui\function\cassette\collection\sort\initialize.mcfunction:831108770252e68668d5bcbff5dc60a27ff71350
 data\ui\function\cassette\collection\sort\zzz\3.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
-data\ui\function\cassette\collection\sort\zzz\2.mcfunction:807ba8c07a8f0f0c4b394acc31266275e1f947c2
+data\ui\function\cassette\collection\sort\zzz\2.mcfunction:dfd94018502858b3e9261c0d80725d480ca0c452
 data\ui\function\cassette\collection\sort\zzz\1.mcfunction:2dbd21c00aa98f57d2edbe8923251100739a5cd1
 data\ui\function\cassette\collection\sort\zzz\7.mcfunction:4e5a04135af1990bfb4b66127deeda40c5c7c7d8
 data\ui\function\cassette\collection\sort\zzz\6.mcfunction:8893d425f7a7a20acd2c670fc65b102de98aed60
@@ -258,7 +258,7 @@ data\ui\function\cassette\collection\sort\zzz\10.mcfunction:81263e423e9fbc0238e0
 data\ui\function\cassette\collection\sort\zzz\13.mcfunction:da760a3a02e45b28dae23e7f15c3117d9ab20570
 data\ui\function\cassette\collection\sort\zzz\12.mcfunction:719561eaa949a777b9a61f92d8a0701397a97831
 data\ui\function\cassette\collection\sort\zzz\11.mcfunction:9f890cbc2c0b7511df9cead9813ceffa1fb5c67e
-data\ui\function\cassette\collection\sort\zzz\9.mcfunction:e8c9769ea38281f6e3c9da4b77ccee9066197fd4
+data\ui\function\cassette\collection\sort\zzz\9.mcfunction:0898cf3bdb4df84f997bb5d67b63b785e4fdb196
 data\ui\function\cassette\collection\sort\zzz\8.mcfunction:96097810bd294a64b3d50f8406a5c1a50a6d174e
 data\ui\function\cassette\collection\sort\zzz\15.mcfunction:74db8ec87928976b55cd4a9146da80cfa73b2135
 data\ui\function\cassette\collection\sort\zzz\14.mcfunction:4208733b4369817ae52772720108174a52ced38b
@@ -267,14 +267,14 @@ data\ui\function\cassette\collection\sort\zzz\18.mcfunction:81263e423e9fbc0238e0
 data\ui\function\cassette\collection\sort\zzz\21.mcfunction:203850ff419df643e1d586ad37e353aa6d7b4ed7
 data\ui\function\cassette\collection\sort\zzz\20.mcfunction:49731f09c0c979c03342c8585c53edac726af616
 data\ui\function\cassette\collection\sort\zzz\19.mcfunction:9aee088d1f07b585f17aa75783d06599a1f92f60
-data\ui\function\cassette\collection\sort\zzz\17.mcfunction:5da8ef6cd034f7e79882b4e0f116ad324a570ef7
+data\ui\function\cassette\collection\sort\zzz\17.mcfunction:9fb9b927734c293d61a897d7c786f93bee496e64
 data\ui\function\cassette\collection\sort\zzz\16.mcfunction:de2ba98fb23d90124915aada549589c60c50924e
 data\ui\function\cassette\collection\sort\zzz\23.mcfunction:74db8ec87928976b55cd4a9146da80cfa73b2135
 data\ui\function\cassette\collection\sort\zzz\22.mcfunction:19c31d65a7ad947bd2ac0be783fd295603893d5d
 data\ui\function\cassette\collection\sort\unlocked.mcfunction:d62e3ea50fba197ac196baf3e07150ceb9aef768
 data\ui\function\cassette\collection\sort\zzz\24.mcfunction:8645d6ee4146744da8ad3df30e0c736c410f54fa
 data\ui\function\cassette\collection\sort\zzz\27.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
-data\ui\function\cassette\collection\sort\zzz\26.mcfunction:e9d5f9c91554a7b65f3b79f2a89966af569307e8
+data\ui\function\cassette\collection\sort\zzz\26.mcfunction:9e6871bb126819cc8e871366b4dff665f9fa2dea
 data\ui\function\cassette\collection\sort\zzz\31.mcfunction:4e5a04135af1990bfb4b66127deeda40c5c7c7d8
 data\ui\function\cassette\collection\sort\zzz\30.mcfunction:4a255108a7406845be263487512db3fb781dda7d
 data\ui\function\cassette\collection\sort\zzz\29.mcfunction:1dd22ee405fb465e3dcd8f19df31446fa90eb9e0
@@ -285,7 +285,7 @@ data\ui\function\cassette\collection\sort\zzz\32.mcfunction:18991ad82309daec6299
 data\ui\function\cassette\collection\sort\zzz\34.mcfunction:1def6f0df464ab07f22877c3fc3fa841dc885cb8
 data\ui\function\cassette\collection\sort\rating.mcfunction:31eabb37cd1a65d78f02e41514bace77c4475f9d
 data\ui\function\cassette\collection\sort\zzz\38.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
-data\ui\function\cassette\collection\sort\zzz\37.mcfunction:364226dfcef1cbea243a00292554e305757a108e
+data\ui\function\cassette\collection\sort\zzz\37.mcfunction:6842162255e71d504cdeac3b363c714a1efa3118
 data\ui\function\cassette\collection\sort\zzz\36.mcfunction:dbc2a3692565bb63fa060475808ee6fd15b5ec29
 data\ui\function\cassette\collection\sort\zzz\35.mcfunction:1c1150b2c758870c715c453b668835532a7d0cf3
 data\ui\function\cassette\collection\sort\zzz\42.mcfunction:4e5a04135af1990bfb4b66127deeda40c5c7c7d8
@@ -294,7 +294,7 @@ data\ui\function\cassette\collection\sort\zzz\40.mcfunction:764de82b4e678736f8bd
 data\ui\function\cassette\collection\sort\zzz\39.mcfunction:108f74feea944f085c1840a9fc3d53a9b3c04722
 data\ui\function\cassette\collection\sort\alphabetical.mcfunction:0177c3d758d23a9afabfe62fcf7aeb388c439117
 data\ui\function\cassette\collection\sort\zzz\46.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
-data\ui\function\cassette\collection\sort\zzz\45.mcfunction:8460e802ee222649fcc1097b98faa2651aa9dbde
+data\ui\function\cassette\collection\sort\zzz\45.mcfunction:318c132d127e0a9b92f03c0fca3bc04c1fef8d7a
 data\ui\function\cassette\collection\sort\zzz\44.mcfunction:91278dca822ed6fec0e388276c77fb454405ecef
 data\ui\function\cassette\collection\sort\zzz\43.mcfunction:67e64b52249944f0c432dab9d279ea54adf33698
 data\ui\function\cassette\collection\sort\zzz\50.mcfunction:4e5a04135af1990bfb4b66127deeda40c5c7c7d8
@@ -303,7 +303,7 @@ data\ui\function\cassette\collection\sort\zzz\48.mcfunction:ffacba39441bb395b333
 data\ui\function\cassette\collection\sort\zzz\47.mcfunction:e9e6c54f073c9e21f795b013d185e668ab499978
 data\ui\function\cassette\collection\sort\artist.mcfunction:a5de2d07d84305e94a54f5419fd77218df349450
 data\ui\function\cassette\collection\sort\zzz\55.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
-data\ui\function\cassette\collection\sort\zzz\54.mcfunction:0df83f7eb97a7996c85ed1d82ac46c0377a6a967
+data\ui\function\cassette\collection\sort\zzz\54.mcfunction:15e12adc432ea244424419b6a37284fefe1a8541
 data\ui\function\cassette\collection\sort\zzz\53.mcfunction:7df0ea2c1b5163e1824d0cb556508d7316800c20
 data\ui\function\cassette\collection\sort\zzz\58.mcfunction:885f040bd5791b00b97256198cbd5272349abd87
 data\ui\function\cassette\collection\sort\zzz\57.mcfunction:721eb4552014db8a97a0fb24899c88b5489c858d
@@ -314,7 +314,7 @@ data\ui\function\cassette\collection\sort\zzz\60.mcfunction:74db8ec87928976b55cd
 data\ui\function\cassette\collection\sort\zzz\59.mcfunction:a62736c17226a31e2ebd5b3e3fd3b0e964078f46
 data\ui\function\cassette\collection\sort\playlist1.mcfunction:8744d784ce0b0cdb8ae5cfdf4c6c40e1f6d37fd6
 data\ui\function\cassette\collection\sort\zzz\65.mcfunction:81263e423e9fbc0238e084990549d19c6a386399
-data\ui\function\cassette\collection\sort\zzz\64.mcfunction:1aeddb4bcc26231909199f251eb47fd3c085e9f0
+data\ui\function\cassette\collection\sort\zzz\64.mcfunction:864d37b24a57865b29e43a1e2befbc76cb83202c
 data\ui\function\cassette\collection\sort\zzz\63.mcfunction:8406378371074c61e0384124eeb73891718e4c33
 data\ui\function\cassette\collection\sort\zzz\68.mcfunction:885f040bd5791b00b97256198cbd5272349abd87
 data\ui\function\cassette\collection\sort\zzz\67.mcfunction:37110a551ea0e91684b85d3aef0eb27cf8cdd8e2
