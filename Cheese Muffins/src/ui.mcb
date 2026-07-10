@@ -887,9 +887,9 @@ dir cassette {
 
         dir operation {
             function main {
-                item replace block 0 -64 0 container.0 from entity @s player.cursor
-                data modify storage minecraft:cassette fetch.click_id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.song_id
-                data modify storage minecraft:cassette fetch.slot_entry set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.slot_entry
+                execute in minecraft:overworld run item replace block 0 -64 0 container.0 from entity @s player.cursor
+                execute in minecraft:overworld run data modify storage minecraft:cassette fetch.click_id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.song_id
+                execute in minecraft:overworld run data modify storage minecraft:cassette fetch.slot_entry set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.slot_entry
                 block { with storage minecraft:cassette fetch
                     $scoreboard players set .clickReturn uiCassette.CollectionOperation $(click_id)
                     $scoreboard players set .entryReturn uiCassette.CollectionOperation $(slot_entry)

@@ -780,9 +780,9 @@ function generate_index {
     data merge storage minecraft:cassette {index:{30:{obtainment:[[{"text":"you're gonna have a bad time.","italic":false,"color":"white"}],[{"text":"1. Slay: ","italic":false,"color":"gray"},{"text":"500 Skeleton(s)","italic":false,"color":"dark_red"}],[{"text":"2. Slay: ","italic":false,"color":"gray"},{"text":"100 Wither Skeleton(s)","italic":false,"color":"red"}],[{"text":"3. Slay: ","italic":false,"color":"gray"},{"text":"25 Stray(s)","italic":false,"color":"red"}],[{"text":"4. Slay: ","italic":false,"color":"gray"},{"text":"25 Parched","italic":false,"color":"red"}],[{"text":"5. Slay: ","italic":false,"color":"gray"},{"text":"10 Bogged","italic":false,"color":"#ff9494"}],[{"text":"6. Slay: ","italic":false,"color":"gray"},{"text":"1 Spider Jockey","italic":false,"color":"#ff9494"}],[{"text":"7. Slay: ","italic":false,"color":"gray"},{"text":"1 Wither","italic":false,"color":"#ff9494"}]]}}}
 
     # 31 - Hold Me Down
-    data merge storage minecraft:cassette {index:{31:{artist:"Happy Fits",duration:225,rating:0,song_id:31}}}
+    data merge storage minecraft:cassette {index:{31:{artist:"Happy Fits",duration:225,rating:1,song_id:31}}}
     data merge storage minecraft:cassette {index:{31:{name:[{"text":"H","italic":false,"color":"#ffcb5c"},{"text":"o","italic":false,"color":"#fad078"},{"text":"l","italic":false,"color":"#f5d693"},{"text":"d","italic":false,"color":"#f0dbaf"},{"text":" ","italic":false,"color":"#ebe1ca"},{"text":"Me","italic":false,"color":"#e6e6e6"},{"text":" ","italic":false,"color":"#ebe1ca"},{"text":"D","italic":false,"color":"#f0dbaf"},{"text":"o","italic":false,"color":"#f5d693"},{"text":"w","italic":false,"color":"#fad078"},{"text":"n","italic":false,"color":"#ffcb5c"}]}}}
-    data merge storage minecraft:cassette {index:{31:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{31:{obtainment:[[{"text":"Gain the ","italic":false,"color":"gray"},{"text":"Mining Fatigue","italic":false,"color":"dark_green"},{"text":" effect","italic":false,"color":"gray"}]]}}}
 
     # 32 - ???
     data merge storage minecraft:cassette {index:{32:{artist:"???",duration:0,rating:0,song_id:32}}}
@@ -795,24 +795,24 @@ function generate_index {
     data merge storage minecraft:cassette {index:{33:{obtainment:[[{"text":"Listen to any ","italic":false,"color":"gray"},{"text":"cassette song","italic":false,"color":"light_purple"}],[{"text":"whilst","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"riding ","italic":false,"color":"yellow"},{"text":"in a ","italic":false,"color":"gray"},{"text":"minecart","italic":false,"color":"light_purple"}]]}}}
 
     # 34 - Hometown
-    data merge storage minecraft:cassette {index:{34:{artist:"Twenty One Pilots",duration:232,rating:0,song_id:34}}}
+    data merge storage minecraft:cassette {index:{34:{artist:"Twenty One Pilots",duration:232,rating:4,song_id:34}}}
     data merge storage minecraft:cassette {index:{34:{name:[{"text":"H","italic":false,"color":"#ff1414"},{"text":"om","italic":false,"color":"white"},{"text":"et","italic":false,"color":"#ff1414"},{"text":"ow","italic":false,"color":"white"},{"text":"n","italic":false,"color":"#ff1414"}]}}}
     data merge storage minecraft:cassette {index:{34:{obtainment:[[{"text":"Gather ","italic":false,"color":"gray"},{"text":"16 Villagers","italic":false,"color":"aqua"},{"text":" within","italic":false,"color":"gray"}],[{"text":"32m","italic":false,"color":"aqua"},{"text":" of ","italic":false,"color":"gray"},{"text":"(0,0)","italic":false,"color":"yellow"}]]}}}
 
     # 35 - Resentment
-    data merge storage minecraft:cassette {index:{35:{artist:"A Day To Remember",duration:227,rating:0,song_id:35}}}
+    data merge storage minecraft:cassette {index:{35:{artist:"A Day To Remember",duration:227,rating:2,song_id:35}}}
     data merge storage minecraft:cassette {index:{35:{name:[{"text":"R","italic":false,"color":"#ffae3d"},{"text":"e","italic":false,"color":"#fba936"},{"text":"s","italic":false,"color":"#f7a42f"},{"text":"e","italic":false,"color":"#f39f29"},{"text":"n","italic":false,"color":"#ef9a22"},{"text":"t","italic":false,"color":"#eb941b"},{"text":"m","italic":false,"color":"#e78f14"},{"text":"e","italic":false,"color":"#e38a0e"},{"text":"n","italic":false,"color":"#df8507"},{"text":"t","italic":false,"color":"#db8000"}]}}}
-    data merge storage minecraft:cassette {index:{35:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{35:{obtainment:[[{"text":"Cause at least ","italic":false,"color":"gray"},{"text":"20 Zombified Piglin(s)","italic":false,"color":"aqua"}],[{"text":"to ","italic":false,"color":"gray"},{"text":"become ","italic":false,"color":"gray"},{"text":"hostile","italic":false,"color":"yellow"},{"text":" towards you","italic":false,"color":"gray"}]]}}}
 
     # 36 - Monster
-    data merge storage minecraft:cassette {index:{36:{artist:"Hands Like Houses",duration:214,rating:0,song_id:36}}}
+    data merge storage minecraft:cassette {index:{36:{artist:"Hands Like Houses",duration:214,rating:2,song_id:36}}}
     data merge storage minecraft:cassette {index:{36:{name:[{"text":"M","italic":false,"color":"#e1dfa3"},{"text":"o","italic":false,"color":"#d8c4b4"},{"text":"n","italic":false,"color":"#d0aac5"},{"text":"st","italic":false,"color":"#c78fd6"},{"text":"e","italic":false,"color":"#d4b7bd"},{"text":"r","italic":false,"color":"#e1dfa3"}]}}}
-    data merge storage minecraft:cassette {index:{36:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{36:{obtainment:[["",{"text":"E","italic":false,"color":"#d642ff"},{"text":"n","italic":false,"color":"#dd4cf7"},{"text":"c","italic":false,"color":"#e457ef"},{"text":"h","italic":false,"color":"#eb61e8"},{"text":"a","italic":false,"color":"#f16be0"},{"text":"n","italic":false,"color":"#f876d8"},{"text":"t","italic":false,"color":"#ff80d0"},{"text":" any type of ","italic":false,"color":"gray"},{"text":"Sword","italic":false,"color":"light_purple"},{"text":" with any","italic":false,"color":"gray"}],["",{"text":"level of ","italic":false,"color":"gray"},{"text":"Knockback","italic":false,"color":"dark_green"},{"text":" ","italic":false,"color":"gray"},{"text":"(Need I say more?)","color":"gray"}]]}}}
 
     # 37 - Me Against Myself
-    data merge storage minecraft:cassette {index:{37:{artist:"Wage War",duration:234,rating:0,song_id:37}}}
+    data merge storage minecraft:cassette {index:{37:{artist:"Wage War",duration:234,rating:1,song_id:37}}}
     data merge storage minecraft:cassette {index:{37:{name:[{"text":"M","italic":false,"color":"#595046"},{"text":"e","italic":false,"color":"#6c5944"},{"text":" ","italic":false,"color":"#7f6342"},{"text":"A","italic":false,"color":"#926c40"},{"text":"g","italic":false,"color":"#a6753e"},{"text":"a","italic":false,"color":"#b97e3c"},{"text":"i","italic":false,"color":"#cc883a"},{"text":"n","italic":false,"color":"#df9138"},{"text":"st","italic":false,"color":"#f29a36"},{"text":" ","italic":false,"color":"#dc8f38"},{"text":"M","italic":false,"color":"#c6853b"},{"text":"y","italic":false,"color":"#b07a3d"},{"text":"s","italic":false,"color":"#9b703f"},{"text":"e","italic":false,"color":"#856541"},{"text":"l","italic":false,"color":"#6f5b44"},{"text":"f","italic":false,"color":"#595046"}]}}}
-    data merge storage minecraft:cassette {index:{37:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
+    data merge storage minecraft:cassette {index:{37:{obtainment:[[{"text":"Survive at ","italic":false,"color":"gray"},{"text":"h","italic":false,"color":"#ff7a7a"},{"text":"a","italic":false,"color":"#fd7575"},{"text":"l","italic":false,"color":"#fc7070"},{"text":"f","italic":false,"color":"#fa6a6a"},{"text":" ","italic":false,"color":"#f86565"},{"text":"a","italic":false,"color":"#f66060"},{"text":" ","italic":false,"color":"#f55b5b"},{"text":"h","italic":false,"color":"#f35656"},{"text":"e","italic":false,"color":"#f15151"},{"text":"a","italic":false,"color":"#ef4b4b"},{"text":"r","italic":false,"color":"#ee4646"},{"text":"t","italic":false,"color":"#ec4141"}]]}}}
 
     # 38 - Sometimes You're The Hammer, Sometimes You're The Nail
     data merge storage minecraft:cassette {index:{38:{artist:"A Day To Remember",duration:275,rating:2,song_id:38}}}

@@ -69,7 +69,7 @@ data\cassette\function\calculate\zzz\21.mcfunction:0b8fd89429f5f64c1285a24ef3e16
 data\cassette\function\calculate\zzz\22.mcfunction:b6b103ed09e2bc4059ba49d911af86db46becbc9
 data\cassette\function\calculate\hover.mcfunction:c872d58eb54d0a552a3773a8e712181304d990df
 data\cassette\function\calculate\real_time.mcfunction:481d099f5c244d5cd9fad6a41e599cf8dc3f38fe
-data\cassette\function\generate_index.mcfunction:2294cd106f19a161aed64f2812304340341179c8
+data\cassette\function\generate_index.mcfunction:c297e5e9b8fc1cd84035edd744cf076a15a9a3e9
 data\ui\function\on_load.mcfunction:5584ce58ed06b803e8140179113aae709d4f2fc0
 data\ui\function\administrator_access.mcfunction:718240e3fa7c843c8d94638356d728f97a9c1c64
 data\ui\function\logic\player\tick.mcfunction:060c3d6d323daf3f99efffc503d89db457efe6f7
@@ -208,7 +208,7 @@ data\ui\function\cassette\collection\operation\zzz\2.mcfunction:b67b7190d32a4fb6
 data\ui\function\cassette\collection\operation\zzz\4.mcfunction:1d19e8ee3e3171d0dbd2adb87b5b3ea292009530
 data\ui\function\cassette\collection\operation\zzz\5.mcfunction:bbe1726b6753e8140cc43ca00609f3b450e08c4e
 data\ui\function\cassette\collection\operation\zzz\3.mcfunction:63f540db85addfe1fbe8bd96979f396794f36153
-data\ui\function\cassette\collection\operation\main.mcfunction:bf79d32ba599600ca65b131611f20f76b1ce0d9d
+data\ui\function\cassette\collection\operation\main.mcfunction:9138e4f4b63b6cfc68c4d961888c7ff83c5acb76
 data\ui\function\cassette\collection\operation\zzz\6.mcfunction:987ac48c0141f422533a128cc45da12751189efe
 data\ui\function\cassette\collection\operation\cycle.mcfunction:8a8795ad0eede3466f2e619fdbbcb79424b0e589
 data\ui\function\cassette\collection\operation\zzz\7.mcfunction:987ac48c0141f422533a128cc45da12751189efe
