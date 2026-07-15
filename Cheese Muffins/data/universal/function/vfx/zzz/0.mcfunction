@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players set @s universalVFX.Speed $(speed)
+$scoreboard players set .Speed universalVFX.Conditions $(speed)

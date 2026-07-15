@@ -6,10 +6,7 @@ scoreboard objectives add mcb.internal dummy
 scoreboard objectives add universalDebug.Duration dummy
 # vfx branch
 scoreboard objectives add universalVFX.ID dummy
-scoreboard objectives add universalVFX.Mode dummy
-scoreboard objectives add universalVFX.Count dummy
-scoreboard objectives add universalVFX.Speed dummy
-scoreboard objectives add universalVFX.Duration dummy
+scoreboard objectives add universalVFX.Conditions dummy
 # ability universals
 scoreboard objectives add universalAbility.MoveCooldown1 dummy
 scoreboard objectives add universalAbility.MoveTrigger1 dummy
@@ -33,3 +30,4 @@ scoreboard objectives add universalAbility.MoveDelay dummy
 scoreboard objectives add universalAbility.ToggleTrigger dummy
 scoreboard objectives add universalAbility.ToggleState dummy
 scoreboard objectives add universalAbility.ToggleDelay dummy
+function ability:billy/install

@@ -1,8 +1,5 @@
 # Generated with MC-Build
 
-execute if score @s universalAbility.MoveCooldown1 matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown1 1
-execute if score @s universalAbility.MoveCooldown2 matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown2 1
-execute if score @s universalAbility.MoveCooldown3 matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown3 1
-execute if score @s abilityBilly.ToggleOnText matches 1.. run function ability:billy/tick/zzz/2
-execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
-execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+function ability:billy/toggle/text with storage minecraft:ability billy
+scoreboard players remove @s abilityBilly.ToggleOnText 1

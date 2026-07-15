@@ -12,9 +12,7 @@ dir tick {
 dir billy {
     dir tick {
         function main {
-            execute if score @s universalToggle.State matches 1 run {
-                execute at @s run function ability:billy/active
-            }
+            execute if score @s universalAbility.ToggleState matches 1 run function ability:billy/active
 
             execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0,abilityBilly.ToggleOnText=0}] unless entity @s[tag=traitAbility.TimeLocked] run {
                 REPEAT (1,3) as i {
@@ -32,6 +30,14 @@ dir billy {
                 execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
             }
         }
+    }
+
+    function install {
+        scoreboard objectives add abilityBilly.FlagID dummy
+    }
+
+    function active {
+        function ability:billy/flags/index
     }
 
     dir toggle {
@@ -65,5 +71,66 @@ dir billy {
                 particle minecraft:snowflake ~ ~ ~ 0 0 0 0.25 50 force @a
             }
         }
+
+        function off {
+            title @s actionbar ""
+            execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:ability billy
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] at @s run {
+                    playsound minecraft:entity.polar_bear.death player @a ~ ~ ~ 0.5
+                    function aj:billy/animations/idle/stop
+                    function aj:billy/animations/withdraw/play
+                }
+            }
+            scoreboard players reset @s abilityBilly.ToggleOnText
+            scoreboard players set @s universalAbility.ToggleDelay 20 
+        }
+    }
+
+    dir flags {
+        function index {
+            execute unless entity @s[tag=abilityBilly.FlagJump] run {
+                execute if predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagWalk] run function ability:billy/flags/setup {type:"walk",animation:"Walk",variation:1}
+                execute if predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagSprint] run function ability:billy/flags/setup {type:"sprint",animation:"Sprint",variation:2}
+                execute if predicate universal:flags/jump run function ability:billy/flags/setup {type:"jump",animation:"Jump",variation:3}
+            }
+            execute if entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/jumping
+
+            execute unless predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagIdle] unless entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/setup {type:"idle",animation:"Idle",variation:4}
+        }
+
+        function setup {
+            $data merge storage minecraft:ability {billy:{type:"$(type)",adjust:1,tween:3}}
+            $scoreboard players set @s abilityBilly.FlagID $(variation)
+
+            execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:ability billy
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy
+                    $function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
+                }
+            }
+
+            function ability:billy/flags/clear
+            $tag @s add abilityBilly.Flag$(animation)
+        }
+
+        function jumping {
+            execute if predicate universal:flags/grounded run tag @s remove abilityBilly.FlagJump
+        }
+
+        function clear {
+            tag @s remove abilityBilly.FlagWalk
+            tag @s remove abilityBilly.FlagSprint
+            tag @s remove abilityBilly.FlagIdle
+        }
+
+        # function adjust {
+        #     tag @s remove temp
+        #     $data merge storage minecraft:ability {billy:{tween:"$(tween)"}}
+        #     $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={universalAbility.ID=$(id)}] run block { {objective:"$(objective)"}
+        #         $scoreboard players add @s aj.$(objective).frame 2
+        #         $execute store result storage minecraft:ability billy.adjust int 1 run scoreboard players get @s aj.$(objective).frame
+        #     }
+        # }
     }
 }

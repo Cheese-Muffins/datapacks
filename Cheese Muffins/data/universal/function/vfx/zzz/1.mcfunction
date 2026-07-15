@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players set @s universalVFX.Duration $(duration)
+$scoreboard players set .Duration universalVFX.Conditions $(duration)

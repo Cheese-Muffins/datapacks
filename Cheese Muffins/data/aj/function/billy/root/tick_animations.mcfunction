@@ -2,7 +2,9 @@
 execute if entity @s[tag=aj.billy.animation.summon.playing] run function aj:billy/animations/summon/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.idle.playing] run function aj:billy/animations/idle/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.idle_snarl.playing] run function aj:billy/animations/idle_snarl/zzz/on_tick
-execute if entity @s[tag=aj.billy.animation.movement.playing] run function aj:billy/animations/movement/zzz/on_tick
+execute if entity @s[tag=aj.billy.animation.walk.playing] run function aj:billy/animations/walk/zzz/on_tick
+execute if entity @s[tag=aj.billy.animation.sprint.playing] run function aj:billy/animations/sprint/zzz/on_tick
+execute if entity @s[tag=aj.billy.animation.jump.playing] run function aj:billy/animations/jump/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.maul.playing] run function aj:billy/animations/maul/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.encourage.playing] run function aj:billy/animations/encourage/zzz/on_tick
 execute if entity @s[tag=aj.billy.animation.phase.playing] run function aj:billy/animations/phase/zzz/on_tick

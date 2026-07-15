@@ -12,3 +12,4 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
 execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/35_locator_commands
+execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/35_locator_constant

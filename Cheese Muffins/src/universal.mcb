@@ -7,10 +7,7 @@ function on_load minecraft:load{
 
     # vfx branch
     scoreboard objectives add universalVFX.ID dummy
-    scoreboard objectives add universalVFX.Mode dummy
-    scoreboard objectives add universalVFX.Count dummy
-    scoreboard objectives add universalVFX.Speed dummy
-    scoreboard objectives add universalVFX.Duration dummy
+    scoreboard objectives add universalVFX.Conditions dummy
 
 
     # ability universals
@@ -24,6 +21,8 @@ function on_load minecraft:load{
     scoreboard objectives add universalAbility.ToggleTrigger dummy
     scoreboard objectives add universalAbility.ToggleState dummy
     scoreboard objectives add universalAbility.ToggleDelay dummy
+
+    function ability:billy/install
 }
 
 dir tick {
@@ -76,7 +75,6 @@ function toggle_ability {
         execute unless score @s universalAbility.ToggleState matches 1.. run {
             scoreboard players set @s universalAbility.ToggleState 1
             tag @s add temp
-            say ???
 
             execute unless score @s universalAbility.ID matches 1.. run {
                 scoreboard players add .global universalAbility.ID 1
@@ -93,7 +91,6 @@ function toggle_ability {
 
         # toggle off
         execute if score @s universalAbility.ToggleState matches 1.. unless entity @s[tag=temp] run {
-            say off
             scoreboard players set @s universalAbility.ToggleState 0
 
             execute if entity @s[tag=abilityBilly.User] run function ability:billy/toggle/off
@@ -127,13 +124,13 @@ dir vfx {
         # Modes
             # 0: NO Offset / Speed to be applied. As basic as it comes
 
-        $scoreboard players set @s universalVFX.Mode $(mode)
-        $scoreboard players set @s universalVFX.Count $(count)
+        $scoreboard players set .Mode universalVFX.Conditions $(mode)
+        $scoreboard players set .Count universalVFX.Conditions $(count)
         execute if data storage minecraft:universal vfx.arguments.speed run block { with storage minecraft:universal vfx.arguments
-            $scoreboard players set @s universalVFX.Speed $(speed)
+            $scoreboard players set .Speed universalVFX.Conditions $(speed)
         }
         execute if data storage minecraft:universal vfx.arguments.duration run block { with storage minecraft:universal vfx.arguments
-            $scoreboard players set @s universalVFX.Duration $(duration)
+            $scoreboard players set .Duration universalVFX.Conditions $(duration)
         }
 
         function universal:vfx/create
@@ -141,11 +138,10 @@ dir vfx {
     }
 
     function create {
-        say create
-        execute if score @s universalVFX.Mode matches 0 run function universal:vfx/mode/0 with storage minecraft:universal vfx.arguments
+        execute if score .Mode universalVFX.Conditions matches 0 run function universal:vfx/mode/0 with storage minecraft:universal vfx.arguments
 
-        scoreboard players remove @s universalVFX.Count 1
-        execute if score @s universalVFX.Count matches 1.. run function universal:vfx/create
+        scoreboard players remove .Count universalVFX.Conditions 1
+        execute if score .Count universalVFX.Conditions matches 1.. run function universal:vfx/create
     }
 
     dir mode {

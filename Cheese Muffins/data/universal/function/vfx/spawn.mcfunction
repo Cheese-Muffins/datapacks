@@ -17,8 +17,8 @@
 # function universal:vfx/spawn with storage minecraft:universal vfx.arguments
 # Modes
 # 0: NO Offset / Speed to be applied. As basic as it comes
-$scoreboard players set @s universalVFX.Mode $(mode)
-$scoreboard players set @s universalVFX.Count $(count)
+$scoreboard players set .Mode universalVFX.Conditions $(mode)
+$scoreboard players set .Count universalVFX.Conditions $(count)
 execute if data storage minecraft:universal vfx.arguments.speed run function universal:vfx/zzz/0 with storage minecraft:universal vfx.arguments
 execute if data storage minecraft:universal vfx.arguments.duration run function universal:vfx/zzz/1 with storage minecraft:universal vfx.arguments
 function universal:vfx/create

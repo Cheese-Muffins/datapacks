@@ -32,10 +32,9 @@ $data merge entity $(blb) {transformation: [-1f,0f,0f,0.2813f,0f,1f,0f,-2.1875f,
 $data merge entity $(backleftleg) {transformation: [-1f,0f,0f,0.2813f,0f,1f,0f,-2.0937f,0f,0f,-1f,-0.9375f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(brb) {transformation: [-1f,0f,0f,-0.2812f,0f,1f,0f,-2.1875f,0f,0f,-1f,-0.6875f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(backrightleg) {transformation: [-1f,0f,0f,-0.2812f,0f,1f,0f,-2.0937f,0f,0f,-1f,-0.9375f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify storage animated_java:temp entry.data merge value {"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"timestop":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"mouth":{"px":0,"py":-0.3097199531,"pz":-0.5214789035,"ry":0,"rx":-82.5},"position":{"px":0,"py":-2.5,"pz":-0.4375,"ry":0,"rx":0},"text_location":{"px":0,"py":-1.75,"pz":-0.3125,"ry":0,"rx":0},"camera":{"px":0,"py":0,"pz":0,"ry":0,"rx":0}}}
+data modify storage animated_java:temp entry.data merge value {"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"mouth":{"px":0,"py":-0.3097199531,"pz":-0.5214789035,"ry":0,"rx":-82.5},"position":{"px":0,"py":-2.5,"pz":-0.4375,"ry":0,"rx":0},"text_location":{"px":0,"py":-1.75,"pz":-0.3125,"ry":0,"rx":0},"camera":{"px":0,"py":0,"pz":0,"ry":0,"rx":0}}}
 # Data Manager: Prepare for Read / Write
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
-execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/snare_trigger/zzz/frames/0_locator_timestop
 execute unless entity @s[tag=aj.transforms_only] run function aj:billy/variants/default/apply
