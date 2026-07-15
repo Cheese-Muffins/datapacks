@@ -4,6 +4,12 @@
 scoreboard objectives add mcb.internal dummy
 # universal scores
 scoreboard objectives add universalDebug.Duration dummy
+# vfx branch
+scoreboard objectives add universalVFX.ID dummy
+scoreboard objectives add universalVFX.Mode dummy
+scoreboard objectives add universalVFX.Count dummy
+scoreboard objectives add universalVFX.Speed dummy
+scoreboard objectives add universalVFX.Duration dummy
 # ability universals
 scoreboard objectives add universalAbility.MoveCooldown1 dummy
 scoreboard objectives add universalAbility.MoveTrigger1 dummy

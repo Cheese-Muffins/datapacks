@@ -1,21 +1,25 @@
 # Generated with MC-Build
 
 #  --   Required Args  --   #
-#   --   Mode: 1 - 4  --    # 
-# Default arguments REQUIRED for each initialization of the VFX branch
+#   --   Mode: 0 - 1  --    # 
+# Arguments default as follows #
+# Mode: Defaults to 0
+# Count: Defaults to 1
+# Speed: Does not run
+# Duration: Does not run
+# Branch: Does not run
+# Animation: Does not run
+# Output: Does not run
+# EXAMPLE #
+# data modify storage minecraft:universal vfx.arguments.branch set value "billy"
+# data modify storage minecraft:universal vfx.arguments.animation set value "appear"
+# data modify storage minecraft:universal vfx.arguments.output set value "appear"
+# function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+# Modes
+# 0: NO Offset / Speed to be applied. As basic as it comes
+$scoreboard players set @s universalVFX.Mode $(mode)
 $scoreboard players set @s universalVFX.Count $(count)
-$scoreboard players set .Mode universalVFX.Conditions $(mode)
-$scoreboard players set .Speed universalVFX.Conditions $(speed)
-$scoreboard players set .Duration universalVFX.Conditions $(duration)
-$data merge storage minecraft:universal {vfx:{branch:"$(branch)",animation:'$(animation)',extra:"$(extra)"}}
-# Particle with speed, duration, and random rotation config
-execute if score .Mode universalVFX.Conditions matches 1 run function custom:universal/vfx/mode_1
-# Mounting spawner with NO rotation
-execute if score .Mode universalVFX.Conditions matches 2 run function custom:universal/vfx/mode_2
-# Mounting spawner with RANDOM rotation
-execute if score .Mode universalVFX.Conditions matches 3 run function custom:universal/vfx/mode_3
-# Particle with speed, duration, and inherited random rotation config
-execute if score .Mode universalVFX.Conditions matches 4 run function custom:universal/vfx/mode_4
-# scoreboard players set .Mode universalVFX.Conditions 0
-# scoreboard players set .Speed universalVFX.Conditions 0
-# data remove storage minecraft:custom universal.vfx
+execute if data storage minecraft:universal vfx.arguments.speed run function universal:vfx/zzz/0 with storage minecraft:universal vfx.arguments
+execute if data storage minecraft:universal vfx.arguments.duration run function universal:vfx/zzz/1 with storage minecraft:universal vfx.arguments
+function universal:vfx/create
+data modify storage minecraft:universal vfx.arguments set value {mode:0,count:1}

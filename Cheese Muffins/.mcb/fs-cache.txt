@@ -6,7 +6,7 @@ data\ability\function\billy\tick\zzz\1.mcfunction:b7eb004a55da87f48b341aef3bec45
 data\ability\function\billy\tick\main.mcfunction:cf4e43205aef6f98535300cf4674410fe29e362a
 data\ability\function\billy\toggle\zzz\0.mcfunction:2b5b99ef810cbd65dd0fd1960c293618cd0dcf49
 data\ability\function\billy\toggle\on.mcfunction:c1b79c3c0b793e8c84b45e2e73b88e8517d25d04
-data\ability\function\billy\toggle\appear.mcfunction:0a94435d50d0135ff97fe02ce6ce214273e11544
+data\ability\function\billy\toggle\appear.mcfunction:fcce1d2bcdc3c222ef548c33f44aae554640559f
 data\ability\function\billy\toggle\zzz\1.mcfunction:9a6adf7aa12e05c16d2ada4f49048d19fa38fd3c
 data\ability\function\billy\toggle\land.mcfunction:5a88141cb98ff8eac8666d4395b982a25439aa80
 data\cassette\function\on_load.mcfunction:baa448228d1ec4273b19290a7e07355d89fcfb3e
@@ -389,7 +389,7 @@ data\ui\function\cassette\party\generate\details.mcfunction:e4028417187c80aa6f29
 data\ui\function\cassette\party\same.mcfunction:591e7ed900de8f38649cddb77480c82afdfc13a1
 data\ui\function\cassette\party\zzz\13.mcfunction:f0cb122e238bf1d15c935cd3d1c2b91c4665a5b1
 data\ui\function\cassette\party\flip.mcfunction:ead0dc05d7030144f98a056938267679be7c6062
-data\universal\function\on_load.mcfunction:e2fd47c6826f5884ea75f3a86edae7f872c4bb34
+data\universal\function\on_load.mcfunction:696454a7bef28ecf79f1048fddf09b0c467055d7
 data\universal\function\tick\zzz\0.mcfunction:36e745f5a9cb523a6ea2e6f52ffd3eaf472c56ee
 data\universal\function\tick\zzz\1.mcfunction:dad4cd2b912dfa52d5a87decf78b4eaf5f4786e1
 data\universal\function\tick\main.mcfunction:dddd19b14c7221a6c2012cc176ab7b9e02241eea
@@ -404,8 +404,13 @@ data\universal\function\zzz\1.mcfunction:7c53e4b753a6e05395960866e920af6f30a556d
 data\universal\function\zzz\4.mcfunction:f337528fd3f8a1254c67203580e1a7fc84c81a75
 data\universal\function\zzz\0.mcfunction:83a85cb1dd255b411793d5f965818901d16836f5
 data\universal\function\toggle_ability.mcfunction:145e2a2ec2b22030be4de173fc8cbbc5b65d342d
-data\universal\function\vfx\spawn.mcfunction:20844cb7753c03a48c58d33a1648a5487021c91b
-data\universal\function\vfx\create.mcfunction:d1a71c8789412d6fa6ac05e41beaedfae1efacc2
+data\universal\function\vfx\zzz\0.mcfunction:6eb4cd4620221d08461992af9206e1636deb3dc0
+data\universal\function\vfx\zzz\1.mcfunction:8665b881a34d013b7d7f572b6180dc2fac13c557
+data\universal\function\vfx\spawn.mcfunction:8bad935da8f2a1c56bd12921eb99db2ee7720e13
+data\universal\function\vfx\create.mcfunction:7e0cefb20c00a41a31debb53034222a934c733d6
+data\universal\function\vfx\mode\zzz\1.mcfunction:760e587ddaa51ae488f8aff6a9309b9a39e353f0
+data\universal\function\vfx\mode\zzz\0.mcfunction:84f8543a68fe1055b5105abfa958250a313ff949
+data\universal\function\vfx\mode\0.mcfunction:519a2a59989886b34ae7535e2eb863dde2c791b4
 data\universal\function\rig\mount\zzz\0.mcfunction:b58b20f6eaf4b97a901f195d543fd6cf7d54244e
 data\universal\function\rig\mount\player.mcfunction:1133a6dc5aeb3ee559360f2d2e49b085122cd693
 data\universal\function\rig\zzz\1.mcfunction:fb5b125b1321edfb9eaf662dd32f32da097edbc6

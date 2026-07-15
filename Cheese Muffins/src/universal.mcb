@@ -5,6 +5,13 @@ function on_load minecraft:load{
     # universal scores
     scoreboard objectives add universalDebug.Duration dummy
 
+    # vfx branch
+    scoreboard objectives add universalVFX.ID dummy
+    scoreboard objectives add universalVFX.Mode dummy
+    scoreboard objectives add universalVFX.Count dummy
+    scoreboard objectives add universalVFX.Speed dummy
+    scoreboard objectives add universalVFX.Duration dummy
+
 
     # ability universals
     REPEAT (1,8) as i {
@@ -99,34 +106,62 @@ function toggle_ability {
 dir vfx {
     function spawn {
         #  --   Required Args  --   #
-        #   --   Mode: 1 - 4  --    # 
+        #   --   Mode: 0 - 1  --    # 
+
+        # Arguments default as follows #
+            # Mode: Defaults to 0
+            # Count: Defaults to 1
+            # Speed: Does not run
+            # Duration: Does not run
+            # Branch: Does not run
+            # Animation: Does not run
+            # Output: Does not run
         
-        # Default arguments REQUIRED for each initialization of the VFX branch
+        # EXAMPLE #
+            # data modify storage minecraft:universal vfx.arguments.branch set value "billy"
+            # data modify storage minecraft:universal vfx.arguments.animation set value "appear"
+            # data modify storage minecraft:universal vfx.arguments.output set value "appear"
+
+            # function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+
+        # Modes
+            # 0: NO Offset / Speed to be applied. As basic as it comes
+
+        $scoreboard players set @s universalVFX.Mode $(mode)
         $scoreboard players set @s universalVFX.Count $(count)
-        $scoreboard players set .Mode universalVFX.Conditions $(mode)
-        $scoreboard players set .Speed universalVFX.Conditions $(speed)
-        $scoreboard players set .Duration universalVFX.Conditions $(duration)
-        $data merge storage minecraft:universal {vfx:{branch:"$(branch)",animation:'$(animation)',extra:"$(extra)"}}
+        execute if data storage minecraft:universal vfx.arguments.speed run block { with storage minecraft:universal vfx.arguments
+            $scoreboard players set @s universalVFX.Speed $(speed)
+        }
+        execute if data storage minecraft:universal vfx.arguments.duration run block { with storage minecraft:universal vfx.arguments
+            $scoreboard players set @s universalVFX.Duration $(duration)
+        }
 
-        # Particle with speed, duration, and random rotation config
-        execute if score .Mode universalVFX.Conditions matches 1 run function custom:universal/vfx/mode_1
-
-        # Mounting spawner with NO rotation
-        execute if score .Mode universalVFX.Conditions matches 2 run function custom:universal/vfx/mode_2
-
-        # Mounting spawner with RANDOM rotation
-        execute if score .Mode universalVFX.Conditions matches 3 run function custom:universal/vfx/mode_3
-
-        # Particle with speed, duration, and inherited random rotation config
-        execute if score .Mode universalVFX.Conditions matches 4 run function custom:universal/vfx/mode_4
-        
-        # scoreboard players set .Mode universalVFX.Conditions 0
-        # scoreboard players set .Speed universalVFX.Conditions 0
-        # data remove storage minecraft:custom universal.vfx
+        function universal:vfx/create
+        data modify storage minecraft:universal vfx.arguments set value {mode:0,count:1}
     }
 
     function create {
+        say create
+        execute if score @s universalVFX.Mode matches 0 run function universal:vfx/mode/0 with storage minecraft:universal vfx.arguments
 
+        scoreboard players remove @s universalVFX.Count 1
+        execute if score @s universalVFX.Count matches 1.. run function universal:vfx/create
+    }
+
+    dir mode {
+        function 0 {
+            $function aj:$(branch)_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
+
+            execute store result storage minecraft:universal vfx.id int 1 run scoreboard players get @s universalAbility.ID
+            $execute as @n[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
+                $scoreboard players set @s universalVFX.ID $(id)
+
+                # if an output argument is present
+                execute if data storage minecraft:universal vfx.arguments.output run block { with storage minecraft:universal vfx.arguments
+                    $$(output)
+                }
+            }
+        }
     }
 }
 
