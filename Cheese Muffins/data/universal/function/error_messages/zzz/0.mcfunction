@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
 $tellraw @s ["",{"text":"\n\$(unicode) ","color":"white"},{"text":" $(move)","color":"gold"}]
-execute if entity @s[tag=universalErrorLog.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" ","color":"blue"},{"score":{"name":"@s","objective":"universalMove.CooldownMath"},"color":"red"},{"text":"s","color":"red"}]
+execute if entity @s[tag=universalErrorLog.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" ","color":"blue"},{"score":{"name":"@s","objective":"universalAbility.MoveCooldownMath"},"color":"red"},{"text":"s","color":"red"}]
 execute if entity @s[tag=universalErrorLog.2] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Another move is ","color":"gray"},{"text":"currently casting!","color":"blue"}]
 execute if entity @s[tag=universalErrorLog.3] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]
 execute if entity @s[tag=universalErrorLog.4] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"be looking at an entity to use ","color":"gray"},{"text":"this ","color":"aqua"},{"text":"move!","color":"gray"}]

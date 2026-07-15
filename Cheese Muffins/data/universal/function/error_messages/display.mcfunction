@@ -1,8 +1,8 @@
 # Generated with MC-Build
 
 # function universal:error_messages/display {number:1,unicode:"u50A0",move:"Blitz"}
-$scoreboard players operation @s universalMove.CooldownMath = @s universalMove.Cooldown$(number)
-# function universal:math/divide {value:20,score:"@s",objective:"universalMove.CooldownMath"}
+$scoreboard players operation @s universalAbility.MoveCooldownMath = @s universalMove.Cooldown$(number)
+# function universal:math/divide {value:20,score:"@s",objective:"universalAbility.MoveCooldownMath"}
 $execute unless entity @s[tag=universalErrorLog.Hide] run function universal:error_messages/zzz/0 {unicode:"$(unicode)",move:"$(move)"}
 tag @s remove universalErrorLog.1
 tag @s remove universalErrorLog.2
@@ -107,5 +107,5 @@ tag @s remove universalErrorLog.100
 tag @s remove universalErrorLog.101
 tag @s remove universalErrorLog.102
 tag @s remove universalErrorLog.Hide
-scoreboard players set @s universalMove.Delay 10
+scoreboard players set @s universalAbility.MoveDelay 10
 scoreboard players set @s universalErrorLog.FailReturn 0

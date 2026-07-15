@@ -2,19 +2,36 @@ function on_load minecraft:load{
     # you can use MC-Build without its internal scoreboard but this will limit the available features
     scoreboard objectives add mcb.internal dummy
 
-    scoreboard objectives add universalMove.CooldownMath dummy
+    # universal scores
     scoreboard objectives add universalDebug.Duration dummy
+
+
+    # ability universals
     REPEAT (1,8) as i {
-        scoreboard objectives add universalMove.Cooldown<%i%> dummy
+        scoreboard objectives add universalAbility.MoveCooldown<%i%> dummy
+        scoreboard objectives add universalAbility.MoveTrigger<%i%> dummy
     }
+    scoreboard objectives add universalAbility.ID dummy
+    scoreboard objectives add universalAbility.MoveCooldownMath dummy
+    scoreboard objectives add universalAbility.MoveDelay dummy
+    scoreboard objectives add universalAbility.ToggleTrigger dummy
+    scoreboard objectives add universalAbility.ToggleState dummy
+    scoreboard objectives add universalAbility.ToggleDelay dummy
 }
 
 dir tick {
     function main {
         execute as @a at @s run {
+            # ability ticks
+            function ability:tick/player
+
+            # cassette ticks
             function ui:logic/player/tick
             function cassette:tick/main
+
+            # scenario ticks
             execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
+            execute if score @s universalAbility.ToggleTrigger matches 1.. run function universal:toggle_ability
         }
 
         execute as @e[type=!#universal:misc_mob] at @s run {
@@ -46,6 +63,117 @@ dir tick {
     }
 }
 
+function toggle_ability {
+    execute if entity @s[tag=universalAbility.User] unless entity @s[tag=universalAbility.Animating] unless score @s universalAbility.ToggleDelay matches 1.. run {
+        # toggle on
+        execute unless score @s universalAbility.ToggleState matches 1.. run {
+            scoreboard players set @s universalAbility.ToggleState 1
+            tag @s add temp
+            say ???
+
+            execute unless score @s universalAbility.ID matches 1.. run {
+                scoreboard players add .global universalAbility.ID 1
+                scoreboard players operation @s universalAbility.ID = .global universalAbility.ID
+
+                function universal:fetch/username {storage:"minecraft:ability",path:"username"}
+                block { with storage minecraft:ability
+                    $scoreboard players display name @s universalAbility.ID {"color":"aqua","text":"$(username)"}
+                }
+            }
+
+            execute if entity @s[tag=abilityBilly.User] run function ability:billy/toggle/on
+        }
+
+        # toggle off
+        execute if score @s universalAbility.ToggleState matches 1.. unless entity @s[tag=temp] run {
+            say off
+            scoreboard players set @s universalAbility.ToggleState 0
+
+            execute if entity @s[tag=abilityBilly.User] run function ability:billy/toggle/off
+        }
+        tag @s remove temp
+    }
+    scoreboard players reset @s universalAbility.ToggleTrigger
+}
+
+dir vfx {
+    function spawn {
+        #  --   Required Args  --   #
+        #   --   Mode: 1 - 4  --    # 
+        
+        # Default arguments REQUIRED for each initialization of the VFX branch
+        $scoreboard players set @s universalVFX.Count $(count)
+        $scoreboard players set .Mode universalVFX.Conditions $(mode)
+        $scoreboard players set .Speed universalVFX.Conditions $(speed)
+        $scoreboard players set .Duration universalVFX.Conditions $(duration)
+        $data merge storage minecraft:universal {vfx:{branch:"$(branch)",animation:'$(animation)',extra:"$(extra)"}}
+
+        # Particle with speed, duration, and random rotation config
+        execute if score .Mode universalVFX.Conditions matches 1 run function custom:universal/vfx/mode_1
+
+        # Mounting spawner with NO rotation
+        execute if score .Mode universalVFX.Conditions matches 2 run function custom:universal/vfx/mode_2
+
+        # Mounting spawner with RANDOM rotation
+        execute if score .Mode universalVFX.Conditions matches 3 run function custom:universal/vfx/mode_3
+
+        # Particle with speed, duration, and inherited random rotation config
+        execute if score .Mode universalVFX.Conditions matches 4 run function custom:universal/vfx/mode_4
+        
+        # scoreboard players set .Mode universalVFX.Conditions 0
+        # scoreboard players set .Speed universalVFX.Conditions 0
+        # data remove storage minecraft:custom universal.vfx
+    }
+
+    function create {
+
+    }
+}
+
+dir rig {
+    dir mount {
+        function player {
+            # ex: function universal:rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+            $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}
+            block { with storage minecraft:universal rig
+                $ride @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] mount @p[tag=$(user),scores={$(objective)=$(id)}]
+            }
+        }
+    }
+
+    function rotate {
+        # ex: function universal:rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+        $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
+        $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}
+        block { with storage minecraft:universal rig
+            $execute as @a[tag=$(user),scores={$(objective)=$(id)}] store result storage minecraft:universal rig.rotation float 0.1 run data get entity @s Rotation[0] 10
+            block { with storage minecraft:universal rig
+                $data modify entity @s Rotation[0] set value $(rotation)
+            }
+            # $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/$(rig)/toggle/off
+        }
+    }
+
+    function as_player {
+        # function universal:rig/as_player {player:"customAbility.Billy",objective:"universalAbility.ID",output:"tag @s remove universalAbility.HideUI"}
+        $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
+        $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",output:"$(output)"}}
+        block { with storage minecraft:universal rig
+            $execute as @p[tag=$(user),scores={$(objective)=$(id)}] at @s run $(output)
+        }
+    }
+
+    function visibility {
+        # ex: function universal:rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+        $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
+        $data merge storage minecraft:universal {rig:{objective:"$(objective)",target:"$(target)",state:"$(state)",perspective:"$(perspective)",mounted:"$(mounted)"}}
+        block { with storage minecraft:universal rig
+            $visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
+        }
+    }
+}
+
 dir error_messages {
     function universal {
         execute if entity @s[tag=customGojo.RidingBlue] run function custom:universal/error_messages/find {error:100}
@@ -62,11 +190,11 @@ dir error_messages {
 
     function display {
         # function universal:error_messages/display {number:1,unicode:"u50A0",move:"Blitz"}
-        $scoreboard players operation @s universalMove.CooldownMath = @s universalMove.Cooldown$(number)
-        # function universal:math/divide {value:20,score:"@s",objective:"universalMove.CooldownMath"}
+        $scoreboard players operation @s universalAbility.MoveCooldownMath = @s universalMove.Cooldown$(number)
+        # function universal:math/divide {value:20,score:"@s",objective:"universalAbility.MoveCooldownMath"}
         $execute unless entity @s[tag=universalErrorLog.Hide] run block { {unicode:"$(unicode)",move:"$(move)"}
             $tellraw @s ["",{"text":"\n\$(unicode) ","color":"white"},{"text":" $(move)","color":"gold"}]
-            execute if entity @s[tag=universalErrorLog.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" ","color":"blue"},{"score":{"name":"@s","objective":"universalMove.CooldownMath"},"color":"red"},{"text":"s","color":"red"}]
+            execute if entity @s[tag=universalErrorLog.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" ","color":"blue"},{"score":{"name":"@s","objective":"universalAbility.MoveCooldownMath"},"color":"red"},{"text":"s","color":"red"}]
             execute if entity @s[tag=universalErrorLog.2] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Another move is ","color":"gray"},{"text":"currently casting!","color":"blue"}]
             execute if entity @s[tag=universalErrorLog.3] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]
             execute if entity @s[tag=universalErrorLog.4] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"be looking at an entity to use ","color":"gray"},{"text":"this ","color":"aqua"},{"text":"move!","color":"gray"}]
@@ -76,9 +204,9 @@ dir error_messages {
             execute if entity @s[tag=universalErrorLog.8] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T","color":"red"},{"text":" use this move whilst being targeted by ","color":"gray"},{"text":"Pact!","color":"aqua"}]
 
             execute if entity @s[tag=universalErrorLog.9] run {
-                scoreboard players operation @s universalMove.CooldownMath = @s customEren.ShiftCooldown
-                scoreboard players operation @s universalMove.CooldownMath /= #divide universalMove.CooldownMath
-                tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't attempt to ","color":"gray"},{"text":"shift","color":"gold"},{"text":" into the ","color":"gray"},{"text":"Attack Titan","color":"aqua"},{"text":" for another ","color":"gray"},{"score":{"name":"@s","objective":"universalMove.CooldownMath"},"color":"red"},{"text":"s!","color":"red"}]
+                scoreboard players operation @s universalAbility.MoveCooldownMath = @s customEren.ShiftCooldown
+                scoreboard players operation @s universalAbility.MoveCooldownMath /= #divide universalAbility.MoveCooldownMath
+                tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't attempt to ","color":"gray"},{"text":"shift","color":"gold"},{"text":" into the ","color":"gray"},{"text":"Attack Titan","color":"aqua"},{"text":" for another ","color":"gray"},{"score":{"name":"@s","objective":"universalAbility.MoveCooldownMath"},"color":"red"},{"text":"s!","color":"red"}]
             }
 
             execute if entity @s[tag=universalErrorLog.10] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"roll the dice before ","color":"gray"},{"text":"storing ","color":"aqua"},{"text":"a move!","color":"gray"}]
@@ -105,7 +233,7 @@ dir error_messages {
 
         tag @s remove universalErrorLog.Hide
         
-        scoreboard players set @s universalMove.Delay 10
+        scoreboard players set @s universalAbility.MoveDelay 10
         scoreboard players set @s universalErrorLog.FailReturn 0
     }
 }
@@ -172,6 +300,13 @@ dir fetch {
         # function universal:fetch/username {storage:"minecraft:cassette",path:"party.username"}
         loot insert 0 -63 0 loot universal:player_head
         $data modify storage $(storage) $(path) set string block 0 -63 0 Items[0].components."minecraft:profile".name
+        item replace block 0 -63 0 container.0 with minecraft:air
+    }
+
+    function block {
+        # function universal:fetch/block {storage:"minecraft:ability",path:"billy.toggle.land"}
+        loot insert 0 -63 0 mine ~ ~ ~ minecraft:stick[tool={can_destroy_blocks_in_creative:true,default_mining_speed:90,damage_per_block:90,rules:[]},enchantments={"minecraft:silk_touch":1}]
+        $data modify storage $(storage) $(path) set string block 0 -63 0 Items[0].id
         item replace block 0 -63 0 container.0 with minecraft:air
     }
 }
