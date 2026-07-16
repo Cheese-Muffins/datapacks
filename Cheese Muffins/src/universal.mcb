@@ -4,10 +4,10 @@ function on_load minecraft:load{
 
     # universal scores
     scoreboard objectives add universalDebug.Duration dummy
-
-    # vfx branch
+    scoreboard objectives add universalText.ID dummy
     scoreboard objectives add universalVFX.ID dummy
     scoreboard objectives add universalVFX.Conditions dummy
+    
 
 
     # ability universals
@@ -164,7 +164,7 @@ dir vfx {
 dir rig {
     dir mount {
         function player {
-            # ex: function universal:rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+            # function universal:rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
             $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
             $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}
             block { with storage minecraft:universal rig
@@ -174,7 +174,7 @@ dir rig {
     }
 
     function rotate {
-        # ex: function universal:rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+        # function universal:rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
         $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
         $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}
         block { with storage minecraft:universal rig
@@ -196,11 +196,52 @@ dir rig {
     }
 
     function visibility {
-        # ex: function universal:rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+        # function universal:rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
         $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
         $data merge storage minecraft:universal {rig:{objective:"$(objective)",target:"$(target)",state:"$(state)",perspective:"$(perspective)",mounted:"$(mounted)"}}
         block { with storage minecraft:universal rig
             $visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
+        }
+    }
+
+    function text {
+        # EXAMPLE #
+            # data modify storage minecraft:universal text.arguments.animation set value "billy"
+            # data modify storage minecraft:universal text.arguments.text set value "{text:{"color":"red","italic":false,"text":"Billy"}}"
+            # data modify storage minecraft:universal text.arguments.output set value "ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"
+        # OR #
+            # data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{text:{"color":"red","italic":false,"text":"Billy"}},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
+        # THEN #
+            # function universal:rig/text with storage minecraft:universal text.arguments
+
+        $function aj:text_display/summon {args:{animation:'$(animation)',start_animation: true}}
+
+        execute store result storage minecraft:universal text.id int 1 run scoreboard players get @s universalAbility.ID
+
+        # as the text node
+        execute as @n[type=minecraft:text_display,tag=aj.text_display.text_display.display,tag=!universalText.IDAssigned] run block { with storage minecraft:universal text
+            data modify entity @s text set from storage minecraft:universal text.arguments.text
+            $scoreboard players set @s universalText.ID $(id)
+            tag @s add universalText.IDAssigned
+        }
+
+        # as the text root
+        execute as @n[type=minecraft:item_display,tag=aj.text_display.root,tag=!universalText.IDAssigned] run block { with storage minecraft:universal text
+            $scoreboard players set @s universalText.ID $(id)
+            tag @s add universalText.IDAssigned
+
+            execute if data storage minecraft:universal text.arguments.output run block { with storage minecraft:universal text.arguments
+                $$(output)
+            }
+        }
+        data remove storage minecraft:universal text.arguments
+    }
+
+    function pair {
+        # function universal:rig/pair {target:"type=minecraft:item_display,tag=aj.billy.root",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+        $data merge storage minecraft:custom {universal:{control:{target:"$(target)",objective_before:"$(objective_before)",objective_target:"$(objective_target)"}}}
+        block { with storage minecraft:custom universal.control
+            $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
         }
     }
 }

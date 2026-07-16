@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] at @s run function ability:billy/toggle/zzz/3
+$data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"red","italic":false,"text":"Billy"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
+function universal:rig/text with storage minecraft:universal text.arguments

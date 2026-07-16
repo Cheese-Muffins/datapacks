@@ -40,7 +40,7 @@
       "predicate": {
         "minecraft:type_specific/player": {
           "input": {
-            "backward": true
+            "left": true
           }
         }
       }

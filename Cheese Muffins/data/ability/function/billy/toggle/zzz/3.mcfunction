@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-playsound minecraft:entity.polar_bear.death player @a ~ ~ ~ 0.5
-function aj:billy/animations/idle/stop
-function aj:billy/animations/withdraw/play
+$data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"gold","italic":false,"text":"Demetrius"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
+function universal:rig/text with storage minecraft:universal text.arguments

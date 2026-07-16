@@ -4,7 +4,7 @@
 scoreboard objectives add mcb.internal dummy
 # universal scores
 scoreboard objectives add universalDebug.Duration dummy
-# vfx branch
+scoreboard objectives add universalText.ID dummy
 scoreboard objectives add universalVFX.ID dummy
 scoreboard objectives add universalVFX.Conditions dummy
 # ability universals
