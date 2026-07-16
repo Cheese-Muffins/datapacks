@@ -189,7 +189,7 @@ dir rig {
     function as_player {
         # function universal:rig/as_player {player:"customAbility.Billy",objective:"universalAbility.ID",output:"tag @s remove universalAbility.HideUI"}
         $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
-        $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",output:"$(output)"}}
+        $data merge storage minecraft:universal {rig:{player:"$(player)",objective:"$(objective)",output:"$(output)"}}
         block { with storage minecraft:universal rig
             $execute as @p[tag=$(user),scores={$(objective)=$(id)}] at @s run $(output)
         }

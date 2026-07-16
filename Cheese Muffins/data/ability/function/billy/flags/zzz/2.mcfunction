@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
+$execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run function ability:billy/flags/zzz/3

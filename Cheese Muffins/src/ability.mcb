@@ -92,9 +92,18 @@ dir billy {
             execute unless entity @s[tag=abilityBilly.FlagJump] run {
                 execute if predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagWalk] run function ability:billy/flags/setup {type:"walk",animation:"Walk",variation:1}
                 execute if predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagSprint] run function ability:billy/flags/setup {type:"sprint",animation:"Sprint",variation:2}
-                execute if predicate universal:flags/jump run function ability:billy/flags/setup {type:"jump",animation:"Jump",variation:3}
+                execute if predicate universal:flags/jump unless predicate universal:flags/flying run function ability:billy/flags/setup {type:"jump",animation:"Jump",variation:3}
             }
-            execute if entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/jumping
+            execute if entity @s[tag=abilityBilly.FlagJump] run {
+                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+                block { with storage minecraft:ability billy
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
+                        function universal:rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+                    }
+                }
+
+                execute unless entity @s[tag=abilityBilly.FlagLanding] run function ability:billy/flags/jump/falling
+            }
 
             execute unless predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagIdle] unless entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/setup {type:"idle",animation:"Idle",variation:4}
         }
@@ -103,7 +112,6 @@ dir billy {
             $data merge storage minecraft:ability {billy:{type:"$(type)",adjust:1,tween:3}}
             $scoreboard players set @s abilityBilly.FlagID $(variation)
 
-            execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
             block { with storage minecraft:ability billy
                 $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy
                     $function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
@@ -114,8 +122,27 @@ dir billy {
             $tag @s add abilityBilly.Flag$(animation)
         }
 
-        function jumping {
-            execute if predicate universal:flags/grounded run tag @s remove abilityBilly.FlagJump
+        dir jump {
+            function falling {
+                execute if predicate universal:flags/flying run function ability:billy/flags/jump/land
+                execute if predicate universal:flags/grounded run function ability:billy/flags/jump/land 
+            }
+
+            function land {
+                tag @s add abilityBilly.FlagLanding
+
+                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+                block { with storage minecraft:ability billy
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
+                        function aj:billy/animations/jump/tween {to_frame:6,duration:1}
+                    }
+                }
+            }
+
+            function end {
+                tag @s remove abilityBilly.FlagLanding
+                tag @s remove abilityBilly.FlagJump
+            }
         }
 
         function clear {

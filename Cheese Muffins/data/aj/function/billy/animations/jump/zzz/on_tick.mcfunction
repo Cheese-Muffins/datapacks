@@ -5,5 +5,5 @@ execute if score @s aj.tween_duration matches 0 on passengers run data modify en
 data remove storage animated_java:temp args
 execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.jump.frame
 function aj:billy/animations/jump/zzz/apply_frame with storage animated_java:temp args
-execute if score @s aj.jump.frame matches 30 run return run function aj:billy/animations/jump/zzz/loop_mode_stop
+execute if score @s aj.jump.frame matches 7 run return run function aj:billy/animations/jump/zzz/loop_mode_stop
 scoreboard players add @s aj.jump.frame 1
