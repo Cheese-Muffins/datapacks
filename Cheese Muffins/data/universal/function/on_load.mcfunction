@@ -4,6 +4,7 @@
 scoreboard objectives add mcb.internal dummy
 # universal scores
 scoreboard objectives add universalDebug.Duration dummy
+scoreboard objectives add universalError.FailReturn dummy
 scoreboard objectives add universalText.ID dummy
 scoreboard objectives add universalVFX.ID dummy
 scoreboard objectives add universalVFX.Conditions dummy
@@ -27,7 +28,9 @@ scoreboard objectives add universalAbility.MoveTrigger8 dummy
 scoreboard objectives add universalAbility.ID dummy
 scoreboard objectives add universalAbility.MoveCooldownMath dummy
 scoreboard objectives add universalAbility.MoveDelay dummy
+scoreboard objectives add universalAbility.MovePrevious dummy
 scoreboard objectives add universalAbility.ToggleTrigger dummy
 scoreboard objectives add universalAbility.ToggleState dummy
 scoreboard objectives add universalAbility.ToggleDelay dummy
+scoreboard objectives add universalAbility.HotbarSlot dummy
 function ability:billy/install

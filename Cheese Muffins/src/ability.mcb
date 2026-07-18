@@ -14,6 +14,13 @@ dir billy {
         function main {
             execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. run function ability:billy/active
 
+            REPEAT (1,3) as i {
+                execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
+                    scoreboard players reset @s universalAbility.MoveTrigger<%i%>
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:billy/moves/<%i%>/core
+                }
+            }
+
             execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0,abilityBilly.ToggleOnText=0}] unless entity @s[tag=traitAbility.TimeLocked] run {
                 REPEAT (1,3) as i {
                     execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
@@ -34,10 +41,122 @@ dir billy {
     function install {
         scoreboard objectives add abilityBilly.FlagID dummy
         scoreboard objectives add abilityBilly.ToggleOnText dummy
+
+
+        function universal:cooldown/8x {name:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
+        function universal:cooldown/8x {name:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:30}
+        
+        function universal:cooldown/8x {name:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
+        function universal:cooldown/8x {name:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
     }
 
     function active {
-        function ability:billy/flags/index
+        function ability:billy/hotbar/main
+
+        execute unless entity @s[tag=abilityBilly.FlagOverride] run function ability:billy/flags/index
+    }
+
+    dir moves {
+        function setup {
+            $data merge storage minecraft:ability {billy:{setup:{rig:'$(rig)',animation:'$(animation)'}}}
+            execute store result storage minecraft:ability billy.setup.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:ability billy.setup
+                $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy.setup
+                    $function aj:billy/animations/$(animation)/play
+                }
+            }
+            tag @s add abilityBilly.FlagOverride
+        }
+
+        dir 1 {
+            function core {
+                execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
+                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                function universal:error_messages/constant
+
+                scoreboard players set @s universalAbility.HotbarSlot 1
+                execute unless score @s universalError.FailReturn matches 1 run function ability:billy/moves/1/pass
+                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Encourage",unicode:"u50A1"}
+            }
+
+            function pass {
+                # setup
+                function ability:billy/moves/setup {rig:"billy",animation:'encourage'}
+
+                # restraints
+                function universal:ability/restraint/cooldown {move:1,name:"Billy"}
+                function universal:ability/restraint/cancelable {move:1}
+
+            }
+        }
+
+        dir 2 {
+            function core {
+                scoreboard players set @s universalAbility.HotbarSlot 2
+            }
+        }
+
+        dir 3 {
+            function core {
+                scoreboard players set @s universalAbility.HotbarSlot 3
+            }
+        }
+
+        dir reset {
+            function all {
+                function universal:ability/rig/as_player {player:"abilityBilly.User",objective:"universalAbility.ID",output:"function ability:billy/moves/reset/player"}
+                function ability:billy/moves/reset/rig
+            }
+
+            function rig {
+                say rig
+            }
+
+            function player {
+                say player
+
+                tag @s remove abilityBilly.FlagOverride
+            }
+        }
+    }
+
+    dir hotbar {
+        function main {
+            REPEAT (1,3) as i {
+                execute unless entity @s[tag=abilityBilly.PassiveHomeland] run function ability:billy/hotbar/progress with storage minecraft:ability billy.cooldown.move<%i%>a
+                execute if entity @s[tag=abilityBilly.PassiveHomeland] run function ability:billy/hotbar/progress with storage minecraft:ability billy.cooldown.move<%i%>b
+            }
+            
+            REPEAT (1,3) as i {
+                execute if score @s universalAbility.HotbarSlot matches <%i%> run {
+                    function universal:hotbar/time {ability:"billy",slot:<%i%>}
+                }
+            }
+
+            execute if score @s universalAbility.HotbarSlot matches 1 run block { with storage minecraft:ability billy.hotbar
+                $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+            }
+
+            execute if score @s universalAbility.HotbarSlot matches 2 run block { with storage minecraft:ability billy.hotbar
+                $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+            }
+            
+            execute if score @s universalAbility.HotbarSlot matches 3 run block { with storage minecraft:ability billy.hotbar
+                $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+            }
+        }
+
+        function progress {
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A2"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A3"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A4"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A5"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A6"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A7"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A8"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A9"
+            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05B0"
+        }
     }
 
     dir toggle {
@@ -49,9 +168,10 @@ dir billy {
                 $scoreboard players set @s universalAbility.ID $(id)
             }
 
-            function universal:rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-            function universal:rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            function universal:rig/pair {target:"type=minecraft:item_display,tag=aj.billy.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+            function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
 
             tag @s add universalAbility.HideUI
             scoreboard players set @s universalAbility.ToggleDelay 40
@@ -75,38 +195,38 @@ dir billy {
         function text {
             execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
             execute if score @s abilityBilly.ToggleOnText matches 54 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"red","italic":false,"text":"Billy"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-                function universal:rig/text with storage minecraft:universal text.arguments
+                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"red","italic":false,"text":"Billy"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
             }
 
             execute if score @s abilityBilly.ToggleOnText matches 44 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"gold","italic":false,"text":"Demetrius"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-                function universal:rig/text with storage minecraft:universal text.arguments
+                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"gold","italic":false,"text":"Demetrius"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
             }
 
             execute if score @s abilityBilly.ToggleOnText matches 35 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"yellow","italic":false,"text":"Demarcus"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-                function universal:rig/text with storage minecraft:universal text.arguments
+                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"yellow","italic":false,"text":"Demarcus"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
             }
 
             execute if score @s abilityBilly.ToggleOnText matches 25 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"green","italic":false,"text":"Bartholomew"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-                function universal:rig/text with storage minecraft:universal text.arguments
+                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"green","italic":false,"text":"Bartholomew"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
             }
 
             execute if score @s abilityBilly.ToggleOnText matches 15 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"blue","italic":false,"text":"James"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-                function universal:rig/text with storage minecraft:universal text.arguments
+                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"blue","italic":false,"text":"James"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
             }
 
             execute if score @s abilityBilly.ToggleOnText matches 8 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"light_purple","italic":false,"text":"the"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-                function universal:rig/text with storage minecraft:universal text.arguments
+                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"light_purple","italic":false,"text":"the"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
             }
 
             execute if score @s abilityBilly.ToggleOnText matches 1 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{"color":"dark_purple","italic":false,"text":"III"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-                function universal:rig/text with storage minecraft:universal text.arguments
+                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"dark_purple","italic":false,"text":"III"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
             }
         }
 
@@ -136,7 +256,7 @@ dir billy {
                 execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
                 block { with storage minecraft:ability billy
                     $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
-                        function universal:rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+                        function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
                     }
                 }
 

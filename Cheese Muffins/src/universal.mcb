@@ -4,6 +4,7 @@ function on_load minecraft:load{
 
     # universal scores
     scoreboard objectives add universalDebug.Duration dummy
+    scoreboard objectives add universalError.FailReturn dummy
     scoreboard objectives add universalText.ID dummy
     scoreboard objectives add universalVFX.ID dummy
     scoreboard objectives add universalVFX.Conditions dummy
@@ -18,9 +19,11 @@ function on_load minecraft:load{
     scoreboard objectives add universalAbility.ID dummy
     scoreboard objectives add universalAbility.MoveCooldownMath dummy
     scoreboard objectives add universalAbility.MoveDelay dummy
+    scoreboard objectives add universalAbility.MovePrevious dummy
     scoreboard objectives add universalAbility.ToggleTrigger dummy
     scoreboard objectives add universalAbility.ToggleState dummy
     scoreboard objectives add universalAbility.ToggleDelay dummy
+    scoreboard objectives add universalAbility.HotbarSlot dummy
 
     function ability:billy/install
 }
@@ -100,6 +103,43 @@ function toggle_ability {
     scoreboard players reset @s universalAbility.ToggleTrigger
 }
 
+dir hotbar {
+    function time {
+        $execute store result storage minecraft:universal hotbar.time int 0.05 run scoreboard players get @s universalAbility.MoveCooldown$(slot)
+        $data merge storage minecraft:universal {hotbar:{ability:"$(ability)",slot:$(slot)}}
+        block { with storage minecraft:universal hotbar
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches 2000.. store result storage minecraft:ability $(ability).hotbar.time int 0.05 run scoreboard players get @s universalAbility.MoveCooldown$(slot)
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches 200..1999 run data merge storage minecraft:ability {$(ability):{hotbar:{time:"0$(time)"}}}
+            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 199.. run data merge storage minecraft:ability {$(ability):{hotbar:{time:"00$(time)"}}}
+        }
+    }
+}
+
+dir cooldown {
+    function 8x {
+        $scoreboard players set .$(name)Cooldown universalAbility.MoveCooldown$(move) $(cooldown)
+        $function universal:math/multiply {value:20,score:".$(name)Cooldown",objective:"universalAbility.MoveCooldown$(move)"}
+        $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+        $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+        $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+        $function universal:math/divide {value:9,score:".$(name)CooldownDivided",objective:"universalAbility.MoveCooldown$(move)"}
+
+        $execute store result storage minecraft:ability $(storage).cooldown.move$(path).9 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+
+        REPEAT (8,1) as i {
+            $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
+            $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>a int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+            $scoreboard players remove .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) 1
+            $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>b int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+        }
+
+        $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
+        $execute store result storage minecraft:ability $(storage).cooldown.move$(path).1 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+
+        $data merge storage minecraft:ability {$(storage):{cooldown:{move$(path):{slot:$(move)}}}}
+    }
+}
+
 dir vfx {
     function spawn {
         #  --   Required Args  --   #
@@ -161,93 +201,109 @@ dir vfx {
     }
 }
 
-dir rig {
-    dir mount {
-        function player {
-            # function universal:rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-            $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
-            $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}
+dir ability {
+    dir rig {
+        dir mount {
+            function player {
+                # function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+                $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
+                $data merge storage minecraft:universal {ability:{rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+                block { with storage minecraft:universal ability.rig
+                    $ride @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] mount @p[tag=$(user),scores={$(objective)=$(id)}]
+                }
+            }
+        }
+
+        function rotate {
+            # function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:universal {ability:{rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+            block { with storage minecraft:universal ability.rig
+                $execute as @a[tag=$(user),scores={$(objective)=$(id)}] store result storage minecraft:universal ability.rig.rotation float 0.1 run data get entity @s Rotation[0] 10
+                block { with storage minecraft:universal ability.rig
+                    $data modify entity @s Rotation[0] set value $(rotation)
+                }
+                # $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/$(rig)/toggle/off
+            }
+        }
+
+        function as_player {
+            # function universal:ability/rig/as_player {player:"abilityBilly.User",objective:"universalAbility.ID",output:"tag @s remove universalAbility.HideUI"}
+            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:universal {ability:{rig:{player:"$(player)",objective:"$(objective)",output:"$(output)"}}}
+            block { with storage minecraft:universal ability.rig
+                $execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)
+            }
+        }
+
+        function visibility {
+            # function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:universal {ability:{rig:{objective:"$(objective)",target:"$(target)",state:"$(state)",perspective:"$(perspective)",mounted:"$(mounted)"}}}
+            block { with storage minecraft:universal ability.rig
+                $visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
+            }
+        }
+
+        function text {
+            # EXAMPLE #
+                # data modify storage minecraft:universal ability.rig.text.arguments.animation set value "billy"
+                # data modify storage minecraft:universal ability.rig.text.arguments.text set value "{text:{"color":"red","italic":false,"text":"Billy"}}"
+                # data modify storage minecraft:universal ability.rig.text.arguments.output set value "ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"
+            # OR #
+                # data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{text:{"color":"red","italic":false,"text":"Billy"}},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
+            # THEN #
+                # function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
+
+            $function aj:text_display/summon {args:{animation:'$(animation)',start_animation: true}}
+
+            execute store result storage minecraft:universal ability.rig.text.id int 1 run scoreboard players get @s universalAbility.ID
+
+            # as the text node
+            execute as @n[type=minecraft:text_display,tag=aj.text_display.text_display.display,tag=!universalText.IDAssigned] run block { with storage minecraft:universal ability.rig.text
+                data modify entity @s text set from storage minecraft:universal ability.rig.text.arguments.text
+                $scoreboard players set @s universalText.ID $(id)
+                tag @s add universalText.IDAssigned
+            }
+
+            # as the text root
+            execute as @n[type=minecraft:item_display,tag=aj.text_display.root,tag=!universalText.IDAssigned] run block { with storage minecraft:universal ability.rig.text
+                $scoreboard players set @s universalText.ID $(id)
+                tag @s add universalText.IDAssigned
+
+                execute if data storage minecraft:universal ability.rig.text.arguments.output run block { with storage minecraft:universal ability.rig.text.arguments
+                    $$(output)
+                }
+            }
+            data remove storage minecraft:universal ability.rig.text.arguments
+        }
+
+        function pair {
+            # function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.root",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            $data merge storage minecraft:universal {ability:{rig:{target:"$(target)",objective_before:"$(objective_before)",objective_target:"$(objective_target)"}}}
+            block { with storage minecraft:universal ability.rig
+                $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
+            }
+        }
+    }
+
+    dir restraint {
+        function cooldown {
+            $execute unless entity @s[tag=abilitySettings.DisabledCooldowns] run scoreboard players operation @s universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+        }
+
+        function cancelable {
+            tag @s add universalAbility.ModifierCancelable
+            $data merge storage minecraft:universal {rig:{move:$(move)}}
             block { with storage minecraft:universal rig
-                $ride @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] mount @p[tag=$(user),scores={$(objective)=$(id)}]
+                scoreboard players set @s universalAbility.MovePrevious $(move)
             }
-        }
-    }
-
-    function rotate {
-        # function universal:rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-        $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
-        $data merge storage minecraft:universal {rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}
-        block { with storage minecraft:universal rig
-            $execute as @a[tag=$(user),scores={$(objective)=$(id)}] store result storage minecraft:universal rig.rotation float 0.1 run data get entity @s Rotation[0] 10
-            block { with storage minecraft:universal rig
-                $data modify entity @s Rotation[0] set value $(rotation)
-            }
-            # $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/$(rig)/toggle/off
-        }
-    }
-
-    function as_player {
-        # function universal:rig/as_player {player:"customAbility.Billy",objective:"universalAbility.ID",output:"tag @s remove universalAbility.HideUI"}
-        $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
-        $data merge storage minecraft:universal {rig:{player:"$(player)",objective:"$(objective)",output:"$(output)"}}
-        block { with storage minecraft:universal rig
-            $execute as @p[tag=$(user),scores={$(objective)=$(id)}] at @s run $(output)
-        }
-    }
-
-    function visibility {
-        # function universal:rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-        $execute store result storage minecraft:universal rig.id int 1 run scoreboard players get @s $(objective)
-        $data merge storage minecraft:universal {rig:{objective:"$(objective)",target:"$(target)",state:"$(state)",perspective:"$(perspective)",mounted:"$(mounted)"}}
-        block { with storage minecraft:universal rig
-            $visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
-        }
-    }
-
-    function text {
-        # EXAMPLE #
-            # data modify storage minecraft:universal text.arguments.animation set value "billy"
-            # data modify storage minecraft:universal text.arguments.text set value "{text:{"color":"red","italic":false,"text":"Billy"}}"
-            # data modify storage minecraft:universal text.arguments.output set value "ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"
-        # OR #
-            # data merge storage minecraft:universal {text:{arguments:{animation:"billy",text:{text:{"color":"red","italic":false,"text":"Billy"}},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}
-        # THEN #
-            # function universal:rig/text with storage minecraft:universal text.arguments
-
-        $function aj:text_display/summon {args:{animation:'$(animation)',start_animation: true}}
-
-        execute store result storage minecraft:universal text.id int 1 run scoreboard players get @s universalAbility.ID
-
-        # as the text node
-        execute as @n[type=minecraft:text_display,tag=aj.text_display.text_display.display,tag=!universalText.IDAssigned] run block { with storage minecraft:universal text
-            data modify entity @s text set from storage minecraft:universal text.arguments.text
-            $scoreboard players set @s universalText.ID $(id)
-            tag @s add universalText.IDAssigned
-        }
-
-        # as the text root
-        execute as @n[type=minecraft:item_display,tag=aj.text_display.root,tag=!universalText.IDAssigned] run block { with storage minecraft:universal text
-            $scoreboard players set @s universalText.ID $(id)
-            tag @s add universalText.IDAssigned
-
-            execute if data storage minecraft:universal text.arguments.output run block { with storage minecraft:universal text.arguments
-                $$(output)
-            }
-        }
-        data remove storage minecraft:universal text.arguments
-    }
-
-    function pair {
-        # function universal:rig/pair {target:"type=minecraft:item_display,tag=aj.billy.root",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-        $data merge storage minecraft:custom {universal:{control:{target:"$(target)",objective_before:"$(objective_before)",objective_target:"$(objective_target)"}}}
-        block { with storage minecraft:custom universal.control
-            $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
         }
     }
 }
 
 dir error_messages {
-    function universal {
+    function constant {
         execute if entity @s[tag=customGojo.RidingBlue] run function custom:universal/error_messages/find {error:100}
         execute if entity @s[tag=customGojo.InfiniteVoided] run function custom:universal/error_messages/find {error:101}
         execute if entity @s[tag=customTheWorld.TimeLocked] run function custom:universal/error_messages/find {error:102}
@@ -255,58 +311,57 @@ dir error_messages {
     }
 
     function setup {
-        # function universal:error_messages/setup {error:1}
-        $tag @s add universalErrorLog.$(error)
-        scoreboard players set @s universalErrorLog.FailReturn 1
+        # function universal:error_messages/setup {id:1}
+        $tag @s add universalError.$(id)
+        scoreboard players set @s universalError.FailReturn 1
     }
 
-    function display {
-        # function universal:error_messages/display {number:1,unicode:"u50A0",move:"Blitz"}
-        $scoreboard players operation @s universalAbility.MoveCooldownMath = @s universalMove.Cooldown$(number)
-        # function universal:math/divide {value:20,score:"@s",objective:"universalAbility.MoveCooldownMath"}
-        $execute unless entity @s[tag=universalErrorLog.Hide] run block { {unicode:"$(unicode)",move:"$(move)"}
-            $tellraw @s ["",{"text":"\n\$(unicode) ","color":"white"},{"text":" $(move)","color":"gold"}]
-            execute if entity @s[tag=universalErrorLog.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" ","color":"blue"},{"score":{"name":"@s","objective":"universalAbility.MoveCooldownMath"},"color":"red"},{"text":"s","color":"red"}]
-            execute if entity @s[tag=universalErrorLog.2] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Another move is ","color":"gray"},{"text":"currently casting!","color":"blue"}]
-            execute if entity @s[tag=universalErrorLog.3] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]
-            execute if entity @s[tag=universalErrorLog.4] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"be looking at an entity to use ","color":"gray"},{"text":"this ","color":"aqua"},{"text":"move!","color":"gray"}]
-            execute if entity @s[tag=universalErrorLog.5] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use ","color":"gray"},{"text":"Domain Expansion","color":"dark_purple"},{"text":" - ","color":"gray"},{"text":"Infinite Void","color":"light_purple"},{"text":" whilst nearby someone ","color":"gray"},{"text":"currently using","color":"gold"},{"text":" or ","color":"red"},{"text":"performing ","color":"gold"},{"text":"this move!","color":"gray"}]
-            execute if entity @s[tag=universalErrorLog.6] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You must be on ","color":"gray"},{"text":"solid ground ","color":"green"},{"text":"to cast this ","color":"gray"},{"text":"move!","color":"gold"}]
-            execute if entity @s[tag=universalErrorLog.7] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use this attack whilst it's ","color":"gray"},{"text":"currently casting!","color":"aqua"}]
-            execute if entity @s[tag=universalErrorLog.8] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T","color":"red"},{"text":" use this move whilst being targeted by ","color":"gray"},{"text":"Pact!","color":"aqua"}]
+    function fail {
+        $data merge storage minecraft:universal {error:{name:"$(name)",unicode:"$(unicode)"}}
+        $execute store result storage minecraft:universal error.cooldown double 0.05 run scoreboard players get @s universalAbility.MoveCooldown$(move)
+        execute unless entity @s[tag=universalError.Hide] run block { with storage minecraft:universal error
+            $tellraw @s ["",{"text":"\n\$(unicode) ","color":"white"},{"text":" $(name)","color":"gold"}]
+            $execute if entity @s[tag=universalError.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" $(cooldown)","color":"red"},{"text":"s","color":"red"}]
+            execute if entity @s[tag=universalError.2] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Another move is ","color":"gray"},{"text":"currently casting!","color":"blue"}]
+            # execute if entity @s[tag=universalError.3] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]
+            # execute if entity @s[tag=universalError.4] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"be looking at an entity to use ","color":"gray"},{"text":"this ","color":"aqua"},{"text":"move!","color":"gray"}]
+            # execute if entity @s[tag=universalError.5] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use ","color":"gray"},{"text":"Domain Expansion","color":"dark_purple"},{"text":" - ","color":"gray"},{"text":"Infinite Void","color":"light_purple"},{"text":" whilst nearby someone ","color":"gray"},{"text":"currently using","color":"gold"},{"text":" or ","color":"red"},{"text":"performing ","color":"gold"},{"text":"this move!","color":"gray"}]
+            # execute if entity @s[tag=universalError.6] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You must be on ","color":"gray"},{"text":"solid ground ","color":"green"},{"text":"to cast this ","color":"gray"},{"text":"move!","color":"gold"}]
+            # execute if entity @s[tag=universalError.7] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use this attack whilst it's ","color":"gray"},{"text":"currently casting!","color":"aqua"}]
+            # execute if entity @s[tag=universalError.8] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T","color":"red"},{"text":" use this move whilst being targeted by ","color":"gray"},{"text":"Pact!","color":"aqua"}]
 
-            execute if entity @s[tag=universalErrorLog.9] run {
-                scoreboard players operation @s universalAbility.MoveCooldownMath = @s customEren.ShiftCooldown
-                scoreboard players operation @s universalAbility.MoveCooldownMath /= #divide universalAbility.MoveCooldownMath
-                tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't attempt to ","color":"gray"},{"text":"shift","color":"gold"},{"text":" into the ","color":"gray"},{"text":"Attack Titan","color":"aqua"},{"text":" for another ","color":"gray"},{"score":{"name":"@s","objective":"universalAbility.MoveCooldownMath"},"color":"red"},{"text":"s!","color":"red"}]
-            }
+            # execute if entity @s[tag=universalError.9] run {
+            #     scoreboard players operation @s universalAbility.MoveCooldownMath = @s customEren.ShiftCooldown
+            #     scoreboard players operation @s universalAbility.MoveCooldownMath /= #divide universalAbility.MoveCooldownMath
+            #     tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't attempt to ","color":"gray"},{"text":"shift","color":"gold"},{"text":" into the ","color":"gray"},{"text":"Attack Titan","color":"aqua"},{"text":" for another ","color":"gray"},{"score":{"name":"@s","objective":"universalAbility.MoveCooldownMath"},"color":"red"},{"text":"s!","color":"red"}]
+            # }
 
-            execute if entity @s[tag=universalErrorLog.10] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"roll the dice before ","color":"gray"},{"text":"storing ","color":"aqua"},{"text":"a move!","color":"gray"}]
-            execute if entity @s[tag=universalErrorLog.11] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be looking at a ","color":"gray"},{"text":"block in range","color":"aqua"},{"text":" in order to use ","color":"gray"},{"text":"Acrobatics","color":"light_purple"}]
-            execute if entity @s[tag=universalErrorLog.12] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You've reached the ","color":"gray"},{"text":"maximum ","color":"red"},{"text":"number of ","color":"gray"},{"text":"traps!","color":"aqua"}]
-            execute if entity @s[tag=universalErrorLog.13] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Traps must be spaced ","color":"gray"},{"text":"at least 4 meters apart","color":"light_purple"},{"text":" from eachother!","color":"gray"}]
-            execute if entity @s[tag=universalErrorLog.14] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"cast this move inside the ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
-            execute if entity @s[tag=universalErrorLog.15] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves while ","color":"gray"},{"text":"disguised","color":"light_purple"},{"text":" as a ","color":"gray"},{"text":"Turtle!","color":"green"}]
-            execute if entity @s[tag=universalErrorLog.16] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
-            execute if entity @s[tag=universalErrorLog.17] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be holding a valid ","color":"gray"},{"text":"tool ","color":"gold"},{"text":"to use this move!","color":"gray"}]
-            execute if entity @s[tag=universalErrorLog.18] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"have ","color":"gray"},{"text":"ammo ","color":"gold"},{"text":"to fire the ","color":"gray"},{"text":"Shrinkray!","color":"green"}]
+            # execute if entity @s[tag=universalError.10] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"roll the dice before ","color":"gray"},{"text":"storing ","color":"aqua"},{"text":"a move!","color":"gray"}]
+            # execute if entity @s[tag=universalError.11] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be looking at a ","color":"gray"},{"text":"block in range","color":"aqua"},{"text":" in order to use ","color":"gray"},{"text":"Acrobatics","color":"light_purple"}]
+            # execute if entity @s[tag=universalError.12] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You've reached the ","color":"gray"},{"text":"maximum ","color":"red"},{"text":"number of ","color":"gray"},{"text":"traps!","color":"aqua"}]
+            # execute if entity @s[tag=universalError.13] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Traps must be spaced ","color":"gray"},{"text":"at least 4 meters apart","color":"light_purple"},{"text":" from eachother!","color":"gray"}]
+            # execute if entity @s[tag=universalError.14] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"cast this move inside the ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
+            # execute if entity @s[tag=universalError.15] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves while ","color":"gray"},{"text":"disguised","color":"light_purple"},{"text":" as a ","color":"gray"},{"text":"Turtle!","color":"green"}]
+            # execute if entity @s[tag=universalError.16] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't ","color":"red"},{"text":"use this move whilst inside someone elses ","color":"gray"},{"text":"Pocket Dimension!","color":"aqua"}]
+            # execute if entity @s[tag=universalError.17] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"be holding a valid ","color":"gray"},{"text":"tool ","color":"gold"},{"text":"to use this move!","color":"gray"}]
+            # execute if entity @s[tag=universalError.18] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"must ","color":"red"},{"text":"have ","color":"gray"},{"text":"ammo ","color":"gold"},{"text":"to fire the ","color":"gray"},{"text":"Shrinkray!","color":"green"}]
 
-            execute if entity @s[tag=universalErrorLog.100] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
-            execute if entity @s[tag=universalErrorLog.101] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
-            execute if entity @s[tag=universalErrorLog.102] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use moves when ","color":"gray"},{"text":"frozen ","color":"red"},{"text":"in ","color":"gray"},{"text":"time!","color":"aqua"}]
-            execute if entity @s[tag=universalErrorLog.103] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves whilst being ","color":"gray"},{"text":"barraged!","color":"aqua"}]
+            # execute if entity @s[tag=universalError.100] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CANNOT ","color":"red"},{"text":"use moves when ","color":"gray"},{"text":"picked up","color":"gold"},{"text":" by ","color":"gray"},{"text":"Lapis Blue","color":"aqua"}]
+            # execute if entity @s[tag=universalError.101] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
+            # execute if entity @s[tag=universalError.102] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use moves when ","color":"gray"},{"text":"frozen ","color":"red"},{"text":"in ","color":"gray"},{"text":"time!","color":"aqua"}]
+            # execute if entity @s[tag=universalError.103] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves whilst being ","color":"gray"},{"text":"barraged!","color":"aqua"}]
             playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5
             tellraw @s ""
         }
 
         REPEAT (1,102) as i {
-            tag @s remove universalErrorLog.<%i%>
+            tag @s remove universalError.<%i%>
         }
 
-        tag @s remove universalErrorLog.Hide
+        tag @s remove universalError.Hide
         
         scoreboard players set @s universalAbility.MoveDelay 10
-        scoreboard players set @s universalErrorLog.FailReturn 0
+        scoreboard players set @s universalError.FailReturn 0
     }
 }
 

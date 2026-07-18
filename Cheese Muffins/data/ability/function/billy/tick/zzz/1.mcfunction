@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-function ability:billy/toggle/text
-scoreboard players remove @s abilityBilly.ToggleOnText 1
+scoreboard players reset @s universalAbility.MoveTrigger2
+execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:billy/moves/2/core
