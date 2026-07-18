@@ -1,4 +1,1 @@
-{
-	"replace": false,
-	"values": ["ability:on_load", "animated_java:global/on_load", "cassette:on_load", "ui:on_load", "universal:on_load"]
-}
+{"values":["ability:on_load","cassette:on_load","ui:on_load","universal:on_load"]}

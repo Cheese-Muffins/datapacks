@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
+# function universal:ability/restraint/cancelable {move:1}
 tag @s add universalAbility.ModifierCancelable
-$data merge storage minecraft:universal {rig:{move:$(move)}}
-function universal:ability/restraint/zzz/0 with storage minecraft:universal rig
+$scoreboard players set @s universalAbility.MovePrevious $(move)

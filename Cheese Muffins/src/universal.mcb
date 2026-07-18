@@ -57,8 +57,9 @@ dir tick {
 
             # scenario ticking relevant to other compilers
             execute if entity @s[tag=scenarioTick.Cassette] run function cassette:tick/scenario/core
+            execute if entity @s[tag=scenarioTick.Ability] run function ability:tick/scenario/index
 
-            execute if entity @s[tag=!scenarioTick.Universal,tag=!scenarioTick.Cassette] run tag @s remove scenarioTick.Enable
+            execute if entity @s[tag=!scenarioTick.Universal,tag=!scenarioTick.Ability,tag=!scenarioTick.Cassette] run tag @s remove scenarioTick.Enable
         }
 
         function debug {
@@ -101,6 +102,26 @@ function toggle_ability {
         tag @s remove temp
     }
     scoreboard players reset @s universalAbility.ToggleTrigger
+}
+
+dir damage {
+    function check {
+        execute if entity @s[tag=universalAbility.ModifierCancelable] run function universal:damage/cancel
+        advancement revoke @s only universal:recieve_damage
+    }
+
+    function cancel {
+        execute if entity @s[tag=abilityBilly.User] run data merge storage minecraft:universal {damage:{namespace:"Billy",ability:"billy"}}
+
+        execute store result storage minecraft:universal damage.id int 1 run scoreboard players get @s universalAbility.ID
+        execute store result storage minecraft:universal damage.move int 1 run scoreboard players get @s universalAbility.MovePrevious
+        block { with storage minecraft:universal damage
+            $execute as @n[type=minecraft:item_display,tag=aj.$(ability).root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal damage
+                playsound minecraft:universal.ability.cancel player @a ~ ~ ~ 1
+                function ability:billy/moves/reset/all
+            }
+        }
+    } 
 }
 
 dir hotbar {
@@ -289,16 +310,56 @@ dir ability {
 
     dir restraint {
         function cooldown {
+            # function universal:ability/restraint/cooldown {move:1,name:"Billy"}
             $execute unless entity @s[tag=abilitySettings.DisabledCooldowns] run scoreboard players operation @s universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
         }
 
         function cancelable {
+            # function universal:ability/restraint/cancelable {move:1}
             tag @s add universalAbility.ModifierCancelable
-            $data merge storage minecraft:universal {rig:{move:$(move)}}
-            block { with storage minecraft:universal rig
-                scoreboard players set @s universalAbility.MovePrevious $(move)
+            $scoreboard players set @s universalAbility.MovePrevious $(move)
+        }
+    }
+
+    dir revoke {
+        function cancelable {
+            # function universal:ability/revoke/cancelable {player:"abilityBilly.User"}
+            $data merge storage minecraft:universal {ability:{revoke:{player:"$(player)"}}}
+            execute store result storage minecraft:universal ability.revoke.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:universal ability.revoke
+                $execute as @p[tag=$(player),scores={universalAbility.ID=$(id)}] at @s run {
+                    tag @s remove universalAbility.ModifierCancelable
+                    scoreboard players reset @s universalAbility.MovePrevious
+                }
             }
         }
+    }
+}
+
+dir attribute {
+    function grant {
+        # function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:billy.encourage",strength:0.25,operation:"add_multiplied_base"}
+        # OPERATION TYPES #
+            # add_multiplied_base
+            # add_multiplied_total
+            # add_value
+        # OPTIONAL ARGUMENTS #
+            # data merge storage minecraft:universal {attribute:{scenario:"Ability",objective:"abilityBilly.EncourageBuff",duration:60,extra:"tag @s add scenarioTick.AbilityBilly"}}
+        $attribute @s $(type) modifier add $(path) $(strength) $(operation)
+        execute if data storage minecraft:universal attribute run block { with storage minecraft:universal attribute
+            $scoreboard players set @s $(objective) $(duration)
+            tag @s add scenarioTick.Enable
+            $tag @s add scenarioTick.$(scenario)
+            execute if data storage minecraft:universal attribute.extra run block { with storage minecraft:universal attribute
+                $$(extra)
+            }
+        }
+        data remove storage minecraft:universal attribute
+    }
+
+    function revoke {
+        # function universal:attribute/revoke {type:"minecraft:movement_speed",path:"ability:billy.encourage"}
+        $attribute @s $(type) modifier remove $(path)
     }
 }
 
