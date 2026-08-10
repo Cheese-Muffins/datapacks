@@ -68,7 +68,7 @@ data\ability\function\billy\flags\jump\end.mcfunction:962d9c5c035bb02a83e7488903
 data\ability\function\billy\flags\clear.mcfunction:66939bbb881c4bc76c9d21e2f85674ba7636c637
 data\ability\function\generate\data.mcfunction:b0523e3c638f9542ec42124b53f536931163344d
 data\ability\function\generate\ratings.mcfunction:6a67339e561bd32d9c9f60a3d3563b909921f8e1
-data\ability\function\generate\zzz\0.mcfunction:e3eeea7ae5e1681ce686a1fc2bec3c79178e408f
+data\ability\function\generate\zzz\0.mcfunction:f28bb7a2035abf0a46b070f688dd07c076028662
 data\ability\function\generate\selection_lore.mcfunction:f28a210107d0e800e831b35428149851fe89a7ef
 data\ability\function\generate\index.mcfunction:97aebd795b65b202fe9e44cfba2d85bb2b9569d4
 data\cassette\function\on_load.mcfunction:baa448228d1ec4273b19290a7e07355d89fcfb3e
@@ -174,6 +174,7 @@ data\ui\function\ability\menu\same.mcfunction:e677bee1a778bb6b3e331d84531e0fd8aa
 data\ui\function\ability\menu\flip.mcfunction:2088f320c56afb1985484ad8ff416b571d0b48c7
 data\ui\function\ability\menu\zzz\0.mcfunction:d845595eb104a121c1ebd050f3b67b7ff2b0b939
 data\ui\function\ability\menu\player.mcfunction:d1216dcee194eb98432e8ae6fa9519de44553380
+data\ui\function\ability\selection\mask.mcfunction:961d5edde0cbbcf9fc4373d55d2cea9ee2b38875
 data\ui\function\cassette\give.mcfunction:face5464a7eeb9cd2f8b9250e68fc51c53f807b3
 data\ui\function\cassette\menu\mask.mcfunction:6eaedbe424eff239544afeedad0453a8bf1a1af8
 data\ui\function\cassette\menu\open.mcfunction:666422a05e9de8b43754301203838ca7f3c7a885

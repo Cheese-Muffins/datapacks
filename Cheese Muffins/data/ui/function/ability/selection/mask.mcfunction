@@ -1,0 +1,3 @@
+# Generated with MC-Build
+
+$data modify storage ui mask set value [{Slot:1b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot1_model)","minecraft:tooltip_display":{hide_tooltip:$(slot1_visibility)},"minecraft:custom_model_data":{floats:[$(slot1_overlay)]},"minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot1_id),slot_entry:$(slot1_entry)}}}}]
