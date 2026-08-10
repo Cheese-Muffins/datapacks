@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$tellraw @s ["",{"text":"$(text)","color":"gray"},{"score":{"name":"$(score)","objective":"$(objective)"},"color":"yellow"}]
+# $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+$execute if entity @s[tag=abilitySettings.DebugLog] run function universal:debug_log/entry/zzz/0 {text:"$(text)",score:"$(score)",objective:"$(objective)"}

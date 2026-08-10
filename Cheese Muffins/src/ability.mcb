@@ -1,6 +1,7 @@
 function on_load minecraft:load{
     # typically all abilities will use these variables
     
+    function ability:generate/index
 }
 
 dir tick {
@@ -64,9 +65,14 @@ dir billy {
     }
 
     function install {
+        scoreboard objectives add abilityBilly.DiscoveredInteractions dummy
+        scoreboard objectives add abilityBilly.UnlockedSkins dummy
         scoreboard objectives add abilityBilly.FlagID dummy
         scoreboard objectives add abilityBilly.ToggleOnText dummy
         scoreboard objectives add abilityBilly.EncourageBuff dummy
+        scoreboard objectives add abilityBilly.PhaseDisconnectX dummy
+        scoreboard objectives add abilityBilly.PhaseDisconnectY dummy
+        scoreboard objectives add abilityBilly.PhaseDisconnectZ dummy
 
 
         function universal:cooldown/8x {name:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
@@ -141,7 +147,37 @@ dir billy {
 
         dir 2 {
             function core {
+                execute if score @s universalAbility.MoveCooldown2 matches 1.. run function universal:error_messages/setup {id:1}
+                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                function universal:error_messages/constant
+
                 scoreboard players set @s universalAbility.HotbarSlot 2
+                execute unless score @s universalError.FailReturn matches 1 run function ability:billy/moves/2/pass
+                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:2,name:"Phase",unicode:"u50A1"}
+            }
+
+            function pass {
+                # setup
+                function ability:billy/moves/setup {rig:"billy",animation:'phase'}
+
+                # restraints
+                function universal:ability/restraint/cooldown {move:1,name:"Billy"}
+                tag @s add universalAbility.Animating
+
+                # specific
+                execute store result score @s abilityBilly.PhaseDisconnectX run data get entity @s Pos[0] 1
+                execute store result score @s abilityBilly.PhaseDisconnectY run data get entity @s Pos[1] 1
+                execute store result score @s abilityBilly.PhaseDisconnectZ run data get entity @s Pos[2] 1
+
+                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+                block { with storage minecraft:ability billy
+                    $tp @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] ~ ~ ~
+                }
+
+
+                gamemode spectator @s
+                function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
+                function universal:ability/rig/spectate_camera {camera:"aj.billy.camera",objective:"universalAbility.ID"}
             }
         }
 
@@ -366,5 +402,100 @@ dir billy {
         #         $execute store result storage minecraft:ability billy.adjust int 1 run scoreboard players get @s aj.$(objective).frame
         #     }
         # }
+    }
+}
+
+dir generate {
+    function data {
+        $function ability:generate/ratings with storage minecraft:ability index.$(ability_id)
+
+    }
+
+    function ratings {
+        # obtainment
+        $scoreboard players set .ObtainmentRating uiAbility.SelectionBroad $(obtainment_rating_raw)
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"",obtainment_rating_2:"⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐",obtainment_rating_2:"⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐",obtainment_rating_2:"⭐⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐",obtainment_rating_2:"⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"yellow"}}}
+
+        # versatility
+        $scoreboard players set .VersatilityRating uiAbility.SelectionBroad $(versatility_rating_raw)
+        $execute if score .VersatilityRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"",versatility_rating_2:"⭐⭐⭐⭐⭐",versatility_rating_color:"light_purple"}}}
+        $execute if score .VersatilityRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐",versatility_rating_2:"⭐⭐⭐⭐",versatility_rating_color:"light_purple"}}}
+        $execute if score .VersatilityRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐",versatility_rating_2:"⭐⭐⭐",versatility_rating_color:"light_purple"}}}
+        $execute if score .VersatilityRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐⭐",versatility_rating_2:"⭐⭐",versatility_rating_color:"light_purple"}}}
+        $execute if score .VersatilityRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐⭐⭐",versatility_rating_2:"⭐",versatility_rating_color:"light_purple"}}}
+        $execute if score .VersatilityRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐⭐⭐⭐",versatility_rating_2:"",versatility_rating_color:"yellow"}}}
+
+        # difficulty
+        $scoreboard players set .DifficultyRating uiAbility.SelectionBroad $(difficulty_rating_raw)
+        $execute if score .DifficultyRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"",difficulty_rating_2:"⭐⭐⭐⭐⭐",difficulty_rating_color:"light_purple"}}}
+        $execute if score .DifficultyRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐",difficulty_rating_2:"⭐⭐⭐⭐",difficulty_rating_color:"light_purple"}}}
+        $execute if score .DifficultyRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐",difficulty_rating_2:"⭐⭐⭐",difficulty_rating_color:"light_purple"}}}
+        $execute if score .DifficultyRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐",difficulty_rating_2:"⭐⭐",difficulty_rating_color:"light_purple"}}}
+        $execute if score .DifficultyRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐⭐",difficulty_rating_2:"⭐",difficulty_rating_color:"light_purple"}}}
+        $execute if score .DifficultyRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐⭐⭐",difficulty_rating_2:"",difficulty_rating_color:"yellow"}}}
+    }
+
+    function selection_lore {
+        $data remove storage minecraft:ability index.$(ability_id).selection_lore
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore set value []
+
+        # line 1
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"$(subtext) ","italic":false,"color":"gray"}]
+
+        # line 2
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ""
+
+        # line 3
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ability Ratings","italic":false,"color":"gold"}]
+
+        # line 4 (obtaiment rating)
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"O","italic":false,"color":"#e6ecb6"},{"text":"b","italic":false,"color":"#e4eab2"},{"text":"t","italic":false,"color":"#e2e8ae"},{"text":"a","italic":false,"color":"#e0e6ab"},{"text":"i","italic":false,"color":"#dee4a7"},{"text":"n","italic":false,"color":"#dbe3a3"},{"text":"m","italic":false,"color":"#d9e19f"},{"text":"e","italic":false,"color":"#d7df9c"},{"text":"n","italic":false,"color":"#d5dd98"},{"text":"t","italic":false,"color":"#d3db94"},{"text":"\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(obtainment_rating_1)","italic":false,"color":"$(obtainment_rating_color)"},{"text":"$(obtainment_rating_2)","italic":false,"color":"gray"}]
+
+        # line 5 (versatility rating)
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"V","italic":false,"color":"#a280ff"},{"text":"e","italic":false,"color":"#9f7cfd"},{"text":"r","italic":false,"color":"#9b79fa"},{"text":"s","italic":false,"color":"#9875f8"},{"text":"a","italic":false,"color":"#9471f5"},{"text":"t","italic":false,"color":"#916ef3"},{"text":"i","italic":false,"color":"#8e6af0"},{"text":"l","italic":false,"color":"#8a66ee"},{"text":"i","italic":false,"color":"#8762eb"},{"text":"t","italic":false,"color":"#835fe9"},{"text":"y","italic":false,"color":"#805be6"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(versatility_rating_1)","italic":false,"color":"$(versatility_rating_color)"},{"text":"$(versatility_rating_2)","italic":false,"color":"gray"}]
+
+        # line 6 (difficulty rating)
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"D","italic":false,"color":"#ff5542"},{"text":"i","italic":false,"color":"#fb513e"},{"text":"f","italic":false,"color":"#f74d3a"},{"text":"f","italic":false,"color":"#f24a37"},{"text":"i","italic":false,"color":"#ee4633"},{"text":"c","italic":false,"color":"#ea422f"},{"text":"u","italic":false,"color":"#e63e2b"},{"text":"l","italic":false,"color":"#e13b28"},{"text":"t","italic":false,"color":"#dd3724"},{"text":"y","italic":false,"color":"#d93320"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(difficulty_rating_1)","italic":false,"color":"$(difficulty_rating_color)"},{"text":"$(difficulty_rating_2)","italic":false,"color":"gray"}]
+
+        # line 7
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ""
+
+        # line 8
+        $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
+
+        # line 9 (ownership)
+        $execute if entity @s[tag=abilityBilly.Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
+        $execute unless entity @s[tag=abilityBilly.Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
+
+        # line 10 (equipped?)
+        $execute if entity @s[tag=abilityBilly.User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
+        $execute unless entity @s[tag=abilityBilly.User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
+
+        # line 11/12 (skins & secret interactions)
+        $execute store result storage minecraft:ability index.$(ability_id).unlocked_skins int 1 run scoreboard players get @s abilityBilly.UnlockedSkins
+        $execute store result storage minecraft:ability index.$(ability_id).discovered_interactions int 1 run scoreboard players get @s abilityBilly.DiscoveredInteractions
+        $block { with storage minecraft:ability index.$(ability_id)
+            $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(unlocked_skins)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skins)","italic":false,"color":"green"}]
+            $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(discovered_interactions)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(secret_interactions)","italic":false,"color":"green"}]
+        }
+
+        $data modify storage minecraft:ui ability.menu merge from storage minecraft:ability index.$(ability_id)
+    }
+
+    function index {
+        # 1 - Billy (Demetrius Demarcus Bartholomew James the III)
+        data merge storage minecraft:ability {index:{1:{subtext:"The Main Character",obtainment_rating_raw:5,versatility_rating_raw:3,difficulty_rating_raw:1,secret_interactions:1,skins:2}}}
+        data merge storage minecraft:ability {index:{1:{model:"minecraft:interactables/ability/billy/default_skin",path:"billy",ability_id:1}}}
+        data merge storage minecraft:ability {index:{1:{name:[{"text":"B","italic":false,"color":"#7afff6"},{"text":"i","italic":false,"color":"#86faf2"},{"text":"l","italic":false,"color":"#92f5ee"},{"text":"l","italic":false,"color":"#9ef0ea"},{"text":"y","italic":false,"color":"#abebe7"},{"text":" ","italic":false,"color":"#b7e6e3"},{"text":"D","italic":false,"color":"#c3e1df"},{"text":"e","italic":false,"color":"#cfdcdb"},{"text":"me","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cfdcdb"},{"text":"r","italic":false,"color":"#c3e1df"},{"text":"i","italic":false,"color":"#b7e6e3"},{"text":"u","italic":false,"color":"#abebe7"},{"text":"s","italic":false,"color":"#9ef0ea"},{"text":" ","italic":false,"color":"#92f5ee"},{"text":"D","italic":false,"color":"#86faf2"},{"text":"em","italic":false,"color":"#7afff6"},{"text":"a","italic":false,"color":"#88f9f2"},{"text":"r","italic":false,"color":"#96f4ed"},{"text":"c","italic":false,"color":"#a4eee9"},{"text":"u","italic":false,"color":"#b1e8e4"},{"text":"s","italic":false,"color":"#bfe2e0"},{"text":" ","italic":false,"color":"#cddddb"},{"text":"Ba","italic":false,"color":"#dbd7d7"},{"text":"r","italic":false,"color":"#cddddb"},{"text":"t","italic":false,"color":"#bfe2e0"},{"text":"h","italic":false,"color":"#b1e8e4"},{"text":"o","italic":false,"color":"#a4eee9"},{"text":"l","italic":false,"color":"#96f4ed"},{"text":"o","italic":false,"color":"#88f9f2"},{"text":"me","italic":false,"color":"#7afff6"},{"text":"w","italic":false,"color":"#88f9f2"},{"text":" ","italic":false,"color":"#96f4ed"},{"text":"J","italic":false,"color":"#a4eee9"},{"text":"a","italic":false,"color":"#b1e8e4"},{"text":"m","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#cddddb"},{"text":"s ","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cddddb"},{"text":"h","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#b1e8e4"},{"text":" ","italic":false,"color":"#a4eee9"},{"text":"I","italic":false,"color":"#96f4ed"},{"text":"I","italic":false,"color":"#88f9f2"},{"text":"I","italic":false,"color":"#7afff6"}]}}}
+        data merge storage minecraft:ability {index:{1:{passive:[{"text":"B","italic":false,"color":"#7afff6"}]}}}
+
+        REPEAT (1,2) as i {
+            function ability:generate/data with storage minecraft:ability index.<%i%>
+        }
     }
 }

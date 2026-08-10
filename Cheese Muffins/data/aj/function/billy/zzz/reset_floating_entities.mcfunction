@@ -4,4 +4,4 @@ data modify storage animated_java:temp entry.data.locators.constant merge value 
 execute at @s run function aj:billy/zzz/set_default_pose/as_locator_mouth with storage animated_java:temp entry.data.locators.mouth
 execute at @s run function aj:billy/zzz/set_default_pose/as_locator_position with storage animated_java:temp entry.data.locators.position
 execute at @s run function aj:billy/zzz/set_default_pose/as_locator_text_location with storage animated_java:temp entry.data.locators.text_location
-execute at @s run function aj:billy/zzz/set_default_pose/as_locator_camera with storage animated_java:temp entry.data.locators.camera
+execute at @s run function aj:billy/zzz/set_default_pose/as_camera_camera with storage animated_java:temp entry.data.cameras.camera

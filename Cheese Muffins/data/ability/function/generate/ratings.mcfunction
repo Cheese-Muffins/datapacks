@@ -1,0 +1,26 @@
+# Generated with MC-Build
+
+# obtainment
+$scoreboard players set .ObtainmentRating uiAbility.SelectionBroad $(obtainment_rating_raw)
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"",obtainment_rating_2:"⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐",obtainment_rating_2:"⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐",obtainment_rating_2:"⭐⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐",obtainment_rating_2:"⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"yellow"}}}
+# versatility
+$scoreboard players set .VersatilityRating uiAbility.SelectionBroad $(versatility_rating_raw)
+$execute if score .VersatilityRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"",versatility_rating_2:"⭐⭐⭐⭐⭐",versatility_rating_color:"light_purple"}}}
+$execute if score .VersatilityRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐",versatility_rating_2:"⭐⭐⭐⭐",versatility_rating_color:"light_purple"}}}
+$execute if score .VersatilityRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐",versatility_rating_2:"⭐⭐⭐",versatility_rating_color:"light_purple"}}}
+$execute if score .VersatilityRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐⭐",versatility_rating_2:"⭐⭐",versatility_rating_color:"light_purple"}}}
+$execute if score .VersatilityRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐⭐⭐",versatility_rating_2:"⭐",versatility_rating_color:"light_purple"}}}
+$execute if score .VersatilityRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{versatility_rating_1:"⭐⭐⭐⭐⭐",versatility_rating_2:"",versatility_rating_color:"yellow"}}}
+# difficulty
+$scoreboard players set .DifficultyRating uiAbility.SelectionBroad $(difficulty_rating_raw)
+$execute if score .DifficultyRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"",difficulty_rating_2:"⭐⭐⭐⭐⭐",difficulty_rating_color:"light_purple"}}}
+$execute if score .DifficultyRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐",difficulty_rating_2:"⭐⭐⭐⭐",difficulty_rating_color:"light_purple"}}}
+$execute if score .DifficultyRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐",difficulty_rating_2:"⭐⭐⭐",difficulty_rating_color:"light_purple"}}}
+$execute if score .DifficultyRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐",difficulty_rating_2:"⭐⭐",difficulty_rating_color:"light_purple"}}}
+$execute if score .DifficultyRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐⭐",difficulty_rating_2:"⭐",difficulty_rating_color:"light_purple"}}}
+$execute if score .DifficultyRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐⭐⭐",difficulty_rating_2:"",difficulty_rating_color:"yellow"}}}

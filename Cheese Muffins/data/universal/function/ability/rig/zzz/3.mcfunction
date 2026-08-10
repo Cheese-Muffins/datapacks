@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
+$execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)

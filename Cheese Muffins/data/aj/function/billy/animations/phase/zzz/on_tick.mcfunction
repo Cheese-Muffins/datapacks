@@ -6,5 +6,5 @@ execute if score @s aj.phase.frame matches -1 run function aj:billy/animations/p
 data remove storage animated_java:temp args
 execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.phase.frame
 function aj:billy/animations/phase/zzz/apply_frame with storage animated_java:temp args
-execute if score @s aj.phase.frame matches 17.. run return run scoreboard players set @s aj.phase.frame -1
+execute if score @s aj.phase.frame matches 18.. run return run scoreboard players set @s aj.phase.frame -1
 scoreboard players add @s aj.phase.frame 1

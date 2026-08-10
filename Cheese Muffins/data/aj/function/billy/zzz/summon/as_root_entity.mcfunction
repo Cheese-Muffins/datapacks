@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:billy"
-data modify storage animated_java:temp entry.data.rig_hash set value "e5c9753217976819e7fa45268bc6b777f901d0022aaff5242fee33152bd74944"
+data modify storage animated_java:temp entry.data.rig_hash set value "78460acf3117149a43384cf532b8008dcec79ea53378b61dd4c9a71bf23b0f31"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0 ^0.71875 ^1.0625 {Tags:["","aj.billy.bone.back.decendant","aj.billy.bone.back.decendant.locator","aj.billy.bone.back.tree","aj.billy.bone.billy.decendant","aj.billy.bone.billy.decendant.locator","aj.billy.bone.billy.tree","aj.billy.bone.bodyf.decendant","aj.billy.bone.bodyf.decendant.locator","aj.billy.bone.bodyf.tree","aj.billy.bone.front.decendant","aj.billy.bone.front.decendant.locator","aj.billy.bone.front.tree","aj.billy.bone.head3.child","aj.billy.bone.head3.child.locator","aj.billy.bone.head3.decendant","aj.billy.bone.head3.decendant.locator","aj.billy.bone.head3.tree","aj.billy.bone.top.decendant","aj.billy.bone.top.decendant.locator","aj.billy.bone.top.tree","aj.billy.entity","aj.billy.locator","aj.billy.locator.mouth","aj.billy.node","aj.billy.node.mouth","aj.global.bone.back.decendant","aj.global.bone.back.decendant.locator","aj.global.bone.back.tree","aj.global.bone.billy.decendant","aj.global.bone.billy.decendant.locator","aj.global.bone.billy.tree","aj.global.bone.bodyf.decendant","aj.global.bone.bodyf.decendant.locator","aj.global.bone.bodyf.tree","aj.global.bone.front.decendant","aj.global.bone.front.decendant.locator","aj.global.bone.front.tree","aj.global.bone.head3.child","aj.global.bone.head3.child.locator","aj.global.bone.head3.decendant","aj.global.bone.head3.decendant.locator","aj.global.bone.head3.tree","aj.global.bone.top.decendant","aj.global.bone.top.decendant.locator","aj.global.bone.top.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.mouth","aj.new"]}
 execute as @n[ type=minecraft:item_display, tag=aj.billy.locator.mouth, tag=aj.new, distance=..8 ] run function aj:billy/zzz/summon/as_locator/mouth
@@ -29,11 +29,11 @@ execute as @n[ type=minecraft:item_display, tag=aj.billy.locator.text_location, 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.text_location set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.locators.text_location.uuid set from storage animated_java:gu out
-summon minecraft:item_display ^0 ^0 ^0 {Tags:["","aj.billy.bone.camera_bone.child","aj.billy.bone.camera_bone.child.locator","aj.billy.bone.camera_bone.decendant","aj.billy.bone.camera_bone.decendant.locator","aj.billy.bone.camera_bone.tree","aj.billy.entity","aj.billy.locator","aj.billy.locator.camera","aj.billy.node","aj.billy.node.camera","aj.global.bone.camera_bone.child","aj.global.bone.camera_bone.child.locator","aj.global.bone.camera_bone.decendant","aj.global.bone.camera_bone.decendant.locator","aj.global.bone.camera_bone.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.camera","aj.new"]}
-execute as @n[ type=minecraft:item_display, tag=aj.billy.locator.camera, tag=aj.new, distance=..5 ] run function aj:billy/zzz/summon/as_locator/camera
+summon minecraft:item_display ^0 ^0 ^0 {Tags:["","aj.billy.camera","aj.billy.camera.camera","aj.billy.entity","aj.billy.node","aj.billy.node.camera","aj.global.camera","aj.global.entity","aj.global.node","aj.global.node.camera","aj.global.root.child","aj.global.root.child.camera","aj.new"], teleport_duration: 2, Roll:0f}
+execute as @n[ type=minecraft:item_display, tag=aj.billy.camera.camera, tag=aj.new, distance=..3 ] run function aj:billy/zzz/summon/as_camera/camera
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.camera set from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.locators.camera.uuid set from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.cameras.camera.uuid set from storage animated_java:gu out
 execute on passengers if entity @s[tag=aj.billy.node.mouthb] run function aj:billy/zzz/summon/as_node/mouthb
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.mouthb set from storage animated_java:gu out
@@ -139,8 +139,6 @@ function aj:billy/zzz/summon/zzz/1 with storage animated_java:temp entry.data.lo
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
 function aj:billy/zzz/summon/zzz/2 with storage animated_java:temp entry.data.locators.text_location
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
-function aj:billy/zzz/summon/zzz/3 with storage animated_java:temp entry.data.locators.camera
-data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
 function aj:billy/zzz/set_default_pose
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
@@ -152,6 +150,5 @@ function aj:billy/root/on_tick/transform_floating_entities
 execute on passengers run rotate @s ~ ~
 data modify entity @s teleport_duration set value 1
 execute on passengers run data modify entity @s teleport_duration set value 1
-function aj:billy/zzz/summon/zzz/4 with storage animated_java:temp entry.data.locators.camera
 tag @s remove aj.new
 execute on passengers run tag @s remove aj.new

@@ -4,4 +4,3 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/snare
 $execute as $(mouth) positioned ^0 ^0.71875 ^1.0625 rotated ~0 ~0 run function aj:billy/animations/snare_trigger/zzz/frames/21_locator_mouth
 $execute as $(position) positioned ^0 ^0 ^-0.125 rotated ~0 ~0 run function aj:billy/animations/snare_trigger/zzz/frames/21_locator_position
 $execute as $(text_location) positioned ^0 ^0.75 ^0 rotated ~0 ~0 run function aj:billy/animations/snare_trigger/zzz/frames/21_locator_text_location
-$execute as $(camera) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/snare_trigger/zzz/frames/21_locator_camera

@@ -1,7 +1,4 @@
 # Generated with MC-Build
 
 # function universal:debug/create {duration:10,text:"Math"}
-$tellraw @s {"text":"$(text) Debug","color":"gold"}
-tag @s add scenarioTick.Enable
-tag @s add scenarioTick.Universal
-$scoreboard players set @s universalDebug.Duration $(duration)
+$execute if entity @s[tag=abilitySettings.DebugLog] run function universal:debug_log/zzz/0 {duration:$(duration),text:"$(text)"}

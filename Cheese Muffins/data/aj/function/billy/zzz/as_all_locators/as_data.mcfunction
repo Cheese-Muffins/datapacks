@@ -5,5 +5,3 @@ data modify storage animated_java:temp args.uuid set from storage animated_java:
 function aj:billy/zzz/as_all_locators/execute_as_uuid with storage animated_java:temp args
 data modify storage animated_java:temp args.uuid set from storage animated_java:temp entry.data.locators.text_location.uuid
 function aj:billy/zzz/as_all_locators/execute_as_uuid with storage animated_java:temp args
-data modify storage animated_java:temp args.uuid set from storage animated_java:temp entry.data.locators.camera.uuid
-function aj:billy/zzz/as_all_locators/execute_as_uuid with storage animated_java:temp args

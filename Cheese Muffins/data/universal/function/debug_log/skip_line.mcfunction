@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-tellraw @s {"text":""}
+execute if entity @s[tag=abilitySettings.DebugLog] run tellraw @s {"text":""}

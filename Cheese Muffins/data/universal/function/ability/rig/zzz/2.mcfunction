@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)
+$data modify entity @s Rotation[0] set value $(rotation)

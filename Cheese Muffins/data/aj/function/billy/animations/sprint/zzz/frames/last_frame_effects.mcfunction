@@ -4,4 +4,3 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/sprin
 $execute as $(mouth) positioned ^0.881542573 ^0.5531104706 ^-0.0125062623 rotated ~1.0780912369 ~27.4765987131 run function aj:billy/animations/sprint/zzz/frames/23_locator_mouth
 $execute as $(position) positioned ^0.875 ^0.04375 ^-1.125 rotated ~0 ~0 run function aj:billy/animations/sprint/zzz/frames/23_locator_position
 $execute as $(text_location) positioned ^0.875 ^0.79375 ^-1 rotated ~0 ~0 run function aj:billy/animations/sprint/zzz/frames/23_locator_text_location
-$execute as $(camera) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/sprint/zzz/frames/23_locator_camera

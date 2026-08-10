@@ -9,5 +9,3 @@ data modify storage animated_java:temp args merge from storage animated_java:tem
 function aj:billy/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.text_location
 function aj:billy/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
-data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.camera
-function aj:billy/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args

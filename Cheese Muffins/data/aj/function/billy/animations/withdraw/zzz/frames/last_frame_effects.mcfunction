@@ -4,4 +4,3 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/withd
 $execute as $(mouth) positioned ^1 ^6.8125069732 ^-0.7499930894 rotated ~0 ~2.5 run function aj:billy/animations/withdraw/zzz/frames/21_locator_mouth
 $execute as $(position) positioned ^1 ^6.8124925788 ^-0.7500033662 rotated ~0 ~20 run function aj:billy/animations/withdraw/zzz/frames/21_locator_position
 $execute as $(text_location) positioned ^1 ^6.8124991989 ^-0.7499996265 rotated ~0 ~20 run function aj:billy/animations/withdraw/zzz/frames/21_locator_text_location
-$execute as $(camera) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/withdraw/zzz/frames/21_locator_camera

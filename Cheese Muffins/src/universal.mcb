@@ -235,6 +235,15 @@ dir ability {
             }
         }
 
+        function dismount {
+            # function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
+            $execute store result storage minecraft:universal ability.dismount.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:universal {ability:{dismount:{objective:"$(objective)",rig:"$(rig)"}}}
+            block { with storage minecraft:universal ability.dismount
+                $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] run ride @s dismount
+            }
+        }
+
         function rotate {
             # function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
             $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
@@ -254,6 +263,15 @@ dir ability {
             $data merge storage minecraft:universal {ability:{rig:{player:"$(player)",objective:"$(objective)",output:"$(output)"}}}
             block { with storage minecraft:universal ability.rig
                 $execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)
+            }
+        }
+
+        function spectate_camera {
+            # function universal:ability/rig/spectate_camera {camera:"aj.billy.camera",objective:"universalAbility.ID"}
+            $execute store result storage minecraft:universal ability.camera.id int 1 run scoreboard players get @s $(objective)
+            $data merge storage minecraft:universal {ability:{camera:{camera:"$(camera)",objective:"$(objective)"}}}
+            block { with storage minecraft:universal ability.camera
+                $spectate @n[type=minecraft:item_display,tag=$(camera),scores={$(objective)=$(id)}] @s
             }
         }
 
@@ -348,6 +366,7 @@ dir attribute {
         $attribute @s $(type) modifier add $(path) $(strength) $(operation)
         execute if data storage minecraft:universal attribute run block { with storage minecraft:universal attribute
             $scoreboard players set @s $(objective) $(duration)
+            $function universal:math/multiply {value:20,score:"@s",objective:"$(objective)"}
             tag @s add scenarioTick.Enable
             $tag @s add scenarioTick.$(scenario)
             execute if data storage minecraft:universal attribute.extra run block { with storage minecraft:universal attribute
@@ -429,24 +448,32 @@ dir error_messages {
 dir debug_log {
     function create {
         # function universal:debug/create {duration:10,text:"Math"}
-        $tellraw @s {"text":"$(text) Debug","color":"gold"}
-        tag @s add scenarioTick.Enable
-        tag @s add scenarioTick.Universal
-        $scoreboard players set @s universalDebug.Duration $(duration)
+        $execute if entity @s[tag=abilitySettings.DebugLog] run block { {duration:$(duration),text:"$(text)"}
+            $tellraw @s {"text":"$(text) Debug","color":"gold"}
+            tag @s add scenarioTick.Enable
+            tag @s add scenarioTick.Universal
+            $scoreboard players set @s universalDebug.Duration $(duration)
+        }
     }
 
     function text {
-        $tellraw @s {"text":"$(text)","color":"$(color)"}
+        # function universal:debug_log/text {text:"Mode: Multiplication",color:"white"}
+        $execute if entity @s[tag=abilitySettings.DebugLog] run block { {text:"$(text)",color:"$(color)"}
+            $tellraw @s {"text":"$(text)","color":"$(color)"}
+        }
     }
 
     dir entry {
         function score {
-            $tellraw @s ["",{"text":"$(text)","color":"gray"},{"score":{"name":"$(score)","objective":"$(objective)"},"color":"yellow"}]
+            # $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+            $execute if entity @s[tag=abilitySettings.DebugLog] run block { {text:"$(text)",score:"$(score)",objective:"$(objective)"}
+                $tellraw @s ["",{"text":"$(text)","color":"gray"},{"score":{"name":"$(score)","objective":"$(objective)"},"color":"yellow"}]
+            }
         }
     }
 
     function skip_line {
-        tellraw @s {"text":""}
+        execute if entity @s[tag=abilitySettings.DebugLog] run tellraw @s {"text":""}
     }
 }
 
