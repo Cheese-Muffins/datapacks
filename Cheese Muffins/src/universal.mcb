@@ -24,8 +24,6 @@ function on_load minecraft:load{
     scoreboard objectives add universalAbility.ToggleState dummy
     scoreboard objectives add universalAbility.ToggleDelay dummy
     scoreboard objectives add universalAbility.HotbarSlot dummy
-
-    function ability:billy/install
 }
 
 dir tick {

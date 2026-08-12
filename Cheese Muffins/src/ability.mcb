@@ -2,6 +2,8 @@ function on_load minecraft:load{
     # typically all abilities will use these variables
     
     function ability:generate/index
+    function ability:billy/install
+    function ability:president/install
 }
 
 dir tick {
@@ -405,6 +407,13 @@ dir billy {
     }
 }
 
+dir president {
+    function install {
+        scoreboard objectives add abilityPresident.DiscoveredInteractions dummy
+        scoreboard objectives add abilityPresident.UnlockedSkins dummy
+    }
+}
+
 dir generate {
     function data {
         $function ability:generate/ratings with storage minecraft:ability index.$(ability_id)
@@ -414,11 +423,11 @@ dir generate {
     function ratings {
         # obtainment
         $scoreboard players set .ObtainmentRating uiAbility.SelectionBroad $(obtainment_rating_raw)
-        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"",obtainment_rating_2:"⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
-        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐",obtainment_rating_2:"⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
-        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐",obtainment_rating_2:"⭐⭐",obtainment_rating_color:"light_purple"}}}
-        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐",obtainment_rating_2:"⭐",obtainment_rating_color:"light_purple"}}}
-        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"",obtainment_rating_2:"⭐⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐",obtainment_rating_2:"⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐",obtainment_rating_2:"⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐",obtainment_rating_2:"⭐⭐",obtainment_rating_color:"light_purple"}}}
+        $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐",obtainment_rating_2:"⭐",obtainment_rating_color:"light_purple"}}}
         $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"yellow"}}}
 
         # versatility
@@ -477,8 +486,8 @@ dir generate {
         $execute unless entity @s[tag=abilityBilly.User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
 
         # line 11/12 (skins & secret interactions)
-        $execute store result storage minecraft:ability index.$(ability_id).unlocked_skins int 1 run scoreboard players get @s abilityBilly.UnlockedSkins
-        $execute store result storage minecraft:ability index.$(ability_id).discovered_interactions int 1 run scoreboard players get @s abilityBilly.DiscoveredInteractions
+        $execute store result storage minecraft:ability index.$(ability_id).unlocked_skins int 1 run scoreboard players get @s ability$(real_path).UnlockedSkins
+        $execute store result storage minecraft:ability index.$(ability_id).discovered_interactions int 1 run scoreboard players get @s ability$(real_path).DiscoveredInteractions
         $block { with storage minecraft:ability index.$(ability_id)
             $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(unlocked_skins)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skins)","italic":false,"color":"green"}]
             $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(discovered_interactions)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(secret_interactions)","italic":false,"color":"green"}]
@@ -486,18 +495,34 @@ dir generate {
             $data remove storage minecraft:ability index.$(ability_id).unlocked_skins
             $data remove storage minecraft:ability index.$(ability_id).discovered_interactions
         }
-
-        $data modify storage minecraft:ui ability.menu merge from storage minecraft:ability index.$(ability_id)
     }
 
     function index {
         # 1 - Billy (Demetrius Demarcus Bartholomew James the III)
-        data merge storage minecraft:ability {index:{1:{subtext:"The Main Character",obtainment_rating_raw:5,versatility_rating_raw:3,difficulty_rating_raw:1,secret_interactions:1,skins:2}}}
-        data merge storage minecraft:ability {index:{1:{model:"minecraft:interactables/ability/billy/default_skin",path:"billy",ability_id:1}}}
+        data merge storage minecraft:ability {index:{1:{subtext:"The Main Character",obtainment_rating_raw:5,versatility_rating_raw:4,difficulty_rating_raw:1,secret_interactions:1,skins:2}}}
+        data merge storage minecraft:ability {index:{1:{model:"minecraft:interactables/ability/billy/default_skin",path:"billy",real_path:"Billy",ability_id:1}}}
         data merge storage minecraft:ability {index:{1:{name:[{"text":"B","italic":false,"color":"#7afff6"},{"text":"i","italic":false,"color":"#86faf2"},{"text":"l","italic":false,"color":"#92f5ee"},{"text":"l","italic":false,"color":"#9ef0ea"},{"text":"y","italic":false,"color":"#abebe7"},{"text":" ","italic":false,"color":"#b7e6e3"},{"text":"D","italic":false,"color":"#c3e1df"},{"text":"e","italic":false,"color":"#cfdcdb"},{"text":"me","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cfdcdb"},{"text":"r","italic":false,"color":"#c3e1df"},{"text":"i","italic":false,"color":"#b7e6e3"},{"text":"u","italic":false,"color":"#abebe7"},{"text":"s","italic":false,"color":"#9ef0ea"},{"text":" ","italic":false,"color":"#92f5ee"},{"text":"D","italic":false,"color":"#86faf2"},{"text":"em","italic":false,"color":"#7afff6"},{"text":"a","italic":false,"color":"#88f9f2"},{"text":"r","italic":false,"color":"#96f4ed"},{"text":"c","italic":false,"color":"#a4eee9"},{"text":"u","italic":false,"color":"#b1e8e4"},{"text":"s","italic":false,"color":"#bfe2e0"},{"text":" ","italic":false,"color":"#cddddb"},{"text":"Ba","italic":false,"color":"#dbd7d7"},{"text":"r","italic":false,"color":"#cddddb"},{"text":"t","italic":false,"color":"#bfe2e0"},{"text":"h","italic":false,"color":"#b1e8e4"},{"text":"o","italic":false,"color":"#a4eee9"},{"text":"l","italic":false,"color":"#96f4ed"},{"text":"o","italic":false,"color":"#88f9f2"},{"text":"me","italic":false,"color":"#7afff6"},{"text":"w","italic":false,"color":"#88f9f2"},{"text":" ","italic":false,"color":"#96f4ed"},{"text":"J","italic":false,"color":"#a4eee9"},{"text":"a","italic":false,"color":"#b1e8e4"},{"text":"m","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#cddddb"},{"text":"s ","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cddddb"},{"text":"h","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#b1e8e4"},{"text":" ","italic":false,"color":"#a4eee9"},{"text":"I","italic":false,"color":"#96f4ed"},{"text":"I","italic":false,"color":"#88f9f2"},{"text":"I","italic":false,"color":"#7afff6"}]}}}
         data merge storage minecraft:ability {index:{1:{passive:[{"text":"B","italic":false,"color":"#7afff6"}]}}}
 
-        REPEAT (1,2) as i {
+        # 2 - Mr. President
+        data merge storage minecraft:ability {index:{2:{subtext:"I'll Fulfill My Promise",obtainment_rating_raw:1,versatility_rating_raw:3,difficulty_rating_raw:4,secret_interactions:1,skins:1}}}
+        data merge storage minecraft:ability {index:{2:{model:"minecraft:interactables/ability/president/default_skin",path:"president",real_path:"President",ability_id:2}}}
+        data merge storage minecraft:ability {index:{2:{name:[{"text":"M","italic":false,"color":"#fcff47"},{"text":"r","italic":false,"color":"#fafd44"},{"text":".","italic":false,"color":"#f8fb41"},{"text":" ","italic":false,"color":"#f6f93e"},{"text":"P","italic":false,"color":"#f4f73a"},{"text":"r","italic":false,"color":"#f2f537"},{"text":"e","italic":false,"color":"#f0f434"},{"text":"s","italic":false,"color":"#eef231"},{"text":"i","italic":false,"color":"#ecf02e"},{"text":"d","italic":false,"color":"#eaee2b"},{"text":"e","italic":false,"color":"#e8ec27"},{"text":"n","italic":false,"color":"#e6ea24"},{"text":"t","italic":false,"color":"#e4e821"}]}}}
+        data merge storage minecraft:ability {index:{2:{passive:[{"text":"B","italic":false,"color":"#7afff6"}]}}}
+
+        # 3 - The Avatar
+        data merge storage minecraft:ability {index:{3:{subtext:"The Past can be a Great Teacher",obtainment_rating_raw:2,versatility_rating_raw:5,difficulty_rating_raw:2,secret_interactions:1,skins:2}}}
+        data merge storage minecraft:ability {index:{3:{model:"minecraft:interactables/ability/avatar/default_skin",path:"avatar",real_path:"Avatar",ability_id:3}}}
+        data merge storage minecraft:ability {index:{3:{name:[{"text":"T","italic":false,"color":"red"},{"text":"he","italic":false,"color":"gold"},{"text":" ","italic":false,"color":"yellow"},{"text":"A","italic":false,"color":"yellow"},{"text":"va","italic":false,"color":"green"},{"text":"t","italic":false,"color":"blue"},{"text":"a","italic":false,"color":"blue"},{"text":"r","italic":false,"color":"light_purple"}]}}}
+        data merge storage minecraft:ability {index:{3:{passive:[{"text":"B","italic":false,"color":"#7afff6"}]}}}
+
+        # 4 - The World
+        data merge storage minecraft:ability {index:{4:{subtext:"I Reject My Humanity, JoJo!",obtainment_rating_raw:4,versatility_rating_raw:2,difficulty_rating_raw:4,secret_interactions:1,skins:2}}}
+        data merge storage minecraft:ability {index:{4:{model:"minecraft:interactables/ability/the_world/default_skin",path:"the_world",real_path:"TheWorld",ability_id:4}}}
+        data merge storage minecraft:ability {index:{4:{name:[{"text":"The World","italic":false,"color":"#f5ff70"}]}}}
+        data merge storage minecraft:ability {index:{4:{passive:[{"text":"B","italic":false,"color":"#7afff6"}]}}}
+
+        REPEAT (1,3) as i {
             function ability:generate/data with storage minecraft:ability index.<%i%>
         }
     }

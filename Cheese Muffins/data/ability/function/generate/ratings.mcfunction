@@ -2,11 +2,11 @@
 
 # obtainment
 $scoreboard players set .ObtainmentRating uiAbility.SelectionBroad $(obtainment_rating_raw)
-$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"",obtainment_rating_2:"⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
-$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐",obtainment_rating_2:"⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
-$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐",obtainment_rating_2:"⭐⭐",obtainment_rating_color:"light_purple"}}}
-$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐",obtainment_rating_2:"⭐",obtainment_rating_color:"light_purple"}}}
-$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 0 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"",obtainment_rating_2:"⭐⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐",obtainment_rating_2:"⭐⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐",obtainment_rating_2:"⭐⭐⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐",obtainment_rating_2:"⭐⭐",obtainment_rating_color:"light_purple"}}}
+$execute if score .ObtainmentRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐",obtainment_rating_2:"⭐",obtainment_rating_color:"light_purple"}}}
 $execute if score .ObtainmentRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{obtainment_rating_1:"⭐⭐⭐⭐⭐",obtainment_rating_2:"",obtainment_rating_color:"yellow"}}}
 # versatility
 $scoreboard players set .VersatilityRating uiAbility.SelectionBroad $(versatility_rating_raw)

@@ -33,4 +33,3 @@ scoreboard objectives add universalAbility.ToggleTrigger dummy
 scoreboard objectives add universalAbility.ToggleState dummy
 scoreboard objectives add universalAbility.ToggleDelay dummy
 scoreboard objectives add universalAbility.HotbarSlot dummy
-function ability:billy/install
