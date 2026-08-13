@@ -19,11 +19,11 @@ $data modify storage minecraft:ability index.$(ability_id).selection_lore append
 # line 8
 $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
 # line 9 (ownership)
-$execute if entity @s[tag=abilityBilly.Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
-$execute unless entity @s[tag=abilityBilly.Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
+$execute if entity @s[tag=ability$(real_path).Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
+$execute unless entity @s[tag=ability$(real_path).Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
 # line 10 (equipped?)
-$execute if entity @s[tag=abilityBilly.User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
-$execute unless entity @s[tag=abilityBilly.User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
+$execute if entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
+$execute unless entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
 # line 11/12 (skins & secret interactions)
 $execute store result storage minecraft:ability index.$(ability_id).unlocked_skins int 1 run scoreboard players get @s ability$(real_path).UnlockedSkins
 $execute store result storage minecraft:ability index.$(ability_id).discovered_interactions int 1 run scoreboard players get @s ability$(real_path).DiscoveredInteractions

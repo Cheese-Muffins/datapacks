@@ -10,6 +10,7 @@ scoreboard objectives add uiCassette.CollectionBroad dummy
 scoreboard objectives add uiCassette.CollectionMaximumPage dummy
 scoreboard objectives add uiCassette.CollectionOperation dummy
 scoreboard objectives add uiAbility.SelectionBroad dummy
+scoreboard objectives add uiAbility.SelectionChoice dummy
 # Parties #
 scoreboard objectives add uiCassette.PartyLogic dummy
 # Settings #

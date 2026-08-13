@@ -70,8 +70,8 @@ data\ability\function\president\install.mcfunction:5d62d7f676ebbb64a769d6b84f030
 data\ability\function\generate\data.mcfunction:b0523e3c638f9542ec42124b53f536931163344d
 data\ability\function\generate\ratings.mcfunction:af487272b8d4bc07269d5cbd062d15844891c060
 data\ability\function\generate\zzz\0.mcfunction:f28bb7a2035abf0a46b070f688dd07c076028662
-data\ability\function\generate\selection_lore.mcfunction:9d0eb2ea629fd400f1ef566721437522f9654684
-data\ability\function\generate\index.mcfunction:1b618d4f14a998994546b2764a2cae12a52036ad
+data\ability\function\generate\selection_lore.mcfunction:2b6e1ce5965f9bd5611c54e600757770d5fa66b4
+data\ability\function\generate\index.mcfunction:098e22d1aa40590dc4bfd242eba984ab8a38b1eb
 data\cassette\function\on_load.mcfunction:baa448228d1ec4273b19290a7e07355d89fcfb3e
 data\cassette\function\tick\zzz\0.mcfunction:feb637352bc165202957eb0f186b167a0227fc93
 data\cassette\function\tick\main.mcfunction:9be9a054340144adbffa057907495d9e4e790ebb
@@ -142,7 +142,7 @@ data\cassette\function\calculate\zzz\22.mcfunction:b6b103ed09e2bc4059ba49d911af8
 data\cassette\function\calculate\hover.mcfunction:c872d58eb54d0a552a3773a8e712181304d990df
 data\cassette\function\calculate\real_time.mcfunction:481d099f5c244d5cd9fad6a41e599cf8dc3f38fe
 data\cassette\function\generate_index.mcfunction:aca0849adbca3135bbe0ce27686f7831748c41d3
-data\ui\function\on_load.mcfunction:51ee4731f57947ffc48af67e6c9907c9088df394
+data\ui\function\on_load.mcfunction:1b5c4cd1be9c0c83002305159670d6471073367c
 data\ui\function\administrator_access.mcfunction:718240e3fa7c843c8d94638356d728f97a9c1c64
 data\ui\function\logic\player\tick.mcfunction:060c3d6d323daf3f99efffc503d89db457efe6f7
 data\ui\function\logic\player\teleport.mcfunction:cd43edba3c6dce9a0882ae0c204194ae85906522
@@ -154,7 +154,7 @@ data\ui\function\logic\player\check_swap.mcfunction:865e69b20d5f76852a05250fcc9c
 data\ui\function\logic\player\return.mcfunction:b814a56357b97930de58f7896a2972cefa1975f4
 data\ui\function\logic\player\close.mcfunction:80a4e384a805ac496e216a622aefe470c5f6c250
 data\ui\function\logic\minecart\tick.mcfunction:cf3b6351194940ec83cc12a924a73c054ed79d16
-data\ui\function\logic\minecart\enhanced_button.mcfunction:a9dddbdd0a9b8d95f7d8fd2cb45806138ed3d313
+data\ui\function\logic\minecart\enhanced_button.mcfunction:f54b7b73f061030e728ecc5fe621833b306fd3fd
 data\ui\function\logic\minecart\zzz\0.mcfunction:d8e0c65a609fc1acd2739ca13dd8f82a4a40ea4a
 data\ui\function\logic\minecart\zzz\1.mcfunction:a03a1ee6df985b1e537509e13325d1f5be5ee7f1
 data\ui\function\logic\minecart\on_change.mcfunction:b558c23c83b05954af95e6007bca523b98acf4c3
@@ -169,13 +169,14 @@ data\ui\function\logic\load\on_click.mcfunction:ae7a407f3a23c3467cbec352db14ae30
 data\ui\function\logic\load\on_input.mcfunction:461ee5ece6a4890865803fadac86989067e5bdce
 data\ui\function\logic\load\refresh.mcfunction:7c71c756fd36be11052a6829a99b8fefab6f40e0
 data\ui\function\ability\give.mcfunction:ec16519cb08c2226132c39111520afbc80df1535
-data\ui\function\ability\menu\mask.mcfunction:2ebc751b65c05ccefe0b318bdff3d58679896368
+data\ui\function\ability\menu\mask.mcfunction:ba93083a6079376bc0d76a894ab5c5ed9b6431a2
 data\ui\function\ability\menu\open.mcfunction:015375293a5c0483eb40436dd017d89f4693d058
 data\ui\function\ability\menu\same.mcfunction:e677bee1a778bb6b3e331d84531e0fd8aa100a64
 data\ui\function\ability\menu\flip.mcfunction:2088f320c56afb1985484ad8ff416b571d0b48c7
 data\ui\function\ability\menu\zzz\0.mcfunction:d845595eb104a121c1ebd050f3b67b7ff2b0b939
-data\ui\function\ability\menu\player.mcfunction:33da34b8de54715cfd58c0b74c304e4cce1eb150
-data\ui\function\ability\selection\mask.mcfunction:fdfc107caf520acddce7e714a51962761e05254c
+data\ui\function\ability\menu\player.mcfunction:8f5a450d25735f6e392aa6d50dfffb34773314d9
+data\ui\function\ability\menu\selected.mcfunction:abffb6cc262049b00f044e0ac51770d91ed5618d
+data\ui\function\ability\selection\mask.mcfunction:b97f63e85441c52d6816e576a0f5d6f779ba2d2d
 data\ui\function\ability\selection\open.mcfunction:45a11b61ac4a5452e579fbe23ed927b5838c3e30
 data\ui\function\ability\selection\player.mcfunction:b61cea64a72efcf88967dfc60edf9032468e07a6
 data\ui\function\ability\selection\generate\slot\initialize.mcfunction:83bdb8d6414a2020b6da6b0a4685e974904a5aec
@@ -191,7 +192,8 @@ data\ui\function\ability\selection\generate\slot\zzz\8.mcfunction:57a2ce9c45f276
 data\ui\function\ability\selection\generate\slot\zzz\7.mcfunction:d73fd0b3789916987f5b0ce9917e3d5e800113d2
 data\ui\function\ability\selection\generate\slot\zzz\6.mcfunction:16cf68119c92374334d048eb58112f33d4d4f505
 data\ui\function\ability\selection\generate\slot\default.mcfunction:fe31f2b29c3b0ae6acb9f3bcefbeeafb6c604e74
-data\ui\function\ability\selection\generate\slot.mcfunction:e1624063aac909a3a11c5648c3f8f81f962a4786
+data\ui\function\ability\selection\zzz\0.mcfunction:dc8b12525d60426f8bf88ecaa383c494f0a1e62e
+data\ui\function\ability\selection\expand.mcfunction:ca52a2f00ffe177e6c76db5937e8499fd590a493
 data\ui\function\ability\selection\flip.mcfunction:9e25aad4e75b835ea178dc42b014db22a1768d8f
 data\ui\function\cassette\give.mcfunction:face5464a7eeb9cd2f8b9250e68fc51c53f807b3
 data\ui\function\cassette\menu\mask.mcfunction:6eaedbe424eff239544afeedad0453a8bf1a1af8
