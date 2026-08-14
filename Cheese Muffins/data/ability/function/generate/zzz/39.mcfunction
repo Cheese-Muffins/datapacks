@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ability {index:{$(ability_id):{price:{$(target):{product:{text:"Awaiting Input",color:"fcff3d"}}}}}}
-$execute if score .$(target)Confirm uiAbility.PurchaseConfirm matches 1.. run data merge storage minecraft:ability {index:{$(ability_id):{price:{$(target):{product:{text:"Confirm?",color:"3cdd31"}}}}}}
+$execute if entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).price_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
+$execute unless entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).price_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]

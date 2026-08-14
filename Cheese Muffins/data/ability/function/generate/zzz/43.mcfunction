@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$execute if score .$(target)Match uiAbility.PurchaseConfirm matches 1 run playsound minecraft:entity.villager.trade player @s ~ ~ ~ 0.5
-$execute if score .$(target)Match uiAbility.PurchaseConfirm matches 2 run playsound minecraft:entity.villager.celebrate player @s ~ ~ ~ 0.5
+$data modify storage minecraft:ability index.$(ability_id).price_lore append value ""
+$data modify storage minecraft:ability index.$(ability_id).price_lore append value [[{"text":"NOTE: This ","italic":false,"color":"gray"},{"text":"CANNOT ","bold":true,"italic":false,"color":"gray"},{"text":"be undone...","italic":false,"color":"gray"}]]

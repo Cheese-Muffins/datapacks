@@ -20,8 +20,6 @@ $execute if data storage minecraft:ability index.$(ability_id).price.$(target).a
 $data modify storage minecraft:ability index.$(ability_id).price_lore append value ""
 # bypass line
 $data modify storage minecraft:ability index.$(ability_id).price.$(target).ability_id set value $(ability_id)
+$data modify storage minecraft:ability index.$(ability_id).price.$(target).target set value $(target)
 $execute if data storage minecraft:ability index.$(ability_id).price.$(target).bypass run function ability:generate/zzz/36 with storage minecraft:ability index.$(ability_id).price.$(target)
-# if the item is not owned
-$data modify storage minecraft:ability index.$(ability_id).price.$(target).product.ability_id set value $(ability_id)
-$data modify storage minecraft:ability index.$(ability_id).price.$(target).product.target set value $(target)
-$function ability:generate/zzz/37 with storage minecraft:ability index.$(ability_id).price.$(target).product
+$function ability:generate/zzz/37 with storage minecraft:ability index.$(ability_id).price.$(target)

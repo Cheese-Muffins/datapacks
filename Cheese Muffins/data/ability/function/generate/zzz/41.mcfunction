@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability index.$(ability_id).price_lore append value ""
-$data modify storage minecraft:ability index.$(ability_id).price_lore append value [[{"text":"NOTE: This ","italic":false,"color":"gray"},{"text":"CANNOT ","bold":true,"italic":false,"color":"gray"},{"text":"be undone...","italic":false,"color":"gray"}]]
+$data merge storage minecraft:ability {index:{$(ability_id):{price:{$(target):{text:"Awaiting Input",color:"fcff3d"}}}}}
+$execute if score .$(target)Confirm uiAbility.PurchaseConfirm matches 1.. run data merge storage minecraft:ability {index:{$(ability_id):{price:{$(target):{text:"Confirm?",color:"3cdd31"}}}}}
