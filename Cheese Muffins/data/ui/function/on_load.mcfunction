@@ -11,6 +11,9 @@ scoreboard objectives add uiCassette.CollectionMaximumPage dummy
 scoreboard objectives add uiCassette.CollectionOperation dummy
 scoreboard objectives add uiAbility.SelectionBroad dummy
 scoreboard objectives add uiAbility.SelectionChoice dummy
+scoreboard objectives add uiAbility.ItemCount dummy
+scoreboard objectives add uiAbility.PurchaseID dummy
+scoreboard objectives add uiAbility.PurchaseConfirm dummy
 # Parties #
 scoreboard objectives add uiCassette.PartyLogic dummy
 # Settings #
