@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability index.$(ability_id).price.$(target).request1.ability_id set value $(ability_id)
-$data modify storage minecraft:ability index.$(ability_id).price.$(target).request1.target set value $(target)
-$function ability:generate/zzz/3 with storage minecraft:ability index.$(ability_id).price.$(target).request1
+scoreboard players add @s uiAbility.PurchaseConfirm 1
+execute store result storage minecraft:ability fetch.confirm int 1 run scoreboard players get @s uiAbility.PurchaseConfirm
+function ability:generate/zzz/3 with storage minecraft:ability fetch

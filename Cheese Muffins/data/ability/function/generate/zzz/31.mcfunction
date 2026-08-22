@@ -1,7 +1,5 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability index.$(ability_id).price_lore append value ["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Advancement(s): ","italic":false,"color":"#$(color)"}]
-$function ability:generate/zzz/32 with storage minecraft:ability index.$(ability_id).price.$(target).advancements.request1
-$function ability:generate/zzz/33 with storage minecraft:ability index.$(ability_id).price.$(target).advancements.request2
-$function ability:generate/zzz/34 with storage minecraft:ability index.$(ability_id).price.$(target).advancements.request3
-$function ability:generate/zzz/35 with storage minecraft:ability index.$(ability_id).price.$(target).advancements.request4
+$data modify storage minecraft:ability index.$(ability_id).price.$(target).advancements.request4.ability_id set value $(ability_id)
+$data modify storage minecraft:ability index.$(ability_id).price.$(target).advancements.request4.target set value $(target)
+$function ability:generate/zzz/32 with storage minecraft:ability index.$(ability_id).price.$(target).advancements.request4

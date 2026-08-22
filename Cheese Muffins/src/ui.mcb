@@ -300,7 +300,8 @@ dir ability {
                 data merge storage minecraft:ui {ability:{menu:{ability_skin_page:"function custom:ui/menu/pages/abilities/menu/same"}}}
             }
 
-            execute if entity @s[tag=abilityBilly.User] run function ui:ability/menu/selected {id:1}
+            function ui:ability/menu/selected {id:1}
+            # execute if entity @s[tag=abilityBilly.User] run function ui:ability/menu/selected {id:1}
             execute if entity @s[tag=abilityPresident.User] run function ui:ability/menu/selected {id:2}
             execute if entity @s[tag=abilityAvatar.User] run function ui:ability/menu/selected {id:3}
             execute if entity @s[tag=abilityTheWorld.User] run function ui:ability/menu/selected {id:4}
@@ -454,7 +455,7 @@ dir ability {
             function player {
                 execute store result storage minecraft:ui ability.choice.lookup int 1 run scoreboard players get @s uiAbility.SelectionChoice
                 block { with storage minecraft:ui ability.choice
-                    $function ability:generate/price {target:"ability",id:$(lookup)}
+                    $function ability:generate/purchase {target:"ability",id:$(lookup)}
                     $data modify storage minecraft:ui ability.choice merge from storage minecraft:ability index.$(lookup)
                 }
             }
@@ -465,15 +466,7 @@ dir ability {
                     execute in minecraft:overworld run data modify storage minecraft:ability fetch.product set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.product
                     execute in minecraft:overworld run data modify storage minecraft:ability fetch.click_id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.id
                     block { with storage minecraft:ability fetch
-                        $execute if score @s uiAbility.PurchaseID matches $(click_id) run {
-                            scoreboard players add @s uiAbility.PurchaseConfirm 1
-                            execute store result storage minecraft:ability fetch.confirm int 1 run scoreboard players get @s uiAbility.PurchaseConfirm
-                            block { with storage minecraft:ability fetch
-                                tag @s add uiAbility.ClickedProduct
-                                $scoreboard players set .$(product)Match uiAbility.PurchaseConfirm $(confirm)
-                                $scoreboard players set .$(product)Confirm uiAbility.PurchaseConfirm $(confirm)
-                            }
-                        }
+                        $execute if score @s uiAbility.PurchaseID matches $(click_id) run tag @s add uiAbility.ClickedProduct
                         $scoreboard players set @s uiAbility.PurchaseID $(click_id)
                         function ui:ability/selection/choice/open
                     }
