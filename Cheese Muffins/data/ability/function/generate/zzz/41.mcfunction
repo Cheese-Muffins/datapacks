@@ -1,6 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability index.$(ability_id).price_lore append value [["",{"text":"Ability Status","italic":false,"color":"gold"}]]
-# handle click events
-$execute if entity @s[tag=uiAbility.ClickedProduct] run function ability:generate/zzz/42 with storage minecraft:ability index.$(ability_id).price.$(target)
-$function ability:generate/zzz/44 with storage minecraft:ability index.$(ability_id)
+$data modify storage minecraft:ability generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#b65cff"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#00bd16"}]]
+data modify storage minecraft:ability generate.purchase.price_lore append value ""

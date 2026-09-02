@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$scoreboard players reset .$(target)Confirm uiAbility.PurchaseConfirm
-tag @s remove uiAbility.PurchaseFlag
+scoreboard players set #ifelse mcb.internal 1
+tag @s remove uiAbility.ItemCheck

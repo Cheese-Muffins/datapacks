@@ -1,11 +1,5 @@
 # Generated with MC-Build
 
-$execute store result score .item1Hotbar uiAbility.ItemCount run execute if items entity @s hotbar.* $(type)[minecraft:custom_data={$(tag)}]
-$execute store result score .item1Inventory uiAbility.ItemCount run execute if items entity @s inventory.* $(type)[minecraft:custom_data={$(tag)}]
-scoreboard players operation .item1Count uiAbility.ItemCount = .item1Hotbar uiAbility.ItemCount
-scoreboard players operation .item1Count uiAbility.ItemCount += .item1Inventory uiAbility.ItemCount
-$execute store result storage minecraft:ability index.$(ability_id).price.$(target).request1.total int 1 run scoreboard players get .item1Count uiAbility.ItemCount
-$data modify storage minecraft:ability index.$(ability_id).price.$(target).request1.color set value "EC3232"
-$execute if score .item1Count uiAbility.ItemCount matches ..$(count) run function ability:generate/zzz/7 with storage minecraft:ability index.$(ability_id).price.$(target).request1
-$execute if score .item1Count uiAbility.ItemCount matches $(count).. run data modify storage minecraft:ability index.$(ability_id).price.$(target).request1.color set value "3cdd31"
-$function ability:generate/zzz/8 with storage minecraft:ability index.$(ability_id).price.$(target).request1
+$data modify storage minecraft:ability generate.purchase.price_lore append value ["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"$(request_total)/$(request_count) $(request_name)(s): ","italic":false,"color":"#$(request_color)"}]
+data modify storage minecraft:ability generate.purchase.price_lore[-1] append from storage minecraft:ability generate.purchase.request_description[0][0]
+data modify storage minecraft:ability generate.purchase.price_lore append from storage minecraft:ability generate.purchase.request_description[1]

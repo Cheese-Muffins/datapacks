@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute if entity @s[advancements={$(path)=false}] run function ability:generate/zzz/24 with storage minecraft:ability index.$(ability_id)
+$data modify storage minecraft:ability generate.purchase.advancement_path set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request1.path
+function ability:generate/zzz/24 with storage minecraft:ability generate.purchase

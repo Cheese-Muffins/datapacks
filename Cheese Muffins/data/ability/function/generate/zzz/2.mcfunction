@@ -1,5 +1,9 @@
 # Generated with MC-Build
 
-scoreboard players add @s uiAbility.PurchaseConfirm 1
-execute store result storage minecraft:ability fetch.confirm int 1 run scoreboard players get @s uiAbility.PurchaseConfirm
-function ability:generate/zzz/3 with storage minecraft:ability fetch
+# fetch relevant request information
+$data modify storage minecraft:ability generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).request1.type
+$data modify storage minecraft:ability generate.purchase.request_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).request1.tag
+$data modify storage minecraft:ability generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).request1.count
+$data modify storage minecraft:ability generate.purchase.request_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).request1.name
+$data modify storage minecraft:ability generate.purchase.request_description set from storage minecraft:ability index.$(ability_id).product.$(product_name).request1.description
+function ability:generate/zzz/3 with storage minecraft:ability generate.purchase

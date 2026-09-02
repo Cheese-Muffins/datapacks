@@ -1,5 +1,9 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability index.$(ability_id).price_lore append value ["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"$(total)/$(count) $(name)(s): ","italic":false,"color":"#$(color)"}]
-$data modify storage minecraft:ability index.$(ability_id).price_lore[-1] append from storage minecraft:ability index.$(ability_id).price.$(target).request2.description[0][0]
-$data modify storage minecraft:ability index.$(ability_id).price_lore append from storage minecraft:ability index.$(ability_id).price.$(target).request2.description[1]
+# fetch relevant request information
+$data modify storage minecraft:ability generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).request3.type
+$data modify storage minecraft:ability generate.purchase.request_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).request3.tag
+$data modify storage minecraft:ability generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).request3.count
+$data modify storage minecraft:ability generate.purchase.request_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).request3.name
+$data modify storage minecraft:ability generate.purchase.request_description set from storage minecraft:ability index.$(ability_id).product.$(product_name).request3.description
+function ability:generate/zzz/13 with storage minecraft:ability generate.purchase

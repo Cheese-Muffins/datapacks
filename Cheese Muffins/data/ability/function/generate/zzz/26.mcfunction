@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute if entity @s[advancements={$(path)=false}] run function ability:generate/zzz/27 with storage minecraft:ability index.$(ability_id)
+# check for each individual advancement
+$execute if entity @s[advancements={$(advancement_path)=false}] run tag @s remove uiAbility.AdvancementCheck

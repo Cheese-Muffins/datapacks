@@ -1,5 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players reset .$(target)Confirm uiAbility.PurchaseConfirm
-tag @s remove uiAbility.AdvancementCheck
-tag @s remove uiAbility.PurchaseFlag
+$data modify storage minecraft:ability generate.purchase.price_lore$(advancement_line) append value ["",{"text":"[$(advancement_name)] ","italic":false,"color":"dark_purple"}]

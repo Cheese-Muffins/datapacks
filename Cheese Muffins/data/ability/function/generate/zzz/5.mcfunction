@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability index.$(ability_id).price.$(target).request1.ability_id set value $(ability_id)
-$data modify storage minecraft:ability index.$(ability_id).price.$(target).request1.target set value $(target)
-$function ability:generate/zzz/6 with storage minecraft:ability index.$(ability_id).price.$(target).request1
+scoreboard players set #ifelse mcb.internal 1
+tag @s remove uiAbility.ItemCheck
