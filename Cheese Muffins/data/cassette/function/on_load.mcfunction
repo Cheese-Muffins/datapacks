@@ -7,11 +7,8 @@ scoreboard objectives add cassettePlay.FeedbackIncrement dummy
 scoreboard objectives add cassettePlay.Incremental dummy
 scoreboard objectives add cassettePlay.MaxDuration dummy
 scoreboard objectives add cassettePlay.FeedbackReturn dummy
-# Party #
 scoreboard objectives add cassetteParty.Disconnected dummy
-# Error #
 scoreboard objectives add cassetteError.Delay dummy
-# Challenge #
 scoreboard objectives add cassetteChallenge.ConsumeCookie dummy
 scoreboard objectives add cassetteChallenge.ConsumeMilk dummy
 scoreboard objectives add cassetteChallenge.SlayMonster dummy

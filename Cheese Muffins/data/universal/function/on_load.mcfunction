@@ -1,14 +1,11 @@
 # Generated with MC-Build
 
-# you can use MC-Build without its internal scoreboard but this will limit the available features
 scoreboard objectives add mcb.internal dummy
-# universal scores
 scoreboard objectives add universalDebug.Duration dummy
 scoreboard objectives add universalError.FailReturn dummy
 scoreboard objectives add universalText.ID dummy
 scoreboard objectives add universalVFX.ID dummy
 scoreboard objectives add universalVFX.Conditions dummy
-# ability universals
 scoreboard objectives add universalAbility.MoveCooldown1 dummy
 scoreboard objectives add universalAbility.MoveTrigger1 dummy
 scoreboard objectives add universalAbility.MoveCooldown2 dummy

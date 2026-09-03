@@ -12,8 +12,8 @@ function on_load minecraft:load{
     scoreboard objectives add uiAbility.SelectionBroad dummy
     scoreboard objectives add uiAbility.SelectionChoice dummy
     scoreboard objectives add uiAbility.ItemCount dummy
-    scoreboard objectives add uiAbility.PurchaseID dummy
-    scoreboard objectives add uiAbility.PurchaseConfirm dummy
+    scoreboard objectives add uiPurchase.ProductID dummy
+    scoreboard objectives add uiPurchase.Confirm dummy
 
     # Parties #
     scoreboard objectives add uiCassette.PartyLogic dummy
@@ -461,19 +461,117 @@ dir ability {
             }
 
             dir purchase {
+                dir check {
+                    function items {
+                        # THE ITEM CHECKS
+                        tag @s add uiAbility.ItemCheck
+                        REPEAT (1,4) as i {
+                            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%> run block { with storage minecraft:ability generate.purchase
+                                # fetch relevant request information
+                                $data modify storage minecraft:ability generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.type
+                                $data modify storage minecraft:ability generate.purchase.request_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.tag
+                                $data modify storage minecraft:ability generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.count
+                                $data modify storage minecraft:ability generate.purchase.request_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.name
+                                $data modify storage minecraft:ability generate.purchase.request_description set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.description
+                                block { with storage minecraft:ability generate.purchase
+                                    # apply the fetched request counts
+                                    $execute store result score .item<%i%>Hotbar uiAbility.ItemCount run execute if items entity @s hotbar.* $(request_type)[minecraft:custom_data={$(request_tag)}]
+                                    $execute store result score .item<%i%>Inventory uiAbility.ItemCount run execute if items entity @s inventory.* $(request_type)[minecraft:custom_data={$(request_tag)}]
+                                    # cleanup
+                                    scoreboard players operation .item<%i%>Count uiAbility.ItemCount = .item<%i%>Hotbar uiAbility.ItemCount
+                                    scoreboard players operation .item<%i%>Count uiAbility.ItemCount += .item<%i%>Inventory uiAbility.ItemCount
+                                    scoreboard players reset .item<%i%>Hotbar uiAbility.ItemCount
+                                    scoreboard players reset .item<%i%>Inventory uiAbility.ItemCount
+                                    # store the result of present items
+                                    execute store result storage minecraft:ability generate.purchase.request_total int 1 run scoreboard players get .item<%i%>Count uiAbility.ItemCount
+                                    # test and see if the correct amount of items is present
+                                    $execute unless score .item<%i%>Count uiAbility.ItemCount matches $(request_count).. run tag @s remove uiAbility.ItemCheck
+                                    execute if entity @s[tag=uiPurchase.GenerateLore] run block { with storage minecraft:ability generate.purchase
+                                        # this will only run when generating lore
+                                        data modify storage minecraft:ability generate.purchase.request_color set value "EC3232"
+                                        $execute if score .item<%i%>Count uiAbility.ItemCount matches $(request_count).. run data modify storage minecraft:ability generate.purchase.request_color set value "3cdd31"
+                                        # plug all of the resulting info in to show actual data
+                                        block { with storage minecraft:ability generate.purchase
+                                            $data modify storage minecraft:ability generate.purchase.price_lore append value ["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"$(request_total)/$(request_count) $(request_name)(s): ","italic":false,"color":"#$(request_color)"}]
+                                            data modify storage minecraft:ability generate.purchase.price_lore[-1] append from storage minecraft:ability generate.purchase.request_description[0][0]
+                                            data modify storage minecraft:ability generate.purchase.price_lore append from storage minecraft:ability generate.purchase.request_description[1]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    function advancements {
+                        $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements run block { with storage minecraft:ability generate.purchase
+                            tag @s add uiAbility.AdvancementCheck
+                            REPEAT (1,4) as i {
+                                $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request<%i%> run block { with storage minecraft:ability generate.purchase
+                                    $data modify storage minecraft:ability generate.purchase.advancement_path set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request<%i%>.path
+                                    block { with storage minecraft:ability generate.purchase
+                                        # check for each individual advancement
+                                        $execute if entity @s[advancements={$(advancement_path)=false}] run tag @s remove uiAbility.AdvancementCheck
+                                    }
+                                }
+                            }
+                            data modify storage minecraft:ability generate.purchase.advancement_color set value "EC3232"
+                            execute if entity @s[tag=uiAbility.AdvancementCheck] run data modify storage minecraft:ability generate.purchase.advancement_color set value "3cdd31"
+
+                            # following the bulk search, put them all into text and set the color of the main line
+                            execute if entity @s[tag=uiPurchase.GenerateLore] run block { with storage minecraft:ability generate.purchase
+                                $data modify storage minecraft:ability generate.purchase.price_lore append value ["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Advancement(s): ","italic":false,"color":"#$(advancement_color)"}]
+                                REPEAT (1,4) as i {
+                                    $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request<%i%> run block { with storage minecraft:ability generate.purchase
+                                        $data modify storage minecraft:ability generate.purchase.advancement_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request<%i%>.name
+                                        $data modify storage minecraft:ability generate.purchase.advancement_line set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request<%i%>.line
+                                        block { with storage minecraft:ability generate.purchase
+                                            $data modify storage minecraft:ability generate.purchase.price_lore$(advancement_line) append value ["",{"text":"[$(advancement_name)] ","italic":false,"color":"dark_purple"}]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    function bypass {
+
+                    }
+                }
+
                 function click {
                     execute in minecraft:overworld run item replace block 0 -64 0 container.0 from entity @s player.cursor
-                    execute store result storage minecraft:ui ability.choice.lookup int 1 run scoreboard players get @s uiAbility.SelectionChoice
-                    execute in minecraft:overworld run data modify storage minecraft:ui ability.choice.product set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.product
+                    execute store result storage minecraft:ability generate.purchase.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
+                    execute in minecraft:overworld run data modify storage minecraft:ability generate.purchase.product_name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.product
+
+                    function ui:ability/selection/choice/purchase/check/items with storage minecraft:ability generate.purchase
+                    function ui:ability/selection/choice/purchase/check/advancements with storage minecraft:ability generate.purchase
+
+                    execute if entity @s[tag=uiAbility.ItemCheck,tag=uiAbility.AdvancementCheck] run block { with storage minecraft:ability generate.purchase
+                        $data modify storage minecraft:ability generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+                        block { with storage minecraft:ability generate.purchase
+                            $execute if score @s uiPurchase.ProductID matches $(product_id) run scoreboard players add @s uiPurchase.Confirm 1
+                            $execute unless score @s uiPurchase.ProductID matches $(product_id) run scoreboard players reset @s uiPurchase.Confirm
+                            $scoreboard players set @s uiPurchase.ProductID $(product_id)
+                        }
+                    }
+
+
+                    tag @s remove uiAbility.ItemCheck
+                    tag @s remove uiAbility.AdvancementCheck
+
+                    function ui:ability/selection/choice/open
+
+
                     
                     # execute in minecraft:overworld run data modify storage minecraft:ability fetch.click_id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.id
-                    block { with storage minecraft:ui ability.choice
-                        $say minecraft:abilty index.$(lookup).product.$(product)
-                        function ui:ability/selection/choice/open
+                    # block { with storage minecraft:ui generate.purchase
+                    #     $say minecraft:ability index.$(lookup).product.$(product)
+                    #     data merge storage minecraft:ability {generate:{purchase:{clicked_product:"$()"}}}
+                        
 
-                        # $execute if score @s uiAbility.PurchaseID matches $(click_id) run tag @s add uiAbility.ClickedProduct
-                        # $scoreboard players set @s uiAbility.PurchaseID $(click_id)
-                    }
+                    #     # $execute if score @s uiAbility.PurchaseID matches $(click_id) run tag @s add uiAbility.ClickedProduct
+                    #     # $scoreboard players set @s uiAbility.PurchaseID $(click_id)
+                    # }
                 }
             }
 

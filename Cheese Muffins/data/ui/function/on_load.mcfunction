@@ -4,7 +4,6 @@ scoreboard objectives add uiLogic.Broad dummy
 scoreboard objectives add uiLogic.ID dummy
 scoreboard objectives add uiLogic.CurrentHotbar dummy
 scoreboard objectives add uiLogic.PreviousHotbar dummy
-# Collection #
 scoreboard objectives add uiCassette.CollectionSort dummy
 scoreboard objectives add uiCassette.CollectionBroad dummy
 scoreboard objectives add uiCassette.CollectionMaximumPage dummy
@@ -12,11 +11,9 @@ scoreboard objectives add uiCassette.CollectionOperation dummy
 scoreboard objectives add uiAbility.SelectionBroad dummy
 scoreboard objectives add uiAbility.SelectionChoice dummy
 scoreboard objectives add uiAbility.ItemCount dummy
-scoreboard objectives add uiAbility.PurchaseID dummy
-scoreboard objectives add uiAbility.PurchaseConfirm dummy
-# Parties #
+scoreboard objectives add uiPurchase.ProductID dummy
+scoreboard objectives add uiPurchase.Confirm dummy
 scoreboard objectives add uiCassette.PartyLogic dummy
-# Settings #
 scoreboard objectives add uiCassette.SettingsTargeting dummy
 scoreboard objectives add uiCassette.SettingsFeedback dummy
 scoreboard objectives add uiCassette.SettingsParty dummy

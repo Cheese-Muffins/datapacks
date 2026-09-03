@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability generate.purchase.price_lore append value ["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"$(request_total)/$(request_count) $(request_name)(s): ","italic":false,"color":"#$(request_color)"}]
-data modify storage minecraft:ability generate.purchase.price_lore[-1] append from storage minecraft:ability generate.purchase.request_description[0][0]
-data modify storage minecraft:ability generate.purchase.price_lore append from storage minecraft:ability generate.purchase.request_description[1]
+data merge storage minecraft:ability {generate:{purchase:{status_text:"Awaiting Input...",status_color:"fcff3d"}}}
+execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ability {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}

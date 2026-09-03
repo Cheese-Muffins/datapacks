@@ -1,6 +1,5 @@
 # Generated with MC-Build
 
-# Bottom square
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.4 ~-0.5 ~-0.5 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.3 ~-0.5 ~-0.5 0 0 0 0 1 force
@@ -45,7 +44,6 @@ particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.2 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.3 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.4 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~-0.5 ~0.5 0 0 0 0 1 force
-# Top square
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~0.5 ~-0.5 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.4 ~0.5 ~-0.5 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.3 ~0.5 ~-0.5 0 0 0 0 1 force
@@ -90,7 +88,6 @@ particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.2 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.3 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.4 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~0.5 ~0.5 ~0.5 0 0 0 0 1 force
-# Vertical edges
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.5 ~-0.5 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.4 ~-0.5 0 0 0 0 1 force
 particle dust{color:[0.478,0.000,0.478],scale:1} ~-0.5 ~-0.3 ~-0.5 0 0 0 0 1 force

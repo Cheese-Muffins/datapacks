@@ -1,6 +1,4 @@
 # Generated with MC-Build
 
-$say minecraft:abilty index.$(lookup).product.$(product)
-function ui:ability/selection/choice/open
-# $execute if score @s uiAbility.PurchaseID matches $(click_id) run tag @s add uiAbility.ClickedProduct
-# $scoreboard players set @s uiAbility.PurchaseID $(click_id)
+$data modify storage minecraft:ability generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+function ui:ability/selection/choice/purchase/zzz/1 with storage minecraft:ability generate.purchase

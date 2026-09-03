@@ -1,13 +1,9 @@
 # Generated with MC-Build
 
-# enhanced button check
 execute at @s as @p run function ui:logic/minecart/zzz/0
-# removal of ui elements in the physical world
 clear @a *[minecraft:custom_data~{ui_item:{}}]
 kill @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{ui_item:{}}}}}]
-# hopper flow prevention
 execute positioned ~ ~-1 ~ run function ui:logic/minecart/zzz/1
-# data remove storage minecraft:ui
 scoreboard players set .type uiLogic.Broad 1
 data modify storage ui in set from storage ui current
 data remove storage ui in[{components:{"minecraft:custom_data":{ui_item:{}}}}]

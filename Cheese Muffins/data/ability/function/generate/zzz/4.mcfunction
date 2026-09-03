@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-scoreboard players set #ifelse mcb.internal 1
-data modify storage minecraft:ability generate.purchase.request_color set value "3cdd31"
+$execute unless entity @s[tag=$(ownership_tag)] run function ability:generate/zzz/5 with storage minecraft:ability generate.purchase
+$execute if entity @s[tag=$(ownership_tag)] run say owned

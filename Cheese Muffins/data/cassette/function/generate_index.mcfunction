@@ -1,427 +1,320 @@
 # Generated with MC-Build
 
-# 1 - YOUSEEBIGGIRL/T:T
 data merge storage minecraft:cassette {index:{1:{artist:"Hiroyuki Sawano",duration:163,rating:1,song_id:1}}}
 data merge storage minecraft:cassette {index:{1:{name:[{"text":"YOU","italic":false,"color":"#ecbd5f"},{"text":"SEEB","italic":false,"color":"#ffe7b3"},{"text":"IG","italic":false,"color":"#ffe7b3"},{"text":"GIRL","italic":false,"color":"#ecbd5f"},{"text":"/","italic":false,"color":"gray"},{"text":"T","italic":false,"color":"#ecbd5f"},{"text":":","italic":false,"color":"#ffe7b3"},{"text":"T","italic":false,"color":"#ecbd5f"}]}}}
 data merge storage minecraft:cassette {index:{1:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"We Need to Go Deeper","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 2 - Fallen Kingdom
 data merge storage minecraft:cassette {index:{2:{artist:"TryHardNinja",duration:254,rating:3,song_id:2}}}
 data merge storage minecraft:cassette {index:{2:{name:[{"text":"F","italic":false,"color":"dark_green"},{"text":"a","italic":false,"color":"white"},{"text":"l","italic":false,"color":"dark_green"},{"text":"l","italic":false,"color":"green"},{"text":"e","italic":false,"color":"white"},{"text":"n Ki","italic":false,"color":"green"},{"text":"n","italic":false,"color":"white"},{"text":"g","italic":false,"color":"green"},{"text":"d","italic":false,"color":"dark_green"},{"text":"o","italic":false,"color":"white"},{"text":"m","italic":false,"color":"dark_green"}]}}}
 data merge storage minecraft:cassette {index:{2:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"The City at the End of the Game","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 3 - Ascending Dawn
 data merge storage minecraft:cassette {index:{3:{artist:"Emile Van Krieken",duration:350,rating:3,song_id:3}}}
 data merge storage minecraft:cassette {index:{3:{name:[{"text":"A","italic":false,"color":"#00bceb"},{"text":"s","italic":false,"color":"#12c1ed"},{"text":"c","italic":false,"color":"#24c6ee"},{"text":"e","italic":false,"color":"#36cbf0"},{"text":"n","italic":false,"color":"#48cff1"},{"text":"d","italic":false,"color":"#5ad4f3"},{"text":"i","italic":false,"color":"#6cd9f4"},{"text":"n","italic":false,"color":"#7fdef6"},{"text":"g","italic":false,"color":"#91e3f7"},{"text":" ","italic":false,"color":"#a3e8f9"},{"text":"D","italic":false,"color":"#b5ecfa"},{"text":"a","italic":false,"color":"#c7f1fc"},{"text":"w","italic":false,"color":"#d9f6fd"},{"text":"n","italic":false,"color":"#ebfbff"}]}}}
 data merge storage minecraft:cassette {index:{3:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Revaulting","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 4 - Sweet Dreams
 data merge storage minecraft:cassette {index:{4:{artist:"SiM",duration:212,rating:2,song_id:4}}}
 data merge storage minecraft:cassette {index:{4:{name:[{"text":"Sweet Dreams","italic":false,"color":"dark_red"}]}}}
 data merge storage minecraft:cassette {index:{4:{obtainment:[[{"text":"Sleep ","italic":false,"color":"yellow"},{"text":"in a ","italic":false,"color":"gray"},{"text":"bed ","italic":false,"color":"light_purple"},{"text":"after helping yourself to","italic":false,"color":"gray"}],[{"text":"some ","italic":false,"color":"gray"},{"text":"milk ","italic":false,"color":"light_purple"},{"text":"and ","italic":false,"color":"gray"},{"text":"cookies","italic":false,"color":"light_purple"}]]}}}
-# 5 - Take On Me
 data merge storage minecraft:cassette {index:{5:{artist:"A-ha",duration:224,rating:1,song_id:5}}}
 data merge storage minecraft:cassette {index:{5:{name:[{"text":"T","italic":false,"color":"#828282"},{"text":"a","italic":false,"color":"#878787"},{"text":"k","italic":false,"color":"#8b8b8b"},{"text":"e","italic":false,"color":"#909090"},{"text":" ","italic":false,"color":"#949494"},{"text":"O","italic":false,"color":"#999999"},{"text":"n","italic":false,"color":"#9d9d9d"},{"text":" ","italic":false,"color":"#a2a2a2"},{"text":"M","italic":false,"color":"#a6a6a6"},{"text":"e","italic":false,"color":"#ababab"}]}}}
 data merge storage minecraft:cassette {index:{5:{obtainment:[[{"text":"Slay: ","italic":false,"color":"gray"},{"text":"100 ","italic":false,"color":"aqua"},{"text":"Monster(s)","italic":false,"color":"gray"}]]}}}
-# 6 - Up From the Bottom
 data merge storage minecraft:cassette {index:{6:{artist:"Linkin Park",duration:183,rating:1,song_id:6}}}
 data merge storage minecraft:cassette {index:{6:{name:[{"text":"U","italic":false,"color":"#429cc2"},{"text":"p","italic":false,"color":"#5892ca"},{"text":" ","italic":false,"color":"#6e88d1"},{"text":"F","italic":false,"color":"#847ed9"},{"text":"r","italic":false,"color":"#9b75e1"},{"text":"o","italic":false,"color":"#b16be8"},{"text":"m","italic":false,"color":"#c761f0"},{"text":" ","italic":false,"color":"#dd57f7"},{"text":"Th","italic":false,"color":"#f34dff"},{"text":"e","italic":false,"color":"#dd57f7"},{"text":" ","italic":false,"color":"#c761f0"},{"text":"B","italic":false,"color":"#b16be8"},{"text":"o","italic":false,"color":"#9b75e1"},{"text":"t","italic":false,"color":"#847ed9"},{"text":"t","italic":false,"color":"#6e88d1"},{"text":"o","italic":false,"color":"#5892ca"},{"text":"m","italic":false,"color":"#429cc2"}]}}}
 data merge storage minecraft:cassette {index:{6:{obtainment:[[{"text":"Stare up from the bottom of the","italic":false,"color":"gray"}],[{"text":"Overworld ","italic":false,"color":"white"},{"text":"to exposed ","italic":false,"color":"gray"},{"text":"sunlight","italic":false,"color":"yellow"}]]}}}
-# 7 - Enemy
 data merge storage minecraft:cassette {index:{7:{artist:"Imagine Dragons",duration:171,rating:0,song_id:7}}}
 data merge storage minecraft:cassette {index:{7:{name:[{"text":"E","italic":false,"color":"#b08fff"},{"text":"n","italic":false,"color":"#a782ff"},{"text":"e","italic":false,"color":"#9f76ff"},{"text":"m","italic":false,"color":"#9669ff"},{"text":"y","italic":false,"color":"#8d5cff"}]}}}
 data merge storage minecraft:cassette {index:{7:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Monster Hunter","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 8 - Fireflies
 data merge storage minecraft:cassette {index:{8:{artist:"Owl City",duration:225,rating:3,song_id:8}}}
 data merge storage minecraft:cassette {index:{8:{name:[{"text":"F","italic":false,"color":"#9e9eff"},{"text":"ir","italic":false,"color":"white"},{"text":"e","italic":false,"color":"#9e9eff"},{"text":"fl","italic":false,"color":"white"},{"text":"ie","italic":false,"color":"#9e9eff"},{"text":"s","italic":false,"color":"white"}]}}}
 data merge storage minecraft:cassette {index:{8:{obtainment:[[{"text":"Capture an ","italic":false,"color":"gray"},{"text":"adult frog","italic":false,"color":"green"},{"text":" on a ","italic":false,"color":"gray"},{"text":"lead ","italic":false,"color":"light_purple"},{"text":"and","italic":false,"color":"gray"}],[{"text":"g","italic":false,"color":"gray"},{"text":"iv","italic":false,"color":"gray"},{"text":"e","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"it ","italic":false,"color":"gray"},{"text":"what it was deprived","italic":false,"underlined":true,"color":"dark_aqua"},{"text":" of...","italic":false,"color":"gray"}]]}}}
-# 9 - Everybody Talks
 data merge storage minecraft:cassette {index:{9:{artist:"Neon Trees",duration:195,rating:4,song_id:9}}}
 data merge storage minecraft:cassette {index:{9:{name:[{"text":"E","italic":false,"color":"#ff2e2e"},{"text":"v","italic":false,"color":"#ff3838"},{"text":"e","italic":false,"color":"#ff4343"},{"text":"r","italic":false,"color":"#ff4d4d"},{"text":"yb","italic":false,"color":"#ff5757"},{"text":"o","italic":false,"color":"#ff4949"},{"text":"d","italic":false,"color":"#ff3c3c"},{"text":"y","italic":false,"color":"#ff2e2e"},{"text":" ","italic":false,"color":"#9e9eff"},{"text":"T","italic":false,"color":"#c8d600"},{"text":"a","italic":false,"color":"#cfdd09"},{"text":"lk","italic":false,"color":"#d6e411"},{"text":"s","italic":false,"color":"#c8d600"}]}}}
 data merge storage minecraft:cassette {index:{9:{obtainment:[[{"text":"Shepherd Villagers","italic":false,"color":"green"},{"text":" have a chance to","italic":false,"color":"gray"}],[{"text":"trade ","italic":false,"color":"yellow"},{"text":"this song to the player","italic":false,"color":"gray"}]]}}}
-# 10 - Tell Me You Know
 data merge storage minecraft:cassette {index:{10:{artist:"Good Kid",duration:198,rating:0,song_id:10}}}
 data merge storage minecraft:cassette {index:{10:{name:[{"text":"T","italic":false,"color":"#2ec0ff"},{"text":"ell Me","italic":false,"color":"#2ec0ff"},{"text":" Y","italic":false,"color":"#c72eff"},{"text":"ou","italic":false,"color":"#fc61ff"},{"text":" Know","italic":false,"color":"#2ec0ff"}]}}}
 data merge storage minecraft:cassette {index:{10:{obtainment:[[{"text":"Stand nearby another ","italic":false,"color":"gray"},{"text":"player","italic":false,"color":"green"},{"text":" for at","italic":false,"color":"gray"}],[{"text":"least ","italic":false,"color":"gray"},{"text":"2 minutes","italic":false,"color":"aqua"}]]}}}
-# 11 - Club 57
 data merge storage minecraft:cassette {index:{11:{artist:"Bastille",duration:296,rating:2,song_id:11}}}
 data merge storage minecraft:cassette {index:{11:{name:[{"text":"C","italic":false,"color":"#ffb22e"},{"text":"lu","italic":false,"color":"#ff432e"},{"text":"b ","italic":false,"color":"#00a806"},{"text":"57","italic":false,"color":"#1b84b1"}]}}}
 data merge storage minecraft:cassette {index:{11:{obtainment:[[{"text":"Chest Loot: ","italic":false,"color":"gray"},{"text":"Nether Fortress","italic":false,"color":"blue"}]]}}}
-# 12 - Antidote
 data merge storage minecraft:cassette {index:{12:{artist:"We Are The Empty",duration:213,rating:2,song_id:12}}}
 data merge storage minecraft:cassette {index:{12:{name:[{"text":"A","italic":false,"color":"#80d9ff"},{"text":"n","italic":false,"color":"#93c0d3"},{"text":"tidot","italic":false,"color":"#a6a6a6"},{"text":"e","italic":false,"color":"#80d9ff"}]}}}
 data merge storage minecraft:cassette {index:{12:{obtainment:[[{"text":"Drink a ","italic":false,"color":"gray"},{"text":"bucket of milk","italic":false,"color":"light_purple"},{"text":" whilst affected by","italic":false,"color":"gray"}],[{"text":"any level of ","italic":false,"color":"gray"},{"text":"poison","italic":false,"color":"dark_green"}]]}}}
-# 13 - Seperate Ways
 data merge storage minecraft:cassette {index:{13:{artist:"Journey",duration:266,rating:3,song_id:13}}}
 data merge storage minecraft:cassette {index:{13:{name:[{"text":"S","italic":false,"color":"#005bbd"},{"text":"e","italic":false,"color":"#0862c3"},{"text":"p","italic":false,"color":"#1069c8"},{"text":"e","italic":false,"color":"#1870ce"},{"text":"r","italic":false,"color":"#2076d3"},{"text":"a","italic":false,"color":"#287dd9"},{"text":"t","italic":false,"color":"#3184de"},{"text":"e","italic":false,"color":"#398be4"},{"text":" ","italic":false,"color":"#4192e9"},{"text":"W","italic":false,"color":"#4999ef"},{"text":"a","italic":false,"color":"#519ff4"},{"text":"y","italic":false,"color":"#59a6fa"},{"text":"s","italic":false,"color":"#61adff"}]}}}
 data merge storage minecraft:cassette {index:{13:{obtainment:[[{"text":"Mob Loot: ","italic":false,"color":"gray"},{"text":"Baby Slimes","italic":false,"color":"green"},{"text":" with a ","italic":false,"color":"gray"},{"text":"1.00%","italic":false,"color":"aqua"}],[{"text":"chance","italic":false,"color":"aqua"},{"text":" upon death","italic":false,"color":"gray"}]]}}}
-# 14 - Popular Monster
 data merge storage minecraft:cassette {index:{14:{artist:"Falling In Reverse",duration:222,rating:2,song_id:14}}}
 data merge storage minecraft:cassette {index:{14:{name:["",{"text":"P","italic":false,"color":"red"},{"text":"o","italic":false,"color":"#fa5252"},{"text":"p","italic":false,"color":"#f54e4e"},{"text":"u","italic":false,"color":"#f14b4b"},{"text":"l","italic":false,"color":"#ec4747"},{"text":"a","italic":false,"color":"#e74444"},{"text":"r","italic":false,"color":"#e24040"},{"text":" ","italic":false},{"text":"Monster","italic":false,"color":"#c51616"}]}}}
 data merge storage minecraft:cassette {index:{14:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Hero of the Village","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 15 - Pesché Rap
 data merge storage minecraft:cassette {index:{15:{artist:"Cheese Muffins",duration:81,rating:5,song_id:15}}}
 data merge storage minecraft:cassette {index:{15:{name:["",{"text":"Pesché","italic":false,"color":"#fdeca6"},{"text":" ","italic":false},{"text":"R","italic":false,"color":"#ff0000"},{"text":"a","italic":false,"color":"#e60000"},{"text":"p","italic":false,"color":"#cc0000"}]}}}
 data merge storage minecraft:cassette {index:{15:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Smithing with Style","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 16 - Rumbling
 data merge storage minecraft:cassette {index:{16:{artist:"SiM",duration:221,rating:3,song_id:16}}}
 data merge storage minecraft:cassette {index:{16:{name:[{"text":"R","italic":false,"color":"#db2929"},{"text":"u","italic":false,"color":"#e0382c"},{"text":"m","italic":false,"color":"#e5482f"},{"text":"b","italic":false,"color":"#ea5732"},{"text":"l","italic":false,"color":"#f06634"},{"text":"i","italic":false,"color":"#f57537"},{"text":"n","italic":false,"color":"#fa853a"},{"text":"g","italic":false,"color":"#ff943d"}]}}}
 data merge storage minecraft:cassette {index:{16:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Withering Heights","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 17 - Scars
 data merge storage minecraft:cassette {index:{17:{artist:"I Prevail",duration:231,rating:2,song_id:17}}}
 data merge storage minecraft:cassette {index:{17:{name:[{"text":"S","italic":false,"color":"#fff957"},{"text":"c","italic":false,"color":"#ffce55"},{"text":"a","italic":false,"color":"#ffa352"},{"text":"r","italic":false,"color":"#ff7850"},{"text":"s","italic":false,"color":"#ff4d4d"}]}}}
 data merge storage minecraft:cassette {index:{17:{obtainment:[[{"text":"Endure at least ","italic":false,"color":"gray"},{"text":"500 hearts","italic":false,"color":"aqua"},{"text":" of ","italic":false,"color":"gray"},{"text":"damage","italic":false,"color":"yellow"}]]}}}
-# 18 - Quarter Past Midnight
 data merge storage minecraft:cassette {index:{18:{artist:"Bastille",duration:205,rating:2,song_id:18}}}
 data merge storage minecraft:cassette {index:{18:{name:[{"text":"Q","italic":false,"color":"#ff6666"},{"text":"u","italic":false,"color":"#ee7373"},{"text":"a","italic":false,"color":"#dc8080"},{"text":"r","italic":false,"color":"#cb8e8e"},{"text":"t","italic":false,"color":"#b99b9b"},{"text":"er Past Midn","italic":false,"color":"#a8a8a8"},{"text":"i","italic":false,"color":"#9aaebe"},{"text":"g","italic":false,"color":"#8cb5d4"},{"text":"h","italic":false,"color":"#7ebbe9"},{"text":"t","italic":false,"color":"#70c1ff"}]}}}
 data merge storage minecraft:cassette {index:{18:{obtainment:[[{"text":"Sleep ","italic":false,"color":"yellow"},{"text":"in a ","italic":false,"color":"gray"},{"text":"bed ","italic":false,"color":"light_purple"},{"text":"a ","italic":false,"color":"gray"},{"text":"Quarter Past Midnight","italic":false,"underlined":true,"color":"dark_aqua"}]]}}}
-# 19 - Mikasa
 data merge storage minecraft:cassette {index:{19:{artist:"Veil of Maya",duration:190,rating:4,song_id:19}}}
 data merge storage minecraft:cassette {index:{19:{name:[{"text":"Mikasa","italic":false,"color":"red"}]}}}
 data merge storage minecraft:cassette {index:{19:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Over-Overkill","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 20 - Lucid Dreams
 data merge storage minecraft:cassette {index:{20:{artist:"Juice WRLD",duration:239,rating:2,song_id:20}}}
 data merge storage minecraft:cassette {index:{20:{name:[{"text":"L","italic":false,"color":"#6e6e6e"},{"text":"u","italic":false,"color":"#7f7f7f"},{"text":"c","italic":false,"color":"#909090"},{"text":"i","italic":false,"color":"#a1a1a1"},{"text":"d Dr","italic":false,"color":"aqua"},{"text":"e","italic":false,"color":"#a1a1a1"},{"text":"a","italic":false,"color":"#909090"},{"text":"m","italic":false,"color":"#7f7f7f"},{"text":"s","italic":false,"color":"#6e6e6e"}]}}}
 data merge storage minecraft:cassette {index:{20:{obtainment:[[{"text":"Return from ","italic":false,"color":"gray"},{"text":"The End","italic":false,"color":"white"}]]}}}
-# 21 - Blackhole Sun
 data merge storage minecraft:cassette {index:{21:{artist:"Soundgarden",duration:318,rating:3,song_id:21}}}
 data merge storage minecraft:cassette {index:{21:{name:[{"text":"B","italic":false,"color":"#750000"},{"text":"l","italic":false,"color":"#3d3d3d"},{"text":"a","italic":false,"color":"#383838"},{"text":"c","italic":false,"color":"#333333"},{"text":"k","italic":false,"color":"#ffee99"},{"text":"h","italic":false,"color":"#ffce82"},{"text":"ol","italic":false,"color":"#ffae6b"},{"text":"e","italic":false,"color":"#8f0000"},{"text":" ","italic":false,"color":"#313131"},{"text":"S","italic":false,"color":"#373737"},{"text":"u","italic":false,"color":"#3d3d3d"},{"text":"n","italic":false,"color":"#db8829"}]}}}
 data merge storage minecraft:cassette {index:{21:{obtainment:[[{"text":"Throw a ","italic":false,"color":"gray"},{"text":"sunflower ","italic":false,"color":"light_purple"},{"text":"on top of a fully","italic":false,"color":"gray"}],[{"text":"charged ","italic":false,"color":"gray"},{"text":"respawn anchor","italic":false,"color":"light_purple"},{"text":" in the","italic":false,"color":"gray"}],[{"text":"Overworld","italic":false,"color":"white"},{"text":" at ","italic":false,"color":"gray"},{"text":"noon","italic":false,"color":"dark_aqua"}]]}}}
-# 22 - Funky Town
 data merge storage minecraft:cassette {index:{22:{artist:"Lipps Inc.",duration:239,rating:3,song_id:22}}}
 data merge storage minecraft:cassette {index:{22:{name:[{"text":"F","italic":false,"color":"#9900b8"},{"text":"u","italic":false,"color":"#af0ec7"},{"text":"n","italic":false,"color":"#c41bd5"},{"text":"k","italic":false,"color":"#da29e4"},{"text":"y ","italic":false,"color":"#ef36f2"},{"text":"T","italic":false,"color":"#da29e4"},{"text":"o","italic":false,"color":"#c41bd5"},{"text":"w","italic":false,"color":"#af0ec7"},{"text":"n","italic":false,"color":"#c8fa00"}]}}}
 data merge storage minecraft:cassette {index:{22:{obtainment:[[{"text":"Stand nearby a ","italic":false,"color":"gray"},{"text":"parrot","italic":false,"color":"green"},{"text":" ","italic":false,"color":"gray"},{"text":"dancing ","italic":false,"color":"yellow"},{"text":"on","italic":false,"color":"gray"}],[{"text":"top of a ","italic":false,"color":"gray"},{"text":"jukebox","italic":false,"color":"light_purple"}]]}}}
-# 23 - Locked Out Of Heaven
 data merge storage minecraft:cassette {index:{23:{artist:"Bruno Mars",duration:233,rating:4,song_id:23}}}
 data merge storage minecraft:cassette {index:{23:{name:[{"text":"L","italic":false,"color":"#e0f000"},{"text":"o","italic":false,"color":"#e3f215"},{"text":"c","italic":false,"color":"#e6f32a"},{"text":"k","italic":false,"color":"#e9f53f"},{"text":"e","italic":false,"color":"#ecf754"},{"text":"d","italic":false,"color":"#eff869"},{"text":" ","italic":false,"color":"#f2fa7e"},{"text":"O","italic":false,"color":"#f5fc93"},{"text":"u","italic":false,"color":"#f8fda8"},{"text":"t ","italic":false,"color":"#fbffbd"},{"text":"O","italic":false,"color":"#f8fda8"},{"text":"f","italic":false,"color":"#f5fc93"},{"text":" ","italic":false,"color":"#f2fa7e"},{"text":"H","italic":false,"color":"#eff869"},{"text":"e","italic":false,"color":"#ecf754"},{"text":"a","italic":false,"color":"#e9f53f"},{"text":"v","italic":false,"color":"#e6f32a"},{"text":"e","italic":false,"color":"#e3f215"},{"text":"n","italic":false,"color":"#e0f000"}]}}}
 data merge storage minecraft:cassette {index:{23:{obtainment:[[{"text":"Reach a ","italic":false,"color":"gray"},{"text":"height ","italic":false,"color":"yellow"},{"text":"not even the ","italic":false,"color":"gray"},{"text":"Overworld","italic":false,"color":"white"}],[{"text":"thought was possible","italic":false,"underlined":true,"color":"dark_aqua"}]]}}}
-# 24 - Zombie
 data merge storage minecraft:cassette {index:{24:{artist:"The Cranberries",duration:307,rating:4,song_id:24}}}
 data merge storage minecraft:cassette {index:{24:{name:[{"text":"Z","italic":false,"color":"#0ba800"},{"text":"om","italic":false,"color":"#0ba800"},{"text":"bi","italic":false,"color":"#00bfc2"},{"text":"e","italic":false,"color":"#0044cc"}]}}}
 data merge storage minecraft:cassette {index:{24:{obtainment:[[{"text":"Slay: ","italic":false,"color":"gray"},{"text":"100 Zombie(s)","italic":false,"color":"aqua"},{"text":" ","italic":false,"color":"light_purple"},{"text":"in a ","italic":false,"color":"gray"},{"text":"single night","italic":false,"color":"yellow"}]]}}}
-# THE GREAT UNSORTED #
-# 25 - ???
 data merge storage minecraft:cassette {index:{25:{artist:"???",duration:0,rating:0,song_id:25}}}
 data merge storage minecraft:cassette {index:{25:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{25:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 26 - Cities
 data merge storage minecraft:cassette {index:{26:{artist:"Throttle",duration:173,rating:2,song_id:26}}}
 data merge storage minecraft:cassette {index:{26:{name:[{"text":"C","italic":false,"color":"#0082e6"},{"text":"i","italic":false,"color":"#51be73"},{"text":"ti","italic":false,"color":"#a2fa00"},{"text":"e","italic":false,"color":"#51be73"},{"text":"s","italic":false,"color":"#0082e6"}]}}}
 data merge storage minecraft:cassette {index:{26:{obtainment:[[{"text":"Discover: ","italic":false,"color":"gray"},{"text":"Ancient City","italic":false,"color":"blue"}]]}}}
-# 27 - ???
 data merge storage minecraft:cassette {index:{27:{artist:"???",duration:0,rating:0,song_id:27}}}
 data merge storage minecraft:cassette {index:{27:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{27:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 28 - Adventure Of A Lifetime
 data merge storage minecraft:cassette {index:{28:{artist:"Coldplay",duration:265,rating:5,song_id:28}}}
 data merge storage minecraft:cassette {index:{28:{name:[{"text":"A","italic":false,"color":"red"},{"text":"d","italic":false,"color":"#ff7139"},{"text":"v","italic":false,"color":"#ff8e1c"},{"text":"en","italic":false,"color":"gold"},{"text":"t","italic":false,"color":"#ffc61c"},{"text":"u","italic":false,"color":"#ffe339"},{"text":"re","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"#c6ff55"},{"text":"O","italic":false,"color":"#8eff55"},{"text":"f ","italic":false,"color":"green"},{"text":"A","italic":false,"color":"#55c68e"},{"text":" ","italic":false,"color":"#558ec6"},{"text":"Li","italic":false,"color":"blue"},{"text":"f","italic":false,"color":"#8e55ff"},{"text":"e","italic":false,"color":"#c655ff"},{"text":"ti","italic":false,"color":"light_purple"},{"text":"m","italic":false,"color":"#d52bd5"},{"text":"e","italic":false,"color":"dark_purple"}]}}}
 data merge storage minecraft:cassette {index:{28:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"Adventuring Time","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 29 - Come As You Are
 data merge storage minecraft:cassette {index:{29:{artist:"Nirvana",duration:220,rating:3,song_id:29}}}
 data merge storage minecraft:cassette {index:{29:{name:[{"text":"C","italic":false,"color":"#007fe0"},{"text":"o","italic":false,"color":"#0f88e4"},{"text":"m","italic":false,"color":"#1d91e9"},{"text":"e","italic":false,"color":"#2c9aed"},{"text":" ","italic":false,"color":"#3aa2f2"},{"text":"A","italic":false,"color":"#49abf6"},{"text":"s","italic":false,"color":"#57b4fb"},{"text":" Y","italic":false,"color":"#66bdff"},{"text":"o","italic":false,"color":"#55b3fa"},{"text":"u","italic":false,"color":"#44a8f5"},{"text":" ","italic":false,"color":"#339ef0"},{"text":"A","italic":false,"color":"#2294ea"},{"text":"r","italic":false,"color":"#1189e5"},{"text":"e","italic":false,"color":"#007fe0"}]}}}
 data merge storage minecraft:cassette {index:{29:{obtainment:[[{"text":"Stand nearby a ","italic":false,"color":"gray"},{"text":"hostile entity","italic":false,"color":"light_purple"},{"text":" with","italic":false,"color":"gray"}],[{"text":"absolutely ","italic":false,"color":"gray"},{"text":"nothing","italic":false,"color":"yellow"},{"text":" in your ","italic":false,"color":"gray"},{"text":"inventory","italic":false,"color":"light_purple"}],[{"text":"for ","italic":false,"color":"gray"},{"text":"15s","italic":false,"color":"aqua"},{"text":" without dealing any ","italic":false,"color":"gray"},{"text":"damage","italic":false,"color":"red"}]]}}}
-# 30 - Megalovania
 data merge storage minecraft:cassette {index:{30:{artist:"Toby Fox",duration:315,rating:5,song_id:30}}}
 data merge storage minecraft:cassette {index:{30:{name:[{"text":"M","italic":false,"color":"#525252"},{"text":"e","italic":false,"color":"#818181"},{"text":"g","italic":false,"color":"#afafaf"},{"text":"alo","italic":false,"color":"#dedede"},{"text":"va","italic":false,"color":"#14ffe4"},{"text":"n","italic":false,"color":"#dedede"},{"text":"i","italic":false,"color":"#989898"},{"text":"a","italic":false,"color":"#525252"}]}}}
 data merge storage minecraft:cassette {index:{30:{obtainment:[[{"text":"you're gonna have a bad time.","italic":false,"color":"white"}],[{"text":"1. Slay: ","italic":false,"color":"gray"},{"text":"500 Skeleton(s)","italic":false,"color":"dark_red"}],[{"text":"2. Slay: ","italic":false,"color":"gray"},{"text":"100 Wither Skeleton(s)","italic":false,"color":"red"}],[{"text":"3. Slay: ","italic":false,"color":"gray"},{"text":"25 Stray(s)","italic":false,"color":"red"}],[{"text":"4. Slay: ","italic":false,"color":"gray"},{"text":"25 Parched","italic":false,"color":"red"}],[{"text":"5. Slay: ","italic":false,"color":"gray"},{"text":"10 Bogged","italic":false,"color":"#ff9494"}],[{"text":"6. Slay: ","italic":false,"color":"gray"},{"text":"1 Spider Jockey","italic":false,"color":"#ff9494"}],[{"text":"7. Slay: ","italic":false,"color":"gray"},{"text":"1 Wither","italic":false,"color":"#ff9494"}]]}}}
-# 31 - Hold Me Down
 data merge storage minecraft:cassette {index:{31:{artist:"Happy Fits",duration:225,rating:1,song_id:31}}}
 data merge storage minecraft:cassette {index:{31:{name:[{"text":"H","italic":false,"color":"#ffcb5c"},{"text":"o","italic":false,"color":"#fad078"},{"text":"l","italic":false,"color":"#f5d693"},{"text":"d","italic":false,"color":"#f0dbaf"},{"text":" ","italic":false,"color":"#ebe1ca"},{"text":"Me","italic":false,"color":"#e6e6e6"},{"text":" ","italic":false,"color":"#ebe1ca"},{"text":"D","italic":false,"color":"#f0dbaf"},{"text":"o","italic":false,"color":"#f5d693"},{"text":"w","italic":false,"color":"#fad078"},{"text":"n","italic":false,"color":"#ffcb5c"}]}}}
 data merge storage minecraft:cassette {index:{31:{obtainment:[[{"text":"Gain the ","italic":false,"color":"gray"},{"text":"Mining Fatigue","italic":false,"color":"dark_green"},{"text":" effect","italic":false,"color":"gray"}]]}}}
-# 32 - ???
 data merge storage minecraft:cassette {index:{32:{artist:"???",duration:0,rating:0,song_id:32}}}
 data merge storage minecraft:cassette {index:{32:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{32:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 33 - Car Radio
 data merge storage minecraft:cassette {index:{33:{artist:"Twenty One Pilots",duration:270,rating:0,song_id:33}}}
 data merge storage minecraft:cassette {index:{33:{name:[{"text":"C","italic":false,"color":"#58d4e4"},{"text":"a","italic":false,"color":"#82dfeb"},{"text":"r","italic":false,"color":"#aceaf2"},{"text":" ","italic":false,"color":"#d5f4f8"},{"text":"Ra","italic":false,"color":"white"},{"text":"d","italic":false,"color":"#ffc0c0"},{"text":"i","italic":false,"color":"#ff8181"},{"text":"o","italic":false,"color":"#ff4242"}]}}}
 data merge storage minecraft:cassette {index:{33:{obtainment:[[{"text":"Listen to any ","italic":false,"color":"gray"},{"text":"cassette song","italic":false,"color":"light_purple"}],[{"text":"whilst","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"riding ","italic":false,"color":"yellow"},{"text":"in a ","italic":false,"color":"gray"},{"text":"minecart","italic":false,"color":"light_purple"}]]}}}
-# 34 - Hometown
 data merge storage minecraft:cassette {index:{34:{artist:"Twenty One Pilots",duration:232,rating:4,song_id:34}}}
 data merge storage minecraft:cassette {index:{34:{name:[{"text":"H","italic":false,"color":"#ff1414"},{"text":"om","italic":false,"color":"white"},{"text":"et","italic":false,"color":"#ff1414"},{"text":"ow","italic":false,"color":"white"},{"text":"n","italic":false,"color":"#ff1414"}]}}}
 data merge storage minecraft:cassette {index:{34:{obtainment:[[{"text":"Gather ","italic":false,"color":"gray"},{"text":"16 Villagers","italic":false,"color":"aqua"},{"text":" within","italic":false,"color":"gray"}],[{"text":"32m","italic":false,"color":"aqua"},{"text":" of ","italic":false,"color":"gray"},{"text":"(0,0)","italic":false,"color":"yellow"}]]}}}
-# 35 - Resentment
 data merge storage minecraft:cassette {index:{35:{artist:"A Day To Remember",duration:227,rating:2,song_id:35}}}
 data merge storage minecraft:cassette {index:{35:{name:[{"text":"R","italic":false,"color":"#ffae3d"},{"text":"e","italic":false,"color":"#fba936"},{"text":"s","italic":false,"color":"#f7a42f"},{"text":"e","italic":false,"color":"#f39f29"},{"text":"n","italic":false,"color":"#ef9a22"},{"text":"t","italic":false,"color":"#eb941b"},{"text":"m","italic":false,"color":"#e78f14"},{"text":"e","italic":false,"color":"#e38a0e"},{"text":"n","italic":false,"color":"#df8507"},{"text":"t","italic":false,"color":"#db8000"}]}}}
 data merge storage minecraft:cassette {index:{35:{obtainment:[[{"text":"Cause at least ","italic":false,"color":"gray"},{"text":"20 Zombified Piglin(s)","italic":false,"color":"aqua"}],[{"text":"to ","italic":false,"color":"gray"},{"text":"become ","italic":false,"color":"gray"},{"text":"hostile","italic":false,"color":"yellow"},{"text":" towards you","italic":false,"color":"gray"}]]}}}
-# 36 - Monster
 data merge storage minecraft:cassette {index:{36:{artist:"Hands Like Houses",duration:214,rating:2,song_id:36}}}
 data merge storage minecraft:cassette {index:{36:{name:[{"text":"M","italic":false,"color":"#e1dfa3"},{"text":"o","italic":false,"color":"#d8c4b4"},{"text":"n","italic":false,"color":"#d0aac5"},{"text":"st","italic":false,"color":"#c78fd6"},{"text":"e","italic":false,"color":"#d4b7bd"},{"text":"r","italic":false,"color":"#e1dfa3"}]}}}
 data merge storage minecraft:cassette {index:{36:{obtainment:[["",{"text":"E","italic":false,"color":"#d642ff"},{"text":"n","italic":false,"color":"#dd4cf7"},{"text":"c","italic":false,"color":"#e457ef"},{"text":"h","italic":false,"color":"#eb61e8"},{"text":"a","italic":false,"color":"#f16be0"},{"text":"n","italic":false,"color":"#f876d8"},{"text":"t","italic":false,"color":"#ff80d0"},{"text":" any type of ","italic":false,"color":"gray"},{"text":"Sword","italic":false,"color":"light_purple"},{"text":" with any","italic":false,"color":"gray"}],["",{"text":"level of ","italic":false,"color":"gray"},{"text":"Knockback","italic":false,"color":"dark_green"},{"text":" ","italic":false,"color":"gray"},{"text":"(Need I say more?)","color":"gray"}]]}}}
-# 37 - Me Against Myself
 data merge storage minecraft:cassette {index:{37:{artist:"Wage War",duration:234,rating:1,song_id:37}}}
 data merge storage minecraft:cassette {index:{37:{name:[{"text":"M","italic":false,"color":"#595046"},{"text":"e","italic":false,"color":"#6c5944"},{"text":" ","italic":false,"color":"#7f6342"},{"text":"A","italic":false,"color":"#926c40"},{"text":"g","italic":false,"color":"#a6753e"},{"text":"a","italic":false,"color":"#b97e3c"},{"text":"i","italic":false,"color":"#cc883a"},{"text":"n","italic":false,"color":"#df9138"},{"text":"st","italic":false,"color":"#f29a36"},{"text":" ","italic":false,"color":"#dc8f38"},{"text":"M","italic":false,"color":"#c6853b"},{"text":"y","italic":false,"color":"#b07a3d"},{"text":"s","italic":false,"color":"#9b703f"},{"text":"e","italic":false,"color":"#856541"},{"text":"l","italic":false,"color":"#6f5b44"},{"text":"f","italic":false,"color":"#595046"}]}}}
 data merge storage minecraft:cassette {index:{37:{obtainment:[[{"text":"Survive at ","italic":false,"color":"gray"},{"text":"h","italic":false,"color":"#ff7a7a"},{"text":"a","italic":false,"color":"#fd7575"},{"text":"l","italic":false,"color":"#fc7070"},{"text":"f","italic":false,"color":"#fa6a6a"},{"text":" ","italic":false,"color":"#f86565"},{"text":"a","italic":false,"color":"#f66060"},{"text":" ","italic":false,"color":"#f55b5b"},{"text":"h","italic":false,"color":"#f35656"},{"text":"e","italic":false,"color":"#f15151"},{"text":"a","italic":false,"color":"#ef4b4b"},{"text":"r","italic":false,"color":"#ee4646"},{"text":"t","italic":false,"color":"#ec4141"}]]}}}
-# 38 - Sometimes You're The Hammer, Sometimes You're The Nail
 data merge storage minecraft:cassette {index:{38:{artist:"A Day To Remember",duration:275,rating:2,song_id:38}}}
 data merge storage minecraft:cassette {index:{38:{name:[{"text":"S","italic":false,"color":"#545454"},{"text":"o","italic":false,"color":"#5d6256"},{"text":"m","italic":false,"color":"#656f59"},{"text":"e","italic":false,"color":"#6e7d5b"},{"text":"t","italic":false,"color":"#768a5e"},{"text":"i","italic":false,"color":"#7f9860"},{"text":"m","italic":false,"color":"#87a563"},{"text":"es","italic":false,"color":"#90b365"},{"text":" ","italic":false,"color":"#87a563"},{"text":"Y","italic":false,"color":"#7f9860"},{"text":"o","italic":false,"color":"#768a5e"},{"text":"u","italic":false,"color":"#6e7d5b"},{"text":"'","italic":false,"color":"#656f59"},{"text":"r","italic":false,"color":"#5d6256"},{"text":"e The Hamm","italic":false,"color":"#545454"},{"text":"e","italic":false,"color":"#5d6256"},{"text":"r","italic":false,"color":"#656f59"},{"text":",","italic":false,"color":"#6e7d5b"},{"text":" ","italic":false,"color":"#768a5e"},{"text":"S","italic":false,"color":"#7f9860"},{"text":"o","italic":false,"color":"#87a563"},{"text":"me","italic":false,"color":"#90b365"},{"text":"t","italic":false,"color":"#87a563"},{"text":"i","italic":false,"color":"#7f9860"},{"text":"m","italic":false,"color":"#768a5e"},{"text":"e","italic":false,"color":"#6e7d5b"},{"text":"s","italic":false,"color":"#656f59"},{"text":" ","italic":false,"color":"#5d6256"},{"text":"You're The Nail","italic":false,"color":"#545454"}]}}}
 data merge storage minecraft:cassette {index:{38:{obtainment:[[{"text":"Get ","italic":false,"color":"gray"},{"text":"squished ","italic":false,"color":"yellow"},{"text":"by an ","italic":false,"color":"gray"},{"text":"anvil","italic":false,"color":"light_purple"},{"text":" when already ","italic":false,"color":"gray"},{"text":"interacting with","italic":false,"color":"gray"}],[{"text":"an ","italic":false,"color":"gray"},{"text":"anvil","italic":false,"color":"light_purple"},{"text":" at the","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"same time","italic":false,"color":"gray"}]]}}}
-# 39 - Judgement Day
 data merge storage minecraft:cassette {index:{39:{artist:"A Day To Remember",duration:169,rating:2,song_id:39}}}
 data merge storage minecraft:cassette {index:{39:{name:[{"text":"J","italic":false,"color":"#605e7d"},{"text":"u","italic":false,"color":"#536286"},{"text":"d","italic":false,"color":"#46668f"},{"text":"g","italic":false,"color":"#3a6a99"},{"text":"e","italic":false,"color":"#2d6ea2"},{"text":"m","italic":false,"color":"#2072ab"},{"text":"en","italic":false,"color":"#1376b4"},{"text":"t","italic":false,"color":"#2271a9"},{"text":" ","italic":false,"color":"#326c9e"},{"text":"D","italic":false,"color":"#416893"},{"text":"a","italic":false,"color":"#516388"},{"text":"y","italic":false,"color":"#605e7d"}]}}}
 data merge storage minecraft:cassette {index:{39:{obtainment:[[{"text":"Complete the Advancement(s): ","italic":false,"color":"gray"},{"text":"[","italic":false,"color":"dark_purple"},{"text":"The End","italic":false,"color":"light_purple"},{"text":"]","italic":false,"color":"dark_purple"}]]}}}
-# 40 - Running in the 90's
 data merge storage minecraft:cassette {index:{40:{artist:"Max Coveri",duration:285,rating:3,song_id:40}}}
 data merge storage minecraft:cassette {index:{40:{name:[{"text":"R","italic":false,"color":"#29a2ff"},{"text":"u","italic":false,"color":"#5f8bd1"},{"text":"n","italic":false,"color":"#9475a3"},{"text":"n","italic":false,"color":"#ca5e75"},{"text":"in","italic":false,"color":"#ff4747"},{"text":"g","italic":false,"color":"#ff6e42"},{"text":" ","italic":false,"color":"#ff963d"},{"text":"i","italic":false,"color":"#ffbd38"},{"text":"n ","italic":false,"color":"#ffe433"},{"text":"t","italic":false,"color":"#e3cf4a"},{"text":"h","italic":false,"color":"#c7ba61"},{"text":"e","italic":false,"color":"#aba478"},{"text":" 90's","italic":false,"color":"#8f8f8f"}]}}}
 data merge storage minecraft:cassette {index:{40:{obtainment:[[{"text":"Sprint ","italic":false,"color":"yellow"},{"text":"a combined total of ","italic":false,"color":"gray"},{"text":"5000m","italic":false,"color":"aqua"}]]}}}
-# 41 - Bad Things
 data merge storage minecraft:cassette {index:{41:{artist:"I Prevail",duration:229,rating:1,song_id:41}}}
 data merge storage minecraft:cassette {index:{41:{name:[{"text":"B","italic":false,"color":"#865f5f"},{"text":"a","italic":false,"color":"#a45e64"},{"text":"d","italic":false,"color":"#c35e6a"},{"text":" ","italic":false,"color":"#e15d6f"},{"text":"Th","italic":false,"color":"#ff5c74"},{"text":"i","italic":false,"color":"#e15d6f"},{"text":"n","italic":false,"color":"#c35e6a"},{"text":"g","italic":false,"color":"#a45e64"},{"text":"s","italic":false,"color":"#865f5f"}]}}}
 data merge storage minecraft:cassette {index:{41:{obtainment:[["",{"text":"Stand in ","italic":false,"color":"gray"},{"text":"complete darkness","italic":false,"color":"yellow"},{"text":" and use","italic":false,"color":"gray"}],["",{"text":"any","color":"green"},{"text":" type of ","italic":false,"color":"gray"},{"text":"drug","italic":false,"color":"light_purple"}]]}}}
-# 42 - Chlorine
 data merge storage minecraft:cassette {index:{42:{artist:"Twenty One Pilots",duration:321,rating:0,song_id:42}}}
 data merge storage minecraft:cassette {index:{42:{name:[{"text":"C","italic":false,"color":"#dbd400"},{"text":"hlor","italic":false,"color":"#dbd400"},{"text":"i","italic":false,"color":"#c3bf31"},{"text":"n","italic":false,"color":"#aca963"},{"text":"e","italic":false,"color":"#949494"}]}}}
 data merge storage minecraft:cassette {index:{42:{obtainment:[[{"text":"Take ","italic":false,"color":"gray"},{"text":"damage","italic":false,"color":"red"},{"text":" from a ","italic":false,"color":"gray"},{"text":"Pufferfish","italic":false,"color":"yellow"}]]}}}
-# 43 - Buddy Holly
 data merge storage minecraft:cassette {index:{43:{artist:"Wheezer",duration:161,rating:0,song_id:43}}}
 data merge storage minecraft:cassette {index:{43:{name:[{"text":"Buddy Holly","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{43:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 44 - The Only Thing They Fear Is You
 data merge storage minecraft:cassette {index:{44:{artist:"Mick Gordon",duration:411,rating:5,song_id:44}}}
 data merge storage minecraft:cassette {index:{44:{name:[{"text":"T","italic":false,"color":"#fffbbd"},{"text":"h","italic":false,"color":"#ffefa9"},{"text":"e","italic":false,"color":"#ffe496"},{"text":" ","italic":false,"color":"#ffd882"},{"text":"O","italic":false,"color":"#ffcd6e"},{"text":"n","italic":false,"color":"#ffc15a"},{"text":"l","italic":false,"color":"#ffb647"},{"text":"y ","italic":false,"color":"#ffaa33"},{"text":"T","italic":false,"color":"#ffa72c"},{"text":"h","italic":false,"color":"#ffa424"},{"text":"i","italic":false,"color":"#ffa11d"},{"text":"n","italic":false,"color":"#ff9e16"},{"text":"g","italic":false,"color":"#ff9b0f"},{"text":" ","italic":false,"color":"#ff9807"},{"text":"Th","italic":false,"color":"#ff9500"},{"text":"e","italic":false,"color":"#ff8b0c"},{"text":"y","italic":false,"color":"#ff8217"},{"text":" ","italic":false,"color":"#ff7823"},{"text":"F","italic":false,"color":"#ff6f2f"},{"text":"e","italic":false,"color":"#ff653b"},{"text":"a","italic":false,"color":"#ff5c46"},{"text":"r ","italic":false,"color":"#ff5252"},{"text":"I","italic":false,"color":"#ff4646"},{"text":"s","italic":false,"color":"#ff3a3a"},{"text":" ","italic":false,"color":"#ff2e2e"},{"text":"Y","italic":false,"color":"#ff2222"},{"text":"o","italic":false,"color":"#ff1616"},{"text":"u","italic":false,"color":"#ff0a0a"}]}}}
 data merge storage minecraft:cassette {index:{44:{obtainment:[[{"text":"Slay: ","italic":false,"color":"gray"},{"text":"500 Monster(s)","italic":false,"color":"aqua"},{"text":" in a ","italic":false,"color":"gray"},{"text":"single night","italic":false,"color":"yellow"}]]}}}
-# 45 - ???
 data merge storage minecraft:cassette {index:{45:{artist:"???",duration:0,rating:0,song_id:45}}}
 data merge storage minecraft:cassette {index:{45:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{45:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 46 - ???
 data merge storage minecraft:cassette {index:{46:{artist:"???",duration:0,rating:0,song_id:46}}}
 data merge storage minecraft:cassette {index:{46:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{46:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 47 - Tanjiro No Uta
 data merge storage minecraft:cassette {index:{47:{artist:"Nami Nakagawa",duration:328,rating:3,song_id:47}}}
 data merge storage minecraft:cassette {index:{47:{name:[{"text":"Ta","italic":false,"color":"gray"},{"text":"n","italic":false,"color":"red"},{"text":"j","italic":false,"color":"gold"},{"text":"i","italic":false,"color":"yellow"},{"text":"ro ","italic":false,"color":"gray"},{"text":"N","italic":false,"color":"red"},{"text":"o","italic":false,"color":"gold"},{"text":" Ut","italic":false,"color":"gray"},{"text":"a","italic":false,"color":"red"}]}}}
 data merge storage minecraft:cassette {index:{47:{obtainment:[[{"text":"Wield an ","italic":false,"color":"gray"},{"text":"enchanted book","italic":false,"color":"light_purple"},{"text":" with both","italic":false,"color":"gray"}],[{"text":"Depth Strider","italic":false,"color":"dark_green"},{"text":" and ","italic":false,"color":"gray"},{"text":"Fire Aspect","italic":false,"color":"dark_green"}],[{"text":"inscribed in it","italic":false,"color":"gray"}]]}}}
-# 48 - Through The Fire And Flames
 data merge storage minecraft:cassette {index:{48:{artist:"DragonForce",duration:304,rating:0,song_id:48}}}
 data merge storage minecraft:cassette {index:{48:{name:[{"text":"Through The Fire And Flames","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{48:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 49 - Leave Me Alone
 data merge storage minecraft:cassette {index:{49:{artist:"NF",duration:305,rating:3,song_id:49}}}
 data merge storage minecraft:cassette {index:{49:{name:[{"text":"Leave Me ","italic":false,"color":"#a1a1a1"},{"text":"A","italic":false,"underlined":true,"color":"#cfcfcf"},{"text":"l","italic":false,"underlined":true,"color":"#dbdbdb"},{"text":"o","italic":false,"underlined":true,"color":"#e7e7e7"},{"text":"n","italic":false,"underlined":true,"color":"#f3f3f3"},{"text":"e","italic":false,"underlined":true,"color":"white"}]}}}
 data merge storage minecraft:cassette {index:{49:{obtainment:[[{"text":"Be under attack by ","italic":false,"color":"gray"},{"text":"8","italic":false,"color":"aqua"},{"text":" different","italic":false,"color":"gray"}],[{"text":"Monster(s)","italic":false,"color":"green"},{"text":" at the same time","italic":false,"color":"gray"}]]}}}
-# 50 - Jump
 data merge storage minecraft:cassette {index:{50:{artist:"Van Halen",duration:237,rating:2,song_id:50}}}
 data merge storage minecraft:cassette {index:{50:{name:[{"text":"J","italic":false,"color":"#8fbfff"},{"text":"u","italic":false,"color":"#7bb4ff"},{"text":"m","italic":false,"color":"#66a8ff"},{"text":"p","italic":false,"color":"#529dff"}]}}}
 data merge storage minecraft:cassette {index:{50:{obtainment:[[{"text":"Jump","italic":false,"color":"yellow"},{"text":" at least ","italic":false,"color":"gray"},{"text":"1000","italic":false,"color":"aqua"},{"text":" times","italic":false,"color":"gray"}]]}}}
-# 51 - Kickback
 data merge storage minecraft:cassette {index:{51:{artist:"Kenshi Yonezu",duration:195,rating:0,song_id:51}}}
 data merge storage minecraft:cassette {index:{51:{name:[{"text":"K","italic":false,"color":"#d10000"},{"text":"i","italic":false,"color":"#8b3807"},{"text":"c","italic":false,"color":"#46700d"},{"text":"k","italic":false,"color":"#00a814"},{"text":"b","italic":false,"color":"#00a814"},{"text":"a","italic":false,"color":"#46700d"},{"text":"c","italic":false,"color":"#8b3807"},{"text":"k","italic":false,"color":"#d10000"}]}}}
 data merge storage minecraft:cassette {index:{51:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 52 - What You Gonna Do?
 data merge storage minecraft:cassette {index:{52:{artist:"Bastille",duration:143,rating:0,song_id:52}}}
 data merge storage minecraft:cassette {index:{52:{name:[{"text":"What You Gonna Do?","italic":false,"color":"light_purple"}]}}}
 data merge storage minecraft:cassette {index:{52:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 53 - Never Gonna Give You Up
 data merge storage minecraft:cassette {index:{53:{artist:"Rick Astley",duration:214,rating:5,song_id:53}}}
 data merge storage minecraft:cassette {index:{53:{name:[{"text":"N","italic":false,"color":"#9a57ff"},{"text":"e","italic":false,"color":"#a358fd"},{"text":"v","italic":false,"color":"#ac59fa"},{"text":"e","italic":false,"color":"#b65af8"},{"text":"r","italic":false,"color":"#bf5bf6"},{"text":" ","italic":false,"color":"#c85cf3"},{"text":"G","italic":false,"color":"#d15cf1"},{"text":"o","italic":false,"color":"#da5dee"},{"text":"n","italic":false,"color":"#e35eec"},{"text":"n","italic":false,"color":"#ed5fea"},{"text":"a","italic":false,"color":"#f660e7"},{"text":" G","italic":false,"color":"#ff61e5"},{"text":"i","italic":false,"color":"#fa6ce3"},{"text":"v","italic":false,"color":"#f677e1"},{"text":"e","italic":false,"color":"#f183df"},{"text":" ","italic":false,"color":"#ed8edd"},{"text":"Y","italic":false,"color":"#e899db"},{"text":"o","italic":false,"color":"#e3a4d9"},{"text":"u","italic":false,"color":"#dfafd7"},{"text":" ","italic":false,"color":"#dabbd5"},{"text":"U","italic":false,"color":"#d6c6d3"},{"text":"p","italic":false,"color":"#d1d1d1"}]}}}
 data merge storage minecraft:cassette {index:{53:{obtainment:[["",{"text":"Good Luck, ","italic":false,"color":"gray"},{"text":"VICTIM","italic":false,"color":"dark_red","obfuscated":true}],[{"text":"Note: This is an elaborate riddle,","color":"gray"}],[{"text":"and as such you'll need to follow","color":"gray"}],[{"text":"the steps below to reach the end.","color":"gray"}],[{"text":"You'll be notified in chat if you","color":"gray"}],[{"text":"complete one of the steps...","color":"gray"}],"",["",{"text":"1. Bring ","italic":false,"color":"gray"},{"text":"sixteen treasures","italic":false,"color":"light_purple"},{"text":" forged beneath","italic":false,"color":"gray"}],["",{"text":"the earth, and offer them ","italic":false,"color":"gray"},{"text":"beneath","italic":false,"underlined":true,"color":"white"},{"text":" the blossoms.","italic":false,"color":"white"}],["",{"text":"2. Descend to the halls of endless ","italic":false,"color":"gray"},{"text":"Valhalla.","italic":false,"color":"red"}],["",{"text":"3. Find one whose thoughts wander ","italic":false,"color":"gray"},{"text":"nowhere","color":"aqua"}],["",{"text":"at all,","color":"aqua"},{"text":" and ","italic":false,"color":"gray"},{"text":"speak.","italic":false,"color":"yellow"}],["",{"text":"4. It ","italic":false,"color":"gray"},{"text":"cannot see,","italic":false,"color":"aqua"},{"text":" it ","italic":false,"color":"gray"},{"text":"does not speak.","italic":false,"color":"aqua"},{"text":" Nevertheless,","italic":false,"color":"gray"}],["",{"text":"attempt for ","italic":false,"color":"gray"},{"text":"peace.","italic":false,"color":"light_purple"}],["",{"text":"5. Let ","italic":false,"color":"gray"},{"text":"admiration","italic":false,"color":"dark_aqua"},{"text":" echo through stone.","italic":false,"color":"gray"}],[{"text":"6. The world has heard your voice. Now call","italic":false,"color":"gray"}],["",{"text":"together those who have not. Let the ","italic":false,"color":"gray"},{"text":"signal ring.","italic":false,"color":"yellow"}]]}}}
-# 54 - All The Boys
 data merge storage minecraft:cassette {index:{54:{artist:"Panic! at The Disco",duration:189,rating:0,song_id:54}}}
 data merge storage minecraft:cassette {index:{54:{name:[{"text":"All The Boys","italic":false,"color":"aqua"}]}}}
 data merge storage minecraft:cassette {index:{54:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 55 - Still Feel
 data merge storage minecraft:cassette {index:{55:{artist:"Half Alive",duration:248,rating:0,song_id:55}}}
 data merge storage minecraft:cassette {index:{55:{name:[{"text":"Still Feel","italic":false,"color":"gold"}]}}}
 data merge storage minecraft:cassette {index:{55:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 56 - Burn The House Down
 data merge storage minecraft:cassette {index:{56:{artist:"AJR",duration:213,rating:0,song_id:56}}}
 data merge storage minecraft:cassette {index:{56:{name:[{"text":"Burn The House Down","italic":false,"color":"dark_purple"}]}}}
 data merge storage minecraft:cassette {index:{56:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 57 - My Blood
 data merge storage minecraft:cassette {index:{57:{artist:"Twenty One Pilots",duration:233,rating:0,song_id:57}}}
 data merge storage minecraft:cassette {index:{57:{name:[{"text":"My Blood","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{57:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 58 - Eight Hours
 data merge storage minecraft:cassette {index:{58:{artist:"Bastille",duration:208,rating:0,song_id:58}}}
 data merge storage minecraft:cassette {index:{58:{name:[{"text":"Eight Hours","italic":false,"color":"red"}]}}}
 data merge storage minecraft:cassette {index:{58:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 59 - Look Better In Gold
 data merge storage minecraft:cassette {index:{59:{artist:"Friday Pilot Club",duration:202,rating:0,song_id:59}}}
 data merge storage minecraft:cassette {index:{59:{name:[{"text":"Look Better In Gold","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{59:{obtainment:[[{"text":"Equip an entire set of ","italic":false,"color":"gray"},{"text":"golden armor","italic":false,"color":"light_purple"}],[{"text":"trimmed","italic":false,"color":"yellow"},{"text":" with any kind of ","italic":false,"color":"gray"},{"text":"golden trim","italic":false,"color":"light_purple"}]]}}}
-# 60 - Crab Rave
 data merge storage minecraft:cassette {index:{60:{artist:"Noise Storm",duration:161,rating:0,song_id:60}}}
 data merge storage minecraft:cassette {index:{60:{name:[{"text":"Crab Rave","italic":false,"color":"dark_red"}]}}}
 data merge storage minecraft:cassette {index:{60:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 61 - All I Need
 data merge storage minecraft:cassette {index:{61:{artist:"Slushii",duration:227,rating:0,song_id:61}}}
 data merge storage minecraft:cassette {index:{61:{name:[{"text":"All I Need","italic":false,"color":"dark_purple"}]}}}
 data merge storage minecraft:cassette {index:{61:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 62 - You and I
 data merge storage minecraft:cassette {index:{62:{artist:"Barns Courtney",duration:180,rating:0,song_id:62}}}
 data merge storage minecraft:cassette {index:{62:{name:[{"text":"You and I","italic":false,"color":"red"}]}}}
 data merge storage minecraft:cassette {index:{62:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 63 - Amongus Drip
 data merge storage minecraft:cassette {index:{63:{artist:"Leonz",duration:75,rating:0,song_id:63}}}
 data merge storage minecraft:cassette {index:{63:{name:[{"text":"Amongus Drip","italic":false,"color":"dark_red"}]}}}
 data merge storage minecraft:cassette {index:{63:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 64 - Baby Blue
 data merge storage minecraft:cassette {index:{64:{artist:"Badfinger",duration:216,rating:0,song_id:64}}}
 data merge storage minecraft:cassette {index:{64:{name:[{"text":"Baby Blue","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{64:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 65 - RED
 data merge storage minecraft:cassette {index:{65:{artist:"SiM",duration:234,rating:0,song_id:65}}}
 data merge storage minecraft:cassette {index:{65:{name:[{"text":"RED","italic":false,"color":"dark_red"}]}}}
 data merge storage minecraft:cassette {index:{65:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 66 - on the verge
 data merge storage minecraft:cassette {index:{66:{artist:"thrown",duration:135,rating:0,song_id:66}}}
 data merge storage minecraft:cassette {index:{66:{name:[{"text":"on the verge","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{66:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 67 - Money Trees
 data merge storage minecraft:cassette {index:{67:{artist:"Kendrick Lamar",duration:350,rating:0,song_id:67}}}
 data merge storage minecraft:cassette {index:{67:{name:[{"text":"Money Trees","italic":false,"color":"dark_green"}]}}}
 data merge storage minecraft:cassette {index:{67:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 68 - Mukanjyo
 data merge storage minecraft:cassette {index:{68:{artist:"Survive Said The Prophet",duration:187,rating:0,song_id:68}}}
 data merge storage minecraft:cassette {index:{68:{name:[{"text":"Mukanjyo","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{68:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 69 - ???
 data merge storage minecraft:cassette {index:{69:{artist:"???",duration:0,rating:0,song_id:69}}}
 data merge storage minecraft:cassette {index:{69:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{69:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 70 - ???
 data merge storage minecraft:cassette {index:{70:{artist:"???",duration:0,rating:0,song_id:70}}}
 data merge storage minecraft:cassette {index:{70:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{70:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 71 - Cruel Angel's Thesis
 data merge storage minecraft:cassette {index:{71:{artist:"Yoko Takahashi",duration:244,rating:0,song_id:71}}}
 data merge storage minecraft:cassette {index:{71:{name:[{"text":"Cruel Angel's Thesis","italic":false,"color":"aqua"}]}}}
 data merge storage minecraft:cassette {index:{71:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 72 - Paradise
 data merge storage minecraft:cassette {index:{72:{artist:"Coldplay",duration:255,rating:0,song_id:72}}}
 data merge storage minecraft:cassette {index:{72:{name:[{"text":"Paradise","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{72:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 73 - Old Me
 data merge storage minecraft:cassette {index:{73:{artist:"5 Seconds of Summer",duration:184,rating:0,song_id:73}}}
 data merge storage minecraft:cassette {index:{73:{name:[{"text":"Old Me","italic":false,"color":"aqua"}]}}}
 data merge storage minecraft:cassette {index:{73:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 74 - ???
 data merge storage minecraft:cassette {index:{74:{artist:"???",duration:0,rating:0,song_id:74}}}
 data merge storage minecraft:cassette {index:{74:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{74:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 75 - ???
 data merge storage minecraft:cassette {index:{75:{artist:"???",duration:0,rating:0,song_id:75}}}
 data merge storage minecraft:cassette {index:{75:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{75:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 76 - ???
 data merge storage minecraft:cassette {index:{76:{artist:"???",duration:0,rating:0,song_id:76}}}
 data merge storage minecraft:cassette {index:{76:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{76:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 77 - Under the Tree
 data merge storage minecraft:cassette {index:{77:{artist:"SiM",duration:270,rating:0,song_id:77}}}
 data merge storage minecraft:cassette {index:{77:{name:[{"text":"Under the Tree","italic":false,"color":"red"}]}}}
 data merge storage minecraft:cassette {index:{77:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 78 - Red Swan
 data merge storage minecraft:cassette {index:{78:{artist:"YOSHIKI feat. HYDE",duration:270,rating:0,song_id:78}}}
 data merge storage minecraft:cassette {index:{78:{name:[{"text":"Red Swan","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{78:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 79 - ???
 data merge storage minecraft:cassette {index:{79:{artist:"???",duration:0,rating:0,song_id:79}}}
 data merge storage minecraft:cassette {index:{79:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{79:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 80 - American Idiot
 data merge storage minecraft:cassette {index:{80:{artist:"Green Day",duration:175,rating:0,song_id:80}}}
 data merge storage minecraft:cassette {index:{80:{name:[{"text":"American Idiot","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{80:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 81 - K21
 data merge storage minecraft:cassette {index:{81:{artist:"Hiroyuki Sawano",duration:203,rating:0,song_id:81}}}
 data merge storage minecraft:cassette {index:{81:{name:[{"text":"K21","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{81:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 82 - Mr. Brightside
 data merge storage minecraft:cassette {index:{82:{artist:"The Killers",duration:224,rating:0,song_id:82}}}
 data merge storage minecraft:cassette {index:{82:{name:[{"text":"Mr. Brightside","italic":false,"color":"red"}]}}}
 data merge storage minecraft:cassette {index:{82:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 83 - Give Me the Future
 data merge storage minecraft:cassette {index:{83:{artist:"Bastille",duration:220,rating:0,song_id:83}}}
 data merge storage minecraft:cassette {index:{83:{name:[{"text":"Give Me the Future","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{83:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 84 - War!
 data merge storage minecraft:cassette {index:{84:{artist:"Zach Callison",duration:286,rating:0,song_id:84}}}
 data merge storage minecraft:cassette {index:{84:{name:[{"text":"War!","italic":false,"color":"dark_red"}]}}}
 data merge storage minecraft:cassette {index:{84:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 85 - Run Into Trouble
 data merge storage minecraft:cassette {index:{85:{artist:"Bastille",duration:184,rating:0,song_id:85}}}
 data merge storage minecraft:cassette {index:{85:{name:[{"text":"Run Into Trouble","italic":false,"color":"dark_purple"}]}}}
 data merge storage minecraft:cassette {index:{85:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 86 - Good Grief
 data merge storage minecraft:cassette {index:{86:{artist:"Bastille",duration:210,rating:0,song_id:86}}}
 data merge storage minecraft:cassette {index:{86:{name:[{"text":"Good Grief","italic":false,"color":"green"}]}}}
 data merge storage minecraft:cassette {index:{86:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 87 - ???
 data merge storage minecraft:cassette {index:{87:{artist:"???",duration:0,rating:0,song_id:87}}}
 data merge storage minecraft:cassette {index:{87:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{87:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 88 - Of the Night
 data merge storage minecraft:cassette {index:{88:{artist:"Bastille",duration:217,rating:0,song_id:88}}}
 data merge storage minecraft:cassette {index:{88:{name:[{"text":"Of the Night","italic":false,"color":"dark_purple"}]}}}
 data merge storage minecraft:cassette {index:{88:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 89 - Sunflower
 data merge storage minecraft:cassette {index:{89:{artist:"Post Malone",duration:158,rating:0,song_id:89}}}
 data merge storage minecraft:cassette {index:{89:{name:[{"text":"Sunflower","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{89:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 090 - ???
 data merge storage minecraft:cassette {index:{90:{artist:"???",duration:0,rating:0,song_id:90}}}
 data merge storage minecraft:cassette {index:{90:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{90:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 091 - Lose Yourself
 data merge storage minecraft:cassette {index:{91:{artist:"Eminem",duration:322,rating:0,song_id:91}}}
 data merge storage minecraft:cassette {index:{91:{name:[{"text":"Lose Yourself","italic":false,"color":"red"}]}}}
 data merge storage minecraft:cassette {index:{91:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 092 - Me and My Broken Heart
 data merge storage minecraft:cassette {index:{92:{artist:"Rixton",duration:196,rating:0,song_id:92}}}
 data merge storage minecraft:cassette {index:{92:{name:[{"text":"Me and My Broken Heart","italic":false,"color":"white"}]}}}
 data merge storage minecraft:cassette {index:{92:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 093 - ???
 data merge storage minecraft:cassette {index:{93:{artist:"???",duration:0,rating:0,song_id:93}}}
 data merge storage minecraft:cassette {index:{93:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{93:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 094 - ???
 data merge storage minecraft:cassette {index:{94:{artist:"???",duration:0,rating:0,song_id:94}}}
 data merge storage minecraft:cassette {index:{94:{name:[{"text":"???","italic":false,"color":"gray"}]}}}
 data merge storage minecraft:cassette {index:{94:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 095 - Keep on Loving You
 data merge storage minecraft:cassette {index:{95:{artist:"REO Speedwagon",duration:202,rating:0,song_id:95}}}
 data merge storage minecraft:cassette {index:{95:{name:[{"text":"Keep on Loving You","italic":false,"color":"light_purple"}]}}}
 data merge storage minecraft:cassette {index:{95:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 096 - California Girls
 data merge storage minecraft:cassette {index:{96:{artist:"Katy Perry",duration:236,rating:0,song_id:96}}}
 data merge storage minecraft:cassette {index:{96:{name:[{"text":"California Girls","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{96:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 097 - Whats up Danger?
 data merge storage minecraft:cassette {index:{97:{artist:"Blackway",duration:219,rating:0,song_id:97}}}
 data merge storage minecraft:cassette {index:{97:{name:[{"text":"Whats up Danger?","italic":false,"color":"gold"}]}}}
 data merge storage minecraft:cassette {index:{97:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 098 - Gotta do Something
 data merge storage minecraft:cassette {index:{98:{artist:"flor",duration:148,rating:0,song_id:98}}}
 data merge storage minecraft:cassette {index:{98:{name:[{"text":"Gotta do Something","italic":false,"color":"green"}]}}}
 data merge storage minecraft:cassette {index:{98:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 099 - All Star
 data merge storage minecraft:cassette {index:{99:{artist:"Smash Mouth",duration:198,rating:0,song_id:99}}}
 data merge storage minecraft:cassette {index:{99:{name:[{"text":"All Star","italic":false,"color":"light_purple"}]}}}
 data merge storage minecraft:cassette {index:{99:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 100 - Everytime We Touch
 data merge storage minecraft:cassette {index:{100:{artist:"Cascada",duration:199,rating:0,song_id:100}}}
 data merge storage minecraft:cassette {index:{100:{name:[{"text":"Everytime We Touch","italic":false,"color":"dark_purple"}]}}}
 data merge storage minecraft:cassette {index:{100:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 101 - How Far We've Come
 data merge storage minecraft:cassette {index:{101:{artist:"Matchbox Twenty",duration:212,rating:0,song_id:101}}}
 data merge storage minecraft:cassette {index:{101:{name:[{"text":"How Far We've Come","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{101:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 102 - Annihilate
 data merge storage minecraft:cassette {index:{102:{artist:"Metro Boomin",duration:234,rating:0,song_id:102}}}
 data merge storage minecraft:cassette {index:{102:{name:[{"text":"Annihilate","italic":false,"color":"dark_red"}]}}}
 data merge storage minecraft:cassette {index:{102:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 103 - Ocean Man
 data merge storage minecraft:cassette {index:{103:{artist:"Ween",duration:270,rating:0,song_id:103}}}
 data merge storage minecraft:cassette {index:{103:{name:[{"text":"Ocean Man","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{103:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 104 - Goofy Goober Rock
 data merge storage minecraft:cassette {index:{104:{artist:"Jim Wise",duration:270,rating:0,song_id:104}}}
 data merge storage minecraft:cassette {index:{104:{name:[{"text":"Goofy Goober Rock","italic":false,"color":"green"}]}}}
 data merge storage minecraft:cassette {index:{104:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 105 - Stadium Rave
 data merge storage minecraft:cassette {index:{105:{artist:"Mark Governor",duration:270,rating:0,song_id:105}}}
 data merge storage minecraft:cassette {index:{105:{name:[{"text":"Stadium Rave","italic":false,"color":"yellow"}]}}}
 data merge storage minecraft:cassette {index:{105:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# generate special data #
 scoreboard players set .alphabeticalTotal uiCassette.CollectionBroad 105
 scoreboard players set .artistTotal uiCassette.CollectionBroad 105
 data remove storage minecraft:cassette index.alphabetical
@@ -636,21 +529,15 @@ data merge storage minecraft:cassette {index:{artist:{102:{id:87}}}}
 data merge storage minecraft:cassette {index:{artist:{103:{id:90}}}}
 data merge storage minecraft:cassette {index:{artist:{104:{id:93}}}}
 data merge storage minecraft:cassette {index:{artist:{105:{id:94}}}}
-# BONUS SONGS!!! #
-# 106 - Vanilla Bundle #
 data merge storage minecraft:cassette {index:{106:{artist:"Minecraft",duration:0,rating:4,song_id:106}}}
 data merge storage minecraft:cassette {index:{106:{name:[{"text":"Vanilla Bundle","italic":false,"color":"green"}]}}}
 data merge storage minecraft:cassette {index:{106:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# 107 - I Want it That Way #
 data merge storage minecraft:cassette {index:{107:{artist:"Backstreet Boys",duration:10,rating:4,song_id:107}}}
 data merge storage minecraft:cassette {index:{107:{name:[{"text":"I Want It That Way","italic":false,"color":"blue"}]}}}
 data merge storage minecraft:cassette {index:{107:{obtainment:[{"text":"i dont know","italic":false,"color":"gray"}]}}}
-# VANILLA BUNDLE!!!! #
-# 121 - Aria Math #
 data merge storage minecraft:cassette {index:{121:{artist:"C418",duration:310,rating:0,song_id:121}}}
 data merge storage minecraft:cassette {index:{121:{name:[{"text":"Aria Math","italic":false,"color":"green"}]}}}
 data merge storage minecraft:cassette {index:{121:{obtainment:[{"text":"V","italic":false,"color":"gray"}]}}}
-# 122 - Aria Math (Piano Cover) #
 data merge storage minecraft:cassette {index:{122:{artist:"Pianicam",duration:174,rating:0,song_id:122}}}
 data merge storage minecraft:cassette {index:{122:{name:[{"text":"Aria Math (Piano Cover)","italic":false,"color":"green"}]}}}
 data merge storage minecraft:cassette {index:{122:{obtainment:[{"text":"V","italic":false,"color":"gray"}]}}}

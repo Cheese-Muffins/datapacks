@@ -1,11 +1,8 @@
 # Generated with MC-Build
 
-# setup
 function ability:billy/moves/setup {rig:"billy",animation:'phase'}
-# restraints
 function universal:ability/restraint/cooldown {move:1,name:"Billy"}
 tag @s add universalAbility.Animating
-# specific
 execute store result score @s abilityBilly.PhaseDisconnectX run data get entity @s Pos[0] 1
 execute store result score @s abilityBilly.PhaseDisconnectY run data get entity @s Pos[1] 1
 execute store result score @s abilityBilly.PhaseDisconnectZ run data get entity @s Pos[2] 1

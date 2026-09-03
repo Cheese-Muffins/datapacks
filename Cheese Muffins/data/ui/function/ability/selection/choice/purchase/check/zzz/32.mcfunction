@@ -2,4 +2,4 @@
 
 $data modify storage minecraft:ability generate.purchase.advancement_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request4.name
 $data modify storage minecraft:ability generate.purchase.advancement_line set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request4.line
-function ability:generate/zzz/39 with storage minecraft:ability generate.purchase
+function ui:ability/selection/choice/purchase/check/zzz/33 with storage minecraft:ability generate.purchase

@@ -1,9 +1,4 @@
 # Generated with MC-Build
 
-# fetch relevant request information
-$data modify storage minecraft:ability generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).request2.type
-$data modify storage minecraft:ability generate.purchase.request_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).request2.tag
-$data modify storage minecraft:ability generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).request2.count
-$data modify storage minecraft:ability generate.purchase.request_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).request2.name
-$data modify storage minecraft:ability generate.purchase.request_description set from storage minecraft:ability index.$(ability_id).product.$(product_name).request2.description
-function ability:generate/zzz/8 with storage minecraft:ability generate.purchase
+$data modify storage minecraft:ability generate.purchase.price_lore append value [["",{"text":"Status: ","italic":false,"color":"gray"},{"text":"$(status_text)","italic":false,"color":"#$(status_color)"}]]
+execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run function ability:generate/zzz/8
