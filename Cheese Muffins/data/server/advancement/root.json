@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:phantom_membrane",
+      "components": {
+        "minecraft:item_model": "minecraft:consumables/cheese_muffin"
+      }
+    },
+    "title": "Cheese Muffins",
+    "description": [
+      {
+        "text": "Bugs ",
+        "italic": false
+      },
+      {
+        "text": "not",
+        "italic": true
+      },
+      {
+        "text": " included",
+        "italic": false
+      }
+    ],
+    "background": "minecraft:block/deepslate",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

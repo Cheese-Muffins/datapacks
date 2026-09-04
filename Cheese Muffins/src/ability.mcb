@@ -497,66 +497,105 @@ dir generate {
         }
     }
 
-    function purchase {
-        $data merge storage minecraft:ability {generate:{purchase:{ability_id:$(ability_id),product_name:"$(product_name)"}}}
+    function product {
+        $data merge storage minecraft:ui {generate:{purchase:{ability_id:$(ability_id),product_name:"$(product_name)"}}}
 
         # ts is literally just bcz im a perfectionist
-        $data modify storage minecraft:ability generate.purchase.subtext set from storage minecraft:ability index.$(ability_id).subtext
+        $data modify storage minecraft:ui generate.purchase.subtext set from storage minecraft:ability index.$(ability_id).subtext
+        $data modify storage minecraft:ui generate.purchase.skins set from storage minecraft:ability index.$(ability_id).skins
+        $data modify storage minecraft:ui generate.purchase.secret_interactions set from storage minecraft:ability index.$(ability_id).secret_interactions
+        $data modify storage minecraft:ui generate.purchase.real_path set from storage minecraft:ability index.$(ability_id).real_path
+        $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
+        $data modify storage minecraft:ui generate.purchase.equipped_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).equipped_tag
 
         # this is ONLY to generate the data for the hover event
-        block { with storage minecraft:ability generate.purchase
-            data remove storage minecraft:ability generate.purchase.price_lore
-            data modify storage minecraft:ability generate.purchase.price_lore set value []
+        block { with storage minecraft:ui generate.purchase
+            data remove storage minecraft:ui generate.purchase.price_lore
+            data modify storage minecraft:ui generate.purchase.price_lore set value []
 
             # 1
-            $data modify storage minecraft:ability generate.purchase.price_lore append value ["",{"text":"$(subtext) ","italic":false,"color":"gray"}]
+            $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"$(subtext) ","italic":false,"color":"gray"}]
             # 2
-            data modify storage minecraft:ability generate.purchase.price_lore append value ""
-            # 3
-            data modify storage minecraft:ability generate.purchase.price_lore append value ["",{"text":"Ability Price","italic":false,"color":"gold"}]
+            data modify storage minecraft:ui generate.purchase.price_lore append value ""
+
+            $execute unless entity @s[tag=$(ownership_tag)] run block { with storage minecraft:ui generate.purchase
+                data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Ability Price","italic":false,"color":"gold"}]
             
-            tag @s add uiPurchase.GenerateLore
-            function ui:ability/selection/choice/purchase/check/items with storage minecraft:ability generate.purchase
-            function ui:ability/selection/choice/purchase/check/advancements with storage minecraft:ability generate.purchase
-            tag @s remove uiPurchase.GenerateLore
+                tag @s add uiPurchase.GenerateLore
+                function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
+                function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
+                tag @s remove uiPurchase.GenerateLore
 
-            data modify storage minecraft:ability generate.purchase.price_lore append value ""
+                data modify storage minecraft:ui generate.purchase.price_lore append value ""
 
-            # bypass line
-            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).bypass run block { with storage minecraft:ability generate.purchase
-                $data modify storage minecraft:ability generate.purchase.bypass set from storage minecraft:ability index.$(ability_id).product.$(product_name).bypass
-                block { with storage minecraft:ability generate.purchase
-                    $data modify storage minecraft:ability generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#b65cff"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#00bd16"}]]
-                    data modify storage minecraft:ability generate.purchase.price_lore append value ""
+                # bypass line
+                $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).bypass run block { with storage minecraft:ui generate.purchase
+                    $data modify storage minecraft:ui generate.purchase.bypass set from storage minecraft:ability index.$(ability_id).product.$(product_name).bypass
+                    block { with storage minecraft:ui generate.purchase
+                        $data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#b65cff"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#00bd16"}]]
+                        data modify storage minecraft:ui generate.purchase.price_lore append value ""
+                    }
                 }
-            }
 
-            data modify storage minecraft:ability generate.purchase.price_lore append value ["",{"text":"Purchase Details","italic":false,"color":"gold"}]
-            $data modify storage minecraft:ability generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
-            $data modify storage minecraft:ability generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
-            block { with storage minecraft:ability generate.purchase
-                $execute unless entity @s[tag=$(ownership_tag)] run block { with storage minecraft:ability generate.purchase
+                data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Purchase Details","italic":false,"color":"gold"}]
+                $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+                block { with storage minecraft:ui generate.purchase
                     $scoreboard players set .generatedProduct uiPurchase.ProductID $(product_id)
-                    data merge storage minecraft:ability {generate:{purchase:{status_text:"Insufficent Resources",status_color:"EC3232"}}}
-                    execute if entity @s[tag=uiAbility.ItemCheck,tag=uiAbility.AdvancementCheck] run {
-                        data merge storage minecraft:ability {generate:{purchase:{status_text:"Awaiting Input...",status_color:"fcff3d"}}}
-                        execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ability {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
+                    data merge storage minecraft:ui {generate:{purchase:{status_text:"Insufficent Resources",status_color:"EC3232"}}}
+                    execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run {
+                        data merge storage minecraft:ui {generate:{purchase:{status_text:"Awaiting Input...",status_color:"fcff3d"}}}
+                        execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
                     }
 
-                    block { with storage minecraft:ability generate.purchase
-                        $data modify storage minecraft:ability generate.purchase.price_lore append value [["",{"text":"Status: ","italic":false,"color":"gray"},{"text":"$(status_text)","italic":false,"color":"#$(status_color)"}]]
+                    block { with storage minecraft:ui generate.purchase
+                        $data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Status: ","italic":false,"color":"gray"},{"text":"$(status_text)","italic":false,"color":"#$(status_color)"}]]
                         execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run {
-                            data modify storage minecraft:ability generate.purchase.price_lore append value ""
-                            data modify storage minecraft:ability generate.purchase.price_lore append value [[{"text":"NOTE: This ","italic":false,"color":"gray"},{"text":"CANNOT ","bold":true,"italic":false,"color":"gray"},{"text":"be undone...","italic":false,"color":"gray"}]]
+                            data modify storage minecraft:ui generate.purchase.price_lore append value ""
+                            data modify storage minecraft:ui generate.purchase.price_lore append value [[{"text":"NOTE: This ","italic":false,"color":"gray"},{"text":"CANNOT ","bold":true,"italic":false,"color":"gray"},{"text":"be undone...","italic":false,"color":"gray"}]]
                         }
                     }
                 }
-                $execute if entity @s[tag=$(ownership_tag)] run say owned
+            }
+
+            $execute if entity @s[tag=$(ownership_tag)] run block { with storage minecraft:ui generate.purchase
+                data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
+
+                data merge storage minecraft:ui {generate:{purchase:{equip_text:"No",equip_color:"EC3232"}}}
+                $execute if entity @s[tag=$(equipped_tag)] run data merge storage minecraft:ui {generate:{purchase:{equip_text:"Yes",equip_color:"3cdd31"}}}
+                block { with storage minecraft:ui generate.purchase
+                    data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"#3cdd31"}]
+                    $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_text)","italic":false,"color":"#$(equip_color)"}]
+                }
+
+                # only if its the ability.
+                $execute store result score .generatedProduct uiPurchase.ProductID run data get storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+                execute if score .generatedProduct uiPurchase.ProductID matches 1 run block { with storage minecraft:ui generate.purchase
+                    $execute store result storage minecraft:ui generate.purchase.unlocked_skins int 1 run scoreboard players get @s ability$(real_path).UnlockedSkins
+                    $execute store result storage minecraft:ui generate.purchase.discovered_interactions int 1 run scoreboard players get @s ability$(real_path).DiscoveredInteractions
+                    block { with storage minecraft:ui generate.purchase
+                        $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(unlocked_skins)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skins)","italic":false,"color":"green"}]
+                        $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(discovered_interactions)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(secret_interactions)","italic":false,"color":"green"}]
+                    }
+                }
+                
+
+
+
+
+
+                
+                # $block { with storage minecraft:ability index.$(ability_id)
+                #     $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(unlocked_skins)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skins)","italic":false,"color":"green"}]
+                #     $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(discovered_interactions)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(secret_interactions)","italic":false,"color":"green"}]
+
+                #     $data remove storage minecraft:ability index.$(ability_id).unlocked_skins
+                #     $data remove storage minecraft:ability index.$(ability_id).discovered_interactions
+                # }
             }
         }
 
         # move data over to the index
-        $data modify storage minecraft:ability index.$(ability_id).$(product_name)_price set from storage minecraft:ability generate.purchase.price_lore
+        $data modify storage minecraft:ability index.$(ability_id).$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore
 
 
 
@@ -602,18 +641,18 @@ dir generate {
         #             $data modify storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>.ability_id set value $(ability_id)
         #             $data modify storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>.target set value $(target)
         #             $block { with storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>
-        #                 $execute store result score .item<%i%>Hotbar uiAbility.ItemCount run execute if items entity @s hotbar.* $(type)[minecraft:custom_data={$(tag)}]
-        #                 $execute store result score .item<%i%>Inventory uiAbility.ItemCount run execute if items entity @s inventory.* $(type)[minecraft:custom_data={$(tag)}]
-        #                 scoreboard players operation .item<%i%>Count uiAbility.ItemCount = .item<%i%>Hotbar uiAbility.ItemCount
-        #                 scoreboard players operation .item<%i%>Count uiAbility.ItemCount += .item<%i%>Inventory uiAbility.ItemCount
+        #                 $execute store result score .item<%i%>Hotbar uiPurchase.ItemCount run execute if items entity @s hotbar.* $(type)[minecraft:custom_data={$(tag)}]
+        #                 $execute store result score .item<%i%>Inventory uiPurchase.ItemCount run execute if items entity @s inventory.* $(type)[minecraft:custom_data={$(tag)}]
+        #                 scoreboard players operation .item<%i%>Count uiPurchase.ItemCount = .item<%i%>Hotbar uiPurchase.ItemCount
+        #                 scoreboard players operation .item<%i%>Count uiPurchase.ItemCount += .item<%i%>Inventory uiPurchase.ItemCount
 
-        #                 $execute store result storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>.total int 1 run scoreboard players get .item<%i%>Count uiAbility.ItemCount
+        #                 $execute store result storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>.total int 1 run scoreboard players get .item<%i%>Count uiPurchase.ItemCount
         #                 $data modify storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>.color set value "EC3232"
-        #                 $execute if score .item<%i%>Count uiAbility.ItemCount matches ..$(count) run block { with storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>
+        #                 $execute if score .item<%i%>Count uiPurchase.ItemCount matches ..$(count) run block { with storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>
         #                     $scoreboard players reset .$(target)Confirm uiAbility.PurchaseConfirm
         #                     tag @s remove uiAbility.PurchaseFlag
         #                 }
-        #                 $execute if score .item<%i%>Count uiAbility.ItemCount matches $(count).. run data modify storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>.color set value "3cdd31"
+        #                 $execute if score .item<%i%>Count uiPurchase.ItemCount matches $(count).. run data modify storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>.color set value "3cdd31"
                         
         #                 $block { with storage minecraft:ability index.$(ability_id).price.$(target).request<%i%>
         #                     $data modify storage minecraft:ability index.$(ability_id).price_lore append value ["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"$(total)/$(count) $(name)(s): ","italic":false,"color":"#$(color)"}]
@@ -738,26 +777,38 @@ dir generate {
 
     function index {
         # 1 - Billy (Demetrius Demarcus Bartholomew James the III)
-        data merge storage minecraft:ability {index:{1:{subtext:"The Main Character",obtainment_rating_raw:5,versatility_rating_raw:4,difficulty_rating_raw:1,secret_interactions:1,skins:2}}}
-        data merge storage minecraft:ability {index:{1:{model:"minecraft:interactables/ability/billy/default_skin",path:"billy",real_path:"Billy",proper_name:"Billy",ability_id:1}}}
+        data merge storage minecraft:ability {index:{1:{\
+            ability_id:1,\
+            model:"minecraft:interactables/ability/billy/default_skin",\
+            path:"billy",\
+            real_path:"Billy",\
+            proper_name:"Billy",\
+            subtext:"The Main Character",\
+                obtainment_rating_raw:5,\
+                versatility_rating_raw:4,\
+                difficulty_rating_raw:1,\
+                secret_interactions:1,\
+                skins:2\
+        }}}
         data merge storage minecraft:ability {index:{1:{name:[{"text":"B","italic":false,"color":"#7afff6"},{"text":"i","italic":false,"color":"#86faf2"},{"text":"l","italic":false,"color":"#92f5ee"},{"text":"l","italic":false,"color":"#9ef0ea"},{"text":"y","italic":false,"color":"#abebe7"},{"text":" ","italic":false,"color":"#b7e6e3"},{"text":"D","italic":false,"color":"#c3e1df"},{"text":"e","italic":false,"color":"#cfdcdb"},{"text":"me","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cfdcdb"},{"text":"r","italic":false,"color":"#c3e1df"},{"text":"i","italic":false,"color":"#b7e6e3"},{"text":"u","italic":false,"color":"#abebe7"},{"text":"s","italic":false,"color":"#9ef0ea"},{"text":" ","italic":false,"color":"#92f5ee"},{"text":"D","italic":false,"color":"#86faf2"},{"text":"em","italic":false,"color":"#7afff6"},{"text":"a","italic":false,"color":"#88f9f2"},{"text":"r","italic":false,"color":"#96f4ed"},{"text":"c","italic":false,"color":"#a4eee9"},{"text":"u","italic":false,"color":"#b1e8e4"},{"text":"s","italic":false,"color":"#bfe2e0"},{"text":" ","italic":false,"color":"#cddddb"},{"text":"Ba","italic":false,"color":"#dbd7d7"},{"text":"r","italic":false,"color":"#cddddb"},{"text":"t","italic":false,"color":"#bfe2e0"},{"text":"h","italic":false,"color":"#b1e8e4"},{"text":"o","italic":false,"color":"#a4eee9"},{"text":"l","italic":false,"color":"#96f4ed"},{"text":"o","italic":false,"color":"#88f9f2"},{"text":"me","italic":false,"color":"#7afff6"},{"text":"w","italic":false,"color":"#88f9f2"},{"text":" ","italic":false,"color":"#96f4ed"},{"text":"J","italic":false,"color":"#a4eee9"},{"text":"a","italic":false,"color":"#b1e8e4"},{"text":"m","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#cddddb"},{"text":"s ","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cddddb"},{"text":"h","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#b1e8e4"},{"text":" ","italic":false,"color":"#a4eee9"},{"text":"I","italic":false,"color":"#96f4ed"},{"text":"I","italic":false,"color":"#88f9f2"},{"text":"I","italic":false,"color":"#7afff6"}]}}}
         data merge storage minecraft:ability {index:{1:{passive:[["",{"text":"Maul","italic":false,"color":"#e2a3ff"},{"text":" activates after dealing damage ","italic":false,"color":"gray"},{"text":"5 times,","italic":false,"color":"#8adcff"}],["",{"text":"dealing a ","italic":false,"color":"gray"},{"text":"secondary tick","italic":false,"color":"#ffb875"},{"text":" of ","italic":false,"color":"gray"},{"text":"6 damage","italic":false,"color":"red"}],"",["",{"text":"Homeland","italic":false,"color":"#e2a3ff"},{"text":" activates when standing in ","italic":false,"color":"gray"},{"text":"biomes","italic":false,"color":"#9e7aff"}],["",{"text":"with a ","italic":false,"color":"gray"},{"text":"c","italic":false,"color":"#61e7ff"},{"text":"o","italic":false,"color":"#66e8ff"},{"text":"l","italic":false,"color":"#6ae8ff"},{"text":"d","italic":false,"color":"#6fe9ff"},{"text":"e","italic":false,"color":"#74eaff"},{"text":"r","italic":false,"color":"#79ebff"},{"text":" ","italic":false,"color":"#7debff"},{"text":"c","italic":false,"color":"#82ecff"},{"text":"l","italic":false,"color":"#87edff"},{"text":"i","italic":false,"color":"#8bedff"},{"text":"m","italic":false,"color":"#90eeff"},{"text":"a","italic":false,"color":"#95efff"},{"text":"t","italic":false,"color":"#9af0ff"},{"text":"e","italic":false,"color":"#9ef0ff"},{"text":",","italic":false,"color":"#a3f1ff"},{"text":" amplifying ","italic":false,"color":"gray"},{"text":"Billy","italic":false,"color":"#66ffed"},{"text":" in","italic":false,"color":"gray"}],[{"text":"beneficial ways","italic":false,"color":"gray"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Ability Damage: ","italic":false,"color":"gray"},{"text":"1.25x","italic":false,"color":"#20c200"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Cooldowns: ","italic":false,"color":"gray"},{"text":"0.8","italic":false,"color":"#20c200"},{"text":"x","italic":false,"color":"#20c200"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Maul Activation: ","italic":false,"color":"gray"},{"text":"-1","italic":false,"color":"#20c200"}]]}}}
-        # Ability Price
+        # products
         data merge storage minecraft:ability {index:{1:{product:{ability:{\
-            product_id:1\
+            product_id:1,\
+            path:"billy",\
             ownership_tag:"abilityBilly.Ownership",\
             equipped_tag:"abilityBilly.User",\
             items:{\
                 request1:{type:"minecraft:dirt",tag:"gem_cluster:1b",count:4,name:"Gem Cluster",description:[[{"text":"Rarely dropped from","italic":false,"color":"gray"}],[{"text":"breaking ","italic":false,"color":"gray"},{"text":"Stone","italic":false,"color":"#ffbdf7"},{"text":" or ","italic":false,"color":"gray"},{"text":"Deepslate","italic":false,"color":"#ffbdf7"}]]},\
                 request2:{type:"minecraft:dirt",tag:"phantom_feather:1b",count:4,name:"Phantom Feather",description:[[{"text":"Uncommonly","italic":false,"color":"gray"}],[{"text":"dropped from slaying ","italic":false,"color":"gray"},{"text":"Phantoms","italic":false,"color":"#577bff"}]]},\
                 request3:{type:"minecraft:dirt",tag:"blaze_core:1b",count:2,name:"Blaze Core",description:[[{"text":"Rarely dropped from","italic":false,"color":"gray"}],[{"text":"slaying ","italic":false,"color":"gray"},{"text":"Blazes","italic":false,"color":"#db9600"}]]},\
-                request4:{type:"minecraft:dirt",tag:"drowned_heart:1b",count:1,name:"Drowned Heart",description:[[{"text":"Rarely dropped","italic":false,"color":"gray"}],[{"text":"from slaying ","italic":false,"color":"gray"},{"text":"Drowned","italic":false,"color":"#47c8ff"}]]},\
+                request4:{type:"minecraft:dirt",tag:"drowned_heart:1b",count:1,name:"Drowned Heart",description:[[{"text":"Rarely dropped","italic":false,"color":"gray"}],[{"text":"from slaying ","italic":false,"color":"gray"},{"text":"Drowned","italic":false,"color":"#47c8ff"}]]}\
             },\
             advancements:{\
                 request1:{path:"minecraft:adventure/hero_of_the_village",name:"Hero of the Village",line:"[-1]"},\
                 request2:{path:"minecraft:adventure/heart_transplanter",name:"Heart Transplanter",line:""}\
             },\
-            bypass:"BaconEater",\
+            bypass:"BaconEater"\
         }}}}}
 
         # temp

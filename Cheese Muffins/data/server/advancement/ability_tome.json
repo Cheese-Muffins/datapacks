@@ -1,0 +1,39 @@
+{
+  "parent": "server:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:phantom_membrane",
+      "components": {
+        "minecraft:item_model": "minecraft:interactables/ability_tome"
+      }
+    },
+    "title": "Untapped Potential",
+    "description": "Put your potential to paper by obtaining an Ability Tome",
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:phantom_membrane",
+            "predicates": {
+              "minecraft:custom_data": "{ability_tome:1b}"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ],
+  "rewards": {
+    "experience": 25
+  }
+}

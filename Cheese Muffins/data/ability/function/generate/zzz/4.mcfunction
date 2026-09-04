@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$execute unless entity @s[tag=$(ownership_tag)] run function ability:generate/zzz/5 with storage minecraft:ability generate.purchase
-$execute if entity @s[tag=$(ownership_tag)] run say owned
+$data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#b65cff"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#00bd16"}]]
+data modify storage minecraft:ui generate.purchase.price_lore append value ""

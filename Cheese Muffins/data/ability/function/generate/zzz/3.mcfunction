@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ability generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#b65cff"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#00bd16"}]]
-data modify storage minecraft:ability generate.purchase.price_lore append value ""
+$data modify storage minecraft:ui generate.purchase.bypass set from storage minecraft:ability index.$(ability_id).product.$(product_name).bypass
+function ability:generate/zzz/4 with storage minecraft:ui generate.purchase

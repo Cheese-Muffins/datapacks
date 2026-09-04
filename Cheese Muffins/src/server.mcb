@@ -1,0 +1,3 @@
+function on_load minecraft:load{
+    # typically all abilities will use these variables
+}

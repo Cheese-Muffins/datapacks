@@ -10,7 +10,7 @@ scoreboard objectives add uiCassette.CollectionMaximumPage dummy
 scoreboard objectives add uiCassette.CollectionOperation dummy
 scoreboard objectives add uiAbility.SelectionBroad dummy
 scoreboard objectives add uiAbility.SelectionChoice dummy
-scoreboard objectives add uiAbility.ItemCount dummy
+scoreboard objectives add uiPurchase.ItemCount dummy
 scoreboard objectives add uiPurchase.ProductID dummy
 scoreboard objectives add uiPurchase.Confirm dummy
 scoreboard objectives add uiCassette.PartyLogic dummy
