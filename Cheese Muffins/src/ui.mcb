@@ -2022,34 +2022,80 @@ dir purchase {
         execute in minecraft:overworld run item replace block 0 -64 0 container.0 from entity @s player.cursor
         execute store result storage minecraft:ui generate.purchase.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
         execute in minecraft:overworld run data modify storage minecraft:ui generate.purchase.product_name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.product
-
-        function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
-        function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
-
-        execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run function ui:purchase/pass with storage minecraft:ui generate.purchase
-
-        tag @s remove uiPurchase.ItemCheck
-        tag @s remove uiPurchase.AdvancementCheck
-
-        function ui:ability/selection/choice/open
-    }
-
-    function pass {
-        $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
         block { with storage minecraft:ui generate.purchase
-            $execute if score @s uiPurchase.ProductID matches $(product_id) run {
-                scoreboard players add @s uiPurchase.Confirm 1
-                execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
-                execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
+            $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+            $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
+            block { with storage minecraft:ui generate.purchase
+                $execute if entity @s[tag=$(ownership_tag)] run function ui:purchase/equip/main with storage minecraft:ui generate.purchase
+                $execute unless entity @s[tag=$(ownership_tag)] run {
+                    function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
+                    function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
+
+                    execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run function ui:purchase/gathered with storage minecraft:ui generate.purchase
+
+                    tag @s remove uiPurchase.ItemCheck
+                    tag @s remove uiPurchase.AdvancementCheck
+                }
+                function ui:ability/selection/choice/open
             }
-            $execute unless score @s uiPurchase.ProductID matches $(product_id) run scoreboard players reset @s uiPurchase.Confirm
-            $scoreboard players set @s uiPurchase.ProductID $(product_id)
         }
     }
 
+    dir equip {
+        function main {
+            $data modify storage minecraft:ui generate.purchase.equipped_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).equipped_tag
+            block { with storage minecraft:ui generate.purchase
+                execute if score @s universalAbility.ToggleState matches 1 run function universal:toggle_ability
+                $execute unless entity @s[tag=$(equipped_tag)] run function ui:purchase/equip/on with storage minecraft:ui generate.purchase
+                $execute if entity @s[tag=$(equipped_tag)] unless entity @s[tag=temp] run function ui:purchase/equip/off with storage minecraft:ui generate.purchase
+                tag @s remove temp
+            }
+            playsound minecraft:cassette.ui.cycle player @s ~ ~ ~
+        }
+
+        function on {
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"ability"} run function ui:purchase/equip/remove/ability
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run function ui:purchase/equip/remove/skin
+            $tag @s add $(equipped_tag)
+            tag @s add temp
+        }
+
+        function off {
+            $tag @s remove $(equipped_tag)
+        }
+
+        dir remove {
+            function ability {
+                REPEAT (1,14) as i {
+                    data modify storage minecraft:ui generate.purchase.remove_tag set from storage minecraft:ability index.<%i%>.product.ability.equipped_tag
+                    block { with storage minecraft:ui generate.purchase
+                        $tag @s remove $(remove_tag)
+                    }
+                    data remove storage minecraft:ui generate.purchase.remove_tag
+                }
+            }
+
+            function skin {
+                REPEAT (1,4) as i {
+                    
+                }
+            }
+        }
+    }
+
+    function gathered {
+        $execute if score @s uiPurchase.ProductID matches $(product_id) run {
+            scoreboard players add @s uiPurchase.Confirm 1
+            execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
+            execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
+        }
+        $execute unless score @s uiPurchase.ProductID matches $(product_id) run scoreboard players reset @s uiPurchase.Confirm
+        $scoreboard players set @s uiPurchase.ProductID $(product_id)
+    }
+
     function confirm {
-        $data modify storage minecraft:ui generate.purchase.path set from storage minecraft:ability index.$(ability_id).product.$(product_name).path
-        $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
+        # this will trigger advancements on skin purchases, fix later
+        $data modify storage minecraft:ui generate.purchase.path set from storage minecraft:ability index.$(ability_id).path
         block { with storage minecraft:ui generate.purchase
             REPEAT (1,4) as i {
                 $data modify storage minecraft:ui generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.type
@@ -2061,6 +2107,7 @@ dir purchase {
             }
             $advancement grant @s only server:ability/$(path)
             $tag @s add $(ownership_tag)
+            scoreboard players reset @s uiPurchase.Confirm
         }
         playsound minecraft:ui.purchase.confirm player @s ~ ~ ~ 1
     }
@@ -2089,7 +2136,7 @@ dir purchase {
                         # store the result of present items
                         execute store result storage minecraft:ui generate.purchase.request_total int 1 run scoreboard players get .item<%i%>Count uiPurchase.ItemCount
                         # test and see if the correct amount of items is present
-                        $execute unless score .item<%i%>Count uiPurchase.ItemCount matches $(request_count).. run tag @s remove uiAbility.ItemCheck
+                        $execute unless score .item<%i%>Count uiPurchase.ItemCount matches $(request_count).. run tag @s remove uiPurchase.ItemCheck
                         execute if entity @s[tag=uiPurchase.GenerateLore] run block { with storage minecraft:ui generate.purchase
                             # this will only run when generating lore
                             data modify storage minecraft:ui generate.purchase.request_color set value "EC3232"

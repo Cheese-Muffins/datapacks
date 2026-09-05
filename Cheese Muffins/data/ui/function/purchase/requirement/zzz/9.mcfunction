@@ -7,5 +7,5 @@ scoreboard players operation .item3Count uiPurchase.ItemCount += .item3Inventory
 scoreboard players reset .item3Hotbar uiPurchase.ItemCount
 scoreboard players reset .item3Inventory uiPurchase.ItemCount
 execute store result storage minecraft:ui generate.purchase.request_total int 1 run scoreboard players get .item3Count uiPurchase.ItemCount
-$execute unless score .item3Count uiPurchase.ItemCount matches $(request_count).. run tag @s remove uiAbility.ItemCheck
+$execute unless score .item3Count uiPurchase.ItemCount matches $(request_count).. run tag @s remove uiPurchase.ItemCheck
 execute if entity @s[tag=uiPurchase.GenerateLore] run function ui:purchase/requirement/zzz/10 with storage minecraft:ui generate.purchase

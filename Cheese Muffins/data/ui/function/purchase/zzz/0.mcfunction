@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-$execute if score @s uiPurchase.ProductID matches $(product_id) run function ui:purchase/zzz/1
-$execute unless score @s uiPurchase.ProductID matches $(product_id) run scoreboard players reset @s uiPurchase.Confirm
-$scoreboard players set @s uiPurchase.ProductID $(product_id)
+$data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+$data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
+function ui:purchase/zzz/1 with storage minecraft:ui generate.purchase

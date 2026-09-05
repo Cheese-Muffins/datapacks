@@ -7,4 +7,4 @@ $data modify storage minecraft:ui generate.purchase.ownership_tag set from stora
 $data modify storage minecraft:ui generate.purchase.equipped_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).equipped_tag
 function ability:generate/zzz/1 with storage minecraft:ui generate.purchase
 $data modify storage minecraft:ability index.$(ability_id).$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore
-function ability:generate/zzz/15
+function ability:generate/zzz/13

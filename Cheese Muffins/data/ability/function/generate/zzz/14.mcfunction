@@ -1,4 +1,0 @@
-# Generated with MC-Build
-
-$data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(unlocked_skins)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skins)","italic":false,"color":"green"}]
-$data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(discovered_interactions)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(secret_interactions)","italic":false,"color":"green"}]

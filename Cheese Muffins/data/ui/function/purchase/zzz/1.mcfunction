@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-scoreboard players add @s uiPurchase.Confirm 1
-execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
-execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
+$execute if entity @s[tag=$(ownership_tag)] run function ui:purchase/equip/main with storage minecraft:ui generate.purchase
+$execute unless entity @s[tag=$(ownership_tag)] run function ui:purchase/zzz/2
+function ui:ability/selection/choice/open
