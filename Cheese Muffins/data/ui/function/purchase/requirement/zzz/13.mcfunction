@@ -1,11 +1,9 @@
 # Generated with MC-Build
 
-$execute store result score .item4Hotbar uiPurchase.ItemCount run execute if items entity @s hotbar.* $(request_type)[minecraft:custom_data={$(request_tag)}]
-$execute store result score .item4Inventory uiPurchase.ItemCount run execute if items entity @s inventory.* $(request_type)[minecraft:custom_data={$(request_tag)}]
-scoreboard players operation .item4Count uiPurchase.ItemCount = .item4Hotbar uiPurchase.ItemCount
-scoreboard players operation .item4Count uiPurchase.ItemCount += .item4Inventory uiPurchase.ItemCount
-scoreboard players reset .item4Hotbar uiPurchase.ItemCount
-scoreboard players reset .item4Inventory uiPurchase.ItemCount
-execute store result storage minecraft:ui generate.purchase.request_total int 1 run scoreboard players get .item4Count uiPurchase.ItemCount
-$execute unless score .item4Count uiPurchase.ItemCount matches $(request_count).. run tag @s remove uiPurchase.ItemCheck
-execute if entity @s[tag=uiPurchase.GenerateLore] run function ui:purchase/requirement/zzz/14 with storage minecraft:ui generate.purchase
+$data modify storage minecraft:ui generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3.type
+data merge storage minecraft:ui {generate:{purchase:{request_tag:[]}}}
+$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3.tag run function ui:purchase/requirement/zzz/14 with storage minecraft:ui generate.purchase
+$data modify storage minecraft:ui generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3.count
+$data modify storage minecraft:ui generate.purchase.request_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3.name
+$data modify storage minecraft:ui generate.purchase.request_description set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3.description
+function ui:purchase/requirement/zzz/16 with storage minecraft:ui generate.purchase

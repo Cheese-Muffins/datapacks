@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.purchase.advancement_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request4.name
-$data modify storage minecraft:ui generate.purchase.advancement_line set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request4.line
+$data modify storage minecraft:ui generate.purchase.advancement_path set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request4.path
 function ui:purchase/requirement/zzz/33 with storage minecraft:ui generate.purchase

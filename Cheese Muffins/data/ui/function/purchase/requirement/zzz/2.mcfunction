@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-data modify storage minecraft:ui generate.purchase.request_color set value "EC3232"
-$execute if score .item1Count uiPurchase.ItemCount matches $(request_count).. run data modify storage minecraft:ui generate.purchase.request_color set value "3cdd31"
+$data modify storage minecraft:ui generate.purchase.request_tag_insert set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1.tag
 function ui:purchase/requirement/zzz/3 with storage minecraft:ui generate.purchase

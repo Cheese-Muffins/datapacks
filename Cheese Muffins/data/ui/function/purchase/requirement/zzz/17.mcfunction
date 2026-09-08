@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.purchase.advancement_path set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request1.path
+data modify storage minecraft:ui generate.purchase.request_color set value "EC3232"
+$execute if score .item3Count uiPurchase.ItemCount matches $(request_count).. run data modify storage minecraft:ui generate.purchase.request_color set value "3cdd31"
 function ui:purchase/requirement/zzz/18 with storage minecraft:ui generate.purchase
