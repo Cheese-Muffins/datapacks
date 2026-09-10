@@ -478,24 +478,35 @@ dir debug_log {
 dir math {
     function multiply {
         # function universal:math/multiply {value:3,score:"@s",objective:"abilityEren.ShiftDuration"}
-        function universal:debug_log/create {duration:1,text:"Math"}
-        function universal:debug_log/text {text:"Mode: Multiplication",color:"white"}
-        $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+        # function universal:debug_log/create {duration:1,text:"Math"}
+        # function universal:debug_log/text {text:"Mode: Multiplication",color:"white"}
+        # $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
         $scoreboard players set .operation $(objective) $(value)
         $scoreboard players operation $(score) $(objective) *= .operation $(objective)
         $scoreboard players reset .operation $(objective)
-        $function universal:debug_log/entry/score {text:"Result: ",score:"$(score)",objective:"$(objective)"}
+        # $function universal:debug_log/entry/score {text:"Result: ",score:"$(score)",objective:"$(objective)"}
     }
 
     function divide {
         # function universal:math/divide {value:2,score:"@s",objective:"abilityEren.ShiftDuration"}
-        function universal:debug_log/create {duration:1,text:"Math"}
-        function universal:debug_log/text {text:"Mode: Division",color:"white"}
-        $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+        # function universal:debug_log/create {duration:1,text:"Math"}
+        # function universal:debug_log/text {text:"Mode: Division",color:"white"}
+        # $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
         $scoreboard players set .operation $(objective) $(value)
         $scoreboard players operation $(score) $(objective) /= .operation $(objective)
         $scoreboard players reset .operation $(objective)
-        $function universal:debug_log/entry/score {text:"Result: ",score:"$(score)",objective:"$(objective)"}
+        # $function universal:debug_log/entry/score {text:"Result: ",score:"$(score)",objective:"$(objective)"}
+    }
+
+    function modulo {
+        # function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiAbility.Moveset"}
+        # function universal:debug_log/create {duration:1,text:"Math"}
+        # function universal:debug_log/text {text:"Mode: Modulo",color:"white"}
+        # $function universal:debug_log/entry/score {text:"Input: ",score:"$(score)",objective:"$(objective)"}
+        $scoreboard players set .operation $(objective) $(value)
+        $scoreboard players operation $(score) $(objective) %= .operation $(objective)
+        $scoreboard players reset .operation $(objective)
+        # $function universal:debug_log/entry/score {text:"Result: ",score:"$(score)",objective:"$(objective)"}
     }
 
     function square_root {

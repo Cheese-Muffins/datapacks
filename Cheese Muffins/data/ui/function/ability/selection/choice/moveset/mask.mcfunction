@@ -1,0 +1,3 @@
+# Generated with MC-Build
+
+$data modify storage ui mask set value [{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/same"}}}}]
