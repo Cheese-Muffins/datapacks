@@ -141,6 +141,10 @@ dir logic {
             # purchase choice #
             execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{purchase_choice:1b}}] run function ui:purchase/click
             execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{purchase_choice:1b}}] run function ui:purchase/click
+
+            # moveset cycle #
+            execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{moveset_entry:1b}}] run function ui:ability/selection/choice/moveset/click
+            execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{moveset_entry:1b}}] run function ui:ability/selection/choice/moveset/click
             
 
             # execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{cassette_item:1b}}] in minecraft:overworld run function ui:logic/menu/pages/cassettes/collection/operation/main
@@ -508,7 +512,7 @@ dir ability {
 
             dir moveset {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(slot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot1_cycle)}}}},{Slot:$(slot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot2_cycle)}}}},{Slot:$(slot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot3_cycle)}}}},{Slot:$(slot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot4_cycle)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(slot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:1,cycle:$(slot1_cycle)}}}},{Slot:$(slot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:2,cycle:$(slot2_cycle)}}}},{Slot:$(slot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:3,cycle:$(slot3_cycle)}}}},{Slot:$(slot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:4,cycle:$(slot4_cycle)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
                 }
 
                 function open {
@@ -540,6 +544,20 @@ dir ability {
                         $data modify storage minecraft:ui ability.choice.path set from storage minecraft:ability index.$(ability_id).path
                         $data modify storage minecraft:ui ability.choice.proper_name set from storage minecraft:ability index.$(ability_id).proper_name
                     }
+                }
+
+                function click {
+                    execute in minecraft:overworld run item replace block 0 -64 0 container.0 from entity @s player.cursor
+                    execute in minecraft:overworld run data modify storage minecraft:ui ability.choice.slot_id set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.slot_id
+                    execute in minecraft:overworld run data modify storage minecraft:ui ability.choice.cycle set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.cycle
+                    block { with storage minecraft:ui ability.choice
+                        $scoreboard players add @s uiAbility.MovesetCycle$(slot_id) 1
+                        $scoreboard players set .max uiAbility.MovesetCycle$(slot_id) $(cycle)
+                        $execute if score @s uiAbility.MovesetCycle$(slot_id) > .max uiAbility.MovesetCycle$(slot_id) run scoreboard players set @s uiAbility.MovesetCycle$(slot_id) 1
+                        $say $(slot_id) $(cycle)
+                    }
+
+                    function ui:ability/selection/choice/moveset/same
                 }
 
                 function flip {
@@ -2483,6 +2501,7 @@ dir generate {
                 slot3:{pos:"14b"},\
                 slot4:{pos:"15b"}\
             }}}}
+
             scoreboard players reset .slotCount uiAbility.Moveset
         }
 

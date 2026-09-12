@@ -159,7 +159,7 @@ data\ui\function\logic\player\check_swap.mcfunction:865e69b20d5f76852a05250fcc9c
 data\ui\function\logic\player\return.mcfunction:b814a56357b97930de58f7896a2972cefa1975f4
 data\ui\function\logic\player\close.mcfunction:80a4e384a805ac496e216a622aefe470c5f6c250
 data\ui\function\logic\minecart\tick.mcfunction:cf3b6351194940ec83cc12a924a73c054ed79d16
-data\ui\function\logic\minecart\enhanced_button.mcfunction:04d39ee08dfdb9b687bcb7a5e3ccf8296e2c6f1c
+data\ui\function\logic\minecart\enhanced_button.mcfunction:23f419b83edbff85a4232ce3d00fda7c3b8502b5
 data\ui\function\logic\minecart\zzz\0.mcfunction:d8e0c65a609fc1acd2739ca13dd8f82a4a40ea4a
 data\ui\function\logic\minecart\zzz\1.mcfunction:a03a1ee6df985b1e537509e13325d1f5be5ee7f1
 data\ui\function\logic\minecart\on_change.mcfunction:afffe916761f7a4214391f265f311b4e01dbfd2f
@@ -207,7 +207,7 @@ data\ui\function\ability\selection\choice\zzz\0.mcfunction:278f3ce4ff2692af770e7
 data\ui\function\ability\selection\choice\player.mcfunction:ae674e65888a0b1db728f8991b75cbe02f926127
 data\ui\function\ability\selection\choice\flip.mcfunction:29925becbc5bb6c0cdce8f801ca16a444e7db22e
 data\ui\function\ability\selection\choice\same.mcfunction:d51842f4123ce5fc514ee1813b50f066c715eecd
-data\ui\function\ability\selection\choice\moveset\mask.mcfunction:d2972158e850f8b75115edd58e6b08ac28bb9360
+data\ui\function\ability\selection\choice\moveset\mask.mcfunction:97931f6c5ab711885d429043df1e05d6a6fb7560
 data\ui\function\ability\selection\choice\moveset\open.mcfunction:b4b90effe65cb811b5990e6f666693fbc7e2d6a6
 data\ui\function\ability\selection\choice\moveset\zzz\0.mcfunction:0427b4cd6608a58a81631826415b0f155f8d3801
 data\ui\function\ability\selection\choice\moveset\zzz\1.mcfunction:5f57c0dec4466b0c15b01de381e83ba8908302a3
@@ -215,6 +215,8 @@ data\ui\function\ability\selection\choice\moveset\zzz\2.mcfunction:2c2eb28eaa2c7
 data\ui\function\ability\selection\choice\moveset\zzz\3.mcfunction:a0d2d6262949f9acec4feecfe9ce1ee37f71b2ee
 data\ui\function\ability\selection\choice\moveset\zzz\4.mcfunction:52a092433c1a3a2395b732d016ee7873c6125611
 data\ui\function\ability\selection\choice\moveset\player.mcfunction:bcf333dd89c0aef5d52a901e53988b7e4c9fd5f3
+data\ui\function\ability\selection\choice\moveset\zzz\5.mcfunction:bdbdb7199c9def2bd6c4282b8cbcd4c16842bc66
+data\ui\function\ability\selection\choice\moveset\click.mcfunction:945c638f13aa23ae414b4133aa395b6898598696
 data\ui\function\ability\selection\choice\moveset\flip.mcfunction:30f75e71ceb1f9a62da84c681ba284e46784719b
 data\ui\function\ability\selection\choice\moveset\same.mcfunction:bce812e3b6a8ad4b7c3e1e9e4cc0f6957953904a
 data\ui\function\ability\selection\choice\skin\mask.mcfunction:e248abc81e01a937b9fb8261c339ef6e6e8b6c82
