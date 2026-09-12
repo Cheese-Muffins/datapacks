@@ -10,4 +10,4 @@ $data modify storage minecraft:ui generate.purchase.equipped_tag set from storag
 function ui:purchase/generate/zzz/0 with storage minecraft:ui generate.purchase
 $data merge storage minecraft:ui {ability:{choice:{$(product_name)_display:false}}}
 $execute unless data storage minecraft:ability index.$(ability_id).product.$(product_name) run function ui:purchase/generate/zzz/14 with storage minecraft:ui generate.purchase
-$data modify storage minecraft:ability index.$(ability_id).$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore
+$data modify storage minecraft:ui ability.choice.$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore

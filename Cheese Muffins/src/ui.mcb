@@ -59,6 +59,7 @@ dir logic {
 
             scoreboard players set .type uiLogic.Broad 1
             execute as @e[type=minecraft:chest_minecart,tag=new] run {
+                gui enable @s
                 function ui:ability/menu/open
                 function ui:logic/minecart/load_page
             }
@@ -75,6 +76,7 @@ dir logic {
 
             scoreboard players set .type uiLogic.Broad 1
             execute as @e[type=minecraft:chest_minecart,tag=new] run {
+                gui enable @s
                 function ui:cassette/menu/open
                 function ui:logic/minecart/load_page
             }
@@ -276,11 +278,11 @@ dir ability {
             $data modify storage ui mask set value [\
                 {Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(name),"minecraft:lore":$(ability_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,ability_path:1b,ability_id:$(ability_id)}}}},\
                 {Slot:9b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Config M","italic":false,"color":"yellow"},{"text":"e","italic":false,"color":"yellow"},{"text":"n","italic":false,"color":"#b0b0b0"},{"text":"u","italic":false,"color":"#ff57f9"}],"minecraft:lore":[[{"text":"Customize various ","italic":false,"color":"gray"},{"text":"behaviors","italic":false,"color":"yellow"}],[{"text":"of the ","italic":false,"color":"gray"},{"text":"A","italic":false,"color":"red"},{"text":"bi","italic":false,"color":"gold"},{"text":"li","italic":false,"color":"yellow"},{"text":"ty","italic":false,"color":"green"},{"text":" T","italic":false,"color":"blue"},{"text":"om","italic":false,"color":"light_purple"},{"text":"e","italic":false,"color":"dark_purple"}],"",["",{"text":"Click","italic":false,"color":"blue"},{"text":" for ","italic":false,"color":"gray"},{"text":"Generic","italic":false,"color":"green"},{"text":" access","italic":false,"color":"gray"}],["",{"text":"Shift-Click","italic":false,"color":"blue"},{"text":" with ","italic":false,"color":"gray"},{"text":"OP","italic":false,"color":"yellow"},{"text":" for ","italic":false,"color":"gray"},{"text":"A","italic":false,"color":"red"},{"text":"d","italic":false,"color":"#ff802b"},{"text":"mi","italic":false,"color":"gold"},{"text":"ni","italic":false,"color":"yellow"},{"text":"st","italic":false,"color":"green"},{"text":"ra","italic":false,"color":"blue"},{"text":"to","italic":false,"color":"light_purple"},{"text":"r","italic":false,"color":"dark_purple"},{"text":" access","italic":false,"color":"gray"}]],"minecraft:custom_data":{ui_item:{settings_button:1b,empty:1b}}}},\
-                {Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"I","italic":false,"color":"#d60000"},{"text":"n","italic":false,"color":"#d90606"},{"text":"f","italic":false,"color":"#db0c0c"},{"text":"o","italic":false,"color":"#de1111"},{"text":"r","italic":false,"color":"#e01717"},{"text":"m","italic":false,"color":"#e31d1d"},{"text":"a","italic":false,"color":"#e52323"},{"text":"t","italic":false,"color":"#e82828"},{"text":"i","italic":false,"color":"#eb2e2e"},{"text":"o","italic":false,"color":"#ed3434"},{"text":"n","italic":false,"color":"#f03a3a"},{"text":" ","italic":false,"color":"#f23f3f"},{"text":"G","italic":false,"color":"#f54545"},{"text":"u","italic":false,"color":"#f74b4b"},{"text":"i","italic":false,"color":"#fa5151"},{"text":"d","italic":false,"color":"#fc5656"},{"text":"e","italic":false,"color":"#ff5c5c"}],"minecraft:lore":[[{"text":"Explanations on ","italic":false,"color":"gray"},{"text":"specific conditions","italic":false,"color":"#ffb057"}],[{"text":"derived from ","italic":false,"color":"gray"},{"text":"Abilities","italic":false,"color":"#e629ff"}],[{"text":">","italic":false,"color":"#5c5c5c"},{"text":" ","italic":false,"color":"gray"},{"text":"Traits","italic":false,"color":"#6bd1c0"}],[{"text":">","italic":false,"color":"#5c5c5c"},{"text":" ","italic":false,"color":"gray"},{"text":"Tokens / Stacks","italic":false,"color":"#8adcff"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Canceling","italic":false,"color":"#d10049"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Combat Logging","italic":false,"color":"#e66565"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}},\
+                {Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"I","italic":false,"color":"#d60000"},{"text":"n","italic":false,"color":"#d90606"},{"text":"f","italic":false,"color":"#db0c0c"},{"text":"o","italic":false,"color":"#de1111"},{"text":"r","italic":false,"color":"#e01717"},{"text":"m","italic":false,"color":"#e31d1d"},{"text":"a","italic":false,"color":"#e52323"},{"text":"t","italic":false,"color":"#e82828"},{"text":"i","italic":false,"color":"#eb2e2e"},{"text":"o","italic":false,"color":"#ed3434"},{"text":"n","italic":false,"color":"#f03a3a"},{"text":" ","italic":false,"color":"#f23f3f"},{"text":"G","italic":false,"color":"#f54545"},{"text":"u","italic":false,"color":"#f74b4b"},{"text":"i","italic":false,"color":"#fa5151"},{"text":"d","italic":false,"color":"#fc5656"},{"text":"e","italic":false,"color":"#ff5c5c"}],"minecraft:lore":[[{"text":"Explanations on ","italic":false,"color":"gray"},{"text":"specific conditions","italic":false,"color":"#ffb057"}],[{"text":"derived from ","italic":false,"color":"gray"},{"text":"abilities","italic":false,"color":"#e629ff"}],[{"text":">","italic":false,"color":"#5c5c5c"},{"text":" ","italic":false,"color":"gray"},{"text":"Traits","italic":false,"color":"#6bd1c0"}],[{"text":">","italic":false,"color":"#5c5c5c"},{"text":" ","italic":false,"color":"gray"},{"text":"Tokens / Stacks","italic":false,"color":"#8adcff"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Canceling","italic":false,"color":"#d10049"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Combat Logging","italic":false,"color":"#e66565"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}},\
                 {Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"P","italic":false,"color":"#b841c8"},{"text":"a","italic":false,"color":"#bf4bce"},{"text":"s","italic":false,"color":"#c556d4"},{"text":"s","italic":false,"color":"#cc60da"},{"text":"i","italic":false,"color":"#d36ae0"},{"text":"v","italic":false,"color":"#d975e7"},{"text":"e","italic":false,"color":"#e07fed"},{"text":"(","italic":false,"color":"#e789f3"},{"text":"s","italic":false,"color":"#ed94f9"},{"text":") ","italic":false,"color":"#f49eff"},{"text":"&","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"#ff5cc3"},{"text":"A","italic":false,"color":"#99e0ff"},{"text":"w","italic":false,"color":"#93dcfc"},{"text":"a","italic":false,"color":"#8cd7f8"},{"text":"k","italic":false,"color":"#86d3f5"},{"text":"e","italic":false,"color":"#80cff1"},{"text":"n","italic":false,"color":"#7acbee"},{"text":"i","italic":false,"color":"#73c6ea"},{"text":"n","italic":false,"color":"#6dc2e7"},{"text":"g","italic":false,"color":"#67bee3"},{"text":"(","italic":false,"color":"#61bae0"},{"text":"s","italic":false,"color":"#5ab5dc"},{"text":")","italic":false,"color":"#54b1d9"}],"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}},\
                 {Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"Moveset","italic":false,"color":"#83cb48"}],"minecraft:lore":[[{"text":"Access ","italic":false,"color":"gray"},{"text":"all","italic":false,"color":"#ce47ff"},{"text":" of the ","italic":false,"color":"gray"},{"text":"available moves","italic":false,"color":"#5ee4bb"}],[{"text":"for ","italic":false,"color":"gray"},{"text":"$(proper_name)","italic":false,"color":"#fffb85"}]],"minecraft:custom_data":{ui_item:{enhanced_button:1b,ability_path:1b,ability_id:$(ability_id)}}}},\
                 {Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"S","italic":false,"color":"#fffc99"},{"text":"k","italic":false,"color":"#fffc8d"},{"text":"i","italic":false,"color":"#fffb81"},{"text":"n","italic":false,"color":"#fffb76"},{"text":"(","italic":false,"color":"#fffa6a"},{"text":"s","italic":false,"color":"#fffa5e"},{"text":")","italic":false,"color":"#fff952"}],"minecraft:lore":[[{"text":"Browse ","italic":false,"color":"gray"},{"text":"all","italic":false,"color":"#ce47ff"},{"text":" available options to ","italic":false,"color":"gray"},{"text":"modify","italic":false,"color":"#5ee4bb"}],[{"text":"the ","italic":false,"color":"gray"},{"text":"appearance","italic":false,"color":"#5ee4bb"},{"text":" of ","italic":false,"color":"gray"},{"text":"$(proper_name)","italic":false,"color":"#fffb85"}]],"minecraft:custom_data":{ui_item:{enhanced_button:1b,ability_path:1b,ability_id:$(ability_id)}}}},\
-                {Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"red"},{"text":"b","italic":false,"color":"#ff802b"},{"text":"il","italic":false,"color":"gold"},{"text":"i","italic":false,"color":"#ffd52b"},{"text":"ty","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"#aaff55"},{"text":"Se","italic":false,"color":"green"},{"text":"l","italic":false,"color":"#55aaaa"},{"text":"ec","italic":false,"color":"blue"},{"text":"t","italic":false,"color":"#aa55ff"},{"text":"io","italic":false,"color":"light_purple"},{"text":"n","italic":false,"color":"dark_purple"}],"minecraft:lore":[[{"text":"Browse the ","italic":false,"color":"gray"},{"text":"complete list","italic":false,"color":"#2bc5c2"},{"text":" of","italic":false,"color":"gray"}],[{"text":"all ","italic":false,"color":"gray"},{"text":"available ","italic":false,"color":"gray"},{"text":"Abilities","italic":false,"color":"#e629ff"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/flip"}}}},\
+                {Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"red"},{"text":"b","italic":false,"color":"#ff802b"},{"text":"il","italic":false,"color":"gold"},{"text":"i","italic":false,"color":"#ffd52b"},{"text":"ty","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"#aaff55"},{"text":"Se","italic":false,"color":"green"},{"text":"l","italic":false,"color":"#55aaaa"},{"text":"ec","italic":false,"color":"blue"},{"text":"t","italic":false,"color":"#aa55ff"},{"text":"io","italic":false,"color":"light_purple"},{"text":"n","italic":false,"color":"dark_purple"}],"minecraft:lore":[[{"text":"Browse the ","italic":false,"color":"gray"},{"text":"complete list","italic":false,"color":"#2bc5c2"},{"text":" of","italic":false,"color":"gray"}],[{"text":"all ","italic":false,"color":"gray"},{"text":"available ","italic":false,"color":"gray"},{"text":"abilities","italic":false,"color":"#e629ff"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/flip"}}}},\
                 {Slot:17b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"Sta","italic":false,"color":"red"},{"text":"t","italic":false,"color":"yellow"},{"text":"ist","italic":false,"color":"yellow"},{"text":"i","italic":false,"color":"green"},{"text":"cs","italic":false,"color":"green"}],"minecraft:lore":[[{"text":"Observe various different sets of data","italic":false,"color":"gray"}],[{"text":"ranging from ","italic":false,"color":"gray"},{"text":"general ","italic":false,"color":"green"},{"text":"or specific to the","italic":false,"color":"gray"}],[{"text":"currently equipped ability.","italic":false,"color":"yellow"}]],"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/statistics/flip"}}}},\
                 {Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/menu","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}}\
             ]
@@ -465,7 +467,7 @@ dir ability {
 
         dir choice {
             function mask {
-                $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":{"color":"red","italic":false,"text":"Selection Menu"},"minecraft:lore":[{"color":"gray","italic":false,"text":"Return to the previous page"}],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"P","italic":false,"color":"#b841c8"},{"text":"a","italic":false,"color":"#bf4bce"},{"text":"s","italic":false,"color":"#c556d4"},{"text":"s","italic":false,"color":"#cc60da"},{"text":"i","italic":false,"color":"#d36ae0"},{"text":"v","italic":false,"color":"#d975e7"},{"text":"e","italic":false,"color":"#e07fed"},{"text":"(","italic":false,"color":"#e789f3"},{"text":"s","italic":false,"color":"#ed94f9"},{"text":") ","italic":false,"color":"#f49eff"},{"text":"&","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"#ff5cc3"},{"text":"A","italic":false,"color":"#99e0ff"},{"text":"w","italic":false,"color":"#93dcfc"},{"text":"a","italic":false,"color":"#8cd7f8"},{"text":"k","italic":false,"color":"#86d3f5"},{"text":"e","italic":false,"color":"#80cff1"},{"text":"n","italic":false,"color":"#7acbee"},{"text":"i","italic":false,"color":"#73c6ea"},{"text":"n","italic":false,"color":"#6dc2e7"},{"text":"g","italic":false,"color":"#67bee3"},{"text":"(","italic":false,"color":"#61bae0"},{"text":"s","italic":false,"color":"#5ab5dc"},{"text":")","italic":false,"color":"#54b1d9"}],"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"Moveset","italic":false,"color":"#83cb48"}],"minecraft:lore":[[{"text":"Access ","italic":false,"color":"gray"},{"text":"all","italic":false,"color":"#ce47ff"},{"text":" of the ","italic":false,"color":"gray"},{"text":"available moves","italic":false,"color":"#5ee4bb"}],[{"text":"for ","italic":false,"color":"gray"},{"text":"$(proper_name)","italic":false,"color":"#fffb85"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"S","italic":false,"color":"#fffc99"},{"text":"k","italic":false,"color":"#fffc8d"},{"text":"i","italic":false,"color":"#fffb81"},{"text":"n","italic":false,"color":"#fffb76"},{"text":"(","italic":false,"color":"#fffa6a"},{"text":"s","italic":false,"color":"#fffa5e"},{"text":")","italic":false,"color":"#fff952"}],"minecraft:lore":[[{"text":"Browse ","italic":false,"color":"gray"},{"text":"all","italic":false,"color":"#ce47ff"},{"text":" available options to ","italic":false,"color":"gray"},{"text":"modify","italic":false,"color":"#5ee4bb"}],[{"text":"the ","italic":false,"color":"gray"},{"text":"appearance","italic":false,"color":"#5ee4bb"},{"text":" of ","italic":false,"color":"gray"},{"text":"$(proper_name)","italic":false,"color":"#fffb85"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(ability_name),"minecraft:lore":$(ability_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"ability"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/same"}}}}]
+                $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"red"},{"text":"b","italic":false,"color":"#ff802b"},{"text":"il","italic":false,"color":"gold"},{"text":"i","italic":false,"color":"#ffd52b"},{"text":"ty","italic":false,"color":"yellow"},{"text":" ","italic":false,"color":"#aaff55"},{"text":"Se","italic":false,"color":"green"},{"text":"l","italic":false,"color":"#55aaaa"},{"text":"ec","italic":false,"color":"blue"},{"text":"t","italic":false,"color":"#aa55ff"},{"text":"io","italic":false,"color":"light_purple"},{"text":"n","italic":false,"color":"dark_purple"}],"minecraft:lore":[[{"text":"Browse the ","italic":false,"color":"gray"},{"text":"complete list","italic":false,"color":"#2bc5c2"},{"text":" of","italic":false,"color":"gray"}],[{"text":"all ","italic":false,"color":"gray"},{"text":"available ","italic":false,"color":"gray"},{"text":"abilities","italic":false,"color":"#e629ff"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"P","italic":false,"color":"#b841c8"},{"text":"a","italic":false,"color":"#bf4bce"},{"text":"s","italic":false,"color":"#c556d4"},{"text":"s","italic":false,"color":"#cc60da"},{"text":"i","italic":false,"color":"#d36ae0"},{"text":"v","italic":false,"color":"#d975e7"},{"text":"e","italic":false,"color":"#e07fed"},{"text":"(","italic":false,"color":"#e789f3"},{"text":"s","italic":false,"color":"#ed94f9"},{"text":") ","italic":false,"color":"#f49eff"},{"text":"&","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"#ff5cc3"},{"text":"A","italic":false,"color":"#99e0ff"},{"text":"w","italic":false,"color":"#93dcfc"},{"text":"a","italic":false,"color":"#8cd7f8"},{"text":"k","italic":false,"color":"#86d3f5"},{"text":"e","italic":false,"color":"#80cff1"},{"text":"n","italic":false,"color":"#7acbee"},{"text":"i","italic":false,"color":"#73c6ea"},{"text":"n","italic":false,"color":"#6dc2e7"},{"text":"g","italic":false,"color":"#67bee3"},{"text":"(","italic":false,"color":"#61bae0"},{"text":"s","italic":false,"color":"#5ab5dc"},{"text":")","italic":false,"color":"#54b1d9"}],"minecraft:lore":$(passive),"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/same"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"Moveset","italic":false,"color":"#83cb48"}],"minecraft:lore":[[{"text":"Access ","italic":false,"color":"gray"},{"text":"all","italic":false,"color":"#ce47ff"},{"text":" of the ","italic":false,"color":"gray"},{"text":"available moves","italic":false,"color":"#5ee4bb"}],[{"text":"for ","italic":false,"color":"gray"},{"text":"$(proper_name)","italic":false,"color":"#fffb85"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/flip"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":[{"text":"S","italic":false,"color":"#fffc99"},{"text":"k","italic":false,"color":"#fffc8d"},{"text":"i","italic":false,"color":"#fffb81"},{"text":"n","italic":false,"color":"#fffb76"},{"text":"(","italic":false,"color":"#fffa6a"},{"text":"s","italic":false,"color":"#fffa5e"},{"text":")","italic":false,"color":"#fff952"}],"minecraft:lore":[[{"text":"Browse ","italic":false,"color":"gray"},{"text":"all","italic":false,"color":"#ce47ff"},{"text":" available options to ","italic":false,"color":"gray"},{"text":"modify","italic":false,"color":"#5ee4bb"}],[{"text":"the ","italic":false,"color":"gray"},{"text":"appearance","italic":false,"color":"#5ee4bb"},{"text":" of ","italic":false,"color":"gray"},{"text":"$(proper_name)","italic":false,"color":"#fffb85"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/flip"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(ability_name),"minecraft:lore":$(ability_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"ability"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/equip","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/same"}}}}]
             }
 
             function open {
@@ -477,11 +479,16 @@ dir ability {
             }
 
             function player {
+                data remove storage minecraft:ui ability.choice
+
                 scoreboard players set @s uiAbility.ChoicePage 1
                 execute store result storage minecraft:ui ability.choice.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
                 block { with storage minecraft:ui ability.choice
                     $function ui:purchase/generate/product {ability_id:$(ability_id),product_name:"ability"}
-                    $data modify storage minecraft:ui ability.choice merge from storage minecraft:ability index.$(ability_id)
+                    $data modify storage minecraft:ui ability.choice.path set from storage minecraft:ability index.$(ability_id).path
+                    $data modify storage minecraft:ui ability.choice.passive set from storage minecraft:ability index.$(ability_id).passive
+                    $data modify storage minecraft:ui ability.choice.proper_name set from storage minecraft:ability index.$(ability_id).proper_name
+                    $data modify storage minecraft:ui ability.choice.ability_price set from storage minecraft:ability index.$(ability_id).ability_price
                 }
             }
 
@@ -497,12 +504,13 @@ dir ability {
 
             dir moveset {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/same"}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(moveslot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot1_name),"minecraft:lore":$(moveslot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:$(moveslot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot2_name),"minecraft:lore":$(moveslot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin2"}}}},{Slot:$(moveslot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot3_name),"minecraft:lore":$(moveslot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin3"}}}},{Slot:$(moveslot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot4_name),"minecraft:lore":$(moveslot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin4"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
                 }
 
                 function open {
                     execute at @s as @p run function ui:ability/selection/choice/moveset/player
 
+                    gui highlight {3b,4b,5b} @s
                     function ui:ability/selection/choice/moveset/mask with storage minecraft:ui ability.choice
                     data modify storage ui current set from storage ui mask
                     execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/selection/choice/moveset/mask"
@@ -512,15 +520,18 @@ dir ability {
                     scoreboard players set @s uiAbility.ChoicePage 2
                     execute store result storage minecraft:ui ability.choice.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
                     block { with storage minecraft:ui ability.choice
-                        REPEAT (1,4) as i {
-                            $function ui:generate/move_lore {ability_id:$(ability_id),slot:<%i%>}
-                        }
+                        $function ui:generate/move_lore/load {ability_id:$(ability_id)}
                         $data modify storage minecraft:ui ability.choice merge from storage minecraft:ability index.$(ability_id)
                     }
                 }
 
                 function flip {
                     execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                    function ui:ability/selection/choice/moveset/open
+                }
+
+                function same {
+                    execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
                     function ui:ability/selection/choice/moveset/open
                 }
             }
@@ -2279,7 +2290,8 @@ dir purchase {
             }
 
             # move data over to the index
-            $data modify storage minecraft:ability index.$(ability_id).$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore
+            $data modify storage minecraft:ui ability.choice.$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore
+            # $data modify storage minecraft:ability index.$(ability_id).$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore
 
 
 
@@ -2422,58 +2434,73 @@ dir purchase {
 }
 
 dir generate {
-    function move_lore {
-        $data modify storage minecraft:ui generate.move.slot set value $(slot)
-        $data modify storage minecraft:ui generate.move.ability_id set value $(ability_id)
-        $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot) run block { with storage minecraft:ui generate.move
-            REPEAT (1,3) as i {
-                $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%> run scoreboard players add .splitMove uiAbility.Moveset 1
-            }
-            
-            # this will happen everytime regardless
-            data remove storage minecraft:ui generate.move.lore
-            data modify storage minecraft:ui generate.move.lore set value []
-            $data modify storage minecraft:ui generate.move.lore append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.description[]
-            data modify storage minecraft:ui generate.move.lore append value ""
+    dir move_lore {
+        function load {
+            $data modify storage minecraft:ui generate.move.ability_id set value $(ability_id)
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot1 run function ui:generate/move_lore/create {slot:1}
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot2 run function ui:generate/move_lore/create {slot:2}
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot3 run function ui:generate/move_lore/create {slot:3}
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot4 run function ui:generate/move_lore/create {slot:4}
 
-            # this will only take place if there are alternate moves to be casted
-            execute if score .splitMove uiAbility.Moveset matches 2.. run block { with storage minecraft:ui generate.move
-                data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
-                $data modify storage minecraft:ui generate.move.lore[-1] append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move2.name
-                data modify storage minecraft:ui generate.move.lore append value ""
-            }
-
-            # cooldown for the attached move
-            $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.cooldown
-            scoreboard players operation .cooldownMinutes uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
-            scoreboard players operation .cooldownSeconds uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
-            function universal:math/divide {value:60,score:".cooldownMinutes",objective:"uiAbility.Moveset"}
-            function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiAbility.Moveset"}
-            execute store result storage minecraft:ui generate.move.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes uiAbility.Moveset
-            execute store result storage minecraft:ui generate.move.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds uiAbility.Moveset
-            data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
-            execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
-                $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
-            }
-            execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
-                $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
-            }
-            scoreboard players reset .cooldownMinutes uiAbility.Moveset
-            scoreboard players reset .cooldownSeconds uiAbility.Moveset
-            scoreboard players reset .cooldownRaw uiAbility.Moveset
-
-
-            data merge storage minecraft:ui {generate:{move:{cancelable_text:"Yes",cancelable_color:"990000"}}}
-            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1{cancelable:false} run data merge storage minecraft:ui {generate:{move:{cancelable_text:"No",cancelable_color:"00ff40"}}}
-            block { with storage minecraft:ui generate.move
-                # 
-                $data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
-            }
-
-
-            scoreboard players reset .splitMove uiAbility.Moveset
+            execute if score .slotCount uiAbility.Moveset matches 1 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"13b",moveslot2_pos:"0b",moveslot3_pos:"0b",moveslot4_pos:"0b"}}}
+            execute if score .slotCount uiAbility.Moveset matches 2 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"12b",moveslot2_pos:"14b",moveslot3_pos:"0b",moveslot4_pos:"0b"}}}
+            execute if score .slotCount uiAbility.Moveset matches 3 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"12b",moveslot2_pos:"13b",moveslot3_pos:"14b",moveslot4_pos:"0b"}}}
+            execute if score .slotCount uiAbility.Moveset matches 4 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"11b",moveslot2_pos:"12b",moveslot3_pos:"14b",moveslot4_pos:"15b"}}}
+            scoreboard players reset .slotCount uiAbility.Moveset
         }
-        $data modify storage minecraft:ui ability.choice.slot$(slot)_name set from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.name
-        $data modify storage minecraft:ui ability.choice.slot$(slot)_lore set from storage minecraft:ui generate.move.lore
+
+        function create {
+            scoreboard players add .slotCount uiAbility.Moveset 1
+            $data modify storage minecraft:ui generate.move.slot set value $(slot)
+            block { with storage minecraft:ui generate.move
+                REPEAT (1,3) as i {
+                    $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%> run scoreboard players add .splitMove uiAbility.Moveset 1
+                }
+                
+                # this will happen everytime regardless
+                data remove storage minecraft:ui generate.move.lore
+                data modify storage minecraft:ui generate.move.lore set value []
+                $data modify storage minecraft:ui generate.move.lore append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.description[]
+                data modify storage minecraft:ui generate.move.lore append value ""
+
+                # this will only take place if there are alternate moves to be casted
+                execute if score .splitMove uiAbility.Moveset matches 2.. run block { with storage minecraft:ui generate.move
+                    data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
+                    $data modify storage minecraft:ui generate.move.lore[-1] append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move2.name
+                    data modify storage minecraft:ui generate.move.lore append value ""
+                }
+
+                # cooldown for the attached move
+                $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.cooldown
+                scoreboard players operation .cooldownMinutes uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+                scoreboard players operation .cooldownSeconds uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+                function universal:math/divide {value:60,score:".cooldownMinutes",objective:"uiAbility.Moveset"}
+                function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiAbility.Moveset"}
+                execute store result storage minecraft:ui generate.move.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes uiAbility.Moveset
+                execute store result storage minecraft:ui generate.move.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds uiAbility.Moveset
+                data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
+                execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
+                    $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
+                }
+                execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
+                    $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
+                }
+                scoreboard players reset .cooldownMinutes uiAbility.Moveset
+                scoreboard players reset .cooldownSeconds uiAbility.Moveset
+                scoreboard players reset .cooldownRaw uiAbility.Moveset
+
+
+                data merge storage minecraft:ui {generate:{move:{cancelable_text:"Yes",cancelable_color:"990000"}}}
+                $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1{cancelable:false} run data merge storage minecraft:ui {generate:{move:{cancelable_text:"No",cancelable_color:"00ff40"}}}
+                block { with storage minecraft:ui generate.move
+                    $data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
+                }
+
+
+                scoreboard players reset .splitMove uiAbility.Moveset
+                $data modify storage minecraft:ui ability.choice.moveslot$(slot)_name set from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.name
+                $data modify storage minecraft:ui ability.choice.moveslot$(slot)_lore set from storage minecraft:ui generate.move.lore
+            }
+        }
     }
 }
