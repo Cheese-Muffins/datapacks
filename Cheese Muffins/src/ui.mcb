@@ -18,6 +18,10 @@ function on_load minecraft:load{
     scoreboard objectives add uiPurchase.Confirm dummy
     scoreboard objectives add uiAbility.Moveset dummy
 
+    REPEAT (1,4) as i {
+        scoreboard objectives add uiAbility.MovesetCycle<%i%> dummy
+    }
+
     # Parties #
     scoreboard objectives add uiCassette.PartyLogic dummy
 
@@ -504,7 +508,7 @@ dir ability {
 
             dir moveset {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(moveslot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot1_name),"minecraft:lore":$(moveslot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:$(moveslot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot2_name),"minecraft:lore":$(moveslot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin2"}}}},{Slot:$(moveslot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot3_name),"minecraft:lore":$(moveslot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin3"}}}},{Slot:$(moveslot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(moveslot4_name),"minecraft:lore":$(moveslot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin4"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(slot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot1_cycle)}}}},{Slot:$(slot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot2_cycle)}}}},{Slot:$(slot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot3_cycle)}}}},{Slot:$(slot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,cycle:$(slot4_cycle)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
                 }
 
                 function open {
@@ -517,11 +521,24 @@ dir ability {
                 }
 
                 function player {
+                    data remove storage minecraft:ui ability.choice
+
                     scoreboard players set @s uiAbility.ChoicePage 2
                     execute store result storage minecraft:ui ability.choice.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
+                    REPEAT (1,4) as i {
+                        execute unless score @s uiAbility.MovesetCycle<%i%> matches 1.. run scoreboard players set @s uiAbility.MovesetCycle<%i%> 1
+                        execute store result storage minecraft:ui ability.choice.slot_cycle int 1 run scoreboard players get @s uiAbility.MovesetCycle<%i%>
+                        block { with storage minecraft:ui ability.choice
+                            $data modify storage minecraft:ui ability.choice.slot<%i%>_name set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.move$(slot_cycle).name
+                            $data modify storage minecraft:ui ability.choice.slot<%i%>_lore set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.move$(slot_cycle).generated
+                            $data modify storage minecraft:ui ability.choice.slot<%i%>_cycle set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.cycle
+                            $data modify storage minecraft:ui ability.choice.slot<%i%>_pos set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.pos
+                        }
+                    }
+
                     block { with storage minecraft:ui ability.choice
-                        $function ui:generate/move_lore/load {ability_id:$(ability_id)}
-                        $data modify storage minecraft:ui ability.choice merge from storage minecraft:ability index.$(ability_id)
+                        $data modify storage minecraft:ui ability.choice.path set from storage minecraft:ability index.$(ability_id).path
+                        $data modify storage minecraft:ui ability.choice.proper_name set from storage minecraft:ability index.$(ability_id).proper_name
                     }
                 }
 
@@ -2189,7 +2206,6 @@ dir purchase {
             $data merge storage minecraft:ui {generate:{purchase:{ability_id:$(ability_id),product_name:"$(product_name)"}}}
             $data modify storage minecraft:ui ability.choice.$(product_name)_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).name
             $data modify storage minecraft:ui generate.purchase.subtext set from storage minecraft:ability index.$(ability_id).product.$(product_name).subtext
-            $data modify storage minecraft:ui ability.choice.$(product_name)_model set from storage minecraft:ability index.$(ability_id).product.$(product_name).model
 
             $execute store result score .generatedProduct uiPurchase.ProductID run data get storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
             $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
@@ -2203,6 +2219,7 @@ dir purchase {
                 # 1 - the text beneath the title
                 $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"$(subtext)","italic":false,"color":"gray"}]
                 $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run block { with storage minecraft:ui generate.purchase
+                    $data modify storage minecraft:ui ability.choice.$(product_name)_model set from storage minecraft:ability index.$(ability_id).product.$(product_name).model
                     $execute store result score .skinRating uiPurchase.SkinRarity run data get storage minecraft:ability index.$(ability_id).product.$(product_name).rarity
                     execute if score .skinRating uiPurchase.SkinRarity matches 0 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Common",rarity_color:"d1d1d1"}}}
                     execute if score .skinRating uiPurchase.SkinRarity matches 1 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Uncommon",rarity_color:"70ff94"}}}
@@ -2434,73 +2451,151 @@ dir purchase {
 }
 
 dir generate {
-    dir move_lore {
-        function load {
+    dir move {
+        function main {
             $data modify storage minecraft:ui generate.move.ability_id set value $(ability_id)
-            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot1 run function ui:generate/move_lore/create {slot:1}
-            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot2 run function ui:generate/move_lore/create {slot:2}
-            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot3 run function ui:generate/move_lore/create {slot:3}
-            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot4 run function ui:generate/move_lore/create {slot:4}
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot1 run function ui:generate/move/generate {slot:1}
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot2 run function ui:generate/move/generate {slot:2}
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot3 run function ui:generate/move/generate {slot:3}
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot4 run function ui:generate/move/generate {slot:4}
 
-            execute if score .slotCount uiAbility.Moveset matches 1 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"13b",moveslot2_pos:"0b",moveslot3_pos:"0b",moveslot4_pos:"0b"}}}
-            execute if score .slotCount uiAbility.Moveset matches 2 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"12b",moveslot2_pos:"14b",moveslot3_pos:"0b",moveslot4_pos:"0b"}}}
-            execute if score .slotCount uiAbility.Moveset matches 3 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"12b",moveslot2_pos:"13b",moveslot3_pos:"14b",moveslot4_pos:"0b"}}}
-            execute if score .slotCount uiAbility.Moveset matches 4 run data merge storage minecraft:ui {ability:{choice:{moveslot1_pos:"11b",moveslot2_pos:"12b",moveslot3_pos:"14b",moveslot4_pos:"15b"}}}
+            $execute if score .slotCount uiAbility.Moveset matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
+                slot1:{pos:"13b"},\
+                slot2:{pos:"0b"},\
+                slot3:{pos:"0b"},\
+                slot4:{pos:"0b"}\
+            }}}}
+            $execute if score .slotCount uiAbility.Moveset matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
+                slot1:{pos:"12b"},\
+                slot2:{pos:"14b"},\
+                slot3:{pos:"0b"},\
+                slot4:{pos:"0b"}\
+            }}}}
+            $execute if score .slotCount uiAbility.Moveset matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
+                slot1:{pos:"12b"},\
+                slot2:{pos:"13b"},\
+                slot3:{pos:"14b"},\
+                slot4:{pos:"0b"}\
+            }}}}
+            $execute if score .slotCount uiAbility.Moveset matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
+                slot1:{pos:"11b"},\
+                slot2:{pos:"12b"},\
+                slot3:{pos:"14b"},\
+                slot4:{pos:"15b"}\
+            }}}}
             scoreboard players reset .slotCount uiAbility.Moveset
         }
 
-        function create {
+        function generate {
             scoreboard players add .slotCount uiAbility.Moveset 1
+
             $data modify storage minecraft:ui generate.move.slot set value $(slot)
             block { with storage minecraft:ui generate.move
                 REPEAT (1,3) as i {
-                    $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%> run scoreboard players add .splitMove uiAbility.Moveset 1
+                    $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%> run block { with storage minecraft:ui generate.move
+                        scoreboard players add .splitMove uiAbility.Moveset 1
+                        scoreboard players set .moveIndex uiAbility.Moveset <%i%>
+                        scoreboard players add .moveIndex uiAbility.Moveset 1
+                        execute if score .moveIndex uiAbility.Moveset matches 4.. run scoreboard players set .moveIndex uiAbility.Moveset 1
+                        execute store result storage minecraft:ui generate.move.next_move int 1 run scoreboard players get .moveIndex uiAbility.Moveset
+
+                        data remove storage minecraft:ui generate.move.lore
+                        data modify storage minecraft:ui generate.move.lore set value []
+                        $data modify storage minecraft:ui generate.move.lore append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%>.description[]
+                        data modify storage minecraft:ui generate.move.lore append value ""
+
+                        block { with storage minecraft:ui generate.move
+                            # $say slot$(slot) move$(next_move)
+                            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move) run block { with storage minecraft:ui generate.move
+                                data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
+                                $data modify storage minecraft:ui generate.move.lore[-1] append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move).name
+                                data modify storage minecraft:ui generate.move.lore append value ""
+                            }
+                        }
+
+                        $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%>.cooldown
+                        scoreboard players operation .cooldownMinutes uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+                        scoreboard players operation .cooldownSeconds uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+                        function universal:math/divide {value:60,score:".cooldownMinutes",objective:"uiAbility.Moveset"}
+                        function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiAbility.Moveset"}
+                        execute store result storage minecraft:ui generate.move.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes uiAbility.Moveset
+                        execute store result storage minecraft:ui generate.move.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds uiAbility.Moveset
+                        data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
+                        execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
+                            $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
+                        }
+                        execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
+                            $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
+                        }
+                        scoreboard players reset .cooldownMinutes uiAbility.Moveset
+                        scoreboard players reset .cooldownSeconds uiAbility.Moveset
+                        scoreboard players reset .cooldownRaw uiAbility.Moveset
+
+                        data merge storage minecraft:ui {generate:{move:{cancelable_text:"Yes",cancelable_color:"990000"}}}
+                        $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%>{cancelable:false} run data merge storage minecraft:ui {generate:{move:{cancelable_text:"No",cancelable_color:"00ff40"}}}
+                        block { with storage minecraft:ui generate.move
+                            $data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
+                        }
+
+                        $data modify storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move<%i%>.generated set from storage minecraft:ui generate.move.lore
+                    }
                 }
-                
-                # this will happen everytime regardless
-                data remove storage minecraft:ui generate.move.lore
-                data modify storage minecraft:ui generate.move.lore set value []
-                $data modify storage minecraft:ui generate.move.lore append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.description[]
-                data modify storage minecraft:ui generate.move.lore append value ""
-
-                # this will only take place if there are alternate moves to be casted
-                execute if score .splitMove uiAbility.Moveset matches 2.. run block { with storage minecraft:ui generate.move
-                    data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
-                    $data modify storage minecraft:ui generate.move.lore[-1] append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move2.name
-                    data modify storage minecraft:ui generate.move.lore append value ""
-                }
-
-                # cooldown for the attached move
-                $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.cooldown
-                scoreboard players operation .cooldownMinutes uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
-                scoreboard players operation .cooldownSeconds uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
-                function universal:math/divide {value:60,score:".cooldownMinutes",objective:"uiAbility.Moveset"}
-                function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiAbility.Moveset"}
-                execute store result storage minecraft:ui generate.move.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes uiAbility.Moveset
-                execute store result storage minecraft:ui generate.move.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds uiAbility.Moveset
-                data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
-                execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
-                    $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
-                }
-                execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
-                    $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
-                }
-                scoreboard players reset .cooldownMinutes uiAbility.Moveset
-                scoreboard players reset .cooldownSeconds uiAbility.Moveset
-                scoreboard players reset .cooldownRaw uiAbility.Moveset
-
-
-                data merge storage minecraft:ui {generate:{move:{cancelable_text:"Yes",cancelable_color:"990000"}}}
-                $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1{cancelable:false} run data merge storage minecraft:ui {generate:{move:{cancelable_text:"No",cancelable_color:"00ff40"}}}
-                block { with storage minecraft:ui generate.move
-                    $data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
-                }
-
-
+                $execute store result storage minecraft:ability index.$(ability_id).moveset.slot$(slot).cycle int 1 run scoreboard players get .splitMove uiAbility.Moveset
                 scoreboard players reset .splitMove uiAbility.Moveset
-                $data modify storage minecraft:ui ability.choice.moveslot$(slot)_name set from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.name
-                $data modify storage minecraft:ui ability.choice.moveslot$(slot)_lore set from storage minecraft:ui generate.move.lore
             }
+            
+
+
+
+            
+            # block { with storage minecraft:ui generate.move
+            #     REPEAT (1,3) as i {
+                    
+            #     }
+                
+            #     # this will happen everytime regardless
+                
+
+            #     # this will only take place if there are alternate moves to be casted
+            #     execute if score .splitMove uiAbility.Moveset matches 2.. run block { with storage minecraft:ui generate.move
+            #         data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
+            #         $data modify storage minecraft:ui generate.move.lore[-1] append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move2.name
+            #         data modify storage minecraft:ui generate.move.lore append value ""
+            #     }
+
+            #     # cooldown for the attached move
+            #     $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.cooldown
+            #     scoreboard players operation .cooldownMinutes uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+            #     scoreboard players operation .cooldownSeconds uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+            #     function universal:math/divide {value:60,score:".cooldownMinutes",objective:"uiAbility.Moveset"}
+            #     function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiAbility.Moveset"}
+            #     execute store result storage minecraft:ui generate.move.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes uiAbility.Moveset
+            #     execute store result storage minecraft:ui generate.move.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds uiAbility.Moveset
+            #     data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
+            #     execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
+            #         $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
+            #     }
+            #     execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.move
+            #         $data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
+            #     }
+            #     scoreboard players reset .cooldownMinutes uiAbility.Moveset
+            #     scoreboard players reset .cooldownSeconds uiAbility.Moveset
+            #     scoreboard players reset .cooldownRaw uiAbility.Moveset
+
+
+            #     data merge storage minecraft:ui {generate:{move:{cancelable_text:"Yes",cancelable_color:"990000"}}}
+            #     $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1{cancelable:false} run data merge storage minecraft:ui {generate:{move:{cancelable_text:"No",cancelable_color:"00ff40"}}}
+            #     block { with storage minecraft:ui generate.move
+            #         $data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
+            #     }
+
+
+            #     scoreboard players reset .splitMove uiAbility.Moveset
+            #     $data modify storage minecraft:ui index.$(ability_id).moveset.slot$(slot).move1.generated_lore set from storage minecraft:ui generate.move.lore
+
+            #     # $data modify storage minecraft:ui index.$(ability_id).slot$(slot)_move1_name set from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.name
+            #     # $data modify storage minecraft:ui index.$(ability_id).slot$(slot)_move1_lore set from storage minecraft:ui generate.move.lore
+            # }
         }
     }
 }

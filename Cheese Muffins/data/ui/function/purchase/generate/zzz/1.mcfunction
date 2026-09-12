@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
+$data modify storage minecraft:ui ability.choice.$(product_name)_model set from storage minecraft:ability index.$(ability_id).product.$(product_name).model
 $execute store result score .skinRating uiPurchase.SkinRarity run data get storage minecraft:ability index.$(ability_id).product.$(product_name).rarity
 execute if score .skinRating uiPurchase.SkinRarity matches 0 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Common",rarity_color:"d1d1d1"}}}
 execute if score .skinRating uiPurchase.SkinRarity matches 1 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Uncommon",rarity_color:"70ff94"}}}
