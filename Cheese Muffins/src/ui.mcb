@@ -512,7 +512,7 @@ dir ability {
 
             dir moveset {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(slot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:1,cycle:$(slot1_cycle)}}}},{Slot:$(slot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:2,cycle:$(slot2_cycle)}}}},{Slot:$(slot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:3,cycle:$(slot3_cycle)}}}},{Slot:$(slot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:false},"minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:4,cycle:$(slot4_cycle)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(slot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot1_model)","minecraft:tooltip_display":{hide_tooltip:$(slot1_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:1,cycle:$(slot1_cycle)}}}},{Slot:$(slot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot2_model)","minecraft:tooltip_display":{hide_tooltip:$(slot2_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:2,cycle:$(slot2_cycle)}}}},{Slot:$(slot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot3_model)","minecraft:tooltip_display":{hide_tooltip:$(slot3_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:3,cycle:$(slot3_cycle)}}}},{Slot:$(slot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot4_model)","minecraft:tooltip_display":{hide_tooltip:$(slot4_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:4,cycle:$(slot4_cycle)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/$(path)/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
                 }
 
                 function open {
@@ -530,13 +530,24 @@ dir ability {
                     scoreboard players set @s uiAbility.ChoicePage 2
                     execute store result storage minecraft:ui ability.choice.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
                     REPEAT (1,4) as i {
+                        data modify storage minecraft:ui ability.choice.slot<%i%>_name set value [{"text":""}]
+                        data modify storage minecraft:ui ability.choice.slot<%i%>_lore set value [{"text":""}]
+                        data modify storage minecraft:ui ability.choice.slot<%i%>_model set value "minecraft:empty"
+                        data modify storage minecraft:ui ability.choice.slot<%i%>_cycle set value 1
+                        data modify storage minecraft:ui ability.choice.slot<%i%>_pos set value "0b"
+                        data modify storage minecraft:ui ability.choice.slot<%i%>_visibility set value "true"
+
                         execute unless score @s uiAbility.MovesetCycle<%i%> matches 1.. run scoreboard players set @s uiAbility.MovesetCycle<%i%> 1
                         execute store result storage minecraft:ui ability.choice.slot_cycle int 1 run scoreboard players get @s uiAbility.MovesetCycle<%i%>
                         block { with storage minecraft:ui ability.choice
-                            $data modify storage minecraft:ui ability.choice.slot<%i%>_name set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.move$(slot_cycle).name
-                            $data modify storage minecraft:ui ability.choice.slot<%i%>_lore set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.move$(slot_cycle).generated
-                            $data modify storage minecraft:ui ability.choice.slot<%i%>_cycle set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.cycle
-                            $data modify storage minecraft:ui ability.choice.slot<%i%>_pos set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.pos
+                            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot<%i%> run block { with storage minecraft:ui ability.choice
+                                $data modify storage minecraft:ui ability.choice.slot<%i%>_name set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.move$(slot_cycle).name
+                                $data modify storage minecraft:ui ability.choice.slot<%i%>_lore set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.move$(slot_cycle).generated
+                                $data modify storage minecraft:ui ability.choice.slot<%i%>_model set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.move$(slot_cycle).model
+                                $data modify storage minecraft:ui ability.choice.slot<%i%>_cycle set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.cycle
+                                $data modify storage minecraft:ui ability.choice.slot<%i%>_pos set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.pos
+                                data modify storage minecraft:ui ability.choice.slot<%i%>_visibility set value "false"
+                            }
                         }
                     }
 
@@ -554,10 +565,13 @@ dir ability {
                         $scoreboard players add @s uiAbility.MovesetCycle$(slot_id) 1
                         $scoreboard players set .max uiAbility.MovesetCycle$(slot_id) $(cycle)
                         $execute if score @s uiAbility.MovesetCycle$(slot_id) > .max uiAbility.MovesetCycle$(slot_id) run scoreboard players set @s uiAbility.MovesetCycle$(slot_id) 1
-                        $say $(slot_id) $(cycle)
+                        
+                        $execute unless score .max uiAbility.MovesetCycle$(slot_id) matches 1 run {
+                            playsound minecraft:cassette.ui.cycle player @s ~ ~ ~
+                            function ui:ability/selection/choice/moveset/open
+                        }
+                        $execute if score .max uiAbility.MovesetCycle$(slot_id) matches 1 run function ui:ability/selection/choice/moveset/same
                     }
-
-                    function ui:ability/selection/choice/moveset/same
                 }
 
                 function flip {
@@ -2524,11 +2538,17 @@ dir generate {
                         data modify storage minecraft:ui generate.move.lore append value ""
 
                         block { with storage minecraft:ui generate.move
-                            # $say slot$(slot) move$(next_move)
-                            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move) run block { with storage minecraft:ui generate.move
-                                data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
-                                $data modify storage minecraft:ui generate.move.lore[-1] append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move).name
-                                data modify storage minecraft:ui generate.move.lore append value ""
+                            # only continue if move2 exists at all
+                            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move2 run block { with storage minecraft:ui generate.move
+                                # fail if no move exists
+                                $execute unless data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move) run data modify storage minecraft:ui generate.move.next_move set value 1
+                                block { with storage minecraft:ui generate.move
+                                    $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move) run block { with storage minecraft:ui generate.move
+                                        data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
+                                        $data modify storage minecraft:ui generate.move.lore[-1] append from storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move).name
+                                        data modify storage minecraft:ui generate.move.lore append value ""
+                                    }
+                                }
                             }
                         }
 

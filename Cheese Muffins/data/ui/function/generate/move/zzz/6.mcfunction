@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
+$data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]

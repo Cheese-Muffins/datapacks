@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
+$execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move2 run function ui:generate/move/zzz/19 with storage minecraft:ui generate.move

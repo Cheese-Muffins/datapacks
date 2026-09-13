@@ -18,12 +18,12 @@ function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiA
 execute store result storage minecraft:ui generate.move.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes uiAbility.Moveset
 execute store result storage minecraft:ui generate.move.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds uiAbility.Moveset
 data modify storage minecraft:ui generate.move.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
-execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run function ui:generate/move/zzz/4 with storage minecraft:ui generate.move
-execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run function ui:generate/move/zzz/5 with storage minecraft:ui generate.move
+execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run function ui:generate/move/zzz/6 with storage minecraft:ui generate.move
+execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run function ui:generate/move/zzz/7 with storage minecraft:ui generate.move
 scoreboard players reset .cooldownMinutes uiAbility.Moveset
 scoreboard players reset .cooldownSeconds uiAbility.Moveset
 scoreboard players reset .cooldownRaw uiAbility.Moveset
 data merge storage minecraft:ui {generate:{move:{cancelable_text:"Yes",cancelable_color:"990000"}}}
 $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1{cancelable:false} run data merge storage minecraft:ui {generate:{move:{cancelable_text:"No",cancelable_color:"00ff40"}}}
-function ui:generate/move/zzz/6 with storage minecraft:ui generate.move
+function ui:generate/move/zzz/8 with storage minecraft:ui generate.move
 $data modify storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move1.generated set from storage minecraft:ui generate.move.lore

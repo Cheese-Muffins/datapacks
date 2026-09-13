@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.move.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
+$execute unless data storage minecraft:ability index.$(ability_id).moveset.slot$(slot).move$(next_move) run data modify storage minecraft:ui generate.move.next_move set value 1
+function ui:generate/move/zzz/12 with storage minecraft:ui generate.move

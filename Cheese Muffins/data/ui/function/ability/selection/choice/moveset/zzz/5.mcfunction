@@ -1,6 +1,8 @@
 # Generated with MC-Build
 
-$scoreboard players add @s uiAbility.MovesetCycle$(slot_id) 1
-$scoreboard players set .max uiAbility.MovesetCycle$(slot_id) $(cycle)
-$execute if score @s uiAbility.MovesetCycle$(slot_id) > .max uiAbility.MovesetCycle$(slot_id) run scoreboard players set @s uiAbility.MovesetCycle$(slot_id) 1
-$say $(slot_id) $(cycle)
+$data modify storage minecraft:ui ability.choice.slot3_name set from storage minecraft:ability index.$(ability_id).moveset.slot3.move$(slot_cycle).name
+$data modify storage minecraft:ui ability.choice.slot3_lore set from storage minecraft:ability index.$(ability_id).moveset.slot3.move$(slot_cycle).generated
+$data modify storage minecraft:ui ability.choice.slot3_model set from storage minecraft:ability index.$(ability_id).moveset.slot3.move$(slot_cycle).model
+$data modify storage minecraft:ui ability.choice.slot3_cycle set from storage minecraft:ability index.$(ability_id).moveset.slot3.cycle
+$data modify storage minecraft:ui ability.choice.slot3_pos set from storage minecraft:ability index.$(ability_id).moveset.slot3.pos
+data modify storage minecraft:ui ability.choice.slot3_visibility set value "false"

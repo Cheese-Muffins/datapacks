@@ -605,12 +605,14 @@ dir generate {
                     move1:{\
                         name:[{"text":"Time","italic":false,"color":"#7081ff"},{"text":"skip","italic":false,"color":"#4dc3ff"}],\
                         description:[[{"text":"Blink","italic":false,"color":"#bc57ff"},{"text":" forwards ","italic":false,"color":"gray"},{"text":"11m","italic":false,"color":"#ffbe4d"},{"text":" in the direction you're","italic":false,"color":"gray"}],[{"text":"facing. This move can be ","italic":false,"color":"gray"},{"text":"activated whilst","italic":false,"color":"#9ef9ff"}],[{"text":"using other moves.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timeskip",\
                         cooldown:9,\
                         cancelable:false\
                     },\
                     move2:{\
                         name:[{"text":"T","italic":false,"color":"#9d00e6"},{"text":"h","italic":false,"color":"#a30ce9"},{"text":"e","italic":false,"color":"#a918ec"},{"text":" ","italic":false,"color":"#af24ef"},{"text":"W","italic":false,"color":"#b531f3"},{"text":"o","italic":false,"color":"#bb3df6"},{"text":"r","italic":false,"color":"#c149f9"},{"text":"l","italic":false,"color":"#c755fc"},{"text":"d","italic":false,"color":"#cd61ff"}],\
                         description:[[{"text":"Following a ","italic":false,"color":"gray"},{"text":"brief windup,","italic":false,"color":"#ff5252"},{"text":" unleash your ","italic":false,"color":"gray"},{"text":"true","italic":false,"color":"#ff94ed"}],[{"text":"power","italic":false,"color":"#ff94ed"},{"text":" completely ","italic":false,"color":"gray"},{"text":"halting time","italic":false,"color":"#61d0ff"},{"text":" for the","italic":false,"color":"gray"}],[{"text":"surrounding ","italic":false,"color":"gray"},{"text":"40m.","italic":false,"color":"#ffbe4d"}],[{"text":" o Duration: ","italic":false,"color":"gray"},{"text":"9s","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timestop",\
                         cooldown:50,\
                         cancelable:true\
                     }\
@@ -619,6 +621,7 @@ dir generate {
                     move1:{\
                         name:[{"text":"K","italic":false,"color":"#c70000"},{"text":"n","italic":false,"color":"#cd0707"},{"text":"i","italic":false,"color":"#d20d0d"},{"text":"f","italic":false,"color":"#d81414"},{"text":"e","italic":false,"color":"#dd1a1a"},{"text":" ","italic":false,"color":"#e32121"},{"text":"T","italic":false,"color":"#e92828"},{"text":"h","italic":false,"color":"#ee2e2e"},{"text":"r","italic":false,"color":"#f43535"},{"text":"o","italic":false,"color":"#f93b3b"},{"text":"w","italic":false,"color":"#ff4242"}],\
                         description:[[{"text":"Toss ","italic":false,"color":"gray"},{"text":"3 knives","italic":false,"color":"#ffbe4d"},{"text":" ahead of where you're looking","italic":false,"color":"gray"}],[{"text":"striking","italic":false,"color":"#ff2929"},{"text":" anyone in their path. Collision with","italic":false,"color":"gray"}],[{"text":"terrain will stop movement. ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"#e2a3ff"}],[{"text":"increases the ","italic":false,"color":"gray"},{"text":"total","italic":false,"color":"#a7ff8f"},{"text":" number of ","italic":false,"color":"gray"},{"text":"tossed ","italic":false,"color":"gray"},{"text":"knives","italic":false,"color":"#ffbe4d"}],[{"text":"to 5.","italic":false,"color":"#ffbe4d"}],[{"text":"o Projectile Speed: ","italic":false,"color":"gray"},{"text":"10m/s","italic":false,"color":"#20c200"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/knife_throw",\
                         cooldown:17,\
                         cancelable:true\
                     }\
@@ -627,6 +630,7 @@ dir generate {
                     move1:{\
                         name:[{"text":"Barrage","italic":false,"color":"#d699ff"}],\
                         description:[[{"text":"Send out a ","italic":false,"color":"gray"},{"text":"flurry","italic":false,"color":"#f4a3ff"},{"text":" of punches completely","italic":false,"color":"gray"}],[{"text":"immobilizing","italic":false,"color":"white"},{"text":" and ","italic":false,"color":"gray"},{"text":"damaging ","italic":false,"color":"#ff2929"},{"text":"anything in their","italic":false,"color":"gray"}],[{"text":"path. The ","italic":false,"color":"gray"},{"text":"finishing punch","italic":false,"color":"#fff957"},{"text":" in the chain will","italic":false,"color":"gray"}],[{"text":"launch","italic":false,"color":"#00b4cc"},{"text":" victims backwards dealing","italic":false,"color":"gray"}],[{"text":"additional damage.","italic":false,"color":"#ff2929"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"4s","italic":false,"color":"#20c200"}],[{"text":"o Regular Damage: ","italic":false,"color":"gray"},{"text":"2hp/0.5s","italic":false,"color":"#20c200"}],[{"text":"o Final Punch Damage: ","italic":false,"color":"gray"},{"text":"5","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/barrage",\
                         cooldown:23,\
                         cancelable:false\
                     }\
@@ -635,6 +639,7 @@ dir generate {
                     move1:{\
                         name:[{"text":"F","italic":false,"color":"#a3d0ff"},{"text":"l","italic":false,"color":"#a3d9fd"},{"text":"u","italic":false,"color":"#a3e3fb"},{"text":"r","italic":false,"color":"#a3ecf8"},{"text":"r","italic":false,"color":"#a3f6f6"},{"text":"y","italic":false,"color":"#a3fff4"}],\
                         description:[["",{"text":"Strike a pose for a ","italic":false,"color":"gray"},{"text":"short duration,","italic":false,"color":"#ff7e75"},{"text":" waiting","italic":false,"color":"gray"}],["",{"text":"for an entity to ","italic":false,"color":"gray"},{"text":"strike.","italic":false,"color":"#ff2929"}],["",{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1.5s","italic":false,"color":"#c20000"}],"",[{"text":"Damaged by an Entity","italic":false,"color":"light_purple"}],[{"text":"Spawn a dome of knives on the attacking","italic":false,"color":"gray"}],["",{"text":"entity, ","italic":false,"color":"gray"},{"text":"dealing damage","italic":false,"color":"#ff2929"},{"text":" and inflicting","italic":false,"color":"gray"}],["",{"text":"deadly bleeding","italic":false,"color":"#ff2929"},{"text":" for ","italic":false,"color":"gray"},{"text":"5s.","italic":false,"color":"#ffbe4d"}],["",{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"6","italic":false,"color":"#20c200"}],["",{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.5x","italic":false,"color":"#c20000"}],["",{"text":"o ","italic":false,"color":"gray"},{"text":"Bleed III","italic":false,"color":"#c20000"}],"",[{"text":"Duration Expired","italic":false,"color":"light_purple"}],["",{"text":"Become ","italic":false,"color":"gray"},{"text":"immobilized","italic":false,"color":"white"},{"text":" for ","italic":false,"color":"gray"},{"text":"1s","italic":false,"color":"#ffbe4d"},{"text":" following the","italic":false,"color":"gray"}],["",{"text":"expiration","italic":false,"color":"#d17aff"},{"text":" of this cast.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/flurry",\
                         cooldown:32,\
                         cancelable:true\
                     }\
