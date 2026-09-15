@@ -15,6 +15,7 @@ scoreboard objectives add uiPurchase.ItemCount dummy
 scoreboard objectives add uiPurchase.ProductID dummy
 scoreboard objectives add uiPurchase.SkinRarity dummy
 scoreboard objectives add uiPurchase.Confirm dummy
+scoreboard objectives add uiAbility.SecretInteraction dummy
 scoreboard objectives add uiAbility.Moveset dummy
 scoreboard objectives add uiAbility.MovesetCycle1 dummy
 scoreboard objectives add uiAbility.MovesetCycle2 dummy

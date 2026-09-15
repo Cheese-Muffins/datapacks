@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
+$function ui:generate/interaction {ability_id:$(ability_id)}
 $function ui:purchase/generate/product {ability_id:$(ability_id),product_name:"ability"}
 $data modify storage minecraft:ui ability.choice.path set from storage minecraft:ability index.$(ability_id).path
 $data modify storage minecraft:ui ability.choice.passive set from storage minecraft:ability index.$(ability_id).passive

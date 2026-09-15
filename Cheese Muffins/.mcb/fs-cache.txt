@@ -75,7 +75,7 @@ data\ability\function\generate\zzz\3.mcfunction:3f3dc8912bd320db59d370a8e700b26e
 data\ability\function\generate\zzz\2.mcfunction:f76b0fa53a442885b212a9e27c9c21b1d36d0e04
 data\ability\function\generate\zzz\4.mcfunction:d1a71c8789412d6fa6ac05e41beaedfae1efacc2
 data\ability\function\generate\selection_lore.mcfunction:010d5781708fc34836c58cfcffb98b73771815d7
-data\ability\function\generate\index.mcfunction:52a992faeb48d003e7d48055671adc33f460226c
+data\ability\function\generate\index.mcfunction:f5a1b4bb4314c35d285ea322312ceaea4a141fec
 data\cassette\function\on_load.mcfunction:9fd3a0a7c0a69e49927b66fc34cccb40106ee299
 data\cassette\function\tick\zzz\0.mcfunction:feb637352bc165202957eb0f186b167a0227fc93
 data\cassette\function\tick\main.mcfunction:9be9a054340144adbffa057907495d9e4e790ebb
@@ -147,7 +147,7 @@ data\cassette\function\calculate\hover.mcfunction:c872d58eb54d0a552a3773a8e71218
 data\cassette\function\calculate\real_time.mcfunction:481d099f5c244d5cd9fad6a41e599cf8dc3f38fe
 data\cassette\function\generate_index.mcfunction:59fd9c5e88b74bb0ce5ba0d05b5d791afa80182a
 data\server\function\on_load.mcfunction:d1a71c8789412d6fa6ac05e41beaedfae1efacc2
-data\ui\function\on_load.mcfunction:06e3978c9a092952fd8a462cf3fb975bd1bb065f
+data\ui\function\on_load.mcfunction:b214dc194a32b5d1bbe037dcba8ec57d746c1449
 data\ui\function\administrator_access.mcfunction:718240e3fa7c843c8d94638356d728f97a9c1c64
 data\ui\function\logic\player\tick.mcfunction:060c3d6d323daf3f99efffc503d89db457efe6f7
 data\ui\function\logic\player\teleport.mcfunction:cd43edba3c6dce9a0882ae0c204194ae85906522
@@ -201,9 +201,9 @@ data\ui\function\ability\selection\generate\slot\default.mcfunction:058dd664a711
 data\ui\function\ability\selection\zzz\0.mcfunction:81c3076db90ddda711a3c28295093eee2c9b3978
 data\ui\function\ability\selection\expand.mcfunction:ca52a2f00ffe177e6c76db5937e8499fd590a493
 data\ui\function\ability\selection\flip.mcfunction:9e25aad4e75b835ea178dc42b014db22a1768d8f
-data\ui\function\ability\selection\choice\mask.mcfunction:ac14d367a699efc01cd9346821b747985c730f82
+data\ui\function\ability\selection\choice\mask.mcfunction:1ad385f3a34ee8ee8a395045e60d392360d73462
 data\ui\function\ability\selection\choice\open.mcfunction:42edd5f9f1a333e4cc055469ee1e3be59cdc09db
-data\ui\function\ability\selection\choice\zzz\0.mcfunction:278f3ce4ff2692af770e7c5b1f2042bad2117c42
+data\ui\function\ability\selection\choice\zzz\0.mcfunction:75e6cd090a74221979ebcda0ad69395e6b387138
 data\ui\function\ability\selection\choice\player.mcfunction:ae674e65888a0b1db728f8991b75cbe02f926127
 data\ui\function\ability\selection\choice\flip.mcfunction:29925becbc5bb6c0cdce8f801ca16a444e7db22e
 data\ui\function\ability\selection\choice\same.mcfunction:d51842f4123ce5fc514ee1813b50f066c715eecd
@@ -625,7 +625,7 @@ data\ui\function\purchase\requirement\zzz\25.mcfunction:d67ad3d104218ac1fb7b6ef0
 data\ui\function\purchase\requirement\advancements.mcfunction:5b07b8e4eb0adc747ab470214a57a149288640a4
 data\ui\function\purchase\requirement\bypass.mcfunction:d1a71c8789412d6fa6ac05e41beaedfae1efacc2
 data\ui\function\generate\move\main.mcfunction:d7b0b82d211dd823a4045de60695e02620562746
-data\ui\function\generate\move\zzz\5.mcfunction:8119a53cf0acdd6ab17d393c6f6a41fc893cf242
+data\ui\function\generate\move\zzz\5.mcfunction:c7d792ee661f35b4dd77ce95c8e476f3c13ba43f
 data\ui\function\generate\move\zzz\4.mcfunction:8605faa06de9156595dd29f7a6fe763218aca63b
 data\ui\function\generate\move\zzz\3.mcfunction:7ccbfdc945fd4005d664d6301cb4147b35497dcf
 data\ui\function\generate\move\zzz\2.mcfunction:4e20729227feffddab02c5b176634939242e4cac
@@ -633,7 +633,7 @@ data\ui\function\generate\move\zzz\6.mcfunction:f6db58bb739e89a034393b519face083
 data\ui\function\generate\move\zzz\7.mcfunction:ee4f59d35b8124edcfe1f0397b7f79cad8ab6af5
 data\ui\function\generate\move\zzz\8.mcfunction:6cf541db4e6cc9ab97619e8c9df1d192f6e0c86a
 data\ui\function\generate\move\zzz\1.mcfunction:38d2f45fcf4d84efc4ccc3af1232c7fefd319921
-data\ui\function\generate\move\zzz\13.mcfunction:8119a53cf0acdd6ab17d393c6f6a41fc893cf242
+data\ui\function\generate\move\zzz\13.mcfunction:c7d792ee661f35b4dd77ce95c8e476f3c13ba43f
 data\ui\function\generate\move\zzz\12.mcfunction:9e2df0547e00e63d7113566d639d7bee48b9e985
 data\ui\function\generate\move\zzz\11.mcfunction:49006e5f304a95fc80e6a8a98275d2291b360928
 data\ui\function\generate\move\zzz\10.mcfunction:4751db86b9f06e3e034ecd42c504826b572522eb
@@ -641,7 +641,7 @@ data\ui\function\generate\move\zzz\14.mcfunction:f6db58bb739e89a034393b519face08
 data\ui\function\generate\move\zzz\15.mcfunction:ee4f59d35b8124edcfe1f0397b7f79cad8ab6af5
 data\ui\function\generate\move\zzz\16.mcfunction:6cf541db4e6cc9ab97619e8c9df1d192f6e0c86a
 data\ui\function\generate\move\zzz\9.mcfunction:e3a1457192dacf5fb8bbc6e10eb05d748a42b193
-data\ui\function\generate\move\zzz\21.mcfunction:8119a53cf0acdd6ab17d393c6f6a41fc893cf242
+data\ui\function\generate\move\zzz\21.mcfunction:c7d792ee661f35b4dd77ce95c8e476f3c13ba43f
 data\ui\function\generate\move\zzz\20.mcfunction:322cc7f315f059b2d8ad4b671b8fe54cd6223c8f
 data\ui\function\generate\move\zzz\19.mcfunction:dd0b89ded1581905e2e203266d8d2e177da1bcdc
 data\ui\function\generate\move\zzz\18.mcfunction:7fc3e23a994ce52a4b802e9abb386f1386337a2a
@@ -651,6 +651,13 @@ data\ui\function\generate\move\zzz\24.mcfunction:6cf541db4e6cc9ab97619e8c9df1d19
 data\ui\function\generate\move\zzz\17.mcfunction:4e79a47ee37a39b4df77af36744d540052567b71
 data\ui\function\generate\move\zzz\0.mcfunction:5183f220267d45dd7ca8b028cd6a49a131ed94fb
 data\ui\function\generate\move\generate.mcfunction:53e709ec399aa205d5875b467680863769ab9c66
+data\ui\function\generate\zzz\3.mcfunction:d305cd0277645dc66838104106a6a925f5d451fc
+data\ui\function\generate\zzz\4.mcfunction:3b86ab04a3ba571f09502324ad14e0865e111803
+data\ui\function\generate\zzz\5.mcfunction:9887bf91254b81bfd50ca11d56bd5887f7f1191a
+data\ui\function\generate\zzz\2.mcfunction:d6b8b654b01fd4c6046db02b41212507ceb1c678
+data\ui\function\generate\zzz\1.mcfunction:cac0fbf4a26e75f81a3597ee2759c03de1dbd1f6
+data\ui\function\generate\zzz\0.mcfunction:9dae020ad2e8408ceffafa612266f5f00c90bfca
+data\ui\function\generate\interaction.mcfunction:9d17f25bf3b5b7418a02642eb5850d7b9f790472
 data\universal\function\on_load.mcfunction:1782db5c4f5458c41bc7ef3e7a2f28e563b81233
 data\universal\function\tick\zzz\0.mcfunction:830961400b4a578da2d6c924879b0b3fc1a037d9
 data\universal\function\tick\zzz\1.mcfunction:dad4cd2b912dfa52d5a87decf78b4eaf5f4786e1
