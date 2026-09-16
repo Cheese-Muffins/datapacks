@@ -201,7 +201,7 @@ data\ui\function\ability\selection\generate\slot\default.mcfunction:058dd664a711
 data\ui\function\ability\selection\zzz\0.mcfunction:81c3076db90ddda711a3c28295093eee2c9b3978
 data\ui\function\ability\selection\expand.mcfunction:ca52a2f00ffe177e6c76db5937e8499fd590a493
 data\ui\function\ability\selection\flip.mcfunction:9e25aad4e75b835ea178dc42b014db22a1768d8f
-data\ui\function\ability\selection\choice\mask.mcfunction:06d0e8fa8ece8a9d05dc174423219c504359cb8d
+data\ui\function\ability\selection\choice\mask.mcfunction:78eb9249ce0199cb0fc96b088a728d10b0abc86c
 data\ui\function\ability\selection\choice\open.mcfunction:42edd5f9f1a333e4cc055469ee1e3be59cdc09db
 data\ui\function\ability\selection\choice\zzz\0.mcfunction:3d5d730bf5f110dc3ff6936d4959188c2939b906
 data\ui\function\ability\selection\choice\player.mcfunction:ae674e65888a0b1db728f8991b75cbe02f926127
@@ -210,7 +210,7 @@ data\ui\function\ability\selection\choice\zzz\1.mcfunction:f969a69e03857db61915c
 data\ui\function\ability\selection\choice\interaction.mcfunction:9c1bcab288b11bf4229749af92d450c50ca5a553
 data\ui\function\ability\selection\choice\flip.mcfunction:29925becbc5bb6c0cdce8f801ca16a444e7db22e
 data\ui\function\ability\selection\choice\same.mcfunction:d51842f4123ce5fc514ee1813b50f066c715eecd
-data\ui\function\ability\selection\choice\moveset\mask.mcfunction:574bea25cf7977b59f625284479e0165eb784093
+data\ui\function\ability\selection\choice\moveset\mask.mcfunction:ec8c3c9903ec6c852263950168e1225af006c05c
 data\ui\function\ability\selection\choice\moveset\open.mcfunction:b4b90effe65cb811b5990e6f666693fbc7e2d6a6
 data\ui\function\ability\selection\choice\moveset\zzz\1.mcfunction:99c4a63a8b43a453e2483f1f1775388ea8db57ed
 data\ui\function\ability\selection\choice\moveset\zzz\0.mcfunction:0f5e6d9fe9bd708a1d2ac186354afa950fca8a52
@@ -227,7 +227,7 @@ data\ui\function\ability\selection\choice\moveset\zzz\9.mcfunction:12bbba7be1b14
 data\ui\function\ability\selection\choice\moveset\click.mcfunction:05b7960005fe49bc48c0c86506018fe72b0a40a7
 data\ui\function\ability\selection\choice\moveset\flip.mcfunction:30f75e71ceb1f9a62da84c681ba284e46784719b
 data\ui\function\ability\selection\choice\moveset\same.mcfunction:bce812e3b6a8ad4b7c3e1e9e4cc0f6957953904a
-data\ui\function\ability\selection\choice\skin\mask.mcfunction:e248abc81e01a937b9fb8261c339ef6e6e8b6c82
+data\ui\function\ability\selection\choice\skin\mask.mcfunction:548a384217fde07bb52abac6a76bc7109c181f45
 data\ui\function\ability\selection\choice\skin\open.mcfunction:0a0ccafd6ad165376b958f6567870e348c869379
 data\ui\function\ability\selection\choice\skin\zzz\0.mcfunction:858cca5948bf0c16608d030afd9d9811c8dd21c2
 data\ui\function\ability\selection\choice\skin\player.mcfunction:8037ab34a34fc697bd15d52d0b2b5fe276fb8c43
