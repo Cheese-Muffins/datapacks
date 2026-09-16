@@ -64,7 +64,7 @@ dir logic {
 
             scoreboard players set .type uiLogic.Broad 1
             execute as @e[type=minecraft:chest_minecart,tag=new] run {
-                gui enable @s
+                gui enable
                 function ui:ability/menu/open
                 function ui:logic/minecart/load_page
             }
@@ -81,7 +81,7 @@ dir logic {
 
             scoreboard players set .type uiLogic.Broad 1
             execute as @e[type=minecraft:chest_minecart,tag=new] run {
-                gui enable @s
+                gui enable
                 function ui:cassette/menu/open
                 function ui:logic/minecart/load_page
             }
@@ -546,7 +546,7 @@ dir ability {
                 function open {
                     execute at @s as @p run function ui:ability/selection/choice/moveset/player
 
-                    gui highlight {3b,4b,5b} @s
+                    gui highlight {3b,4b,5b}
                     function ui:ability/selection/choice/moveset/mask with storage minecraft:ui ability.choice
                     data modify storage ui current set from storage ui mask
                     execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/selection/choice/moveset/mask"
@@ -615,10 +615,13 @@ dir ability {
 
             dir skin {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin1_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin1_display)},"minecraft:item_name":$(skin1_name),"minecraft:lore":$(skin1_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin2_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin2_display)},"minecraft:item_name":$(skin2_name),"minecraft:lore":$(skin2_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin2"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin3_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin3_display)},"minecraft:item_name":$(skin3_name),"minecraft:lore":$(skin3_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin3"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin4_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin4_display)},"minecraft:item_name":$(skin4_name),"minecraft:lore":$(skin4_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin4"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/skin","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_model_data":{strings:["$(path)"]},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/same"}}}}]
+                    $data modify storage ui mask set value [{Slot:5b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin1_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin1_display)},"minecraft:item_name":$(skin1_name),"minecraft:lore":$(skin1_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin2_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin2_display)},"minecraft:item_name":$(skin2_name),"minecraft:lore":$(skin2_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin2"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin3_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin3_display)},"minecraft:item_name":$(skin3_name),"minecraft:lore":$(skin3_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin3"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin4_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin4_display)},"minecraft:item_name":$(skin4_name),"minecraft:lore":$(skin4_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin4"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/skin","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_model_data":{strings:["$(path)"]},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/same"}}}}]
                 }
 
                 function open {
+                    gui highlight {}
+                    gui priority {10b}
+                    gui highlight {4b,5b,6b}
                     execute at @s as @p run function ui:ability/selection/choice/skin/player
 
                     function ui:ability/selection/choice/skin/mask with storage minecraft:ui ability.choice

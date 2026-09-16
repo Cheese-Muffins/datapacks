@@ -151,9 +151,9 @@ data\ui\function\on_load.mcfunction:b214dc194a32b5d1bbe037dcba8ec57d746c1449
 data\ui\function\administrator_access.mcfunction:718240e3fa7c843c8d94638356d728f97a9c1c64
 data\ui\function\logic\player\tick.mcfunction:060c3d6d323daf3f99efffc503d89db457efe6f7
 data\ui\function\logic\player\teleport.mcfunction:cd43edba3c6dce9a0882ae0c204194ae85906522
-data\ui\function\logic\player\zzz\0.mcfunction:080f125d4209def213a20b97b0de9dc7f27b8fc6
+data\ui\function\logic\player\zzz\0.mcfunction:d002d906c4739f565dee46ee5a37b33bdb090090
 data\ui\function\logic\player\ability_open.mcfunction:d9c4f06d516f06d2ad69c76866dd0d0c8344e9fa
-data\ui\function\logic\player\zzz\1.mcfunction:bcb3e0675514e625184131d4338c352577efb32b
+data\ui\function\logic\player\zzz\1.mcfunction:3c652b7ab63e6b045797c5e1952c55d523795a28
 data\ui\function\logic\player\cassette_open.mcfunction:82dab6cbe922a5d5f70997682ac01c148791a86b
 data\ui\function\logic\player\check_swap.mcfunction:865e69b20d5f76852a05250fcc9c6191eb1b7852
 data\ui\function\logic\player\return.mcfunction:b814a56357b97930de58f7896a2972cefa1975f4
@@ -211,7 +211,7 @@ data\ui\function\ability\selection\choice\interaction.mcfunction:9c1bcab288b11bf
 data\ui\function\ability\selection\choice\flip.mcfunction:29925becbc5bb6c0cdce8f801ca16a444e7db22e
 data\ui\function\ability\selection\choice\same.mcfunction:d51842f4123ce5fc514ee1813b50f066c715eecd
 data\ui\function\ability\selection\choice\moveset\mask.mcfunction:ec8c3c9903ec6c852263950168e1225af006c05c
-data\ui\function\ability\selection\choice\moveset\open.mcfunction:b4b90effe65cb811b5990e6f666693fbc7e2d6a6
+data\ui\function\ability\selection\choice\moveset\open.mcfunction:6e53ae234124755d63b33583a9b03e3968dab81c
 data\ui\function\ability\selection\choice\moveset\zzz\1.mcfunction:99c4a63a8b43a453e2483f1f1775388ea8db57ed
 data\ui\function\ability\selection\choice\moveset\zzz\0.mcfunction:0f5e6d9fe9bd708a1d2ac186354afa950fca8a52
 data\ui\function\ability\selection\choice\moveset\zzz\3.mcfunction:85ccf18a0870cb15986621524ad416403c4e7df0
@@ -227,8 +227,8 @@ data\ui\function\ability\selection\choice\moveset\zzz\9.mcfunction:12bbba7be1b14
 data\ui\function\ability\selection\choice\moveset\click.mcfunction:05b7960005fe49bc48c0c86506018fe72b0a40a7
 data\ui\function\ability\selection\choice\moveset\flip.mcfunction:30f75e71ceb1f9a62da84c681ba284e46784719b
 data\ui\function\ability\selection\choice\moveset\same.mcfunction:bce812e3b6a8ad4b7c3e1e9e4cc0f6957953904a
-data\ui\function\ability\selection\choice\skin\mask.mcfunction:548a384217fde07bb52abac6a76bc7109c181f45
-data\ui\function\ability\selection\choice\skin\open.mcfunction:0a0ccafd6ad165376b958f6567870e348c869379
+data\ui\function\ability\selection\choice\skin\mask.mcfunction:9c7fbde70500176f43245e79fdd017b814133e6e
+data\ui\function\ability\selection\choice\skin\open.mcfunction:ad1dc67c32d041cfe875a4057397c7f0fa387744
 data\ui\function\ability\selection\choice\skin\zzz\0.mcfunction:858cca5948bf0c16608d030afd9d9811c8dd21c2
 data\ui\function\ability\selection\choice\skin\player.mcfunction:8037ab34a34fc697bd15d52d0b2b5fe276fb8c43
 data\ui\function\ability\selection\choice\skin\flip.mcfunction:d7cb07f0d8d11c6f5ea5702b3ab12e6c820973a3
