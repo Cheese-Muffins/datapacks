@@ -11,9 +11,10 @@ scoreboard objectives add uiCassette.CollectionOperation dummy
 scoreboard objectives add uiAbility.SelectionBroad dummy
 scoreboard objectives add uiAbility.SelectionChoice dummy
 scoreboard objectives add uiAbility.ChoicePage dummy
+scoreboard objectives add uiAbility.Choice dummy
 scoreboard objectives add uiPurchase.ItemCount dummy
 scoreboard objectives add uiPurchase.ProductID dummy
-scoreboard objectives add uiPurchase.SkinRarity dummy
+scoreboard objectives add uiAbility.Skin dummy
 scoreboard objectives add uiPurchase.Confirm dummy
 scoreboard objectives add uiAbility.SecretInteraction dummy
 scoreboard objectives add uiAbility.Moveset dummy

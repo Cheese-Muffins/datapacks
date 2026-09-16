@@ -12,3 +12,6 @@ data remove storage minecraft:ui generate.purchase.remove_tag
 $data modify storage minecraft:ui generate.purchase.remove_tag set from storage minecraft:ability index.$(ability_id).product.skin4.equipped_tag
 function ui:purchase/equip/remove/zzz/17 with storage minecraft:ui generate.purchase
 data remove storage minecraft:ui generate.purchase.remove_tag
+$data modify storage minecraft:ui generate.purchase.remove_tag set from storage minecraft:ability index.$(ability_id).product.skin5.equipped_tag
+function ui:purchase/equip/remove/zzz/18 with storage minecraft:ui generate.purchase
+data remove storage minecraft:ui generate.purchase.remove_tag

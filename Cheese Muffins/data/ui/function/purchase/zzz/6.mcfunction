@@ -1,7 +1,6 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1.type
-data merge storage minecraft:ui {generate:{purchase:{request_tag:[]}}}
-$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1.tag run function ui:purchase/zzz/7 with storage minecraft:ui generate.purchase
-$data modify storage minecraft:ui generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1.count
-function ui:purchase/zzz/9 with storage minecraft:ui generate.purchase
+$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items run function ui:purchase/zzz/7 with storage minecraft:ui generate.purchase
+$advancement grant @s only server:ability/$(path)
+$tag @s add $(ownership_tag)
+scoreboard players reset @s uiPurchase.Confirm

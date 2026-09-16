@@ -1,9 +1,6 @@
 # Generated with MC-Build
 
-$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1 run function ui:purchase/zzz/6 with storage minecraft:ui generate.purchase
-$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request2 run function ui:purchase/zzz/10 with storage minecraft:ui generate.purchase
-$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3 run function ui:purchase/zzz/14 with storage minecraft:ui generate.purchase
-$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request4 run function ui:purchase/zzz/18 with storage minecraft:ui generate.purchase
-$advancement grant @s only server:ability/$(path)
-$tag @s add $(ownership_tag)
 scoreboard players reset @s uiPurchase.Confirm
+scoreboard players add @s uiPurchase.Confirm 1
+execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
+execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase

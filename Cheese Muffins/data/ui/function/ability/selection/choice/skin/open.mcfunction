@@ -1,6 +1,5 @@
 # Generated with MC-Build
 
-gui highlight {}
 gui priority {10b}
 gui highlight {4b,5b,6b}
 execute at @s as @p run function ui:ability/selection/choice/skin/player

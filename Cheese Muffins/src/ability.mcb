@@ -449,96 +449,6 @@ dir generate {
         $execute if score .DifficultyRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐⭐⭐",difficulty_rating_2:"",difficulty_rating_color:"yellow"}}}
     }
 
-    function selection_lore {
-        # function ability:generate/selection_lore {ability_id:1}
-        data remove storage minecraft:ui generate.selection.lore
-        data modify storage minecraft:ui generate.selection.lore set value []
-
-        $data merge storage minecraft:ui {generate:{selection:{ability_id:$(ability_id)}}}
-        $data modify storage minecraft:ui generate.selection.subtext set from storage minecraft:ability index.$(ability_id).product.ability.subtext
-        $data modify storage minecraft:ui generate.selection.ownership_tag set from storage minecraft:ability index.$(ability_id).product.ability.ownership_tag
-        $data modify storage minecraft:ui generate.selection.equipped_tag set from storage minecraft:ability index.$(ability_id).product.ability.equipped_tag
-
-        block { with storage minecraft:ui generate.selection
-            $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"$(subtext)","italic":false,"color":"gray"}]
-
-            data modify storage minecraft:ui generate.selection.lore append value ""
-
-            data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ability Ratings","italic":false,"color":"gold"}]
-            $block { with storage minecraft:ability index.$(ability_id)
-                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"O","italic":false,"color":"#e6ecb6"},{"text":"b","italic":false,"color":"#e4eab2"},{"text":"t","italic":false,"color":"#e2e8ae"},{"text":"a","italic":false,"color":"#e0e6ab"},{"text":"i","italic":false,"color":"#dee4a7"},{"text":"n","italic":false,"color":"#dbe3a3"},{"text":"m","italic":false,"color":"#d9e19f"},{"text":"e","italic":false,"color":"#d7df9c"},{"text":"n","italic":false,"color":"#d5dd98"},{"text":"t","italic":false,"color":"#d3db94"},{"text":"\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(obtainment_rating_1)","italic":false,"color":"$(obtainment_rating_color)"},{"text":"$(obtainment_rating_2)","italic":false,"color":"gray"}]
-                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"V","italic":false,"color":"#a280ff"},{"text":"e","italic":false,"color":"#9f7cfd"},{"text":"r","italic":false,"color":"#9b79fa"},{"text":"s","italic":false,"color":"#9875f8"},{"text":"a","italic":false,"color":"#9471f5"},{"text":"t","italic":false,"color":"#916ef3"},{"text":"i","italic":false,"color":"#8e6af0"},{"text":"l","italic":false,"color":"#8a66ee"},{"text":"i","italic":false,"color":"#8762eb"},{"text":"t","italic":false,"color":"#835fe9"},{"text":"y","italic":false,"color":"#805be6"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(versatility_rating_1)","italic":false,"color":"$(versatility_rating_color)"},{"text":"$(versatility_rating_2)","italic":false,"color":"gray"}]
-                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"D","italic":false,"color":"#ff5542"},{"text":"i","italic":false,"color":"#fb513e"},{"text":"f","italic":false,"color":"#f74d3a"},{"text":"f","italic":false,"color":"#f24a37"},{"text":"i","italic":false,"color":"#ee4633"},{"text":"c","italic":false,"color":"#ea422f"},{"text":"u","italic":false,"color":"#e63e2b"},{"text":"l","italic":false,"color":"#e13b28"},{"text":"t","italic":false,"color":"#dd3724"},{"text":"y","italic":false,"color":"#d93320"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(difficulty_rating_1)","italic":false,"color":"$(difficulty_rating_color)"},{"text":"$(difficulty_rating_2)","italic":false,"color":"gray"}]
-            }
-            data modify storage minecraft:ui generate.selection.lore append value ""
-        }
-
-        data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
-
-        data merge storage minecraft:ui {generate:{selection:{ownership_text:"No",ownership_color:"EC3232"}}}
-        data merge storage minecraft:ui {generate:{selection:{equip_text:"No",equip_color:"EC3232"}}}
-        block { with storage minecraft:ui generate.selection
-            $execute if entity @s[tag=$(ownership_tag)] run data merge storage minecraft:ui {generate:{selection:{ownership_text:"Yes",ownership_color:"3cdd31"}}}
-            $execute if entity @s[tag=$(equipped_tag)] run data merge storage minecraft:ui {generate:{selection:{equip_text:"Yes",equip_color:"3cdd31"}}}
-            block { with storage minecraft:ui generate.selection
-                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"$(ownership_text)","italic":false,"color":"#$(ownership_color)"}]
-                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_text)","italic":false,"color":"#$(equip_color)"}]
-            }
-        }
-
-        $data modify storage minecraft:ui $(target) set from storage minecraft:ui generate.selection.lore
-
-
-
-        block {
-            # $data remove storage minecraft:ability index.$(ability_id).selection_lore
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore set value []
-
-            # # line 1
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"$(subtext) ","italic":false,"color":"gray"}]
-
-            # # line 2
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ""
-
-            # # line 3
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ability Ratings","italic":false,"color":"gold"}]
-
-            # # line 4 (obtaiment rating)
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"O","italic":false,"color":"#e6ecb6"},{"text":"b","italic":false,"color":"#e4eab2"},{"text":"t","italic":false,"color":"#e2e8ae"},{"text":"a","italic":false,"color":"#e0e6ab"},{"text":"i","italic":false,"color":"#dee4a7"},{"text":"n","italic":false,"color":"#dbe3a3"},{"text":"m","italic":false,"color":"#d9e19f"},{"text":"e","italic":false,"color":"#d7df9c"},{"text":"n","italic":false,"color":"#d5dd98"},{"text":"t","italic":false,"color":"#d3db94"},{"text":"\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(obtainment_rating_1)","italic":false,"color":"$(obtainment_rating_color)"},{"text":"$(obtainment_rating_2)","italic":false,"color":"gray"}]
-
-            # # line 5 (versatility rating)
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"V","italic":false,"color":"#a280ff"},{"text":"e","italic":false,"color":"#9f7cfd"},{"text":"r","italic":false,"color":"#9b79fa"},{"text":"s","italic":false,"color":"#9875f8"},{"text":"a","italic":false,"color":"#9471f5"},{"text":"t","italic":false,"color":"#916ef3"},{"text":"i","italic":false,"color":"#8e6af0"},{"text":"l","italic":false,"color":"#8a66ee"},{"text":"i","italic":false,"color":"#8762eb"},{"text":"t","italic":false,"color":"#835fe9"},{"text":"y","italic":false,"color":"#805be6"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(versatility_rating_1)","italic":false,"color":"$(versatility_rating_color)"},{"text":"$(versatility_rating_2)","italic":false,"color":"gray"}]
-
-            # # line 6 (difficulty rating)
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"D","italic":false,"color":"#ff5542"},{"text":"i","italic":false,"color":"#fb513e"},{"text":"f","italic":false,"color":"#f74d3a"},{"text":"f","italic":false,"color":"#f24a37"},{"text":"i","italic":false,"color":"#ee4633"},{"text":"c","italic":false,"color":"#ea422f"},{"text":"u","italic":false,"color":"#e63e2b"},{"text":"l","italic":false,"color":"#e13b28"},{"text":"t","italic":false,"color":"#dd3724"},{"text":"y","italic":false,"color":"#d93320"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(difficulty_rating_1)","italic":false,"color":"$(difficulty_rating_color)"},{"text":"$(difficulty_rating_2)","italic":false,"color":"gray"}]
-
-            # # line 7
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ""
-
-            # # line 8
-            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
-
-            # # line 9 (ownership)
-            # $execute if entity @s[tag=ability$(real_path).Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
-            # $execute unless entity @s[tag=ability$(real_path).Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
-
-            # # line 10 (equipped?)
-            # $execute if entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
-            # $execute unless entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
-
-            # # line 11/12 (skins & secret interactions)
-            # $execute store result storage minecraft:ability index.$(ability_id).unlocked_skins int 1 run scoreboard players get @s ability$(real_path).UnlockedSkins
-            # $execute store result storage minecraft:ability index.$(ability_id).discovered_interactions int 1 run scoreboard players get @s ability$(real_path).DiscoveredInteractions
-            # $block { with storage minecraft:ability index.$(ability_id)
-            #     $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(unlocked_skins)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skins)","italic":false,"color":"green"}]
-            #     $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(discovered_interactions)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(secret_interactions)","italic":false,"color":"green"}]
-
-            #     $data remove storage minecraft:ability index.$(ability_id).unlocked_skins
-            #     $data remove storage minecraft:ability index.$(ability_id).discovered_interactions
-            # }
-        }
-    }
-
     function index {
         # 1 - Billy (Demetrius Demarcus Bartholomew James the III)
         data merge storage minecraft:ability {index:{1:{\
@@ -549,9 +459,52 @@ dir generate {
             obtainment_rating_raw:5,\
             versatility_rating_raw:4,\
             difficulty_rating_raw:1,\
-            secret_interactions:1,\
-            skins:2,\
             passive:[["",{"text":"Maul","italic":false,"color":"#e2a3ff"},{"text":" activates after dealing damage ","italic":false,"color":"gray"},{"text":"5 times,","italic":false,"color":"#8adcff"}],["",{"text":"dealing a ","italic":false,"color":"gray"},{"text":"secondary tick","italic":false,"color":"#ffb875"},{"text":" of ","italic":false,"color":"gray"},{"text":"6 damage","italic":false,"color":"red"}],"",["",{"text":"Homeland","italic":false,"color":"#e2a3ff"},{"text":" activates when standing in ","italic":false,"color":"gray"},{"text":"biomes","italic":false,"color":"#9e7aff"}],["",{"text":"with a ","italic":false,"color":"gray"},{"text":"c","italic":false,"color":"#61e7ff"},{"text":"o","italic":false,"color":"#66e8ff"},{"text":"l","italic":false,"color":"#6ae8ff"},{"text":"d","italic":false,"color":"#6fe9ff"},{"text":"e","italic":false,"color":"#74eaff"},{"text":"r","italic":false,"color":"#79ebff"},{"text":" ","italic":false,"color":"#7debff"},{"text":"c","italic":false,"color":"#82ecff"},{"text":"l","italic":false,"color":"#87edff"},{"text":"i","italic":false,"color":"#8bedff"},{"text":"m","italic":false,"color":"#90eeff"},{"text":"a","italic":false,"color":"#95efff"},{"text":"t","italic":false,"color":"#9af0ff"},{"text":"e","italic":false,"color":"#9ef0ff"},{"text":",","italic":false,"color":"#a3f1ff"},{"text":" amplifying ","italic":false,"color":"gray"},{"text":"Billy","italic":false,"color":"#66ffed"},{"text":" in","italic":false,"color":"gray"}],[{"text":"beneficial ways","italic":false,"color":"gray"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Ability Damage: ","italic":false,"color":"gray"},{"text":"1.25x","italic":false,"color":"#20c200"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Cooldowns: ","italic":false,"color":"gray"},{"text":"0.8","italic":false,"color":"#20c200"},{"text":"x","italic":false,"color":"#20c200"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Maul Activation: ","italic":false,"color":"gray"},{"text":"-1","italic":false,"color":"#20c200"}]],\
+            moveset:{\
+                slot1:{\
+                    move1:{\
+                        name:[{"text":"Time","italic":false,"color":"#7081ff"},{"text":"skip","italic":false,"color":"#4dc3ff"}],\
+                        description:[[{"text":"Blink","italic":false,"color":"#bc57ff"},{"text":" forwards ","italic":false,"color":"gray"},{"text":"11m","italic":false,"color":"#ffbe4d"},{"text":" in the direction you're","italic":false,"color":"gray"}],[{"text":"facing. This move can be ","italic":false,"color":"gray"},{"text":"activated whilst","italic":false,"color":"#9ef9ff"}],[{"text":"using other moves.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timeskip",\
+                        cooldown:9,\
+                        cancelable:false\
+                    },\
+                    move2:{\
+                        name:[{"text":"T","italic":false,"color":"#9d00e6"},{"text":"h","italic":false,"color":"#a30ce9"},{"text":"e","italic":false,"color":"#a918ec"},{"text":" ","italic":false,"color":"#af24ef"},{"text":"W","italic":false,"color":"#b531f3"},{"text":"o","italic":false,"color":"#bb3df6"},{"text":"r","italic":false,"color":"#c149f9"},{"text":"l","italic":false,"color":"#c755fc"},{"text":"d","italic":false,"color":"#cd61ff"}],\
+                        description:[[{"text":"Following a ","italic":false,"color":"gray"},{"text":"brief windup,","italic":false,"color":"#ff5252"},{"text":" unleash your ","italic":false,"color":"gray"},{"text":"true","italic":false,"color":"#ff94ed"}],[{"text":"power","italic":false,"color":"#ff94ed"},{"text":" completely ","italic":false,"color":"gray"},{"text":"halting time","italic":false,"color":"#61d0ff"},{"text":" for the","italic":false,"color":"gray"}],[{"text":"surrounding ","italic":false,"color":"gray"},{"text":"40m.","italic":false,"color":"#ffbe4d"}],[{"text":" o Duration: ","italic":false,"color":"gray"},{"text":"9s","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timestop",\
+                        cooldown:50,\
+                        cancelable:true\
+                    }\
+                },\
+                slot2:{\
+                    move1:{\
+                        name:[{"text":"K","italic":false,"color":"#c70000"},{"text":"n","italic":false,"color":"#cd0707"},{"text":"i","italic":false,"color":"#d20d0d"},{"text":"f","italic":false,"color":"#d81414"},{"text":"e","italic":false,"color":"#dd1a1a"},{"text":" ","italic":false,"color":"#e32121"},{"text":"T","italic":false,"color":"#e92828"},{"text":"h","italic":false,"color":"#ee2e2e"},{"text":"r","italic":false,"color":"#f43535"},{"text":"o","italic":false,"color":"#f93b3b"},{"text":"w","italic":false,"color":"#ff4242"}],\
+                        description:[[{"text":"Toss ","italic":false,"color":"gray"},{"text":"3 knives","italic":false,"color":"#ffbe4d"},{"text":" ahead of where you're looking","italic":false,"color":"gray"}],[{"text":"striking","italic":false,"color":"#ff2929"},{"text":" anyone in their path. Collision with","italic":false,"color":"gray"}],[{"text":"terrain will stop movement. ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"#e2a3ff"}],[{"text":"increases the ","italic":false,"color":"gray"},{"text":"total","italic":false,"color":"#a7ff8f"},{"text":" number of ","italic":false,"color":"gray"},{"text":"tossed ","italic":false,"color":"gray"},{"text":"knives","italic":false,"color":"#ffbe4d"}],[{"text":"to 5.","italic":false,"color":"#ffbe4d"}],[{"text":"o Projectile Speed: ","italic":false,"color":"gray"},{"text":"10m/s","italic":false,"color":"#20c200"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/knife_throw",\
+                        cooldown:17,\
+                        cancelable:true\
+                    }\
+                },\
+                slot3:{\
+                    move1:{\
+                        name:[{"text":"Barrage","italic":false,"color":"#d699ff"}],\
+                        description:[[{"text":"Send out a ","italic":false,"color":"gray"},{"text":"flurry","italic":false,"color":"#f4a3ff"},{"text":" of punches completely","italic":false,"color":"gray"}],[{"text":"immobilizing","italic":false,"color":"white"},{"text":" and ","italic":false,"color":"gray"},{"text":"damaging ","italic":false,"color":"#ff2929"},{"text":"anything in their","italic":false,"color":"gray"}],[{"text":"path. The ","italic":false,"color":"gray"},{"text":"finishing punch","italic":false,"color":"#fff957"},{"text":" in the chain will","italic":false,"color":"gray"}],[{"text":"launch","italic":false,"color":"#00b4cc"},{"text":" victims backwards dealing","italic":false,"color":"gray"}],[{"text":"additional damage.","italic":false,"color":"#ff2929"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"4s","italic":false,"color":"#20c200"}],[{"text":"o Regular Damage: ","italic":false,"color":"gray"},{"text":"2hp/0.5s","italic":false,"color":"#20c200"}],[{"text":"o Final Punch Damage: ","italic":false,"color":"gray"},{"text":"5","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/barrage",\
+                        cooldown:23,\
+                        cancelable:false\
+                    }\
+                },\
+                slot4:{\
+                    move1:{\
+                        name:[{"text":"F","italic":false,"color":"#a3d0ff"},{"text":"l","italic":false,"color":"#a3d9fd"},{"text":"u","italic":false,"color":"#a3e3fb"},{"text":"r","italic":false,"color":"#a3ecf8"},{"text":"r","italic":false,"color":"#a3f6f6"},{"text":"y","italic":false,"color":"#a3fff4"}],\
+                        description:[["",{"text":"Strike a pose for a ","italic":false,"color":"gray"},{"text":"short duration,","italic":false,"color":"#ff7e75"},{"text":" waiting","italic":false,"color":"gray"}],["",{"text":"for an entity to ","italic":false,"color":"gray"},{"text":"strike.","italic":false,"color":"#ff2929"}],["",{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1.5s","italic":false,"color":"#c20000"}],"",[{"text":"Damaged by an Entity","italic":false,"color":"light_purple"}],[{"text":"Spawn a dome of knives on the attacking","italic":false,"color":"gray"}],["",{"text":"entity, ","italic":false,"color":"gray"},{"text":"dealing damage","italic":false,"color":"#ff2929"},{"text":" and inflicting","italic":false,"color":"gray"}],["",{"text":"deadly bleeding","italic":false,"color":"#ff2929"},{"text":" for ","italic":false,"color":"gray"},{"text":"5s.","italic":false,"color":"#ffbe4d"}],["",{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"6","italic":false,"color":"#20c200"}],["",{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.5x","italic":false,"color":"#c20000"}],["",{"text":"o ","italic":false,"color":"gray"},{"text":"Bleed III","italic":false,"color":"#c20000"}],"",[{"text":"Duration Expired","italic":false,"color":"light_purple"}],["",{"text":"Become ","italic":false,"color":"gray"},{"text":"immobilized","italic":false,"color":"white"},{"text":" for ","italic":false,"color":"gray"},{"text":"1s","italic":false,"color":"#ffbe4d"},{"text":" following the","italic":false,"color":"gray"}],["",{"text":"expiration","italic":false,"color":"#d17aff"},{"text":" of this cast.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/flurry",\
+                        cooldown:32,\
+                        cancelable:true\
+                    }\
+                }\
+            },\
             product:{\
                 ability:{\
                     product_id:1,\
@@ -561,16 +514,6 @@ dir generate {
                     model:"minecraft:interactables/ability/billy/default_skin",\
                     ownership_tag:"abilityBilly.Ownership",\
                     equipped_tag:"abilityBilly.User",\
-                    items:{\
-                        request1:{type:"minecraft:dirt",tag:"gem_cluster:1b",count:4,name:"Gem Cluster",description:[[{"text":"Rarely dropped from","italic":false,"color":"gray"}],[{"text":"breaking ","italic":false,"color":"gray"},{"text":"Stone","italic":false,"color":"#ffbdf7"},{"text":" or ","italic":false,"color":"gray"},{"text":"Deepslate","italic":false,"color":"#ffbdf7"}]]},\
-                        request2:{type:"minecraft:dirt",tag:"phantom_feather:1b",count:4,name:"Phantom Feather",description:[[{"text":"Uncommonly","italic":false,"color":"gray"}],[{"text":"dropped from slaying ","italic":false,"color":"gray"},{"text":"Phantoms","italic":false,"color":"#577bff"}]]},\
-                        request3:{type:"minecraft:dirt",tag:"blaze_core:1b",count:2,name:"Blaze Core",description:[[{"text":"Rarely dropped from","italic":false,"color":"gray"}],[{"text":"slaying ","italic":false,"color":"gray"},{"text":"Blazes","italic":false,"color":"#db9600"}]]},\
-                        request4:{type:"minecraft:dirt",tag:"drowned_heart:1b",count:1,name:"Drowned Heart",description:[[{"text":"Rarely dropped","italic":false,"color":"gray"}],[{"text":"from slaying ","italic":false,"color":"gray"},{"text":"Drowned","italic":false,"color":"#47c8ff"}]]}\
-                    },\
-                    advancements:{\
-                        request1:{path:"minecraft:adventure/hero_of_the_village",name:"Hero of the Village",line:"[-1]"},\
-                        request2:{path:"minecraft:adventure/heart_transplanter",name:"Heart Transplanter",line:""}\
-                    },\
                     bypass:"BaconEater"\
                 }\
             }\
@@ -597,8 +540,6 @@ dir generate {
             obtainment_rating_raw:4,\
             versatility_rating_raw:2,\
             difficulty_rating_raw:4,\
-            secret_interactions:1,\
-            skins:4,\
             passive:[["",{"text":"Rage","italic":false,"color":"#e2a3ff"},{"text":" gains a stack anytime ","italic":false,"color":"gray"},{"text":"damage","italic":false,"color":"red"},{"text":" is dealt to an","italic":false,"color":"gray"}],["",{"text":"entity using one of ","italic":false,"color":"gray"},{"text":"The World's","italic":false,"color":"#fffb85"},{"text":" moves. Failing to","italic":false,"color":"gray"}],["",{"text":"deal ","italic":false,"color":"red"},{"text":"damage","italic":false,"color":"red"},{"text":" to anything after ","italic":false,"color":"gray"},{"text":"60s ","italic":false,"color":"#40f799"},{"text":"will start to","italic":false,"color":"gray"}],["",{"text":"drain","italic":false,"color":"red"},{"text":" your stacks. Reaching a total of ","italic":false,"color":"gray"},{"text":"10 stacks","italic":false,"color":"#8adcff"}],["",{"text":"will activate ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"#e2a3ff"}],"",[{"text":"Awakening: Rage Mode","italic":false,"color":"#99e0ff"}],["",{"text":"The World","italic":false,"color":"#fffb85"},{"text":" replaces ","italic":false,"color":"gray"},{"text":"Time Skip","italic":false,"color":"#83cb48"},{"text":" with the ability to","italic":false,"color":"gray"}],["",{"text":"completely ","italic":false,"color":"gray"},{"text":"freeze time","italic":false,"color":"#d4aaaa"},{"text":" around the player for ","italic":false,"color":"gray"},{"text":"9s","italic":false,"color":"#40f799"}],["",{"text":">","italic":false,"color":"#5c5c5c"},{"text":" Duration: ","italic":false,"color":"gray"},{"text":"2m 25s","italic":false,"color":"#40f799"}],["",{"text":">","italic":false,"color":"#5c5c5c"},{"text":" Move #1: ","italic":false,"color":"gray"},{"text":"Timeskip","italic":false,"color":"#83cb48"},{"text":" -> ","italic":false,"color":"gray"},{"text":"T","italic":false,"color":"red"},{"text":"he","italic":false,"color":"gold"},{"text":" W","italic":false,"color":"yellow"},{"text":"or","italic":false,"color":"green"},{"text":"l","italic":false,"color":"blue"},{"text":"d","italic":false,"color":"light_purple"}],["",{"text":">","italic":false,"color":"#5c5c5c"},{"text":" Buffs: ","italic":false,"color":"gray"},{"text":"Regeneration I ","italic":false,"color":"#ff8080"},{"text":"&","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"Health Boost I","italic":false,"color":"#ff2929"}]],\
             moveset:{\
                 slot1:{\
@@ -665,7 +606,7 @@ dir generate {
                     type:"ability",\
                     name:[{"text":"The World","italic":false,"color":"#f5ff70"}],\
                     subtext:"I Reject My Humanity, JoJo!",\
-                    model:"minecraft:interactables/ability/the_world/default_skin",\
+                    model:"minecraft:interactables/ability/the_world/skin_default",\
                     ownership_tag:"abilityTheWorld.Ownership",\
                     equipped_tag:"abilityTheWorld.User",\
                     items:{\
@@ -684,7 +625,7 @@ dir generate {
                     name:[{"text":"I","italic":false,"color":"#1fb4ff"},{"text":"n","italic":false,"color":"#2cb8ff"},{"text":"v","italic":false,"color":"#39bdff"},{"text":"e","italic":false,"color":"#46c1ff"},{"text":"r","italic":false,"color":"#53c6ff"},{"text":"t","italic":false,"color":"#60caff"},{"text":"e","italic":false,"color":"#6dcfff"},{"text":"d","italic":false,"color":"#7ad3ff"}],\
                     subtext:"You're next, Jotaro!",\
                     model:"minecraft:interactables/ability/the_world/skin_inverted",\
-                    rarity:0,\
+                    rarity:1,\
                     ownership_tag:"skinTheWorldInverted.Ownership",\
                     equipped_tag:"skinTheWorldInverted.User",\
                     advancements:{\
@@ -697,7 +638,7 @@ dir generate {
                     name:[{"text":"V","italic":false,"color":"#bd0000"},{"text":"a","italic":false,"color":"#c80f0f"},{"text":"m","italic":false,"color":"#d31d1d"},{"text":"p","italic":false,"color":"#de2c2c"},{"text":"i","italic":false,"color":"#e93a3a"},{"text":"r","italic":false,"color":"#f44949"},{"text":"e","italic":false,"color":"#ff5757"}],\
                     subtext:"WRYYYYYYYY!!!",\
                     model:"minecraft:interactables/ability/the_world/skin_vampire",\
-                    rarity:1,\
+                    rarity:2,\
                     ownership_tag:"skinTheWorldVampire.Ownership",\
                     equipped_tag:"skinTheWorldVampire.User",\
                     items:{\
@@ -713,7 +654,7 @@ dir generate {
                     name:[{"text":"R","italic":false,"color":"#00e61b"},{"text":"e","italic":false,"color":"#18ec31"},{"text":"t","italic":false,"color":"#31f347"},{"text":"r","italic":false,"color":"#49f95d"},{"text":"o","italic":false,"color":"#61ff73"}],\
                     subtext:"In that case, Ascend.",\
                     model:"minecraft:interactables/ability/the_world/skin_retro",\
-                    rarity:2,\
+                    rarity:3,\
                     ownership_tag:"skinTheWorldRetro.Ownership",\
                     equipped_tag:"skinTheWorldRetro.User",\
                     items:{\
@@ -727,7 +668,7 @@ dir generate {
                     name:[{"text":"S","italic":false,"color":"#969696"},{"text":"h","italic":false,"color":"#a0a0a0"},{"text":"a","italic":false,"color":"gray"},{"text":"d","italic":false,"color":"#b3b3b3"},{"text":"o","italic":false,"color":"#bdbdbd"},{"text":"w","italic":false,"color":"#c7c7c7"}],\
                     subtext:"Omae no hoshī mono wa nanda?",\
                     model:"minecraft:interactables/ability/the_world/skin_shadow",\
-                    rarity:3,\
+                    rarity:4,\
                     ownership_tag:"skinTheWorldShadow.Ownership",\
                     equipped_tag:"skinTheWorldShadow.User",\
                     items:{\

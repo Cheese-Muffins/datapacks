@@ -1,6 +1,7 @@
 # Generated with MC-Build
 
 execute at @s as @p run function ui:ability/menu/player
+gui block {26b}
 function ui:ability/menu/mask with storage minecraft:ui ability.menu
 data modify storage ui current set from storage ui mask
 execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/menu/mask"

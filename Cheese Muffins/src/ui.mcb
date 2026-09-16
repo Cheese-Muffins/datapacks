@@ -12,9 +12,10 @@ function on_load minecraft:load{
     scoreboard objectives add uiAbility.SelectionBroad dummy
     scoreboard objectives add uiAbility.SelectionChoice dummy
     scoreboard objectives add uiAbility.ChoicePage dummy
+    scoreboard objectives add uiAbility.Choice dummy
     scoreboard objectives add uiPurchase.ItemCount dummy
     scoreboard objectives add uiPurchase.ProductID dummy
-    scoreboard objectives add uiPurchase.SkinRarity dummy
+    scoreboard objectives add uiAbility.Skin dummy
     scoreboard objectives add uiPurchase.Confirm dummy
     scoreboard objectives add uiAbility.SecretInteraction dummy
     scoreboard objectives add uiAbility.Moveset dummy
@@ -305,6 +306,8 @@ dir ability {
 
         function open {
             execute at @s as @p run function ui:ability/menu/player
+
+            gui block {26b}
             function ui:ability/menu/mask with storage minecraft:ui ability.menu
             data modify storage ui current set from storage ui mask
             execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/menu/mask"
@@ -366,6 +369,8 @@ dir ability {
 
         function open {
             execute at @s as @p run function ui:ability/selection/player
+
+            gui highlight {3b,4b,5b}
             function ui:ability/selection/mask with storage minecraft:ui ability.selection
             data modify storage ui current set from storage ui mask
             execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/selection/mask"
@@ -394,21 +399,16 @@ dir ability {
                     scoreboard players add .totalEntries uiAbility.SelectionBroad 1
                     scoreboard players add .incrementIndex uiAbility.SelectionBroad 1
 
-                    execute store result storage minecraft:ability fetch.lookup int 1 run scoreboard players get .incrementIndex uiAbility.SelectionBroad
+                    execute store result storage minecraft:ui ability.selection.lookup int 1 run scoreboard players get .incrementIndex uiAbility.SelectionBroad
                     execute unless score .indexOffset uiAbility.SelectionBroad matches 1.. run {
-                        execute unless score .abilitySlot uiAbility.SelectionBroad matches 7.. run block { with storage minecraft:ability fetch
+                        execute unless score .abilitySlot uiAbility.SelectionBroad matches 7.. run block { with storage minecraft:ui ability.selection
                             scoreboard players add .abilitySlot uiAbility.SelectionBroad 1
-
-                            execute store result storage minecraft:ability fetch.number int 1 run scoreboard players get .abilitySlot uiAbility.SelectionBroad
-
-                            $function ability:generate/selection_lore with storage minecraft:ability index.$(lookup)
-                            $data modify storage minecraft:ability fetch merge from storage minecraft:ability index.$(lookup)
+                            $function ui:generate/selection_lore {ability_id:$(lookup)}
                             block { with storage minecraft:ability fetch
-                                $data modify storage minecraft:ui ability.selection.slot$(number)_name set from storage minecraft:ability index.$(lookup).name
-                                $data modify storage minecraft:ui ability.selection.slot$(number)_lore set from storage minecraft:ability index.$(lookup).selection_lore
-                                $data modify storage minecraft:ui ability.selection.slot$(number)_model set from storage minecraft:ability index.$(lookup).model
-                                $data modify storage minecraft:ui ability.selection.slot$(number)_id set from storage minecraft:ability index.$(lookup).ability_id
-                                $data modify storage minecraft:ui ability.selection.slot$(number)_tooltip set from storage minecraft:ability index.$(lookup).path
+                                $data modify storage minecraft:ui ability.selection.slot$(slot)_name set from storage minecraft:ability index.$(lookup).name
+                                $data modify storage minecraft:ui ability.selection.slot$(slot)_model set from storage minecraft:ability index.$(lookup).model
+                                $data modify storage minecraft:ui ability.selection.slot$(slot)_id set from storage minecraft:ability index.$(lookup).ability_id
+                                $data modify storage minecraft:ui ability.selection.slot$(slot)_tooltip set from storage minecraft:ability index.$(lookup).path
                             }
                         } 
                     }
@@ -488,6 +488,7 @@ dir ability {
             function open {
                 execute at @s as @p run function ui:ability/selection/choice/player
 
+                gui highlight {3b,4b,5b}
                 function ui:ability/selection/choice/mask with storage minecraft:ui ability.choice
                 data modify storage ui current set from storage ui mask
                 execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/selection/choice/mask"
@@ -615,11 +616,10 @@ dir ability {
 
             dir skin {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:5b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin1_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin1_display)},"minecraft:item_name":$(skin1_name),"minecraft:lore":$(skin1_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin2_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin2_display)},"minecraft:item_name":$(skin2_name),"minecraft:lore":$(skin2_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin2"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin3_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin3_display)},"minecraft:item_name":$(skin3_name),"minecraft:lore":$(skin3_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin3"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin4_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin4_display)},"minecraft:item_name":$(skin4_name),"minecraft:lore":$(skin4_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin4"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/skin","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_model_data":{strings:["$(path)"]},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/same"}}}}]
+                    $data modify storage ui mask set value [{Slot:5b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(equipped_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(equipped_name),"minecraft:lore":$(equipped_lore),"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/same"}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin1_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin1_display)},"minecraft:item_name":$(skin1_name),"minecraft:lore":$(skin1_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin1"}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin2_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin2_display)},"minecraft:item_name":$(skin2_name),"minecraft:lore":$(skin2_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin2"}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin3_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin3_display)},"minecraft:item_name":$(skin3_name),"minecraft:lore":$(skin3_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin3"}}}},{Slot:15b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin4_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin4_display)},"minecraft:item_name":$(skin4_name),"minecraft:lore":$(skin4_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin4"}}}},{Slot:16b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(skin5_model)","minecraft:tooltip_style":"minecraft:$(path)","minecraft:tooltip_display":{hide_tooltip:$(skin5_display)},"minecraft:item_name":$(skin5_name),"minecraft:lore":$(skin5_price),"minecraft:custom_data":{ui_item:{enhanced_button:1b,purchase_choice:1b,product:"skin5"}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/skin","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_model_data":{strings:["$(path)"],floats:[$(skin_count)]},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/skin/same"}}}}]
                 }
 
                 function open {
-                    gui highlight {}
                     gui priority {10b}
                     gui highlight {4b,5b,6b}
                     execute at @s as @p run function ui:ability/selection/choice/skin/player
@@ -633,15 +633,23 @@ dir ability {
                     scoreboard players set @s uiAbility.ChoicePage 3
                     execute store result storage minecraft:ui ability.choice.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
                     block { with storage minecraft:ui ability.choice
-                        REPEAT (1,4) as i {
+                        function ui:generate/equipped_skin
+                        REPEAT (1,5) as i {
                             $function ui:purchase/generate/product {ability_id:$(ability_id),product_name:"skin<%i%>"}
                         }
                         $data modify storage minecraft:ui ability.choice merge from storage minecraft:ability index.$(ability_id)
+                        execute store result storage minecraft:ui ability.choice.skin_count int 1 run scoreboard players get .skinCount uiAbility.Skin
+                        scoreboard players reset .skinCount uiAbility.Skin
                     }
                 }
 
                 function flip {
                     execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                    function ui:ability/selection/choice/skin/open
+                }
+
+                function same {
+                    execute at @s as @p run playsound minecraft:block.glass.break player @s ~ ~ ~ 0.5
                     function ui:ability/selection/choice/skin/open
                 }
             }
@@ -2198,22 +2206,28 @@ dir purchase {
         execute in minecraft:overworld run item replace block 0 -64 0 container.0 from entity @s player.cursor
         execute store result storage minecraft:ui generate.purchase.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
         execute in minecraft:overworld run data modify storage minecraft:ui generate.purchase.product_name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.product
+
         block { with storage minecraft:ui generate.purchase
-            $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
-            $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
-            block { with storage minecraft:ui generate.purchase
-                $execute if entity @s[tag=$(ownership_tag)] run function ui:purchase/equip/main with storage minecraft:ui generate.purchase
-                $execute unless entity @s[tag=$(ownership_tag)] run {
-                    function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
-                    function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name) run block { with storage minecraft:ui generate.purchase
+                $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+                $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
 
-                    execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run function ui:purchase/gathered with storage minecraft:ui generate.purchase
+                block { with storage minecraft:ui generate.purchase
+                    $execute if entity @s[tag=$(ownership_tag)] run function ui:purchase/equip/main with storage minecraft:ui generate.purchase
 
-                    tag @s remove uiPurchase.ItemCheck
-                    tag @s remove uiPurchase.AdvancementCheck
+                    $execute unless entity @s[tag=$(ownership_tag)] run {
+                        function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
+                        function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
+
+                        execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run function ui:purchase/gathered with storage minecraft:ui generate.purchase
+
+                        tag @s remove uiPurchase.ItemCheck
+                        tag @s remove uiPurchase.AdvancementCheck
+                    }
                 }
             }
         }
+
         execute if score @s uiAbility.ChoicePage matches 1 run function ui:ability/selection/choice/open
         execute if score @s uiAbility.ChoicePage matches 3 run function ui:ability/selection/choice/skin/open
     }
@@ -2253,7 +2267,7 @@ dir purchase {
             }
 
             function skin {
-                REPEAT (1,4) as i {
+                REPEAT (1,5) as i {
                     $data modify storage minecraft:ui generate.purchase.remove_tag set from storage minecraft:ability index.$(ability_id).product.skin<%i%>.equipped_tag
                     block { with storage minecraft:ui generate.purchase
                         $tag @s remove $(remove_tag)
@@ -2282,13 +2296,16 @@ dir purchase {
                 # 1 - the text beneath the title
                 $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"$(subtext)","italic":false,"color":"gray"}]
                 $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run block { with storage minecraft:ui generate.purchase
+                    scoreboard players add .skinCount uiAbility.Skin 1
                     $data modify storage minecraft:ui ability.choice.$(product_name)_model set from storage minecraft:ability index.$(ability_id).product.$(product_name).model
-                    $execute store result score .skinRating uiPurchase.SkinRarity run data get storage minecraft:ability index.$(ability_id).product.$(product_name).rarity
-                    execute if score .skinRating uiPurchase.SkinRarity matches 0 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Common",rarity_color:"d1d1d1"}}}
-                    execute if score .skinRating uiPurchase.SkinRarity matches 1 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Uncommon",rarity_color:"70ff94"}}}
-                    execute if score .skinRating uiPurchase.SkinRarity matches 2 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Epic",rarity_color:"c46bff"}}}
-                    execute if score .skinRating uiPurchase.SkinRarity matches 3 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Legendary",rarity_color:"fffa5c"}}}
-                    execute if score .skinRating uiPurchase.SkinRarity matches 4 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Mythical",rarity_color:"ff1f1f"}}}
+                    $execute store result score .skinRating uiAbility.Skin run data get storage minecraft:ability index.$(ability_id).product.$(product_name).rarity
+
+                    execute if score .skinRating uiAbility.Skin matches 0 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Default",rarity_color:"d1d1d1"}}}
+                    execute if score .skinRating uiAbility.Skin matches 1 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Common",rarity_color:"ffffff"}}}
+                    execute if score .skinRating uiAbility.Skin matches 2 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Uncommon",rarity_color:"70ff94"}}}
+                    execute if score .skinRating uiAbility.Skin matches 3 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Epic",rarity_color:"c46bff"}}}
+                    execute if score .skinRating uiAbility.Skin matches 4 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Legendary",rarity_color:"fffa5c"}}}
+                    execute if score .skinRating uiAbility.Skin matches 5 run data merge storage minecraft:ui {generate:{purchase:{rarity_name:"Mythical",rarity_color:"ff1f1f"}}}
 
                     block { with storage minecraft:ui generate.purchase
                         $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"$(rarity_name)","italic":false,"color":"#$(rarity_color)"}]
@@ -2321,7 +2338,7 @@ dir purchase {
                         $scoreboard players set .generatedProduct uiPurchase.ProductID $(product_id)
                         data merge storage minecraft:ui {generate:{purchase:{status_text:"Insufficent Resources",status_color:"EC3232"}}}
                         execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run {
-                            data merge storage minecraft:ui {generate:{purchase:{status_text:"Awaiting Input...",status_color:"fcff3d"}}}
+                            data merge storage minecraft:ui {generate:{purchase:{status_text:"Click to Purchase...",status_color:"fcff3d"}}}
                             execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
                         }
 
@@ -2399,22 +2416,24 @@ dir purchase {
     function confirm {
         # this will trigger advancements on skin purchases, fix later
         $data modify storage minecraft:ui generate.purchase.path set from storage minecraft:ability index.$(ability_id).path
-        $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items run block { with storage minecraft:ui generate.purchase
-            REPEAT (1,4) as i {
-                $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%> run block { with storage minecraft:ui generate.purchase
-                    $data modify storage minecraft:ui generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.type
-                
-                    data merge storage minecraft:ui {generate:{purchase:{request_tag:[]}}}
-                    $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.tag run block { with storage minecraft:ui generate.purchase
-                        $data modify storage minecraft:ui generate.purchase.request_tag_insert set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.tag
-                        block { with storage minecraft:ui generate.purchase
-                            $data merge storage minecraft:ui {generate:{purchase:{request_tag:"[minecraft:custom_data={$(request_tag_insert)}]"}}}
+        block { with storage minecraft:ui generate.purchase
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items run block { with storage minecraft:ui generate.purchase
+                REPEAT (1,4) as i {
+                    $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%> run block { with storage minecraft:ui generate.purchase
+                        $data modify storage minecraft:ui generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.type
+                    
+                        data merge storage minecraft:ui {generate:{purchase:{request_tag:[]}}}
+                        $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.tag run block { with storage minecraft:ui generate.purchase
+                            $data modify storage minecraft:ui generate.purchase.request_tag_insert set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.tag
+                            block { with storage minecraft:ui generate.purchase
+                                $data merge storage minecraft:ui {generate:{purchase:{request_tag:"[minecraft:custom_data={$(request_tag_insert)}]"}}}
+                            }
                         }
-                    }
 
-                    $data modify storage minecraft:ui generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.count
-                    block { with storage minecraft:ui generate.purchase
-                        $clear @s $(request_type)$(request_tag) $(request_count)
+                        $data modify storage minecraft:ui generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request<%i%>.count
+                        block { with storage minecraft:ui generate.purchase
+                            $clear @s $(request_type)$(request_tag) $(request_count)
+                        }
                     }
                 }
             }
@@ -2477,8 +2496,8 @@ dir purchase {
         }
 
         function advancements {
+            tag @s add uiPurchase.AdvancementCheck
             $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements run block { with storage minecraft:ui generate.purchase
-                tag @s add uiPurchase.AdvancementCheck
                 REPEAT (1,4) as i {
                     $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request<%i%> run block { with storage minecraft:ui generate.purchase
                         $data modify storage minecraft:ui generate.purchase.advancement_path set from storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request<%i%>.path
@@ -2681,5 +2700,216 @@ dir generate {
         }
 
         # execute store result storage minecraft:ui generate.interaction.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
+    }
+
+    function equipped_skin {
+        data remove storage minecraft:ui generate.equipped_skin
+
+        execute store result storage minecraft:ui generate.equipped_skin.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
+
+        block { with storage minecraft:ui generate.equipped_skin
+            REPEAT (1,5) as i {
+                $execute if data storage minecraft:ability index.$(ability_id).product.skin<%i%> run block { with storage minecraft:ui generate.equipped_skin
+                    $data modify storage minecraft:ui generate.equipped_skin.equipped_tag set from storage minecraft:ability index.$(ability_id).product.skin<%i%>.equipped_tag
+
+                    block { with storage minecraft:ui generate.equipped_skin
+                        $execute if entity @s[tag=$(equipped_tag)] run block { with storage minecraft:ui generate.equipped_skin
+                            $data modify storage minecraft:ui generate.equipped_skin merge from storage minecraft:ability index.$(ability_id).product.skin<%i%>
+                            tag @s add found
+                        }
+                    }
+                }
+            }
+
+            $execute unless entity @s[tag=found] run data modify storage minecraft:ui generate.equipped_skin merge from storage minecraft:ability index.$(ability_id).product.ability
+            tag @s remove found
+
+            block { with storage minecraft:ui generate.equipped_skin
+                data remove storage minecraft:ui generate.equipped_skin.lore
+                data modify storage minecraft:ui generate.equipped_skin.lore set value []
+
+                $data modify storage minecraft:ui generate.equipped_skin.lore append value ["",{"text":"$(subtext)","italic":false,"color":"gray"}]
+
+                scoreboard players set .skinRating uiAbility.Skin 0
+                execute store result score .skinRating uiAbility.Skin run data get storage minecraft:ui generate.equipped_skin.rarity
+
+                execute if score .skinRating uiAbility.Skin matches 0 run data merge storage minecraft:ui {generate:{equipped_skin:{rarity_name:"Default",rarity_color:"d1d1d1"}}}
+                execute if score .skinRating uiAbility.Skin matches 1 run data merge storage minecraft:ui {generate:{equipped_skin:{rarity_name:"Common",rarity_color:"ffffff"}}}
+                execute if score .skinRating uiAbility.Skin matches 2 run data merge storage minecraft:ui {generate:{equipped_skin:{rarity_name:"Uncommon",rarity_color:"70ff94"}}}
+                execute if score .skinRating uiAbility.Skin matches 3 run data merge storage minecraft:ui {generate:{equipped_skin:{rarity_name:"Epic",rarity_color:"c46bff"}}}
+                execute if score .skinRating uiAbility.Skin matches 4 run data merge storage minecraft:ui {generate:{equipped_skin:{rarity_name:"Legendary",rarity_color:"fffa5c"}}}
+                execute if score .skinRating uiAbility.Skin matches 5 run data merge storage minecraft:ui {generate:{equipped_skin:{rarity_name:"Mythical",rarity_color:"ff1f1f"}}}
+
+                block { with storage minecraft:ui generate.equipped_skin
+                    $data modify storage minecraft:ui generate.equipped_skin.lore append value ["",{"text":"Rarity: ","italic":false,"color":"gray"},{"text":"$(rarity_name)","italic":false,"color":"#$(rarity_color)"}]
+                }
+            }
+        }
+
+        data modify storage minecraft:ui ability.choice.equipped_name set from storage minecraft:ui generate.equipped_skin.name
+        data modify storage minecraft:ui ability.choice.equipped_lore set from storage minecraft:ui generate.equipped_skin.lore
+        data modify storage minecraft:ui ability.choice.equipped_model set from storage minecraft:ui generate.equipped_skin.model
+    }
+
+    function selection_lore {
+        execute store result storage minecraft:ui generate.selection.slot int 1 run scoreboard players get .abilitySlot uiAbility.SelectionBroad
+        $data modify storage minecraft:ui generate.selection merge from storage minecraft:ability index.$(ability_id)
+        block { with storage minecraft:ui generate.selection
+            data modify storage minecraft:ui generate.selection.subtext set from storage minecraft:ui generate.selection.product.ability.subtext
+            data modify storage minecraft:ui generate.selection.ownership_tag set from storage minecraft:ui generate.selection.product.ability.ownership_tag
+            data modify storage minecraft:ui generate.selection.equipped_tag set from storage minecraft:ui generate.selection.product.ability.equipped_tag
+            block { with storage minecraft:ui generate.selection
+                data remove storage minecraft:ui generate.selection.lore
+                data modify storage minecraft:ui generate.selection.lore set value []
+                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"$(subtext)","italic":false,"color":"gray"}]
+
+                data modify storage minecraft:ui generate.selection.lore append value ""
+
+                data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ability Ratings","italic":false,"color":"gold"}]
+                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"O","italic":false,"color":"#e6ecb6"},{"text":"b","italic":false,"color":"#e4eab2"},{"text":"t","italic":false,"color":"#e2e8ae"},{"text":"a","italic":false,"color":"#e0e6ab"},{"text":"i","italic":false,"color":"#dee4a7"},{"text":"n","italic":false,"color":"#dbe3a3"},{"text":"m","italic":false,"color":"#d9e19f"},{"text":"e","italic":false,"color":"#d7df9c"},{"text":"n","italic":false,"color":"#d5dd98"},{"text":"t","italic":false,"color":"#d3db94"},{"text":"\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(obtainment_rating_1)","italic":false,"color":"$(obtainment_rating_color)"},{"text":"$(obtainment_rating_2)","italic":false,"color":"gray"}]
+                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"V","italic":false,"color":"#a280ff"},{"text":"e","italic":false,"color":"#9f7cfd"},{"text":"r","italic":false,"color":"#9b79fa"},{"text":"s","italic":false,"color":"#9875f8"},{"text":"a","italic":false,"color":"#9471f5"},{"text":"t","italic":false,"color":"#916ef3"},{"text":"i","italic":false,"color":"#8e6af0"},{"text":"l","italic":false,"color":"#8a66ee"},{"text":"i","italic":false,"color":"#8762eb"},{"text":"t","italic":false,"color":"#835fe9"},{"text":"y","italic":false,"color":"#805be6"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(versatility_rating_1)","italic":false,"color":"$(versatility_rating_color)"},{"text":"$(versatility_rating_2)","italic":false,"color":"gray"}]
+                $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"D","italic":false,"color":"#ff5542"},{"text":"i","italic":false,"color":"#fb513e"},{"text":"f","italic":false,"color":"#f74d3a"},{"text":"f","italic":false,"color":"#f24a37"},{"text":"i","italic":false,"color":"#ee4633"},{"text":"c","italic":false,"color":"#ea422f"},{"text":"u","italic":false,"color":"#e63e2b"},{"text":"l","italic":false,"color":"#e13b28"},{"text":"t","italic":false,"color":"#dd3724"},{"text":"y","italic":false,"color":"#d93320"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(difficulty_rating_1)","italic":false,"color":"$(difficulty_rating_color)"},{"text":"$(difficulty_rating_2)","italic":false,"color":"gray"}]
+
+                data modify storage minecraft:ui generate.selection.lore append value ""
+
+                data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
+                data merge storage minecraft:ui {generate:{selection:{ownership_text:"No",ownership_color:"EC3232"}}}
+                data merge storage minecraft:ui {generate:{selection:{equip_text:"No",equip_color:"EC3232"}}}
+                block { with storage minecraft:ui generate.selection
+                    $execute if entity @s[tag=$(ownership_tag)] run data merge storage minecraft:ui {generate:{selection:{ownership_text:"Yes",ownership_color:"3cdd31"}}}
+                    $execute if entity @s[tag=$(equipped_tag)] run data merge storage minecraft:ui {generate:{selection:{equip_text:"Yes",equip_color:"3cdd31"}}}
+                    block { with storage minecraft:ui generate.selection
+                        $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"$(ownership_text)","italic":false,"color":"#$(ownership_color)"}]
+                        $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_text)","italic":false,"color":"#$(equip_color)"}]
+                    }
+                }
+
+                # secret interactions
+                execute if data storage minecraft:ui generate.selection.secret run {
+                    REPEAT (1,5) as i {
+                        execute if data storage minecraft:ui generate.selection.secret.interaction<%i%> run {
+                            scoreboard players add .interactionTotal uiAbility.SelectionBroad 1
+                            data modify storage minecraft:ui generate.selection.required_tag set from storage minecraft:ui generate.selection.secret.interaction<%i%>.required_tag
+                            block { with storage minecraft:ui generate.selection
+                                $execute if entity @s[tag=$(required_tag)] run scoreboard players add .interactionOwnership uiAbility.SelectionBroad 1
+                            }
+                        }
+                    }
+                }
+                execute store result storage minecraft:ui generate.selection.interaction_total int 1 run scoreboard players get .interactionTotal uiAbility.SelectionBroad
+                execute store result storage minecraft:ui generate.selection.interaction_unlocked int 1 run scoreboard players get .interactionOwnership uiAbility.SelectionBroad
+                block { with storage minecraft:ui generate.selection
+                    $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(interaction_unlocked)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(interaction_total)","italic":false,"color":"green"}]
+                }
+                scoreboard players reset .interactionTotal uiAbility.SelectionBroad
+                scoreboard players reset .interactionOwnership uiAbility.SelectionBroad
+
+                # skins
+                REPEAT (1,5) as i {
+                    execute if data storage minecraft:ui generate.selection.product.skin<%i%> run {
+                        scoreboard players add .skinTotal uiAbility.SelectionBroad 1
+                        data modify storage minecraft:ui generate.selection.ownership_tag set from storage minecraft:ui generate.selection.product.skin<%i%>.ownership_tag
+                        block { with storage minecraft:ui generate.selection
+                            $execute if entity @s[tag=$(ownership_tag)] run scoreboard players add .skinOwnership uiAbility.SelectionBroad 1
+                        }
+                    }
+                }
+                execute store result storage minecraft:ui generate.selection.skin_total int 1 run scoreboard players get .skinTotal uiAbility.SelectionBroad
+                execute store result storage minecraft:ui generate.selection.skin_owned int 1 run scoreboard players get .skinOwnership uiAbility.SelectionBroad
+                block { with storage minecraft:ui generate.selection
+                    $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(skin_owned)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skin_total)","italic":false,"color":"green"}]
+                }
+                scoreboard players reset .skinTotal uiAbility.SelectionBroad
+                scoreboard players reset .skinOwnership uiAbility.SelectionBroad
+            }
+            $data modify storage minecraft:ui ability.selection.slot$(slot)_name set from storage minecraft:ui generate.selection.product.ability.name
+            $data modify storage minecraft:ui ability.selection.slot$(slot)_model set from storage minecraft:ui generate.selection.product.ability.model
+            $data modify storage minecraft:ui ability.selection.slot$(slot)_lore set from storage minecraft:ui generate.selection.lore
+            data remove storage minecraft:ui generate.selection
+        }
+
+
+        # $data modify storage minecraft:ui generate.selection.subtext set from storage minecraft:ability index.$(ability_id).product.ability.subtext
+        # $data modify storage minecraft:ui generate.selection.ownership_tag set from storage minecraft:ability index.$(ability_id).product.ability.ownership_tag
+        # $data modify storage minecraft:ui generate.selection.equipped_tag set from storage minecraft:ability index.$(ability_id).product.ability.equipped_tag
+
+        # block { with storage minecraft:ui generate.selection
+        #     $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"$(subtext)","italic":false,"color":"gray"}]
+
+        #     data modify storage minecraft:ui generate.selection.lore append value ""
+
+        #     data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ability Ratings","italic":false,"color":"gold"}]
+        #     $block { with storage minecraft:ability index.$(ability_id)
+        #         $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"O","italic":false,"color":"#e6ecb6"},{"text":"b","italic":false,"color":"#e4eab2"},{"text":"t","italic":false,"color":"#e2e8ae"},{"text":"a","italic":false,"color":"#e0e6ab"},{"text":"i","italic":false,"color":"#dee4a7"},{"text":"n","italic":false,"color":"#dbe3a3"},{"text":"m","italic":false,"color":"#d9e19f"},{"text":"e","italic":false,"color":"#d7df9c"},{"text":"n","italic":false,"color":"#d5dd98"},{"text":"t","italic":false,"color":"#d3db94"},{"text":"\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(obtainment_rating_1)","italic":false,"color":"$(obtainment_rating_color)"},{"text":"$(obtainment_rating_2)","italic":false,"color":"gray"}]
+        #         $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"V","italic":false,"color":"#a280ff"},{"text":"e","italic":false,"color":"#9f7cfd"},{"text":"r","italic":false,"color":"#9b79fa"},{"text":"s","italic":false,"color":"#9875f8"},{"text":"a","italic":false,"color":"#9471f5"},{"text":"t","italic":false,"color":"#916ef3"},{"text":"i","italic":false,"color":"#8e6af0"},{"text":"l","italic":false,"color":"#8a66ee"},{"text":"i","italic":false,"color":"#8762eb"},{"text":"t","italic":false,"color":"#835fe9"},{"text":"y","italic":false,"color":"#805be6"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(versatility_rating_1)","italic":false,"color":"$(versatility_rating_color)"},{"text":"$(versatility_rating_2)","italic":false,"color":"gray"}]
+        #         $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"D","italic":false,"color":"#ff5542"},{"text":"i","italic":false,"color":"#fb513e"},{"text":"f","italic":false,"color":"#f74d3a"},{"text":"f","italic":false,"color":"#f24a37"},{"text":"i","italic":false,"color":"#ee4633"},{"text":"c","italic":false,"color":"#ea422f"},{"text":"u","italic":false,"color":"#e63e2b"},{"text":"l","italic":false,"color":"#e13b28"},{"text":"t","italic":false,"color":"#dd3724"},{"text":"y","italic":false,"color":"#d93320"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(difficulty_rating_1)","italic":false,"color":"$(difficulty_rating_color)"},{"text":"$(difficulty_rating_2)","italic":false,"color":"gray"}]
+        #     }
+        #     data modify storage minecraft:ui generate.selection.lore append value ""
+        # }
+
+        # data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
+
+        # data merge storage minecraft:ui {generate:{selection:{ownership_text:"No",ownership_color:"EC3232"}}}
+        # data merge storage minecraft:ui {generate:{selection:{equip_text:"No",equip_color:"EC3232"}}}
+        # block { with storage minecraft:ui generate.selection
+        #     $execute if entity @s[tag=$(ownership_tag)] run data merge storage minecraft:ui {generate:{selection:{ownership_text:"Yes",ownership_color:"3cdd31"}}}
+        #     $execute if entity @s[tag=$(equipped_tag)] run data merge storage minecraft:ui {generate:{selection:{equip_text:"Yes",equip_color:"3cdd31"}}}
+        #     block { with storage minecraft:ui generate.selection
+        #         $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"$(ownership_text)","italic":false,"color":"#$(ownership_color)"}]
+        #         $data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_text)","italic":false,"color":"#$(equip_color)"}]
+        #     }
+        # }
+
+        # $data modify storage minecraft:ui ability.selection. set from storage minecraft:ui generate.selection.lore
+
+
+
+        block {
+            # $data remove storage minecraft:ability index.$(ability_id).selection_lore
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore set value []
+
+            # # line 1
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"$(subtext) ","italic":false,"color":"gray"}]
+
+            # # line 2
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ""
+
+            # # line 3
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ability Ratings","italic":false,"color":"gold"}]
+
+            # # line 4 (obtaiment rating)
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"O","italic":false,"color":"#e6ecb6"},{"text":"b","italic":false,"color":"#e4eab2"},{"text":"t","italic":false,"color":"#e2e8ae"},{"text":"a","italic":false,"color":"#e0e6ab"},{"text":"i","italic":false,"color":"#dee4a7"},{"text":"n","italic":false,"color":"#dbe3a3"},{"text":"m","italic":false,"color":"#d9e19f"},{"text":"e","italic":false,"color":"#d7df9c"},{"text":"n","italic":false,"color":"#d5dd98"},{"text":"t","italic":false,"color":"#d3db94"},{"text":"\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(obtainment_rating_1)","italic":false,"color":"$(obtainment_rating_color)"},{"text":"$(obtainment_rating_2)","italic":false,"color":"gray"}]
+
+            # # line 5 (versatility rating)
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"V","italic":false,"color":"#a280ff"},{"text":"e","italic":false,"color":"#9f7cfd"},{"text":"r","italic":false,"color":"#9b79fa"},{"text":"s","italic":false,"color":"#9875f8"},{"text":"a","italic":false,"color":"#9471f5"},{"text":"t","italic":false,"color":"#916ef3"},{"text":"i","italic":false,"color":"#8e6af0"},{"text":"l","italic":false,"color":"#8a66ee"},{"text":"i","italic":false,"color":"#8762eb"},{"text":"t","italic":false,"color":"#835fe9"},{"text":"y","italic":false,"color":"#805be6"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(versatility_rating_1)","italic":false,"color":"$(versatility_rating_color)"},{"text":"$(versatility_rating_2)","italic":false,"color":"gray"}]
+
+            # # line 6 (difficulty rating)
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"D","italic":false,"color":"#ff5542"},{"text":"i","italic":false,"color":"#fb513e"},{"text":"f","italic":false,"color":"#f74d3a"},{"text":"f","italic":false,"color":"#f24a37"},{"text":"i","italic":false,"color":"#ee4633"},{"text":"c","italic":false,"color":"#ea422f"},{"text":"u","italic":false,"color":"#e63e2b"},{"text":"l","italic":false,"color":"#e13b28"},{"text":"t","italic":false,"color":"#dd3724"},{"text":"y","italic":false,"color":"#d93320"},{"text":"\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1\u90A1| ","italic":false,"color":"gray"},{"text":"$(difficulty_rating_1)","italic":false,"color":"$(difficulty_rating_color)"},{"text":"$(difficulty_rating_2)","italic":false,"color":"gray"}]
+
+            # # line 7
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ""
+
+            # # line 8
+            # $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ability Status","italic":false,"color":"gold"}]
+
+            # # line 9 (ownership)
+            # $execute if entity @s[tag=ability$(real_path).Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
+            # $execute unless entity @s[tag=ability$(real_path).Ownership] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
+
+            # # line 10 (equipped?)
+            # $execute if entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"Yes","italic":false,"color":"green"}]
+            # $execute unless entity @s[tag=ability$(real_path).User] run data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"No","italic":false,"color":"red"}]
+
+            # # line 11/12 (skins & secret interactions)
+            # $execute store result storage minecraft:ability index.$(ability_id).unlocked_skins int 1 run scoreboard players get @s ability$(real_path).UnlockedSkins
+            # $execute store result storage minecraft:ability index.$(ability_id).discovered_interactions int 1 run scoreboard players get @s ability$(real_path).DiscoveredInteractions
+            # $block { with storage minecraft:ability index.$(ability_id)
+            #     $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Skin(s): ","italic":false,"color":"gray"},{"text":"$(unlocked_skins)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(skins)","italic":false,"color":"green"}]
+            #     $data modify storage minecraft:ability index.$(ability_id).selection_lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(discovered_interactions)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(secret_interactions)","italic":false,"color":"green"}]
+
+            #     $data remove storage minecraft:ability index.$(ability_id).unlocked_skins
+            #     $data remove storage minecraft:ability index.$(ability_id).discovered_interactions
+            # }
+        }
     }
 }

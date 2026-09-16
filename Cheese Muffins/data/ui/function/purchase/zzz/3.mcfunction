@@ -1,5 +1,7 @@
 # Generated with MC-Build
 
-scoreboard players add @s uiPurchase.Confirm 1
-execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
-execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
+function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
+function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
+execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run function ui:purchase/gathered with storage minecraft:ui generate.purchase
+tag @s remove uiPurchase.ItemCheck
+tag @s remove uiPurchase.AdvancementCheck
