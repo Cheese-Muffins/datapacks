@@ -39,4 +39,6 @@ data modify storage minecraft:ui ability.choice.slot4_visibility set value "true
 execute unless score @s uiAbility.MovesetCycle4 matches 1.. run scoreboard players set @s uiAbility.MovesetCycle4 1
 execute store result storage minecraft:ui ability.choice.slot_cycle int 1 run scoreboard players get @s uiAbility.MovesetCycle4
 function ui:ability/selection/choice/moveset/zzz/6 with storage minecraft:ui ability.choice
+execute store result storage minecraft:ui ability.choice.moveset_count int 1 run scoreboard players get .moveCount uiAbility.Moveset
+scoreboard players reset .moveCount uiAbility.Moveset
 function ui:ability/selection/choice/moveset/zzz/8 with storage minecraft:ui ability.choice

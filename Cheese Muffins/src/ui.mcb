@@ -540,7 +540,7 @@ dir ability {
 
             dir moveset {
                 function mask {
-                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(slot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot1_model)","minecraft:tooltip_display":{hide_tooltip:$(slot1_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:1,cycle:$(slot1_cycle)}}}},{Slot:$(slot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot2_model)","minecraft:tooltip_display":{hide_tooltip:$(slot2_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:2,cycle:$(slot2_cycle)}}}},{Slot:$(slot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot3_model)","minecraft:tooltip_display":{hide_tooltip:$(slot3_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:3,cycle:$(slot3_cycle)}}}},{Slot:$(slot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot4_model)","minecraft:tooltip_display":{hide_tooltip:$(slot4_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:4,cycle:$(slot4_cycle)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_model_data":{strings:["$(path)"]},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
+                    $data modify storage ui mask set value [{Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ae00ff"},{"text":"b","italic":false,"color":"#b207ff"},{"text":"i","italic":false,"color":"#b50eff"},{"text":"l","italic":false,"color":"#b914ff"},{"text":"i","italic":false,"color":"#bd1bff"},{"text":"t","italic":false,"color":"#c022ff"},{"text":"y","italic":false,"color":"#c429ff"},{"text":" ","italic":false,"color":"#c830ff"},{"text":"O","italic":false,"color":"#cb36ff"},{"text":"v","italic":false,"color":"#cf3dff"},{"text":"e","italic":false,"color":"#d344ff"},{"text":"r","italic":false,"color":"#d64bff"},{"text":"v","italic":false,"color":"#da52ff"},{"text":"i","italic":false,"color":"#de58ff"},{"text":"e","italic":false,"color":"#e15fff"},{"text":"w","italic":false,"color":"#e566ff"}],"minecraft:lore":[[{"color":"gray","italic":false,"text":"View all relevant information"}],[{"color":"gray","italic":false,"text":"for "},{"color":"#fffb85","italic":false,"text":"$(proper_name)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/flip"}}}},{Slot:$(slot1_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot1_model)","minecraft:tooltip_display":{hide_tooltip:$(slot1_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:1,cycle:$(slot1_cycle)}}}},{Slot:$(slot2_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot2_model)","minecraft:tooltip_display":{hide_tooltip:$(slot2_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:2,cycle:$(slot2_cycle)}}}},{Slot:$(slot3_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot3_model)","minecraft:tooltip_display":{hide_tooltip:$(slot3_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:3,cycle:$(slot3_cycle)}}}},{Slot:$(slot4_pos),id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot4_model)","minecraft:tooltip_display":{hide_tooltip:$(slot4_visibility)},"minecraft:tooltip_style":"minecraft:$(path)","minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,moveset_entry:1b,slot_id:4,cycle:$(slot4_cycle)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/moveset","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_model_data":{strings:["$(path)"],floats:[$(moveset_count)]},"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/selection/choice/moveset/same"}}}}]
                 }
 
                 function open {
@@ -575,9 +575,13 @@ dir ability {
                                 $data modify storage minecraft:ui ability.choice.slot<%i%>_cycle set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.cycle
                                 $data modify storage minecraft:ui ability.choice.slot<%i%>_pos set from storage minecraft:ability index.$(ability_id).moveset.slot<%i%>.pos
                                 data modify storage minecraft:ui ability.choice.slot<%i%>_visibility set value "false"
+                                scoreboard players add .moveCount uiAbility.Moveset 1
                             }
                         }
                     }
+
+                    execute store result storage minecraft:ui ability.choice.moveset_count int 1 run scoreboard players get .moveCount uiAbility.Moveset
+                    scoreboard players reset .moveCount uiAbility.Moveset
 
                     block { with storage minecraft:ui ability.choice
                         $data modify storage minecraft:ui ability.choice.path set from storage minecraft:ability index.$(ability_id).path
@@ -2320,7 +2324,7 @@ dir purchase {
 
             $execute unless entity @s[tag=$(ownership_tag)] run block { with storage minecraft:ui generate.purchase
                 data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Ability Price","italic":false,"color":"gold"}]
-            
+        
                 tag @s add uiPurchase.GenerateLore
                 function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
                 function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
@@ -2335,25 +2339,20 @@ dir purchase {
                         data modify storage minecraft:ui generate.purchase.price_lore[-1] append value ["",{"text":"must be your","italic":false,"color":"gray"}]
                         data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Mojang username","italic":false,"color":"#b65cff"}]
                     }
-
                     # more than just a bypass entry
                     execute if entity @s[tag=uiPurchase.CostFound] run block { with storage minecraft:ui generate.purchase
                         data modify storage minecraft:ui generate.purchase.price_lore append value ""
                         $data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#00bd16"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#b65cff"}]]
                     }
-
                     data modify storage minecraft:ui generate.purchase.price_lore append value ""
                 }
 
                 data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Purchase Details","italic":false,"color":"gold"}]
                 $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
-
                 block { with storage minecraft:ui generate.purchase
                     $scoreboard players set .generatedProduct uiPurchase.ProductID $(product_id)
-
                     # default: unavailable
                     data merge storage minecraft:ui {generate:{purchase:{status_text:"Unavailable",status_color:"EC3232"}}}
-
                     # there IS a normal item/advancement cost
                     execute if entity @s[tag=uiPurchase.CostFound] run {
                         data merge storage minecraft:ui {generate:{purchase:{status_text:"Insufficent Resources",status_color:"EC3232"}}}
@@ -2365,14 +2364,12 @@ dir purchase {
                             execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
                         }
                     }
-
                     # bypass username matched
                     execute if score .bypassCheck uiPurchase.Broad matches 0 run {
                         data merge storage minecraft:ui {generate:{purchase:{status_text:"Click to Purchase...",status_color:"fcff3d"}}}
 
                         execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
                     }
-
                     block { with storage minecraft:ui generate.purchase
                         $data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Status: ","italic":false,"color":"gray"},{"text":"$(status_text)","italic":false,"color":"#$(status_color)"}]]
 

@@ -6,3 +6,4 @@ $data modify storage minecraft:ui ability.choice.slot1_model set from storage mi
 $data modify storage minecraft:ui ability.choice.slot1_cycle set from storage minecraft:ability index.$(ability_id).moveset.slot1.cycle
 $data modify storage minecraft:ui ability.choice.slot1_pos set from storage minecraft:ability index.$(ability_id).moveset.slot1.pos
 data modify storage minecraft:ui ability.choice.slot1_visibility set value "false"
+scoreboard players add .moveCount uiAbility.Moveset 1
