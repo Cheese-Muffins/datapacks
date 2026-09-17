@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ui {generate:{purchase:{request_tag:"[minecraft:custom_data={$(request_tag_insert)}]"}}}
+data merge storage minecraft:ui {generate:{purchase:{status_text:"Click to Purchase...",status_color:"fcff3d"}}}
+execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}

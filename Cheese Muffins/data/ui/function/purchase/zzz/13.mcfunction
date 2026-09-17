@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.purchase.request_tag_insert set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request2.tag
-function ui:purchase/zzz/14 with storage minecraft:ui generate.purchase
+data merge storage minecraft:ui {generate:{purchase:{status_text:"Click to Purchase...",status_color:"fcff3d"}}}
+execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}

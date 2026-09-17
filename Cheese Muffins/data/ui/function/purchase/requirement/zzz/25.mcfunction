@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
+tag @s add uiPurchase.CostFound
 $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request1 run function ui:purchase/requirement/zzz/26 with storage minecraft:ui generate.purchase
 $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request2 run function ui:purchase/requirement/zzz/28 with storage minecraft:ui generate.purchase
 $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).advancements.request3 run function ui:purchase/requirement/zzz/30 with storage minecraft:ui generate.purchase
