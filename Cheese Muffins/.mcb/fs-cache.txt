@@ -511,7 +511,7 @@ data\ui\function\cassette\party\generate\details.mcfunction:e4028417187c80aa6f29
 data\ui\function\cassette\party\same.mcfunction:591e7ed900de8f38649cddb77480c82afdfc13a1
 data\ui\function\cassette\party\zzz\13.mcfunction:f0cb122e238bf1d15c935cd3d1c2b91c4665a5b1
 data\ui\function\cassette\party\flip.mcfunction:ead0dc05d7030144f98a056938267679be7c6062
-data\ui\function\purchase\zzz\3.mcfunction:37e94cf0de2c873906bfa311fb13776d4aff2c69
+data\ui\function\purchase\zzz\3.mcfunction:d8b40fc0f3cda5d95fb947205d20a743ce00e4cf
 data\ui\function\purchase\zzz\2.mcfunction:dbc3bf95a94310d37b8b335939c19ac8329a25f1
 data\ui\function\purchase\zzz\1.mcfunction:9990a4a5a2363d24b6f478b19bdddb3722659cae
 data\ui\function\purchase\zzz\0.mcfunction:d6937e6a0e25025708cba16cf63f4ca0361fc2c9
@@ -552,7 +552,7 @@ data\ui\function\purchase\zzz\14.mcfunction:ba6cd274692afed7f9f72ce6f62e7c48f705
 data\ui\function\purchase\zzz\16.mcfunction:0a9c0b680ab1133686f14e9689feb1fc7e5a5353
 data\ui\function\purchase\zzz\15.mcfunction:c9a35a9b97965a4f54da1f2c2da0980e103741a5
 data\ui\function\purchase\zzz\11.mcfunction:708e0855bf8f719c64d416fb08279fe064e8ebcf
-data\ui\function\purchase\zzz\7.mcfunction:7f94ad4cc954f3683fe33df6ef038313622e8e81
+data\ui\function\purchase\zzz\7.mcfunction:f74db8b9f8971f81a4df8b925a581e03f08cf11f
 data\ui\function\purchase\zzz\19.mcfunction:b6e112b9f6ae6fbdcfee15d4c80eddc895e91c89
 data\ui\function\purchase\zzz\18.mcfunction:3c76be84a8d9dd68bb73496dc449a385e11662e1
 data\ui\function\purchase\zzz\20.mcfunction:0b8404c4bdc69dea0e79aaa7ab1450c2e9d34bee
