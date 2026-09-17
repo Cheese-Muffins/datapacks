@@ -1,4 +1,6 @@
 # Generated with MC-Build
 
-data merge storage minecraft:ui {generate:{purchase:{status_text:"Insufficent Resources",status_color:"EC3232"}}}
-execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run function ui:purchase/zzz/13 with storage minecraft:ui generate.purchase
+data merge storage minecraft:ui {generate:{purchase:{status_text:"Unavailable",status_color:"EC3232"}}}
+execute if entity @s[tag=uiPurchase.CostFound] run function ui:purchase/zzz/13
+execute if score .bypassCheck uiPurchase.Broad matches 0 run function ui:purchase/zzz/15 with storage minecraft:ui generate.purchase
+function ui:purchase/zzz/16 with storage minecraft:ui generate.purchase

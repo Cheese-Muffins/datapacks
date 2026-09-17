@@ -14,7 +14,7 @@ scoreboard objectives add uiAbility.ChoicePage dummy
 scoreboard objectives add uiAbility.ChoiceBroad dummy
 scoreboard objectives add uiAbility.SecretInteraction dummy
 scoreboard objectives add uiAbility.Moveset dummy
-scoreboard objectives add uiPurchase.ProductID dummy
+scoreboard objectives add uiPurchase.PlayerID dummy
 scoreboard objectives add uiPurchase.Confirm dummy
 scoreboard objectives add uiPurchase.Broad dummy
 scoreboard objectives add uiAbility.MovesetCycle1 dummy

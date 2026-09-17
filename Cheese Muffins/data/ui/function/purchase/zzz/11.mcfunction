@@ -1,6 +1,4 @@
 # Generated with MC-Build
 
-data merge storage minecraft:ui {generate:{purchase:{status_text:"Unavailable",status_color:"EC3232"}}}
-execute if entity @s[tag=uiPurchase.CostFound] run function ui:purchase/zzz/12
-execute if score .bypassCheck uiPurchase.Broad matches 0 run function ui:purchase/zzz/14 with storage minecraft:ui generate.purchase
-function ui:purchase/zzz/15 with storage minecraft:ui generate.purchase
+data modify storage minecraft:ui generate.purchase.price_lore append value ""
+$data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#00bd16"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#b65cff"}]]

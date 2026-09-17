@@ -5,7 +5,7 @@ $data modify storage minecraft:ui ability.choice.$(product_name)_name set from s
 $data modify storage minecraft:ui generate.purchase.subtext set from storage minecraft:ability index.$(ability_id).product.$(product_name).subtext
 $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
 $data modify storage minecraft:ui generate.purchase.equipped_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).equipped_tag
-function ui:purchase/zzz/4 with storage minecraft:ui generate.purchase
+function ui:purchase/zzz/5 with storage minecraft:ui generate.purchase
 $data merge storage minecraft:ui {ability:{choice:{$(product_name)_display:false}}}
-$execute unless data storage minecraft:ability index.$(ability_id).product.$(product_name) run function ui:purchase/zzz/21 with storage minecraft:ui generate.purchase
+$execute unless data storage minecraft:ability index.$(ability_id).product.$(product_name) run function ui:purchase/zzz/22 with storage minecraft:ui generate.purchase
 $data modify storage minecraft:ui ability.choice.$(product_name)_price set from storage minecraft:ui generate.purchase.price_lore

@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.purchase.request_tag_insert set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3.tag
-function ui:purchase/zzz/37 with storage minecraft:ui generate.purchase
+$data merge storage minecraft:ui {generate:{purchase:{request_tag:"[minecraft:custom_data={$(request_tag_insert)}]"}}}
