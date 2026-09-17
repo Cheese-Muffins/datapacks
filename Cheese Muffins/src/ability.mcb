@@ -450,6 +450,8 @@ dir generate {
     }
 
     function index {
+        data remove storage minecraft:ability index
+
         # 1 - Billy (Demetrius Demarcus Bartholomew James the III)
         data merge storage minecraft:ability {index:{1:{\
             ability_id:1,\
@@ -481,24 +483,31 @@ dir generate {
                 },\
                 slot3:{\
                     move1:{\
-                        name:[{"text":"Barrage","italic":false,"color":"#d699ff"}],\
-                        description:[[{"text":"Send out a ","italic":false,"color":"gray"},{"text":"flurry","italic":false,"color":"#f4a3ff"},{"text":" of punches completely","italic":false,"color":"gray"}],[{"text":"immobilizing","italic":false,"color":"white"},{"text":" and ","italic":false,"color":"gray"},{"text":"damaging ","italic":false,"color":"#ff2929"},{"text":"anything in their","italic":false,"color":"gray"}],[{"text":"path. The ","italic":false,"color":"gray"},{"text":"finishing punch","italic":false,"color":"#fff957"},{"text":" in the chain will","italic":false,"color":"gray"}],[{"text":"launch","italic":false,"color":"#00b4cc"},{"text":" victims backwards dealing","italic":false,"color":"gray"}],[{"text":"additional damage.","italic":false,"color":"#ff2929"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"4s","italic":false,"color":"#20c200"}],[{"text":"o Regular Damage: ","italic":false,"color":"gray"},{"text":"2hp/0.5s","italic":false,"color":"#20c200"}],[{"text":"o Final Punch Damage: ","italic":false,"color":"gray"},{"text":"5","italic":false,"color":"#20c200"}]],\
-                        model:"minecraft:interactables/ability/the_world/moveset/barrage",\
-                        cooldown:23,\
+                        name:[{"text":"???","italic":false,"color":"gray"}],\
+                        description:[[{"text":"idk yet ","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/billy/moveset/snare",\
+                        cooldown:1,\
                         cancelable:false\
                     }\
                 }\
             },\
+            secret:{\
+                interaction1:{\
+                    hint:[[{"text":"Billy's ","italic":false,"color":"gray"},{"text":"hunger","italic":false,"underlined":true,"color":"#ff5c5c"},{"text":" must be ","italic":false,"color":"gray"},{"text":"satiated...","italic":false,"color":"#bbffb3"}]],\
+                    name:[{"text":"D","italic":false,"color":"#ff961f"},{"text":"e","italic":false,"color":"#ffa92e"},{"text":"v","italic":false,"color":"#ffbc3d"},{"text":"o","italic":false,"color":"#ffcf4d"},{"text":"u","italic":false,"color":"#ffe25c"},{"text":"r","italic":false,"color":"#fff56b"}],\
+                    description:[[{"text":"Upon activation of ","italic":false,"color":"gray"},{"text":"Maul,","italic":false,"color":"#e2a3ff"},{"text":" there is a","italic":false,"color":"gray"}],[{"text":"1.00%","italic":false,"color":"#ffbe4d"},{"text":" chance that Billy goes above","italic":false,"color":"gray"}],[{"text":"and beyond. Deal ","italic":false,"color":"gray"},{"text":"devasting damage","italic":false,"color":"#e60000"}],[{"text":"following a brief cutscene along","italic":false,"color":"gray"}],[{"text":"with some ","italic":false,"color":"gray"},{"text":"lingering traits","italic":false,"color":"#66ffe0"},{"text":" for ","italic":false,"color":"gray"},{"text":"3.00s","italic":false,"color":"#ffbe4d"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Damage: ","italic":false,"color":"gray"},{"text":"16","italic":false,"color":"#6aff57"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Trait(s): ","italic":false,"color":"gray"},{"text":"Bleed II","italic":false,"color":"#e63737"}]],\
+                    required_tag:"abilityBilly.SecretInteractionDevour"\
+                }\
+            },\
             product:{\
                 ability:{\
-                    product_id:1,\
                     type:"ability",\
                     name:[{"text":"B","italic":false,"color":"#7afff6"},{"text":"i","italic":false,"color":"#86faf2"},{"text":"l","italic":false,"color":"#92f5ee"},{"text":"l","italic":false,"color":"#9ef0ea"},{"text":"y","italic":false,"color":"#abebe7"},{"text":" ","italic":false,"color":"#b7e6e3"},{"text":"D","italic":false,"color":"#c3e1df"},{"text":"e","italic":false,"color":"#cfdcdb"},{"text":"me","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cfdcdb"},{"text":"r","italic":false,"color":"#c3e1df"},{"text":"i","italic":false,"color":"#b7e6e3"},{"text":"u","italic":false,"color":"#abebe7"},{"text":"s","italic":false,"color":"#9ef0ea"},{"text":" ","italic":false,"color":"#92f5ee"},{"text":"D","italic":false,"color":"#86faf2"},{"text":"em","italic":false,"color":"#7afff6"},{"text":"a","italic":false,"color":"#88f9f2"},{"text":"r","italic":false,"color":"#96f4ed"},{"text":"c","italic":false,"color":"#a4eee9"},{"text":"u","italic":false,"color":"#b1e8e4"},{"text":"s","italic":false,"color":"#bfe2e0"},{"text":" ","italic":false,"color":"#cddddb"},{"text":"Ba","italic":false,"color":"#dbd7d7"},{"text":"r","italic":false,"color":"#cddddb"},{"text":"t","italic":false,"color":"#bfe2e0"},{"text":"h","italic":false,"color":"#b1e8e4"},{"text":"o","italic":false,"color":"#a4eee9"},{"text":"l","italic":false,"color":"#96f4ed"},{"text":"o","italic":false,"color":"#88f9f2"},{"text":"me","italic":false,"color":"#7afff6"},{"text":"w","italic":false,"color":"#88f9f2"},{"text":" ","italic":false,"color":"#96f4ed"},{"text":"J","italic":false,"color":"#a4eee9"},{"text":"a","italic":false,"color":"#b1e8e4"},{"text":"m","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#cddddb"},{"text":"s ","italic":false,"color":"#dbd7d7"},{"text":"t","italic":false,"color":"#cddddb"},{"text":"h","italic":false,"color":"#bfe2e0"},{"text":"e","italic":false,"color":"#b1e8e4"},{"text":" ","italic":false,"color":"#a4eee9"},{"text":"I","italic":false,"color":"#96f4ed"},{"text":"I","italic":false,"color":"#88f9f2"},{"text":"I","italic":false,"color":"#7afff6"}],\
                     subtext:"The Main Character",\
                     model:"minecraft:interactables/ability/billy/default_skin",\
                     ownership_tag:"abilityBilly.Ownership",\
                     equipped_tag:"abilityBilly.User",\
-                    bypass:"BaconEater"\
+                    bypass:"Jaboble_Head"\
                 }\
             }\
         }}}
@@ -586,7 +595,6 @@ dir generate {
             },\
             product:{\
                 ability:{\
-                    product_id:1,\
                     type:"ability",\
                     name:[{"text":"The World","italic":false,"color":"#f5ff70"}],\
                     subtext:"I Reject My Humanity, JoJo!",\
@@ -604,7 +612,6 @@ dir generate {
                     bypass:"BaconEater"\
                 },\
                 skin1:{\
-                    product_id:2,\
                     type:"skin",\
                     name:[{"text":"I","italic":false,"color":"#1fb4ff"},{"text":"n","italic":false,"color":"#2cb8ff"},{"text":"v","italic":false,"color":"#39bdff"},{"text":"e","italic":false,"color":"#46c1ff"},{"text":"r","italic":false,"color":"#53c6ff"},{"text":"t","italic":false,"color":"#60caff"},{"text":"e","italic":false,"color":"#6dcfff"},{"text":"d","italic":false,"color":"#7ad3ff"}],\
                     subtext:"You're next, Jotaro!",\
@@ -617,7 +624,6 @@ dir generate {
                     }\
                 },\
                 skin2:{\
-                    product_id:3,\
                     type:"skin",\
                     name:[{"text":"V","italic":false,"color":"#bd0000"},{"text":"a","italic":false,"color":"#c80f0f"},{"text":"m","italic":false,"color":"#d31d1d"},{"text":"p","italic":false,"color":"#de2c2c"},{"text":"i","italic":false,"color":"#e93a3a"},{"text":"r","italic":false,"color":"#f44949"},{"text":"e","italic":false,"color":"#ff5757"}],\
                     subtext:"WRYYYYYYYY!!!",\
@@ -633,7 +639,6 @@ dir generate {
                     }\
                 },\
                 skin3:{\
-                    product_id:4,\
                     type:"skin",\
                     name:[{"text":"R","italic":false,"color":"#00e61b"},{"text":"e","italic":false,"color":"#18ec31"},{"text":"t","italic":false,"color":"#31f347"},{"text":"r","italic":false,"color":"#49f95d"},{"text":"o","italic":false,"color":"#61ff73"}],\
                     subtext:"In that case, Ascend.",\
@@ -647,7 +652,6 @@ dir generate {
                     }\
                 },\
                 skin4:{\
-                    product_id:5,\
                     type:"skin",\
                     name:[{"text":"S","italic":false,"color":"#969696"},{"text":"h","italic":false,"color":"#a0a0a0"},{"text":"a","italic":false,"color":"gray"},{"text":"d","italic":false,"color":"#b3b3b3"},{"text":"o","italic":false,"color":"#bdbdbd"},{"text":"w","italic":false,"color":"#c7c7c7"}],\
                     subtext:"Omae no hoshī mono wa nanda?",\

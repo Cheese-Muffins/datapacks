@@ -1,7 +1,6 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.purchase.request_type set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1.type
-data merge storage minecraft:ui {generate:{purchase:{request_tag:[]}}}
-$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1.tag run function ui:purchase/zzz/27 with storage minecraft:ui generate.purchase
-$data modify storage minecraft:ui generate.purchase.request_count set from storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1.count
-function ui:purchase/zzz/29 with storage minecraft:ui generate.purchase
+$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request1 run function ui:purchase/zzz/27 with storage minecraft:ui generate.purchase
+$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request2 run function ui:purchase/zzz/31 with storage minecraft:ui generate.purchase
+$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request3 run function ui:purchase/zzz/35 with storage minecraft:ui generate.purchase
+$execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).items.request4 run function ui:purchase/zzz/39 with storage minecraft:ui generate.purchase

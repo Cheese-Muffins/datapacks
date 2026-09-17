@@ -2,4 +2,3 @@
 
 execute unless entity @s[tag=uiPurchase.CostFound] run function ui:purchase/zzz/9 with storage minecraft:ui generate.purchase
 execute if entity @s[tag=uiPurchase.CostFound] run function ui:purchase/zzz/10 with storage minecraft:ui generate.purchase
-data modify storage minecraft:ui generate.purchase.price_lore append value ""

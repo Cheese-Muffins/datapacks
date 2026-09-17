@@ -2207,12 +2207,14 @@ dir cassette {
 dir purchase {
     function click {
         execute in minecraft:overworld run item replace block 0 -64 0 container.0 from entity @s player.cursor
+
+        data modify storage minecraft:ui generate.purchase.player set from entity @s UUID
+
         execute store result storage minecraft:ui generate.purchase.ability_id int 1 run scoreboard players get @s uiAbility.SelectionChoice
         execute in minecraft:overworld run data modify storage minecraft:ui generate.purchase.product_name set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.product
 
         block { with storage minecraft:ui generate.purchase
             $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name) run block { with storage minecraft:ui generate.purchase
-                $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
                 $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
 
                 block { with storage minecraft:ui generate.purchase
@@ -2293,7 +2295,6 @@ dir purchase {
         $data modify storage minecraft:ui ability.choice.$(product_name)_name set from storage minecraft:ability index.$(ability_id).product.$(product_name).name
         $data modify storage minecraft:ui generate.purchase.subtext set from storage minecraft:ability index.$(ability_id).product.$(product_name).subtext
 
-        $execute store result score .generatedProduct uiPurchase.ProductID run data get storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
         $data modify storage minecraft:ui generate.purchase.ownership_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).ownership_tag
         $data modify storage minecraft:ui generate.purchase.equipped_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).equipped_tag
 
@@ -2344,13 +2345,13 @@ dir purchase {
                         data modify storage minecraft:ui generate.purchase.price_lore append value ""
                         $data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Or.... ","color":"gray"},{"text":"$(bypass)","italic":false,"color":"#00bd16"},{"text":" as your ","italic":false,"color":"gray"},{"text":"Mojang username","italic":false,"color":"#b65cff"}]]
                     }
-                    data modify storage minecraft:ui generate.purchase.price_lore append value ""
                 }
+                data modify storage minecraft:ui generate.purchase.price_lore append value ""
 
                 data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Purchase Details","italic":false,"color":"gold"}]
-                $data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+
+                data modify storage minecraft:ui generate.purchase.player set from entity @s UUID
                 block { with storage minecraft:ui generate.purchase
-                    $scoreboard players set .generatedProduct uiPurchase.ProductID $(product_id)
                     # default: unavailable
                     data merge storage minecraft:ui {generate:{purchase:{status_text:"Unavailable",status_color:"EC3232"}}}
                     # there IS a normal item/advancement cost
@@ -2358,22 +2359,22 @@ dir purchase {
                         data merge storage minecraft:ui {generate:{purchase:{status_text:"Insufficent Resources",status_color:"EC3232"}}}
 
                         # normal requirements are satisfied
-                        execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run {
+                        execute if entity @s[tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run block { with storage minecraft:ui generate.purchase
                             data merge storage minecraft:ui {generate:{purchase:{status_text:"Click to Purchase...",status_color:"fcff3d"}}}
 
-                            execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
+                            $execute if data storage minecraft:ui generate.purchase.last_click{player:$(player),ability_id:$(ability_id),product_name:"$(product_name)"} if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
                         }
                     }
                     # bypass username matched
-                    execute if score .bypassCheck uiPurchase.Broad matches 0 run {
+                    execute if score .bypassCheck uiPurchase.Broad matches 0 run block { with storage minecraft:ui generate.purchase
                         data merge storage minecraft:ui {generate:{purchase:{status_text:"Click to Purchase...",status_color:"fcff3d"}}}
 
-                        execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
+                        $execute if data storage minecraft:ui generate.purchase.last_click{player:$(player),ability_id:$(ability_id),product_name:"$(product_name)"} if score @s uiPurchase.Confirm matches 1 run data merge storage minecraft:ui {generate:{purchase:{status_text:"Confirm?",status_color:"3cdd31"}}}
                     }
                     block { with storage minecraft:ui generate.purchase
                         $data modify storage minecraft:ui generate.purchase.price_lore append value [["",{"text":"Status: ","italic":false,"color":"gray"},{"text":"$(status_text)","italic":false,"color":"#$(status_color)"}]]
 
-                        execute if score @s uiPurchase.ProductID = .generatedProduct uiPurchase.ProductID if score @s uiPurchase.Confirm matches 1 run {
+                        $execute if data storage minecraft:ui generate.purchase.last_click{player:$(player),ability_id:$(ability_id),product_name:"$(product_name)"} if score @s uiPurchase.Confirm matches 1 run {
                             data modify storage minecraft:ui generate.purchase.price_lore append value ""
                             data modify storage minecraft:ui generate.purchase.price_lore append value [[{"text":"NOTE: This ","italic":false,"color":"gray"},{"text":"CANNOT ","bold":true,"italic":false,"color":"gray"},{"text":"be undone...","italic":false,"color":"gray"}]]
                         }
@@ -2423,18 +2424,25 @@ dir purchase {
     }
 
     function gathered {
-        $execute if score @s uiPurchase.ProductID matches $(product_id) run {
-            scoreboard players add @s uiPurchase.Confirm 1
-            execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
-            execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
+        data modify storage minecraft:ui generate.purchase.player set from entity @s UUID
+
+        block { with storage minecraft:ui generate.purchase
+            $execute if data storage minecraft:ui generate.purchase.last_click{player:$(player),ability_id:$(ability_id),product_name:"$(product_name)"} run {
+                scoreboard players add @s uiPurchase.Confirm 1
+            }
+
+            $execute unless data storage minecraft:ui generate.purchase.last_click{player:$(player),ability_id:$(ability_id),product_name:"$(product_name)"} run {
+                scoreboard players set @s uiPurchase.Confirm 1
+
+                data modify storage minecraft:ui generate.purchase.last_click.player set from storage minecraft:ui generate.purchase.player
+                data modify storage minecraft:ui generate.purchase.last_click.ability_id set from storage minecraft:ui generate.purchase.ability_id
+                data modify storage minecraft:ui generate.purchase.last_click.product_name set from storage minecraft:ui generate.purchase.product_name
+            }
         }
-        $execute unless score @s uiPurchase.ProductID matches $(product_id) run {
-            scoreboard players reset @s uiPurchase.Confirm
-            scoreboard players add @s uiPurchase.Confirm 1
-            execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
-            execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
-        }
-        $scoreboard players set @s uiPurchase.ProductID $(product_id)
+
+        execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
+        execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
+
         tag @s add uiPurchase.Gathered
     }
 
@@ -2464,7 +2472,9 @@ dir purchase {
             }
             $advancement grant @s only server:ability/$(path)
             $tag @s add $(ownership_tag)
+
             scoreboard players reset @s uiPurchase.Confirm
+            data remove storage minecraft:ui generate.purchase.last_click
         }
         playsound minecraft:ui.purchase.confirm player @s ~ ~ ~ 1
     }

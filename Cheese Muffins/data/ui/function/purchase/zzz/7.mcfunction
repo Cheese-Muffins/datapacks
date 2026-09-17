@@ -7,7 +7,8 @@ function ui:purchase/requirement/advancements with storage minecraft:ui generate
 function ui:purchase/requirement/bypass with storage minecraft:ui generate.purchase
 tag @s remove uiPurchase.GenerateLore
 $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name).bypass run function ui:purchase/zzz/8 with storage minecraft:ui generate.purchase
+data modify storage minecraft:ui generate.purchase.price_lore append value ""
 data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Purchase Details","italic":false,"color":"gold"}]
-$data modify storage minecraft:ui generate.purchase.product_id set from storage minecraft:ability index.$(ability_id).product.$(product_name).product_id
+data modify storage minecraft:ui generate.purchase.player set from entity @s UUID
 function ui:purchase/zzz/11 with storage minecraft:ui generate.purchase
 tag @s remove uiPurchase.CostFound

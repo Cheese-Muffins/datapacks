@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-scoreboard players add @s uiPurchase.Confirm 1
-execute if score @s uiPurchase.Confirm matches 1 run playsound minecraft:ui.purchase.ask player @s ~ ~ ~ 1
-execute if score @s uiPurchase.Confirm matches 2 run function ui:purchase/confirm with storage minecraft:ui generate.purchase
+$execute if data storage minecraft:ui generate.purchase.last_click{player:$(player),ability_id:$(ability_id),product_name:"$(product_name)"} run function ui:purchase/zzz/23
+$execute unless data storage minecraft:ui generate.purchase.last_click{player:$(player),ability_id:$(ability_id),product_name:"$(product_name)"} run function ui:purchase/zzz/24
