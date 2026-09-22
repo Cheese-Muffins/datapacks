@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-playsound minecraft:cassette.ui.cycle player @s ~ ~ ~
+playsound minecraft:ui.cycle player @s ~ ~ ~
 function ui:ability/selection/choice/open

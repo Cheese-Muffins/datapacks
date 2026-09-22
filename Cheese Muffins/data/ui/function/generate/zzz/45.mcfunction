@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$execute if entity @s[tag=$(ownership_tag)] run scoreboard players add .skinOwnership uiAbility.SelectionBroad 1
+scoreboard players add .skinTotal uiAbility.SelectionBroad 1
+data modify storage minecraft:ui generate.selection.ownership_tag set from storage minecraft:ui generate.selection.product.skin2.ownership_tag
+function ui:generate/zzz/46 with storage minecraft:ui generate.selection

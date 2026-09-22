@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute if entity @s[tag=$(equipped_tag)] run function ui:generate/zzz/20 with storage minecraft:ui generate.equipped_skin
+$data modify storage minecraft:ui generate.equipped_skin.equipped_tag set from storage minecraft:ability index.$(ability_id).product.skin4.equipped_tag
+function ui:generate/zzz/20 with storage minecraft:ui generate.equipped_skin

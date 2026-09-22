@@ -3,19 +3,22 @@ function on_load minecraft:load{
     
     function ability:generate/index
     function ability:billy/install
+    function ability:yuji/install
     function ability:president/install
 }
 
 dir tick {
     function player {
         execute if entity @s[tag=abilityBilly.User] run function ability:billy/tick/main
+        execute if entity @s[tag=abilityYuji.User] run function ability:yuji/tick/main
     }
 
     dir scenario {
         function index {
             execute if entity @s[tag=scenarioTick.AbilityBilly] run function ability:billy/tick/scenario/core
+            execute if entity @s[tag=scenarioTick.AbilityYuji] run function ability:yuji/tick/scenario/core
 
-            execute if entity @s[tag=!scenarioTick.AbilityBilly] run tag @s remove scenarioTick.Ability
+            execute if entity @s[tag=!scenarioTick.AbilityBilly,tag=!scenarioTick.AbilityYuji] run tag @s remove scenarioTick.Ability
         }
     }
 }
@@ -32,7 +35,7 @@ dir billy {
                 }
             }
 
-            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0,abilityBilly.ToggleOnText=0}] unless entity @s[tag=traitAbility.TimeLocked] run {
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0,abilityBilly.ToggleOnText=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
                 REPEAT (1,3) as i {
                     execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
                 }
@@ -77,11 +80,11 @@ dir billy {
         scoreboard objectives add abilityBilly.PhaseDisconnectZ dummy
 
 
-        function universal:cooldown/8x {name:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
-        function universal:cooldown/8x {name:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:30}
+        function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
+        function universal:ability/setup/cooldown/8x {name:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:30}
         
-        function universal:cooldown/8x {name:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
-        function universal:cooldown/8x {name:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
+        function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
+        function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
     }
 
     function active {
@@ -221,15 +224,15 @@ dir billy {
             }
 
             execute if score @s universalAbility.HotbarSlot matches 1 run block { with storage minecraft:ability billy.hotbar
-                $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                $title @s actionbar [{"text":"\uF895\u05A0\uF85F"},{"text":"\uF867\$(move1)"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF862\u05A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
             }
 
             execute if score @s universalAbility.HotbarSlot matches 2 run block { with storage minecraft:ability billy.hotbar
-                $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                $title @s actionbar [{"text":"\uF895\u05A0\uF85F"},{"text":"\uF867\$(move1)"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF862\u05A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
             }
-            
+
             execute if score @s universalAbility.HotbarSlot matches 3 run block { with storage minecraft:ability billy.hotbar
-                $title @s actionbar [{"text":"\uF807\u05A0\uF817"},{"text":"\uF820\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF811\u05A1"},{"text":"\uF806\u90A0"},{"text":"\uF808$(time)","color":"yellow"}]
+                $title @s actionbar [{"text":"\uF895\u05A0\uF85F"},{"text":"\uF867\$(move1)"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF862\u05A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
             }
         }
 
@@ -407,6 +410,286 @@ dir billy {
     }
 }
 
+dir yuji {
+    dir tick {
+        function main {
+            execute if score @s universalAbility.ToggleState matches 1 run function ability:yuji/active
+            REPEAT (1,3) as i {
+                execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
+                    scoreboard players reset @s universalAbility.MoveTrigger<%i%>
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:yuji/moves/<%i%>/core
+                }
+            }
+
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
+                REPEAT (1,3) as i {
+                    execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
+                }
+
+                execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
+                execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+            }
+        }
+
+        dir scenario {
+            function core {
+                execute if score @s abilityYuji.NaturalTalentBuff matches 1.. run function ability:yuji/tick/scenario/natural_talent
+
+                execute unless entity @s[scores={abilityYuji.NaturalTalentBuff=1..}] run tag @s remove scenarioTick.AbilityYuji
+            }
+
+            function natural_talent {
+                scoreboard players remove @s abilityYuji.NaturalTalentBuff 1
+                execute if score @s abilityYuji.NaturalTalentBuff matches 0 run {
+                    function universal:attribute/revoke {type:"minecraft:movement_speed",path:"ability:yuji.natural_talent"}
+                    function universal:attribute/revoke {type:"minecraft:jump_strength",path:"ability:yuji.natural_talent"}
+                    scoreboard players reset @s abilityYuji.NaturalTalentBuff
+                }
+            }
+        }
+    }
+
+    function install {
+        scoreboard objectives add abilityYuji.NaturalTalentBuff dummy
+
+        function universal:ability/setup/cooldown/10x {name:"Yuji",storage:"yuji",path:"1a",move:1,cooldown:30}
+        function universal:ability/setup/cooldown/10x {name:"Sukuna_King",storage:"yuji",path:"1b",move:1,cooldown:30}
+        function universal:ability/setup/cooldown/10x {name:"Sukuna_Fuga",storage:"yuji",path:"1c",move:1,cooldown:30}
+        
+        function universal:ability/setup/cooldown/10x {name:"Yuji",storage:"yuji",path:"2a",move:2,cooldown:30}
+        function universal:ability/setup/cooldown/10x {name:"Sukuna",storage:"yuji",path:"2b",move:2,cooldown:30}
+
+        function universal:ability/setup/cooldown/10x {name:"Yuji",storage:"yuji",path:"3a",move:3,cooldown:30}
+        function universal:ability/setup/cooldown/10x {name:"Sukuna",storage:"yuji",path:"3b",move:3,cooldown:30}
+
+        function universal:ability/setup/cooldown/10x {name:"Yuji",storage:"yuji",path:"4a",move:4,cooldown:30}
+        function universal:ability/setup/cooldown/10x {name:"Sukuna",storage:"yuji",path:"4b",move:4,cooldown:30}
+    }
+
+    function active {
+        function ability:yuji/hotbar/main
+    }
+
+    dir moves {
+        function setup {
+            $execute rotated ~ 0 run function aj:yuji/summon {args:{animation: '$(animation)', start_animation: true}}
+                
+            execute store result storage minecraft:ability yuji.id int 1 run scoreboard players get @s universalAbility.ID
+            execute as @n[type=minecraft:item_display,tag=aj.yuji.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability yuji
+                $scoreboard players set @s universalAbility.ID $(id)
+            }
+
+            visibility disable @s @a ignore_perspective render_passengers
+            function universal:ability/rig/stable_player_display/main {branch:"yuji"}
+            function universal:ability/rig/mount/player {user:"abilityYuji.User",rig:"yuji",objective:"universalAbility.ID"}
+            function universal:ability/rig/visibility {target:"aj.yuji.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.yuji.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+        }
+
+        dir 1 {
+            function core {
+                execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
+                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                function universal:error_messages/constant
+
+                scoreboard players set @s universalAbility.HotbarSlot 1
+                execute unless score @s universalError.FailReturn matches 1 run function ability:yuji/moves/1/pass
+                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Natural Talent",unicode:"u50A1"}
+            }
+
+            function pass {
+                # setup
+                function ability:yuji/moves/setup {rig:"yuji",animation:'natural_talent'}
+
+                # restraints
+                function universal:ability/restraint/cooldown {name:"Yuji",move:1}
+                function universal:ability/restraint/cancelable {move:1}
+                tag @s add universalAbility.Animating
+            }
+
+            function buff {
+                data merge storage minecraft:universal {attribute:{scenario:"Ability",objective:"abilityYuji.NaturalTalentBuff",duration:60,extra:"tag @s add scenarioTick.AbilityYuji"}}
+                function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:yuji.natural_talent",strength:0.25,operation:"add_multiplied_base"}
+                function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:yuji.natural_talent",strength:0.5,operation:"add_multiplied_base"}
+                effect give @s minecraft:haste 60 1 true
+            }
+        }
+
+        dir reset {
+            function all {
+                function universal:ability/rig/as_player {player:"abilityYuji.User",objective:"universalAbility.ID",output:"function ability:yuji/moves/reset/player"}
+                function ability:yuji/moves/reset/rig
+            }
+
+            function rig {
+                function aj:yuji/remove/all
+            }
+
+            function player {
+                visibility enable @s @a
+                function universal:ability/revoke/cancelable {player:"abilityBilly.User"}
+                tag @s remove universalAbility.Animating
+            }
+        }
+    }
+
+    dir hotbar {
+        function main {
+            function ability:yuji/hotbar/meter with storage minecraft:ability yuji.awakening
+
+            # base mode
+            execute unless entity @s[tag=abilityYuji.SukunaAwakening] run {
+                function ability:yuji/hotbar/slot/1 with storage minecraft:ability yuji.cooldown.move1a
+                function ability:yuji/hotbar/slot/2 with storage minecraft:ability yuji.cooldown.move2a
+                function ability:yuji/hotbar/slot/3a with storage minecraft:ability yuji.cooldown.move3a
+
+                # scoreboard players operation @s customUniversal.Move1Cooldown = @s customYuji.SplitMove1Natural_Talent
+                # scoreboard players operation @s customUniversal.Move2Cooldown = @s customYuji.SplitMove2Majin_Kick
+                # scoreboard players operation @s customUniversal.Move3Cooldown = @s customYuji.SplitMove3Black_Flash_Assault
+
+                REPEAT (1,3) as i {
+                    execute if score @s universalAbility.HotbarSlot matches <%i%> run {
+                        function universal:hotbar/time {ability:"yuji",slot:<%i%>}
+                    }
+                }
+
+                block { with storage minecraft:ability yuji.hotbar
+                    $title @s actionbar [{"text":"\uF869\uF895\u02A0"},{"text":"\uF87C\uF84C"},{"text":"\uF863\$(move1)"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF828\$(awakening)"},{"text":"\uF867\u02A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
+                }
+            }
+
+            # sukuna mode
+            execute if entity @s[tag=abilityYuji.SukunaAwakening] run {
+                scoreboard players operation @s customUniversal.Move1Cooldown = @s customYuji.SplitMove1King_of_Curses
+                scoreboard players operation @s customUniversal.Move2Cooldown = @s customYuji.SplitMove2Cleave
+                scoreboard players operation @s customUniversal.Move3Cooldown = @s customYuji.SplitMove3Dismantle
+                function custom:abilities/yuji/hotbar/slot/1 with storage minecraft:custom yuji.cooldowns.move1b
+                function custom:abilities/yuji/hotbar/slot/2 with storage minecraft:custom yuji.cooldowns.move2b
+                function custom:abilities/yuji/hotbar/slot/3b with storage minecraft:custom yuji.cooldowns.move3b
+                function custom:abilities/yuji/hotbar/slot/4 with storage minecraft:custom yuji.cooldowns.move4
+
+                REPEAT (1,3) as i {
+                    execute if score @s customUniversal.ActiveHotbar matches <%i%> run {
+                        function custom:universal/hotbar/time {ability:"yuji",selected:<%i%>}
+                    }
+                }
+
+                block { with storage minecraft:custom yuji.hotbar
+                    $title @s actionbar [{"text":"\uF820\uF807\u02A0"},{"text":"\uF839\uF816"},{"text":"\uF800\$(move1)"},{"text":"\uF800\$(move2)"},{"text":"\uF800\$(move3)"},{"text":"\uF800\$(move4)"},{"text":"\uF840\$(awakening)"},{"text":"\uF841\u02A1"},{"text":"\uF806\u02A3"},{"text":"\uF808$(time)","color":"yellow"}]
+                }
+            }
+        }
+
+        dir slot {
+            function 1 {
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D1"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D2"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D3"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D4"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D5"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D6"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D7"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D8"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02D9"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E0"
+                $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E1"
+            }
+
+            function 2 {
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E2"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E3"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E4"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E5"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E6"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E7"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E8"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02E9"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F0"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F1"
+                $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F2"
+            }
+
+            function 3a {
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F3"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F4"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F5"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F6"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F7"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F8"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F9"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0200"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0201"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0202"
+                $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0203"
+            }
+
+            function 3b {
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0204"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0205"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0206"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0207"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0208"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0209"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0210"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0211"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0212"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0213"
+                $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0214"
+            }
+
+            function 4 {
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0215"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0216"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0217"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0218"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0219"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0220"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0221"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0222"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0223"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0224"
+                $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0225"
+            }
+        }
+
+        function meter {
+            $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B9"
+            $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B8"
+            $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B5"
+            $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B4"
+            $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B3"
+            $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B2"
+            $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B1"
+            $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02B0"
+            $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02A9"
+            $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02A8"
+            $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02A7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02A6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability yuji.hotbar.awakening set value "u02A5"
+            execute unless score @s universalAbility.AwakeningDuration matches 1.. run {
+                data modify storage minecraft:ability yuji.hotbar.awakening set value "u02A4"
+                tag @s remove abilityYuji.SukunaAwakening
+            }
+        }
+    }
+
+    dir toggle {
+        function on {
+            playsound minecraft:ability.yuji.toggle_on player @s ~ ~ ~ 1
+            scoreboard players set @s universalAbility.ToggleDelay 10
+        }
+
+        function off {
+            title @s actionbar ""
+            playsound minecraft:ability.yuji.toggle_off player @s ~ ~ ~ 0.5
+
+            scoreboard players set @s universalAbility.ToggleDelay 10
+        }
+    }
+}
+
 dir president {
     function install {
         scoreboard objectives add abilityPresident.DiscoveredInteractions dummy
@@ -447,6 +730,60 @@ dir generate {
         $execute if score .DifficultyRating uiAbility.SelectionBroad matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐",difficulty_rating_2:"⭐⭐",difficulty_rating_color:"light_purple"}}}
         $execute if score .DifficultyRating uiAbility.SelectionBroad matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐⭐",difficulty_rating_2:"⭐",difficulty_rating_color:"light_purple"}}}
         $execute if score .DifficultyRating uiAbility.SelectionBroad matches 5 run data merge storage minecraft:ability {index:{$(ability_id):{difficulty_rating_1:"⭐⭐⭐⭐⭐",difficulty_rating_2:"",difficulty_rating_color:"yellow"}}}
+    }
+
+    function death_message {
+        data remove storage minecraft:ui generate.death_message
+        data modify storage minecraft:ui generate.death_message set value {}
+
+        $data modify storage minecraft:ui generate.death_message.ability set value "$(ability)"
+        $data modify storage minecraft:ui generate.death_message.move set value $(move)
+        $data modify storage minecraft:ui generate.death_message.variation set value $(variation)
+
+        block { with storage minecraft:ui generate.death_message
+            data modify storage minecraft:ui generate.death_message.lore set value []
+
+            $data modify storage minecraft:ui generate.death_message.lore append from storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation).description[]
+
+            data modify storage minecraft:ui generate.death_message.lore append value ""
+
+            $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation).cooldown
+
+            scoreboard players operation .cooldownMinutes uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+            scoreboard players operation .cooldownSeconds uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
+
+            function universal:math/divide {value:60,score:".cooldownMinutes",objective:"uiAbility.Moveset"}
+            function universal:math/modulo {value:60,score:".cooldownSeconds",objective:"uiAbility.Moveset"}
+
+            execute store result storage minecraft:ui generate.death_message.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes uiAbility.Moveset
+            execute store result storage minecraft:ui generate.death_message.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds uiAbility.Moveset
+
+            data modify storage minecraft:ui generate.death_message.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
+
+            execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.death_message
+                $data modify storage minecraft:ui generate.death_message.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
+            }
+
+            execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.death_message
+                $data modify storage minecraft:ui generate.death_message.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
+            }
+
+            scoreboard players reset .cooldownMinutes uiAbility.Moveset
+            scoreboard players reset .cooldownSeconds uiAbility.Moveset
+            scoreboard players reset .cooldownRaw uiAbility.Moveset
+
+            data modify storage minecraft:ui generate.death_message.cancelable_text set value "Yes"
+            data modify storage minecraft:ui generate.death_message.cancelable_color set value "990000"
+
+            $execute if data storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation){cancelable:false} run data modify storage minecraft:ui generate.death_message.cancelable_text set value "No"
+            $execute if data storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation){cancelable:false} run data modify storage minecraft:ui generate.death_message.cancelable_color set value "00ff40"
+
+            block { with storage minecraft:ui generate.death_message
+                $data modify storage minecraft:ui generate.death_message.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
+            }
+
+            $data modify storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation).generated set from storage minecraft:ui generate.death_message.lore
+        }
     }
 
     function index {
@@ -507,22 +844,56 @@ dir generate {
                     model:"minecraft:interactables/ability/billy/default_skin",\
                     ownership_tag:"abilityBilly.Ownership",\
                     equipped_tag:"abilityBilly.User",\
-                    bypass:"Jaboble_Head"\
+                    bypass:"BaconEater"\
                 }\
             }\
         }}}
 
         # 2 - Mr. President
-        data merge storage minecraft:ability {index:{2:{subtext:"I'll Fulfill My Promise",obtainment_rating_raw:1,versatility_rating_raw:5,difficulty_rating_raw:3,secret_interactions:1,skins:1}}}
-        data merge storage minecraft:ability {index:{2:{model:"minecraft:interactables/ability/president/default_skin",path:"president",real_path:"President",proper_name:"Mr. President",ability_id:2}}}
-        data merge storage minecraft:ability {index:{2:{name:[{"text":"M","italic":false,"color":"#fcff47"},{"text":"r","italic":false,"color":"#fafd44"},{"text":".","italic":false,"color":"#f8fb41"},{"text":" ","italic":false,"color":"#f6f93e"},{"text":"P","italic":false,"color":"#f4f73a"},{"text":"r","italic":false,"color":"#f2f537"},{"text":"e","italic":false,"color":"#f0f434"},{"text":"s","italic":false,"color":"#eef231"},{"text":"i","italic":false,"color":"#ecf02e"},{"text":"d","italic":false,"color":"#eaee2b"},{"text":"e","italic":false,"color":"#e8ec27"},{"text":"n","italic":false,"color":"#e6ea24"},{"text":"t","italic":false,"color":"#e4e821"}]}}}
-        data merge storage minecraft:ability {index:{2:{passive:[{"text":"B","italic":false,"color":"#7afff6"}]}}}
+        data merge storage minecraft:ability {index:{2:{\
+            ability_id:2,\
+            path:"president",\
+            real_path:"President",\
+            proper_name:"Mr. President",\
+            obtainment_rating_raw:1,\
+            versatility_rating_raw:5,\
+            difficulty_rating_raw:3,\
+            passive:[{"text":"B","italic":false,"color":"#7afff6"}],\
+            product:{\
+                ability:{\
+                    type:"ability",\
+                    name:[{"text":"M","italic":false,"color":"#fcff47"},{"text":"r","italic":false,"color":"#fafd44"},{"text":".","italic":false,"color":"#f8fb41"},{"text":" ","italic":false,"color":"#f6f93e"},{"text":"P","italic":false,"color":"#f4f73a"},{"text":"r","italic":false,"color":"#f2f537"},{"text":"e","italic":false,"color":"#f0f434"},{"text":"s","italic":false,"color":"#eef231"},{"text":"i","italic":false,"color":"#ecf02e"},{"text":"d","italic":false,"color":"#eaee2b"},{"text":"e","italic":false,"color":"#e8ec27"},{"text":"n","italic":false,"color":"#e6ea24"},{"text":"t","italic":false,"color":"#e4e821"}],\
+                    subtext:"I'll Fulfill My Promise",\
+                    model:"minecraft:interactables/ability/president/default_skin",\
+                    ownership_tag:"abilityPresident.Ownership",\
+                    equipped_tag:"abilityPresident.User",\
+                    bypass:"JoeBingleBarf"\
+                }\
+            }\
+        }}}
 
         # 3 - The Avatar
-        data merge storage minecraft:ability {index:{3:{subtext:"The Past Can be a Great Teacher",obtainment_rating_raw:2,versatility_rating_raw:5,difficulty_rating_raw:2,secret_interactions:1,skins:2}}}
-        data merge storage minecraft:ability {index:{3:{model:"minecraft:interactables/ability/avatar/default_skin",path:"avatar",real_path:"Avatar",proper_name:"The Avatar",ability_id:3}}}
-        data merge storage minecraft:ability {index:{3:{name:[{"text":"T","italic":false,"color":"red"},{"text":"he","italic":false,"color":"gold"},{"text":" ","italic":false,"color":"yellow"},{"text":"A","italic":false,"color":"yellow"},{"text":"va","italic":false,"color":"green"},{"text":"t","italic":false,"color":"blue"},{"text":"a","italic":false,"color":"blue"},{"text":"r","italic":false,"color":"light_purple"}]}}}
-        data merge storage minecraft:ability {index:{3:{passive:[{"text":"B","italic":false,"color":"#7afff6"}]}}}
+        data merge storage minecraft:ability {index:{3:{\
+            ability_id:3,\
+            path:"avatar",\
+            real_path:"Avatar",\
+            proper_name:"The Avatar",\
+            obtainment_rating_raw:2,\
+            versatility_rating_raw:5,\
+            difficulty_rating_raw:2,\
+            passive:[{"text":"B","italic":false,"color":"#7afff6"}],\
+            product:{\
+                ability:{\
+                    type:"ability",\
+                    name:[{"text":"T","italic":false,"color":"red"},{"text":"he","italic":false,"color":"gold"},{"text":" ","italic":false,"color":"yellow"},{"text":"A","italic":false,"color":"yellow"},{"text":"va","italic":false,"color":"green"},{"text":"t","italic":false,"color":"blue"},{"text":"a","italic":false,"color":"blue"},{"text":"r","italic":false,"color":"light_purple"}],\
+                    subtext:"The Past Can be a Great Teacher",\
+                    model:"minecraft:interactables/ability/avatar/default_skin",\
+                    ownership_tag:"abilityAvatar.Ownership",\
+                    equipped_tag:"abilityAvatar.User",\
+                    bypass:"35ShadowGames"\
+                }\
+            }\
+        }}}
 
         # 4 - The World
         data merge storage minecraft:ability {index:{4:{\
@@ -671,7 +1042,109 @@ dir generate {
             }\
         }}}
 
-        REPEAT (1,4) as i {
+        # 5 - Yuji Itadori
+        data merge storage minecraft:ability {index:{5:{\
+            ability_id:5,\
+            path:"yuji",\
+            real_path:"Yuji",\
+            proper_name:"Yuji Itadori",\
+            obtainment_rating_raw:4,\
+            versatility_rating_raw:3,\
+            difficulty_rating_raw:5,\
+            passive:[["",{"text":"Black Flash","italic":false,"color":"#e2a3ff"},{"text":" can activate with a ","italic":false,"color":"gray"},{"text":"small chance","italic":false,"color":"#ffbe4d"}],["",{"text":"following every ","italic":false,"color":"gray"},{"text":"melee attack","italic":false,"color":"#ff5252"},{"text":" on an entity, dealing","italic":false,"color":"gray"}],["",{"text":"double damage","italic":false,"color":"#d11f00"},{"text":" on the victim. Following the ","italic":false,"color":"gray"},{"text":"first","italic":false,"color":"#a3ffd7"}],["",{"text":"activation,","italic":false,"color":"#a3ffd7"},{"text":" the chance of landing a ","italic":false,"color":"gray"},{"text":"subsequent","italic":false,"color":"#db99d7"}],["",{"text":"one ","italic":false,"color":"gray"},{"text":"increases.","italic":false,"color":"#62b4f3"}],"",["",{"text":"Binding Vow","italic":false,"color":"#e2a3ff"},{"text":" activates when ","italic":false,"color":"gray"},{"text":"dropping","italic":false,"color":"#ef2e2e"},{"text":" beneath","italic":false,"color":"gray"}],["",{"text":"4 hp","italic":false,"color":"#ffbe4d"},{"text":" will cause the user to instantly ","italic":false,"color":"gray"},{"text":"regain health","italic":false,"color":"#e100ff"}],["",{"text":"at the cost of losing ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"#fff93d"},{"text":"l","italic":false,"color":"#ffe93a"},{"text":"e","italic":false,"color":"#ffda36"},{"text":"a","italic":false,"color":"#ffca33"},{"text":"v","italic":false,"color":"#ffba30"},{"text":"e ","italic":false,"color":"#ffab2c"},{"text":"for ","italic":false,"color":"gray"},{"text":"2m","italic":false,"color":"#ffbe4d"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Health Restoration: ","italic":false,"color":"gray"},{"text":"5hp","italic":false,"color":"#6aff57"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"3m","italic":false,"color":"#ff2929"}],"",[{"text":"Awakening: Ryomen Sukuna","italic":false,"color":"#99e0ff"}],[{"text":"this needs to be updated ^^^","bold":true,"italic":false,"color":"gray"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Duration: ","italic":false,"color":"gray"},{"text":"3m 15s","italic":false,"color":"#6aff57"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Passive: ","italic":false,"color":"gray"},{"text":"Black Flash","italic":false,"color":"#e2a3ff"},{"text":" -> ","italic":false,"color":"gray"},{"text":"Binding Vow","italic":false,"color":"#e2a3ff"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Move #1: ","italic":false,"color":"gray"},{"text":"N","italic":false,"color":"#a3ff66"},{"text":"a","italic":false,"color":"#a0fe61"},{"text":"t","italic":false,"color":"#9cfd5c"},{"text":"u","italic":false,"color":"#99fc57"},{"text":"r","italic":false,"color":"#96fb52"},{"text":"a","italic":false,"color":"#92fa4d"},{"text":"l","italic":false,"color":"#8ff948"},{"text":" ","italic":false,"color":"#8cf844"},{"text":"T","italic":false,"color":"#89f73f"},{"text":"a","italic":false,"color":"#85f63a"},{"text":"l","italic":false,"color":"#82f535"},{"text":"e","italic":false,"color":"#7ff430"},{"text":"n","italic":false,"color":"#7bf32b"},{"text":"t","italic":false,"color":"#78f226"},{"text":" -> ","italic":false,"color":"gray"},{"text":"K","italic":false,"color":"#ff7070"},{"text":"i","italic":false,"color":"#ff7078"},{"text":"n","italic":false,"color":"#ff707f"},{"text":"g","italic":false,"color":"#ff7087"},{"text":" ","italic":false,"color":"#ff708e"},{"text":"o","italic":false,"color":"#ff7096"},{"text":"f","italic":false,"color":"#ff709d"},{"text":" ","italic":false,"color":"#ff70a5"},{"text":"C","italic":false,"color":"#ff70ac"},{"text":"u","italic":false,"color":"#ff70b4"},{"text":"r","italic":false,"color":"#ff70bb"},{"text":"s","italic":false,"color":"#ff70c3"},{"text":"e","italic":false,"color":"#ff70ca"},{"text":"s","italic":false,"color":"#ff70d2"},{"text":" / ","italic":false,"color":"gray"},{"text":"F","italic":false,"color":"#ff7e05"},{"text":"u","italic":false,"color":"#ff5605"},{"text":"g","italic":false,"color":"#ff2d05"},{"text":"a","italic":false,"color":"#ff0505"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Move #2: ","italic":false,"color":"gray"},{"text":"Majin Kick","italic":false,"color":"#fd3e30"},{"text":" -> ","italic":false,"color":"gray"},{"text":"C","italic":false,"color":"#fff93d"},{"text":"l","italic":false,"color":"#ffe93a"},{"text":"e","italic":false,"color":"#ffda36"},{"text":"a","italic":false,"color":"#ffca33"},{"text":"v","italic":false,"color":"#ffba30"},{"text":"e","italic":false,"color":"#ffab2c"}],["",{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Move #3: ","italic":false,"color":"gray"},{"text":"B","italic":false,"color":"#4dacff"},{"text":"l","italic":false,"color":"#4da8ff"},{"text":"a","italic":false,"color":"#4da3ff"},{"text":"c","italic":false,"color":"#4d9fff"},{"text":"k","italic":false,"color":"#4d9aff"},{"text":" ","italic":false,"color":"#4d96ff"},{"text":"F","italic":false,"color":"#4d91ff"},{"text":"l","italic":false,"color":"#4d8dff"},{"text":"a","italic":false,"color":"#4d89ff"},{"text":"s","italic":false,"color":"#4d84ff"},{"text":"h","italic":false,"color":"#4d80ff"},{"text":":","italic":false,"color":"#4d7bff"},{"text":" ","italic":false,"color":"#4d77ff"},{"text":"A","italic":false,"color":"#4d73ff"},{"text":"s","italic":false,"color":"#4d6eff"},{"text":"s","italic":false,"color":"#4d6aff"},{"text":"a","italic":false,"color":"#4d65ff"},{"text":"u","italic":false,"color":"#4d61ff"},{"text":"l","italic":false,"color":"#4d5cff"},{"text":"t","italic":false,"color":"#4d58ff"},{"text":" -> ","italic":false,"color":"gray"},{"text":"D","italic":false,"color":"#ff8080"},{"text":"i","italic":false,"color":"#ff9180"},{"text":"s","italic":false,"color":"#ffa280"},{"text":"m","italic":false,"color":"#ffb280"},{"text":"an","italic":false,"color":"#ffc380"},{"text":"t","italic":false,"color":"#ffad80"},{"text":"l","italic":false,"color":"#ff9680"},{"text":"e","italic":false,"color":"#ff8080"}],["",{"text":"+ ","italic":false,"color":"#5c5c5c"},{"text":"Move #4: ","italic":false,"color":"gray"},{"text":"D","italic":false,"color":"#ff0000"},{"text":"o","italic":false,"color":"#ff0400"},{"text":"m","italic":false,"color":"#ff0700"},{"text":"a","italic":false,"color":"#ff0b00"},{"text":"i","italic":false,"color":"#ff0e00"},{"text":"n","italic":false,"color":"#ff1200"},{"text":" ","italic":false,"color":"#ff1600"},{"text":"E","italic":false,"color":"#ff1900"},{"text":"x","italic":false,"color":"#ff1d00"},{"text":"p","italic":false,"color":"#ff2100"},{"text":"a","italic":false,"color":"#ff2400"},{"text":"n","italic":false,"color":"#ff2800"},{"text":"s","italic":false,"color":"#ff2b00"},{"text":"i","italic":false,"color":"#ff2f00"},{"text":"o","italic":false,"color":"#ff3300"},{"text":"n","italic":false,"color":"#ff3600"},{"text":":","italic":false,"color":"#ff3a00"},{"text":" ","italic":false,"color":"#ff3e00"},{"text":"M","italic":false,"color":"#ff4100"},{"text":"a","italic":false,"color":"#ff4500"},{"text":"l","italic":false,"color":"#ff4800"},{"text":"e","italic":false,"color":"#ff4c00"},{"text":"v","italic":false,"color":"#ff5000"},{"text":"o","italic":false,"color":"#ff5300"},{"text":"l","italic":false,"color":"#ff5700"},{"text":"e","italic":false,"color":"#ff5a00"},{"text":"n","italic":false,"color":"#ff5e00"},{"text":"t","italic":false,"color":"#ff6200"},{"text":" ","italic":false,"color":"#ff6500"},{"text":"S","italic":false,"color":"#ff6900"},{"text":"h","italic":false,"color":"#ff6d00"},{"text":"r","italic":false,"color":"#ff7000"},{"text":"i","italic":false,"color":"#ff7400"},{"text":"n","italic":false,"color":"#ff7700"},{"text":"e","italic":false,"color":"#ff7b00"}]],\
+            moveset:{\
+                slot1:{\
+                    move1:{\
+                        name:[{"text":"Time","italic":false,"color":"#7081ff"},{"text":"skip","italic":false,"color":"#4dc3ff"}],\
+                        description:[[{"text":"Blink","italic":false,"color":"#bc57ff"},{"text":" forwards ","italic":false,"color":"gray"},{"text":"11m","italic":false,"color":"#ffbe4d"},{"text":" in the direction you're","italic":false,"color":"gray"}],[{"text":"facing. This move can be ","italic":false,"color":"gray"},{"text":"activated whilst","italic":false,"color":"#9ef9ff"}],[{"text":"using other moves.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timeskip",\
+                        cooldown:9,\
+                        cancelable:false\
+                    },\
+                    move2:{\
+                        name:[{"text":"T","italic":false,"color":"#9d00e6"},{"text":"h","italic":false,"color":"#a30ce9"},{"text":"e","italic":false,"color":"#a918ec"},{"text":" ","italic":false,"color":"#af24ef"},{"text":"W","italic":false,"color":"#b531f3"},{"text":"o","italic":false,"color":"#bb3df6"},{"text":"r","italic":false,"color":"#c149f9"},{"text":"l","italic":false,"color":"#c755fc"},{"text":"d","italic":false,"color":"#cd61ff"}],\
+                        description:[[{"text":"Following a ","italic":false,"color":"gray"},{"text":"brief windup,","italic":false,"color":"#ff5252"},{"text":" unleash your ","italic":false,"color":"gray"},{"text":"true","italic":false,"color":"#ff94ed"}],[{"text":"power","italic":false,"color":"#ff94ed"},{"text":" completely ","italic":false,"color":"gray"},{"text":"halting time","italic":false,"color":"#61d0ff"},{"text":" for the","italic":false,"color":"gray"}],[{"text":"surrounding ","italic":false,"color":"gray"},{"text":"40m.","italic":false,"color":"#ffbe4d"}],[{"text":" o Duration: ","italic":false,"color":"gray"},{"text":"9s","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timestop",\
+                        cooldown:50,\
+                        cancelable:true\
+                    }\
+                },\
+                slot2:{\
+                    move1:{\
+                        name:[{"text":"K","italic":false,"color":"#c70000"},{"text":"n","italic":false,"color":"#cd0707"},{"text":"i","italic":false,"color":"#d20d0d"},{"text":"f","italic":false,"color":"#d81414"},{"text":"e","italic":false,"color":"#dd1a1a"},{"text":" ","italic":false,"color":"#e32121"},{"text":"T","italic":false,"color":"#e92828"},{"text":"h","italic":false,"color":"#ee2e2e"},{"text":"r","italic":false,"color":"#f43535"},{"text":"o","italic":false,"color":"#f93b3b"},{"text":"w","italic":false,"color":"#ff4242"}],\
+                        description:[[{"text":"Toss ","italic":false,"color":"gray"},{"text":"3 knives","italic":false,"color":"#ffbe4d"},{"text":" ahead of where you're looking","italic":false,"color":"gray"}],[{"text":"striking","italic":false,"color":"#ff2929"},{"text":" anyone in their path. Collision with","italic":false,"color":"gray"}],[{"text":"terrain will stop movement. ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"#e2a3ff"}],[{"text":"increases the ","italic":false,"color":"gray"},{"text":"total","italic":false,"color":"#a7ff8f"},{"text":" number of ","italic":false,"color":"gray"},{"text":"tossed ","italic":false,"color":"gray"},{"text":"knives","italic":false,"color":"#ffbe4d"}],[{"text":"to 5.","italic":false,"color":"#ffbe4d"}],[{"text":"o Projectile Speed: ","italic":false,"color":"gray"},{"text":"10m/s","italic":false,"color":"#20c200"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/knife_throw",\
+                        cooldown:17,\
+                        cancelable:true\
+                    }\
+                },\
+                slot3:{\
+                    move1:{\
+                        name:[{"text":"Barrage","italic":false,"color":"#d699ff"}],\
+                        description:[[{"text":"Send out a ","italic":false,"color":"gray"},{"text":"flurry","italic":false,"color":"#f4a3ff"},{"text":" of punches completely","italic":false,"color":"gray"}],[{"text":"immobilizing","italic":false,"color":"white"},{"text":" and ","italic":false,"color":"gray"},{"text":"damaging ","italic":false,"color":"#ff2929"},{"text":"anything in their","italic":false,"color":"gray"}],[{"text":"path. The ","italic":false,"color":"gray"},{"text":"finishing punch","italic":false,"color":"#fff957"},{"text":" in the chain will","italic":false,"color":"gray"}],[{"text":"launch","italic":false,"color":"#00b4cc"},{"text":" victims backwards dealing","italic":false,"color":"gray"}],[{"text":"additional damage.","italic":false,"color":"#ff2929"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"4s","italic":false,"color":"#20c200"}],[{"text":"o Regular Damage: ","italic":false,"color":"gray"},{"text":"2hp/0.5s","italic":false,"color":"#20c200"}],[{"text":"o Final Punch Damage: ","italic":false,"color":"gray"},{"text":"5","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/barrage",\
+                        cooldown:23,\
+                        cancelable:false\
+                    }\
+                },\
+                slot4:{\
+                    move1:{\
+                        name:[{"text":"F","italic":false,"color":"#a3d0ff"},{"text":"l","italic":false,"color":"#a3d9fd"},{"text":"u","italic":false,"color":"#a3e3fb"},{"text":"r","italic":false,"color":"#a3ecf8"},{"text":"r","italic":false,"color":"#a3f6f6"},{"text":"y","italic":false,"color":"#a3fff4"}],\
+                        description:[["",{"text":"Strike a pose for a ","italic":false,"color":"gray"},{"text":"short duration,","italic":false,"color":"#ff7e75"},{"text":" waiting","italic":false,"color":"gray"}],["",{"text":"for an entity to ","italic":false,"color":"gray"},{"text":"strike.","italic":false,"color":"#ff2929"}],["",{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1.5s","italic":false,"color":"#c20000"}],"",[{"text":"Damaged by an Entity","italic":false,"color":"light_purple"}],[{"text":"Spawn a dome of knives on the attacking","italic":false,"color":"gray"}],["",{"text":"entity, ","italic":false,"color":"gray"},{"text":"dealing damage","italic":false,"color":"#ff2929"},{"text":" and inflicting","italic":false,"color":"gray"}],["",{"text":"deadly bleeding","italic":false,"color":"#ff2929"},{"text":" for ","italic":false,"color":"gray"},{"text":"5s.","italic":false,"color":"#ffbe4d"}],["",{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"6","italic":false,"color":"#20c200"}],["",{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.5x","italic":false,"color":"#c20000"}],["",{"text":"o ","italic":false,"color":"gray"},{"text":"Bleed III","italic":false,"color":"#c20000"}],"",[{"text":"Duration Expired","italic":false,"color":"light_purple"}],["",{"text":"Become ","italic":false,"color":"gray"},{"text":"immobilized","italic":false,"color":"white"},{"text":" for ","italic":false,"color":"gray"},{"text":"1s","italic":false,"color":"#ffbe4d"},{"text":" following the","italic":false,"color":"gray"}],["",{"text":"expiration","italic":false,"color":"#d17aff"},{"text":" of this cast.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/flurry",\
+                        cooldown:32,\
+                        cancelable:true\
+                    }\
+                }\
+            },\
+            secret:{\
+                interaction1:{\
+                    hint:[["",{"text":"What kind of ","color":"gray"},{"text":"woman","color":"#b8ffe4"},{"text":" is your type?","color":"gray"}]],\
+                    name:[{"text":"Todo Aoi","italic":false,"color":"#47fff3"}],\
+                    description:[[{"text":"idk yet","italic":false,"color":"gray"}]],\
+                    required_tag:"abilityYuji.SecretInteractionTodoAoi"\
+                },\
+                interaction2:{\
+                    hint:[[{"text":"You need to ","italic":false,"color":"gray"},{"text":"enter","italic":false,"color":"#e8a8ff"},{"text":" the ","italic":false,"color":"gray"},{"text":"zone","italic":false,"color":"#ff4242"}]],\
+                    name:[{"text":"R","italic":false,"color":"#f92424"},{"text":"e","italic":false,"color":"#ef1d1d"},{"text":"p","italic":false,"color":"#e51616"},{"text":"e","italic":false,"color":"#db0e0e"},{"text":"t","italic":false,"color":"#d10707"},{"text":"i","italic":false,"color":"#c70000"},{"text":"t","italic":false,"color":"#c70000"},{"text":"i","italic":false,"color":"#d10707"},{"text":"v","italic":false,"color":"#db0e0e"},{"text":"e","italic":false,"color":"#e51616"},{"text":" ","italic":false,"color":"#ef1d1d"},{"text":"B","italic":false,"color":"#f92424"},{"text":"l","italic":false,"color":"#f92424"},{"text":"a","italic":false,"color":"#ed1b1b"},{"text":"c","italic":false,"color":"#e01212"},{"text":"k","italic":false,"color":"#d40909"},{"text":" ","italic":false,"color":"#c70000"},{"text":"F","italic":false,"color":"#c70000"},{"text":"l","italic":false,"color":"#d40909"},{"text":"a","italic":false,"color":"#e01212"},{"text":"s","italic":false,"color":"#ed1b1b"},{"text":"h","italic":false,"color":"#f92424"}],\
+                    description:[[{"text":"For each ","italic":false,"color":"gray"},{"text":"Black Flash","italic":false,"color":"#e2a3ff"},{"text":" landed","italic":false,"color":"gray"}],[{"text":"consecutively","italic":false,"color":"white"},{"text":" following the first","italic":false,"color":"gray"}],[{"text":"one, the chance of landing the ","italic":false,"color":"gray"},{"text":"next","italic":false,"color":"#d2f34f"}],[{"text":"increases. Landing ","italic":false,"color":"gray"},{"text":"3","italic":false,"color":"#ffbe4d"},{"text":" in a row will","italic":false,"color":"gray"}],[{"text":"trigger a ","italic":false,"color":"gray"},{"text":"cutscene","italic":false,"color":"#c2a8ff"},{"text":" dealing ","italic":false,"color":"gray"},{"text":"devasting","italic":false,"color":"#ff2929"}],[{"text":"damage","italic":false,"color":"#ff2929"},{"text":" to the victim.","italic":false,"color":"gray"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Damage: ","italic":false,"color":"gray"},{"text":"23","italic":false,"color":"#6aff57"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"5m","italic":false,"color":"#6aff57"}]],\
+                    required_tag:"abilityYuji.SecretInteractionRepetitiveBlackFlash"\
+                }\
+            },\
+            product:{\
+                ability:{\
+                    type:"ability",\
+                    name:[{"text":"Y","italic":false,"color":"#ff245b"},{"text":"u","italic":false,"color":"#ff2c61"},{"text":"j","italic":false,"color":"#ff3567"},{"text":"i","italic":false,"color":"#ff3d6e"},{"text":" ","italic":false,"color":"#ff4574"},{"text":"I","italic":false,"color":"#ff4e7a"},{"text":"t","italic":false,"color":"#ff5680"},{"text":"a","italic":false,"color":"#ff5f86"},{"text":"d","italic":false,"color":"#ff678c"},{"text":"o","italic":false,"color":"#ff6f93"},{"text":"r","italic":false,"color":"#ff7899"},{"text":"i","italic":false,"color":"#ff809f"}],\
+                    subtext:"The Vessel",\
+                    model:"minecraft:interactables/ability/yuji/skin_default",\
+                    ownership_tag:"abilityYuji.Ownership",\
+                    equipped_tag:"abilityYuji.User",\
+                    items:{\
+                        request1:{type:"minecraft:dirt",tag:"mysterious_arrow:1b",count:1,name:"Mysterious Arrow",description:[[{"text":"Can be recovered","italic":false,"color":"gray"}],[{"text":"from ","italic":false,"color":"gray"},{"text":"Archaeology","italic":false,"color":"#c59c63"},{"text":" housed in ","italic":false,"color":"gray"},{"text":"Trail Ruins","italic":false,"color":"#9e3dff"}]]},\
+                        request2:{type:"minecraft:dirt",tag:"time_fragment:1b",count:8,name:"Time Fragment",description:[[{"text":"Rarely dropped","italic":false,"color":"gray"}],[{"text":"from slaying ","italic":false,"color":"gray"},{"text":"Endermen","italic":false,"color":"#a66bff"}]]}\
+                    },\
+                    advancements:{\
+                        request1:{path:"minecraft:nether/obtain_blaze_rod",name:"Into Fire",line:"[-1]"},\
+                        request2:{path:"minecraft:adventure/summon_iron_golem",name:"Hired Help",line:""}\
+                    },\
+                    bypass:"Lazyharpseal15"\
+                },\
+                skin1:{\
+                    type:"skin",\
+                    name:[{"text":"M","italic":false,"color":"#61a5ff"},{"text":"a","italic":false,"color":"#61aeff"},{"text":"h","italic":false,"color":"#61b6ff"},{"text":"i","italic":false,"color":"#61bfff"},{"text":"t","italic":false,"color":"#61c7ff"},{"text":"o","italic":false,"color":"#61d0ff"}],\
+                    subtext:"Does the Soul Reside Within the Body...?",\
+                    model:"minecraft:interactables/ability/yuji/skin_mahito",\
+                    rarity:4,\
+                    ownership_tag:"skinYujiMahito.Ownership",\
+                    equipped_tag:"skinYujiMahito.User",\
+                    advancements:{\
+                        request1:{path:"minecraft:nether/get_wither_skull",name:"Spooky Scary Skeleton",line:"[-1]"}\
+                    }\
+                }\
+            }\
+        }}}
+
+        REPEAT (1,7) as i {
             function ability:generate/data with storage minecraft:ability index.<%i%>
         }
     }

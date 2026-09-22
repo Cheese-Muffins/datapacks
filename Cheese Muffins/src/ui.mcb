@@ -337,12 +337,12 @@ dir ability {
         }
 
         function fetch {
-            $data modify storage minecraft:ui ability.menu set from storage minecraft:ability index.$(ability_id).product.ability
+            # $data modify storage minecraft:ui ability.menu set from storage minecraft:ability index.$(ability_id).product.ability
             $data modify storage minecraft:ui ability.menu.path set from storage minecraft:ability index.$(ability_id).path
             $data modify storage minecraft:ui ability.menu.proper_name set from storage minecraft:ability index.$(ability_id).proper_name
             $data modify storage minecraft:ui ability.menu.passive set from storage minecraft:ability index.$(ability_id).passive
             $data modify storage minecraft:ui ability.menu.ability_id set from storage minecraft:ability index.$(ability_id).ability_id
-            $function ability:generate/selection_lore {target:"ability.menu.ability_lore",ability_id:"$(ability_id)"}
+            $function ui:generate/selection_lore {target:"ability.menu.ability_lore",ability_id:"$(ability_id)"}
         }
 
         function same {
@@ -363,7 +363,7 @@ dir ability {
 
     dir selection {
         function mask {
-            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot1_model)","minecraft:tooltip_style":"minecraft:$(slot1_tooltip)","minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot1_id)}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot2_model)","minecraft:tooltip_style":"minecraft:$(slot2_tooltip)","minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot2_id)}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot3_model)","minecraft:tooltip_style":"minecraft:$(slot3_tooltip)","minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot3_id)}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot4_model)","minecraft:tooltip_style":"minecraft:$(slot4_tooltip)","minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot4_id)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}}]
+            $data modify storage ui mask set value [{Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot1_model)","minecraft:tooltip_style":"minecraft:$(slot1_tooltip)","minecraft:item_name":$(slot1_name),"minecraft:lore":$(slot1_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot1_id)}}}},{Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot2_model)","minecraft:tooltip_style":"minecraft:$(slot2_tooltip)","minecraft:item_name":$(slot2_name),"minecraft:lore":$(slot2_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot2_id)}}}},{Slot:12b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot3_model)","minecraft:tooltip_style":"minecraft:$(slot3_tooltip)","minecraft:item_name":$(slot3_name),"minecraft:lore":$(slot3_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot3_id)}}}},{Slot:13b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot4_model)","minecraft:tooltip_style":"minecraft:$(slot4_tooltip)","minecraft:item_name":$(slot4_name),"minecraft:lore":$(slot4_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot4_id)}}}},{Slot:14b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"$(slot5_model)","minecraft:tooltip_style":"minecraft:$(slot5_tooltip)","minecraft:item_name":$(slot5_name),"minecraft:lore":$(slot5_lore),"minecraft:custom_data":{ui_item:{enhanced_button:1b,selection_entry:1b,ability_id:$(slot5_id)}}}},{Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/selection1","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}}]
         }
 
         function open {
@@ -403,60 +403,18 @@ dir ability {
                         execute unless score .abilitySlot uiAbility.SelectionBroad matches 7.. run block { with storage minecraft:ui ability.selection
                             scoreboard players add .abilitySlot uiAbility.SelectionBroad 1
                             $function ui:generate/selection_lore {ability_id:$(lookup)}
-                            block { with storage minecraft:ability fetch
-                                $data modify storage minecraft:ui ability.selection.slot$(slot)_name set from storage minecraft:ability index.$(lookup).name
-                                $data modify storage minecraft:ui ability.selection.slot$(slot)_model set from storage minecraft:ability index.$(lookup).model
-                                $data modify storage minecraft:ui ability.selection.slot$(slot)_id set from storage minecraft:ability index.$(lookup).ability_id
-                                $data modify storage minecraft:ui ability.selection.slot$(slot)_tooltip set from storage minecraft:ability index.$(lookup).path
-                            }
+                            # block { with storage minecraft:ability fetch
+                            #     $data modify storage minecraft:ui ability.selection.slot$(slot)_name set from storage minecraft:ability index.$(lookup).name
+                            #     $data modify storage minecraft:ui ability.selection.slot$(slot)_model set from storage minecraft:ability index.$(lookup).model
+                            #     $data modify storage minecraft:ui ability.selection.slot$(slot)_id set from storage minecraft:ability index.$(lookup).ability_id
+                            #     $data modify storage minecraft:ui ability.selection.slot$(slot)_tooltip set from storage minecraft:ability index.$(lookup).path
+                            # }
                         } 
                     }
                     
                     execute if score .indexOffset uiAbility.SelectionBroad matches 1.. run scoreboard players remove .indexOffset uiAbility.SelectionBroad 1
 
                     execute unless score .incrementIndex uiAbility.SelectionBroad matches 7.. run function ui:ability/selection/generate/slot/index
-                }
-
-                function default {
-                    # found correct page
-                    scoreboard players add .totalEntries uiCassette.CollectionBroad 1
-                    scoreboard players add .incrementIndex uiCassette.CollectionBroad 1
-                    execute store result storage minecraft:cassette fetch.lookup int 1 run scoreboard players get .incrementIndex uiCassette.CollectionBroad
-                    block { with storage minecraft:cassette fetch
-                        $execute if entity @s[advancements={cassette:ownership/$(lookup)=true}] run {
-                            scoreboard players add .totalPassed uiCassette.CollectionBroad 1
-                            execute if entity @s[tag=cassettePlay.FeedbackIncrementing] if score @s cassettePlay.FeedbackIncrement = .totalPassed uiCassette.CollectionBroad run block { with storage minecraft:cassette fetch
-                                $scoreboard players set @s cassettePlay.FeedbackReturn $(lookup)
-                            }
-                        }
-                    }
-
-                    execute store result storage minecraft:cassette fetch.entry int 1 run scoreboard players get .totalPassed uiCassette.CollectionBroad
-                    execute unless score .indexOffset uiCassette.CollectionBroad matches 1.. run {
-                        execute unless score .cassetteSlot uiCassette.CollectionBroad matches 21.. run block { with storage minecraft:cassette fetch
-                            scoreboard players add .cassetteSlot uiCassette.CollectionBroad 1
-                            execute store result storage minecraft:cassette fetch.number int 1 run scoreboard players get .cassetteSlot uiCassette.CollectionBroad
-
-                            $data modify storage minecraft:cassette fetch merge from storage minecraft:cassette index.$(lookup)
-                            block { with storage minecraft:cassette fetch
-                                $data modify storage minecraft:ui cassette.collection.slot$(number)_name set from storage minecraft:cassette index.$(lookup).name
-                                $execute if entity @s[tag=cassetteSettings.ShowCollectionID] run data modify storage minecraft:ui cassette.collection.slot$(number)_name append value {"text":" ID $(lookup)","italic":false,"color":"gray"}
-
-                                $data modify storage minecraft:ui cassette.collection.slot$(number)_lore set from storage minecraft:cassette fetch.built_lore
-                                $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"red",slot$(number)_model:"minecraft:cassettes/$(lookup)",slot$(number)_visibility:"false",slot$(number)_id:$(lookup),slot$(number)_entry:$(entry),slot$(number)_overlay:1}}}
-                                $execute if entity @s[advancements={cassette:ownership/$(lookup)=true}] run block { with storage minecraft:cassette fetch
-                                    $data merge storage minecraft:ui {cassette:{collection:{slot$(number)_color:"green",slot$(number)_overlay:0}}}
-                                    $execute if score @s uiCassette.CollectionOperation matches 2 if entity @s[tag=cassettePlayed.Playlist1_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
-                                    $execute if score @s uiCassette.CollectionOperation matches 3 if entity @s[tag=cassettePlayed.Playlist2_$(lookup)] run data merge storage minecraft:ui {cassette:{collection:{slot$(number)_overlay:3}}}
-                                }
-                            }
-                        }
-                    }
-                    # searching for right page
-                    execute if score .indexOffset uiCassette.CollectionBroad matches 1.. run scoreboard players remove .indexOffset uiCassette.CollectionBroad 1
-
-                    # continue the search
-                    execute unless score .incrementIndex uiCassette.CollectionBroad matches 105.. run function ui:cassette/collection/sort/default
                 }
             }
         }
@@ -521,7 +479,7 @@ dir ability {
                     execute if score @s uiAbility.SecretInteraction > .max uiAbility.SecretInteraction run scoreboard players set @s uiAbility.SecretInteraction 1
                     
                     execute unless score .max uiAbility.SecretInteraction matches 1 run {
-                        playsound minecraft:cassette.ui.cycle player @s ~ ~ ~
+                        playsound minecraft:ui.cycle player @s ~ ~ ~
                         function ui:ability/selection/choice/open
                     }
                     execute if score .max uiAbility.SecretInteraction matches 1 run function ui:ability/selection/choice/same
@@ -599,7 +557,7 @@ dir ability {
                         $execute if score @s uiAbility.MovesetCycle$(slot_id) > .max uiAbility.MovesetCycle$(slot_id) run scoreboard players set @s uiAbility.MovesetCycle$(slot_id) 1
                         
                         $execute unless score .max uiAbility.MovesetCycle$(slot_id) matches 1 run {
-                            playsound minecraft:cassette.ui.cycle player @s ~ ~ ~
+                            playsound minecraft:ui.cycle player @s ~ ~ ~
                             function ui:ability/selection/choice/moveset/open
                         }
                         $execute if score .max uiAbility.MovesetCycle$(slot_id) matches 1 run function ui:ability/selection/choice/moveset/same
@@ -689,7 +647,7 @@ dir cassette {
         }
 
         function same {
-            execute at @s as @p run playsound minecraft:cassette.ui.error record @s ~ ~ ~
+            execute at @s as @p run playsound minecraft:ui.error record @s ~ ~ ~
             function ui:cassette/menu/open
         }
 
@@ -2245,7 +2203,7 @@ dir purchase {
                         execute unless score .bypassCheck uiPurchase.Broad matches 0 if entity @s[tag=uiPurchase.CostFound,tag=uiPurchase.ItemCheck,tag=uiPurchase.AdvancementCheck] run function ui:purchase/gathered with storage minecraft:ui generate.purchase
 
                         # nothing valid reached gathered
-                        execute unless entity @s[tag=uiPurchase.Gathered] run playsound minecraft:cassette.ui.error player @s ~ ~ ~
+                        execute unless entity @s[tag=uiPurchase.Gathered] run playsound minecraft:ui.error player @s ~ ~ ~
 
                         tag @s remove uiPurchase.Gathered
                         tag @s remove uiPurchase.CostFound
@@ -2270,7 +2228,7 @@ dir purchase {
                 $execute if entity @s[tag=$(equipped_tag)] unless entity @s[tag=temp] run function ui:purchase/equip/off with storage minecraft:ui generate.purchase
                 tag @s remove temp
             }
-            playsound minecraft:cassette.ui.cycle player @s ~ ~ ~
+            playsound minecraft:ui.cycle player @s ~ ~ ~
         }
 
         function on {
@@ -2620,30 +2578,23 @@ dir generate {
             $execute if data storage minecraft:ability index.$(ability_id).moveset.slot3 run function ui:generate/move/generate {slot:3}
             $execute if data storage minecraft:ability index.$(ability_id).moveset.slot4 run function ui:generate/move/generate {slot:4}
 
-            $execute if score .slotCount uiAbility.Moveset matches 1 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
-                slot1:{pos:"13b"},\
-                slot2:{pos:"0b"},\
-                slot3:{pos:"0b"},\
-                slot4:{pos:"0b"}\
-            }}}}
-            $execute if score .slotCount uiAbility.Moveset matches 2 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
-                slot1:{pos:"12b"},\
-                slot2:{pos:"14b"},\
-                slot3:{pos:"0b"},\
-                slot4:{pos:"0b"}\
-            }}}}
-            $execute if score .slotCount uiAbility.Moveset matches 3 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
-                slot1:{pos:"12b"},\
-                slot2:{pos:"13b"},\
-                slot3:{pos:"14b"},\
-                slot4:{pos:"0b"}\
-            }}}}
-            $execute if score .slotCount uiAbility.Moveset matches 4 run data merge storage minecraft:ability {index:{$(ability_id):{moveset:{\
-                slot1:{pos:"11b"},\
-                slot2:{pos:"12b"},\
-                slot3:{pos:"14b"},\
-                slot4:{pos:"15b"}\
-            }}}}
+            # 1 move
+            $execute if score .slotCount uiAbility.Moveset matches 1 if data storage minecraft:ability index.$(ability_id).moveset.slot1 run data modify storage minecraft:ability index.$(ability_id).moveset.slot1.pos set value "13b"
+
+            # 2 moves
+            $execute if score .slotCount uiAbility.Moveset matches 2 if data storage minecraft:ability index.$(ability_id).moveset.slot1 run data modify storage minecraft:ability index.$(ability_id).moveset.slot1.pos set value "12b"
+            $execute if score .slotCount uiAbility.Moveset matches 2 if data storage minecraft:ability index.$(ability_id).moveset.slot2 run data modify storage minecraft:ability index.$(ability_id).moveset.slot2.pos set value "14b"
+
+            # 3 moves
+            $execute if score .slotCount uiAbility.Moveset matches 3 if data storage minecraft:ability index.$(ability_id).moveset.slot1 run data modify storage minecraft:ability index.$(ability_id).moveset.slot1.pos set value "12b"
+            $execute if score .slotCount uiAbility.Moveset matches 3 if data storage minecraft:ability index.$(ability_id).moveset.slot2 run data modify storage minecraft:ability index.$(ability_id).moveset.slot2.pos set value "13b"
+            $execute if score .slotCount uiAbility.Moveset matches 3 if data storage minecraft:ability index.$(ability_id).moveset.slot3 run data modify storage minecraft:ability index.$(ability_id).moveset.slot3.pos set value "14b"
+
+            # 4 moves
+            $execute if score .slotCount uiAbility.Moveset matches 4 if data storage minecraft:ability index.$(ability_id).moveset.slot1 run data modify storage minecraft:ability index.$(ability_id).moveset.slot1.pos set value "11b"
+            $execute if score .slotCount uiAbility.Moveset matches 4 if data storage minecraft:ability index.$(ability_id).moveset.slot2 run data modify storage minecraft:ability index.$(ability_id).moveset.slot2.pos set value "12b"
+            $execute if score .slotCount uiAbility.Moveset matches 4 if data storage minecraft:ability index.$(ability_id).moveset.slot3 run data modify storage minecraft:ability index.$(ability_id).moveset.slot3.pos set value "14b"
+            $execute if score .slotCount uiAbility.Moveset matches 4 if data storage minecraft:ability index.$(ability_id).moveset.slot4 run data modify storage minecraft:ability index.$(ability_id).moveset.slot4.pos set value "15b"
 
             scoreboard players reset .slotCount uiAbility.Moveset
         }
@@ -2758,22 +2709,22 @@ dir generate {
                         data modify storage minecraft:ui generate.interaction.lore append from storage minecraft:ui generate.interaction.description[]
                     }
                 }
-                # if there is another interaction to load
-                $execute if data storage minecraft:ability index.$(ability_id).secret.interaction$(next_interaction) run block { with storage minecraft:ui generate.interaction
-                    $data modify storage minecraft:ui generate.interaction merge from storage minecraft:ability index.$(ability_id).secret.interaction$(next_interaction)
-                    block { with storage minecraft:ui generate.interaction
-                        data modify storage minecraft:ui generate.interaction.lore append value ""
-                        data modify storage minecraft:ui generate.interaction.lore append value ["",{"text":"Other Interaction(s)","italic":false,"color":"gold"}]
-                        data modify storage minecraft:ui generate.interaction.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
+                execute if score .maximum uiAbility.SecretInteraction matches 2.. run block { with storage minecraft:ui generate.interaction
+                    $execute if data storage minecraft:ability index.$(ability_id).secret.interaction$(next_interaction) run block { with storage minecraft:ui generate.interaction
+                        $data modify storage minecraft:ui generate.interaction merge from storage minecraft:ability index.$(ability_id).secret.interaction$(next_interaction)
+                        block { with storage minecraft:ui generate.interaction
+                            data modify storage minecraft:ui generate.interaction.lore append value ""
+                            data modify storage minecraft:ui generate.interaction.lore append value ["",{"text":"Other Interaction(s)","italic":false,"color":"gold"}]
+                            data modify storage minecraft:ui generate.interaction.lore append value ["",{"text":"Click to view ","italic":false,"color":"gray"}]
 
-                        # undiscovered
-                        $execute unless entity @s[tag=$(required_tag)] run data modify storage minecraft:ui generate.interaction.lore[-1] append value ["",{"text":"[","italic":false,"color":"dark_gray"},{"text":"???","italic":false,"color":"white"},{"text":"]","italic":false,"color":"dark_gray"}]
+                            # undiscovered
+                            $execute unless entity @s[tag=$(required_tag)] run data modify storage minecraft:ui generate.interaction.lore[-1] append value ["",{"text":"[","italic":false,"color":"dark_gray"},{"text":"???","italic":false,"color":"white"},{"text":"]","italic":false,"color":"dark_gray"}]
 
-                        # discovered
-                        $execute if entity @s[tag=$(required_tag)] run data modify storage minecraft:ui generate.interaction.lore[-1] append from storage minecraft:ui generate.interaction.name
+                            # discovered
+                            $execute if entity @s[tag=$(required_tag)] run data modify storage minecraft:ui generate.interaction.lore[-1] append from storage minecraft:ui generate.interaction.name
+                        }
                     }
                 }
-                
             }
             data modify storage minecraft:ui ability.choice.interaction_lore set from storage minecraft:ui generate.interaction.lore
         }
@@ -2901,9 +2852,12 @@ dir generate {
                 scoreboard players reset .skinTotal uiAbility.SelectionBroad
                 scoreboard players reset .skinOwnership uiAbility.SelectionBroad
             }
+            $data modify storage minecraft:ui ability.selection.slot$(slot)_id set from storage minecraft:ui generate.selection.ability_id
             $data modify storage minecraft:ui ability.selection.slot$(slot)_name set from storage minecraft:ui generate.selection.product.ability.name
             $data modify storage minecraft:ui ability.selection.slot$(slot)_model set from storage minecraft:ui generate.selection.product.ability.model
+            $data modify storage minecraft:ui ability.selection.slot$(slot)_tooltip set from storage minecraft:ui generate.selection.path
             $data modify storage minecraft:ui ability.selection.slot$(slot)_lore set from storage minecraft:ui generate.selection.lore
+            data modify storage minecraft:ui ability.menu.ability_lore set from storage minecraft:ui generate.selection.lore
             data remove storage minecraft:ui generate.selection
         }
 

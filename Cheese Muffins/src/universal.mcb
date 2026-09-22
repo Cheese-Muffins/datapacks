@@ -16,6 +16,7 @@ function on_load minecraft:load{
         scoreboard objectives add universalAbility.MoveCooldown<%i%> dummy
         scoreboard objectives add universalAbility.MoveTrigger<%i%> dummy
     }
+    scoreboard objectives add universalAbility.AwakeningDuration dummy
     scoreboard objectives add universalAbility.ID dummy
     scoreboard objectives add universalAbility.MoveCooldownMath dummy
     scoreboard objectives add universalAbility.MoveDelay dummy
@@ -89,6 +90,7 @@ function toggle_ability {
             }
 
             execute if entity @s[tag=abilityBilly.User] run function ability:billy/toggle/on
+            execute if entity @s[tag=abilityYuji.User] run function ability:yuji/toggle/on
         }
 
         # toggle off
@@ -96,6 +98,7 @@ function toggle_ability {
             scoreboard players set @s universalAbility.ToggleState 0
 
             execute if entity @s[tag=abilityBilly.User] run function ability:billy/toggle/off
+            execute if entity @s[tag=abilityYuji.User] run function ability:yuji/toggle/off
         }
         tag @s remove temp
     }
@@ -110,13 +113,14 @@ dir damage {
 
     function cancel {
         execute if entity @s[tag=abilityBilly.User] run data merge storage minecraft:universal {damage:{namespace:"Billy",ability:"billy"}}
+        execute if entity @s[tag=abilityYuji.User] run data merge storage minecraft:universal {damage:{namespace:"Yuji",ability:"yuji"}}
 
         execute store result storage minecraft:universal damage.id int 1 run scoreboard players get @s universalAbility.ID
         execute store result storage minecraft:universal damage.move int 1 run scoreboard players get @s universalAbility.MovePrevious
         block { with storage minecraft:universal damage
             $execute as @n[type=minecraft:item_display,tag=aj.$(ability).root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal damage
                 playsound minecraft:universal.ability.cancel player @a ~ ~ ~ 1
-                function ability:billy/moves/reset/all
+                $function ability:$(ability)/moves/reset/all
             }
         }
     } 
@@ -131,31 +135,6 @@ dir hotbar {
             $execute if score @s universalAbility.MoveCooldown$(slot) matches 200..1999 run data merge storage minecraft:ability {$(ability):{hotbar:{time:"0$(time)"}}}
             $execute unless score @s universalAbility.MoveCooldown$(slot) matches 199.. run data merge storage minecraft:ability {$(ability):{hotbar:{time:"00$(time)"}}}
         }
-    }
-}
-
-dir cooldown {
-    function 8x {
-        $scoreboard players set .$(name)Cooldown universalAbility.MoveCooldown$(move) $(cooldown)
-        $function universal:math/multiply {value:20,score:".$(name)Cooldown",objective:"universalAbility.MoveCooldown$(move)"}
-        $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
-        $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
-        $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
-        $function universal:math/divide {value:9,score:".$(name)CooldownDivided",objective:"universalAbility.MoveCooldown$(move)"}
-
-        $execute store result storage minecraft:ability $(storage).cooldown.move$(path).9 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
-
-        REPEAT (8,1) as i {
-            $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
-            $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>a int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
-            $scoreboard players remove .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) 1
-            $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>b int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
-        }
-
-        $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
-        $execute store result storage minecraft:ability $(storage).cooldown.move$(path).1 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
-
-        $data merge storage minecraft:ability {$(storage):{cooldown:{move$(path):{slot:$(move)}}}}
     }
 }
 
@@ -222,6 +201,105 @@ dir vfx {
 
 dir ability {
     dir rig {
+        dir stable_player_display {
+            function main {
+                $data modify storage minecraft:universal stable_player_display.branch set value "$(branch)"
+                execute unless entity @s[tag=customSettings.DisplayState] run function universal:ability/rig/stable_player_display/state/model with storage minecraft:universal stable_player_display
+                execute if entity @s[tag=customSettings.DisplayState] run function universal:ability/rig/stable_player_display/state/skin with storage minecraft:universal stable_player_display
+            }
+
+            dir state {
+                function model {
+                    $execute as @n[tag=aj.$(branch).root] run block { with storage minecraft:universal stable_player_display
+                        $function ability:$(branch)/skin_index with storage minecraft:universal stable_player_display
+                        $item replace entity @n[tag=aj.$(branch).bone.head] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.right_arm] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.right_forearm] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.left_arm] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.left_forearm] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.waist] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.right_leg] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.lower_right_leg] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.left_leg] hotbar.0 with minecraft:air
+                        $item replace entity @n[tag=aj.$(branch).bone.lower_left_leg] hotbar.0 with minecraft:air
+                        $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"minecraft:empty"}}}
+                    }
+                }
+
+                function skin {
+                    $function aj:$(branch)/variants/player_model/apply
+                    
+                    $loot replace entity @n[tag=aj.$(branch).bone.head] hotbar.0 loot minecraft:player/head
+                    $loot replace entity @n[tag=aj.$(branch).bone.right_arm] hotbar.0 loot minecraft:player/right_arm
+                    $loot replace entity @n[tag=aj.$(branch).bone.right_forearm] hotbar.0 loot minecraft:player/right_forearm
+                    $loot replace entity @n[tag=aj.$(branch).bone.left_arm] hotbar.0 loot minecraft:player/left_arm
+                    $loot replace entity @n[tag=aj.$(branch).bone.left_forearm] hotbar.0 loot minecraft:player/left_forearm
+                    $loot replace entity @n[tag=aj.$(branch).bone.waist] hotbar.0 loot minecraft:player/waist
+                    $loot replace entity @n[tag=aj.$(branch).bone.right_leg] hotbar.0 loot minecraft:player/right_leg
+                    $loot replace entity @n[tag=aj.$(branch).bone.lower_right_leg] hotbar.0 loot minecraft:player/lower_right_leg
+                    $loot replace entity @n[tag=aj.$(branch).bone.left_leg] hotbar.0 loot minecraft:player/left_leg
+                    $loot replace entity @n[tag=aj.$(branch).bone.lower_left_leg] hotbar.0 loot minecraft:player/lower_left_leg
+
+                    data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:empty",chestplate_body:"minecraft:empty",chestplate_arms:"minecraft:empty",leggings_pants:"minecraft:empty",leggings_upper:"minecraft:empty",leggings_lower:"minecraft:empty",boots:"minecraft:empty"}}
+                    execute if items entity @s armor.head #minecraft:head_armor run {
+                        execute if items entity @s armor.head minecraft:netherite_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/netherite/helmet"}}
+                        execute if items entity @s armor.head minecraft:diamond_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/diamond/helmet"}}
+                        execute if items entity @s armor.head minecraft:iron_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/iron/helmet"}}
+                        execute if items entity @s armor.head minecraft:chainmail_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/chainmail/helmet"}}
+                        execute if items entity @s armor.head minecraft:golden_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/gold/helmet"}}
+                    }
+
+                    execute if items entity @s armor.chest #minecraft:chest_armor run {
+                        execute if items entity @s armor.chest minecraft:netherite_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/netherite/chestplate/arms",chestplate_body:"minecraft:armor/netherite/chestplate/body"}}
+                        execute if items entity @s armor.chest minecraft:diamond_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/diamond/chestplate/arms",chestplate_body:"minecraft:armor/diamond/chestplate/body"}}
+                        execute if items entity @s armor.chest minecraft:iron_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/iron/chestplate/arms",chestplate_body:"minecraft:armor/iron/chestplate/body"}}
+                        execute if items entity @s armor.chest minecraft:chainmail_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/chainmail/chestplate/arms",chestplate_body:"minecraft:armor/chainmail/chestplate/body"}}
+                        execute if items entity @s armor.chest minecraft:golden_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/gold/chestplate/arms",chestplate_body:"minecraft:armor/gold/chestplate/body"}}
+                    }
+
+                    execute if items entity @s armor.legs #minecraft:leg_armor run {
+                        execute if items entity @s armor.legs minecraft:netherite_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/netherite/leggings/pants",leggings_upper:"minecraft:armor/netherite/leggings/upper",leggings_lower:"minecraft:armor/netherite/leggings/lower"}}
+                        execute if items entity @s armor.legs minecraft:diamond_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/diamond/leggings/pants",leggings_upper:"minecraft:armor/diamond/leggings/upper",leggings_lower:"minecraft:armor/diamond/leggings/lower"}}
+                        execute if items entity @s armor.legs minecraft:iron_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/iron/leggings/pants",leggings_upper:"minecraft:armor/iron/leggings/upper",leggings_lower:"minecraft:armor/iron/leggings/lower"}}
+                        execute if items entity @s armor.legs minecraft:chainmail_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/chainmail/leggings/pants",leggings_upper:"minecraft:armor/chainmail/leggings/upper",leggings_lower:"minecraft:armor/chainmail/leggings/lower"}}
+                        execute if items entity @s armor.legs minecraft:golden_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/gold/leggings/pants",leggings_upper:"minecraft:armor/gold/leggings/upper",leggings_lower:"minecraft:armor/gold/leggings/lower"}}
+                    }
+
+                    execute if items entity @s armor.feet #minecraft:foot_armor run {
+                        execute if items entity @s armor.feet minecraft:netherite_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/netherite/boots"}}
+                        execute if items entity @s armor.feet minecraft:diamond_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/diamond/boots"}}
+                        execute if items entity @s armor.feet minecraft:iron_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/iron/boots"}}
+                        execute if items entity @s armor.feet minecraft:chainmail_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/chainmail/boots"}}
+                        execute if items entity @s armor.feet minecraft:golden_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/gold/boots"}}
+                    }
+
+                    block { with storage minecraft:universal stable_player_display
+                        $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)"}}}
+                    }
+                }
+            }
+        }
+
         dir mount {
             function player {
                 # function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
@@ -321,6 +399,80 @@ dir ability {
             block { with storage minecraft:universal ability.rig
                 $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
             }
+        }
+    }
+
+    dir setup {
+        dir cooldown {
+            function 8x {
+                $scoreboard players set .$(name)Cooldown universalAbility.MoveCooldown$(move) $(cooldown)
+                $function universal:math/multiply {value:20,score:".$(name)Cooldown",objective:"universalAbility.MoveCooldown$(move)"}
+                $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+                $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+                $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+                $function universal:math/divide {value:9,score:".$(name)CooldownDivided",objective:"universalAbility.MoveCooldown$(move)"}
+
+                $execute store result storage minecraft:ability $(storage).cooldown.move$(path).9 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+
+                REPEAT (8,1) as i {
+                    $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
+                    $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>a int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+                    $scoreboard players remove .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) 1
+                    $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>b int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+                }
+
+                $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
+                $execute store result storage minecraft:ability $(storage).cooldown.move$(path).1 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+
+                $data merge storage minecraft:ability {$(storage):{cooldown:{move$(path):{slot:$(move)}}}}
+            }
+
+            function 10x {
+                $scoreboard players set .$(name)Cooldown universalAbility.MoveCooldown$(move) $(cooldown)
+                $function universal:math/multiply {value:20,score:".$(name)Cooldown",objective:"universalAbility.MoveCooldown$(move)"}
+                $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+                $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+                $scoreboard players operation .$(name)CooldownDivided universalAbility.MoveCooldown$(move) = .$(name)Cooldown universalAbility.MoveCooldown$(move)
+                $function universal:math/divide {value:11,score:".$(name)CooldownDivided",objective:"universalAbility.MoveCooldown$(move)"}
+
+                $execute store result storage minecraft:ability $(storage).cooldown.move$(path).11 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+
+                REPEAT (10,1) as i {
+                    $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
+                    $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>a int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+                    $scoreboard players remove .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) 1
+                    $execute store result storage minecraft:ability $(storage).cooldown.move$(path).<%i%>b int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+                }
+
+                $scoreboard players operation .$(name)CooldownThresholds universalAbility.MoveCooldown$(move) -= .$(name)CooldownDivided universalAbility.MoveCooldown$(move)
+                $execute store result storage minecraft:ability $(storage).cooldown.move$(path).1 int 1 run scoreboard players get .$(name)CooldownThresholds universalAbility.MoveCooldown$(move)
+
+                $data merge storage minecraft:ability {$(storage):{cooldown:{move$(path):{slot:$(move)}}}}
+            }
+        }
+
+        function meter {
+            # function universal:ability/setup/meter {name:"Yuji",storage:"yuji",duration:145}
+            $scoreboard players set .$(name)Duration universalAbility.AwakeningDuration $(duration)
+            $function universal:math/multiply {value:20,score:".$(name)Duration",objective:"universalAbility.AwakeningDuration"}
+            $scoreboard players operation .$(name)DurationDivided universalAbility.AwakeningDuration = .$(name)Duration universalAbility.AwakeningDuration
+            $scoreboard players operation .$(name)DurationThresholds universalAbility.AwakeningDuration = .$(name)Duration universalAbility.AwakeningDuration
+            $scoreboard players operation .$(name)DurationDivided universalAbility.AwakeningDuration = .$(name)Duration universalAbility.AwakeningDuration
+            $function universal:math/divide {value:16,score:".$(name)DurationDivided",objective:"universalAbility.AwakeningDuration"}
+
+            $execute store result storage minecraft:ability $(storage).awakening.16 int 1 run scoreboard players get .$(name)DurationThresholds universalAbility.AwakeningDuration
+
+            REPEAT (15,1) as i {
+                $scoreboard players operation .$(name)DurationThresholds universalAbility.AwakeningDuration -= .$(name)DurationDivided universalAbility.AwakeningDuration
+                $execute store result storage minecraft:ability $(storage).awakening.<%i%>a int 1 run scoreboard players get .$(name)DurationThresholds universalAbility.AwakeningDuration
+                $scoreboard players remove .$(name)DurationThresholds universalAbility.AwakeningDuration 1
+                $execute store result storage minecraft:ability $(storage).awakening.<%i%>b int 1 run scoreboard players get .$(name)DurationThresholds universalAbility.AwakeningDuration
+            }
+
+            $scoreboard players operation .$(name)DurationThresholds universalAbility.AwakeningDuration -= .$(name)DurationDivided universalAbility.AwakeningDuration
+            $execute store result storage minecraft:ability $(storage).awakening.1 int 1 run scoreboard players get .$(name)DurationThresholds universalAbility.AwakeningDuration
+
+            # $data merge storage minecraft:ability {$(storage):{awakening:{move$(path):{slot:$(move)}}}}
         }
     }
 

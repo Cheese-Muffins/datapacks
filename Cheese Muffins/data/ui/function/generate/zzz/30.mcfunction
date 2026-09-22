@@ -1,7 +1,4 @@
 # Generated with MC-Build
 
-execute if data storage minecraft:ui generate.selection.secret.interaction1 run function ui:generate/zzz/31
-execute if data storage minecraft:ui generate.selection.secret.interaction2 run function ui:generate/zzz/33
-execute if data storage minecraft:ui generate.selection.secret.interaction3 run function ui:generate/zzz/35
-execute if data storage minecraft:ui generate.selection.secret.interaction4 run function ui:generate/zzz/37
-execute if data storage minecraft:ui generate.selection.secret.interaction5 run function ui:generate/zzz/39
+$data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"$(ownership_text)","italic":false,"color":"#$(ownership_color)"}]
+$data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_text)","italic":false,"color":"#$(equip_color)"}]

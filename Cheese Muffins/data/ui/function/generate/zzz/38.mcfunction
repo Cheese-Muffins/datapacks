@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$execute if entity @s[tag=$(required_tag)] run scoreboard players add .interactionOwnership uiAbility.SelectionBroad 1
+scoreboard players add .interactionTotal uiAbility.SelectionBroad 1
+data modify storage minecraft:ui generate.selection.required_tag set from storage minecraft:ui generate.selection.secret.interaction4.required_tag
+function ui:generate/zzz/39 with storage minecraft:ui generate.selection

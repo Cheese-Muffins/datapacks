@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.equipped_skin merge from storage minecraft:ability index.$(ability_id).product.skin2
-tag @s add found
+$execute if entity @s[tag=$(equipped_tag)] run function ui:generate/zzz/15 with storage minecraft:ui generate.equipped_skin

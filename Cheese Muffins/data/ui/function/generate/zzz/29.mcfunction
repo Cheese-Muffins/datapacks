@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Ownership: ","italic":false,"color":"gray"},{"text":"$(ownership_text)","italic":false,"color":"#$(ownership_color)"}]
-$data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_text)","italic":false,"color":"#$(equip_color)"}]
+$execute if entity @s[tag=$(ownership_tag)] run data merge storage minecraft:ui {generate:{selection:{ownership_text:"Yes",ownership_color:"3cdd31"}}}
+$execute if entity @s[tag=$(equipped_tag)] run data merge storage minecraft:ui {generate:{selection:{equip_text:"Yes",equip_color:"3cdd31"}}}
+function ui:generate/zzz/30 with storage minecraft:ui generate.selection

@@ -1,5 +1,7 @@
 # Generated with MC-Build
 
-scoreboard players add .interactionTotal uiAbility.SelectionBroad 1
-data modify storage minecraft:ui generate.selection.required_tag set from storage minecraft:ui generate.selection.secret.interaction1.required_tag
-function ui:generate/zzz/32 with storage minecraft:ui generate.selection
+execute if data storage minecraft:ui generate.selection.secret.interaction1 run function ui:generate/zzz/32
+execute if data storage minecraft:ui generate.selection.secret.interaction2 run function ui:generate/zzz/34
+execute if data storage minecraft:ui generate.selection.secret.interaction3 run function ui:generate/zzz/36
+execute if data storage minecraft:ui generate.selection.secret.interaction4 run function ui:generate/zzz/38
+execute if data storage minecraft:ui generate.selection.secret.interaction5 run function ui:generate/zzz/40

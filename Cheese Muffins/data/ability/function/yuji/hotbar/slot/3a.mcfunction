@@ -1,0 +1,13 @@
+# Generated with MC-Build
+
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F3"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F4"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F5"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F6"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F7"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F8"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u02F9"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0200"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0201"
+$execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0202"
+$execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability yuji.hotbar.move$(slot) set value "u0203"

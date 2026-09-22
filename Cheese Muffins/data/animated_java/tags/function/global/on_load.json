@@ -1,4 +1,4 @@
 {
 	"replace": false,
-	"values": ["aj:billy_vfx/on_load", "aj:billy/on_load", "aj:text_display/on_load", "animated_java:cassette/on_load"]
+	"values": ["aj:billy_vfx/on_load", "aj:billy/on_load", "aj:text_display/on_load", "aj:yuji/on_load", "animated_java:cassette/on_load"]
 }

@@ -1,0 +1,7 @@
+# Generated with MC-Build
+
+execute if items entity @s armor.chest minecraft:netherite_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/netherite/chestplate/arms",chestplate_body:"minecraft:armor/netherite/chestplate/body"}}
+execute if items entity @s armor.chest minecraft:diamond_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/diamond/chestplate/arms",chestplate_body:"minecraft:armor/diamond/chestplate/body"}}
+execute if items entity @s armor.chest minecraft:iron_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/iron/chestplate/arms",chestplate_body:"minecraft:armor/iron/chestplate/body"}}
+execute if items entity @s armor.chest minecraft:chainmail_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/chainmail/chestplate/arms",chestplate_body:"minecraft:armor/chainmail/chestplate/body"}}
+execute if items entity @s armor.chest minecraft:golden_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/gold/chestplate/arms",chestplate_body:"minecraft:armor/gold/chestplate/body"}}

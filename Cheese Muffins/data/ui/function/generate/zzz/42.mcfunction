@@ -1,5 +1,3 @@
 # Generated with MC-Build
 
-scoreboard players add .skinTotal uiAbility.SelectionBroad 1
-data modify storage minecraft:ui generate.selection.ownership_tag set from storage minecraft:ui generate.selection.product.skin1.ownership_tag
-function ui:generate/zzz/43 with storage minecraft:ui generate.selection
+$data modify storage minecraft:ui generate.selection.lore append value ["",{"text":"Secret Interaction(s): ","italic":false,"color":"gray"},{"text":"$(interaction_unlocked)","italic":false,"color":"green"},{"text":"/","italic":false,"color":"gray"},{"text":"$(interaction_total)","italic":false,"color":"green"}]
