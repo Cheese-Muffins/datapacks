@@ -1,6 +1,10 @@
 # Generated with MC-Build
 
 scoreboard objectives add abilityYuji.NaturalTalentBuff dummy
+scoreboard objectives add abilityYuji.MajinKickVelocityX dummy
+scoreboard objectives add abilityYuji.MajinKickVelocityY dummy
+scoreboard objectives add abilityYuji.MajinKickAcceleration dummy
+scoreboard objectives add abilityYuji.MajinKickTime dummy
 function universal:ability/setup/cooldown/10x {name:"Yuji",storage:"yuji",path:"1a",move:1,cooldown:30}
 function universal:ability/setup/cooldown/10x {name:"Sukuna_King",storage:"yuji",path:"1b",move:1,cooldown:30}
 function universal:ability/setup/cooldown/10x {name:"Sukuna_Fuga",storage:"yuji",path:"1c",move:1,cooldown:30}

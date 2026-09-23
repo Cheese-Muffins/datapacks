@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
 scoreboard players reset @s universalAbility.MoveTrigger2
-execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:yuji/moves/2/core
+execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:yuji/moves/2/variation

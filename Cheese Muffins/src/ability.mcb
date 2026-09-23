@@ -417,7 +417,7 @@ dir yuji {
             REPEAT (1,3) as i {
                 execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
                     scoreboard players reset @s universalAbility.MoveTrigger<%i%>
-                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:yuji/moves/<%i%>/core
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:yuji/moves/<%i%>/variation
                 }
             }
 
@@ -451,6 +451,10 @@ dir yuji {
 
     function install {
         scoreboard objectives add abilityYuji.NaturalTalentBuff dummy
+        scoreboard objectives add abilityYuji.MajinKickVelocityX dummy
+        scoreboard objectives add abilityYuji.MajinKickVelocityY dummy
+        scoreboard objectives add abilityYuji.MajinKickAcceleration dummy
+        scoreboard objectives add abilityYuji.MajinKickTime dummy
 
         function universal:ability/setup/cooldown/10x {name:"Yuji",storage:"yuji",path:"1a",move:1,cooldown:30}
         function universal:ability/setup/cooldown/10x {name:"Sukuna_King",storage:"yuji",path:"1b",move:1,cooldown:30}
@@ -487,31 +491,230 @@ dir yuji {
         }
 
         dir 1 {
-            function core {
-                execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
-                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
-                function universal:error_messages/constant
-
-                scoreboard players set @s universalAbility.HotbarSlot 1
-                execute unless score @s universalError.FailReturn matches 1 run function ability:yuji/moves/1/pass
-                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Natural Talent",unicode:"u50A1"}
+            function variation {
+                execute unless entity @s[tag=abilityYuji.SukunaAwakening] run function ability:yuji/moves/1/natural_talent/core
+                execute if entity @s[tag=abilityYuji.SukunaAwakening] run function ability:yuji/moves/1/king_of_curses/core
             }
 
-            function pass {
-                # setup
-                function ability:yuji/moves/setup {rig:"yuji",animation:'natural_talent'}
+            dir natural_talent {
+                function core {
+                    execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
+                    execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                    function universal:error_messages/constant
 
-                # restraints
-                function universal:ability/restraint/cooldown {name:"Yuji",move:1}
-                function universal:ability/restraint/cancelable {move:1}
-                tag @s add universalAbility.Animating
+                    scoreboard players set @s universalAbility.HotbarSlot 1
+                    execute unless score @s universalError.FailReturn matches 1 run function ability:yuji/moves/1/natural_talent/pass
+                    execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Natural Talent",unicode:"u50A1"}
+                }
+
+                function pass {
+                    # setup
+                    function ability:yuji/moves/setup {rig:"yuji",animation:'natural_talent'}
+
+                    # restraints
+                    function universal:ability/restraint/cooldown {name:"Yuji",move:1}
+                    function universal:ability/restraint/cancelable {move:1}
+                    tag @s add universalAbility.Animating
+                }
+
+                function buff {
+                    data merge storage minecraft:universal {attribute:{scenario:"Ability",objective:"abilityYuji.NaturalTalentBuff",duration:60,extra:"tag @s add scenarioTick.AbilityYuji"}}
+                    function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:yuji.natural_talent",strength:0.25,operation:"add_multiplied_base"}
+                    function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:yuji.natural_talent",strength:0.5,operation:"add_multiplied_base"}
+                    effect give @s minecraft:haste 60 1 true
+                }
+            }
+        }
+
+        dir 2 {
+            function variation {
+                execute unless entity @s[tag=abilityYuji.SukunaAwakening] run function ability:yuji/moves/2/majin_kick/core
+                execute if entity @s[tag=abilityYuji.SukunaAwakening] run function ability:yuji/moves/2/cleave/core
             }
 
-            function buff {
-                data merge storage minecraft:universal {attribute:{scenario:"Ability",objective:"abilityYuji.NaturalTalentBuff",duration:60,extra:"tag @s add scenarioTick.AbilityYuji"}}
-                function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:yuji.natural_talent",strength:0.25,operation:"add_multiplied_base"}
-                function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:yuji.natural_talent",strength:0.5,operation:"add_multiplied_base"}
-                effect give @s minecraft:haste 60 1 true
+            dir majin_kick {
+                function core {
+                    execute if score @s universalAbility.MoveCooldown2 matches 1.. run function universal:error_messages/setup {id:1}
+                    execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                    function universal:error_messages/constant
+
+                    scoreboard players set @s universalAbility.HotbarSlot 1
+                    execute unless score @s universalError.FailReturn matches 1 run function ability:yuji/moves/2/majin_kick/pass
+                    execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:2,name:"Majin Kick",unicode:"u50A1"}
+                }
+
+                function pass {
+                    # setup
+                    function ability:yuji/moves/setup {rig:"yuji",animation:'majin_kick'}
+
+                    # restraints
+                    function universal:ability/restraint/cooldown {name:"Yuji",move:2}
+                    function universal:ability/restraint/cancelable {move:2}
+                    tag @s add universalAbility.Animating
+
+                    # specific
+                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.yuji.locator.mount",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+                    function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
+                    function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
+                }
+
+                function swap {
+                    execute store result storage minecraft:ability yuji.majin_kick.id int 1 run scoreboard players get @s universalAbility.ID
+                    block { with storage minecraft:ability yuji.majin_kick
+                        $execute as @n[type=minecraft:item_display,tag=aj.yuji.root,scores={universalAbility.ID=$(id)}] run {
+                            tag @s add abilityYuji.MajinKickBurst
+                            ride @s dismount
+                        }
+                        $ride @s mount @n[type=minecraft:item_display,tag=aj.yuji.locator.mount,scores={universalAbility.ID=$(id)}]
+                    }
+                }
+
+                function check_fall {
+                    tag @s remove abilityYuji.MajinKickBurst
+                    function aj:yuji/animations/majin_kick_fall/tween {to_frame:1,duration:3}
+                }
+
+                dir movement {
+                    function main {
+                        # start out by determining a base velocity. ideally it should start out with with a vertical velocity of +1m/s
+                        execute rotated ~ 0 at @s unless entity @s[tag=abilityYuji.MajinKickEnd] run function ability:yuji/moves/2/majin_kick/movement/tick
+                    }
+
+                    function tick {
+                        scoreboard players reset .Recursions abilityYuji.MajinKickVelocityX
+
+                        execute store result storage minecraft:ability yuji.majin_kick.id int 1 run scoreboard players get @s universalAbility.ID
+                        function ability:yuji/moves/2/majin_kick/movement/velocity_x/determine
+                        function ability:yuji/moves/2/majin_kick/movement/velocity_y/determine
+
+                        function ability:yuji/moves/2/majin_kick/movement/apply with storage minecraft:ability yuji.majin_kick
+                    }
+
+                    dir velocity_x {
+                        function determine {
+                            scoreboard players reset .Recursions abilityYuji.MajinKickVelocityX
+                            scoreboard players reset .Multiplier abilityYuji.MajinKickVelocityX
+                            execute unless entity @s[tag=abilityYuji.MajinKickBurst] run data merge storage minecraft:ability {yuji:{majin_kick:{segment_velocityX:0.04,multiplierX:5}}}
+                            execute if entity @s[tag=abilityYuji.MajinKickBurst] run data merge storage minecraft:ability {yuji:{majin_kick:{segment_velocityX:0.1,multiplierX:20}}}
+                            execute positioned ~ ~0.1 ~ positioned ^ ^ ^0.35 run function ability:yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:ability yuji.majin_kick
+                            function ability:yuji/moves/2/majin_kick/movement/velocity_x/export
+                        }
+
+                        function check {
+                            $execute positioned ^ ^ ^$(segment_velocityX) run {
+                                scoreboard players add .Recursions abilityYuji.MajinKickVelocityX 1
+
+                                execute if block ~ ~ ~ #ability:yuji/majin_kick run block { with storage minecraft:ability yuji.majin_kick
+                                    $execute rotated ~ -15 if entity @s[tag=abilityYuji.MajinKickBurst] as @n[type=!#universal:not_mob,distance=..1.5] unless score @s universalAbility.ID matches $(id) run block { with storage minecraft:ability yuji.majin_kick
+                                        # $function custom:universal/damage/victim {id:"$(id)",damage:"13",type:"custom:bypass_immunity",attacker:"tag=customAbility.Yuji",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
+                                        playsound minecraft:ability.yuji.majin.kick player @a ~ ~ ~
+                                        launch @s looking 2
+
+                                        $execute as @n[type=minecraft:item_display,tag=aj.yuji.root,scores={universalAbility.ID=$(id)}] run tag @s add abilityYuji.MajinKickMotionEndX
+                                    }
+
+                                    execute unless entity @s[tag=abilityYuji.MajinKickMotionEndX] run {
+                                        scoreboard players add .Multiplier abilityYuji.MajinKickVelocityX 1
+                                        execute unless score .Recursions abilityYuji.MajinKickVelocityX matches 10.. run function ability:yuji/moves/2/majin_kick/movement/velocity_x/check with storage minecraft:ability yuji.majin_kick
+                                    }
+                                }
+
+                                execute unless block ~ ~ ~ #ability:yuji/majin_kick unless entity @s[tag=abilityYuji.MajinKickMotionEndX] run {
+                                    execute if entity @s[tag=abilityYuji.MajinKickBurst] run {
+                                        execute summon minecraft:area_effect_cloud align xyz positioned ~.5 ~.5 ~.5 facing entity @s feet summon minecraft:area_effect_cloud positioned ^ ^ ^-0.7071 align xyz positioned ~.5 ~.5 ~.5 facing entity @s feet positioned as @s positioned ^ ^ ^.5 run function ability:yuji/moves/2/majin_kick/movement/velocity_x/face
+
+                                        playsound minecraft:ability.yuji.majin.punch player @a ~ ~ ~
+                                    }
+                                    tag @s add abilityYuji.MajinKickMotionEndX
+                                }
+                            }
+                        }
+
+                        function face {
+                            data merge storage minecraft:universal {vfx:{notation:"~"}}
+                            data merge storage minecraft:universal {vfx:{offsetXL:0,offsetXR:0,offsetYL:0,offsetYR:0,offsetZL:0,offsetZR:0}}
+                            data merge storage minecraft:universal {vfx:{speedXL:0,speedXR:0,speedYL:0,speedYR:0,speedZL:0,speedZR:0}}
+                            tp @s ~ ~ ~ ~ ~
+                            
+                            # execute if entity @s[y_rotation=-1..1] rotated 0 0 positioned ^ ^ ^0.05 run function universal:vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                            # execute if entity @s[y_rotation=89..91] rotated 90 0 positioned ^ ^ ^0.05 run function universal:vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                            # execute if entity @s[y_rotation=179..181] rotated 180 0 positioned ^ ^ ^0.05 run function universal:vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                            # execute if entity @s[y_rotation=269..271] rotated 270 0 positioned ^ ^ ^0.05 run function universal:vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'crack',extra:"random value 1..2"}
+                            kill @e[type=minecraft:area_effect_cloud,sort=nearest,limit=2]
+                        }
+
+                        function export {
+                            execute store result score .Result abilityYuji.MajinKickVelocityX run data get storage minecraft:ability yuji.majin_kick.segment_velocityX 1000000
+                            execute store result storage minecraft:ability yuji.majin_kick.multiplier_velocityX int 1 run scoreboard players get .Multiplier abilityYuji.MajinKickVelocityX
+                            
+                            block { with storage minecraft:ability yuji.majin_kick
+                                $function universal:math/multiply {value:$(multiplier_velocityX),score:".Result",objective:"abilityYuji.MajinKickVelocityX"}
+                                execute store result storage minecraft:ability yuji.majin_kick.velocityX double 0.000001 run scoreboard players get .Result abilityYuji.MajinKickVelocityX
+                            }
+                        }
+                    }
+
+                    dir velocity_y {
+                        function determine {
+                            scoreboard players reset .Recursions abilityYuji.MajinKickVelocityY
+                            scoreboard players reset .Multiplier abilityYuji.MajinKickVelocityY
+                            scoreboard players set @s abilityYuji.MajinKickAcceleration -18
+                            scoreboard players add @s abilityYuji.MajinKickTime 1
+
+                            scoreboard players operation @s abilityYuji.MajinKickAcceleration *= @s abilityYuji.MajinKickTime
+
+                            scoreboard players set @s abilityYuji.MajinKickVelocityY 125
+                            scoreboard players operation @s abilityYuji.MajinKickVelocityY += @s abilityYuji.MajinKickAcceleration
+
+                            # execute store result storage minecraft:custom yuji.majin_kick.velocityY double 0.002 run scoreboard players get @s customYuji.MajinKickVelocityY
+                            execute store result storage minecraft:ability yuji.majin_kick.segment_velocityY double 0.0004 run scoreboard players get @s abilityYuji.MajinKickVelocityY
+                            function ability:yuji/moves/2/majin_kick/movement/velocity_y/check with storage minecraft:ability yuji.majin_kick
+                            function ability:yuji/moves/2/majin_kick/movement/velocity_y/export
+                        }
+
+                        function check {
+                            $execute positioned ~ ~$(segment_velocityY) ~ run {
+                                scoreboard players add .Recursions abilityYuji.MajinKickVelocityY 1
+
+                                execute if score @s abilityYuji.MajinKickVelocityY matches ..-1 unless block ~ ~ ~ #ability:yuji/majin_kick run {
+                                    tag @s add abilityYuji.MajinKickEnd
+                                    execute if score @s abilityYuji.MajinKickVelocityY matches ..-200 at @s run {
+                                        playsound minecraft:ability.yuji.majin.land player @a ~ ~ ~
+                                        function universal:vfx/spawn {mode:1,speed:0,count:1,duration:0,branch:"yuji",animation:'land',extra:"random value 1..2"}
+                                    }
+                                    function aj:yuji/animations/majin_kick/tween {to_frame:26,duration:3}
+                                }
+
+                                execute if block ~ ~ ~ #ability:yuji/majin_kick run {
+                                    scoreboard players add .Multiplier abilityYuji.MajinKickVelocityY 1
+                                    execute unless score .Recursions abilityYuji.MajinKickVelocityY matches 5.. run function ability:yuji/moves/2/majin_kick/movement/velocity_y/check with storage minecraft:ability yuji.majin_kick
+                                }
+                            }
+                        }
+
+                        function export {
+                            execute store result score .Result abilityYuji.MajinKickVelocityY run data get storage minecraft:ability yuji.majin_kick.segment_velocityY 1000000
+                            execute store result storage minecraft:ability yuji.majin_kick.multiplier_velocityY int 1 run scoreboard players get .Multiplier abilityYuji.MajinKickVelocityY
+                            
+                            block { with storage minecraft:ability yuji.majin_kick
+                                $function universal:math/multiply {value:$(multiplier_velocityY),score:".Result",objective:"abilityYuji.MajinKickVelocityY"}
+                                execute store result storage minecraft:ability yuji.majin_kick.velocityY double 0.000001 run scoreboard players get .Result abilityYuji.MajinKickVelocityY
+                            }
+                        }
+                    }
+
+                    function apply {
+                        $tp @s ^ ^$(velocityY) ^$(velocityX)
+                    }
+                }
+
+                function end {
+                    ride @s dismount
+                    execute store result storage minecraft:ability yuji.majin_kick.id int 1 run scoreboard players get @s universalAbility.ID
+                    block { with storage minecraft:ability yuji.majin_kick
+                        $execute at @n[type=minecraft:item_display,tag=aj.yuji.root,scores={universalAbility.ID=$(id)}] run tp @s ~ ~ ~
+                    }
+                }
             }
         }
 
@@ -527,6 +730,8 @@ dir yuji {
 
             function player {
                 visibility enable @s @a
+                function universal:attribute/revoke {type:"minecraft:movement_speed",path:"ability:generic"}
+                function universal:attribute/revoke {type:"minecraft:jump_strength",path:"ability:generic"}
                 function universal:ability/revoke/cancelable {player:"abilityBilly.User"}
                 tag @s remove universalAbility.Animating
             }

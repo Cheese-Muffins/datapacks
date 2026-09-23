@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:yuji"
-data modify storage animated_java:temp entry.data.rig_hash set value "acd5eb38782e689a7c74b459fa7077d0d21121efa345677948ea067efbecddf9"
+data modify storage animated_java:temp entry.data.rig_hash set value "c29b7fcc583c9db588386876499ca6ef60a072c3c83ca2815eed439ca1d6a4fd"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0 ^0.75 ^0 {Tags:["","aj.global.bone.upper_body.child","aj.global.bone.upper_body.child.locator","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.bone.yuji.decendant","aj.global.bone.yuji.decendant.locator","aj.global.bone.yuji.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.mount","aj.new","aj.yuji.bone.upper_body.child","aj.yuji.bone.upper_body.child.locator","aj.yuji.bone.upper_body.decendant","aj.yuji.bone.upper_body.decendant.locator","aj.yuji.bone.upper_body.tree","aj.yuji.bone.yuji.decendant","aj.yuji.bone.yuji.decendant.locator","aj.yuji.bone.yuji.tree","aj.yuji.entity","aj.yuji.locator","aj.yuji.locator.mount","aj.yuji.node","aj.yuji.node.mount"]}
 execute as @n[ type=minecraft:item_display, tag=aj.yuji.locator.mount, tag=aj.new, distance=..8 ] run function aj:yuji/zzz/summon/as_locator/mount
