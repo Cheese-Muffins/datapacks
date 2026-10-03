@@ -3,4 +3,5 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/black_
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/black_flash_assault/zzz/frames/39_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/black_flash_assault/zzz/frames/39_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/black_flash_assault/zzz/frames/39_locator_sfx
-$execute as $(mount) positioned ^0 ^0.7125 ^0 rotated ~29.62347057 ~58.3189675296 run function aj:yuji/animations/black_flash_assault/zzz/frames/39_locator_mount
+$execute as $(yuji_mount) positioned ^0 ^0.65 ^0 rotated ~29.62347057 ~58.3189675296 run function aj:yuji/animations/black_flash_assault/zzz/frames/39_locator_yuji_mount
+$execute as $(sukuna) positioned ^0 ^1 ^0 rotated ~0 ~0 run function aj:yuji/animations/black_flash_assault/zzz/frames/39_locator_sukuna

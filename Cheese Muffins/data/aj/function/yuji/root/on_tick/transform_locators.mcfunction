@@ -3,4 +3,5 @@ function aj:yuji/root/on_tick/select_locator_commands with storage animated_java
 function aj:yuji/root/on_tick/select_locator_constant with storage animated_java:temp entry.data.locators.constant
 function aj:yuji/root/on_tick/select_locator_skins with storage animated_java:temp entry.data.locators.skins
 function aj:yuji/root/on_tick/select_locator_sfx with storage animated_java:temp entry.data.locators.sfx
-function aj:yuji/root/on_tick/select_locator_mount with storage animated_java:temp entry.data.locators.mount
+function aj:yuji/root/on_tick/select_locator_yuji_mount with storage animated_java:temp entry.data.locators.yuji_mount
+function aj:yuji/root/on_tick/select_locator_sukuna with storage animated_java:temp entry.data.locators.sukuna

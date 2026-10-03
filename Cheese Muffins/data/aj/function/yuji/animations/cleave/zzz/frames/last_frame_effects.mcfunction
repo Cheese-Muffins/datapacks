@@ -3,4 +3,5 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/cleave
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/cleave/zzz/frames/31_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/cleave/zzz/frames/31_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/cleave/zzz/frames/31_locator_sfx
-$execute as $(mount) positioned ^0 ^0.75 ^0 rotated ~0 ~0 run function aj:yuji/animations/cleave/zzz/frames/31_locator_mount
+$execute as $(yuji_mount) positioned ^0 ^0.6875 ^0 rotated ~0 ~0 run function aj:yuji/animations/cleave/zzz/frames/31_locator_yuji_mount
+$execute as $(sukuna) positioned ^0 ^1 ^0 rotated ~0 ~0 run function aj:yuji/animations/cleave/zzz/frames/31_locator_sukuna

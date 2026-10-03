@@ -3,4 +3,5 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/majin_
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/majin_kick_fall/zzz/frames/201_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/majin_kick_fall/zzz/frames/201_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/majin_kick_fall/zzz/frames/201_locator_sfx
-$execute as $(mount) positioned ^-0.0625 ^0.75 ^0 rotated ~352.3934318824 ~-9.8923907076 run function aj:yuji/animations/majin_kick_fall/zzz/frames/201_locator_mount
+$execute as $(yuji_mount) positioned ^-0.0625 ^0.6875 ^0 rotated ~352.3934318824 ~-9.8923907076 run function aj:yuji/animations/majin_kick_fall/zzz/frames/201_locator_yuji_mount
+$execute as $(sukuna) positioned ^0 ^1 ^0 rotated ~0 ~0 run function aj:yuji/animations/majin_kick_fall/zzz/frames/201_locator_sukuna

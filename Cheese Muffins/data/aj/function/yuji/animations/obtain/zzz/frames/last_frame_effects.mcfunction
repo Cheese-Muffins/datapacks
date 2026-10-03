@@ -3,4 +3,5 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/obtain
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/obtain/zzz/frames/41_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/obtain/zzz/frames/41_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:yuji/animations/obtain/zzz/frames/41_locator_sfx
-$execute as $(mount) positioned ^6.75 ^0.75 ^0 rotated ~90 ~0 run function aj:yuji/animations/obtain/zzz/frames/41_locator_mount
+$execute as $(yuji_mount) positioned ^6.75 ^0.6875 ^0 rotated ~90 ~0 run function aj:yuji/animations/obtain/zzz/frames/41_locator_yuji_mount
+$execute as $(sukuna) positioned ^0 ^1 ^0 rotated ~0 ~0 run function aj:yuji/animations/obtain/zzz/frames/41_locator_sukuna

@@ -3,5 +3,6 @@ data modify storage animated_java:temp entry.data.locators.commands merge value 
 data modify storage animated_java:temp entry.data.locators.constant merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
 data modify storage animated_java:temp entry.data.locators.skins merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
 data modify storage animated_java:temp entry.data.locators.sfx merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
-execute at @s run function aj:yuji/zzz/set_default_pose/as_locator_mount with storage animated_java:temp entry.data.locators.mount
+execute at @s run function aj:yuji/zzz/set_default_pose/as_locator_yuji_mount with storage animated_java:temp entry.data.locators.yuji_mount
+execute at @s run function aj:yuji/zzz/set_default_pose/as_locator_sukuna with storage animated_java:temp entry.data.locators.sukuna
 execute at @s run function aj:yuji/zzz/set_default_pose/as_camera_camera with storage animated_java:temp entry.data.cameras.camera

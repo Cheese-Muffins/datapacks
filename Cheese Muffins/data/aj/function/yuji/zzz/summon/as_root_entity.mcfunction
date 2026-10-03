@@ -12,115 +12,215 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:yuji"
-data modify storage animated_java:temp entry.data.rig_hash set value "c29b7fcc583c9db588386876499ca6ef60a072c3c83ca2815eed439ca1d6a4fd"
+data modify storage animated_java:temp entry.data.rig_hash set value "bfd967a573f0cda3a9ef4769b071aaca663b730c3586029a64c2ca780153cdde"
 tp @s ~ ~ ~ ~ ~
-summon minecraft:item_display ^0 ^0.75 ^0 {Tags:["","aj.global.bone.upper_body.child","aj.global.bone.upper_body.child.locator","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.bone.yuji.decendant","aj.global.bone.yuji.decendant.locator","aj.global.bone.yuji.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.mount","aj.new","aj.yuji.bone.upper_body.child","aj.yuji.bone.upper_body.child.locator","aj.yuji.bone.upper_body.decendant","aj.yuji.bone.upper_body.decendant.locator","aj.yuji.bone.upper_body.tree","aj.yuji.bone.yuji.decendant","aj.yuji.bone.yuji.decendant.locator","aj.yuji.bone.yuji.tree","aj.yuji.entity","aj.yuji.locator","aj.yuji.locator.mount","aj.yuji.node","aj.yuji.node.mount"]}
-execute as @n[ type=minecraft:item_display, tag=aj.yuji.locator.mount, tag=aj.new, distance=..8 ] run function aj:yuji/zzz/summon/as_locator/mount
+summon minecraft:item_display ^0 ^0.6875 ^0 {Tags:["","aj.global.bone.yuji.decendant","aj.global.bone.yuji.decendant.locator","aj.global.bone.yuji.tree","aj.global.bone.yuji_upper_body.child","aj.global.bone.yuji_upper_body.child.locator","aj.global.bone.yuji_upper_body.decendant","aj.global.bone.yuji_upper_body.decendant.locator","aj.global.bone.yuji_upper_body.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.yuji_mount","aj.new","aj.yuji.bone.yuji.decendant","aj.yuji.bone.yuji.decendant.locator","aj.yuji.bone.yuji.tree","aj.yuji.bone.yuji_upper_body.child","aj.yuji.bone.yuji_upper_body.child.locator","aj.yuji.bone.yuji_upper_body.decendant","aj.yuji.bone.yuji_upper_body.decendant.locator","aj.yuji.bone.yuji_upper_body.tree","aj.yuji.entity","aj.yuji.locator","aj.yuji.locator.yuji_mount","aj.yuji.node","aj.yuji.node.yuji_mount"]}
+execute as @n[ type=minecraft:item_display, tag=aj.yuji.locator.yuji_mount, tag=aj.new, distance=..8 ] run function aj:yuji/zzz/summon/as_locator/yuji_mount
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.mount set from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.locators.mount.uuid set from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_mount set from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.locators.yuji_mount.uuid set from storage animated_java:gu out
+summon minecraft:item_display ^0 ^1 ^0 {Tags:["","aj.global.bone.sukuna1.child","aj.global.bone.sukuna1.child.locator","aj.global.bone.sukuna1.decendant","aj.global.bone.sukuna1.decendant.locator","aj.global.bone.sukuna1.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.sukuna","aj.new","aj.yuji.bone.sukuna1.child","aj.yuji.bone.sukuna1.child.locator","aj.yuji.bone.sukuna1.decendant","aj.yuji.bone.sukuna1.decendant.locator","aj.yuji.bone.sukuna1.tree","aj.yuji.entity","aj.yuji.locator","aj.yuji.locator.sukuna","aj.yuji.node","aj.yuji.node.sukuna"]}
+execute as @n[ type=minecraft:item_display, tag=aj.yuji.locator.sukuna, tag=aj.new, distance=..16 ] run function aj:yuji/zzz/summon/as_locator/sukuna
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna set from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.locators.sukuna.uuid set from storage animated_java:gu out
 summon minecraft:item_display ^0 ^0 ^0 {Tags:["","aj.global.camera","aj.global.entity","aj.global.node","aj.global.node.camera","aj.global.root.child","aj.global.root.child.camera","aj.new","aj.yuji.camera","aj.yuji.camera.camera","aj.yuji.entity","aj.yuji.node","aj.yuji.node.camera"], teleport_duration: 2, Roll:0f}
-execute as @n[ type=minecraft:item_display, tag=aj.yuji.camera.camera, tag=aj.new, distance=..5 ] run function aj:yuji/zzz/summon/as_camera/camera
+execute as @n[ type=minecraft:item_display, tag=aj.yuji.camera.camera, tag=aj.new, distance=..15 ] run function aj:yuji/zzz/summon/as_camera/camera
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.camera set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.cameras.camera.uuid set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.lower_left_leg] run function aj:yuji/zzz/summon/as_node/lower_left_leg
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_lower_left_leg] run function aj:yuji/zzz/summon/as_node/yuji_lower_left_leg
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.lower_left_leg set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.leggings_lower_r] run function aj:yuji/zzz/summon/as_node/leggings_lower_r
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_lower_left_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_leggings_lower_r] run function aj:yuji/zzz/summon/as_node/yuji_leggings_lower_r
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.leggings_lower_r set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.boots_r] run function aj:yuji/zzz/summon/as_node/boots_r
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_leggings_lower_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_boots_r] run function aj:yuji/zzz/summon/as_node/yuji_boots_r
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.boots_r set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.lower_left_leg_group] run function aj:yuji/zzz/summon/as_node/lower_left_leg_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_boots_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_lower_left_leg_group] run function aj:yuji/zzz/summon/as_node/yuji_lower_left_leg_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.lower_left_leg_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.left_leg] run function aj:yuji/zzz/summon/as_node/left_leg
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_lower_left_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_left_leg] run function aj:yuji/zzz/summon/as_node/yuji_left_leg
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.left_leg set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.leggings_upper_r] run function aj:yuji/zzz/summon/as_node/leggings_upper_r
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_left_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_leggings_upper_r] run function aj:yuji/zzz/summon/as_node/yuji_leggings_upper_r
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.leggings_upper_r set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.left_leg_group] run function aj:yuji/zzz/summon/as_node/left_leg_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_leggings_upper_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_left_leg_group] run function aj:yuji/zzz/summon/as_node/yuji_left_leg_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.left_leg_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.lower_right_leg] run function aj:yuji/zzz/summon/as_node/lower_right_leg
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_left_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_lower_right_leg] run function aj:yuji/zzz/summon/as_node/yuji_lower_right_leg
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.lower_right_leg set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.leggings_lower_l] run function aj:yuji/zzz/summon/as_node/leggings_lower_l
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_lower_right_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_leggings_lower_l] run function aj:yuji/zzz/summon/as_node/yuji_leggings_lower_l
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.leggings_lower_l set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.boots_l] run function aj:yuji/zzz/summon/as_node/boots_l
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_leggings_lower_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_boots_l] run function aj:yuji/zzz/summon/as_node/yuji_boots_l
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.boots_l set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.lower_right_leg_group] run function aj:yuji/zzz/summon/as_node/lower_right_leg_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_boots_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_lower_right_leg_group] run function aj:yuji/zzz/summon/as_node/yuji_lower_right_leg_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.lower_right_leg_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.right_leg] run function aj:yuji/zzz/summon/as_node/right_leg
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_lower_right_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_right_leg] run function aj:yuji/zzz/summon/as_node/yuji_right_leg
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.right_leg set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.leggings_upper_l] run function aj:yuji/zzz/summon/as_node/leggings_upper_l
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_right_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_leggings_upper_l] run function aj:yuji/zzz/summon/as_node/yuji_leggings_upper_l
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.leggings_upper_l set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.right_leg_group] run function aj:yuji/zzz/summon/as_node/right_leg_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_leggings_upper_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_right_leg_group] run function aj:yuji/zzz/summon/as_node/yuji_right_leg_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.right_leg_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.waist] run function aj:yuji/zzz/summon/as_node/waist
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_right_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_waist] run function aj:yuji/zzz/summon/as_node/yuji_waist
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.waist set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.waist_group] run function aj:yuji/zzz/summon/as_node/waist_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_waist set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_waist_group] run function aj:yuji/zzz/summon/as_node/yuji_waist_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.waist_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.head] run function aj:yuji/zzz/summon/as_node/head
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_waist_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_head] run function aj:yuji/zzz/summon/as_node/yuji_head
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.head set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.helmet] run function aj:yuji/zzz/summon/as_node/helmet
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_head set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_helmet] run function aj:yuji/zzz/summon/as_node/yuji_helmet
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.helmet set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.head_group] run function aj:yuji/zzz/summon/as_node/head_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_helmet set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_head_group] run function aj:yuji/zzz/summon/as_node/yuji_head_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.head_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.right_arm] run function aj:yuji/zzz/summon/as_node/right_arm
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_head_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_right_arm] run function aj:yuji/zzz/summon/as_node/yuji_right_arm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.right_arm set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.right_forearm] run function aj:yuji/zzz/summon/as_node/right_forearm
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_right_arm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_right_forearm] run function aj:yuji/zzz/summon/as_node/yuji_right_forearm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.right_forearm set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.right_forearm_group] run function aj:yuji/zzz/summon/as_node/right_forearm_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_right_forearm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_right_forearm_group] run function aj:yuji/zzz/summon/as_node/yuji_right_forearm_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.right_forearm_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.chestplate_arm_r] run function aj:yuji/zzz/summon/as_node/chestplate_arm_r
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_right_forearm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_chestplate_arm_r] run function aj:yuji/zzz/summon/as_node/yuji_chestplate_arm_r
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.chestplate_arm_r set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.right_arm_group] run function aj:yuji/zzz/summon/as_node/right_arm_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_chestplate_arm_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_right_arm_group] run function aj:yuji/zzz/summon/as_node/yuji_right_arm_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.right_arm_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.left_arm] run function aj:yuji/zzz/summon/as_node/left_arm
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_right_arm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_left_arm] run function aj:yuji/zzz/summon/as_node/yuji_left_arm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.left_arm set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.left_forearm] run function aj:yuji/zzz/summon/as_node/left_forearm
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_left_arm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_left_forearm] run function aj:yuji/zzz/summon/as_node/yuji_left_forearm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.left_forearm set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.left_forearm_group] run function aj:yuji/zzz/summon/as_node/left_forearm_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_left_forearm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_left_forearm_group] run function aj:yuji/zzz/summon/as_node/yuji_left_forearm_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.left_forearm_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.chestplate_arm_l] run function aj:yuji/zzz/summon/as_node/chestplate_arm_l
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_left_forearm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_chestplate_arm_l] run function aj:yuji/zzz/summon/as_node/yuji_chestplate_arm_l
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.chestplate_arm_l set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.left_arm_group] run function aj:yuji/zzz/summon/as_node/left_arm_group
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_chestplate_arm_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_left_arm_group] run function aj:yuji/zzz/summon/as_node/yuji_left_arm_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.left_arm_group set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.chestplate_body] run function aj:yuji/zzz/summon/as_node/chestplate_body
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_left_arm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_chestplate_body] run function aj:yuji/zzz/summon/as_node/yuji_chestplate_body
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.chestplate_body set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.yuji.node.leggings_pants] run function aj:yuji/zzz/summon/as_node/leggings_pants
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_chestplate_body set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.yuji_leggings_pants] run function aj:yuji/zzz/summon/as_node/yuji_leggings_pants
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.leggings_pants set from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.yuji_leggings_pants set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_lower_left_leg] run function aj:yuji/zzz/summon/as_node/sukuna_lower_left_leg
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_lower_left_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_leggings_lower_r] run function aj:yuji/zzz/summon/as_node/sukuna_leggings_lower_r
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_leggings_lower_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_boots_r] run function aj:yuji/zzz/summon/as_node/sukuna_boots_r
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_boots_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_lower_left_leg_group] run function aj:yuji/zzz/summon/as_node/sukuna_lower_left_leg_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_lower_left_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_left_leg] run function aj:yuji/zzz/summon/as_node/sukuna_left_leg
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_left_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_leggings_upper_r] run function aj:yuji/zzz/summon/as_node/sukuna_leggings_upper_r
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_leggings_upper_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_left_leg_group] run function aj:yuji/zzz/summon/as_node/sukuna_left_leg_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_left_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_lower_right_leg] run function aj:yuji/zzz/summon/as_node/sukuna_lower_right_leg
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_lower_right_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_leggings_lower_l] run function aj:yuji/zzz/summon/as_node/sukuna_leggings_lower_l
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_leggings_lower_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_boots_l] run function aj:yuji/zzz/summon/as_node/sukuna_boots_l
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_boots_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_lower_right_leg_group] run function aj:yuji/zzz/summon/as_node/sukuna_lower_right_leg_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_lower_right_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_right_leg] run function aj:yuji/zzz/summon/as_node/sukuna_right_leg
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_right_leg set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_leggings_upper_l] run function aj:yuji/zzz/summon/as_node/sukuna_leggings_upper_l
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_leggings_upper_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_right_leg_group] run function aj:yuji/zzz/summon/as_node/sukuna_right_leg_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_right_leg_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_waist] run function aj:yuji/zzz/summon/as_node/sukuna_waist
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_waist set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_waist_group] run function aj:yuji/zzz/summon/as_node/sukuna_waist_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_waist_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_head] run function aj:yuji/zzz/summon/as_node/sukuna_head
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_head set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_helmet] run function aj:yuji/zzz/summon/as_node/sukuna_helmet
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_helmet set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_head_group] run function aj:yuji/zzz/summon/as_node/sukuna_head_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_head_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_right_arm] run function aj:yuji/zzz/summon/as_node/sukuna_right_arm
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_right_arm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_right_forearm] run function aj:yuji/zzz/summon/as_node/sukuna_right_forearm
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_right_forearm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_right_forearm_group] run function aj:yuji/zzz/summon/as_node/sukuna_right_forearm_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_right_forearm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_chestplate_arm_r] run function aj:yuji/zzz/summon/as_node/sukuna_chestplate_arm_r
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_chestplate_arm_r set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_right_arm_group] run function aj:yuji/zzz/summon/as_node/sukuna_right_arm_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_right_arm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_left_arm] run function aj:yuji/zzz/summon/as_node/sukuna_left_arm
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_left_arm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_left_forearm] run function aj:yuji/zzz/summon/as_node/sukuna_left_forearm
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_left_forearm set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_left_forearm_group] run function aj:yuji/zzz/summon/as_node/sukuna_left_forearm_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_left_forearm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_chestplate_arm_l] run function aj:yuji/zzz/summon/as_node/sukuna_chestplate_arm_l
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_chestplate_arm_l set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_left_arm_group] run function aj:yuji/zzz/summon/as_node/sukuna_left_arm_group
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_left_arm_group set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_chestplate_body] run function aj:yuji/zzz/summon/as_node/sukuna_chestplate_body
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_chestplate_body set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.yuji.node.sukuna_leggings_pants] run function aj:yuji/zzz/summon/as_node/sukuna_leggings_pants
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.sukuna_leggings_pants set from storage animated_java:gu out
 execute on passengers if entity @s[tag=aj.yuji.node.fuga] run function aj:yuji/zzz/summon/as_node/fuga
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.fuga set from storage animated_java:gu out
-function aj:yuji/zzz/summon/zzz/0 with storage animated_java:temp entry.data.locators.mount
+function aj:yuji/zzz/summon/zzz/0 with storage animated_java:temp entry.data.locators.yuji_mount
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
+function aj:yuji/zzz/summon/zzz/1 with storage animated_java:temp entry.data.locators.sukuna
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
 function aj:yuji/zzz/set_default_pose
 # Data Manager: Write

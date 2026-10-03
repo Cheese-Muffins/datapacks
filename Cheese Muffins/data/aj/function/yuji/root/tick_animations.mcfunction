@@ -2,8 +2,11 @@
 execute if entity @s[tag=aj.yuji.animation.natural_talent.playing] run function aj:yuji/animations/natural_talent/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.majin_kick.playing] run function aj:yuji/animations/majin_kick/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.majin_kick_fall.playing] run function aj:yuji/animations/majin_kick_fall/zzz/on_tick
-execute if entity @s[tag=aj.yuji.animation.sukuna.playing] run function aj:yuji/animations/sukuna/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.sukuna_old.playing] run function aj:yuji/animations/sukuna_old/zzz/on_tick
+execute if entity @s[tag=aj.yuji.animation.sukuna_public.playing] run function aj:yuji/animations/sukuna_public/zzz/on_tick
+execute if entity @s[tag=aj.yuji.animation.sukuna_private.playing] run function aj:yuji/animations/sukuna_private/zzz/on_tick
+execute if entity @s[tag=aj.yuji.animation.sukuna_private3.playing] run function aj:yuji/animations/sukuna_private3/zzz/on_tick
+execute if entity @s[tag=aj.yuji.animation.sukuna_private2.playing] run function aj:yuji/animations/sukuna_private2/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.king_of_curses.playing] run function aj:yuji/animations/king_of_curses/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.cleave.playing] run function aj:yuji/animations/cleave/zzz/on_tick
 execute if entity @s[tag=aj.yuji.animation.dismantle.playing] run function aj:yuji/animations/dismantle/zzz/on_tick

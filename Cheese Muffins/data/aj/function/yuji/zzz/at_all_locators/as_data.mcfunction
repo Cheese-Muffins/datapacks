@@ -7,5 +7,7 @@ data modify storage animated_java:temp args merge from storage animated_java:tem
 function aj:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.sfx
 function aj:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
-data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.mount
+data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.yuji_mount
+function aj:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.sukuna
 function aj:yuji/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
