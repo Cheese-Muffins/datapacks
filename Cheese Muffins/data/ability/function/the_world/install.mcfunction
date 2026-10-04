@@ -1,6 +1,8 @@
 # Generated with MC-Build
 
 scoreboard objectives add abilityTheWorld.PassiveRageCount dummy
+scoreboard objectives add abilityTheWorld.TimeskipGreyscale dummy
+scoreboard objectives add abilityTheWorld.TimeskipMovement dummy
 function universal:ability/setup/cooldown/10x {name:"TheWorld_Timeskip",storage:"the_world",path:"1a",move:1,cooldown:9}
 function universal:ability/setup/variables {ability:"the_world",name:"timeskip",variables:{max_distance:9.0}}
 function universal:ability/setup/cooldown/10x {name:"TheWorld_Timestop",storage:"the_world",path:"1b",move:1,cooldown:50}

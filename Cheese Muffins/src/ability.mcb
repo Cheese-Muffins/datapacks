@@ -21,7 +21,7 @@ dir tick {
             execute if entity @s[tag=scenarioTick.AbilityTheWorld] run function ability:the_world/tick/scenario/core
             execute if entity @s[tag=scenarioTick.AbilityYuji] run function ability:yuji/tick/scenario/core
 
-            execute if entity @s[tag=!scenarioTick.AbilityBilly,tag=!scenarioTick.AbilityYuji] run tag @s remove scenarioTick.Ability
+            execute if entity @s[tag=!scenarioTick.AbilityBilly,tag=!scenarioTick.AbilityTheWorld,tag=!scenarioTick.AbilityYuji] run tag @s remove scenarioTick.Ability
         }
     }
 }
@@ -437,13 +437,22 @@ dir the_world {
 
         dir scenario {
             function core {
-                # execute unless entity @s[scores={abilityBilly.EncourageBuff=1..}] run tag @s remove scenarioTick.AbilityBilly
+                execute if score @s abilityTheWorld.TimeskipGreyscale matches 1.. run function ability:the_world/tick/scenario/timeskip_greyscale
+
+                execute unless entity @s[scores={abilityTheWorld.TimeskipGreyscale=1..}] run tag @s remove scenarioTick.AbilityTheWorld
+            }
+
+            function timeskip_greyscale {
+                scoreboard players remove @s abilityTheWorld.TimeskipGreyscale 1
+                execute if score @s abilityTheWorld.TimeskipGreyscale matches 0 run shader disable @s minecraft:greyscale
             }
         }
     }
 
     function install {
         scoreboard objectives add abilityTheWorld.PassiveRageCount dummy
+        scoreboard objectives add abilityTheWorld.TimeskipGreyscale dummy
+        scoreboard objectives add abilityTheWorld.TimeskipMovement dummy
 
         # Move 1 #
             # Timeskip #
@@ -478,106 +487,103 @@ dir the_world {
 
     dir moves {
         function setup {
-            $data merge storage minecraft:ability {billy:{setup:{rig:'$(rig)',animation:'$(animation)'}}}
-            execute store result storage minecraft:ability billy.setup.id int 1 run scoreboard players get @s universalAbility.ID
-            block { with storage minecraft:ability billy.setup
-                $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy.setup
-                    $function aj:billy/animations/$(animation)/play
+            $data merge storage minecraft:ability {the_world:{setup:{rig:'$(rig)',animation:'$(animation)'}}}
+            execute store result storage minecraft:ability the_world.setup.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:ability the_world.setup
+                $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability the_world.setup
+                    $function aj:$(rig)/animations/$(animation)/play
                 }
             }
-            tag @s add abilityBilly.FlagOverride
-            function ability:billy/flags/clear
         }
 
         dir 1 {
             function core {
-                execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
-                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
-                function universal:error_messages/constant
-
-                scoreboard players set @s universalAbility.HotbarSlot 1
-                execute unless score @s universalError.FailReturn matches 1 run function ability:billy/moves/1/pass
-                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Encourage",unicode:"u50A1"}
+                execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/moves/1/timeskip/core
+                execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/moves/1/timestop/core
             }
 
-            function pass {
-                # setup
-                function ability:billy/moves/setup {rig:"billy",animation:'encourage'}
+            dir timeskip {
+                function core {
+                    execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
+                    execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                    function universal:error_messages/constant
 
-                # restraints
-                function universal:ability/restraint/cooldown {move:1,name:"Billy"}
-                function universal:ability/restraint/cancelable {move:1}
-                tag @s add universalAbility.Animating
-            }
-
-            function encourage {
-                data modify storage minecraft:universal vfx.arguments.branch set value "billy"
-                data modify storage minecraft:universal vfx.arguments.animation set value "encourage"
-                data modify storage minecraft:universal vfx.arguments.output set value "ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.mouth]"
-                function universal:vfx/spawn with storage minecraft:universal vfx.arguments
-            }
-
-            function range {
-                data modify storage minecraft:universal vfx.arguments.branch set value "billy"
-                data modify storage minecraft:universal vfx.arguments.animation set value "range"
-                function universal:vfx/spawn with storage minecraft:universal vfx.arguments
-            }
-
-            function buff {
-                execute at @s as @a[distance=..4] run {
-                    data merge storage minecraft:universal {attribute:{scenario:"Ability",objective:"abilityBilly.EncourageBuff",duration:60,extra:"tag @s add scenarioTick.AbilityBilly"}}
-                    function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:billy.encourage",strength:0.25,operation:"add_multiplied_base"}
-                    function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:billy.encourage",strength:0.5,operation:"add_multiplied_base"}
-                    effect give @s minecraft:haste 60 1 true
-                }
-            }
-        }
-
-        dir 2 {
-            function core {
-                execute if score @s universalAbility.MoveCooldown2 matches 1.. run function universal:error_messages/setup {id:1}
-                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
-                function universal:error_messages/constant
-
-                scoreboard players set @s universalAbility.HotbarSlot 2
-                execute unless score @s universalError.FailReturn matches 1 run function ability:billy/moves/2/pass
-                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:2,name:"Phase",unicode:"u50A1"}
-            }
-
-            function pass {
-                # setup
-                function ability:billy/moves/setup {rig:"billy",animation:'phase'}
-
-                # restraints
-                function universal:ability/restraint/cooldown {move:1,name:"Billy"}
-                tag @s add universalAbility.Animating
-
-                # specific
-                execute store result score @s abilityBilly.PhaseDisconnectX run data get entity @s Pos[0] 1
-                execute store result score @s abilityBilly.PhaseDisconnectY run data get entity @s Pos[1] 1
-                execute store result score @s abilityBilly.PhaseDisconnectZ run data get entity @s Pos[2] 1
-
-                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-                block { with storage minecraft:ability billy
-                    $tp @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] ~ ~ ~
+                    scoreboard players set @s universalAbility.HotbarSlot 1
+                    execute unless score @s universalError.FailReturn matches 1 run function ability:the_world/moves/1/timeskip/pass
+                    execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Timeskip",unicode:"u50A1"}
                 }
 
+                function pass {
+                    function ability:the_world/moves/setup {rig:"the_world",animation:'phase'}
+                    function universal:ability/restraint/cooldown {move:1,name:"TheWorld_Timeskip"}
 
-                gamemode spectator @s
-                function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
-                function universal:ability/rig/spectate_camera {camera:"aj.billy.camera",objective:"universalAbility.ID"}
-            }
-        }
+                    function ability:the_world/moves/1/timeskip/recursive/start
+                }
 
-        dir 3 {
-            function core {
-                scoreboard players set @s universalAbility.HotbarSlot 3
+                dir recursive {
+                    function start {
+                        execute as @a[distance=..12] run {
+                            shader enable @s minecraft:greyscale
+                            function universal:scenario_setup {scenario:"Ability",sub_scenario:"TheWorld",objective:"abilityTheWorld.TimeskipGreyscale",duration:6}
+                        }
+
+                        playsound minecraft:ability.the_world.timeskip.sfx player @a ~ ~ ~ 0.5
+
+                        scoreboard players reset .distance abilityTheWorld.TimeskipMovement
+                        execute store result score .maxDistance abilityTheWorld.TimeskipMovement run data get storage minecraft:ability the_world.variables.timeskip.max_distance 10
+
+                        tag @s add temp
+                        execute anchored eyes positioned ^ ^ ^ run function ability:the_world/moves/1/timeskip/recursive/travel
+                        tag @s remove temp
+
+                        scoreboard players reset .distance abilityTheWorld.TimeskipMovement
+                        scoreboard players reset .maxDistance abilityTheWorld.TimeskipMovement
+                    }
+
+                    function travel {
+                        execute unless block ^ ^ ^.1 #ability:the_world/timeskip run function ability:the_world/moves/1/timeskip/recursive/collide
+
+                        scoreboard players add .distance abilityTheWorld.TimeskipMovement 1
+
+                        execute if score .distance abilityTheWorld.TimeskipMovement >= .maxDistance abilityTheWorld.TimeskipMovement run function ability:the_world/moves/1/timeskip/recursive/collide
+
+                        execute if score .distance abilityTheWorld.TimeskipMovement < .maxDistance abilityTheWorld.TimeskipMovement positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #ability:the_world/timeskip unless entity @s[tag=temp2] run function ability:the_world/moves/1/timeskip/recursive/travel
+
+                        execute if entity @s[tag=temp2] run tag @s remove temp2
+                    }
+
+                    function collide {
+                        execute align y run tp @s ^ ^ ^-0.3
+
+                        scoreboard players set .groundDistance abilityTheWorld.TimeskipMovement 0
+                        execute at @s run function ability:the_world/moves/1/timeskip/recursive/ground
+
+                        execute as @a[distance=..12] run {
+                            shader enable @s minecraft:greyscale
+                            function universal:scenario_setup {scenario:"Ability",sub_scenario:"TheWorld",objective:"abilityTheWorld.TimeskipGreyscale",duration:6}
+                        }
+
+                        playsound minecraft:ability.the_world.timeskip.sfx player @a ~ ~ ~ 0.5
+
+                        tag @s add temp2
+                    }
+
+                    function ground {
+                        execute unless block ~ ~-0.1 ~ #ability:the_world/timeskip run return 0
+
+                        scoreboard players add .groundDistance abilityTheWorld.TimeskipMovement 1
+                        execute if score .groundDistance abilityTheWorld.TimeskipMovement matches 31.. run return 0
+
+                        tp @s ~ ~-0.1 ~
+                        execute at @s run function ability:the_world/moves/1/timeskip/recursive/ground
+                    }
+                }
             }
         }
 
         dir reset {
             function all {
-                function universal:ability/rig/as_player {player:"abilityBilly.User",objective:"universalAbility.ID",output:"function ability:billy/moves/reset/player"}
+                function universal:ability/rig/as_player {player:"abilityTheWorld.User",objective:"universalAbility.ID",output:"function ability:the_world/moves/reset/player"}
                 function ability:billy/moves/reset/rig
             }
 

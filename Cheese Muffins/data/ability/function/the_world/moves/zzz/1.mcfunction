@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$function aj:billy/animations/$(animation)/play
+$function aj:$(rig)/animations/$(animation)/play
