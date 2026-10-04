@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"red","italic":false,"text":"Billy"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
+playsound minecraft:ability.the_world.toggle.withdraw player @a ~ ~ ~ 1
+function aj:the_world/remove/this

@@ -416,7 +416,7 @@ dir billy {
 dir the_world {
     dir tick {
         function main {
-            execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. run function ability:the_world/active
+            execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 11.. run function ability:the_world/active
 
             REPEAT (1,3) as i {
                 execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
@@ -443,14 +443,7 @@ dir the_world {
     }
 
     function install {
-        scoreboard objectives add abilityBilly.DiscoveredInteractions dummy
-        scoreboard objectives add abilityBilly.UnlockedSkins dummy
-        scoreboard objectives add abilityBilly.FlagID dummy
-        scoreboard objectives add abilityBilly.ToggleOnText dummy
-        scoreboard objectives add abilityBilly.EncourageBuff dummy
-        scoreboard objectives add abilityBilly.PhaseDisconnectX dummy
-        scoreboard objectives add abilityBilly.PhaseDisconnectY dummy
-        scoreboard objectives add abilityBilly.PhaseDisconnectZ dummy
+        scoreboard objectives add abilityTheWorld.PassiveRageCount dummy
 
         # Move 1 #
             # Timeskip #
@@ -462,18 +455,21 @@ dir the_world {
 
         # Move 2 #
             # Knife Throw #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:2,move:2,cooldown:17}
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
             function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.15,hitbox_size:2.5,damage:10}}
 
         # Move 3 #
             # Barrage #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:3,move:3,cooldown:23}
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"3a",move:3,cooldown:23}
             function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{hitbox_size:2.5,damage:3}}
         
         # Move 4 #
             # Flurry #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:4,move:4,cooldown:32}
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"4a",move:4,cooldown:32}
             function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{spawned_knives:50,damage:10}}
+        
+        # Awakening: Rage Mode #
+        function universal:ability/setup/meter {name:"TheWorld",storage:"the_world",duration:145}
     }
 
     function active {
@@ -598,148 +594,116 @@ dir the_world {
     }
 
     dir hotbar {
-        dir hotbar {
-            function main {
-                function ability:the_world/hotbar/meter with storage minecraft:ability the_world.awakening
+        function main {
+            function ability:the_world/hotbar/meter with storage minecraft:ability the_world.awakening
 
-                execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move1a
-                execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move1b
-                function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move2a
-                function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move3a
-                function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move4a
+            execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1a
+            execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1b
+            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move2a
+            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move3a
+            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move4a
 
-                REPEAT (1,4) as i {
-                    execute if score @s universalAbility.HotbarSlot matches <%i%> run {
-                        function universal:hotbar/time {ability:"the_world",slot:<%i%>}
-                    }
-                }
-
-                block { with storage minecraft:ability yuji.hotbar
-                    $title @s actionbar [{"text":"\uF85E\u03D0"},{"text":"\uF850$(rage)","color":"aqua"},{"text":"\uF873\u03A0"},{"text":"\uF863\$(move1)\uF84F\u03A2"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF863\$(move4)"},{"text":"\uF820\$(awakening)"},{"text":"\uF86E\u03A1"},{"text":"\uF86C\u90A0"},{"text":"\uF84A$(time)","color":"yellow"}]
+            function ability:the_world/hotbar/rage
+            REPEAT (1,4) as i {
+                execute if score @s universalAbility.HotbarSlot matches <%i%> run {
+                    function universal:hotbar/time {ability:"the_world",slot:<%i%>}
                 }
             }
 
-            function progress {
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D1"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D2"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D3"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D4"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D5"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D6"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D7"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D8"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D9"
-                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02E0"
-                $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02E1"
+            block { with storage minecraft:ability the_world.hotbar
+                $title @s actionbar [{"text":"\uF85E\u03D0"},{"text":"\uF850$(rage)","color":"aqua"},{"text":"\uF873\u03A0"},{"text":"\uF863\$(move1)\uF84F\u03A2"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF863\$(move4)"},{"text":"\uF820\$(awakening)"},{"text":"\uF86E\u03A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
             }
+        }
 
-            function meter {
-                $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B9"
-                $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B8"
-                $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B7"
-                $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B6"
-                $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B5"
-                $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B4"
-                $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B3"
-                $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B2"
-                $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B1"
-                $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B0"
-                $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A9"
-                $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A8"
-                $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A7"
-                $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A6"
-                $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A5"
-                execute unless score @s universalAbility.AwakeningDuration matches 1.. run {
-                    data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A4"
-                    tag @s remove abilityTheWorld.SukunaAwakening
-                }
+        function rage {
+            # clamp
+            execute unless score @s abilityTheWorld.PassiveRageCount matches 0.. run scoreboard players set @s abilityTheWorld.PassiveRageCount 0
+
+            # split into whole + frac
+            scoreboard players operation #tmp_whole abilityTheWorld.PassiveRageCount = @s abilityTheWorld.PassiveRageCount
+            scoreboard players operation #tmp_frac abilityTheWorld.PassiveRageCount = @s abilityTheWorld.PassiveRageCount
+            scoreboard players set #ten abilityTheWorld.PassiveRageCount 10
+
+            scoreboard players operation #tmp_whole abilityTheWorld.PassiveRageCount /= #ten abilityTheWorld.PassiveRageCount
+            scoreboard players operation #tmp_frac abilityTheWorld.PassiveRageCount %= #ten abilityTheWorld.PassiveRageCount
+
+            execute store result storage minecraft:ability the_world.hotbar.whole int 1 run scoreboard players get #tmp_whole abilityTheWorld.PassiveRageCount
+            execute store result storage minecraft:ability the_world.hotbar.frac int 1 run scoreboard players get #tmp_frac abilityTheWorld.PassiveRageCount
+
+            block { with storage minecraft:ability the_world.hotbar
+                $data merge storage minecraft:ability {the_world:{hotbar:{rage:"$(whole).$(frac)"}}}
+            }
+            data remove storage minecraft:ability the_world.hotbar.whole
+            data remove storage minecraft:ability the_world.hotbar.frac
+        }
+
+        function progress {
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A3"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A4"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A5"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A6"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A7"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A8"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A9"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B0"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B1"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B2"
+            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B3"
+        }
+
+        function meter {
+            $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B9"
+            $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B8"
+            $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B5"
+            $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B4"
+            $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B3"
+            $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B2"
+            $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B1"
+            $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B0"
+            $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A9"
+            $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A8"
+            $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A5"
+            execute unless score @s universalAbility.AwakeningDuration matches 1.. run {
+                data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A4"
+                tag @s remove abilityTheWorld.RageMode
             }
         }
     }
 
     dir toggle {
         function on {
-            execute rotated ~ 0 run function aj:billy/summon {args:{animation: 'summon', start_animation: true}}
+            execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.toggle.spawn player @a ~ ~ ~ 1
+            execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
+            execute rotated ~ 0 run function aj:the_world/summon {args:{animation: 'summon', start_animation: true}}
                 
-            execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-            execute as @n[type=minecraft:item_display,tag=aj.billy.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability billy
+            execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
+            execute as @n[type=minecraft:item_display,tag=aj.the_world.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability the_world
                 $scoreboard players set @s universalAbility.ID $(id)
             }
 
-            function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-            function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/rig/mount/player {user:"abilityTheWorld.User",rig:"the_world",objective:"universalAbility.ID"}
+            function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
 
             tag @s add universalAbility.HideUI
-            scoreboard players set @s universalAbility.ToggleDelay 40
-        }
-
-        function appear {
-            data modify storage minecraft:universal vfx.arguments.branch set value "billy"
-            data modify storage minecraft:universal vfx.arguments.animation set value "appear"
-            data modify storage minecraft:universal vfx.arguments.output set value "ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.position]"
-            function universal:vfx/spawn with storage minecraft:universal vfx.arguments
-        }
-
-        function land {
-            execute positioned ~ ~-1 ~ run function universal:fetch/block {storage:"minecraft:ability",path:"billy.toggle.land"}
-            block { with storage minecraft:ability billy.toggle
-                $particle block{block_state:"$(id)"} ^ ^0.5 ^0.25 0.75 0 0.75 1 50 normal
-                particle minecraft:snowflake ~ ~ ~ 0 0 0 0.25 50 force @a
-            }
-        }
-
-        function text {
-            execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-            execute if score @s abilityBilly.ToggleOnText matches 54 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"red","italic":false,"text":"Billy"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
-            }
-
-            execute if score @s abilityBilly.ToggleOnText matches 44 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"gold","italic":false,"text":"Demetrius"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
-            }
-
-            execute if score @s abilityBilly.ToggleOnText matches 35 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"yellow","italic":false,"text":"Demarcus"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
-            }
-
-            execute if score @s abilityBilly.ToggleOnText matches 25 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"green","italic":false,"text":"Bartholomew"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
-            }
-
-            execute if score @s abilityBilly.ToggleOnText matches 15 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"blue","italic":false,"text":"James"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
-            }
-
-            execute if score @s abilityBilly.ToggleOnText matches 8 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"light_purple","italic":false,"text":"the"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
-            }
-
-            execute if score @s abilityBilly.ToggleOnText matches 1 run block { with storage minecraft:ability billy
-                $data merge storage minecraft:universal {ability:{rig:{text:{arguments:{animation:"billy",text:{"color":"dark_purple","italic":false,"text":"III"},output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.text_location,scores={universalAbility.ID=$(id)}]"}}}}}
-                function universal:ability/rig/text with storage minecraft:universal ability.rig.text.arguments
-            }
+            scoreboard players set @s universalAbility.ToggleDelay 20
         }
 
         function off {
             title @s actionbar ""
-            execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-            block { with storage minecraft:ability billy
-                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] at @s run {
-                    playsound minecraft:entity.polar_bear.death player @a ~ ~ ~ 0.5
-                    function aj:billy/animations/idle/stop
-                    function aj:billy/animations/withdraw/play
+            execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:ability the_world
+                $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={universalAbility.ID=$(id)}] at @s run {
+                    playsound minecraft:ability.the_world.toggle.withdraw player @a ~ ~ ~ 1
+                    function aj:the_world/remove/this
                 }
             }
-            scoreboard players reset @s abilityBilly.ToggleOnText
-            scoreboard players set @s universalAbility.ToggleDelay 20 
+            scoreboard players set @s universalAbility.ToggleDelay 10 
         }
     }
 

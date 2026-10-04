@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. run function ability:the_world/active
+execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 11.. run function ability:the_world/active
 execute at @s if score @s universalAbility.MoveTrigger1 matches 1.. run function ability:the_world/tick/zzz/0
 execute at @s if score @s universalAbility.MoveTrigger2 matches 1.. run function ability:the_world/tick/zzz/1
 execute at @s if score @s universalAbility.MoveTrigger3 matches 1.. run function ability:the_world/tick/zzz/2
