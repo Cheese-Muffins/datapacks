@@ -39,7 +39,7 @@ dir tick {
 
             # scenario ticks
             execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
-            execute if score @s universalAbility.ToggleTrigger matches 1.. run function universal:toggle_ability
+            execute if score @s universalAbility.ToggleTrigger matches 1.. run function universal:ability/toggle
         }
 
         execute as @e[type=!#universal:misc_mob] at @s run {
@@ -476,7 +476,7 @@ dir ability {
             # $data merge storage minecraft:ability {$(storage):{awakening:{move$(path):{slot:$(move)}}}}
         }
 
-        function variable {
+        function variables {
             $data modify storage minecraft:ability $(ability).variables.$(name) merge value $(variables)
         }
     }
@@ -506,6 +506,47 @@ dir ability {
                 }
             }
         }
+    }
+
+    function toggle {
+        execute if entity @s[tag=universalAbility.User] unless entity @s[tag=universalAbility.Animating] unless score @s universalAbility.ToggleDelay matches 1.. run {
+            # find which ability is active
+            REPEAT (1,14) as i {
+                data modify storage minecraft:universal toggle.check_tag set from storage minecraft:ability index.<%i%>.product.ability.equipped_tag
+                block { with storage minecraft:universal toggle
+                    $execute if entity @s[tag=$(check_tag)] run data modify storage minecraft:universal toggle.ability set from storage minecraft:ability index.<%i%>.path
+                }
+                data remove storage minecraft:universal toggle.check_tag
+            }
+
+            # toggle handling
+            execute unless score @s universalAbility.ToggleState matches 1.. run {
+                scoreboard players set @s universalAbility.ToggleState 1
+                tag @s add temp
+
+                data modify storage minecraft:universal toggle.state set value "on"
+                execute unless score @s universalAbility.ID matches 1.. run {
+                    scoreboard players add .global universalAbility.ID 1
+                    scoreboard players operation @s universalAbility.ID = .global universalAbility.ID
+
+                    function universal:fetch/username {storage:"minecraft:ability",path:"username"}
+                    block { with storage minecraft:ability
+                        $scoreboard players display name @s universalAbility.ID {"color":"aqua","text":"$(username)"}
+                    }
+                }
+            }
+            execute if score @s universalAbility.ToggleState matches 1.. unless entity @s[tag=temp] run {
+                scoreboard players set @s universalAbility.ToggleState 0
+                data modify storage minecraft:universal toggle.state set value "off"
+            }
+            tag @s remove temp
+
+            # apply
+            block { with storage minecraft:universal toggle
+                $function ability:$(ability)/toggle/$(state)
+            }
+        }
+        scoreboard players reset @s universalAbility.ToggleTrigger
     }
 }
 

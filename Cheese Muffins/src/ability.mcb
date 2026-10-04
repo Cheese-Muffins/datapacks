@@ -452,40 +452,32 @@ dir the_world {
         scoreboard objectives add abilityBilly.PhaseDisconnectY dummy
         scoreboard objectives add abilityBilly.PhaseDisconnectZ dummy
 
-
-        function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
-        function universal:ability/setup/cooldown/8x {name:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:30}
-        
-        function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
-        function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
-
-
         # Move 1 #
             # Timeskip #
             function universal:ability/setup/cooldown/10x {name:"TheWorld_Timeskip",storage:"the_world",path:"1a",move:1,cooldown:9}
-            function universal:ability/setup/variable {ability:"the_world",name:"timeskip",variables:{max_distance:9.0}}
-
+            function universal:ability/setup/variables {ability:"the_world",name:"timeskip",variables:{max_distance:9.0}}
             # Timestop #
             function universal:ability/setup/cooldown/10x {name:"TheWorld_Timestop",storage:"the_world",path:"1b",move:1,cooldown:50}
-            function universal:ability/setup/variable {ability:"the_world",name:"timestop",variables:{range:40.0,duration:9.0,tick_damage:3}}
+            function universal:ability/setup/variables {ability:"the_world",name:"timestop",variables:{range:40.0,duration:9.0,tick_damage:3}}
 
         # Move 2 #
-            # Knife Throw
-            function universal:ability/setup/cooldown/10x {ability:"TheWorld",storage:"the_world",path:2,move:2,cooldown:17}
+            # Knife Throw #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:2,move:2,cooldown:17}
+            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.15,hitbox_size:2.5,damage:10}}
 
+        # Move 3 #
+            # Barrage #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:3,move:3,cooldown:23}
+            function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{hitbox_size:2.5,damage:3}}
         
-        data merge storage minecraft:custom {the_world:{knife_throw:{damage:10,speed:0.15,range:2.5}}}
-
-        function custom:universal/cooldowns/10x {ability:"TheWorld",storage:"the_world",path:3,move:3,cooldown:23}
-        data merge storage minecraft:custom {the_world:{barrage:{damage:3,range:2.5}}}
-        
-        function custom:universal/cooldowns/10x {ability:"TheWorld",storage:"the_world",path:4,move:4,cooldown:32}
+        # Move 4 #
+            # Flurry #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:4,move:4,cooldown:32}
+            function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{spawned_knives:50,damage:10}}
     }
 
     function active {
-        function ability:billy/hotbar/main
-
-        execute unless entity @s[tag=abilityBilly.FlagOverride] run function ability:billy/flags/index
+        function ability:the_world/hotbar/main
     }
 
     dir moves {
@@ -606,41 +598,62 @@ dir the_world {
     }
 
     dir hotbar {
-        function main {
-            REPEAT (1,3) as i {
-                execute unless entity @s[tag=abilityBilly.PassiveHomeland] run function ability:billy/hotbar/progress with storage minecraft:ability billy.cooldown.move<%i%>a
-                execute if entity @s[tag=abilityBilly.PassiveHomeland] run function ability:billy/hotbar/progress with storage minecraft:ability billy.cooldown.move<%i%>b
-            }
-            
-            REPEAT (1,3) as i {
-                execute if score @s universalAbility.HotbarSlot matches <%i%> run {
-                    function universal:hotbar/time {ability:"billy",slot:<%i%>}
+        dir hotbar {
+            function main {
+                function ability:the_world/hotbar/meter with storage minecraft:ability the_world.awakening
+
+                execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move1a
+                execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move1b
+                function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move2a
+                function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move3a
+                function ability:the_world/hotbar/progress with storage minecraft:ability yuji.cooldown.move4a
+
+                REPEAT (1,4) as i {
+                    execute if score @s universalAbility.HotbarSlot matches <%i%> run {
+                        function universal:hotbar/time {ability:"the_world",slot:<%i%>}
+                    }
+                }
+
+                block { with storage minecraft:ability yuji.hotbar
+                    $title @s actionbar [{"text":"\uF85E\u03D0"},{"text":"\uF850$(rage)","color":"aqua"},{"text":"\uF873\u03A0"},{"text":"\uF863\$(move1)\uF84F\u03A2"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF863\$(move4)"},{"text":"\uF820\$(awakening)"},{"text":"\uF86E\u03A1"},{"text":"\uF86C\u90A0"},{"text":"\uF84A$(time)","color":"yellow"}]
                 }
             }
 
-            execute if score @s universalAbility.HotbarSlot matches 1 run block { with storage minecraft:ability billy.hotbar
-                $title @s actionbar [{"text":"\uF895\u05A0\uF85F"},{"text":"\uF867\$(move1)"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF862\u05A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
+            function progress {
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D1"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D2"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D3"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D4"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D5"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D6"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D7"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D8"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02D9"
+                $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02E0"
+                $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u02E1"
             }
 
-            execute if score @s universalAbility.HotbarSlot matches 2 run block { with storage minecraft:ability billy.hotbar
-                $title @s actionbar [{"text":"\uF895\u05A0\uF85F"},{"text":"\uF867\$(move1)"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF862\u05A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
+            function meter {
+                $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B9"
+                $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B8"
+                $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B7"
+                $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B6"
+                $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B5"
+                $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B4"
+                $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B3"
+                $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B2"
+                $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B1"
+                $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B0"
+                $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A9"
+                $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A8"
+                $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A7"
+                $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A6"
+                $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A5"
+                execute unless score @s universalAbility.AwakeningDuration matches 1.. run {
+                    data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A4"
+                    tag @s remove abilityTheWorld.SukunaAwakening
+                }
             }
-
-            execute if score @s universalAbility.HotbarSlot matches 3 run block { with storage minecraft:ability billy.hotbar
-                $title @s actionbar [{"text":"\uF895\u05A0\uF85F"},{"text":"\uF867\$(move1)"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF862\u05A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
-            }
-        }
-
-        function progress {
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A2"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A3"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A4"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A5"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A6"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A7"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A8"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05A9"
-            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability billy.hotbar.move$(slot) set value "u05B0"
         }
     }
 
