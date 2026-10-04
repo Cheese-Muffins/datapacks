@@ -24,6 +24,7 @@ scoreboard objectives add universalAbility.MoveCooldown8 dummy
 scoreboard objectives add universalAbility.MoveTrigger8 dummy
 scoreboard objectives add universalAbility.AwakeningDuration dummy
 scoreboard objectives add universalAbility.ID dummy
+scoreboard objectives add universalAbility.EquippedID dummy
 scoreboard objectives add universalAbility.MoveCooldownMath dummy
 scoreboard objectives add universalAbility.MoveDelay dummy
 scoreboard objectives add universalAbility.MovePrevious dummy

@@ -1,3 +1,6 @@
 # Generated with MC-Build
 
-$execute if entity @s[tag=$(check_tag)] run data modify storage minecraft:universal toggle.ability set from storage minecraft:ability index.2.path
+scoreboard players set @s universalAbility.ToggleState 1
+tag @s add temp
+data modify storage minecraft:universal toggle.state set value "on"
+execute unless score @s universalAbility.ID matches 1.. run function universal:ability/zzz/3

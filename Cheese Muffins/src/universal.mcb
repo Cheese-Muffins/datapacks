@@ -18,6 +18,7 @@ function on_load minecraft:load{
     }
     scoreboard objectives add universalAbility.AwakeningDuration dummy
     scoreboard objectives add universalAbility.ID dummy
+    scoreboard objectives add universalAbility.EquippedID dummy
     scoreboard objectives add universalAbility.MoveCooldownMath dummy
     scoreboard objectives add universalAbility.MoveDelay dummy
     scoreboard objectives add universalAbility.MovePrevious dummy
@@ -478,12 +479,9 @@ dir ability {
     function toggle {
         execute if entity @s[tag=universalAbility.User] unless entity @s[tag=universalAbility.Animating] unless score @s universalAbility.ToggleDelay matches 1.. run {
             # find which ability is active
-            REPEAT (1,14) as i {
-                data modify storage minecraft:universal toggle.check_tag set from storage minecraft:ability index.<%i%>.product.ability.equipped_tag
-                block { with storage minecraft:universal toggle
-                    $execute if entity @s[tag=$(check_tag)] run data modify storage minecraft:universal toggle.ability set from storage minecraft:ability index.<%i%>.path
-                }
-                data remove storage minecraft:universal toggle.check_tag
+            execute store result storage minecraft:universal toggle.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
+            block { with storage minecraft:universal toggle
+                $data modify storage minecraft:universal toggle.ability set from storage minecraft:ability index.$(equipped_id).path
             }
 
             # toggle handling

@@ -2223,7 +2223,7 @@ dir purchase {
         function main {
             $data modify storage minecraft:ui generate.purchase.equipped_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).equipped_tag
             block { with storage minecraft:ui generate.purchase
-                execute if score @s universalAbility.ToggleState matches 1 run function universal:toggle_ability
+                execute if score @s universalAbility.ToggleState matches 1 run function universal:ability/toggle
                 $execute unless entity @s[tag=$(equipped_tag)] run function ui:purchase/equip/on with storage minecraft:ui generate.purchase
                 $execute if entity @s[tag=$(equipped_tag)] unless entity @s[tag=temp] run function ui:purchase/equip/off with storage minecraft:ui generate.purchase
                 tag @s remove temp
@@ -2232,7 +2232,10 @@ dir purchase {
         }
 
         function on {
-            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"ability"} run function ui:purchase/equip/remove/ability
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"ability"} run block { with storage minecraft:ui generate.purchase
+                function ui:purchase/equip/remove/ability
+                $scoreboard players set @s universalAbility.EquippedID $(ability_id)
+            }
             $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run function ui:purchase/equip/remove/skin with storage minecraft:ui generate.purchase
             $tag @s add $(equipped_tag)
             tag @s add temp

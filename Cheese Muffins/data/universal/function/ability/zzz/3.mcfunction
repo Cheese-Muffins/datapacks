@@ -1,3 +1,6 @@
 # Generated with MC-Build
 
-$execute if entity @s[tag=$(check_tag)] run data modify storage minecraft:universal toggle.ability set from storage minecraft:ability index.3.path
+scoreboard players add .global universalAbility.ID 1
+scoreboard players operation @s universalAbility.ID = .global universalAbility.ID
+function universal:fetch/username {storage:"minecraft:ability",path:"username"}
+function universal:ability/zzz/4 with storage minecraft:ability

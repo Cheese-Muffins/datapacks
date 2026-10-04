@@ -1,5 +1,4 @@
 # Generated with MC-Build
 
-execute if entity @s[tag=abilityBilly.User] run function ability:billy/tick/main
-execute if entity @s[tag=abilityTheWorld.User] run function ability:the_world/tick/main
-execute if entity @s[tag=abilityYuji.User] run function ability:yuji/tick/main
+execute store result storage minecraft:ability tick.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
+function ability:tick/zzz/0 with storage minecraft:ability tick
