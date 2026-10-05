@@ -993,8 +993,10 @@ dir the_world {
         scoreboard objectives add abilityTheWorld.KnifeThrowID dummy
         scoreboard objectives add abilityTheWorld.KnifeThrowSpread dummy
         scoreboard objectives add abilityTheWorld.KnifeSpeed dummy
-        scoreboard objectives add abilityTheWorld.KnifeGravity dummy
-        scoreboard objectives add abilityTheWorld.KnifePitch dummy
+        scoreboard objectives add abilityTheWorld.KnifeVelocityX dummy
+        scoreboard objectives add abilityTheWorld.KnifeVelocityY dummy
+        scoreboard objectives add abilityTheWorld.KnifeVelocityZ dummy
+        scoreboard objectives add abilityTheWorld.KnifePosition dummy
         scoreboard objectives add abilityTheWorld.KnifeThrowMovement dummy
         scoreboard players set .knifeDrag abilityTheWorld.Constants 990
 
@@ -1009,7 +1011,7 @@ dir the_world {
         # Move 2 #
             # Knife Throw #
             function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
-            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.15,gravity:12.0,drag:99.0}}
+            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.1,drag:95.0}}
 
         # Move 3 #
             # Barrage #
@@ -1142,111 +1144,199 @@ dir the_world {
                 execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:2,name:"Knife Throw",unicode:"u50A1"}
             }
 
-            function count {
-                $scoreboard players set @s abilityTheWorld.KnifeThrowSpread $(spread)
-                function universal:math/divide {value:2,score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
-                execute store result storage minecraft:ability the_world.knife_throw.spread_initial double 0.01 run scoreboard players get @s abilityTheWorld.KnifeThrowSpread
-                function universal:math/multiply {value:2,score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
+            dir logic {
+                function spread {
+                    $scoreboard players set @s abilityTheWorld.KnifeThrowSpread $(offset)
+                    function universal:math/divide {value:2,score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
+                    execute store result storage minecraft:ability the_world.knife_throw.spread_initial double 0.01 run scoreboard players get @s abilityTheWorld.KnifeThrowSpread
+                    function universal:math/multiply {value:2,score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
 
-                execute unless entity @s[tag=traitIndex.TimeLocked] run {
-                    execute unless entity @s[tag=abilityTheWorld.RageMode] run data merge storage minecraft:ability {the_world:{knife_throw:{count:3,div_value:2}}}
-                    execute if entity @s[tag=abilityTheWorld.RageMode] run data merge storage minecraft:ability {the_world:{knife_throw:{count:5,div_value:4}}}
-                }
-                execute if entity @s[tag=traitIndex.TimeLocked] run data merge storage minecraft:ability {the_world:{knife_throw:{count:2,div_value:1}}}
+                    execute unless entity @s[tag=traitIndex.TimeLocked] run {
+                        execute unless entity @s[tag=abilityTheWorld.RageMode] run data merge storage minecraft:ability {the_world:{knife_throw:{count:3,div_value:2}}}
+                        execute if entity @s[tag=abilityTheWorld.RageMode] run data merge storage minecraft:ability {the_world:{knife_throw:{count:5,div_value:4}}}
+                    }
+                    execute if entity @s[tag=traitIndex.TimeLocked] run data merge storage minecraft:ability {the_world:{knife_throw:{count:2,div_value:1}}}
 
-                data modify storage minecraft:ability the_world.knife_throw.speed set from storage minecraft:ability the_world.variables.knife_throw.speed
-                block { with storage minecraft:ability the_world.knife_throw
-                    $function universal:math/divide {value:$(div_value),score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
-                    execute store result storage minecraft:ability the_world.knife_throw.spread double 0.01 run scoreboard players get @s abilityTheWorld.KnifeThrowSpread 
-                    $execute rotated ~ ~ anchored eyes positioned ^-$(spread_initial) ^ ^ run function ability:the_world/moves/2/spawn with storage minecraft:ability the_world.knife_throw
-                    scoreboard players reset .count abilityTheWorld.KnifeThrowSpread
-                }
-            }
-
-            function spawn {
-                scoreboard players add .count abilityTheWorld.KnifeThrowSpread 1
-
-                execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s abilityTheWorld.KnifeThrowID
-                execute unless entity @s[tag=customTheWorld.StoppingTime] run {
-                    data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
-                    data modify storage minecraft:universal vfx.arguments.animation set value "knife"
-                    data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/default_throw/setup with storage minecraft:ability the_world.knife_throw"
-                    function universal:vfx/spawn with storage minecraft:universal vfx.arguments
-                }
-                execute if entity @s[tag=customTheWorld.StoppingTime] run {
-                    data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
-                    data modify storage minecraft:universal vfx.arguments.animation set value "knife"
-                    data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/timestop_throw/setup with storage minecraft:ability the_world.knife_throw"
-                    function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+                    data modify storage minecraft:ability the_world.knife_throw.speed set from storage minecraft:ability the_world.variables.knife_throw.speed
+                    block { with storage minecraft:ability the_world.knife_throw
+                        $function universal:math/divide {value:$(div_value),score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
+                        execute store result storage minecraft:ability the_world.knife_throw.spread double 0.01 run scoreboard players get @s abilityTheWorld.KnifeThrowSpread 
+                        $execute rotated ~ ~ anchored eyes positioned ^-$(spread_initial) ^ ^ run function ability:the_world/moves/2/logic/create with storage minecraft:ability the_world.knife_throw
+                        scoreboard players reset .count abilityTheWorld.KnifeThrowSpread
+                    }
                 }
 
-                $execute positioned ^$(spread) ^ ^ unless score .count abilityTheWorld.KnifeThrowSpread matches $(count).. run function ability:the_world/moves/2/spawn with storage minecraft:ability the_world.knife_throw
-            }
+                function create {
+                    scoreboard players add .count abilityTheWorld.KnifeThrowSpread 1
 
-            function movement {
-                execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s abilityTheWorld.KnifeThrowID
+                    execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s abilityTheWorld.KnifeThrowID
+                    execute unless entity @s[tag=customTheWorld.StoppingTime] run {
+                        data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
+                        data modify storage minecraft:universal vfx.arguments.animation set value "knife"
+                        data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/default_throw/setup with storage minecraft:ability the_world.knife_throw"
+                        function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+                    }
+                    execute if entity @s[tag=customTheWorld.StoppingTime] run {
+                        data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
+                        data modify storage minecraft:universal vfx.arguments.animation set value "knife"
+                        data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/timestop_throw/setup with storage minecraft:ability the_world.knife_throw"
+                        function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+                    }
 
-                execute unless entity @s[tag=abilityTheWorld.KnifeCollision] run {
-                    function ability:the_world/moves/2/check
-                    function ability:the_world/moves/2/physics
+                    $execute positioned ^$(spread) ^ ^ unless score .count abilityTheWorld.KnifeThrowSpread matches $(count).. run function ability:the_world/moves/2/logic/create with storage minecraft:ability the_world.knife_throw
                 }
 
-                scoreboard players reset @s abilityTheWorld.KnifeThrowMovement
-            }
+                dir setup {
+                    function initial {
+                        tag @s add abilityTheWorld.VelocitySetup
 
-            function physics {
-                execute store result storage minecraft:ability the_world.knife_throw.drag int 1 run data get storage minecraft:ability the_world.variables.knife_throw.drag
-                execute store result storage minecraft:ability the_world.knife_throw.gravity int 1 run data get storage minecraft:ability the_world.variables.knife_throw.gravity
+                        execute store result score .startX abilityTheWorld.KnifePosition run data get entity @s Pos[0] 1000
+                        execute store result score .startY abilityTheWorld.KnifePosition run data get entity @s Pos[1] 1000
+                        execute store result score .startZ abilityTheWorld.KnifePosition run data get entity @s Pos[2] 1000
 
-                block { with storage minecraft:ability the_world.knife_throw
-                    $function universal:math/multiply {value:$(drag),score:"@s",objective:"abilityTheWorld.KnifeSpeed"}
-                    function universal:math/divide {value:100,score:"@s",objective:"abilityTheWorld.KnifeSpeed"}
+                        execute positioned ^ ^ ^1 summon minecraft:marker run function ability:the_world/moves/2/logic/setup/capture
 
-                    $scoreboard players add @s abilityTheWorld.KnifeGravity $(gravity)
+                        tag @s remove abilityTheWorld.VelocitySetup
+                    }
+
+                    function capture {
+                        execute store result score .directionX abilityTheWorld.KnifePosition run data get entity @s Pos[0] 1000
+                        execute store result score .directionY abilityTheWorld.KnifePosition run data get entity @s Pos[1] 1000
+                        execute store result score .directionZ abilityTheWorld.KnifePosition run data get entity @s Pos[2] 1000
+
+                        scoreboard players operation .directionX abilityTheWorld.KnifePosition -= .startX abilityTheWorld.KnifePosition
+                        scoreboard players operation .directionY abilityTheWorld.KnifePosition -= .startY abilityTheWorld.KnifePosition
+                        scoreboard players operation .directionZ abilityTheWorld.KnifePosition -= .startZ abilityTheWorld.KnifePosition
+
+                        execute as @n[tag=abilityTheWorld.VelocitySetup] run function ability:the_world/moves/2/logic/setup/apply
+
+                        kill @s[type=minecraft:marker]
+                    }
+
+                    function apply {
+                        scoreboard players operation @s abilityTheWorld.KnifeVelocityX = .directionX abilityTheWorld.KnifePosition
+                        scoreboard players operation @s abilityTheWorld.KnifeVelocityY = .directionY abilityTheWorld.KnifePosition
+                        scoreboard players operation @s abilityTheWorld.KnifeVelocityZ = .directionZ abilityTheWorld.KnifePosition
+
+                        scoreboard players operation @s abilityTheWorld.KnifeVelocityX *= @s abilityTheWorld.KnifeSpeed
+                        scoreboard players operation @s abilityTheWorld.KnifeVelocityY *= @s abilityTheWorld.KnifeSpeed
+                        scoreboard players operation @s abilityTheWorld.KnifeVelocityZ *= @s abilityTheWorld.KnifeSpeed
+
+                        function universal:math/divide {value:1000,score:"@s",objective:"abilityTheWorld.KnifeVelocityX"}
+                        function universal:math/divide {value:1000,score:"@s",objective:"abilityTheWorld.KnifeVelocityY"}
+                        function universal:math/divide {value:1000,score:"@s",objective:"abilityTheWorld.KnifeVelocityZ"}
+                    }
                 }
 
-                execute store result score @s abilityTheWorld.KnifePitch run data get entity @s Rotation[1] 10
+                dir movement {
+                    function main {
+                        execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s abilityTheWorld.KnifeThrowID
 
-                scoreboard players operation @s abilityTheWorld.KnifePitch += @s abilityTheWorld.KnifeGravity
+                        execute unless entity @s[tag=abilityTheWorld.KnifeCollision] run {
+                            function ability:the_world/moves/2/logic/movement/physics
+                            function ability:the_world/moves/2/logic/movement/rotation
+                            function ability:the_world/moves/2/logic/movement/check/start
+                        }
 
-                execute if score @s abilityTheWorld.KnifePitch matches 900.. run scoreboard players set @s abilityTheWorld.KnifePitch 900
+                        scoreboard players reset @s abilityTheWorld.KnifeThrowMovement
+                    }
 
-                execute store result entity @s Rotation[1] float 0.1 run scoreboard players get @s abilityTheWorld.KnifePitch
-            }
+                    function physics {
+                        execute store result storage minecraft:ability the_world.knife_throw.drag int 1 run data get storage minecraft:ability the_world.variables.knife_throw.drag
 
-            function check {
-                scoreboard players operation .stepSpeed abilityTheWorld.KnifeThrowMovement = @s abilityTheWorld.KnifeSpeed
+                        execute store result score .gravity abilityTheWorld.KnifeVelocityY run data get storage minecraft:ability the_world.variables.knife_throw.gravity 1000
 
-                function universal:math/divide {value:10,score:".stepSpeed",objective:"abilityTheWorld.KnifeThrowMovement"}
+                        block { with storage minecraft:ability the_world.knife_throw
+                            $function universal:math/multiply {value:$(drag),score:"@s",objective:"abilityTheWorld.KnifeVelocityX"}
+                            function universal:math/divide {value:100,score:"@s",objective:"abilityTheWorld.KnifeVelocityX"}
 
-                execute store result storage minecraft:ability the_world.knife_throw.speed double 0.001 run scoreboard players get .stepSpeed abilityTheWorld.KnifeThrowMovement
+                            $function universal:math/multiply {value:$(drag),score:"@s",objective:"abilityTheWorld.KnifeVelocityZ"}
+                            function universal:math/divide {value:100,score:"@s",objective:"abilityTheWorld.KnifeVelocityZ"}
+                        }
 
-                scoreboard players reset .stepSpeed abilityTheWorld.KnifeThrowMovement
-                scoreboard players set @s abilityTheWorld.KnifeThrowMovement 0
+                        scoreboard players operation @s abilityTheWorld.KnifeVelocityY -= .gravity abilityTheWorld.KnifeVelocityY
+                    }
 
-                function ability:the_world/moves/2/check_step with storage minecraft:ability the_world.knife_throw
-            }
+                    function rotation {
+                        execute store result storage minecraft:ability the_world.knife_throw.velocity_x double 0.001 run scoreboard players get @s abilityTheWorld.KnifeVelocityX
+                        execute store result storage minecraft:ability the_world.knife_throw.velocity_y double 0.001 run scoreboard players get @s abilityTheWorld.KnifeVelocityY
+                        execute store result storage minecraft:ability the_world.knife_throw.velocity_z double 0.001 run scoreboard players get @s abilityTheWorld.KnifeVelocityZ
 
-            function check_step {
-                $execute if block ^ ^ ^$(speed) #ability:the_world/knife_throw positioned ^ ^ ^$(speed) run function ability:the_world/moves/2/check_move {speed:"$(speed)"}
+                        block { with storage minecraft:ability the_world.knife_throw
+                            tag @s add abilityTheWorld.KnifeRotationSource
 
-                $execute unless block ^ ^ ^$(speed) #ability:the_world/knife_throw run function ability:the_world/moves/2/collision
-            }
+                            $execute positioned ~$(velocity_x) ~$(velocity_y) ~$(velocity_z) run summon minecraft:marker ~ ~ ~ {Tags:["abilityTheWorld.KnifeRotationTarget"]}
 
-            function check_move {
-                scoreboard players add @s abilityTheWorld.KnifeThrowMovement 1
+                            execute facing entity @n[type=minecraft:marker,tag=abilityTheWorld.KnifeRotationTarget,distance=..5] feet run summon minecraft:marker ~ ~ ~ {Tags:["abilityTheWorld.KnifeRotationResult"]}
 
-                execute if score @s abilityTheWorld.KnifeThrowMovement matches 10.. run tp @s ~ ~ ~
+                            execute as @n[type=minecraft:marker,tag=abilityTheWorld.KnifeRotationResult,distance=..5] at @s facing entity @n[type=minecraft:marker,tag=abilityTheWorld.KnifeRotationTarget,distance=..5] feet run tp @s ~ ~ ~ ~ ~
 
-                $execute unless score @s abilityTheWorld.KnifeThrowMovement matches 10.. run function ability:the_world/moves/2/check_step {speed:"$(speed)"}
-            }
+                            execute store result score .knifePitch abilityTheWorld.KnifePosition run data get entity @n[type=minecraft:marker,tag=abilityTheWorld.KnifeRotationResult,distance=..5] Rotation[1] 100
 
-            function collision {
-                tag @s add abilityTheWorld.KnifeCollision
+                            execute store result entity @s Rotation[1] float 0.01 run scoreboard players get .knifePitch abilityTheWorld.KnifePosition
 
-                playsound minecraft:ability.the_world.knife_throw.terrain player @a ~ ~ ~ 0.5
+                            kill @n[type=minecraft:marker,tag=abilityTheWorld.KnifeRotationTarget,distance=..5]
+                            kill @n[type=minecraft:marker,tag=abilityTheWorld.KnifeRotationResult,distance=..5]
 
-                tp @s ~ ~ ~
+                            tag @s remove abilityTheWorld.KnifeRotationSource
+                        }
+                    }
+
+                    function move {
+                        execute store result storage minecraft:ability the_world.knife_throw.velocity_x double 0.001 run scoreboard players get @s abilityTheWorld.KnifeVelocityX
+                        execute store result storage minecraft:ability the_world.knife_throw.velocity_y double 0.001 run scoreboard players get @s abilityTheWorld.KnifeVelocityY
+                        execute store result storage minecraft:ability the_world.knife_throw.velocity_z double 0.001 run scoreboard players get @s abilityTheWorld.KnifeVelocityZ
+
+                        block { with storage minecraft:ability the_world.knife_throw
+                            $execute positioned ~$(velocity_x) ~$(velocity_y) ~$(velocity_z) run summon minecraft:marker ~ ~ ~ {Tags:["abilityTheWorld.KnifeDirection"]}
+
+                            execute facing entity @n[type=minecraft:marker,tag=abilityTheWorld.KnifeDirection] eyes run tp @s ~ ~ ~ ~ ~
+                            kill @n[type=minecraft:marker,tag=abilityTheWorld.KnifeDirection]
+
+                            $tp @s ~$(velocity_x) ~$(velocity_y) ~$(velocity_z)
+                        }
+                    }
+
+                    dir check {
+                        function start {
+                            scoreboard players operation .stepX abilityTheWorld.KnifeThrowMovement = @s abilityTheWorld.KnifeVelocityX
+                            scoreboard players operation .stepY abilityTheWorld.KnifeThrowMovement = @s abilityTheWorld.KnifeVelocityY
+                            scoreboard players operation .stepZ abilityTheWorld.KnifeThrowMovement = @s abilityTheWorld.KnifeVelocityZ
+
+                            function universal:math/divide {value:10,score:".stepX",objective:"abilityTheWorld.KnifeThrowMovement"}
+                            function universal:math/divide {value:10,score:".stepY",objective:"abilityTheWorld.KnifeThrowMovement"}
+                            function universal:math/divide {value:10,score:".stepZ",objective:"abilityTheWorld.KnifeThrowMovement"}
+
+                            execute store result storage minecraft:ability the_world.knife_throw.step_x double 0.001 run scoreboard players get .stepX abilityTheWorld.KnifeThrowMovement
+                            execute store result storage minecraft:ability the_world.knife_throw.step_y double 0.001 run scoreboard players get .stepY abilityTheWorld.KnifeThrowMovement
+                            execute store result storage minecraft:ability the_world.knife_throw.step_z double 0.001 run scoreboard players get .stepZ abilityTheWorld.KnifeThrowMovement
+
+                            scoreboard players reset .stepX abilityTheWorld.KnifeThrowMovement
+                            scoreboard players reset .stepY abilityTheWorld.KnifeThrowMovement
+                            scoreboard players reset .stepZ abilityTheWorld.KnifeThrowMovement
+
+                            scoreboard players set @s abilityTheWorld.KnifeThrowMovement 0
+
+                            function ability:the_world/moves/2/logic/movement/check/step with storage minecraft:ability the_world.knife_throw
+                        }
+
+                        function step {
+                            $execute positioned ~$(step_x) ~$(step_y) ~$(step_z) if block ~ ~ ~ #ability:the_world/knife_throw run block { {step_x:"$(step_x)",step_y:"$(step_y)",step_z:"$(step_z)"}
+                                scoreboard players add @s abilityTheWorld.KnifeThrowMovement 1
+
+                                execute if score @s abilityTheWorld.KnifeThrowMovement matches 10.. run tp @s ~ ~ ~
+                                $execute unless score @s abilityTheWorld.KnifeThrowMovement matches 10.. run function ability:the_world/moves/2/logic/movement/check/step {step_x:"$(step_x)",step_y:"$(step_y)",step_z:"$(step_z)"}
+                            }
+                            $execute positioned ~$(step_x) ~$(step_y) ~$(step_z) unless block ~ ~ ~ #ability:the_world/knife_throw run {
+                                tag @s add abilityTheWorld.KnifeCollision
+
+                                particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
+                                playsound minecraft:ability.the_world.knife_throw.terrain player @a ~ ~ ~ 0.5
+                                tp @s ~ ~ ~
+                            }
+                        }
+                    }
+                }
             }
 
 
@@ -1275,7 +1365,7 @@ dir the_world {
 
                     execute store result score @s abilityTheWorld.KnifeSpeed run data get storage minecraft:ability the_world.variables.knife_throw.speed 10000
 
-                    scoreboard players set @s abilityTheWorld.KnifeGravity 0
+                    function ability:the_world/moves/2/logic/setup/initial
 
                     function aj:the_world_vfx/animations/knife/play
                 }

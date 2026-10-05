@@ -5,5 +5,5 @@ execute if score @s aj.tween_duration matches 0 on passengers run data modify en
 data remove storage animated_java:temp args
 execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.knife.frame
 function aj:the_world_vfx/animations/knife/zzz/apply_frame with storage animated_java:temp args
-execute if score @s aj.knife.frame matches 60 run return run function aj:the_world_vfx/animations/knife/zzz/loop_mode_stop
+execute if score @s aj.knife.frame matches 140 run return run function aj:the_world_vfx/animations/knife/zzz/loop_mode_stop
 scoreboard players add @s aj.knife.frame 1
