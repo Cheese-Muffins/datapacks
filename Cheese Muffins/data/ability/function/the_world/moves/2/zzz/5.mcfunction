@@ -1,5 +1,5 @@
 # Generated with MC-Build
 
-scoreboard players add @s abilityTheWorld.KnifeThrowMovement 1
-$execute if score @s abilityTheWorld.KnifeThrowMovement matches 15.. positioned ^ ^ ^$(speed) run tp @s ~ ~ ~
-$execute unless score @s abilityTheWorld.KnifeThrowMovement matches 15.. positioned ^ ^ ^$(speed) run function ability:the_world/moves/2/check {speed:"$(speed)"}
+$function universal:math/multiply {value:$(drag),score:"@s",objective:"abilityTheWorld.KnifeSpeed"}
+function universal:math/divide {value:100,score:"@s",objective:"abilityTheWorld.KnifeSpeed"}
+$scoreboard players add @s abilityTheWorld.KnifeGravity $(gravity)
