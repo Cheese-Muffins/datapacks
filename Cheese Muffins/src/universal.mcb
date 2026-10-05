@@ -19,6 +19,7 @@ function on_load minecraft:load{
     scoreboard objectives add universalAbility.AwakeningDuration dummy
     scoreboard objectives add universalAbility.ID dummy
     scoreboard objectives add universalAbility.EquippedID dummy
+    scoreboard objectives add universalAbility.EquippedSkinID dummy
     scoreboard objectives add universalAbility.MoveCooldownMath dummy
     scoreboard objectives add universalAbility.MoveDelay dummy
     scoreboard objectives add universalAbility.MovePrevious dummy

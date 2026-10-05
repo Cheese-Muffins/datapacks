@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
+$tag @s remove skin$(real_path)Default.User
 $data modify storage minecraft:ui generate.purchase.remove_tag set from storage minecraft:ability index.$(ability_id).product.skin1.equipped_tag
 function ui:purchase/equip/remove/zzz/14 with storage minecraft:ui generate.purchase
 data remove storage minecraft:ui generate.purchase.remove_tag

@@ -2221,9 +2221,10 @@ dir purchase {
 
     dir equip {
         function main {
+            $data modify storage minecraft:ui generate.purchase.real_path set from storage minecraft:ability index.$(ability_id).real_path
             $data modify storage minecraft:ui generate.purchase.equipped_tag set from storage minecraft:ability index.$(ability_id).product.$(product_name).equipped_tag
             block { with storage minecraft:ui generate.purchase
-                execute if score @s universalAbility.ToggleState matches 1 run function universal:ability/toggle
+                $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"ability"} run execute if score @s universalAbility.ToggleState matches 1 run function universal:ability/toggle
                 $execute unless entity @s[tag=$(equipped_tag)] run function ui:purchase/equip/on with storage minecraft:ui generate.purchase
                 $execute if entity @s[tag=$(equipped_tag)] unless entity @s[tag=temp] run function ui:purchase/equip/off with storage minecraft:ui generate.purchase
                 tag @s remove temp
@@ -2235,14 +2236,39 @@ dir purchase {
             $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"ability"} run block { with storage minecraft:ui generate.purchase
                 function ui:purchase/equip/remove/ability
                 $scoreboard players set @s universalAbility.EquippedID $(ability_id)
+
+                scoreboard players set @s universalAbility.EquippedSkinID 0
+
+                REPEAT (1,4) as i {
+                    $execute if data storage minecraft:ability index.$(ability_id).product.skin<%i%> run block { with storage minecraft:ui generate.purchase
+                        $data modify storage minecraft:ui generate.purchase.skin_tag set from storage minecraft:ability index.$(ability_id).product.skin<%i%>.equipped_tag
+                        block { with storage minecraft:ui generate.purchase
+                            $execute if entity @s[tag=$(skin_tag)] run scoreboard players set @s universalAbility.EquippedSkinID <%i%>
+                        }
+                    }
+                }
+
+                data remove storage minecraft:ui generate.purchase.skin_tag
             }
-            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run function ui:purchase/equip/remove/skin with storage minecraft:ui generate.purchase
+
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run block { with storage minecraft:ui generate.purchase
+                function ui:purchase/equip/remove/skin with storage minecraft:ui generate.purchase
+
+                REPEAT (1,5) as i {
+                    $execute if score @s universalAbility.EquippedID matches $(ability_id) if data storage minecraft:ui generate.purchase{product_name:"skin<%i%>"} run scoreboard players set @s universalAbility.EquippedSkinID <%i%>
+                }
+            }
+
             $tag @s add $(equipped_tag)
             tag @s add temp
         }
 
         function off {
             $tag @s remove $(equipped_tag)
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run block { with storage minecraft:ui generate.purchase
+                $tag @s add skin$(real_path)Default.User
+                $execute if score @s universalAbility.EquippedID matches $(ability_id) run scoreboard players set @s universalAbility.EquippedSkinID 0
+            }
         }
 
         dir remove {
@@ -2257,6 +2283,7 @@ dir purchase {
             }
 
             function skin {
+                $tag @s remove skin$(real_path)Default.User
                 REPEAT (1,5) as i {
                     $data modify storage minecraft:ui generate.purchase.remove_tag set from storage minecraft:ability index.$(ability_id).product.skin<%i%>.equipped_tag
                     block { with storage minecraft:ui generate.purchase
