@@ -2,10 +2,13 @@ function on_load minecraft:load{
     # typically all abilities will use these variables
     
     function ability:generate/index
-    function ability:billy/install
-    function ability:the_world/install
-    function ability:yuji/install
-    function ability:president/install
+    REPEAT (1,14) as i {
+        data modify storage minecraft:universal install.path set from storage minecraft:ability index.<%i%>.path
+        block { with storage minecraft:universal install
+            $function ability:$(path)/install
+        }
+    }
+    data remove storage minecraft:universal install
 }
 
 dir tick {
@@ -339,405 +342,6 @@ dir billy {
             }
             scoreboard players reset @s abilityBilly.ToggleOnText
             scoreboard players set @s universalAbility.ToggleDelay 20 
-        }
-    }
-
-    dir flags {
-        function index {
-            execute unless entity @s[tag=abilityBilly.FlagJump] run {
-                execute if predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagWalk] run function ability:billy/flags/setup {type:"walk",animation:"Walk",variation:1}
-                execute if predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagSprint] run function ability:billy/flags/setup {type:"sprint",animation:"Sprint",variation:2}
-                execute if predicate universal:flags/jump unless predicate universal:flags/flying run function ability:billy/flags/setup {type:"jump",animation:"Jump",variation:3}
-            }
-            execute if entity @s[tag=abilityBilly.FlagJump] run {
-                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-                block { with storage minecraft:ability billy
-                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
-                        function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-                    }
-                }
-
-                execute unless entity @s[tag=abilityBilly.FlagLanding] run function ability:billy/flags/jump/falling
-            }
-
-            execute unless predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagIdle] unless entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/setup {type:"idle",animation:"Idle",variation:4}
-        }
-
-        function setup {
-            $data merge storage minecraft:ability {billy:{type:"$(type)",adjust:1,tween:3}}
-            $scoreboard players set @s abilityBilly.FlagID $(variation)
-
-            block { with storage minecraft:ability billy
-                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy
-                    $function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
-                }
-            }
-
-            function ability:billy/flags/clear
-            $tag @s add abilityBilly.Flag$(animation)
-        }
-
-        dir jump {
-            function falling {
-                execute if predicate universal:flags/flying run function ability:billy/flags/jump/land
-                execute if predicate universal:flags/grounded run function ability:billy/flags/jump/land 
-            }
-
-            function land {
-                tag @s add abilityBilly.FlagLanding
-
-                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-                block { with storage minecraft:ability billy
-                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
-                        function aj:billy/animations/jump/tween {to_frame:6,duration:1}
-                    }
-                }
-            }
-
-            function end {
-                tag @s remove abilityBilly.FlagLanding
-                tag @s remove abilityBilly.FlagJump
-            }
-        }
-
-        function clear {
-            tag @s remove abilityBilly.FlagWalk
-            tag @s remove abilityBilly.FlagSprint
-            tag @s remove abilityBilly.FlagIdle
-        }
-
-        # function adjust {
-        #     tag @s remove temp
-        #     $data merge storage minecraft:ability {billy:{tween:"$(tween)"}}
-        #     $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={universalAbility.ID=$(id)}] run block { {objective:"$(objective)"}
-        #         $scoreboard players add @s aj.$(objective).frame 2
-        #         $execute store result storage minecraft:ability billy.adjust int 1 run scoreboard players get @s aj.$(objective).frame
-        #     }
-        # }
-    }
-}
-
-dir the_world {
-    dir tick {
-        function main {
-            execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 11.. run function ability:the_world/active
-
-            REPEAT (1,3) as i {
-                execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
-                    scoreboard players reset @s universalAbility.MoveTrigger<%i%>
-                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:the_world/moves/<%i%>/core
-                }
-            }
-
-            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
-                REPEAT (1,3) as i {
-                    execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
-                }
-
-                execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
-                execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
-            }
-        }
-
-        dir scenario {
-            function core {
-                execute if score @s abilityTheWorld.TimeskipGreyscale matches 1.. run function ability:the_world/tick/scenario/timeskip_greyscale
-
-                execute unless entity @s[scores={abilityTheWorld.TimeskipGreyscale=1..}] run tag @s remove scenarioTick.AbilityTheWorld
-            }
-
-            function timeskip_greyscale {
-                scoreboard players remove @s abilityTheWorld.TimeskipGreyscale 1
-                execute if score @s abilityTheWorld.TimeskipGreyscale matches 0 run shader disable @s minecraft:greyscale
-            }
-        }
-    }
-
-    function install {
-        scoreboard objectives add abilityTheWorld.PassiveRageCount dummy
-        scoreboard objectives add abilityTheWorld.TimeskipGreyscale dummy
-        scoreboard objectives add abilityTheWorld.TimeskipMovement dummy
-
-        # Move 1 #
-            # Timeskip #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld_Timeskip",storage:"the_world",path:"1a",move:1,cooldown:9}
-            function universal:ability/setup/variables {ability:"the_world",name:"timeskip",variables:{max_distance:11.0}}
-            # Timestop #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld_Timestop",storage:"the_world",path:"1b",move:1,cooldown:50}
-            function universal:ability/setup/variables {ability:"the_world",name:"timestop",variables:{range:40.0,duration:9.0,tick_damage:3}}
-
-        # Move 2 #
-            # Knife Throw #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
-            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.15,hitbox_size:2.5,damage:10}}
-
-        # Move 3 #
-            # Barrage #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"3a",move:3,cooldown:23}
-            function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{hitbox_size:2.5,damage:3}}
-        
-        # Move 4 #
-            # Flurry #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"4a",move:4,cooldown:32}
-            function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{spawned_knives:50,damage:10}}
-        
-        # Awakening: Rage Mode #
-        function universal:ability/setup/meter {name:"TheWorld",storage:"the_world",duration:145}
-    }
-
-    function active {
-        function ability:the_world/hotbar/main
-    }
-
-    dir moves {
-        function setup {
-            $data merge storage minecraft:ability {the_world:{setup:{rig:'$(rig)',animation:'$(animation)'}}}
-            execute store result storage minecraft:ability the_world.setup.id int 1 run scoreboard players get @s universalAbility.ID
-            block { with storage minecraft:ability the_world.setup
-                $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability the_world.setup
-                    $function aj:$(rig)/animations/$(animation)/play
-                }
-            }
-        }
-
-        dir 1 {
-            function core {
-                execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/moves/1/timeskip/core
-                execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/moves/1/timestop/core
-            }
-
-            dir timeskip {
-                function core {
-                    execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
-                    execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
-                    function universal:error_messages/constant
-
-                    scoreboard players set @s universalAbility.HotbarSlot 1
-                    execute unless score @s universalError.FailReturn matches 1 run function ability:the_world/moves/1/timeskip/pass
-                    execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Timeskip",unicode:"u50A1"}
-                }
-
-                function pass {
-                    function ability:the_world/moves/setup {rig:"the_world",animation:'phase'}
-                    function universal:ability/restraint/cooldown {move:1,name:"TheWorld_Timeskip"}
-
-                    function ability:the_world/moves/1/timeskip/recursive/start
-                }
-
-                dir recursive {
-                    function start {
-                        execute as @a[distance=..12] run {
-                            shader enable @s minecraft:greyscale
-                            function universal:scenario_setup {scenario:"Ability",sub_scenario:"TheWorld",objective:"abilityTheWorld.TimeskipGreyscale",duration:6}
-                        }
-
-                        playsound minecraft:ability.the_world.timeskip.sfx player @a ~ ~ ~ 0.5
-
-                        scoreboard players reset .distance abilityTheWorld.TimeskipMovement
-                        execute store result score .maxDistance abilityTheWorld.TimeskipMovement run data get storage minecraft:ability the_world.variables.timeskip.max_distance 10
-
-                        tag @s add temp
-                        execute anchored eyes positioned ^ ^ ^ run function ability:the_world/moves/1/timeskip/recursive/travel
-                        tag @s remove temp
-
-                        scoreboard players reset .distance abilityTheWorld.TimeskipMovement
-                        scoreboard players reset .maxDistance abilityTheWorld.TimeskipMovement
-                    }
-
-                    function travel {
-                        execute unless block ^ ^ ^.1 #ability:the_world/timeskip run function ability:the_world/moves/1/timeskip/recursive/collide
-
-                        scoreboard players add .distance abilityTheWorld.TimeskipMovement 1
-
-                        execute if score .distance abilityTheWorld.TimeskipMovement >= .maxDistance abilityTheWorld.TimeskipMovement run function ability:the_world/moves/1/timeskip/recursive/collide
-
-                        execute if score .distance abilityTheWorld.TimeskipMovement < .maxDistance abilityTheWorld.TimeskipMovement positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #ability:the_world/timeskip unless entity @s[tag=temp2] run function ability:the_world/moves/1/timeskip/recursive/travel
-
-                        execute if entity @s[tag=temp2] run tag @s remove temp2
-                    }
-
-                    function collide {
-                        execute align y run tp @s ^ ^ ^-0.3
-
-                        scoreboard players set .groundDistance abilityTheWorld.TimeskipMovement 0
-                        execute at @s run function ability:the_world/moves/1/timeskip/recursive/ground
-
-                        execute as @a[distance=..12] run {
-                            shader enable @s minecraft:greyscale
-                            function universal:scenario_setup {scenario:"Ability",sub_scenario:"TheWorld",objective:"abilityTheWorld.TimeskipGreyscale",duration:6}
-                        }
-
-                        playsound minecraft:ability.the_world.timeskip.sfx player @a ~ ~ ~ 0.5
-
-                        tag @s add temp2
-                    }
-
-                    function ground {
-                        execute unless block ~ ~-0.1 ~ #ability:the_world/timeskip run return 0
-
-                        scoreboard players add .groundDistance abilityTheWorld.TimeskipMovement 1
-                        execute if score .groundDistance abilityTheWorld.TimeskipMovement matches 31.. run return 0
-
-                        tp @s ~ ~-0.1 ~
-                        execute at @s run function ability:the_world/moves/1/timeskip/recursive/ground
-                    }
-                }
-            }
-        }
-
-        dir 2 {
-            function core {
-                execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
-                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
-                function universal:error_messages/constant
-
-                scoreboard players set @s universalAbility.HotbarSlot 1
-                execute unless score @s universalError.FailReturn matches 1 run function ability:the_world/moves/2/default_throw/pass
-                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:2,name:"Knife Throw",unicode:"u50A1"}
-            }
-
-            dir default_throw {
-                function pass {
-                    # setup
-                    function ability:the_world/moves/setup {rig:"the_world",animation:'default_knife_throw'}
-
-                    # restraints
-                    function universal:ability/restraint/cooldown {name:"TheWorld",move:2}
-                    function universal:ability/restraint/cancelable {move:2}
-                    tag @s add universalAbility.Animating
-                }
-            } 
-        }
-
-        dir reset {
-            function all {
-                function universal:ability/rig/as_player {player:"abilityTheWorld.User",objective:"universalAbility.ID",output:"function ability:the_world/moves/reset/player"}
-                function ability:billy/moves/reset/rig
-            }
-
-            function rig {
-
-            }
-
-            function player {
-                function universal:ability/revoke/cancelable {player:"abilityBilly.User"}
-                tag @s remove abilityBilly.FlagOverride
-                tag @s remove universalAbility.Animating
-            }
-        }
-    }
-
-    dir hotbar {
-        function main {
-            function ability:the_world/hotbar/meter with storage minecraft:ability the_world.awakening
-
-            execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1a
-            execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1b
-            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move2a
-            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move3a
-            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move4a
-
-            function ability:the_world/hotbar/rage
-            REPEAT (1,4) as i {
-                execute if score @s universalAbility.HotbarSlot matches <%i%> run {
-                    function universal:hotbar/time {ability:"the_world",slot:<%i%>}
-                }
-            }
-
-            block { with storage minecraft:ability the_world.hotbar
-                $title @s actionbar [{"text":"\uF85E\u03D0"},{"text":"\uF850$(rage)","color":"aqua"},{"text":"\uF873\u03A0"},{"text":"\uF863\$(move1)\uF84F\u03A2"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF863\$(move4)"},{"text":"\uF820\$(awakening)"},{"text":"\uF86E\u03A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
-            }
-        }
-
-        function rage {
-            # clamp
-            execute unless score @s abilityTheWorld.PassiveRageCount matches 0.. run scoreboard players set @s abilityTheWorld.PassiveRageCount 0
-
-            # split into whole + frac
-            scoreboard players operation #tmp_whole abilityTheWorld.PassiveRageCount = @s abilityTheWorld.PassiveRageCount
-            scoreboard players operation #tmp_frac abilityTheWorld.PassiveRageCount = @s abilityTheWorld.PassiveRageCount
-            scoreboard players set #ten abilityTheWorld.PassiveRageCount 10
-
-            scoreboard players operation #tmp_whole abilityTheWorld.PassiveRageCount /= #ten abilityTheWorld.PassiveRageCount
-            scoreboard players operation #tmp_frac abilityTheWorld.PassiveRageCount %= #ten abilityTheWorld.PassiveRageCount
-
-            execute store result storage minecraft:ability the_world.hotbar.whole int 1 run scoreboard players get #tmp_whole abilityTheWorld.PassiveRageCount
-            execute store result storage minecraft:ability the_world.hotbar.frac int 1 run scoreboard players get #tmp_frac abilityTheWorld.PassiveRageCount
-
-            block { with storage minecraft:ability the_world.hotbar
-                $data merge storage minecraft:ability {the_world:{hotbar:{rage:"$(whole).$(frac)"}}}
-            }
-            data remove storage minecraft:ability the_world.hotbar.whole
-            data remove storage minecraft:ability the_world.hotbar.frac
-        }
-
-        function progress {
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A3"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A4"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A5"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A6"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A7"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A8"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A9"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B0"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B1"
-            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B2"
-            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B3"
-        }
-
-        function meter {
-            $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B9"
-            $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B8"
-            $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B7"
-            $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B6"
-            $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B5"
-            $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B4"
-            $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B3"
-            $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B2"
-            $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B1"
-            $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B0"
-            $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A9"
-            $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A8"
-            $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A7"
-            $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A6"
-            $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A5"
-            execute unless score @s universalAbility.AwakeningDuration matches 1.. run {
-                data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A4"
-                tag @s remove abilityTheWorld.RageMode
-            }
-        }
-    }
-
-    dir toggle {
-        function on {
-            execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.toggle.spawn player @a ~ ~ ~ 1
-            execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
-            execute rotated ~ 0 run function aj:the_world/summon {args:{animation: 'summon', start_animation: true}}
-                
-            execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
-            execute as @n[type=minecraft:item_display,tag=aj.the_world.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability the_world
-                $scoreboard players set @s universalAbility.ID $(id)
-            }
-
-            function universal:ability/rig/mount/player {user:"abilityTheWorld.User",rig:"the_world",objective:"universalAbility.ID"}
-            function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-
-            tag @s add universalAbility.HideUI
-            scoreboard players set @s universalAbility.ToggleDelay 20
-        }
-
-        function off {
-            title @s actionbar ""
-            execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
-            block { with storage minecraft:ability the_world
-                $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={universalAbility.ID=$(id)}] at @s run {
-                    playsound minecraft:ability.the_world.toggle.withdraw player @a ~ ~ ~ 1
-                    function aj:the_world/remove/this
-                }
-            }
-            scoreboard players set @s universalAbility.ToggleDelay 10 
         }
     }
 
@@ -1343,6 +947,512 @@ dir yuji {
 
             scoreboard players set @s universalAbility.ToggleDelay 10
         }
+    }
+}
+
+dir the_world {
+    dir tick {
+        function main {
+            execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 11.. run function ability:the_world/active
+
+            REPEAT (1,3) as i {
+                execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
+                    scoreboard players reset @s universalAbility.MoveTrigger<%i%>
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:the_world/moves/<%i%>/core
+                }
+            }
+
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
+                REPEAT (1,3) as i {
+                    execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
+                }
+
+                execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
+                execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+            }
+        }
+
+        dir scenario {
+            function core {
+                execute if score @s abilityTheWorld.TimeskipGreyscale matches 1.. run function ability:the_world/tick/scenario/timeskip_greyscale
+
+                execute unless entity @s[scores={abilityTheWorld.TimeskipGreyscale=1..}] run tag @s remove scenarioTick.AbilityTheWorld
+            }
+
+            function timeskip_greyscale {
+                scoreboard players remove @s abilityTheWorld.TimeskipGreyscale 1
+                execute if score @s abilityTheWorld.TimeskipGreyscale matches 0 run shader disable @s minecraft:greyscale
+            }
+        }
+    }
+
+    function install {
+        scoreboard objectives add abilityTheWorld.PassiveRageCount dummy
+        scoreboard objectives add abilityTheWorld.TimeskipGreyscale dummy
+        scoreboard objectives add abilityTheWorld.TimeskipMovement dummy
+        scoreboard objectives add abilityTheWorld.KnifeThrowID dummy
+        scoreboard objectives add abilityTheWorld.KnifeThrowSpread dummy
+        scoreboard objectives add abilityTheWorld.KnifeThrowMovement dummy
+
+        # Move 1 #
+            # Timeskip #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld_Timeskip",storage:"the_world",path:"1a",move:1,cooldown:9}
+            function universal:ability/setup/variables {ability:"the_world",name:"timeskip",variables:{max_distance:11.0,greyscale_duration:6}}
+            # Timestop #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld_Timestop",storage:"the_world",path:"1b",move:1,cooldown:50}
+            function universal:ability/setup/variables {ability:"the_world",name:"timestop",variables:{range:40.0,duration:9.0,tick_damage:3}}
+
+        # Move 2 #
+            # Knife Throw #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
+            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.15,hitbox_size:2.5,damage:10}}
+
+        # Move 3 #
+            # Barrage #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"3a",move:3,cooldown:23}
+            function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{hitbox_size:2.5,damage:3}}
+        
+        # Move 4 #
+            # Flurry #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"4a",move:4,cooldown:32}
+            function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{spawned_knives:50,damage:10}}
+        
+        # Awakening: Rage Mode #
+        function universal:ability/setup/meter {name:"TheWorld",storage:"the_world",duration:145}
+    }
+
+    function active {
+        function ability:the_world/hotbar/main
+    }
+
+    dir moves {
+        function setup {
+            $data merge storage minecraft:ability {the_world:{setup:{rig:'$(rig)',animation:'$(animation)'}}}
+            execute store result storage minecraft:ability the_world.setup.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:ability the_world.setup
+                $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability the_world.setup
+                    $function aj:$(rig)/animations/$(animation)/play
+                }
+            }
+
+            function universal:ability/rig/stable_player_display/main {branch:"the_world",split:""}
+        }
+
+        dir 1 {
+            function core {
+                execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/moves/1/timeskip/core
+                execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/moves/1/timestop/core
+            }
+
+            dir timeskip {
+                function core {
+                    execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
+                    execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                    function universal:error_messages/constant
+
+                    scoreboard players set @s universalAbility.HotbarSlot 1
+                    execute unless score @s universalError.FailReturn matches 1 run function ability:the_world/moves/1/timeskip/pass
+                    execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Timeskip",unicode:"u50A1"}
+                }
+
+                function pass {
+                    function ability:the_world/moves/setup {rig:"the_world",animation:'phase'}
+                    function universal:ability/restraint/cooldown {move:1,name:"TheWorld_Timeskip"}
+
+                    function ability:the_world/moves/1/timeskip/recursive/start
+                }
+
+                dir recursive {
+                    function start {
+                        execute as @a[distance=..12] run block {
+                            shader enable @s minecraft:greyscale
+                            block { with storage minecraft:ability the_world.variables.timeskip
+                                $function universal:scenario_setup {scenario:"Ability",sub_scenario:"TheWorld",objective:"abilityTheWorld.TimeskipGreyscale",duration:$(greyscale_duration)}
+                            }
+                        }
+
+                        playsound minecraft:ability.the_world.timeskip.sfx player @a ~ ~ ~ 0.5
+
+                        scoreboard players reset .distance abilityTheWorld.TimeskipMovement
+                        execute store result score .maxDistance abilityTheWorld.TimeskipMovement run data get storage minecraft:ability the_world.variables.timeskip.max_distance 10
+
+                        tag @s add temp
+                        execute anchored eyes positioned ^ ^ ^ run function ability:the_world/moves/1/timeskip/recursive/travel
+                        tag @s remove temp
+
+                        scoreboard players reset .distance abilityTheWorld.TimeskipMovement
+                        scoreboard players reset .maxDistance abilityTheWorld.TimeskipMovement
+                    }
+
+                    function travel {
+                        execute unless block ^ ^ ^.1 #ability:the_world/timeskip run function ability:the_world/moves/1/timeskip/recursive/collide
+
+                        scoreboard players add .distance abilityTheWorld.TimeskipMovement 1
+
+                        execute if score .distance abilityTheWorld.TimeskipMovement >= .maxDistance abilityTheWorld.TimeskipMovement run function ability:the_world/moves/1/timeskip/recursive/collide
+
+                        execute if score .distance abilityTheWorld.TimeskipMovement < .maxDistance abilityTheWorld.TimeskipMovement positioned ^ ^ ^.1 rotated ~ ~ if block ~ ~ ~ #ability:the_world/timeskip unless entity @s[tag=temp2] run function ability:the_world/moves/1/timeskip/recursive/travel
+
+                        execute if entity @s[tag=temp2] run tag @s remove temp2
+                    }
+
+                    function collide {
+                        execute align y run tp @s ^ ^ ^-0.3
+
+                        scoreboard players set .groundDistance abilityTheWorld.TimeskipMovement 0
+                        execute at @s run function ability:the_world/moves/1/timeskip/recursive/ground
+
+                        execute as @a[distance=..12] run block {
+                            shader enable @s minecraft:greyscale
+                            block { with storage minecraft:ability the_world.variables.timeskip
+                                $function universal:scenario_setup {scenario:"Ability",sub_scenario:"TheWorld",objective:"abilityTheWorld.TimeskipGreyscale",duration:$(greyscale_duration)}
+                            }
+                        }
+
+                        playsound minecraft:ability.the_world.timeskip.sfx player @a ~ ~ ~ 0.5
+
+                        tag @s add temp2
+                    }
+
+                    function ground {
+                        execute unless block ~ ~-0.1 ~ #ability:the_world/timeskip run return 0
+
+                        scoreboard players add .groundDistance abilityTheWorld.TimeskipMovement 1
+                        execute if score .groundDistance abilityTheWorld.TimeskipMovement matches 31.. run return 0
+
+                        tp @s ~ ~-0.1 ~
+                        execute at @s run function ability:the_world/moves/1/timeskip/recursive/ground
+                    }
+                }
+            }
+        }
+
+        dir 2 {
+            function core {
+                execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
+                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                function universal:error_messages/constant
+
+                scoreboard players set @s universalAbility.HotbarSlot 1
+                execute unless score @s universalError.FailReturn matches 1 run function ability:the_world/moves/2/default_throw/pass
+                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:2,name:"Knife Throw",unicode:"u50A1"}
+            }
+
+            function count {
+                $scoreboard players set @s abilityTheWorld.KnifeThrowSpread $(spread)
+                function universal:math/divide {value:2,score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
+                execute store result storage minecraft:ability the_world.knife_throw.spread_initial double 0.01 run scoreboard players get @s abilityTheWorld.KnifeThrowSpread
+                function universal:math/multiply {value:2,score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
+
+                execute unless entity @s[tag=traitIndex.TimeLocked] run {
+                    execute unless entity @s[tag=abilityTheWorld.RageMode] run data merge storage minecraft:ability {the_world:{knife_throw:{count:3,div_value:2}}}
+                    execute if entity @s[tag=abilityTheWorld.RageMode] run data merge storage minecraft:ability {the_world:{knife_throw:{count:5,div_value:4}}}
+                }
+                execute if entity @s[tag=traitIndex.TimeLocked] run data merge storage minecraft:ability {the_world:{knife_throw:{count:2,div_value:1}}}
+
+                data modify storage minecraft:ability the_world.knife_throw.speed set from storage minecraft:ability the_world.variables.knife_throw.speed
+                block { with storage minecraft:ability the_world.knife_throw
+                    $function universal:math/divide {value:$(div_value),score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
+                    execute store result storage minecraft:ability the_world.knife_throw.spread double 0.01 run scoreboard players get @s abilityTheWorld.KnifeThrowSpread 
+                    $execute rotated ~ ~ anchored eyes positioned ^-$(spread_initial) ^ ^ run function ability:the_world/moves/2/spawn with storage minecraft:ability the_world.knife_throw
+                    scoreboard players reset .count abilityTheWorld.KnifeThrowSpread
+                }
+            }
+
+            function spawn {
+                scoreboard players add .count abilityTheWorld.KnifeThrowSpread 1
+
+                execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s abilityTheWorld.KnifeThrowID
+                execute unless entity @s[tag=customTheWorld.StoppingTime] run {
+                    data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
+                    data modify storage minecraft:universal vfx.arguments.animation set value "knife"
+                    data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/default_throw/setup with storage minecraft:ability the_world.knife_throw"
+                    function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+                }
+                execute if entity @s[tag=customTheWorld.StoppingTime] run {
+                    data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
+                    data modify storage minecraft:universal vfx.arguments.animation set value "knife"
+                    data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/timestop_throw/setup with storage minecraft:ability the_world.knife_throw"
+                    function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+                }
+
+                $execute positioned ^$(spread) ^ ^ unless score .count abilityTheWorld.KnifeThrowSpread matches $(count).. run function ability:the_world/moves/2/spawn with storage minecraft:ability the_world.knife_throw
+            }
+
+            function movement {
+                execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s abilityTheWorld.KnifeThrowID
+                execute positioned ^ ^ ^ unless entity @s[tag=abilityTheWorld.KnifeCollision] run function ability:the_world/moves/2/check with storage minecraft:ability the_world.knife_throw
+                tag @s remove temp
+
+                # execute if entity @s[tag=abilityTheWorld.KnifeCollision] run block { with storage minecraft:ability the_world.knife_throw
+                #     particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
+                #     $execute as @e[type=!#universal:not_mob,distance=..$(range)] unless entity @s[scores={universalAbility.ID=$(id)}] unless entity @s[tag=customSettings_Immunity] run block { with storage minecraft:ability the_world.knife_throw
+                #         execute unless entity @s[tag=customTheWorld.TimeLocked] run block { with storage minecraft:ability the_world.knife_throw
+                #             $function custom:universal/damage/victim {id:"$(id)",damage:"$(damage)",type:"custom:bypass_immunity",attacker:"tag=customAbility.TheWorld",objective:"customUniversal.AbilityID",first:"was skewered by",second:"using Knife Throw"}
+                #             $execute as @p[tag=customAbility.TheWorld,scores={customUniversal.AbilityID=$(id)}] run block { with storage minecraft:ability the_world.knife_throw
+                #                 function custom:abilities/the_world/passive/rage/gain {amount:10}
+                #                 $scoreboard players add @s customTheWorld.Statistics.KnifeThrow.Damage $(damage)
+                #                 $execute if entity @s[tag=customSettings.DebugLog] run tellraw @s ["",{"text":"Debug Log ","color":"gold"},{"text":"-","color":"gray"},{"text":" Knife Throw","color":"gold"},{"text":"\n"},{"text":"Damage: ","color":"gray"},{"text":"$(damage)","color":"red"}]
+                #             }
+                #         }
+                #         execute if entity @s[tag=customTheWorld.TimeLocked] run scoreboard players add @s customTheWorld.TimeStopVictimHit 1
+                #         $execute as @n[type=minecraft:item_display,tag=aj.the_world_vfx.root,scores={universalAbility.ID=$(id)}] run function animated_java:the_world_vfx/remove/this
+                #     }
+                # }
+
+                scoreboard players reset @s abilityTheWorld.KnifeThrowMovement
+            }
+
+            function check {
+                $execute unless block ^ ^ ^$(speed) #ability:the_world/knife_throw run {
+                    tag @s add abilityTheWorld.KnifeCollision
+                    playsound minecraft:ability.the_world.knife_throw.terrain player @a ~ ~ ~ 0.5
+                    tp @s ~ ~ ~
+                }
+
+                $execute if block ^ ^ ^$(speed) #ability:the_world/knife_throw run block { with storage minecraft:ability the_world.knife_throw
+                    scoreboard players add @s abilityTheWorld.KnifeThrowMovement 1
+
+                    $execute if score @s abilityTheWorld.KnifeThrowMovement matches 15.. positioned ^ ^ ^$(speed) run tp @s ~ ~ ~
+
+                    $execute unless score @s abilityTheWorld.KnifeThrowMovement matches 15.. positioned ^ ^ ^$(speed) run function ability:the_world/moves/2/check {speed:"$(speed)"}
+                }
+            }
+
+
+
+
+
+            dir default_throw {
+                function pass {
+                    # setup
+                    function ability:the_world/moves/setup {rig:"the_world",animation:'default_knife_throw'}
+                    visibility disable @s @a ignore_perspective render_passengers
+
+                    # restraints
+                    function universal:ability/restraint/cooldown {name:"TheWorld",move:2}
+                    function universal:ability/restraint/cancelable {move:2}
+                    tag @s add universalAbility.Animating
+                }
+
+                function voiceline {
+                    execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.knife_throw.voiceline player @a ~ ~ ~ 0.5
+                    execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.knife_throw.shadow_voiceline player @a ~ ~ ~ 0.5
+                }
+
+                function setup {
+                    $scoreboard players set @s abilityTheWorld.KnifeThrowID $(id)
+                    function aj:the_world_vfx/animations/knife/play
+                }
+            } 
+        }
+
+        dir reset {
+            function all {
+                function universal:ability/rig/as_player {player:"abilityTheWorld.User",objective:"universalAbility.ID",output:"function ability:the_world/moves/reset/player"}
+                function ability:the_world/moves/reset/rig
+            }
+
+            function rig {
+                function aj:the_world/animations/hide_dio/play
+                # function aj:the_world/animations/idle/play
+                # scoreboard players reset @s customUniversal.TimeStopAnimation
+            }
+
+            function player {
+                visibility enable @s @a
+                function universal:ability/revoke/cancelable {player:"abilityTheWorld.User"}
+                tag @s remove universalAbility.Animating
+            }
+        }
+    }
+
+    dir hotbar {
+        function main {
+            function ability:the_world/hotbar/meter with storage minecraft:ability the_world.awakening
+
+            execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1a
+            execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1b
+            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move2a
+            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move3a
+            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move4a
+
+            function ability:the_world/hotbar/rage
+            REPEAT (1,4) as i {
+                execute if score @s universalAbility.HotbarSlot matches <%i%> run {
+                    function universal:hotbar/time {ability:"the_world",slot:<%i%>}
+                }
+            }
+
+            block { with storage minecraft:ability the_world.hotbar
+                $title @s actionbar [{"text":"\uF85E\u03D0"},{"text":"\uF850$(rage)","color":"aqua"},{"text":"\uF873\u03A0"},{"text":"\uF863\$(move1)\uF84F\u03A2"},{"text":"\uF863\$(move2)"},{"text":"\uF863\$(move3)"},{"text":"\uF863\$(move4)"},{"text":"\uF820\$(awakening)"},{"text":"\uF86E\u03A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
+            }
+        }
+
+        function rage {
+            # clamp
+            execute unless score @s abilityTheWorld.PassiveRageCount matches 0.. run scoreboard players set @s abilityTheWorld.PassiveRageCount 0
+
+            # split into whole + frac
+            scoreboard players operation #tmp_whole abilityTheWorld.PassiveRageCount = @s abilityTheWorld.PassiveRageCount
+            scoreboard players operation #tmp_frac abilityTheWorld.PassiveRageCount = @s abilityTheWorld.PassiveRageCount
+            scoreboard players set #ten abilityTheWorld.PassiveRageCount 10
+
+            scoreboard players operation #tmp_whole abilityTheWorld.PassiveRageCount /= #ten abilityTheWorld.PassiveRageCount
+            scoreboard players operation #tmp_frac abilityTheWorld.PassiveRageCount %= #ten abilityTheWorld.PassiveRageCount
+
+            execute store result storage minecraft:ability the_world.hotbar.whole int 1 run scoreboard players get #tmp_whole abilityTheWorld.PassiveRageCount
+            execute store result storage minecraft:ability the_world.hotbar.frac int 1 run scoreboard players get #tmp_frac abilityTheWorld.PassiveRageCount
+
+            block { with storage minecraft:ability the_world.hotbar
+                $data merge storage minecraft:ability {the_world:{hotbar:{rage:"$(whole).$(frac)"}}}
+            }
+            data remove storage minecraft:ability the_world.hotbar.whole
+            data remove storage minecraft:ability the_world.hotbar.frac
+        }
+
+        function progress {
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A3"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A4"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A5"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A6"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A7"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A8"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03A9"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B0"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B1"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B2"
+            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B3"
+        }
+
+        function meter {
+            $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B9"
+            $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B8"
+            $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B5"
+            $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B4"
+            $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B3"
+            $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B2"
+            $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B1"
+            $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B0"
+            $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A9"
+            $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A8"
+            $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A5"
+            execute unless score @s universalAbility.AwakeningDuration matches 1.. run {
+                data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A4"
+                tag @s remove abilityTheWorld.RageMode
+            }
+        }
+    }
+
+    dir toggle {
+        function on {
+            execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.toggle.spawn player @a ~ ~ ~ 1
+            execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
+            execute rotated ~ 0 run function aj:the_world/summon {args:{animation: 'summon', start_animation: true}}
+                
+            execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
+            execute as @n[type=minecraft:item_display,tag=aj.the_world.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability the_world
+                $scoreboard players set @s universalAbility.ID $(id)
+            }
+
+            function universal:ability/rig/mount/player {user:"abilityTheWorld.User",rig:"the_world",objective:"universalAbility.ID"}
+            function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+
+            tag @s add universalAbility.HideUI
+            scoreboard players set @s universalAbility.ToggleDelay 20
+        }
+
+        function off {
+            title @s actionbar ""
+            execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:ability the_world
+                $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={universalAbility.ID=$(id)}] at @s run {
+                    playsound minecraft:ability.the_world.toggle.withdraw player @a ~ ~ ~ 1
+                    function aj:the_world/remove/this
+                }
+            }
+            scoreboard players set @s universalAbility.ToggleDelay 10 
+        }
+    }
+
+    dir flags {
+        function index {
+            execute unless entity @s[tag=abilityBilly.FlagJump] run {
+                execute if predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagWalk] run function ability:billy/flags/setup {type:"walk",animation:"Walk",variation:1}
+                execute if predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagSprint] run function ability:billy/flags/setup {type:"sprint",animation:"Sprint",variation:2}
+                execute if predicate universal:flags/jump unless predicate universal:flags/flying run function ability:billy/flags/setup {type:"jump",animation:"Jump",variation:3}
+            }
+            execute if entity @s[tag=abilityBilly.FlagJump] run {
+                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+                block { with storage minecraft:ability billy
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
+                        function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+                    }
+                }
+
+                execute unless entity @s[tag=abilityBilly.FlagLanding] run function ability:billy/flags/jump/falling
+            }
+
+            execute unless predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagIdle] unless entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/setup {type:"idle",animation:"Idle",variation:4}
+        }
+
+        function setup {
+            $data merge storage minecraft:ability {billy:{type:"$(type)",adjust:1,tween:3}}
+            $scoreboard players set @s abilityBilly.FlagID $(variation)
+
+            block { with storage minecraft:ability billy
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy
+                    $function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
+                }
+            }
+
+            function ability:billy/flags/clear
+            $tag @s add abilityBilly.Flag$(animation)
+        }
+
+        dir jump {
+            function falling {
+                execute if predicate universal:flags/flying run function ability:billy/flags/jump/land
+                execute if predicate universal:flags/grounded run function ability:billy/flags/jump/land 
+            }
+
+            function land {
+                tag @s add abilityBilly.FlagLanding
+
+                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+                block { with storage minecraft:ability billy
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
+                        function aj:billy/animations/jump/tween {to_frame:6,duration:1}
+                    }
+                }
+            }
+
+            function end {
+                tag @s remove abilityBilly.FlagLanding
+                tag @s remove abilityBilly.FlagJump
+            }
+        }
+
+        function clear {
+            tag @s remove abilityBilly.FlagWalk
+            tag @s remove abilityBilly.FlagSprint
+            tag @s remove abilityBilly.FlagIdle
+        }
+
+        # function adjust {
+        #     tag @s remove temp
+        #     $data merge storage minecraft:ability {billy:{tween:"$(tween)"}}
+        #     $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={universalAbility.ID=$(id)}] run block { {objective:"$(objective)"}
+        #         $scoreboard players add @s aj.$(objective).frame 2
+        #         $execute store result storage minecraft:ability billy.adjust int 1 run scoreboard players get @s aj.$(objective).frame
+        #     }
+        # }
     }
 }
 

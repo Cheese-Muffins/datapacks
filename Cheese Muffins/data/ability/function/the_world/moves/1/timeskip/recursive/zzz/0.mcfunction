@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
 shader enable @s minecraft:greyscale
-function universal:scenario_setup {scenario:"Ability",sub_scenario:"TheWorld",objective:"abilityTheWorld.TimeskipGreyscale",duration:6}
+function ability:the_world/moves/1/timeskip/recursive/zzz/1 with storage minecraft:ability the_world.variables.timeskip
