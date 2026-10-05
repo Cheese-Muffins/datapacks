@@ -2257,6 +2257,7 @@ dir purchase {
                 REPEAT (1,5) as i {
                     $execute if score @s universalAbility.EquippedID matches $(ability_id) if data storage minecraft:ui generate.purchase{product_name:"skin<%i%>"} run scoreboard players set @s universalAbility.EquippedSkinID <%i%>
                 }
+                function ui:purchase/equip/root_skin with storage minecraft:ui generate.purchase
             }
 
             $tag @s add $(equipped_tag)
@@ -2268,6 +2269,7 @@ dir purchase {
             $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run block { with storage minecraft:ui generate.purchase
                 $tag @s add skin$(real_path)Default.User
                 $execute if score @s universalAbility.EquippedID matches $(ability_id) run scoreboard players set @s universalAbility.EquippedSkinID 0
+                function ui:purchase/equip/root_skin with storage minecraft:ui generate.purchase
             }
         }
 
@@ -2290,6 +2292,19 @@ dir purchase {
                         $tag @s remove $(remove_tag)
                     }
                     data remove storage minecraft:ui generate.purchase.remove_tag
+                }
+            }
+        }
+
+        function root_skin {
+            execute store result storage minecraft:ui generate.purchase.ability_id int 1 run scoreboard players get @s universalAbility.ID
+            execute store result storage minecraft:ui generate.purchase.skin_id int 1 run scoreboard players get @s universalAbility.EquippedSkinID
+
+            $data modify storage minecraft:ui generate.purchase.path set from storage minecraft:ability index.$(ability_id).path
+            block { with storage minecraft:ui generate.purchase
+                $execute as @n[type=minecraft:item_display,tag=aj.global.root,scores={universalAbility.ID=$(ability_id)}] run block { with storage minecraft:ui generate.purchase
+                    $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
+                    $function ability:$(path)/skin_index
                 }
             }
         }

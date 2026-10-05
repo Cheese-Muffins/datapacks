@@ -223,11 +223,12 @@ data\ability\function\the_world\hotbar\rage.mcfunction:c977900aafd1579bfc7a33daf
 data\ability\function\the_world\hotbar\progress.mcfunction:280fbc83238eadca688678f6f8192699081ae133
 data\ability\function\the_world\hotbar\zzz\6.mcfunction:9746b600cc8d26624c872d8fe13bc10a980cb1ab
 data\ability\function\the_world\hotbar\meter.mcfunction:cea86eb6af5bab6675eeddef965d603f40f45006
-data\ability\function\the_world\toggle\zzz\0.mcfunction:a31fa16704cf38af236f6292edbfc6ecaa521f07
-data\ability\function\the_world\toggle\on.mcfunction:f1c01cbe39a6121b41df0cada846388d5c5965da
+data\ability\function\the_world\toggle\zzz\0.mcfunction:851e1044b76cdf0f55960950a52346d3948303a6
+data\ability\function\the_world\toggle\on.mcfunction:961c1707d28092e764210df6d99e5185bfcbabe4
 data\ability\function\the_world\toggle\zzz\2.mcfunction:527a3bb012e9e5e17275f6a868e0a99de21c209f
 data\ability\function\the_world\toggle\zzz\1.mcfunction:13fdc14b033be94591828d9f8a0947fa43dca3d9
 data\ability\function\the_world\toggle\off.mcfunction:c1e6ebbbc77c8661de9105dfb7ebc9362f0716aa
+data\ability\function\the_world\skin_index.mcfunction:9a737d8750fc01ed0bb3b37e94986f47ddb5070b
 data\ability\function\president\install.mcfunction:5d62d7f676ebbb64a769d6b84f03034e6dc0c7a7
 data\ability\function\generate\data.mcfunction:878450a76c27337ef8e4792a8a34c3aa46a2318c
 data\ability\function\generate\ratings.mcfunction:c119c6454b4d2ebbbb5d691566890cf39e9d580f
@@ -686,9 +687,9 @@ data\ui\function\purchase\equip\zzz\6.mcfunction:10c3a408bbc122c816ba773ce6807b3
 data\ui\function\purchase\equip\zzz\9.mcfunction:5b91601e3d6356b9c06abbfcb8dd9b199f618917
 data\ui\function\purchase\equip\zzz\8.mcfunction:7e1220a30e93cc27c08c2a8a04b63062e39c1980
 data\ui\function\purchase\equip\zzz\1.mcfunction:59eeebb52b98f487a5b4d77f1e1b61a2ea36cb0e
-data\ui\function\purchase\equip\zzz\10.mcfunction:dbcf54614e8eca179177f138af4e86e161724c30
+data\ui\function\purchase\equip\zzz\10.mcfunction:fcf27253ed010b1325ce0d74bd704bbfd6f41dc3
 data\ui\function\purchase\equip\on.mcfunction:c5c6f3172786d82904ff899b0568a1828edfc9bc
-data\ui\function\purchase\equip\zzz\11.mcfunction:319365d1a7ef314658d194033daa184fceacf3d8
+data\ui\function\purchase\equip\zzz\11.mcfunction:e428b258a700b14af8ed1eb5f6620bd28cce7874
 data\ui\function\purchase\equip\off.mcfunction:51e2b9c97956514f767a7a59ae4dbf60ff206078
 data\ui\function\purchase\equip\remove\zzz\0.mcfunction:8a4deb228183d06f22ff2e364c4e2528e5b0c33e
 data\ui\function\purchase\equip\remove\zzz\1.mcfunction:8a4deb228183d06f22ff2e364c4e2528e5b0c33e
@@ -711,6 +712,9 @@ data\ui\function\purchase\equip\remove\zzz\16.mcfunction:8a4deb228183d06f22ff2e3
 data\ui\function\purchase\equip\remove\zzz\17.mcfunction:8a4deb228183d06f22ff2e364c4e2528e5b0c33e
 data\ui\function\purchase\equip\remove\zzz\18.mcfunction:8a4deb228183d06f22ff2e364c4e2528e5b0c33e
 data\ui\function\purchase\equip\remove\skin.mcfunction:060cfc472ed74c12697beca6ac2df2eed5c9a8cd
+data\ui\function\purchase\equip\zzz\13.mcfunction:da92b7a684f2fd0a3142884fdd4e671277082210
+data\ui\function\purchase\equip\zzz\12.mcfunction:87e0861a7fa7bdc90dd969d05200c6a52e016111
+data\ui\function\purchase\equip\root_skin.mcfunction:97161b7452f214bc2296cc598ed8589093ba1f0d
 data\ui\function\purchase\zzz\7.mcfunction:8a39c9911f0e5f2f92c7a46429bb9465fd0994c7
 data\ui\function\purchase\zzz\6.mcfunction:d2204617127bd08cf4b87fed54cbe23cb13026d8
 data\ui\function\purchase\zzz\10.mcfunction:ae8221e7f6d082f01d3c25e6733201de9605982f

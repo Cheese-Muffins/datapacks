@@ -6,3 +6,4 @@ $execute if score @s universalAbility.EquippedID matches $(ability_id) if data s
 $execute if score @s universalAbility.EquippedID matches $(ability_id) if data storage minecraft:ui generate.purchase{product_name:"skin3"} run scoreboard players set @s universalAbility.EquippedSkinID 3
 $execute if score @s universalAbility.EquippedID matches $(ability_id) if data storage minecraft:ui generate.purchase{product_name:"skin4"} run scoreboard players set @s universalAbility.EquippedSkinID 4
 $execute if score @s universalAbility.EquippedID matches $(ability_id) if data storage minecraft:ui generate.purchase{product_name:"skin5"} run scoreboard players set @s universalAbility.EquippedSkinID 5
+function ui:purchase/equip/root_skin with storage minecraft:ui generate.purchase

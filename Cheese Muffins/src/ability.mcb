@@ -1467,11 +1467,12 @@ dir the_world {
             execute if entity @s[tag=skinTheWorldShadow.User] run playsound minecraft:ability.the_world.toggle.shadow_spawn player @a ~ ~ ~ 1
             execute rotated ~ 0 run function aj:the_world/summon {args:{animation: 'summon', start_animation: true}}
             
-            execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
-            execute store result storage minecraft:ability the_world.skin_id int 1 run scoreboard players get @s universalAbility.EquippedSkinID
-            execute as @n[type=minecraft:item_display,tag=aj.the_world.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability the_world
+            execute store result storage minecraft:ability the_world.toggle.id int 1 run scoreboard players get @s universalAbility.ID
+            execute store result storage minecraft:ability the_world.toggle.skin_id int 1 run scoreboard players get @s universalAbility.EquippedSkinID
+            execute as @n[type=minecraft:item_display,tag=aj.the_world.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability the_world.toggle
                 $scoreboard players set @s universalAbility.ID $(id)
-                $scoreboard players set @s universalAbility.EquippedSkinID $(id)
+                $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
+                function ability:the_world/skin_index
             }
 
             function universal:ability/rig/mount/player {user:"abilityTheWorld.User",rig:"the_world",objective:"universalAbility.ID"}
@@ -1494,6 +1495,23 @@ dir the_world {
             }
             scoreboard players set @s universalAbility.ToggleDelay 10 
         }
+    }
+
+    function skin_index {
+        # default skin
+        execute if score @s universalAbility.EquippedSkinID matches 0 run function aj:the_world/variants/default/apply
+
+        # inverted skin
+        execute if score @s universalAbility.EquippedSkinID matches 1 run function aj:the_world/variants/inverted_the_world/apply
+
+        # vampire skin
+        execute if score @s universalAbility.EquippedSkinID matches 2 run function aj:the_world/variants/vampire_the_world/apply
+        
+        # retro skin
+        execute if score @s universalAbility.EquippedSkinID matches 3 run function aj:the_world/variants/retro_the_world/apply
+
+        # shadow skin
+        execute if score @s universalAbility.EquippedSkinID matches 4 run function aj:the_world/variants/shadow_the_world/apply
     }
 }
 
