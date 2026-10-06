@@ -2236,8 +2236,8 @@ dir purchase {
             $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"ability"} run block { with storage minecraft:ui generate.purchase
                 function ui:purchase/equip/remove/ability
                 $scoreboard players set @s universalAbility.EquippedID $(ability_id)
-
                 scoreboard players set @s universalAbility.EquippedSkinID 0
+                tag @s add universalAbility.User
 
                 REPEAT (1,4) as i {
                     $execute if data storage minecraft:ability index.$(ability_id).product.skin<%i%> run block { with storage minecraft:ui generate.purchase
@@ -2266,6 +2266,7 @@ dir purchase {
 
         function off {
             $tag @s remove $(equipped_tag)
+            $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"ability"} run tag @s remove universalAbility.User
             $execute if data storage minecraft:ability index.$(ability_id).product.$(product_name){type:"skin"} run block { with storage minecraft:ui generate.purchase
                 $tag @s add skin$(real_path)Default.User
                 $execute if score @s universalAbility.EquippedID matches $(ability_id) run scoreboard players set @s universalAbility.EquippedSkinID 0

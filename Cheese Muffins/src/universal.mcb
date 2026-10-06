@@ -9,6 +9,7 @@ function on_load minecraft:load{
     scoreboard objectives add universalText.ID dummy
     scoreboard objectives add universalVFX.ID dummy
     scoreboard objectives add universalVFX.Conditions dummy
+    scoreboard objectives add universalDisconnect.Check minecraft.custom:minecraft.leave_game
     
 
 
@@ -43,6 +44,7 @@ dir tick {
             # scenario ticks
             execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
             execute if score @s universalAbility.ToggleTrigger matches 1.. run function universal:ability/toggle
+            execute if score @s universalDisconnect.Check matches 1.. run function universal:disconnect
         }
 
         execute as @e[type=!#universal:misc_mob] at @s run {
@@ -73,6 +75,22 @@ dir tick {
             }
         }
     }
+}
+
+function disconnect {
+    # ability disconnection
+    execute if score @s universalAbility.ToggleState matches 1 run {
+        execute store result storage minecraft:universal disconnect.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
+        block { with storage minecraft:universal disconnect
+            $data modify storage minecraft:universal disconnect.path set from storage minecraft:ability index.$(equipped_id).path
+            block { with storage minecraft:universal disconnect
+                $function ability:$(path)/toggle/on
+                $function ability:$(path)/disconnected
+            }
+        }
+    }
+
+    scoreboard players reset @s universalDisconnect.Check
 }
 
 dir damage {
@@ -107,8 +125,7 @@ dir damage {
             attribute @s minecraft:knockback_resistance modifier add universal:damage.apply 1 add_value
             $damage @s $(damage) $(type) by @p[$(user_tags),scores={$(objective)=$(user_id)}]
 
-            # execute unless score .initial universalDamage.DeathCount = @s universalDamage.DeathCount run 
-            block { with storage minecraft:universal damage.apply
+            execute unless score .initial universalDamage.DeathCount = @s universalDamage.DeathCount run block { with storage minecraft:universal damage.apply
                 $function ability:generate/death_message {ability_id:$(ability_id),move:$(move_number),variation:$(move_variation)}
 
                 block { with storage minecraft:universal damage.apply
@@ -325,7 +342,7 @@ dir ability {
                 block { with storage minecraft:universal ability.rig
                     $data modify entity @s Rotation[0] set value $(rotation)
                 }
-                # $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function custom:abilities/$(rig)/toggle/off
+                $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function ability:$(rig)/toggle/off
             }
         }
 
