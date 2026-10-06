@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui generate.death_message.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
+$data modify storage minecraft:ui generate.death_message.lore append from storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation).description[0][]
+data modify storage minecraft:ui generate.death_message.lore append value "\n"

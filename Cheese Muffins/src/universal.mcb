@@ -4,6 +4,7 @@ function on_load minecraft:load{
 
     # universal scores
     scoreboard objectives add universalDebug.Duration dummy
+    scoreboard objectives add universalDamage.DeathCount deathCount
     scoreboard objectives add universalError.FailReturn dummy
     scoreboard objectives add universalText.ID dummy
     scoreboard objectives add universalVFX.ID dummy
@@ -81,18 +82,43 @@ dir damage {
     }
 
     function cancel {
-        execute if entity @s[tag=abilityBilly.User] run data merge storage minecraft:universal {damage:{namespace:"Billy",ability:"billy"}}
-        execute if entity @s[tag=abilityYuji.User] run data merge storage minecraft:universal {damage:{namespace:"Yuji",ability:"yuji"}}
+        execute store result storage minecraft:universal damage.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
+        block { with storage minecraft:universal damage
+            $data modify storage minecraft:universal damage.path set from storage minecraft:ability index.$(equipped_id).path
+            $data modify storage minecraft:universal damage.real_path set from storage minecraft:ability index.$(equipped_id).real_path
+        }
 
         execute store result storage minecraft:universal damage.id int 1 run scoreboard players get @s universalAbility.ID
         execute store result storage minecraft:universal damage.move int 1 run scoreboard players get @s universalAbility.MovePrevious
         block { with storage minecraft:universal damage
-            $execute as @n[type=minecraft:item_display,tag=aj.$(ability).root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal damage
+            $execute as @n[type=minecraft:item_display,tag=aj.$(path).root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal damage
                 playsound minecraft:universal.ability.cancel player @a ~ ~ ~ 1
-                $function ability:$(ability)/moves/reset/all
+                $function ability:$(path)/moves/reset/all
             }
         }
-    } 
+    }
+
+    function apply {
+        $data modify storage minecraft:universal damage.apply merge value $(import)
+
+        gamerule show_death_messages false
+        scoreboard players operation .initial universalDamage.DeathCount = @s universalDamage.DeathCount
+        block { with storage minecraft:universal damage.apply
+            attribute @s minecraft:knockback_resistance modifier add universal:damage.apply 1 add_value
+            $damage @s $(damage) $(type) by @p[$(user_tags),scores={$(objective)=$(user_id)}]
+
+            # execute unless score .initial universalDamage.DeathCount = @s universalDamage.DeathCount run 
+            block { with storage minecraft:universal damage.apply
+                $function ability:generate/death_message {ability_id:$(ability_id),move:$(move_number),variation:$(move_variation)}
+
+                block { with storage minecraft:universal damage.apply
+                    $tellraw @a ["",{"selector":"@s"},{"text":" $(death_message) "},{"selector":"@p[$(user_tags),scores={$(objective)=$(user_id)}]"},{"text":" using "},{"text":"","extra":$(move_name),"hover_event":{"action":"show_text","value":$(move_hover)}}]
+                }
+            }
+        }
+        attribute @s minecraft:knockback_resistance modifier remove universal:damage.apply
+        gamerule show_death_messages true
+    }
 }
 
 dir hotbar {

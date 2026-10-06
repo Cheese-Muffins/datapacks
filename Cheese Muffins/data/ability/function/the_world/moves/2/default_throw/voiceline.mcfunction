@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.knife_throw.voiceline player @a ~ ~ ~ 0.5
-execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.knife_throw.shadow_voiceline player @a ~ ~ ~ 0.5
+function universal:damage/apply {import:{user_id:1,user_tags:"tag=customAbility.TheWorld",objective:"universalAbility.ID",damage:1,type:"minecraft:arrow",death_message:"was impaled by",ability_id:4,move_number:2,move_variation:1}}
+function universal:damage/apply {import:{user_id:1,user_tags:"tag=customAbility.TheWorld",objective:"universalAbility.ID",damage:1,type:"minecraft:arrow",death_message:"was impaled by",ability_id:4,move_number:2,move_variation:1}}

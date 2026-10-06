@@ -1014,7 +1014,7 @@ dir the_world {
         # Move 2 #
             # Knife Throw #
             function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
-            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.075,drag:99.0}}
+            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.075,drag:99.0,collision_offset:0.25}}
 
         # Move 3 #
             # Barrage #
@@ -1057,7 +1057,6 @@ dir the_world {
             dir timeskip {
                 function core {
                     execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
-                    execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
                     function universal:error_messages/constant
 
                     scoreboard players set @s universalAbility.HotbarSlot 1
@@ -1310,19 +1309,27 @@ dir the_world {
                         }
 
                         function step {
-                            $execute positioned ~$(step_x) ~$(step_y) ~$(step_z) if block ~ ~ ~ #ability:the_world/knife_throw run block { {step_x:"$(step_x)",step_y:"$(step_y)",step_z:"$(step_z)"}
+                            $execute positioned ~$(step_x) ~$(step_y) ~$(step_z) if block ~ ~ ~ #ability:the_world/knife_throw run block { with storage minecraft:ability the_world.knife_throw
                                 scoreboard players add @s abilityTheWorld.KnifeThrowMovement 1
 
+                                execute if predicate universal:chance/0.25 run particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
                                 execute if score @s abilityTheWorld.KnifeThrowMovement matches 10.. run tp @s ~ ~ ~
-                                $execute unless score @s abilityTheWorld.KnifeThrowMovement matches 10.. run function ability:the_world/moves/2/logic/movement/check/step {step_x:"$(step_x)",step_y:"$(step_y)",step_z:"$(step_z)"}
+                                execute unless score @s abilityTheWorld.KnifeThrowMovement matches 10.. run function ability:the_world/moves/2/logic/movement/check/step with storage minecraft:ability the_world.knife_throw
                             }
+
                             $execute positioned ~$(step_x) ~$(step_y) ~$(step_z) unless block ~ ~ ~ #ability:the_world/knife_throw run {
                                 tag @s add abilityTheWorld.KnifeCollision
-
-                                particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
+                                
                                 playsound minecraft:ability.the_world.knife_throw.terrain player @a ~ ~ ~ 0.5
-                                tp @s ~ ~ ~
+
+                                function ability:the_world/moves/2/logic/movement/check/backtrack
                             }
+                        }
+
+                        function backtrack {
+                            execute positioned ^ ^ ^-0.01 if block ~ ~ ~ #ability:the_world/knife_throw run tp @s ~ ~ ~
+
+                            execute positioned ^ ^ ^-0.01 unless block ~ ~ ~ #ability:the_world/knife_throw run function ability:the_world/moves/2/logic/movement/check/backtrack
                         }
                     }
                 }
@@ -1344,8 +1351,19 @@ dir the_world {
                 }
 
                 function voiceline {
-                    execute unless entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.knife_throw.voiceline player @a ~ ~ ~ 0.5
-                    execute if entity @s[tag=customTheWorld.SkinShadow] run playsound minecraft:ability.the_world.knife_throw.shadow_voiceline player @a ~ ~ ~ 0.5
+                    function universal:damage/apply {import:{\
+                        user_id:1,\
+                        user_tags:"tag=customAbility.TheWorld",\
+                        objective:"universalAbility.ID",\
+                        damage:1,\
+                        type:"minecraft:arrow",\
+                        death_message:"was impaled by",\
+                        ability_id:4,\
+                        move_number:2,\
+                        move_variation:1\
+                    }}
+
+                    function universal:damage/apply {import:{user_id:1,user_tags:"tag=customAbility.TheWorld",objective:"universalAbility.ID",damage:1,type:"minecraft:arrow",death_message:"was impaled by",ability_id:4,move_number:2,move_variation:1}}
                 }
 
                 function setup {
@@ -1367,8 +1385,9 @@ dir the_world {
             }
 
             function rig {
+                function aj:the_world/animations/pause_all
                 function aj:the_world/animations/hide_dio/play
-                # function aj:the_world/animations/idle/play
+                function aj:the_world/animations/idle/resume
                 # scoreboard players reset @s customUniversal.TimeStopAnimation
             }
 
@@ -1563,20 +1582,25 @@ dir generate {
 
     function death_message {
         data remove storage minecraft:ui generate.death_message
-        data modify storage minecraft:ui generate.death_message set value {}
+        data modify storage minecraft:ui generate.death_message.lore set value []
 
-        $data modify storage minecraft:ui generate.death_message.ability set value "$(ability)"
+        $data modify storage minecraft:ui generate.death_message.ability_id set value $(ability_id)
         $data modify storage minecraft:ui generate.death_message.move set value $(move)
         $data modify storage minecraft:ui generate.death_message.variation set value $(variation)
-
         block { with storage minecraft:ui generate.death_message
-            data modify storage minecraft:ui generate.death_message.lore set value []
+            $data modify storage minecraft:ui generate.death_message.lore append from storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation).name[]
+            data modify storage minecraft:ui generate.death_message.lore append value "\n"
 
-            $data modify storage minecraft:ui generate.death_message.lore append from storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation).description[]
+            REPEAT (0,20) as i {
+                $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation).description[<%i%>] run block { with storage minecraft:ui generate.death_message
+                    $data modify storage minecraft:ui generate.death_message.lore append from storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation).description[<%i%>][]
+                    data modify storage minecraft:ui generate.death_message.lore append value "\n"
+                }
+            }
 
-            data modify storage minecraft:ui generate.death_message.lore append value ""
+            data modify storage minecraft:ui generate.death_message.lore append value "\n"
 
-            $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation).cooldown
+            $execute store result score .cooldownRaw uiAbility.Moveset run data get storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation).cooldown
 
             scoreboard players operation .cooldownMinutes uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
             scoreboard players operation .cooldownSeconds uiAbility.Moveset = .cooldownRaw uiAbility.Moveset
@@ -1590,28 +1614,31 @@ dir generate {
             data modify storage minecraft:ui generate.death_message.lore append value ["",{"text":"Cooldown: ","italic":false,"color":"gray"}]
 
             execute if score .cooldownMinutes uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.death_message
-                $data modify storage minecraft:ui generate.death_message.lore[-1] append value ["",{"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}]
+                $data modify storage minecraft:ui generate.death_message.lore[-1] append value {"text":"$(cooldown_minutes)m ","italic":false,"color":"#ffca0a"}
             }
 
             execute if score .cooldownSeconds uiAbility.Moveset matches 1.. run block { with storage minecraft:ui generate.death_message
-                $data modify storage minecraft:ui generate.death_message.lore[-1] append value ["",{"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}]
+                $data modify storage minecraft:ui generate.death_message.lore[-1] append value {"text":"$(cooldown_seconds)s","italic":false,"color":"#ffca0a"}
             }
+            data modify storage minecraft:ui generate.death_message.lore append value "\n"
 
             scoreboard players reset .cooldownMinutes uiAbility.Moveset
             scoreboard players reset .cooldownSeconds uiAbility.Moveset
             scoreboard players reset .cooldownRaw uiAbility.Moveset
 
             data modify storage minecraft:ui generate.death_message.cancelable_text set value "Yes"
-            data modify storage minecraft:ui generate.death_message.cancelable_color set value "990000"
+            data modify storage minecraft:ui generate.death_message.cancelable_color set value "00ff40"
 
-            $execute if data storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation){cancelable:false} run data modify storage minecraft:ui generate.death_message.cancelable_text set value "No"
-            $execute if data storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation){cancelable:false} run data modify storage minecraft:ui generate.death_message.cancelable_color set value "00ff40"
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation){cancelable:false} run data modify storage minecraft:ui generate.death_message.cancelable_text set value "No"
+            $execute if data storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation){cancelable:false} run data modify storage minecraft:ui generate.death_message.cancelable_color set value "990000"
 
             block { with storage minecraft:ui generate.death_message
                 $data modify storage minecraft:ui generate.death_message.lore append value ["",{"text":"Cancelable: ","italic":false,"color":"gray"},{"text":"$(cancelable_text)","italic":false,"color":"#$(cancelable_color)"}]
             }
 
-            $data modify storage minecraft:ability index.$(ability).moveset.slot$(move).move$(variation).generated set from storage minecraft:ui generate.death_message.lore
+            data modify storage minecraft:universal damage.apply.move_hover set from storage minecraft:ui generate.death_message.lore
+            $data modify storage minecraft:universal damage.apply.move_name set from storage minecraft:ability index.$(ability_id).moveset.slot$(move).move$(variation).name
+            data remove storage minecraft:universal damage.apply.move_name[].color
         }
     }
 

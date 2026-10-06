@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=aj.$(ability).root,scores={universalAbility.ID=$(id)}] at @s run function universal:damage/zzz/1 with storage minecraft:universal damage
+$data modify storage minecraft:universal damage.path set from storage minecraft:ability index.$(equipped_id).path
+$data modify storage minecraft:universal damage.real_path set from storage minecraft:ability index.$(equipped_id).real_path
