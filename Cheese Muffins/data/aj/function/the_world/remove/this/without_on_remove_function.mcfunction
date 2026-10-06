@@ -8,6 +8,6 @@ function animated_java:global/remove/entity_stack_by_uuid with storage animated_
 function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.locators.barrage_anchor
 function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.locators.hitbox
 function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.cameras.camera
-execute unless data storage animated_java:temp {entry:{data:{rig_hash: '680f0a51eee0f1e619f07cafb995e44a63ba471eb8497844c965090fd8f13035'}}} run function animated_java:global/remove/outdated_rig
+execute unless data storage animated_java:temp {entry:{data:{rig_hash: 'b32f1a77970e14b6ef7669ef96d896ffb286021b24530607b7d11d1d0684221f'}}} run function animated_java:global/remove/outdated_rig
 function aj:the_world/remove/this/zzz/0 with storage animated_java:temp entry.data.uuids_by_name
 function animated_java:global/remove/entity_stack

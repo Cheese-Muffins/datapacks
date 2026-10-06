@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:the_world"
-data modify storage animated_java:temp entry.data.rig_hash set value "680f0a51eee0f1e619f07cafb995e44a63ba471eb8497844c965090fd8f13035"
+data modify storage animated_java:temp entry.data.rig_hash set value "b32f1a77970e14b6ef7669ef96d896ffb286021b24530607b7d11d1d0684221f"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0.25 ^1.4375 ^-0.1875 {Tags:["","aj.global.bone.dio.decendant","aj.global.bone.dio.decendant.locator","aj.global.bone.dio.tree","aj.global.bone.upper_body1.child","aj.global.bone.upper_body1.child.locator","aj.global.bone.upper_body1.decendant","aj.global.bone.upper_body1.decendant.locator","aj.global.bone.upper_body1.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.dio_shoulder","aj.new","aj.the_world.bone.dio.decendant","aj.the_world.bone.dio.decendant.locator","aj.the_world.bone.dio.tree","aj.the_world.bone.upper_body1.child","aj.the_world.bone.upper_body1.child.locator","aj.the_world.bone.upper_body1.decendant","aj.the_world.bone.upper_body1.decendant.locator","aj.the_world.bone.upper_body1.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.dio_shoulder","aj.the_world.node","aj.the_world.node.dio_shoulder"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.dio_shoulder, tag=aj.new, distance=..2 ] run function aj:the_world/zzz/summon/as_locator/dio_shoulder

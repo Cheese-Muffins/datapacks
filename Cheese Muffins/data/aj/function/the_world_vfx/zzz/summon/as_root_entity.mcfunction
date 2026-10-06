@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:the_world_vfx"
-data modify storage animated_java:temp entry.data.rig_hash set value "a299f884cb5d4d1ef01a6e545c05fcf855ddf737804c0c7a80058232654c92ea"
+data modify storage animated_java:temp entry.data.rig_hash set value "d87ecbca4cc6782a47406b9489796854b2d50bc98286e76079de7b20c6ce69ea"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0 ^-0.08535125 ^0.0482425 {Tags:["","aj.global.bone.arm_right.child","aj.global.bone.arm_right.child.locator","aj.global.bone.arm_right.decendant","aj.global.bone.arm_right.decendant.locator","aj.global.bone.arm_right.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.right","aj.new","aj.the_world_vfx.bone.arm_right.child","aj.the_world_vfx.bone.arm_right.child.locator","aj.the_world_vfx.bone.arm_right.decendant","aj.the_world_vfx.bone.arm_right.decendant.locator","aj.the_world_vfx.bone.arm_right.tree","aj.the_world_vfx.bone.scale.decendant","aj.the_world_vfx.bone.scale.decendant.locator","aj.the_world_vfx.bone.scale.tree","aj.the_world_vfx.entity","aj.the_world_vfx.locator","aj.the_world_vfx.locator.right","aj.the_world_vfx.node","aj.the_world_vfx.node.right"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world_vfx.locator.right, tag=aj.new, distance=..3 ] run function aj:the_world_vfx/zzz/summon/as_locator/right

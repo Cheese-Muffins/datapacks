@@ -1014,7 +1014,7 @@ dir the_world {
         # Move 2 #
             # Knife Throw #
             function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
-            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.1,drag:95.0}}
+            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.075,drag:99.0}}
 
         # Move 3 #
             # Barrage #
@@ -1045,6 +1045,7 @@ dir the_world {
             }
 
             function universal:ability/rig/stable_player_display/main {branch:"the_world",split:""}
+            function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
         }
 
         dir 1 {
@@ -1327,10 +1328,6 @@ dir the_world {
                 }
             }
 
-
-
-
-
             dir default_throw {
                 function pass {
                     # setup
@@ -1341,6 +1338,9 @@ dir the_world {
                     function universal:ability/restraint/cooldown {name:"TheWorld",move:2}
                     function universal:ability/restraint/cancelable {move:2}
                     tag @s add universalAbility.Animating
+
+                    function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-0.25,operation:"add_multiplied_base"}
+                    function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                 }
 
                 function voiceline {
@@ -1374,8 +1374,12 @@ dir the_world {
 
             function player {
                 visibility enable @s @a
+                function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
                 function universal:ability/revoke/cancelable {player:"abilityTheWorld.User"}
                 tag @s remove universalAbility.Animating
+
+                function universal:attribute/revoke {type:"minecraft:movement_speed",path:"ability:generic"}
+                function universal:attribute/revoke {type:"minecraft:jump_strength",path:"ability:generic"}
             }
         }
     }
