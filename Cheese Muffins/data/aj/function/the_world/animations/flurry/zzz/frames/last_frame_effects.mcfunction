@@ -4,7 +4,7 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/f
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/flurry/zzz/frames/24_locator_global
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/flurry/zzz/frames/24_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/flurry/zzz/frames/24_locator_sfx
-$execute as $(dio_shoulder) positioned ^-0.1914320584 ^1.4097125288 ^0.313760492 rotated ~162.5373374841 ~-4.6564515351 run function aj:the_world/animations/flurry/zzz/frames/24_locator_dio_shoulder
+$execute as $(dio_shoulder) positioned ^-0.177074654 ^1.3039840892 ^0.2902284551 rotated ~162.5373374841 ~-4.6564515351 run function aj:the_world/animations/flurry/zzz/frames/24_locator_dio_shoulder
 $execute as $(right_hand_world) positioned ^0.62499625 ^1.4374975 ^-0.5625 rotated ~180 ~0 run function aj:the_world/animations/flurry/zzz/frames/24_locator_right_hand_world
 $execute as $(barrage_anchor) positioned ^0.625 ^1.437500625 ^-0.5625 rotated ~0 ~0 run function aj:the_world/animations/flurry/zzz/frames/24_locator_barrage_anchor
 $execute as $(hitbox) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/flurry/zzz/frames/24_locator_hitbox

@@ -6,6 +6,7 @@ function on_load minecraft:load{
     scoreboard objectives add universalDebug.Duration dummy
     scoreboard objectives add universalDamage.DeathCount deathCount
     scoreboard objectives add universalError.FailReturn dummy
+    scoreboard objectives add universalError.Math dummy
     scoreboard objectives add universalText.ID dummy
     scoreboard objectives add universalVFX.ID dummy
     scoreboard objectives add universalVFX.Conditions dummy
@@ -81,6 +82,7 @@ dir tick {
 function disconnect {
     # ability disconnection
     execute if score @s universalAbility.ToggleState matches 1 run {
+        say rtun
         execute store result storage minecraft:universal disconnect.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
         block { with storage minecraft:universal disconnect
             $data modify storage minecraft:universal disconnect.path set from storage minecraft:ability index.$(equipped_id).path
@@ -629,13 +631,63 @@ dir error_messages {
         scoreboard players set @s universalError.FailReturn 1
     }
 
+    function cooldown {
+        $scoreboard players operation .cooldownTicks universalError.Math = @s universalAbility.MoveCooldown$(move)
+
+        scoreboard players operation .cooldownMinutes universalError.Math = .cooldownTicks universalError.Math
+        scoreboard players operation .cooldownSeconds universalError.Math = .cooldownTicks universalError.Math
+
+        scoreboard players set .ticksPerMinute universalError.Math 1200
+        scoreboard players set .ticksPerSecond universalError.Math 20
+        scoreboard players set .ticksPerDecimal universalError.Math 2
+
+        scoreboard players operation .cooldownMinutes universalError.Math /= .ticksPerMinute universalError.Math
+        scoreboard players operation .cooldownSeconds universalError.Math %= .ticksPerMinute universalError.Math
+        scoreboard players operation .cooldownSeconds universalError.Math /= .ticksPerDecimal universalError.Math
+
+        scoreboard players operation .cooldownDecimal universalError.Math = .cooldownSeconds universalError.Math
+        scoreboard players set .decimalBase universalError.Math 10
+
+        scoreboard players operation .cooldownSeconds universalError.Math /= .decimalBase universalError.Math
+        scoreboard players operation .cooldownDecimal universalError.Math %= .decimalBase universalError.Math
+
+        execute store result storage minecraft:universal error.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes universalError.Math
+        execute store result storage minecraft:universal error.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds universalError.Math
+        execute store result storage minecraft:universal error.cooldown_decimal int 1 run scoreboard players get .cooldownDecimal universalError.Math
+
+        data modify storage minecraft:universal error.cooldown_display set value []
+
+        execute if score .cooldownMinutes universalError.Math matches 1.. run block { with storage minecraft:universal error
+            $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_minutes)m ","color":"#ffca0a"}
+        }
+
+        execute if score .cooldownMinutes universalError.Math matches 0 run block { with storage minecraft:universal error
+            $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_seconds).$(cooldown_decimal)s","color":"#ffca0a"}
+        }
+
+        execute if score .cooldownMinutes universalError.Math matches 1.. run block { with storage minecraft:universal error
+            $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_seconds)s","color":"#ffca0a"}
+        }
+    }
+
     function fail {
-        $data merge storage minecraft:universal {error:{name:"$(name)",unicode:"$(unicode)"}}
-        $execute store result storage minecraft:universal error.cooldown double 0.05 run scoreboard players get @s universalAbility.MoveCooldown$(move)
+        $data merge storage minecraft:universal {error:{name:"$(name)",move:$(move)}}
         execute unless entity @s[tag=universalError.Hide] run block { with storage minecraft:universal error
-            $tellraw @s ["",{"text":"\n\$(unicode) ","color":"white"},{"text":" $(name)","color":"gold"}]
-            $execute if entity @s[tag=universalError.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" $(cooldown)","color":"red"},{"text":"s","color":"red"}]
-            execute if entity @s[tag=universalError.2] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" Another move is ","color":"gray"},{"text":"currently casting!","color":"blue"}]
+            tellraw @s ""
+            $tellraw @s ["",{"text":"[","color":"gray"},{"text":"!","color":"#F6FF2A"},{"text":"] ","color":"gray"},{"text":"$(name) ","color":"gold"},{"text":"[","color":"gray"},{"text":"!","color":"#F6FF2A"},{"text":"]","color":"gray"}]
+
+            # $execute if entity @s[tag=universalError.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" $(cooldown)","color":"red"},{"text":"s","color":"red"}]
+
+            # very universal errors
+            execute if entity @s[tag=universalError.1] run block { with storage minecraft:universal error
+                $function universal:error_messages/cooldown {move:$(move)}
+                block { with storage minecraft:universal error
+                    $tellraw @s ["",{"text":"> ","color":"#5c5c5c"},{"text":"Cooldown: ","color":"gray"},{"text":"","extra":$(cooldown_display)}]
+                }
+            }
+            execute if entity @s[tag=universalError.2] run tellraw @s ["",{"text":"> ","color":"#5c5c5c"},{"text":"Finish your ","color":"gray"},{"text":"current move","color":"#40DBF0"},{"text":" before ","color":"gray"},{"text":"casting another!","color":"#BA65FF"}]
+
+
             # execute if entity @s[tag=universalError.3] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]
             # execute if entity @s[tag=universalError.4] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"MUST ","color":"red"},{"text":"be looking at an entity to use ","color":"gray"},{"text":"this ","color":"aqua"},{"text":"move!","color":"gray"}]
             # execute if entity @s[tag=universalError.5] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use ","color":"gray"},{"text":"Domain Expansion","color":"dark_purple"},{"text":" - ","color":"gray"},{"text":"Infinite Void","color":"light_purple"},{"text":" whilst nearby someone ","color":"gray"},{"text":"currently using","color":"gold"},{"text":" or ","color":"red"},{"text":"performing ","color":"gold"},{"text":"this move!","color":"gray"}]

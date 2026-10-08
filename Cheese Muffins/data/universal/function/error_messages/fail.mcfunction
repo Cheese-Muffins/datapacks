@@ -1,8 +1,7 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:universal {error:{name:"$(name)",unicode:"$(unicode)"}}
-$execute store result storage minecraft:universal error.cooldown double 0.05 run scoreboard players get @s universalAbility.MoveCooldown$(move)
-execute unless entity @s[tag=universalError.Hide] run function universal:error_messages/zzz/0 with storage minecraft:universal error
+$data merge storage minecraft:universal {error:{name:"$(name)",move:$(move)}}
+execute unless entity @s[tag=universalError.Hide] run function universal:error_messages/zzz/3 with storage minecraft:universal error
 tag @s remove universalError.1
 tag @s remove universalError.2
 tag @s remove universalError.3

@@ -4,6 +4,7 @@ scoreboard objectives add mcb.internal dummy
 scoreboard objectives add universalDebug.Duration dummy
 scoreboard objectives add universalDamage.DeathCount deathCount
 scoreboard objectives add universalError.FailReturn dummy
+scoreboard objectives add universalError.Math dummy
 scoreboard objectives add universalText.ID dummy
 scoreboard objectives add universalVFX.ID dummy
 scoreboard objectives add universalVFX.Conditions dummy

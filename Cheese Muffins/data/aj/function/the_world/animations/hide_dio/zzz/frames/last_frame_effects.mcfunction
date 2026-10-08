@@ -4,7 +4,7 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/h
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_global
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_sfx
-$execute as $(dio_shoulder) positioned ^0.0000025 ^0.000014375 ^-0.000001875 rotated ~0 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_dio_shoulder
+$execute as $(dio_shoulder) positioned ^0.0000023125 ^0.0000132969 ^-0.0000017344 rotated ~0 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_dio_shoulder
 $execute as $(right_hand_world) positioned ^-0.375 ^0.8125 ^0 rotated ~180 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_right_hand_world
 $execute as $(barrage_anchor) positioned ^0 ^1.125 ^0 rotated ~0 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_barrage_anchor
 $execute as $(hitbox) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/hide_dio/zzz/frames/2_locator_hitbox

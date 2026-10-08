@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-playsound minecraft:ability.the_world.toggle.withdraw player @a ~ ~ ~ 1
-function aj:the_world/remove/this
+$execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={universalAbility.ID=$(id)}] at @s run function ability:the_world/toggle/zzz/3
