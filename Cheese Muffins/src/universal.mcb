@@ -45,6 +45,7 @@ dir tick {
             execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
             execute if score @s universalAbility.ToggleTrigger matches 1.. run function universal:ability/toggle
             execute if score @s universalDisconnect.Check matches 1.. run function universal:disconnect
+            execute if score @s universalDamage.DeathCount matches 1.. run function universal:ability/death
         }
 
         execute as @e[type=!#universal:misc_mob] at @s run {
@@ -556,6 +557,24 @@ dir ability {
             }
         }
         scoreboard players reset @s universalAbility.ToggleTrigger
+    }
+
+    function death {
+        execute if score @s universalAbility.ToggleState matches 1 run {
+            execute store result storage minecraft:universal death.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
+            block { with storage minecraft:universal death
+                $data modify storage minecraft:universal death.path set from storage minecraft:ability index.$(equipped_id).path
+                $data modify storage minecraft:universal death.real_path set from storage minecraft:ability index.$(equipped_id).real_path
+                execute store result storage minecraft:universal death.id int 1 run scoreboard players get @s universalAbility.ID
+                block { with storage minecraft:universal damage
+                    $execute as @n[type=minecraft:item_display,tag=aj.$(path).root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal death
+                        $function ability:$(path)/moves/reset/all
+                        $function universal:ability/rig/mount/player {user:"ability$(real_path).User",rig:"$(path)",objective:"universalAbility.ID"}
+                    }
+                }
+            }
+        }
+        scoreboard players reset @s universalDamage.DeathCount
     }
 }
 

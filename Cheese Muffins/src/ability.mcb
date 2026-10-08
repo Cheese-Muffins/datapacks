@@ -1014,7 +1014,7 @@ dir the_world {
         # Move 2 #
             # Knife Throw #
             function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
-            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.075,drag:99.0,collision_offset:0.25}}
+            function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.075,drag:99.0,collision_offset:0.25,hitbox:2.5,damage:6}}
 
         # Move 3 #
             # Barrage #
@@ -1164,7 +1164,7 @@ dir the_world {
                     block { with storage minecraft:ability the_world.knife_throw
                         $function universal:math/divide {value:$(div_value),score:"@s",objective:"abilityTheWorld.KnifeThrowSpread"}
                         execute store result storage minecraft:ability the_world.knife_throw.spread double 0.01 run scoreboard players get @s abilityTheWorld.KnifeThrowSpread 
-                        $execute rotated ~ ~ anchored eyes positioned ^-$(spread_initial) ^ ^ run function ability:the_world/moves/2/logic/create with storage minecraft:ability the_world.knife_throw
+                        $execute rotated ~ ~ anchored eyes positioned ^-$(spread_initial) ^ ^0.5 run function ability:the_world/moves/2/logic/create with storage minecraft:ability the_world.knife_throw
                         scoreboard players reset .count abilityTheWorld.KnifeThrowSpread
                     }
                 }
@@ -1172,7 +1172,7 @@ dir the_world {
                 function create {
                     scoreboard players add .count abilityTheWorld.KnifeThrowSpread 1
 
-                    execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s abilityTheWorld.KnifeThrowID
+                    execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s universalAbility.ID
                     execute unless entity @s[tag=customTheWorld.StoppingTime] run {
                         data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
                         data modify storage minecraft:universal vfx.arguments.animation set value "knife"
@@ -1311,15 +1311,19 @@ dir the_world {
                         function step {
                             $execute positioned ~$(step_x) ~$(step_y) ~$(step_z) if block ~ ~ ~ #ability:the_world/knife_throw run block { with storage minecraft:ability the_world.knife_throw
                                 scoreboard players add @s abilityTheWorld.KnifeThrowMovement 1
-
                                 execute if predicate universal:chance/0.25 run particle minecraft:crit ~ ~ ~ 0 0 0 0 1 force @a
-                                execute if score @s abilityTheWorld.KnifeThrowMovement matches 10.. run tp @s ~ ~ ~
-                                execute unless score @s abilityTheWorld.KnifeThrowMovement matches 10.. run function ability:the_world/moves/2/logic/movement/check/step with storage minecraft:ability the_world.knife_throw
+
+                                execute if entity @s if score @s abilityTheWorld.KnifeThrowMovement matches 10.. run {
+                                    tp @s ~ ~ ~
+                                    function ability:the_world/moves/2/logic/hitbox
+                                }
+
+                                execute if entity @s unless score @s abilityTheWorld.KnifeThrowMovement matches 10.. run function ability:the_world/moves/2/logic/movement/check/step with storage minecraft:ability the_world.knife_throw
                             }
 
-                            $execute positioned ~$(step_x) ~$(step_y) ~$(step_z) unless block ~ ~ ~ #ability:the_world/knife_throw run {
+                            $execute if entity @s positioned ~$(step_x) ~$(step_y) ~$(step_z) unless block ~ ~ ~ #ability:the_world/knife_throw run {
                                 tag @s add abilityTheWorld.KnifeCollision
-                                
+
                                 playsound minecraft:ability.the_world.knife_throw.terrain player @a ~ ~ ~ 0.5
 
                                 function ability:the_world/moves/2/logic/movement/check/backtrack
@@ -1330,6 +1334,27 @@ dir the_world {
                             execute positioned ^ ^ ^-0.01 if block ~ ~ ~ #ability:the_world/knife_throw run tp @s ~ ~ ~
 
                             execute positioned ^ ^ ^-0.01 unless block ~ ~ ~ #ability:the_world/knife_throw run function ability:the_world/moves/2/logic/movement/check/backtrack
+                        }
+                    }
+                }
+
+                function hitbox {
+                    data modify storage minecraft:ability the_world.knife_throw.hitbox set from storage minecraft:ability the_world.variables.knife_throw.hitbox
+                    data modify storage minecraft:ability the_world.knife_throw.damage set from storage minecraft:ability the_world.variables.knife_throw.damage
+                    block { with storage minecraft:ability the_world.knife_throw
+                        $execute as @n[type=!#universal:not_mob,distance=..$(hitbox)] unless score @s universalAbility.ID matches $(id) run block { with storage minecraft:ability the_world.knife_throw
+                            $function universal:damage/apply {import:{\
+                                user_id:$(id),\
+                                user_tags:"tag=customAbility.TheWorld",\
+                                objective:"universalAbility.ID",\
+                                damage:$(damage),\
+                                type:"universal:projectile_bypass",\
+                                death_message:"was impaled by",\
+                                ability_id:4,\
+                                move_number:2,\
+                                move_variation:1\
+                            }}
+                            $execute as @n[type=minecraft:item_display,tag=aj.the_world_vfx.root] if score @s abilityTheWorld.KnifeThrowID matches $(id) run function aj:the_world_vfx/remove/this
                         }
                     }
                 }
@@ -1351,18 +1376,6 @@ dir the_world {
                 }
 
                 function voiceline {
-                    function universal:damage/apply {import:{\
-                        user_id:1,\
-                        user_tags:"tag=customAbility.TheWorld",\
-                        objective:"universalAbility.ID",\
-                        damage:1,\
-                        type:"minecraft:arrow",\
-                        death_message:"was impaled by",\
-                        ability_id:4,\
-                        move_number:2,\
-                        move_variation:1\
-                    }}
-
                     function universal:damage/apply {import:{user_id:1,user_tags:"tag=customAbility.TheWorld",objective:"universalAbility.ID",damage:1,type:"minecraft:arrow",death_message:"was impaled by",ability_id:4,move_number:2,move_variation:1}}
                 }
 
@@ -1790,10 +1803,17 @@ dir generate {
                 slot2:{\
                     move1:{\
                         name:[{"text":"K","italic":false,"color":"#c70000"},{"text":"n","italic":false,"color":"#cd0707"},{"text":"i","italic":false,"color":"#d20d0d"},{"text":"f","italic":false,"color":"#d81414"},{"text":"e","italic":false,"color":"#dd1a1a"},{"text":" ","italic":false,"color":"#e32121"},{"text":"T","italic":false,"color":"#e92828"},{"text":"h","italic":false,"color":"#ee2e2e"},{"text":"r","italic":false,"color":"#f43535"},{"text":"o","italic":false,"color":"#f93b3b"},{"text":"w","italic":false,"color":"#ff4242"}],\
-                        description:[[{"text":"Toss ","italic":false,"color":"gray"},{"text":"3 knives","italic":false,"color":"#ffbe4d"},{"text":" ahead of where you're looking","italic":false,"color":"gray"}],[{"text":"striking","italic":false,"color":"#ff2929"},{"text":" anyone in their path. Collision with","italic":false,"color":"gray"}],[{"text":"terrain will stop movement. ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"#e2a3ff"}],[{"text":"increases the ","italic":false,"color":"gray"},{"text":"total","italic":false,"color":"#a7ff8f"},{"text":" number of ","italic":false,"color":"gray"},{"text":"tossed ","italic":false,"color":"gray"},{"text":"knives","italic":false,"color":"#ffbe4d"}],[{"text":"to 5.","italic":false,"color":"#ffbe4d"}],[{"text":"o Projectile Speed: ","italic":false,"color":"gray"},{"text":"10m/s","italic":false,"color":"#20c200"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"#20c200"}]],\
+                        description:[[{"text":"Toss ","italic":false,"color":"gray"},{"text":"3 knives","italic":false,"color":"#ffbe4d"},{"text":" ahead of where you're looking","italic":false,"color":"gray"}],[{"text":"striking","italic":false,"color":"#ff2929"},{"text":" anyone in their path. Collision with","italic":false,"color":"gray"}],[{"text":"terrain will stop movement. ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"#e2a3ff"}],[{"text":"increases the ","italic":false,"color":"gray"},{"text":"total","italic":false,"color":"#a7ff8f"},{"text":" number of ","italic":false,"color":"gray"},{"text":"tossed ","italic":false,"color":"gray"},{"text":"knives","italic":false,"color":"#ffbe4d"}],[{"text":"to 5.","italic":false,"color":"#ffbe4d"}],[{"text":"o Projectile Speed: ","italic":false,"color":"gray"},{"text":"50m/s","italic":false,"color":"#20c200"}],[{"text":"o Projectile Drag: ","italic":false,"color":"gray"},{"text":"1.0% of VelocityX/t","italic":false,"color":"#c20000"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"6","italic":false,"color":"#20c200"}]],\
                         model:"minecraft:interactables/ability/the_world/moveset/knife_throw",\
                         cooldown:17,\
                         cancelable:true\
+                    },\
+                    move2:{\
+                        name:[{"text":"T","italic":false,"color":"#009ceb"},{"text":"i","italic":false,"color":"#00a2eb"},{"text":"m","italic":false,"color":"#00a7ea"},{"text":"e","italic":false,"color":"#00adea"},{"text":"s","italic":false,"color":"#00b3ea"},{"text":"t","italic":false,"color":"#00b8ea"},{"text":"o","italic":false,"color":"#00bee9"},{"text":"p","italic":false,"color":"#00c4e9"},{"text":" ","italic":false,"color":"#00c9e9"},{"text":"K","italic":false,"color":"#00cfe8"},{"text":"n","italic":false,"color":"#00d4e8"},{"text":"i","italic":false,"color":"#00dae8"},{"text":"v","italic":false,"color":"#00e0e8"},{"text":"e","italic":false,"color":"#00e5e7"},{"text":"s","italic":false,"color":"#00ebe7"}],\
+                        description:[[{"text":"Replaces the default ","italic":false,"color":"gray"},{"text":"K","italic":false,"color":"#c70000"},{"text":"n","italic":false,"color":"#cd0707"},{"text":"i","italic":false,"color":"#d20d0d"},{"text":"f","italic":false,"color":"#d81414"},{"text":"e","italic":false,"color":"#dd1a1a"},{"text":" ","italic":false,"color":"#e32121"},{"text":"T","italic":false,"color":"#e92828"},{"text":"h","italic":false,"color":"#ee2e2e"},{"text":"r","italic":false,"color":"#f43535"},{"text":"o","italic":false,"color":"#f93b3b"},{"text":"w","italic":false,"color":"#ff4242"},{"text":" during","italic":false,"color":"gray"}],[{"text":"stopped time. Toss ","italic":false,"color":"gray"},{"text":"2 knives","italic":false,"color":"#ffbe4d"},{"text":" ahead of you","italic":false,"color":"gray"}],[{"text":"f","italic":false,"color":"#b8faff"},{"text":"r","italic":false,"color":"#bff8ff"},{"text":"o","italic":false,"color":"#c6f6ff"},{"text":"z","italic":false,"color":"#cdf4ff"},{"text":"e","italic":false,"color":"#d4f2ff"},{"text":"n","italic":false,"color":"#dbf0ff"},{"text":" in their intended path, ","italic":false,"color":"gray"},{"text":"waiting","italic":false,"color":"#ffa200"},{"text":" for","italic":false,"color":"gray"}],[{"text":"time to resume. Once ","italic":false,"color":"gray"},{"text":"time resumes,","italic":false,"color":"#d485ff"},{"text":" they","italic":false,"color":"gray"}],[{"text":"behave the same as the ","italic":false,"color":"gray"},{"text":"default knives.","italic":false,"color":"#adff5c"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/knife_throw",\
+                        cooldown:1,\
+                        cancelable:false\
                     }\
                 },\
                 slot3:{\
