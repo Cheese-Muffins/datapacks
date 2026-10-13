@@ -6,7 +6,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 function aj:the_world_vfx/animations/pause_all
 tag @s add aj.the_world_vfx.animation.barrage_left_2.playing
 $scoreboard players set @s aj.tween_duration $(duration)
-$scoreboard players set @s aj.barrage_left_2.frame $(to_frame)
+$scoreboard players set @s aj.the_world_vfx.barrage_left_2.frame $(to_frame)
 scoreboard players operation #this aj.i = @s aj.tween_duration
 tag @s add aj.transforms_only
 execute at @s run function aj:the_world_vfx/animations/barrage_left_2/zzz/apply_frame {frame: 0}

@@ -5,7 +5,9 @@ data modify storage animated_java:temp entry.data.locators.global merge value { 
 data modify storage animated_java:temp entry.data.locators.skins merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
 data modify storage animated_java:temp entry.data.locators.sfx merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
 execute at @s run function aj:the_world/zzz/set_default_pose/as_locator_dio_shoulder with storage animated_java:temp entry.data.locators.dio_shoulder
-execute at @s run function aj:the_world/zzz/set_default_pose/as_locator_right_hand_world with storage animated_java:temp entry.data.locators.right_hand_world
 execute at @s run function aj:the_world/zzz/set_default_pose/as_locator_barrage_anchor with storage animated_java:temp entry.data.locators.barrage_anchor
+execute at @s run function aj:the_world/zzz/set_default_pose/as_locator_right_hand_world with storage animated_java:temp entry.data.locators.right_hand_world
 execute at @s run function aj:the_world/zzz/set_default_pose/as_locator_hitbox with storage animated_java:temp entry.data.locators.hitbox
 execute at @s run function aj:the_world/zzz/set_default_pose/as_camera_camera with storage animated_java:temp entry.data.cameras.camera
+# Data Manager: Write
+function animated_java:global/data_manager/write with storage animated_java:temp args

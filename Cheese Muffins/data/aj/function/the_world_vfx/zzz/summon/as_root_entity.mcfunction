@@ -12,14 +12,14 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:the_world_vfx"
-data modify storage animated_java:temp entry.data.rig_hash set value "a03830c3fd242e2d03495b36750a38f71d8467987f73396743003a55f9ecb436"
+data modify storage animated_java:temp entry.data.rig_hash set value "105bbee8a2c9ccfa84d6143a175ab6f3703bd17996a31f648cc88c8b7c252166"
 tp @s ~ ~ ~ ~ ~
-summon minecraft:item_display ^0 ^-0.08535125 ^0.0482425 {Tags:["","aj.global.bone.arm_right.child","aj.global.bone.arm_right.child.locator","aj.global.bone.arm_right.decendant","aj.global.bone.arm_right.decendant.locator","aj.global.bone.arm_right.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.right","aj.new","aj.the_world_vfx.bone.arm_right.child","aj.the_world_vfx.bone.arm_right.child.locator","aj.the_world_vfx.bone.arm_right.decendant","aj.the_world_vfx.bone.arm_right.decendant.locator","aj.the_world_vfx.bone.arm_right.tree","aj.the_world_vfx.bone.scale.decendant","aj.the_world_vfx.bone.scale.decendant.locator","aj.the_world_vfx.bone.scale.tree","aj.the_world_vfx.entity","aj.the_world_vfx.locator","aj.the_world_vfx.locator.right","aj.the_world_vfx.node","aj.the_world_vfx.node.right"]}
+summon minecraft:item_display ^0 ^-0.0854 ^0.0482 {Tags:["aj.global.bone.arm_right.child","aj.global.bone.arm_right.child.locator","aj.global.bone.arm_right.decendant","aj.global.bone.arm_right.decendant.locator","aj.global.bone.arm_right.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.right","aj.new","aj.the_world_vfx.bone.arm_right.child","aj.the_world_vfx.bone.arm_right.child.locator","aj.the_world_vfx.bone.arm_right.decendant","aj.the_world_vfx.bone.arm_right.decendant.locator","aj.the_world_vfx.bone.arm_right.tree","aj.the_world_vfx.bone.scale.decendant","aj.the_world_vfx.bone.scale.decendant.locator","aj.the_world_vfx.bone.scale.tree","aj.the_world_vfx.entity","aj.the_world_vfx.locator","aj.the_world_vfx.locator.right","aj.the_world_vfx.node","aj.the_world_vfx.node.right"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world_vfx.locator.right, tag=aj.new, distance=..3 ] run function aj:the_world_vfx/zzz/summon/as_locator/right
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.right set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.locators.right.uuid set from storage animated_java:gu out
-summon minecraft:item_display ^0 ^-0.08535125 ^0.0482425 {Tags:["","aj.global.bone.arm_left.child","aj.global.bone.arm_left.child.locator","aj.global.bone.arm_left.decendant","aj.global.bone.arm_left.decendant.locator","aj.global.bone.arm_left.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.left","aj.new","aj.the_world_vfx.bone.arm_left.child","aj.the_world_vfx.bone.arm_left.child.locator","aj.the_world_vfx.bone.arm_left.decendant","aj.the_world_vfx.bone.arm_left.decendant.locator","aj.the_world_vfx.bone.arm_left.tree","aj.the_world_vfx.bone.scale.decendant","aj.the_world_vfx.bone.scale.decendant.locator","aj.the_world_vfx.bone.scale.tree","aj.the_world_vfx.entity","aj.the_world_vfx.locator","aj.the_world_vfx.locator.left","aj.the_world_vfx.node","aj.the_world_vfx.node.left"]}
+summon minecraft:item_display ^0 ^-0.0854 ^0.0482 {Tags:["aj.global.bone.arm_left.child","aj.global.bone.arm_left.child.locator","aj.global.bone.arm_left.decendant","aj.global.bone.arm_left.decendant.locator","aj.global.bone.arm_left.tree","aj.global.bone.scale.decendant","aj.global.bone.scale.decendant.locator","aj.global.bone.scale.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.left","aj.new","aj.the_world_vfx.bone.arm_left.child","aj.the_world_vfx.bone.arm_left.child.locator","aj.the_world_vfx.bone.arm_left.decendant","aj.the_world_vfx.bone.arm_left.decendant.locator","aj.the_world_vfx.bone.arm_left.tree","aj.the_world_vfx.bone.scale.decendant","aj.the_world_vfx.bone.scale.decendant.locator","aj.the_world_vfx.bone.scale.tree","aj.the_world_vfx.entity","aj.the_world_vfx.locator","aj.the_world_vfx.locator.left","aj.the_world_vfx.node","aj.the_world_vfx.node.left"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world_vfx.locator.left, tag=aj.new, distance=..3 ] run function aj:the_world_vfx/zzz/summon/as_locator/left
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.left set from storage animated_java:gu out
@@ -48,20 +48,26 @@ data modify storage animated_java:temp entry.data.uuids_by_name.entity_wind set 
 execute on passengers if entity @s[tag=aj.the_world_vfx.node.projectile_wind] run function aj:the_world_vfx/zzz/summon/as_node/projectile_wind
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.projectile_wind set from storage animated_java:gu out
-function aj:the_world_vfx/zzz/summon/zzz/0 with storage animated_java:temp entry.data.locators.right
-data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
-function aj:the_world_vfx/zzz/summon/zzz/1 with storage animated_java:temp entry.data.locators.left
-data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
-function aj:the_world_vfx/zzz/set_default_pose
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
+function aj:the_world_vfx/zzz/set_default_pose
 execute if data storage animated_java:temp args.variant run function aj:the_world_vfx/zzz/summon/variant_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
 execute if data storage animated_java:temp args.animation run function aj:the_world_vfx/zzz/summon/animation_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
-function aj:the_world_vfx/root/on_tick/transform_floating_entities
 execute on passengers run rotate @s ~ ~
 data modify entity @s teleport_duration set value 1
 execute on passengers run data modify entity @s teleport_duration set value 1
+function aj:the_world_vfx/zzz/summon/zzz/0 with storage animated_java:temp entry.data.locators
+# Data Manager: Prepare for Read / Write
+execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
+# Data Manager: Read
+function animated_java:global/data_manager/read with storage animated_java:temp args
+function aj:the_world_vfx/zzz/summon/zzz/1 with storage animated_java:temp entry.data.locators.right
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
+function aj:the_world_vfx/zzz/summon/zzz/2 with storage animated_java:temp entry.data.locators.left
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
+# Data Manager: Write
+function animated_java:global/data_manager/write with storage animated_java:temp args
 tag @s remove aj.new
 execute on passengers run tag @s remove aj.new

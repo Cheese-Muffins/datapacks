@@ -11,9 +11,9 @@ data modify storage animated_java:temp args merge from storage animated_java:tem
 function aj:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.dio_shoulder
 function aj:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
-data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.right_hand_world
-function aj:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.barrage_anchor
+function aj:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.right_hand_world
 function aj:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.hitbox
 function aj:the_world/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args

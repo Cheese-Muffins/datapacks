@@ -6,7 +6,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 function aj:the_world_vfx/animations/pause_all
 tag @s add aj.the_world_vfx.animation.projectile_wind.playing
 $scoreboard players set @s aj.tween_duration $(duration)
-$scoreboard players set @s aj.projectile_wind.frame $(to_frame)
+$scoreboard players set @s aj.the_world_vfx.projectile_wind.frame $(to_frame)
 scoreboard players operation #this aj.i = @s aj.tween_duration
 tag @s add aj.transforms_only
 execute at @s run function aj:the_world_vfx/animations/projectile_wind/zzz/apply_frame {frame: 0}

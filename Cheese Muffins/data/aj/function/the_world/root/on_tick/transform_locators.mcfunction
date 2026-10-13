@@ -5,6 +5,6 @@ function aj:the_world/root/on_tick/select_locator_global with storage animated_j
 function aj:the_world/root/on_tick/select_locator_skins with storage animated_java:temp entry.data.locators.skins
 function aj:the_world/root/on_tick/select_locator_sfx with storage animated_java:temp entry.data.locators.sfx
 function aj:the_world/root/on_tick/select_locator_dio_shoulder with storage animated_java:temp entry.data.locators.dio_shoulder
-function aj:the_world/root/on_tick/select_locator_right_hand_world with storage animated_java:temp entry.data.locators.right_hand_world
 function aj:the_world/root/on_tick/select_locator_barrage_anchor with storage animated_java:temp entry.data.locators.barrage_anchor
+function aj:the_world/root/on_tick/select_locator_right_hand_world with storage animated_java:temp entry.data.locators.right_hand_world
 function aj:the_world/root/on_tick/select_locator_hitbox with storage animated_java:temp entry.data.locators.hitbox

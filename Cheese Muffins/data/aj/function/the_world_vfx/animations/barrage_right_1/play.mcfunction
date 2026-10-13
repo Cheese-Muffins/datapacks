@@ -3,8 +3,9 @@
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
+tag @s remove aj.pause_after_tween
 tag @s add aj.the_world_vfx.animation.barrage_right_1.playing
-scoreboard players set @s aj.barrage_right_1.frame 0
+scoreboard players set @s aj.the_world_vfx.barrage_right_1.frame 0
 tag @s add aj.transforms_only
 execute at @s run function aj:the_world_vfx/animations/barrage_right_1/zzz/set_frame {frame: 0}
 tag @s remove aj.transforms_only

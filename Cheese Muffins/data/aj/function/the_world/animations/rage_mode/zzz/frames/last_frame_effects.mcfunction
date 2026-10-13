@@ -4,7 +4,7 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/r
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_global
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_sfx
-$execute as $(dio_shoulder) positioned ^0.0000019634 ^0.0000133628 ^-0.0000019124 rotated ~335 ~7.5 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_dio_shoulder
-$execute as $(right_hand_world) positioned ^-0.3468802588 ^2.0809422432 ^-0.5205570105 rotated ~85.8439274437 ~53.6597598029 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_right_hand_world
+$execute as $(dio_shoulder) positioned ^0 ^0 ^0 rotated ~335 ~7.5 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_dio_shoulder
 $execute as $(barrage_anchor) positioned ^0 ^1.7875 ^-1.3625 rotated ~0 ~0 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_barrage_anchor
+$execute as $(right_hand_world) positioned ^-0.3469 ^2.0809 ^-0.5206 rotated ~85.8439 ~53.6598 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_right_hand_world
 $execute as $(hitbox) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/rage_mode/zzz/frames/78_locator_hitbox

@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
+$execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] run ride @s dismount

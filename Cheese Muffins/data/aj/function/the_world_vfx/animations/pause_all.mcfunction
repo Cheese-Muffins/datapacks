@@ -13,3 +13,4 @@ tag @s remove aj.the_world_vfx.animation.entity_wind_start.playing
 tag @s remove aj.the_world_vfx.animation.entity_wind_end.playing
 tag @s remove aj.the_world_vfx.animation.projectile_wind.playing
 tag @s remove aj.the_world_vfx.animation.timestopping_knife.playing
+tag @s remove aj.pause_after_tween

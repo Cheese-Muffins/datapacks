@@ -5,3 +5,4 @@ execute store result storage minecraft:ability the_world.setup.id int 1 run scor
 function ability:the_world/moves/zzz/0 with storage minecraft:ability the_world.setup
 function universal:ability/rig/stable_player_display/main {branch:"the_world",split:""}
 function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}

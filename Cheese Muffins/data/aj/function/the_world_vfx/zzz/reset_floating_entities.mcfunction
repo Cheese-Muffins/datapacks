@@ -4,3 +4,5 @@ data modify storage animated_java:temp entry.data.locators.constant merge value 
 data modify storage animated_java:temp entry.data.locators.global merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
 execute at @s run function aj:the_world_vfx/zzz/set_default_pose/as_locator_right with storage animated_java:temp entry.data.locators.right
 execute at @s run function aj:the_world_vfx/zzz/set_default_pose/as_locator_left with storage animated_java:temp entry.data.locators.left
+# Data Manager: Write
+function animated_java:global/data_manager/write with storage animated_java:temp args

@@ -4,8 +4,9 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
 function aj:billy/animations/pause_all
+scoreboard players set @s aj.billy.animation_id 7
 tag @s add aj.billy.animation.maul.playing
-scoreboard players set @s aj.maul.frame 0
+scoreboard players set @s aj.billy.maul.frame 0
 tag @s add aj.transforms_only
 execute at @s run function aj:billy/animations/maul/zzz/set_frame {frame: 0}
 tag @s remove aj.transforms_only

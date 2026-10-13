@@ -2,8 +2,9 @@
 scoreboard players remove @s aj.tween_duration 1
 execute if score @s aj.tween_duration matches 1.. run return 1
 execute if score @s aj.tween_duration matches 0 on passengers run data modify entity @s interpolation_duration set value 1
+execute if score @s aj.tween_duration matches ..0 if entity @s[tag=aj.pause_after_tween] run return run function aj:the_world/animations/rage_mode/zzz/pause_after_tween
 data remove storage animated_java:temp args
-execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.rage_mode.frame
+execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.the_world.rage_mode.frame
 function aj:the_world/animations/rage_mode/zzz/apply_frame with storage animated_java:temp args
-execute if score @s aj.rage_mode.frame matches 77 run return run function aj:the_world/animations/rage_mode/zzz/loop_mode_stop
-scoreboard players add @s aj.rage_mode.frame 1
+execute if score @s aj.the_world.rage_mode.frame matches 77 run return run function aj:the_world/animations/rage_mode/zzz/loop_mode_stop
+scoreboard players add @s aj.the_world.rage_mode.frame 1

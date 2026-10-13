@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$function aj:$(rig)/animations/$(animation)/play
+$function universal:ability/rig/play_animation {rig:"$(rig)",animation:"$(animation)",objective:"universalAbility.ID"}

@@ -4,9 +4,10 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
 function aj:the_world/animations/pause_all
+scoreboard players set @s aj.the_world.animation_id 3
 tag @s add aj.the_world.animation.default_knife_throw.playing
 $scoreboard players set @s aj.tween_duration $(duration)
-$scoreboard players set @s aj.default_knife_throw.frame $(to_frame)
+$scoreboard players set @s aj.the_world.default_knife_throw.frame $(to_frame)
 scoreboard players operation #this aj.i = @s aj.tween_duration
 tag @s add aj.transforms_only
 execute at @s run function aj:the_world/animations/default_knife_throw/zzz/apply_frame {frame: 0}

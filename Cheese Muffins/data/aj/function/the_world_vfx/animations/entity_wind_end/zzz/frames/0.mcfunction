@@ -7,7 +7,7 @@ $data merge entity $(rage_mode) {transformation: [0f,0f,0f,0f,0f,0f,0f,-0.0312f,
 $data merge entity $(arm_left) {transformation: [0f,0f,0f,0f,0f,0f,0f,-0.0312f,0f,0f,0f,0.0813f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(entity_wind) {transformation: [0f,0f,1.5f,0f,0f,1.5f,0f,0f,-1.5f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(projectile_wind) {transformation: [0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0f,0.5f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify storage animated_java:temp entry.data merge value {"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"global":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"right":{"px":0,"py":-0.031250541,"pz":0.0812496699,"ry":0,"rx":-89.9999987926},"left":{"px":0,"py":-0.031250541,"pz":0.0812496699,"ry":0,"rx":-89.9999987926}}}
+data modify storage animated_java:temp entry.data merge value {"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"global":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"right":{"px":0,"py":-0.0313,"pz":0.0812,"ry":0,"rx":-90},"left":{"px":0,"py":-0.0313,"pz":0.0812,"ry":0,"rx":-90}}}
 # Data Manager: Prepare for Read / Write
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Write

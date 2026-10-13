@@ -2,5 +2,5 @@
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world_vfx/animations/barrage_left_3/zzz/frames/8_locator_commands
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world_vfx/animations/barrage_left_3/zzz/frames/8_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world_vfx/animations/barrage_left_3/zzz/frames/8_locator_global
-$execute as $(right) positioned ^0 ^-0.031250541 ^0.0812496699 rotated ~0 ~-89.9999987926 run function aj:the_world_vfx/animations/barrage_left_3/zzz/frames/8_locator_right
-$execute as $(left) positioned ^0.015625 ^0.1562496045 ^2.0812495048 rotated ~0 ~-70 run function aj:the_world_vfx/animations/barrage_left_3/zzz/frames/8_locator_left
+$execute as $(right) positioned ^0 ^-0.0313 ^0.0812 rotated ~0 ~-90 run function aj:the_world_vfx/animations/barrage_left_3/zzz/frames/8_locator_right
+$execute as $(left) positioned ^0.0156 ^0.1562 ^2.0812 rotated ~0 ~-70 run function aj:the_world_vfx/animations/barrage_left_3/zzz/frames/8_locator_left

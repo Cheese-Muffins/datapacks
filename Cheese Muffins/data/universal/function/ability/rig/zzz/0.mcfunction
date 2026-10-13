@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] run ride @s dismount
+$execute as @p[scores={$(objective)=$(id)}] run function universal:ability/rig/zzz/1

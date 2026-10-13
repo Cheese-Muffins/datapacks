@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$$(output)
+$execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)

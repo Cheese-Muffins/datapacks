@@ -4,7 +4,7 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
 function aj:the_world/animations/pause_all
-scoreboard players set @s aj.timestop_knife_throw.frame 0
+scoreboard players set @s aj.the_world.timestop_knife_throw.frame 0
 tag @s add aj.transforms_only
 execute at @s run function aj:the_world/animations/timestop_knife_throw/zzz/set_frame {frame: 0}
 tag @s remove aj.transforms_only

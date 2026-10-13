@@ -4,10 +4,10 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
 function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.locators.dio_shoulder
-function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.locators.right_hand_world
 function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.locators.barrage_anchor
+function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.locators.right_hand_world
 function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.locators.hitbox
 function animated_java:global/remove/entity_stack_by_uuid with storage animated_java:temp entry.data.cameras.camera
-execute unless data storage animated_java:temp {entry:{data:{rig_hash: 'f25d730ea4a3b9aa504318d1379ee6b860a0316f5dea02e158b27e07ade88d05'}}} run function animated_java:global/remove/outdated_rig
+execute unless data storage animated_java:temp {entry:{data:{rig_hash: '7f78135885cee5f0344cbfbb2483eb40d1dddfd9daf340bd85d1711ad9f5f322'}}} run function animated_java:global/remove/outdated_rig
 function aj:the_world/remove/this/zzz/0 with storage animated_java:temp entry.data.uuids_by_name
 function animated_java:global/remove/entity_stack

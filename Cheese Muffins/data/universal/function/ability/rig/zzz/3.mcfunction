@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)
+$execute as @p[scores={$(objective)=$(id)}] run function universal:ability/rig/zzz/4
