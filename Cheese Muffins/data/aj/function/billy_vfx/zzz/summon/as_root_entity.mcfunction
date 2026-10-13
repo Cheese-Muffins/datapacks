@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:billy_vfx"
-data modify storage animated_java:temp entry.data.rig_hash set value "fc73c22867eb8cea43f7e5da01370514fb1a318c6d8fc7bf68f085aa4c65f2dc"
+data modify storage animated_java:temp entry.data.rig_hash set value "58da94ed78baf8b2ddd8f5de6a725407e98b45c715979d0d06cc9447d550c9cc"
 tp @s ~ ~ ~ ~ ~
 execute on passengers if entity @s[tag=aj.billy_vfx.node.center] run function aj:billy_vfx/zzz/summon/as_node/center
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
@@ -23,14 +23,13 @@ data modify storage animated_java:temp entry.data.uuids_by_name.fixed set from s
 execute on passengers if entity @s[tag=aj.billy_vfx.node.range] run function aj:billy_vfx/zzz/summon/as_node/range
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.range set from storage animated_java:gu out
-function aj:billy_vfx/zzz/set_default_pose
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
+function aj:billy_vfx/zzz/set_default_pose
 execute if data storage animated_java:temp args.variant run function aj:billy_vfx/zzz/summon/variant_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
 execute if data storage animated_java:temp args.animation run function aj:billy_vfx/zzz/summon/animation_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
-function aj:billy_vfx/root/on_tick/transform_floating_entities
 execute on passengers run rotate @s ~ ~
 data modify entity @s teleport_duration set value 1
 execute on passengers run data modify entity @s teleport_duration set value 1

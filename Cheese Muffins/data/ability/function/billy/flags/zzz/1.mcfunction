@@ -1,5 +1,3 @@
 # Generated with MC-Build
 
-execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-function ability:billy/flags/zzz/2 with storage minecraft:ability billy
-execute unless entity @s[tag=abilityBilly.FlagLanding] run function ability:billy/flags/jump/falling
+$execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"$(type)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjust),tween_duration:$(tween)}}

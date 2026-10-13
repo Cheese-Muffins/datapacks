@@ -3,8 +3,8 @@
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
-execute if score @s aj.range.frame matches 17.. run scoreboard players set @s aj.range.frame 1
+execute if score @s aj.billy_vfx.range.frame matches 17.. run scoreboard players set @s aj.billy_vfx.range.frame 1
 data remove storage animated_java:temp args
-execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.range.frame
+execute store result storage animated_java:temp args.frame int 1 run scoreboard players get @s aj.billy_vfx.range.frame
 execute at @s run function aj:billy_vfx/animations/range/zzz/apply_frame with storage animated_java:temp args
-scoreboard players add @s aj.range.frame 1
+scoreboard players add @s aj.billy_vfx.range.frame 1

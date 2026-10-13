@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-function aj:billy/animations/jump/tween {to_frame:6,duration:1}
+$execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"jump",objective:"universalAbility.ID",style:"tween",tweened_frame:6,tween_duration:1}}

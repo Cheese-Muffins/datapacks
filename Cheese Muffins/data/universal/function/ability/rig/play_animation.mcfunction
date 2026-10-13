@@ -1,9 +1,8 @@
 # Generated with MC-Build
 
-$execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-$data merge storage minecraft:universal {ability:{rig:{objective:"$(objective)"}}}
-function universal:ability/rig/zzz/0 with storage minecraft:universal ability.rig
-$execute if score .fetchSize traitShrinkray.Size matches 0 run function aj:$(rig)/animations/$(animation)/play_exclusive
-$execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/play_exclusive
-$execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/play_exclusive
+$data modify storage minecraft:universal ability.rig.play_animation merge value $(arguments)
+execute if entity @s[type=minecraft:item_display] run function universal:ability/rig/zzz/0 with storage minecraft:universal ability.rig.play_animation
+execute if entity @s[type=minecraft:player] run function universal:ability/rig/zzz/3
+execute unless data storage minecraft:universal ability.rig.play_animation{style:"tween"} run function universal:ability/rig/zzz/4 with storage minecraft:universal ability.rig.play_animation
+execute if data storage minecraft:universal ability.rig.play_animation{style:"tween"} run function universal:ability/rig/zzz/5
 scoreboard players reset .fetchSize traitShrinkray.Size

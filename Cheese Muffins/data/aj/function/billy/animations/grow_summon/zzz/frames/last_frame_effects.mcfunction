@@ -2,6 +2,7 @@
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/grow_summon/zzz/frames/57_locator_commands
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/grow_summon/zzz/frames/57_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/grow_summon/zzz/frames/57_locator_sfx
+execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/grow_summon/zzz/frames/57_locator_vfx
 $execute as $(position) positioned ^1.3125 ^0 ^-1.6875 rotated ~0 ~0 run function aj:billy/animations/grow_summon/zzz/frames/57_locator_position
 $execute as $(mouth) positioned ^1.3125 ^1.0781 ^0.0938 rotated ~0 ~0 run function aj:billy/animations/grow_summon/zzz/frames/57_locator_mouth
 $execute as $(text_location) positioned ^1.3125 ^1.125 ^-1.5 rotated ~0 ~0 run function aj:billy/animations/grow_summon/zzz/frames/57_locator_text_location

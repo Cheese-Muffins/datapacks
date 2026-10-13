@@ -2,11 +2,11 @@
 execute if score @s aj.billy.animation_id matches 1 run function aj:billy/animations/grow_summon/play_exclusive
 execute if score @s aj.billy.animation_id matches 2 run function aj:billy/animations/grow_idle/play_exclusive
 execute if score @s aj.billy.animation_id matches 3 run function aj:billy/animations/idle_snarl/play_exclusive
-execute if score @s aj.billy.animation_id matches 4 run function aj:billy/animations/walk/play_exclusive
-execute if score @s aj.billy.animation_id matches 5 run function aj:billy/animations/sprint/play_exclusive
-execute if score @s aj.billy.animation_id matches 6 run function aj:billy/animations/jump/play_exclusive
+execute if score @s aj.billy.animation_id matches 4 run function aj:billy/animations/grow_walk/play_exclusive
+execute if score @s aj.billy.animation_id matches 5 run function aj:billy/animations/grow_sprint/play_exclusive
+execute if score @s aj.billy.animation_id matches 6 run function aj:billy/animations/grow_jump/play_exclusive
 execute if score @s aj.billy.animation_id matches 7 run function aj:billy/animations/maul/play_exclusive
-execute if score @s aj.billy.animation_id matches 8 run function aj:billy/animations/encourage/play_exclusive
+execute if score @s aj.billy.animation_id matches 8 run function aj:billy/animations/grow_encourage/play_exclusive
 execute if score @s aj.billy.animation_id matches 9 run function aj:billy/animations/phase/play_exclusive
 execute if score @s aj.billy.animation_id matches 10 run function aj:billy/animations/feast2/play_exclusive
 execute if score @s aj.billy.animation_id matches 11 run function aj:billy/animations/snare_trigger/play_exclusive

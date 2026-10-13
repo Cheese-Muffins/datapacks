@@ -2,6 +2,7 @@
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/feast2/zzz/frames/13_locator_commands
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/feast2/zzz/frames/13_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/feast2/zzz/frames/13_locator_sfx
+execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/feast2/zzz/frames/13_locator_vfx
 $execute as $(position) positioned ^0.875 ^-1.1406 ^0.0313 rotated ~0 ~0 run function aj:billy/animations/feast2/zzz/frames/13_locator_position
 $execute as $(mouth) positioned ^0.875 ^-1.8685 ^-0.5736 rotated ~180 ~40 run function aj:billy/animations/feast2/zzz/frames/13_locator_mouth
 $execute as $(text_location) positioned ^0.875 ^-0.3906 ^0.1563 rotated ~0 ~0 run function aj:billy/animations/feast2/zzz/frames/13_locator_text_location

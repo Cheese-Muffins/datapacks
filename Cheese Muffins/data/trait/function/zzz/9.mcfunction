@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
-function universal:math/divide {value:100,score:"@s",objective:"traitShrinkray.Frame"}
+execute if score @s traitShrinkray.Size matches 0 run function trait:zzz/10
+execute if score @s traitShrinkray.Size matches 2 run function universal:math/multiply {value:2,score:"@s",objective:"traitShrinkray.Frame"}

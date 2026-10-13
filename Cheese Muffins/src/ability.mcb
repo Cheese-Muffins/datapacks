@@ -109,7 +109,8 @@ dir billy {
             execute store result storage minecraft:ability billy.setup.id int 1 run scoreboard players get @s universalAbility.ID
             block { with storage minecraft:ability billy.setup
                 $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy.setup
-                    $function aj:billy/animations/$(animation)/play
+                    # function aj:billy/animations/pause_all
+                    $function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"$(animation)",style:"play_exclusive",objective:"universalAbility.ID"}}
                 }
             }
             tag @s add abilityBilly.FlagOverride
@@ -135,19 +136,6 @@ dir billy {
                 function universal:ability/restraint/cooldown {move:1,name:"Billy"}
                 function universal:ability/restraint/cancelable {move:1}
                 tag @s add universalAbility.Animating
-            }
-
-            function encourage {
-                data modify storage minecraft:universal vfx.arguments.branch set value "billy"
-                data modify storage minecraft:universal vfx.arguments.animation set value "encourage"
-                data modify storage minecraft:universal vfx.arguments.output set value "ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.mouth]"
-                function universal:vfx/spawn with storage minecraft:universal vfx.arguments
-            }
-
-            function range {
-                data modify storage minecraft:universal vfx.arguments.branch set value "billy"
-                data modify storage minecraft:universal vfx.arguments.animation set value "range"
-                function universal:vfx/spawn with storage minecraft:universal vfx.arguments
             }
 
             function buff {
@@ -266,7 +254,7 @@ dir billy {
             execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
             execute as @n[type=minecraft:item_display,tag=aj.billy.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability billy
                 $scoreboard players set @s universalAbility.ID $(id)
-                function universal:ability/rig/play_animation {rig:"billy",animation:"summon",objective:"universalAbility.ID"}
+                function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"summon",style:"play",objective:"universalAbility.ID"}}
             }
 
             function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
@@ -276,13 +264,6 @@ dir billy {
 
             tag @s add universalAbility.HideUI
             scoreboard players set @s universalAbility.ToggleDelay 40
-        }
-
-        function appear {
-            data modify storage minecraft:universal vfx.arguments.branch set value "billy"
-            data modify storage minecraft:universal vfx.arguments.animation set value "appear"
-            data modify storage minecraft:universal vfx.arguments.output set value "ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.position]"
-            function universal:vfx/spawn with storage minecraft:universal vfx.arguments
         }
 
         function land {
@@ -337,7 +318,7 @@ dir billy {
             block { with storage minecraft:ability billy
                 $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] at @s run {
                     playsound minecraft:entity.polar_bear.death player @a ~ ~ ~ 0.5
-                    function universal:ability/rig/play_animation {rig:"billy",animation:"withdraw",objective:"universalAbility.ID"}
+                    function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"withdraw",style:"play_exclusive",objective:"universalAbility.ID"}}
                 }
             }
             scoreboard players reset @s abilityBilly.ToggleOnText
@@ -347,33 +328,34 @@ dir billy {
 
     dir flags {
         function index {
+            execute if entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/jump/tick
+
+            execute unless entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/movement
+        }
+
+        function movement {
+            execute if predicate universal:flags/jump unless predicate universal:flags/grounded unless predicate universal:flags/flying run function ability:billy/flags/setup {type:"jump",animation:"Jump",variation:3}
+
             execute unless entity @s[tag=abilityBilly.FlagJump] run {
-                execute if predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagWalk] run function ability:billy/flags/setup {type:"walk",animation:"Walk",variation:1}
                 execute if predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagSprint] run function ability:billy/flags/setup {type:"sprint",animation:"Sprint",variation:2}
-                execute if predicate universal:flags/jump unless predicate universal:flags/flying run function ability:billy/flags/setup {type:"jump",animation:"Jump",variation:3}
-            }
-            execute if entity @s[tag=abilityBilly.FlagJump] run {
-                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
-                block { with storage minecraft:ability billy
-                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
-                        function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-                    }
-                }
 
-                execute unless entity @s[tag=abilityBilly.FlagLanding] run function ability:billy/flags/jump/falling
-            }
+                execute unless predicate universal:flags/sprint if predicate universal:flags/walk unless entity @s[tag=abilityBilly.FlagWalk] run function ability:billy/flags/setup {type:"walk",animation:"Walk",variation:1}
 
-            execute unless predicate universal:flags/walk unless predicate universal:flags/sprint unless entity @s[tag=abilityBilly.FlagIdle] unless entity @s[tag=abilityBilly.FlagJump] run function ability:billy/flags/setup {type:"idle",animation:"Idle",variation:4}
+                execute unless predicate universal:flags/sprint unless predicate universal:flags/walk unless entity @s[tag=abilityBilly.FlagIdle] run function ability:billy/flags/setup {type:"idle",animation:"Idle",variation:4}
+            }
         }
 
         function setup {
             $data merge storage minecraft:ability {billy:{type:"$(type)",adjust:1,tween:3}}
             $scoreboard players set @s abilityBilly.FlagID $(variation)
 
+            execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+
             block { with storage minecraft:ability billy
-                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy
-                    $function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
-                }
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"$(type)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjust),tween_duration:$(tween)}}
+                
+                
+                # function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
             }
 
             function ability:billy/flags/clear
@@ -381,19 +363,25 @@ dir billy {
         }
 
         dir jump {
-            function falling {
-                execute if predicate universal:flags/flying run function ability:billy/flags/jump/land
-                execute if predicate universal:flags/grounded run function ability:billy/flags/jump/land 
+            function tick {
+                execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+
+                block { with storage minecraft:ability billy
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+                }
+
+                execute unless entity @s[tag=abilityBilly.FlagLanding] if predicate universal:flags/grounded run function ability:billy/flags/jump/land
             }
 
             function land {
                 tag @s add abilityBilly.FlagLanding
 
                 execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
+
                 block { with storage minecraft:ability billy
-                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run {
-                        function aj:billy/animations/jump/tween {to_frame:6,duration:1}
-                    }
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"jump",objective:"universalAbility.ID",style:"tween",tweened_frame:6,tween_duration:1}}
+                    
+                    # function aj:billy/animations/jump/tween {to_frame:6,duration:1}
                 }
             }
 
@@ -407,16 +395,9 @@ dir billy {
             tag @s remove abilityBilly.FlagWalk
             tag @s remove abilityBilly.FlagSprint
             tag @s remove abilityBilly.FlagIdle
+            tag @s remove abilityBilly.FlagJump
+            tag @s remove abilityBilly.FlagLanding
         }
-
-        # function adjust {
-        #     tag @s remove temp
-        #     $data merge storage minecraft:ability {billy:{tween:"$(tween)"}}
-        #     $execute as @n[type=minecraft:item_display,tag=aj.eren.root,scores={universalAbility.ID=$(id)}] run block { {objective:"$(objective)"}
-        #         $scoreboard players add @s aj.$(objective).frame 2
-        #         $execute store result storage minecraft:ability billy.adjust int 1 run scoreboard players get @s aj.$(objective).frame
-        #     }
-        # }
     }
 }
 
@@ -1095,7 +1076,7 @@ dir the_world {
             execute store result storage minecraft:ability the_world.setup.id int 1 run scoreboard players get @s universalAbility.ID
             block { with storage minecraft:ability the_world.setup
                 $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability the_world.setup
-                    $function universal:ability/rig/play_animation {rig:"$(rig)",animation:"$(animation)",objective:"universalAbility.ID"}
+                    $function universal:ability/rig/play_animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
                 }
             }
 
@@ -1456,7 +1437,8 @@ dir the_world {
             function rig {
                 function aj:the_world/animations/pause_all
                 function aj:the_world/animations/hide_dio/play
-                function aj:the_world/animations/idle/resume
+                function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"idle",style:"resume",objective:"universalAbility.ID"}}
+                # function aj:the_world/animations/idle/resume
                 # scoreboard players reset @s customUniversal.TimeStopAnimation
             }
 
@@ -1566,7 +1548,7 @@ dir the_world {
                     $scoreboard players set @s universalAbility.ID $(id)
                     $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
                     function ability:the_world/skin_index
-                    function universal:ability/rig/play_animation {rig:"the_world",animation:"summon",objective:"universalAbility.ID"}
+                    function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"summon",style:"play",objective:"universalAbility.ID"}}
                 }
                 $execute if score @s universalDisconnect.Check matches 1.. as @n[type=minecraft:item_display,tag=aj.the_world.root] if score @s universalAbility.ID matches $(id) run function aj:the_world/animations/idle/play
             }

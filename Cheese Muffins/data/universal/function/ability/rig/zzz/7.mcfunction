@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$data modify entity @s Rotation[0] set value $(rotation)
+function universal:math/multiply {value:2,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}

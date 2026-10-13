@@ -1,5 +1,6 @@
 # Generated with MC-Build
 
+execute if score @s traitShrinkray.Size matches 1 run function trait:index/shrink/reset
 attribute @s minecraft:scale modifier add trait:ability/shrinkray 0.5 add_multiplied_total
 attribute @s minecraft:movement_speed modifier add trait:ability/shrinkray -0.15 add_multiplied_total
 attribute @s minecraft:safe_fall_distance modifier add trait:ability/shrinkray 0.5 add_multiplied_total

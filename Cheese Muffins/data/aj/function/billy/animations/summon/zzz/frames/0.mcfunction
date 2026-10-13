@@ -32,11 +32,11 @@ $data merge entity $(backleftleg) {transformation: [0f,0f,0f,0.875f,0f,0f,0f,3.8
 $data merge entity $(blb) {transformation: [0f,0f,0f,0.875f,0f,0f,0f,3.8125f,0f,0f,0f,-5.0625f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(backrightleg) {transformation: [0f,0f,0f,0.875f,0f,0f,0f,3.8125f,0f,0f,0f,-5.0625f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(brb) {transformation: [0f,0f,0f,0.875f,0f,0f,0f,3.8125f,0f,0f,0f,-5.0625f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify storage animated_java:temp entry.data merge value {"cameras":{"camera":{"px":0,"py":0,"pz":0,"ry":0,"rx":0}},"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"sfx":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"position":{"px":0.875,"py":3.8125,"pz":-5.0625,"ry":0,"rx":27.5},"mouth":{"px":0.875,"py":3.8125,"pz":-5.0625,"ry":0,"rx":2.5},"text_location":{"px":0.875,"py":3.8125,"pz":-5.0625,"ry":0,"rx":27.5}}}
+data modify storage animated_java:temp entry.data merge value {"cameras":{"camera":{"px":0,"py":0,"pz":0,"ry":0,"rx":0}},"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"constant":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"sfx":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"vfx":{"px":0,"py":0,"pz":0,"ry":0,"rx":0},"position":{"px":0.875,"py":3.8125,"pz":-5.0625,"ry":0,"rx":27.5},"mouth":{"px":0.875,"py":3.8125,"pz":-5.0625,"ry":0,"rx":2.5},"text_location":{"px":0.875,"py":3.8125,"pz":-5.0625,"ry":0,"rx":27.5}}}
 # Data Manager: Prepare for Read / Write
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
-execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/summon/zzz/frames/0_locator_commands
 execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/summon/zzz/frames/0_locator_constant
 execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/summon/zzz/frames/0_locator_sfx
+execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/summon/zzz/frames/0_locator_vfx

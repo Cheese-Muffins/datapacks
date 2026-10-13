@@ -2,6 +2,7 @@
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/withdraw/zzz/frames/21_locator_commands
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/withdraw/zzz/frames/21_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/withdraw/zzz/frames/21_locator_sfx
+execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/withdraw/zzz/frames/21_locator_vfx
 $execute as $(position) positioned ^1 ^6.8125 ^-0.75 rotated ~0 ~20 run function aj:billy/animations/withdraw/zzz/frames/21_locator_position
 $execute as $(mouth) positioned ^1 ^6.8125 ^-0.75 rotated ~0 ~2.5 run function aj:billy/animations/withdraw/zzz/frames/21_locator_mouth
 $execute as $(text_location) positioned ^1 ^6.8125 ^-0.75 rotated ~0 ~20 run function aj:billy/animations/withdraw/zzz/frames/21_locator_text_location

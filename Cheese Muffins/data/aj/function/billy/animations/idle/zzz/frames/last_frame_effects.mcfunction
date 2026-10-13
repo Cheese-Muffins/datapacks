@@ -2,6 +2,7 @@
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/51_locator_commands
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/51_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/51_locator_sfx
+execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/51_locator_vfx
 $execute as $(position) positioned ^0.875 ^0 ^-1.125 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/51_locator_position
 $execute as $(mouth) positioned ^0.875 ^0.7188 ^0.0625 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/51_locator_mouth
 $execute as $(text_location) positioned ^0.875 ^0.75 ^-1 rotated ~0 ~0 run function aj:billy/animations/idle/zzz/frames/51_locator_text_location

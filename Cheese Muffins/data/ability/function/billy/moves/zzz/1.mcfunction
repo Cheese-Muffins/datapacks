@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$function aj:billy/animations/$(animation)/play
+$function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"$(animation)",style:"play_exclusive",objective:"universalAbility.ID"}}

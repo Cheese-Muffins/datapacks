@@ -2,6 +2,7 @@
 function aj:billy/root/on_tick/select_locator_commands with storage animated_java:temp entry.data.locators.commands
 function aj:billy/root/on_tick/select_locator_constant with storage animated_java:temp entry.data.locators.constant
 function aj:billy/root/on_tick/select_locator_sfx with storage animated_java:temp entry.data.locators.sfx
+function aj:billy/root/on_tick/select_locator_vfx with storage animated_java:temp entry.data.locators.vfx
 function aj:billy/root/on_tick/select_locator_position with storage animated_java:temp entry.data.locators.position
 function aj:billy/root/on_tick/select_locator_mouth with storage animated_java:temp entry.data.locators.mouth
 function aj:billy/root/on_tick/select_locator_text_location with storage animated_java:temp entry.data.locators.text_location

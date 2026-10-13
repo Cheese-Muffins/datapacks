@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
 $scoreboard players set @s universalAbility.ID $(id)
-function universal:ability/rig/play_animation {rig:"billy",animation:"summon",objective:"universalAbility.ID"}
+function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"summon",style:"play",objective:"universalAbility.ID"}}

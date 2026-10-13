@@ -2,4 +2,4 @@
 
 $execute store result storage minecraft:universal ability.dismount.id int 1 run scoreboard players get @s $(objective)
 $data merge storage minecraft:universal {ability:{dismount:{objective:"$(objective)",rig:"$(rig)"}}}
-function universal:ability/rig/zzz/5 with storage minecraft:universal ability.dismount
+function universal:ability/rig/zzz/12 with storage minecraft:universal ability.dismount

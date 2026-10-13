@@ -2,4 +2,4 @@
 
 function aj:the_world/animations/pause_all
 function aj:the_world/animations/hide_dio/play
-function aj:the_world/animations/idle/resume
+function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"idle",style:"resume",objective:"universalAbility.ID"}}

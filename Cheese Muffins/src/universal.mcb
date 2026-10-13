@@ -155,18 +155,18 @@ dir hotbar {
 }
 
 dir vfx {
-    function spawn {
+    function initialize {
         #  --   Required Args  --   #
         #   --   Mode: 0 - 1  --    # 
 
         # Arguments default as follows #
-            # Mode: Defaults to 0
-            # Count: Defaults to 1
-            # Speed: Does not run
-            # Duration: Does not run
-            # Branch: Does not run
-            # Animation: Does not run
-            # Output: Does not run
+            # Mode:      | Defaults to 0
+            # Count:     | Defaults to 1
+            # Speed:     | Does not run
+            # Duration:  | Does not run
+            # Branch:    | REQUIRED to run
+            # Animation: | REQUIRED to run
+            # Output:    | Does not run
         
         # EXAMPLE #
             # data modify storage minecraft:universal vfx.arguments.branch set value "billy"
@@ -176,23 +176,33 @@ dir vfx {
             # function universal:vfx/spawn with storage minecraft:universal vfx.arguments
 
         # Modes
-            # 0: NO Offset / Speed to be applied. As basic as it comes
+            # 0: NO Offset / Speed to be applied. As basic as it comes!
 
-        $scoreboard players set .Mode universalVFX.Conditions $(mode)
-        $scoreboard players set .Count universalVFX.Conditions $(count)
-        execute if data storage minecraft:universal vfx.arguments.speed run block { with storage minecraft:universal vfx.arguments
-            $scoreboard players set .Speed universalVFX.Conditions $(speed)
-        }
-        execute if data storage minecraft:universal vfx.arguments.duration run block { with storage minecraft:universal vfx.arguments
-            $scoreboard players set .Duration universalVFX.Conditions $(duration)
-        }
+        $data modify storage minecraft:universal vfx merge value $(arguments)
 
-        function universal:vfx/create
-        data modify storage minecraft:universal vfx.arguments set value {mode:0,count:1}
+        # arguments to relevant scores.
+        scoreboard players set .Count universalVFX.Conditions 1
+        execute if data storage minecraft:universal vfx.mode store result score .Mode universalVFX.Conditions run data get storage minecraft:universal vfx.mode
+        execute if data storage minecraft:universal vfx.count store result score .Count universalVFX.Conditions run data get storage minecraft:universal vfx.count
+        execute if data storage minecraft:universal vfx.speed store result score .Speed universalVFX.Conditions run data get storage minecraft:universal vfx.speed
+        execute if data storage minecraft:universal vfx.duration store result score .Duration universalVFX.Conditions run data get storage minecraft:universal vfx.duration
+        
+        # Makes sure VFX are spawned ONLY if the branch and animation are provided.
+        execute unless data storage minecraft:universal vfx.branch run scoreboard players set .invalidArgs universalVFX.Conditions 1
+        execute unless data storage minecraft:universal vfx.animation run scoreboard players set .invalidArgs universalVFX.Conditions 1
+        execute unless score .invalidArgs universalVFX.Conditions matches 1 run function universal:vfx/create
+        scoreboard players reset .invalidArgs universalVFX.Conditions
+
+
+        data remove storage minecraft:universal vfx
+        scoreboard players reset .Mode universalVFX.Conditions
+        scoreboard players reset .Count universalVFX.Conditions
+        scoreboard players reset .Speed universalVFX.Conditions
+        scoreboard players reset .Duration universalVFX.Conditions
     }
 
     function create {
-        execute if score .Mode universalVFX.Conditions matches 0 run function universal:vfx/mode/0 with storage minecraft:universal vfx.arguments
+        execute unless score .Mode universalVFX.Conditions matches 1.. run function universal:vfx/mode/0 with storage minecraft:universal vfx
 
         scoreboard players remove .Count universalVFX.Conditions 1
         execute if score .Count universalVFX.Conditions matches 1.. run function universal:vfx/create
@@ -200,14 +210,15 @@ dir vfx {
 
     dir mode {
         function 0 {
-            $function aj:$(branch)_vfx/summon {args:{animation:'$(animation)', start_animation: true}}
-
+            $function aj:$(branch)_vfx/summon {args:{}}
+            
             execute store result storage minecraft:universal vfx.id int 1 run scoreboard players get @s universalAbility.ID
-            $execute as @n[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
+            $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
                 $scoreboard players set @s universalVFX.ID $(id)
+                $function universal:ability/rig/play_animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
 
                 # if an output argument is present
-                execute if data storage minecraft:universal vfx.arguments.output run block { with storage minecraft:universal vfx.arguments
+                execute if data storage minecraft:universal vfx.output run block { with storage minecraft:universal vfx
                     $$(output)
                 }
             }
@@ -318,46 +329,81 @@ dir ability {
         }
 
         function play_animation {
-            # function universal:ability/rig/play_animation {rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID"}
-            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-            $data merge storage minecraft:universal {ability:{rig:{objective:"$(objective)"}}}
-            block { with storage minecraft:universal ability.rig
-                $execute as @p[scores={$(objective)=$(id)}] run {
-                    execute unless score @s traitShrinkray.Size matches 1.. run scoreboard players set .fetchSize traitShrinkray.Size 0
-                    execute if score @s traitShrinkray.Size matches 1 run scoreboard players set .fetchSize traitShrinkray.Size 1
-                    execute if score @s traitShrinkray.Size matches 2 run scoreboard players set .fetchSize traitShrinkray.Size 2
+            # function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"play"}}
+            # or
+            # function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:5}}
+
+            $data modify storage minecraft:universal ability.rig.play_animation merge value $(arguments)
+            execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.rig.play_animation
+                $execute store result storage minecraft:universal ability.rig.play_animation.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.rig.play_animation
+                    $execute as @p[scores={universalAbility.ID=$(id)}] run {
+                        execute unless score @s traitShrinkray.Size matches 1.. run scoreboard players set .fetchSize traitShrinkray.Size 0
+                        execute if score @s traitShrinkray.Size matches 1 run scoreboard players set .fetchSize traitShrinkray.Size 1
+                        execute if score @s traitShrinkray.Size matches 2 run scoreboard players set .fetchSize traitShrinkray.Size 2
+                    }
                 }
             }
-
-            $execute if score .fetchSize traitShrinkray.Size matches 0 run function aj:$(rig)/animations/$(animation)/play_exclusive
-            $execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/play_exclusive
-            $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/play_exclusive
-            scoreboard players reset .fetchSize traitShrinkray.Size
-        }
-
-        function sfx {
-            # function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
-            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-            $data merge storage minecraft:universal {ability:{rig:{objective:"$(objective)"}}}
-
             execute if entity @s[type=minecraft:player] run {
                 execute unless score @s traitShrinkray.Size matches 1.. run scoreboard players set .fetchSize traitShrinkray.Size 0
                 execute if score @s traitShrinkray.Size matches 1 run scoreboard players set .fetchSize traitShrinkray.Size 1
                 execute if score @s traitShrinkray.Size matches 2 run scoreboard players set .fetchSize traitShrinkray.Size 2
             }
 
+            # playing animation WITHOUT tweening
+            execute unless data storage minecraft:universal ability.rig.play_animation{style:"tween"} run block { with storage minecraft:universal ability.rig.play_animation
+                $execute if score .fetchSize traitShrinkray.Size matches 0 run function aj:$(rig)/animations/$(animation)/$(style)
+                $execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/$(style)
+                $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/$(style)
+            }
+            # playing animation WITH tweening
+            # playing animation WITH tweening
+            execute if data storage minecraft:universal ability.rig.play_animation{style:"tween"} run {
+                block { with storage minecraft:universal ability.rig.play_animation
+                    $scoreboard players set .tweenFrame traitShrinkray.Frame $(tweened_frame)
+                }
+
+                execute if score .fetchSize traitShrinkray.Size matches 1 run {
+                    function universal:math/multiply {value:2,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                    function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                }
+
+                execute if score .fetchSize traitShrinkray.Size matches 2 run {
+                    function universal:math/multiply {value:4,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                    function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                }
+
+                execute store result storage minecraft:universal ability.rig.play_animation.adjusted_frame int 1 run scoreboard players get .tweenFrame traitShrinkray.Frame
+
+                block { with storage minecraft:universal ability.rig.play_animation
+                    $execute if score .fetchSize traitShrinkray.Size matches 0 run function aj:$(rig)/animations/$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
+                    $execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
+                    $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
+                }
+
+                scoreboard players reset .tweenFrame traitShrinkray.Frame
+            }
+            # data remove storage minecraft:universal ability.rig.play_animation
+            scoreboard players reset .fetchSize traitShrinkray.Size
+        }
+
+        function sfx {
+            # function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
+
+            scoreboard players set .fetchSize traitShrinkray.Size 0
+            execute if entity @s[type=minecraft:player] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+
+            $data modify storage minecraft:universal ability.rig.objective set value "$(objective)"
             execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.rig
-                $execute as @p[scores={$(objective)=$(id)}] run {
-                    execute unless score @s traitShrinkray.Size matches 1.. run scoreboard players set .fetchSize traitShrinkray.Size 0
-                    execute if score @s traitShrinkray.Size matches 1 run scoreboard players set .fetchSize traitShrinkray.Size 1
-                    execute if score @s traitShrinkray.Size matches 2 run scoreboard players set .fetchSize traitShrinkray.Size 2
+                $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.rig
+                    $execute as @p[scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
                 }
             }
 
-            $execute unless score @s traitShrinkray.Size matches 1.. at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.00
             $execute if score .fetchSize traitShrinkray.Size matches 1 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.50
             $execute if score .fetchSize traitShrinkray.Size matches 2 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 0.75
-            scoreboard players reset .fetchSize traitShrinkray.Size
+            $execute unless score .fetchSize traitShrinkray.Size matches 1..2 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.00
         }
 
         dir mount {

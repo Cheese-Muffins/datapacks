@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
+$data modify entity @s Rotation[0] set value $(rotation)

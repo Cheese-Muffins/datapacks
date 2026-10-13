@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:billy"
-data modify storage animated_java:temp entry.data.rig_hash set value "cae75843d71513a806984e262d2c5a344c5e10e1360621b8da808f5fd8761971"
+data modify storage animated_java:temp entry.data.rig_hash set value "9824969f68d23462904a66891128d4f46ccaa94f5a858e41eb126017aedbd0f7"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0 ^0 ^-0.125 {Tags:["aj.billy.bone.billy.child","aj.billy.bone.billy.child.locator","aj.billy.bone.billy.decendant","aj.billy.bone.billy.decendant.locator","aj.billy.bone.billy.tree","aj.billy.bone.size.decendant","aj.billy.bone.size.decendant.locator","aj.billy.bone.size.tree","aj.billy.entity","aj.billy.locator","aj.billy.locator.position","aj.billy.node","aj.billy.node.position","aj.global.bone.billy.child","aj.global.bone.billy.child.locator","aj.global.bone.billy.decendant","aj.global.bone.billy.decendant.locator","aj.global.bone.billy.tree","aj.global.bone.size.decendant","aj.global.bone.size.decendant.locator","aj.global.bone.size.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.position","aj.new"]}
 execute as @n[ type=minecraft:item_display, tag=aj.billy.locator.position, tag=aj.new, distance=..11 ] run function aj:billy/zzz/summon/as_locator/position

@@ -19,7 +19,6 @@ dir tick {
 				execute if score @s traitShrinkray.Size matches 2 run function trait:index/grow/reset
 				tag @s remove scenarioTick.TraitShrinkray
 
-				scoreboard players reset @s traitShrinkray.Size
 				function trait:change_size
 			}
 		}
@@ -45,6 +44,7 @@ function apply {
 dir index {
 	dir shrink {
 		function setup {
+			execute if score @s traitShrinkray.Size matches 2 run function trait:index/grow/reset
 			attribute @s minecraft:scale modifier add trait:ability/shrinkray -0.75 add_multiplied_total
 			attribute @s minecraft:movement_speed modifier add trait:ability/shrinkray 0.15 add_multiplied_total
 			attribute @s minecraft:safe_fall_distance modifier add trait:ability/shrinkray -0.33 add_multiplied_total
@@ -63,11 +63,13 @@ dir index {
 			attribute @s minecraft:max_health modifier remove trait:ability/shrinkray
 			attribute @s minecraft:block_interaction_range modifier remove trait:ability/shrinkray
 			attribute @s minecraft:entity_interaction_range modifier remove trait:ability/shrinkray
+			scoreboard players reset @s traitShrinkray.Size
 		}
 	}
 
 	dir grow {
 		function setup {
+			execute if score @s traitShrinkray.Size matches 1 run function trait:index/shrink/reset
 			attribute @s minecraft:scale modifier add trait:ability/shrinkray 0.5 add_multiplied_total
 			attribute @s minecraft:movement_speed modifier add trait:ability/shrinkray -0.15 add_multiplied_total
 			attribute @s minecraft:safe_fall_distance modifier add trait:ability/shrinkray 0.5 add_multiplied_total
@@ -75,7 +77,7 @@ dir index {
 			attribute @s minecraft:block_interaction_range modifier add trait:ability/shrinkray 0.33 add_multiplied_total
 			attribute @s minecraft:entity_interaction_range modifier add trait:ability/shrinkray 0.33 add_multiplied_total
 			attribute @s minecraft:jump_strength modifier add trait:ability/shrinkray 0.5 add_multiplied_total
-			attribute @s minecraft:step_height modifier add trait:ability/shrinkray 1 add_multiplied_total
+			attribute @s minecraft:step_height modifier add trait:ability/shrinkray 1 add_multiplied_total 
 
 			scoreboard players set @s traitShrinkray.Size 2
 			function trait:change_size
@@ -90,6 +92,7 @@ dir index {
 			attribute @s minecraft:entity_interaction_range modifier remove trait:ability/shrinkray
 			attribute @s minecraft:jump_strength modifier remove trait:ability/shrinkray
 			attribute @s minecraft:step_height modifier remove trait:ability/shrinkray
+			scoreboard players reset @s traitShrinkray.Size
 		}
 	}
 }
@@ -122,14 +125,20 @@ function change_size {
 						}
 					}
 
-					execute if score .currentSize traitShrinkray.Size matches 1 if score @s traitShrinkray.Size matches 0 run {
-						function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
-						function universal:math/divide {value:100,score:"@s",objective:"traitShrinkray.Frame"}
+					execute if score .currentSize traitShrinkray.Size matches 1 run {
+						execute if score @s traitShrinkray.Size matches 0 run {
+							function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
+							function universal:math/divide {value:100,score:"@s",objective:"traitShrinkray.Frame"}
+						}
+						execute if score @s traitShrinkray.Size matches 2 run function universal:math/multiply {value:2,score:"@s",objective:"traitShrinkray.Frame"}
 					}
 
-					execute if score .currentSize traitShrinkray.Size matches 2 if score @s traitShrinkray.Size matches 0 run {
-						function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
-						function universal:math/divide {value:200,score:"@s",objective:"traitShrinkray.Frame"}
+					execute if score .currentSize traitShrinkray.Size matches 2 run {
+						execute if score @s traitShrinkray.Size matches 0 run {
+							function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
+							function universal:math/divide {value:200,score:"@s",objective:"traitShrinkray.Frame"}
+						}
+						execute if score @s traitShrinkray.Size matches 1 run function universal:math/divide {value:2,score:"@s",objective:"traitShrinkray.Frame"}
 					}
 					execute store result storage minecraft:trait size.frame int 1 run scoreboard players get @s traitShrinkray.Frame
 

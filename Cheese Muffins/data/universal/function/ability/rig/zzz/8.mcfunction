@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)
+function universal:math/multiply {value:4,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
