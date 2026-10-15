@@ -10,4 +10,4 @@ attribute @s minecraft:entity_interaction_range modifier add trait:ability/shrin
 attribute @s minecraft:jump_strength modifier add trait:ability/shrinkray 0.5 add_multiplied_total
 attribute @s minecraft:step_height modifier add trait:ability/shrinkray 1 add_multiplied_total
 scoreboard players set @s traitShrinkray.Size 2
-function trait:change_size
+function trait:size/change

@@ -1,7 +1,7 @@
 # Generated with MC-Build
 
-execute unless entity @s[tag=skinTheWorldShadow.User] run function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
-execute if entity @s[tag=skinTheWorldShadow.User] run function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
+execute unless entity @s[tag=skinTheWorldShadow.User] run function universal:ability/play/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
+execute if entity @s[tag=skinTheWorldShadow.User] run function universal:ability/play/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
 execute rotated ~ 0 run function aj:the_world/summon {args:{}}
 execute store result storage minecraft:ability the_world.toggle.id int 1 run scoreboard players get @s universalAbility.ID
 execute store result storage minecraft:ability the_world.toggle.skin_id int 1 run scoreboard players get @s universalAbility.EquippedSkinID

@@ -19,7 +19,7 @@ dir tick {
 				execute if score @s traitShrinkray.Size matches 2 run function trait:index/grow/reset
 				tag @s remove scenarioTick.TraitShrinkray
 
-				function trait:change_size
+				function trait:size/change
 			}
 		}
 	}
@@ -53,7 +53,7 @@ dir index {
 			attribute @s minecraft:entity_interaction_range modifier add trait:ability/shrinkray -0.33 add_multiplied_total
 
 			scoreboard players set @s traitShrinkray.Size 1
-			function trait:change_size
+			function trait:size/change
 		}
 
 		function reset {
@@ -80,7 +80,7 @@ dir index {
 			attribute @s minecraft:step_height modifier add trait:ability/shrinkray 1 add_multiplied_total 
 
 			scoreboard players set @s traitShrinkray.Size 2
-			function trait:change_size
+			function trait:size/change
 		}
 
 		function reset {
@@ -97,61 +97,69 @@ dir index {
 	}
 }
 
-function change_size {
-	execute if score @s universalAbility.ToggleState matches 1 run {
-		execute store result storage minecraft:trait size.id int 1 run scoreboard players get @s universalAbility.ID
-		execute store result storage minecraft:trait size.mode int 1 run scoreboard players get @s traitShrinkray.Size
-		execute store result storage minecraft:trait size.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
-		block { with storage minecraft:trait size
-			$data modify storage minecraft:trait size.path set from storage minecraft:ability index.$(equipped_id).path
+dir size {
+	function change {
+		execute if score @s universalAbility.ToggleState matches 1 run {
+			execute store result storage minecraft:trait size.id int 1 run scoreboard players get @s universalAbility.ID
+			execute store result storage minecraft:trait size.mode int 1 run scoreboard players get @s traitShrinkray.Size
+			execute store result storage minecraft:trait size.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
 			block { with storage minecraft:trait size
-				$execute as @n[type=minecraft:item_display,tag=aj.$(path).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:trait size
-					scoreboard players operation .currentSize traitShrinkray.Size = @s traitShrinkray.Size
-					$scoreboard players set @s traitShrinkray.Size $(mode)
-					$execute store result score @s traitShrinkray.Frame run function aj:$(path)/animations/get_frame_by_id
+				$data modify storage minecraft:trait size.path set from storage minecraft:ability index.$(equipped_id).path
+				block { with storage minecraft:trait size
+					$execute as @n[type=minecraft:item_display,tag=aj.$(path).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:trait size
+						scoreboard players operation .currentSize traitShrinkray.Size = @s traitShrinkray.Size
+						$scoreboard players set @s traitShrinkray.Size $(mode)
+						$execute store result score @s traitShrinkray.Frame run function aj:$(path)/animations/get_frame_by_id
 
-					# 0 = default
-					# 1 = small
-					# 2 = large
-					# for the default size being changed
-					execute if score .currentSize traitShrinkray.Size matches 0 run {
-						execute if score @s traitShrinkray.Size matches 1 run {
-							function universal:math/multiply {value:100,score:"@s",objective:"traitShrinkray.Frame"}
-							function universal:math/divide {value:200,score:"@s",objective:"traitShrinkray.Frame"}
-						}
-						execute if score @s traitShrinkray.Size matches 2 run {
-							function universal:math/multiply {value:500,score:"@s",objective:"traitShrinkray.Frame"}
-							function universal:math/divide {value:400,score:"@s",objective:"traitShrinkray.Frame"}
+						# 0 = default
+						# 1 = small
+						# 2 = large
+						# for the default size being changed
+						execute if score .currentSize traitShrinkray.Size matches 0 run function trait:size/calculate/default
+						execute if score .currentSize traitShrinkray.Size matches 1 run function trait:size/calculate/small
+						execute if score .currentSize traitShrinkray.Size matches 2 run function trait:size/calculate/large
+						execute store result storage minecraft:trait size.frame int 1 run scoreboard players get @s traitShrinkray.Frame
+
+						$execute unless score @s traitShrinkray.Size matches 1.. run function aj:$(path)/animations/play_by_id
+						$execute if score @s traitShrinkray.Size matches 1 run function aj:$(path)/animations/shrink_by_id
+						$execute if score @s traitShrinkray.Size matches 2 run function aj:$(path)/animations/grow_by_id
+
+						block { with storage minecraft:trait size
+							$function aj:$(path)/animations/set_frame_by_id {frame:$(frame)}
 						}
 					}
-
-					execute if score .currentSize traitShrinkray.Size matches 1 run {
-						execute if score @s traitShrinkray.Size matches 0 run {
-							function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
-							function universal:math/divide {value:100,score:"@s",objective:"traitShrinkray.Frame"}
-						}
-						execute if score @s traitShrinkray.Size matches 2 run function universal:math/multiply {value:2,score:"@s",objective:"traitShrinkray.Frame"}
-					}
-
-					execute if score .currentSize traitShrinkray.Size matches 2 run {
-						execute if score @s traitShrinkray.Size matches 0 run {
-							function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
-							function universal:math/divide {value:200,score:"@s",objective:"traitShrinkray.Frame"}
-						}
-						execute if score @s traitShrinkray.Size matches 1 run function universal:math/divide {value:2,score:"@s",objective:"traitShrinkray.Frame"}
-					}
-					execute store result storage minecraft:trait size.frame int 1 run scoreboard players get @s traitShrinkray.Frame
-
-					$execute unless score @s traitShrinkray.Size matches 1.. run function aj:$(path)/animations/play_by_id
-					$execute if score @s traitShrinkray.Size matches 1 run function aj:$(path)/animations/shrink_by_id
-					$execute if score @s traitShrinkray.Size matches 2 run function aj:$(path)/animations/grow_by_id
-
-					block { with storage minecraft:trait size
-						$function aj:$(path)/animations/set_frame_by_id {frame:$(frame)}
-					}
+					scoreboard players reset .currentSize traitShrinkray.Size
 				}
-				scoreboard players reset .currentSize traitShrinkray.Size
 			}
+		}
+	}
+
+	dir calculate {
+		function default {
+			execute if score @s traitShrinkray.Size matches 1 run {
+				function universal:math/multiply {value:100,score:"@s",objective:"traitShrinkray.Frame"}
+				function universal:math/divide {value:200,score:"@s",objective:"traitShrinkray.Frame"}
+			}
+			execute if score @s traitShrinkray.Size matches 2 run {
+				function universal:math/multiply {value:500,score:"@s",objective:"traitShrinkray.Frame"}
+				function universal:math/divide {value:400,score:"@s",objective:"traitShrinkray.Frame"}
+			}
+		}
+
+		function small {
+			execute if score @s traitShrinkray.Size matches 0 run {
+				function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
+				function universal:math/divide {value:100,score:"@s",objective:"traitShrinkray.Frame"}
+			}
+			execute if score @s traitShrinkray.Size matches 2 run function universal:math/multiply {value:2,score:"@s",objective:"traitShrinkray.Frame"}
+		}
+
+		function large {
+			execute if score @s traitShrinkray.Size matches 0 run {
+				function universal:math/multiply {value:150,score:"@s",objective:"traitShrinkray.Frame"}
+				function universal:math/divide {value:200,score:"@s",objective:"traitShrinkray.Frame"}
+			}
+			execute if score @s traitShrinkray.Size matches 1 run function universal:math/divide {value:2,score:"@s",objective:"traitShrinkray.Frame"}
 		}
 	}
 }

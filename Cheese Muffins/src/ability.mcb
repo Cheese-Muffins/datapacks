@@ -92,8 +92,11 @@ dir billy {
 
         function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"1a",move:1,cooldown:30}
         function universal:ability/setup/cooldown/8x {name:"Billy_Homeland",storage:"billy",path:"1b",move:1,cooldown:30}
+        function universal:ability/setup/variables {ability:"billy",name:"encourage",variables:{range:4.00}}
         
         function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"2a",move:2,cooldown:30}
+        function universal:ability/setup/variables {ability:"billy",name:"encourage",variables:{rising_rate:0.05}}
+
         function universal:ability/setup/cooldown/8x {name:"Billy",storage:"billy",path:"3a",move:3,cooldown:30}
     }
 
@@ -110,7 +113,7 @@ dir billy {
             block { with storage minecraft:ability billy.setup
                 $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability billy.setup
                     # function aj:billy/animations/pause_all
-                    $function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"$(animation)",style:"play_exclusive",objective:"universalAbility.ID"}}
+                    $function universal:ability/play/animation {arguments:{rig:"billy",animation:"$(animation)",style:"play_exclusive",objective:"universalAbility.ID"}}
                 }
             }
             tag @s add abilityBilly.FlagOverride
@@ -254,7 +257,7 @@ dir billy {
             execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
             execute as @n[type=minecraft:item_display,tag=aj.billy.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability billy
                 $scoreboard players set @s universalAbility.ID $(id)
-                function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"summon",style:"play",objective:"universalAbility.ID"}}
+                function universal:ability/play/animation {arguments:{rig:"billy",animation:"summon",style:"play",objective:"universalAbility.ID"}}
             }
 
             function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
@@ -318,7 +321,7 @@ dir billy {
             block { with storage minecraft:ability billy
                 $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] at @s run {
                     playsound minecraft:entity.polar_bear.death player @a ~ ~ ~ 0.5
-                    function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"withdraw",style:"play_exclusive",objective:"universalAbility.ID"}}
+                    function universal:ability/play/animation {arguments:{rig:"billy",animation:"withdraw",style:"play_exclusive",objective:"universalAbility.ID"}}
                 }
             }
             scoreboard players reset @s abilityBilly.ToggleOnText
@@ -352,7 +355,7 @@ dir billy {
             execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
 
             block { with storage minecraft:ability billy
-                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"$(type)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjust),tween_duration:$(tween)}}
+                $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] rotated as @p[tag=abilityBilly.User,scores={universalAbility.ID=$(id)}] run function universal:ability/play/animation {arguments:{rig:"billy",animation:"$(type)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjust),tween_duration:$(tween)}}
                 
                 
                 # function aj:billy/animations/$(type)/tween {to_frame:$(adjust),duration:$(tween)}
@@ -379,9 +382,7 @@ dir billy {
                 execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
 
                 block { with storage minecraft:ability billy
-                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run function universal:ability/rig/play_animation {arguments:{rig:"billy",animation:"jump",objective:"universalAbility.ID",style:"tween",tweened_frame:6,tween_duration:1}}
-                    
-                    # function aj:billy/animations/jump/tween {to_frame:6,duration:1}
+                    $execute as @n[type=minecraft:item_display,tag=aj.billy.root,scores={universalAbility.ID=$(id)}] run function universal:ability/play/animation {arguments:{rig:"billy",animation:"jump",objective:"universalAbility.ID",style:"tween",tweened_frame:6,tween_duration:1}}
                 }
             }
 
@@ -477,7 +478,7 @@ dir yuji {
             }
 
             visibility disable @s @a ignore_perspective render_passengers
-            function universal:ability/rig/stable_player_display/main {branch:"yuji"}
+            function universal:ability/rig/stable_player_display/main {branch:"yuji",}
             function universal:ability/rig/mount/player {user:"abilityYuji.User",rig:"yuji",objective:"universalAbility.ID"}
             function universal:ability/rig/visibility {target:"aj.yuji.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
             function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.yuji.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
@@ -1076,7 +1077,7 @@ dir the_world {
             execute store result storage minecraft:ability the_world.setup.id int 1 run scoreboard players get @s universalAbility.ID
             block { with storage minecraft:ability the_world.setup
                 $execute as @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={universalAbility.ID=$(id)}] run block { with storage minecraft:ability the_world.setup
-                    $function universal:ability/rig/play_animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
+                    $function universal:ability/play/animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
                 }
             }
 
@@ -1437,7 +1438,7 @@ dir the_world {
             function rig {
                 function aj:the_world/animations/pause_all
                 function aj:the_world/animations/hide_dio/play
-                function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"idle",style:"resume",objective:"universalAbility.ID"}}
+                function universal:ability/play/animation {arguments:{rig:"the_world",animation:"idle",style:"resume",objective:"universalAbility.ID"}}
                 # function aj:the_world/animations/idle/resume
                 # scoreboard players reset @s customUniversal.TimeStopAnimation
             }
@@ -1537,8 +1538,8 @@ dir the_world {
 
     dir toggle {
         function on {
-            execute unless entity @s[tag=skinTheWorldShadow.User] run function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
-            execute if entity @s[tag=skinTheWorldShadow.User] run function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
+            execute unless entity @s[tag=skinTheWorldShadow.User] run function universal:ability/play/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
+            execute if entity @s[tag=skinTheWorldShadow.User] run function universal:ability/play/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
             execute rotated ~ 0 run function aj:the_world/summon {args:{}}
             
             execute store result storage minecraft:ability the_world.toggle.id int 1 run scoreboard players get @s universalAbility.ID
@@ -1548,7 +1549,7 @@ dir the_world {
                     $scoreboard players set @s universalAbility.ID $(id)
                     $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
                     function ability:the_world/skin_index
-                    function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"summon",style:"play",objective:"universalAbility.ID"}}
+                    function universal:ability/play/animation {arguments:{rig:"the_world",animation:"summon",style:"play",objective:"universalAbility.ID"}}
                 }
                 $execute if score @s universalDisconnect.Check matches 1.. as @n[type=minecraft:item_display,tag=aj.the_world.root] if score @s universalAbility.ID matches $(id) run function aj:the_world/animations/idle/play
             }
@@ -1565,7 +1566,7 @@ dir the_world {
             execute store result storage minecraft:ability the_world.id int 1 run scoreboard players get @s universalAbility.ID
             block { with storage minecraft:ability the_world
                 $execute as @n[type=minecraft:item_display,tag=aj.the_world.root,scores={universalAbility.ID=$(id)}] at @s run {
-                    function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.withdraw",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                    function universal:ability/play/sfx {sfx:"minecraft:ability.the_world.toggle.withdraw",selector:"@a",volume:1,objective:"universalAbility.ID"}
                     function aj:the_world/remove/this
                 }
             }
@@ -1600,6 +1601,169 @@ dir president {
     function install {
         scoreboard objectives add abilityPresident.DiscoveredInteractions dummy
         scoreboard objectives add abilityPresident.UnlockedSkins dummy
+    }
+}
+
+dir shrinkray {
+    dir tick {
+        function main {
+            execute if score @s universalAbility.ToggleState matches 1 run function ability:shrinkray/active
+            REPEAT (1,2) as i {
+                execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
+                    scoreboard players reset @s universalAbility.MoveTrigger<%i%>
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:shrinkray/moves/<%i%>/root
+                }
+            }
+
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run function ability:shrinkray/tick/scores
+        }
+
+        function scores {
+            REPEAT (1,2) as i {
+                execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
+            }
+
+            execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
+            execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+        }
+
+        dir scenario {
+            function core {
+                # execute if score @s abilityYuji.NaturalTalentBuff matches 1.. run function ability:yuji/tick/scenario/natural_talent
+
+                execute unless entity @s[scores={abilityYuji.NaturalTalentBuff=1..}] run tag @s remove scenarioTick.AbilityShrinkray
+            }
+        }
+    }
+
+    function install {
+        function universal:ability/setup/cooldown/10x {name:"Shrinkray_Shoot",storage:"shrinkray",path:"1a",move:1,cooldown:1}
+        function universal:ability/setup/cooldown/10x {name:"Shrinkray_Self",storage:"shrinkray",path:"1b",move:1,cooldown:3}
+        
+        function universal:ability/setup/cooldown/10x {name:"Shrinkray_Shoot",storage:"shrinkray",path:"2a",move:2,cooldown:1}
+        function universal:ability/setup/cooldown/10x {name:"Shrinkray_Self",storage:"shrinkray",path:"2b",move:2,cooldown:3}
+    }
+
+    function active {
+        function ability:shrinkray/hotbar/main
+    }
+
+    dir moves {
+        function setup {
+            $execute rotated ~ 0 run function aj:shrinkray/summon {args:{animation: '$(animation)', start_animation: true}}
+                
+            execute store result storage minecraft:ability shrinkray.id int 1 run scoreboard players get @s universalAbility.ID
+            execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability shrinkray
+                $scoreboard players set @s universalAbility.ID $(id)
+            }
+
+            visibility disable @s @a ignore_perspective render_passengers
+            function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
+            function universal:ability/rig/mount/player {user:"abilityShrinkray.User",rig:"shrinkray",objective:"universalAbility.ID"}
+            function universal:ability/rig/visibility {target:"aj.shrinkray.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+        }
+
+        dir 1 {
+            function root {
+                execute unless predicate universal:flags/sneaking run function ability:shrinkray/moves/1/shoot/check
+                execute if predicate universal:flags/sneaking run say b
+            }
+
+            dir shoot {
+                function check {
+                    execute if score @s universalAbility.MoveCooldown1 matches 1.. run function universal:error_messages/setup {id:1}
+                    execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                    function universal:error_messages/constant
+
+                    scoreboard players set @s universalAbility.HotbarSlot 1
+                    execute unless score @s universalError.FailReturn matches 1 run function ability:shrinkray/moves/1/shoot/pass
+                    execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:1,name:"Shrink Beam"}
+                }
+
+                function pass {
+                    # setup
+                    function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
+
+                    # restraints
+                    function universal:ability/restraint/cooldown {name:"Shrinkray",move:1}
+                    function universal:ability/restraint/cancelable {move:1}
+                    tag @s add universalAbility.Animating
+
+                    # specific
+                    function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
+                    function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
+                }
+            }
+        }
+
+        dir reset {
+            function all {
+                function universal:ability/rig/as_player {player:"abilityShrinkray.User",objective:"universalAbility.ID",output:"function ability:shrinkray/moves/reset/player"}
+                function ability:shrinkray/moves/reset/rig
+            }
+
+            function rig {
+                function aj:shrinkray/remove/all
+            }
+
+            function player {
+                visibility enable @s @a
+                function universal:attribute/revoke {type:"minecraft:movement_speed",path:"ability:generic"}
+                function universal:attribute/revoke {type:"minecraft:jump_strength",path:"ability:generic"}
+                function universal:ability/revoke/cancelable {player:"abilityShrinkray.User"}
+                tag @s remove universalAbility.Animating
+            }
+        }
+    }
+
+    dir hotbar {
+        function main {
+            REPEAT (1,2) as i {
+                function ability:shrinkray/hotbar/progress with storage minecraft:ability shrinkray.cooldown.move<%i%>a
+            }
+            
+            REPEAT (1,2) as i {
+                execute if score @s universalAbility.HotbarSlot matches <%i%> run {
+                    function universal:hotbar/time {ability:"shrinkray",slot:<%i%>}
+                }
+            }
+
+            execute if score @s universalAbility.HotbarSlot matches 1 run block { with storage minecraft:ability shrinkray.hotbar
+                $title @s actionbar [{"text":"\uF893\u09A0\uF85F"},{"text":"\uF868\$(move1)\uF84B\u09A2"},{"text":"\uF863\$(move2)"},{"text":"\uF862\u09A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
+            }
+
+            execute if score @s universalAbility.HotbarSlot matches 2 run block { with storage minecraft:ability shrinkray.hotbar
+                $title @s actionbar [{"text":"\uF893\u05A0\uF85F"},{"text":"\uF86\$(move1)"},{"text":"\uF863\$(move2)\uF84B\u09A2"},{"text":"\uF862\u09A1"},{"text":"\uF86C\u01A0"},{"text":"\uF84A$(time)","color":"yellow"}]
+            }
+        }
+
+        function progress {
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(10a)..$(11) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09A3"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(9a)..$(10b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09A4"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(8a)..$(9b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09A5"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(7a)..$(8b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09A6"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(6a)..$(7b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09A7"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(5a)..$(6b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09A8"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09A9"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09B0"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09B1"
+            $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09B2"
+            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability shrinkray.hotbar.move$(slot) set value "u09B3"
+        }
+    }
+
+    dir toggle {
+        function on {
+            playsound minecraft:ability.shrinkray.toggle_on player @s ~ ~ ~ 1
+            scoreboard players set @s universalAbility.ToggleDelay 10
+        }
+
+        function off {
+            title @s actionbar ""
+            playsound minecraft:ability.shrinkray.toggle_off player @s ~ ~ ~ 0.5
+
+            scoreboard players set @s universalAbility.ToggleDelay 10
+        }
     }
 }
 
@@ -2049,6 +2213,108 @@ dir generate {
                         request2:{path:"minecraft:adventure/summon_iron_golem",name:"Hired Help",line:""}\
                     },\
                     bypass:"Lazyharpseal15"\
+                },\
+                skin1:{\
+                    type:"skin",\
+                    name:[{"text":"M","italic":false,"color":"#61a5ff"},{"text":"a","italic":false,"color":"#61aeff"},{"text":"h","italic":false,"color":"#61b6ff"},{"text":"i","italic":false,"color":"#61bfff"},{"text":"t","italic":false,"color":"#61c7ff"},{"text":"o","italic":false,"color":"#61d0ff"}],\
+                    subtext:"Does the Soul Reside Within the Body...?",\
+                    model:"minecraft:interactables/ability/yuji/skin_mahito",\
+                    rarity:4,\
+                    ownership_tag:"skinYujiMahito.Ownership",\
+                    equipped_tag:"skinYujiMahito.User",\
+                    advancements:{\
+                        request1:{path:"minecraft:nether/get_wither_skull",name:"Spooky Scary Skeleton",line:"[-1]"}\
+                    }\
+                }\
+            }\
+        }}}
+
+        # 6 - Shrinkray (will probably change ids)
+        data merge storage minecraft:ability {index:{6:{\
+            ability_id:6,\
+            path:"shrinkray",\
+            real_path:"Shrinkray",\
+            proper_name:"Shrinkray",\
+            obtainment_rating_raw:2,\
+            versatility_rating_raw:4,\
+            difficulty_rating_raw:1,\
+            passive:[[{"text":"Ammo","italic":false,"color":"#e2a3ff"},{"text":" is ","italic":false,"color":"gray"},{"text":"required","italic":false,"color":"#ff3333"},{"text":" to activate any of","italic":false,"color":"gray"}],[{"text":"the ","italic":false,"color":"gray"},{"text":"moveset,","italic":false,"color":"#83cb48"},{"text":" consuming ","italic":false,"color":"gray"},{"text":"1 bullet","italic":false,"color":"#ffbe4d"},{"text":" per","italic":false,"color":"gray"}],[{"text":"activation. ","italic":false,"color":"gray"},{"text":"Regenerate","italic":false,"color":"#80c3ff"},{"text":" bullets at a","italic":false,"color":"gray"}],[{"text":"rate of ","italic":false,"color":"gray"},{"text":"1ammo","italic":false,"color":"#ffbe4d"},{"text":"/","italic":false,"color":"gray"},{"text":"3.0s","italic":false,"color":"#40f799"}]],\
+            moveset:{\
+                slot1:{\
+                    move1:{\
+                        name:[{"text":"Time","italic":false,"color":"#7081ff"},{"text":"skip","italic":false,"color":"#4dc3ff"}],\
+                        description:[[{"text":"Blink","italic":false,"color":"#bc57ff"},{"text":" forwards ","italic":false,"color":"gray"},{"text":"11m","italic":false,"color":"#ffbe4d"},{"text":" in the direction you're","italic":false,"color":"gray"}],[{"text":"facing. This move can be ","italic":false,"color":"gray"},{"text":"activated whilst","italic":false,"color":"#9ef9ff"}],[{"text":"using other moves.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timeskip",\
+                        cooldown:9,\
+                        cancelable:false\
+                    },\
+                    move2:{\
+                        name:[{"text":"T","italic":false,"color":"#9d00e6"},{"text":"h","italic":false,"color":"#a30ce9"},{"text":"e","italic":false,"color":"#a918ec"},{"text":" ","italic":false,"color":"#af24ef"},{"text":"W","italic":false,"color":"#b531f3"},{"text":"o","italic":false,"color":"#bb3df6"},{"text":"r","italic":false,"color":"#c149f9"},{"text":"l","italic":false,"color":"#c755fc"},{"text":"d","italic":false,"color":"#cd61ff"}],\
+                        description:[[{"text":"Following a ","italic":false,"color":"gray"},{"text":"brief windup,","italic":false,"color":"#ff5252"},{"text":" unleash your ","italic":false,"color":"gray"},{"text":"true","italic":false,"color":"#ff94ed"}],[{"text":"power","italic":false,"color":"#ff94ed"},{"text":" completely ","italic":false,"color":"gray"},{"text":"halting time","italic":false,"color":"#61d0ff"},{"text":" for the","italic":false,"color":"gray"}],[{"text":"surrounding ","italic":false,"color":"gray"},{"text":"40m.","italic":false,"color":"#ffbe4d"}],[{"text":" o Duration: ","italic":false,"color":"gray"},{"text":"9s","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/timestop",\
+                        cooldown:50,\
+                        cancelable:true\
+                    }\
+                },\
+                slot2:{\
+                    move1:{\
+                        name:[{"text":"K","italic":false,"color":"#c70000"},{"text":"n","italic":false,"color":"#cd0707"},{"text":"i","italic":false,"color":"#d20d0d"},{"text":"f","italic":false,"color":"#d81414"},{"text":"e","italic":false,"color":"#dd1a1a"},{"text":" ","italic":false,"color":"#e32121"},{"text":"T","italic":false,"color":"#e92828"},{"text":"h","italic":false,"color":"#ee2e2e"},{"text":"r","italic":false,"color":"#f43535"},{"text":"o","italic":false,"color":"#f93b3b"},{"text":"w","italic":false,"color":"#ff4242"}],\
+                        description:[[{"text":"Toss ","italic":false,"color":"gray"},{"text":"3 knives","italic":false,"color":"#ffbe4d"},{"text":" ahead of where you're looking","italic":false,"color":"gray"}],[{"text":"striking","italic":false,"color":"#ff2929"},{"text":" anyone in their path. Collision with","italic":false,"color":"gray"}],[{"text":"terrain will stop movement. ","italic":false,"color":"gray"},{"text":"Rage Mode","italic":false,"color":"#e2a3ff"}],[{"text":"increases the ","italic":false,"color":"gray"},{"text":"total","italic":false,"color":"#a7ff8f"},{"text":" number of ","italic":false,"color":"gray"},{"text":"tossed ","italic":false,"color":"gray"},{"text":"knives","italic":false,"color":"#ffbe4d"}],[{"text":"to 5.","italic":false,"color":"#ffbe4d"}],[{"text":"o Projectile Speed: ","italic":false,"color":"gray"},{"text":"10m/s","italic":false,"color":"#20c200"}],[{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"10","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/knife_throw",\
+                        cooldown:17,\
+                        cancelable:true\
+                    }\
+                },\
+                slot3:{\
+                    move1:{\
+                        name:[{"text":"Barrage","italic":false,"color":"#d699ff"}],\
+                        description:[[{"text":"Send out a ","italic":false,"color":"gray"},{"text":"flurry","italic":false,"color":"#f4a3ff"},{"text":" of punches completely","italic":false,"color":"gray"}],[{"text":"immobilizing","italic":false,"color":"white"},{"text":" and ","italic":false,"color":"gray"},{"text":"damaging ","italic":false,"color":"#ff2929"},{"text":"anything in their","italic":false,"color":"gray"}],[{"text":"path. The ","italic":false,"color":"gray"},{"text":"finishing punch","italic":false,"color":"#fff957"},{"text":" in the chain will","italic":false,"color":"gray"}],[{"text":"launch","italic":false,"color":"#00b4cc"},{"text":" victims backwards dealing","italic":false,"color":"gray"}],[{"text":"additional damage.","italic":false,"color":"#ff2929"}],[{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"4s","italic":false,"color":"#20c200"}],[{"text":"o Regular Damage: ","italic":false,"color":"gray"},{"text":"2hp/0.5s","italic":false,"color":"#20c200"}],[{"text":"o Final Punch Damage: ","italic":false,"color":"gray"},{"text":"5","italic":false,"color":"#20c200"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/barrage",\
+                        cooldown:23,\
+                        cancelable:false\
+                    }\
+                },\
+                slot4:{\
+                    move1:{\
+                        name:[{"text":"F","italic":false,"color":"#a3d0ff"},{"text":"l","italic":false,"color":"#a3d9fd"},{"text":"u","italic":false,"color":"#a3e3fb"},{"text":"r","italic":false,"color":"#a3ecf8"},{"text":"r","italic":false,"color":"#a3f6f6"},{"text":"y","italic":false,"color":"#a3fff4"}],\
+                        description:[["",{"text":"Strike a pose for a ","italic":false,"color":"gray"},{"text":"short duration,","italic":false,"color":"#ff7e75"},{"text":" waiting","italic":false,"color":"gray"}],["",{"text":"for an entity to ","italic":false,"color":"gray"},{"text":"strike.","italic":false,"color":"#ff2929"}],["",{"text":"o Duration: ","italic":false,"color":"gray"},{"text":"1.5s","italic":false,"color":"#c20000"}],"",[{"text":"Damaged by an Entity","italic":false,"color":"light_purple"}],[{"text":"Spawn a dome of knives on the attacking","italic":false,"color":"gray"}],["",{"text":"entity, ","italic":false,"color":"gray"},{"text":"dealing damage","italic":false,"color":"#ff2929"},{"text":" and inflicting","italic":false,"color":"gray"}],["",{"text":"deadly bleeding","italic":false,"color":"#ff2929"},{"text":" for ","italic":false,"color":"gray"},{"text":"5s.","italic":false,"color":"#ffbe4d"}],["",{"text":"o Damage: ","italic":false,"color":"gray"},{"text":"6","italic":false,"color":"#20c200"}],["",{"text":"o Movement Speed: ","italic":false,"color":"gray"},{"text":"0.5x","italic":false,"color":"#c20000"}],["",{"text":"o ","italic":false,"color":"gray"},{"text":"Bleed III","italic":false,"color":"#c20000"}],"",[{"text":"Duration Expired","italic":false,"color":"light_purple"}],["",{"text":"Become ","italic":false,"color":"gray"},{"text":"immobilized","italic":false,"color":"white"},{"text":" for ","italic":false,"color":"gray"},{"text":"1s","italic":false,"color":"#ffbe4d"},{"text":" following the","italic":false,"color":"gray"}],["",{"text":"expiration","italic":false,"color":"#d17aff"},{"text":" of this cast.","italic":false,"color":"gray"}]],\
+                        model:"minecraft:interactables/ability/the_world/moveset/flurry",\
+                        cooldown:32,\
+                        cancelable:true\
+                    }\
+                }\
+            },\
+            secret:{\
+                interaction1:{\
+                    hint:[["",{"text":"What kind of ","color":"gray"},{"text":"woman","color":"#b8ffe4"},{"text":" is your type?","color":"gray"}]],\
+                    name:[{"text":"Todo Aoi","italic":false,"color":"#47fff3"}],\
+                    description:[[{"text":"idk yet","italic":false,"color":"gray"}]],\
+                    required_tag:"abilityYuji.SecretInteractionTodoAoi"\
+                },\
+                interaction2:{\
+                    hint:[[{"text":"You need to ","italic":false,"color":"gray"},{"text":"enter","italic":false,"color":"#e8a8ff"},{"text":" the ","italic":false,"color":"gray"},{"text":"zone","italic":false,"color":"#ff4242"}]],\
+                    name:[{"text":"R","italic":false,"color":"#f92424"},{"text":"e","italic":false,"color":"#ef1d1d"},{"text":"p","italic":false,"color":"#e51616"},{"text":"e","italic":false,"color":"#db0e0e"},{"text":"t","italic":false,"color":"#d10707"},{"text":"i","italic":false,"color":"#c70000"},{"text":"t","italic":false,"color":"#c70000"},{"text":"i","italic":false,"color":"#d10707"},{"text":"v","italic":false,"color":"#db0e0e"},{"text":"e","italic":false,"color":"#e51616"},{"text":" ","italic":false,"color":"#ef1d1d"},{"text":"B","italic":false,"color":"#f92424"},{"text":"l","italic":false,"color":"#f92424"},{"text":"a","italic":false,"color":"#ed1b1b"},{"text":"c","italic":false,"color":"#e01212"},{"text":"k","italic":false,"color":"#d40909"},{"text":" ","italic":false,"color":"#c70000"},{"text":"F","italic":false,"color":"#c70000"},{"text":"l","italic":false,"color":"#d40909"},{"text":"a","italic":false,"color":"#e01212"},{"text":"s","italic":false,"color":"#ed1b1b"},{"text":"h","italic":false,"color":"#f92424"}],\
+                    description:[[{"text":"For each ","italic":false,"color":"gray"},{"text":"Black Flash","italic":false,"color":"#e2a3ff"},{"text":" landed","italic":false,"color":"gray"}],[{"text":"consecutively","italic":false,"color":"white"},{"text":" following the first","italic":false,"color":"gray"}],[{"text":"one, the chance of landing the ","italic":false,"color":"gray"},{"text":"next","italic":false,"color":"#d2f34f"}],[{"text":"increases. Landing ","italic":false,"color":"gray"},{"text":"3","italic":false,"color":"#ffbe4d"},{"text":" in a row will","italic":false,"color":"gray"}],[{"text":"trigger a ","italic":false,"color":"gray"},{"text":"cutscene","italic":false,"color":"#c2a8ff"},{"text":" dealing ","italic":false,"color":"gray"},{"text":"devasting","italic":false,"color":"#ff2929"}],[{"text":"damage","italic":false,"color":"#ff2929"},{"text":" to the victim.","italic":false,"color":"gray"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Damage: ","italic":false,"color":"gray"},{"text":"23","italic":false,"color":"#6aff57"}],[{"text":"> ","italic":false,"color":"#5c5c5c"},{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"5m","italic":false,"color":"#6aff57"}]],\
+                    required_tag:"abilityYuji.SecretInteractionRepetitiveBlackFlash"\
+                }\
+            },\
+            product:{\
+                ability:{\
+                    type:"ability",\
+                    name:[{"text":"S","italic":false,"color":"#50e600"},{"text":"h","italic":false,"color":"#4be90c"},{"text":"r","italic":false,"color":"#46ec18"},{"text":"i","italic":false,"color":"#41ef23"},{"text":"n","italic":false,"color":"#3df32f"},{"text":"k","italic":false,"color":"#38f63b"},{"text":"r","italic":false,"color":"#33f947"},{"text":"a","italic":false,"color":"#2efc52"},{"text":"y","italic":false,"color":"#29ff5e"}],\
+                    subtext:"idk",\
+                    model:"minecraft:interactables/ability/shrinkray/skin_default",\
+                    ownership_tag:"abilityShrinkray.Ownership",\
+                    equipped_tag:"abilityShrinkray.User",\
+                    items:{\
+                        request1:{type:"minecraft:dirt",tag:"mysterious_arrow:1b",count:1,name:"Mysterious Arrow",description:[[{"text":"Can be recovered","italic":false,"color":"gray"}],[{"text":"from ","italic":false,"color":"gray"},{"text":"Archaeology","italic":false,"color":"#c59c63"},{"text":" housed in ","italic":false,"color":"gray"},{"text":"Trail Ruins","italic":false,"color":"#9e3dff"}]]},\
+                        request2:{type:"minecraft:dirt",tag:"time_fragment:1b",count:8,name:"Time Fragment",description:[[{"text":"Rarely dropped","italic":false,"color":"gray"}],[{"text":"from slaying ","italic":false,"color":"gray"},{"text":"Endermen","italic":false,"color":"#a66bff"}]]}\
+                    },\
+                    advancements:{\
+                        request1:{path:"minecraft:nether/obtain_blaze_rod",name:"Into Fire",line:"[-1]"},\
+                        request2:{path:"minecraft:adventure/summon_iron_golem",name:"Hired Help",line:""}\
+                    },\
+                    bypass:"_BigCheese_"\
                 },\
                 skin1:{\
                     type:"skin",\

@@ -215,7 +215,7 @@ dir vfx {
             execute store result storage minecraft:universal vfx.id int 1 run scoreboard players get @s universalAbility.ID
             $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
                 $scoreboard players set @s universalVFX.ID $(id)
-                $function universal:ability/rig/play_animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
+                $function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
 
                 # if an output argument is present
                 execute if data storage minecraft:universal vfx.output run block { with storage minecraft:universal vfx
@@ -278,132 +278,168 @@ dir ability {
                     $loot replace entity @n[tag=aj.$(branch).bone.left_leg] hotbar.0 loot minecraft:player/left_leg
                     $loot replace entity @n[tag=aj.$(branch).bone.lower_left_leg] hotbar.0 loot minecraft:player/lower_left_leg
 
-                    data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:empty",chestplate_body:"minecraft:empty",chestplate_arms:"minecraft:empty",leggings_pants:"minecraft:empty",leggings_upper:"minecraft:empty",leggings_lower:"minecraft:empty",boots:"minecraft:empty"}}
-                    execute if items entity @s armor.head #minecraft:head_armor run {
-                        execute if items entity @s armor.head minecraft:netherite_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/netherite/helmet"}}
-                        execute if items entity @s armor.head minecraft:diamond_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/diamond/helmet"}}
-                        execute if items entity @s armor.head minecraft:iron_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/iron/helmet"}}
-                        execute if items entity @s armor.head minecraft:chainmail_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/chainmail/helmet"}}
-                        execute if items entity @s armor.head minecraft:golden_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/gold/helmet"}}
-                    }
+                    # Reset every slot so removing armor or trims clears previous display data.
+                    data merge storage minecraft:universal {"stable_player_display":{"helmet":"minecraft:empty","chestplate_body":"minecraft:empty","chestplate_arms":"minecraft:empty","leggings_pants":"minecraft:empty","leggings_upper":"minecraft:empty","leggings_lower":"minecraft:empty","boots":"minecraft:empty","head_base":"","head_pattern":"","head_material":"","chest_base":"","chest_pattern":"","chest_material":"","legs_base":"","legs_pattern":"","legs_material":"","feet_base":"","feet_pattern":"","feet_material":"","chestplate_arms_flipped":"minecraft:empty","leggings_upper_flipped":"minecraft:empty","leggings_lower_flipped":"minecraft:empty","boots_flipped":"minecraft:empty"}}
 
-                    execute if items entity @s armor.chest #minecraft:chest_armor run {
-                        execute if items entity @s armor.chest minecraft:netherite_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/netherite/chestplate/arms",chestplate_body:"minecraft:armor/netherite/chestplate/body"}}
-                        execute if items entity @s armor.chest minecraft:diamond_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/diamond/chestplate/arms",chestplate_body:"minecraft:armor/diamond/chestplate/body"}}
-                        execute if items entity @s armor.chest minecraft:iron_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/iron/chestplate/arms",chestplate_body:"minecraft:armor/iron/chestplate/body"}}
-                        execute if items entity @s armor.chest minecraft:chainmail_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/chainmail/chestplate/arms",chestplate_body:"minecraft:armor/chainmail/chestplate/body"}}
-                        execute if items entity @s armor.chest minecraft:golden_chestplate run data merge storage minecraft:universal {stable_player_display:{chestplate_arms:"minecraft:armor/gold/chestplate/arms",chestplate_body:"minecraft:armor/gold/chestplate/body"}}
-                    }
+                    # Detect head armor and its vanilla trim component on the source entity (@s).
+                    execute if items entity @s armor.head minecraft:netherite_helmet run data merge storage minecraft:universal {"stable_player_display":{"helmet":"minecraft:item/armor/helmet","head_base":"netherite"}}
+                    execute if items entity @s armor.head minecraft:diamond_helmet run data merge storage minecraft:universal {"stable_player_display":{"helmet":"minecraft:item/armor/helmet","head_base":"diamond"}}
+                    execute if items entity @s armor.head minecraft:iron_helmet run data merge storage minecraft:universal {"stable_player_display":{"helmet":"minecraft:item/armor/helmet","head_base":"iron"}}
+                    execute if items entity @s armor.head minecraft:chainmail_helmet run data merge storage minecraft:universal {"stable_player_display":{"helmet":"minecraft:item/armor/helmet","head_base":"chainmail"}}
+                    execute if items entity @s armor.head minecraft:golden_helmet run data merge storage minecraft:universal {"stable_player_display":{"helmet":"minecraft:item/armor/helmet","head_base":"gold"}}
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:bolt"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "bolt"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:coast"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "coast"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:dune"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "dune"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:eye"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "eye"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:flow"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "flow"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:host"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "host"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:raiser"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "raiser"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:rib"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "rib"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:sentry"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "sentry"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:shaper"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "shaper"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:silence"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "silence"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:snout"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "snout"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:spire"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "spire"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:tide"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "tide"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:vex"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "vex"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:ward"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "ward"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:wayfinder"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "wayfinder"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"pattern":"minecraft:wild"}}}}} run data modify storage minecraft:universal stable_player_display.head_pattern set value "wild"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:quartz"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "quartz"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:iron"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "iron"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:netherite"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "netherite"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:redstone"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "redstone"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:copper"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "copper"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:gold"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "gold"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:emerald"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "emerald"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:diamond"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "diamond"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:lapis"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "lapis"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:amethyst"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "amethyst"
+                    execute if data entity @s {"equipment":{"head":{"components":{"minecraft:trim":{"material":"minecraft:resin"}}}}} run data modify storage minecraft:universal stable_player_display.head_material set value "resin"
 
-                    execute if items entity @s armor.legs #minecraft:leg_armor run {
-                        execute if items entity @s armor.legs minecraft:netherite_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/netherite/leggings/pants",leggings_upper:"minecraft:armor/netherite/leggings/upper",leggings_lower:"minecraft:armor/netherite/leggings/lower"}}
-                        execute if items entity @s armor.legs minecraft:diamond_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/diamond/leggings/pants",leggings_upper:"minecraft:armor/diamond/leggings/upper",leggings_lower:"minecraft:armor/diamond/leggings/lower"}}
-                        execute if items entity @s armor.legs minecraft:iron_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/iron/leggings/pants",leggings_upper:"minecraft:armor/iron/leggings/upper",leggings_lower:"minecraft:armor/iron/leggings/lower"}}
-                        execute if items entity @s armor.legs minecraft:chainmail_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/chainmail/leggings/pants",leggings_upper:"minecraft:armor/chainmail/leggings/upper",leggings_lower:"minecraft:armor/chainmail/leggings/lower"}}
-                        execute if items entity @s armor.legs minecraft:golden_leggings run data merge storage minecraft:universal {stable_player_display:{leggings_pants:"minecraft:armor/gold/leggings/pants",leggings_upper:"minecraft:armor/gold/leggings/upper",leggings_lower:"minecraft:armor/gold/leggings/lower"}}
-                    }
+                    # Detect chest armor and its vanilla trim component on the source entity (@s).
+                    execute if items entity @s armor.chest minecraft:netherite_chestplate run data merge storage minecraft:universal {"stable_player_display":{"chestplate_body":"minecraft:item/armor/chestplate/body","chestplate_arms":"minecraft:item/armor/chestplate/arms","chest_base":"netherite","chestplate_arms_flipped":"minecraft:item/armor/chestplate/arms_flipped"}}
+                    execute if items entity @s armor.chest minecraft:diamond_chestplate run data merge storage minecraft:universal {"stable_player_display":{"chestplate_body":"minecraft:item/armor/chestplate/body","chestplate_arms":"minecraft:item/armor/chestplate/arms","chest_base":"diamond","chestplate_arms_flipped":"minecraft:item/armor/chestplate/arms_flipped"}}
+                    execute if items entity @s armor.chest minecraft:iron_chestplate run data merge storage minecraft:universal {"stable_player_display":{"chestplate_body":"minecraft:item/armor/chestplate/body","chestplate_arms":"minecraft:item/armor/chestplate/arms","chest_base":"iron","chestplate_arms_flipped":"minecraft:item/armor/chestplate/arms_flipped"}}
+                    execute if items entity @s armor.chest minecraft:chainmail_chestplate run data merge storage minecraft:universal {"stable_player_display":{"chestplate_body":"minecraft:item/armor/chestplate/body","chestplate_arms":"minecraft:item/armor/chestplate/arms","chest_base":"chainmail","chestplate_arms_flipped":"minecraft:item/armor/chestplate/arms_flipped"}}
+                    execute if items entity @s armor.chest minecraft:golden_chestplate run data merge storage minecraft:universal {"stable_player_display":{"chestplate_body":"minecraft:item/armor/chestplate/body","chestplate_arms":"minecraft:item/armor/chestplate/arms","chest_base":"gold","chestplate_arms_flipped":"minecraft:item/armor/chestplate/arms_flipped"}}
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:bolt"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "bolt"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:coast"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "coast"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:dune"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "dune"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:eye"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "eye"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:flow"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "flow"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:host"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "host"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:raiser"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "raiser"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:rib"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "rib"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:sentry"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "sentry"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:shaper"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "shaper"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:silence"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "silence"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:snout"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "snout"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:spire"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "spire"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:tide"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "tide"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:vex"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "vex"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:ward"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "ward"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:wayfinder"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "wayfinder"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"pattern":"minecraft:wild"}}}}} run data modify storage minecraft:universal stable_player_display.chest_pattern set value "wild"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:quartz"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "quartz"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:iron"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "iron"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:netherite"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "netherite"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:redstone"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "redstone"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:copper"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "copper"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:gold"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "gold"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:emerald"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "emerald"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:diamond"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "diamond"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:lapis"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "lapis"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:amethyst"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "amethyst"
+                    execute if data entity @s {"equipment":{"chest":{"components":{"minecraft:trim":{"material":"minecraft:resin"}}}}} run data modify storage minecraft:universal stable_player_display.chest_material set value "resin"
 
-                    execute if items entity @s armor.feet #minecraft:foot_armor run {
-                        execute if items entity @s armor.feet minecraft:netherite_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/netherite/boots"}}
-                        execute if items entity @s armor.feet minecraft:diamond_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/diamond/boots"}}
-                        execute if items entity @s armor.feet minecraft:iron_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/iron/boots"}}
-                        execute if items entity @s armor.feet minecraft:chainmail_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/chainmail/boots"}}
-                        execute if items entity @s armor.feet minecraft:golden_boots run data merge storage minecraft:universal {stable_player_display:{boots:"minecraft:armor/gold/boots"}}
-                    }
+                    # Detect legs armor and its vanilla trim component on the source entity (@s).
+                    execute if items entity @s armor.legs minecraft:netherite_leggings run data merge storage minecraft:universal {"stable_player_display":{"leggings_pants":"minecraft:item/armor/leggings/pants","leggings_upper":"minecraft:item/armor/leggings/upper","leggings_lower":"minecraft:item/armor/leggings/lower","legs_base":"netherite","leggings_upper_flipped":"minecraft:item/armor/leggings/upper_flipped","leggings_lower_flipped":"minecraft:item/armor/leggings/lower_flipped"}}
+                    execute if items entity @s armor.legs minecraft:diamond_leggings run data merge storage minecraft:universal {"stable_player_display":{"leggings_pants":"minecraft:item/armor/leggings/pants","leggings_upper":"minecraft:item/armor/leggings/upper","leggings_lower":"minecraft:item/armor/leggings/lower","legs_base":"diamond","leggings_upper_flipped":"minecraft:item/armor/leggings/upper_flipped","leggings_lower_flipped":"minecraft:item/armor/leggings/lower_flipped"}}
+                    execute if items entity @s armor.legs minecraft:iron_leggings run data merge storage minecraft:universal {"stable_player_display":{"leggings_pants":"minecraft:item/armor/leggings/pants","leggings_upper":"minecraft:item/armor/leggings/upper","leggings_lower":"minecraft:item/armor/leggings/lower","legs_base":"iron","leggings_upper_flipped":"minecraft:item/armor/leggings/upper_flipped","leggings_lower_flipped":"minecraft:item/armor/leggings/lower_flipped"}}
+                    execute if items entity @s armor.legs minecraft:chainmail_leggings run data merge storage minecraft:universal {"stable_player_display":{"leggings_pants":"minecraft:item/armor/leggings/pants","leggings_upper":"minecraft:item/armor/leggings/upper","leggings_lower":"minecraft:item/armor/leggings/lower","legs_base":"chainmail","leggings_upper_flipped":"minecraft:item/armor/leggings/upper_flipped","leggings_lower_flipped":"minecraft:item/armor/leggings/lower_flipped"}}
+                    execute if items entity @s armor.legs minecraft:golden_leggings run data merge storage minecraft:universal {"stable_player_display":{"leggings_pants":"minecraft:item/armor/leggings/pants","leggings_upper":"minecraft:item/armor/leggings/upper","leggings_lower":"minecraft:item/armor/leggings/lower","legs_base":"gold","leggings_upper_flipped":"minecraft:item/armor/leggings/upper_flipped","leggings_lower_flipped":"minecraft:item/armor/leggings/lower_flipped"}}
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:bolt"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "bolt"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:coast"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "coast"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:dune"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "dune"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:eye"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "eye"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:flow"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "flow"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:host"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "host"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:raiser"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "raiser"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:rib"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "rib"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:sentry"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "sentry"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:shaper"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "shaper"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:silence"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "silence"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:snout"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "snout"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:spire"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "spire"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:tide"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "tide"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:vex"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "vex"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:ward"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "ward"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:wayfinder"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "wayfinder"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"pattern":"minecraft:wild"}}}}} run data modify storage minecraft:universal stable_player_display.legs_pattern set value "wild"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:quartz"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "quartz"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:iron"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "iron"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:netherite"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "netherite"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:redstone"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "redstone"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:copper"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "copper"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:gold"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "gold"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:emerald"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "emerald"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:diamond"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "diamond"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:lapis"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "lapis"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:amethyst"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "amethyst"
+                    execute if data entity @s {"equipment":{"legs":{"components":{"minecraft:trim":{"material":"minecraft:resin"}}}}} run data modify storage minecraft:universal stable_player_display.legs_material set value "resin"
+
+                    # Detect feet armor and its vanilla trim component on the source entity (@s).
+                    execute if items entity @s armor.feet minecraft:netherite_boots run data merge storage minecraft:universal {"stable_player_display":{"boots":"minecraft:item/armor/boots","feet_base":"netherite","boots_flipped":"minecraft:item/armor/boots_flipped"}}
+                    execute if items entity @s armor.feet minecraft:diamond_boots run data merge storage minecraft:universal {"stable_player_display":{"boots":"minecraft:item/armor/boots","feet_base":"diamond","boots_flipped":"minecraft:item/armor/boots_flipped"}}
+                    execute if items entity @s armor.feet minecraft:iron_boots run data merge storage minecraft:universal {"stable_player_display":{"boots":"minecraft:item/armor/boots","feet_base":"iron","boots_flipped":"minecraft:item/armor/boots_flipped"}}
+                    execute if items entity @s armor.feet minecraft:chainmail_boots run data merge storage minecraft:universal {"stable_player_display":{"boots":"minecraft:item/armor/boots","feet_base":"chainmail","boots_flipped":"minecraft:item/armor/boots_flipped"}}
+                    execute if items entity @s armor.feet minecraft:golden_boots run data merge storage minecraft:universal {"stable_player_display":{"boots":"minecraft:item/armor/boots","feet_base":"gold","boots_flipped":"minecraft:item/armor/boots_flipped"}}
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:bolt"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "bolt"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:coast"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "coast"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:dune"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "dune"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:eye"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "eye"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:flow"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "flow"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:host"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "host"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:raiser"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "raiser"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:rib"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "rib"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:sentry"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "sentry"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:shaper"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "shaper"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:silence"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "silence"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:snout"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "snout"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:spire"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "spire"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:tide"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "tide"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:vex"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "vex"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:ward"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "ward"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:wayfinder"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "wayfinder"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"pattern":"minecraft:wild"}}}}} run data modify storage minecraft:universal stable_player_display.feet_pattern set value "wild"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:quartz"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "quartz"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:iron"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "iron"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:netherite"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "netherite"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:redstone"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "redstone"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:copper"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "copper"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:gold"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "gold"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:emerald"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "emerald"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:diamond"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "diamond"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:lapis"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "lapis"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:amethyst"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "amethyst"
+                    execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:resin"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "resin"
 
                     block { with storage minecraft:universal stable_player_display
-                        $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)"}}}
-                        $execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)"}}}
+                        $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)","minecraft:custom_model_data":{strings:["$(head_base)","$(head_pattern)","$(head_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms_flipped)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper_flipped)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower_flipped)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)","minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots_flipped)","minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
                     }
                 }
             }
-        }
-
-        function play_animation {
-            # function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"play"}}
-            # or
-            # function universal:ability/rig/play_animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:5}}
-
-            $data modify storage minecraft:universal ability.rig.play_animation merge value $(arguments)
-            execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.rig.play_animation
-                $execute store result storage minecraft:universal ability.rig.play_animation.id int 1 run scoreboard players get @s $(objective)
-                block { with storage minecraft:universal ability.rig.play_animation
-                    $execute as @p[scores={universalAbility.ID=$(id)}] run {
-                        execute unless score @s traitShrinkray.Size matches 1.. run scoreboard players set .fetchSize traitShrinkray.Size 0
-                        execute if score @s traitShrinkray.Size matches 1 run scoreboard players set .fetchSize traitShrinkray.Size 1
-                        execute if score @s traitShrinkray.Size matches 2 run scoreboard players set .fetchSize traitShrinkray.Size 2
-                    }
-                }
-            }
-            execute if entity @s[type=minecraft:player] run {
-                execute unless score @s traitShrinkray.Size matches 1.. run scoreboard players set .fetchSize traitShrinkray.Size 0
-                execute if score @s traitShrinkray.Size matches 1 run scoreboard players set .fetchSize traitShrinkray.Size 1
-                execute if score @s traitShrinkray.Size matches 2 run scoreboard players set .fetchSize traitShrinkray.Size 2
-            }
-
-            # playing animation WITHOUT tweening
-            execute unless data storage minecraft:universal ability.rig.play_animation{style:"tween"} run block { with storage minecraft:universal ability.rig.play_animation
-                $execute if score .fetchSize traitShrinkray.Size matches 0 run function aj:$(rig)/animations/$(animation)/$(style)
-                $execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/$(style)
-                $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/$(style)
-            }
-            # playing animation WITH tweening
-            # playing animation WITH tweening
-            execute if data storage minecraft:universal ability.rig.play_animation{style:"tween"} run {
-                block { with storage minecraft:universal ability.rig.play_animation
-                    $scoreboard players set .tweenFrame traitShrinkray.Frame $(tweened_frame)
-                }
-
-                execute if score .fetchSize traitShrinkray.Size matches 1 run {
-                    function universal:math/multiply {value:2,score:".tweenFrame",objective:"traitShrinkray.Frame"}
-                    function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
-                }
-
-                execute if score .fetchSize traitShrinkray.Size matches 2 run {
-                    function universal:math/multiply {value:4,score:".tweenFrame",objective:"traitShrinkray.Frame"}
-                    function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
-                }
-
-                execute store result storage minecraft:universal ability.rig.play_animation.adjusted_frame int 1 run scoreboard players get .tweenFrame traitShrinkray.Frame
-
-                block { with storage minecraft:universal ability.rig.play_animation
-                    $execute if score .fetchSize traitShrinkray.Size matches 0 run function aj:$(rig)/animations/$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
-                    $execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
-                    $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
-                }
-
-                scoreboard players reset .tweenFrame traitShrinkray.Frame
-            }
-            # data remove storage minecraft:universal ability.rig.play_animation
-            scoreboard players reset .fetchSize traitShrinkray.Size
-        }
-
-        function sfx {
-            # function universal:ability/rig/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
-
-            scoreboard players set .fetchSize traitShrinkray.Size 0
-            execute if entity @s[type=minecraft:player] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
-
-            $data modify storage minecraft:universal ability.rig.objective set value "$(objective)"
-            execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.rig
-                $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-                block { with storage minecraft:universal ability.rig
-                    $execute as @p[scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
-                }
-            }
-
-            $execute if score .fetchSize traitShrinkray.Size matches 1 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.50
-            $execute if score .fetchSize traitShrinkray.Size matches 2 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 0.75
-            $execute unless score .fetchSize traitShrinkray.Size matches 1..2 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.00
         }
 
         dir mount {
@@ -505,6 +541,78 @@ dir ability {
             block { with storage minecraft:universal ability.rig
                 $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
             }
+        }
+    }
+
+    dir play {
+        function animation {
+            # function universal:ability/play/animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"play"}}
+            # or
+            # function universal:ability/play/animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:5}}
+
+            $data modify storage minecraft:universal ability.play.animation merge value $(arguments)
+            execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.play.animation
+                $execute store result storage minecraft:universal ability.play.animation.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.play.animation
+                    $execute as @p[scores={universalAbility.ID=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+                }
+            }
+            execute if entity @s[type=minecraft:player] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+
+            # playing animation WITHOUT tweening
+            execute unless data storage minecraft:universal ability.play.animation{style:"tween"} run block { with storage minecraft:universal ability.play.animation
+                $execute unless score .fetchSize traitShrinkray.Size matches 1.. run function aj:$(rig)/animations/$(animation)/$(style)
+                $execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/$(style)
+                $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/$(style)
+            }
+            # playing animation WITH tweening
+            # playing animation WITH tweening
+            execute if data storage minecraft:universal ability.play.animation{style:"tween"} run {
+                block { with storage minecraft:universal ability.play.animation
+                    $scoreboard players set .tweenFrame traitShrinkray.Frame $(tweened_frame)
+                }
+
+                execute if score .fetchSize traitShrinkray.Size matches 1 run {
+                    function universal:math/multiply {value:2,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                    function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                }
+
+                execute if score .fetchSize traitShrinkray.Size matches 2 run {
+                    function universal:math/multiply {value:4,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                    function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+                }
+
+                execute store result storage minecraft:universal ability.play.animation.adjusted_frame int 1 run scoreboard players get .tweenFrame traitShrinkray.Frame
+
+                block { with storage minecraft:universal ability.play.animation
+                    $execute unless score .fetchSize traitShrinkray.Size matches 1.. run function aj:$(rig)/animations/$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
+                    $execute if score .fetchSize traitShrinkray.Size matches 1 run function aj:$(rig)/animations/shrink_$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
+                    $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/tween {to_frame:$(adjusted_frame),duration:$(tween_duration)}
+                }
+
+                scoreboard players reset .tweenFrame traitShrinkray.Frame
+            }
+            data remove storage minecraft:universal ability.play.animation
+            scoreboard players reset .fetchSize traitShrinkray.Size
+        }
+
+        function sfx {
+            # function universal:ability/play/sfx {sfx:"minecraft:ability.the_world.toggle.spawn",selector:"@a",volume:1,objective:"universalAbility.ID"}
+
+            scoreboard players set .fetchSize traitShrinkray.Size 0
+            execute if entity @s[type=minecraft:player] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+
+            $data modify storage minecraft:universal ability.play.objective set value "$(objective)"
+            execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.play
+                $execute store result storage minecraft:universal ability.play.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.play
+                    $execute as @p[scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+                }
+            }
+
+            $execute unless score .fetchSize traitShrinkray.Size matches 1.. at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.00
+            $execute if score .fetchSize traitShrinkray.Size matches 1 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.50
+            $execute if score .fetchSize traitShrinkray.Size matches 2 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 0.75
         }
     }
 

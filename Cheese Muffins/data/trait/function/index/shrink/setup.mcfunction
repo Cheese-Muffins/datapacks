@@ -8,4 +8,4 @@ attribute @s minecraft:max_health modifier add trait:ability/shrinkray -0.2 add_
 attribute @s minecraft:block_interaction_range modifier add trait:ability/shrinkray -0.33 add_multiplied_total
 attribute @s minecraft:entity_interaction_range modifier add trait:ability/shrinkray -0.33 add_multiplied_total
 scoreboard players set @s traitShrinkray.Size 1
-function trait:change_size
+function trait:size/change

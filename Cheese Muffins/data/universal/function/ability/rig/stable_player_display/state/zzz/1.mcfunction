@@ -1,7 +1,13 @@
 # Generated with MC-Build
 
-execute if items entity @s armor.head minecraft:netherite_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/netherite/helmet"}}
-execute if items entity @s armor.head minecraft:diamond_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/diamond/helmet"}}
-execute if items entity @s armor.head minecraft:iron_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/iron/helmet"}}
-execute if items entity @s armor.head minecraft:chainmail_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/chainmail/helmet"}}
-execute if items entity @s armor.head minecraft:golden_helmet run data merge storage minecraft:universal {stable_player_display:{helmet:"minecraft:armor/gold/helmet"}}
+$execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)","minecraft:custom_model_data":{strings:["$(head_base)","$(head_pattern)","$(head_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms_flipped)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper_flipped)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower_flipped)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)","minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots_flipped)","minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}

@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-function universal:math/multiply {value:2,score:".tweenFrame",objective:"traitShrinkray.Frame"}
-function universal:math/divide {value:3,score:".tweenFrame",objective:"traitShrinkray.Frame"}
+$scoreboard players set @s universalText.ID $(id)
+tag @s add universalText.IDAssigned
+execute if data storage minecraft:universal ability.rig.text.arguments.output run function universal:ability/rig/zzz/8 with storage minecraft:universal ability.rig.text.arguments
