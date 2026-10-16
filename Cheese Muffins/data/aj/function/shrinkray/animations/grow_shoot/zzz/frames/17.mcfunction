@@ -18,4 +18,3 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 function animated_java:global/data_manager/write with storage animated_java:temp args
 execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/17_locator_commands
 execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/17_locator_constant
-execute unless entity @s[tag=aj.transforms_only] positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/17_locator_sfx

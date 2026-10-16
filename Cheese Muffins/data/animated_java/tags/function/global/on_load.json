@@ -3,6 +3,7 @@
 	"values": [
 		"aj:billy_vfx/on_load",
 		"aj:billy/on_load",
+		"aj:shrinkray_vfx/on_load",
 		"aj:shrinkray/on_load",
 		"aj:text_display/on_load",
 		"aj:the_world_vfx/on_load",

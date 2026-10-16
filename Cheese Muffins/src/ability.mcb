@@ -1631,6 +1631,8 @@ dir shrinkray {
     }
 
     function install {
+        scoreboard objectives add abilityShrinkray.BeamDistance dummy
+
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Shoot",storage:"shrinkray",path:"1a",move:1,cooldown:1}
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Self",storage:"shrinkray",path:"1b",move:1,cooldown:3}
         
@@ -1681,14 +1683,51 @@ dir shrinkray {
                     function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
 
                     # restraints
+                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
                     function universal:ability/restraint/cooldown {name:"Shrinkray",move:1}
                     function universal:ability/restraint/cancelable {move:1}
                     tag @s add universalAbility.Animating
 
                     # specific
+                    tag @s add abilityShrinkray.ShrinkBeam
                     function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                     function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                 }
+            }
+        }
+
+        dir beam {
+            function create {
+                execute if entity @s[tag=abilityShrinkray.ShrinkBeam] run data merge storage minecraft:ability {shrinkray:{beam:{type:"shrink",check_size:1}}}
+                execute if entity @s[tag=abilityShrinkray.GrowBeam] run data merge storage minecraft:ability {shrinkray:{beam:{type:"grow",check_size:2}}}
+
+                execute store result storage minecraft:ability shrinkray.beam.id int 1 run scoreboard players get @s universalAbility.ID
+                execute store result storage minecraft:ability shrinkray.beam.y_rotation float 0.1 run data get entity @s Rotation[1] 10
+                block { with storage minecraft:ability shrinkray.beam
+                    $execute rotated ~-2 $(y_rotation) run {
+                        function ability:shrinkray/moves/beam/distance with storage minecraft:ability shrinkray.beam
+                        execute store result storage minecraft:ability shrinkray.beam.size int 0.1 run scoreboard players get @s abilityShrinkray.BeamDistance
+                        scoreboard players reset @s abilityShrinkray.BeamDistance
+                        tag @s remove temp
+
+                        block { with storage minecraft:ability shrinkray.beam
+                            $function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"beam_$(size)"}}
+                        }
+                    }
+                }
+            }
+
+            function distance {
+                say go
+                scoreboard players add @s abilityShrinkray.BeamDistance 1
+
+                $execute as @e[type=!#universal:not_mob,distance=..1.5] unless score @s traitShrinkray.Size matches $(check_size) unless score @s universalAbility.ID matches $(id) run function trait:apply {args:{type:"$(type)",proper:"Shrinkray",duration:30}}
+
+                execute if predicate universal:chance/0.10 run particle dust{color:[0.435,1.000,0.000],scale:1} ~ ~ ~ 0.5 0.5 0.5 0 1 force @a
+
+                execute unless block ~ ~ ~ #ability:shrinkray/beam run tag @s add temp
+
+                execute positioned ^ ^ ^0.1 unless score @s abilityShrinkray.BeamDistance matches 90.. unless entity @s[tag=temp] run function ability:shrinkray/moves/beam/distance with storage minecraft:ability shrinkray.beam
             }
         }
 
@@ -1708,6 +1747,7 @@ dir shrinkray {
                 function universal:attribute/revoke {type:"minecraft:jump_strength",path:"ability:generic"}
                 function universal:ability/revoke/cancelable {player:"abilityShrinkray.User"}
                 tag @s remove universalAbility.Animating
+                tag @s remove abilityShrinkray.ShrinkBeam
             }
         }
     }
