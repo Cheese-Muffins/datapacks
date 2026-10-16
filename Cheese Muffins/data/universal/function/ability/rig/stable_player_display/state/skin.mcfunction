@@ -1,6 +1,6 @@
 # Generated with MC-Build
 
-$function aj:$(branch)/variants/player_model/apply
+$execute as @n[tag=aj.$(branch).root] run function aj:$(branch)/variants/player_model/apply
 $loot replace entity @n[tag=aj.$(branch).bone.head] hotbar.0 loot minecraft:player/head
 $loot replace entity @n[tag=aj.$(branch).bone.right_arm] hotbar.0 loot minecraft:player/right_arm
 $loot replace entity @n[tag=aj.$(branch).bone.right_forearm] hotbar.0 loot minecraft:player/right_forearm
@@ -148,4 +148,28 @@ execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{
 execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:lapis"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "lapis"
 execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:amethyst"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "amethyst"
 execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:resin"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "resin"
+data modify storage minecraft:universal stable_player_display.head_glint set value "false"
+data modify storage minecraft:universal stable_player_display.head_enchant_count set value 0
+execute store result storage minecraft:universal stable_player_display.head_enchant_count int 1 run data get entity @s equipment.head.components."minecraft:enchantments"
+execute unless data storage minecraft:universal {stable_player_display:{head_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.head_glint set value "true"
+execute if items entity @s armor.head *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.head_glint set value "true"
+execute if items entity @s armor.head *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.head_glint set value "false"
+data modify storage minecraft:universal stable_player_display.chest_glint set value "false"
+data modify storage minecraft:universal stable_player_display.chest_enchant_count set value 0
+execute store result storage minecraft:universal stable_player_display.chest_enchant_count int 1 run data get entity @s equipment.chest.components."minecraft:enchantments"
+execute unless data storage minecraft:universal {stable_player_display:{chest_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.chest_glint set value "true"
+execute if items entity @s armor.chest *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.chest_glint set value "true"
+execute if items entity @s armor.chest *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.chest_glint set value "false"
+data modify storage minecraft:universal stable_player_display.legs_glint set value "false"
+data modify storage minecraft:universal stable_player_display.legs_enchant_count set value 0
+execute store result storage minecraft:universal stable_player_display.legs_enchant_count int 1 run data get entity @s equipment.legs.components."minecraft:enchantments"
+execute unless data storage minecraft:universal {stable_player_display:{legs_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.legs_glint set value "true"
+execute if items entity @s armor.legs *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.legs_glint set value "true"
+execute if items entity @s armor.legs *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.legs_glint set value "false"
+data modify storage minecraft:universal stable_player_display.feet_glint set value "false"
+data modify storage minecraft:universal stable_player_display.feet_enchant_count set value 0
+execute store result storage minecraft:universal stable_player_display.feet_enchant_count int 1 run data get entity @s equipment.feet.components."minecraft:enchantments"
+execute unless data storage minecraft:universal {stable_player_display:{feet_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.feet_glint set value "true"
+execute if items entity @s armor.feet *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.feet_glint set value "true"
+execute if items entity @s armor.feet *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.feet_glint set value "false"
 function universal:ability/rig/stable_player_display/state/zzz/1 with storage minecraft:universal stable_player_display

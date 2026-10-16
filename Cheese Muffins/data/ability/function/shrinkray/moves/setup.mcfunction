@@ -1,8 +1,9 @@
 # Generated with MC-Build
 
-$execute rotated ~ 0 run function aj:shrinkray/summon {args:{animation: '$(animation)', start_animation: true}}
-execute store result storage minecraft:ability shrinkray.id int 1 run scoreboard players get @s universalAbility.ID
-execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root] unless score @s universalAbility.ID matches 1.. run function ability:shrinkray/moves/zzz/0 with storage minecraft:ability shrinkray
+execute rotated ~ 0 run function aj:shrinkray/summon {args:{}}
+$data merge storage minecraft:ability {shrinkray:{setup:{rig:"$(rig)",animation:'$(animation)'}}}
+execute store result storage minecraft:ability shrinkray.setup.id int 1 run scoreboard players get @s universalAbility.ID
+execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root] unless score @s universalAbility.ID matches 1.. run function ability:shrinkray/moves/zzz/0 with storage minecraft:ability shrinkray.setup
 visibility disable @s @a ignore_perspective render_passengers
 function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
 function universal:ability/rig/mount/player {user:"abilityShrinkray.User",rig:"shrinkray",objective:"universalAbility.ID"}

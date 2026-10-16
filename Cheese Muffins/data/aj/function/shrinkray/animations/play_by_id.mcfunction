@@ -2,4 +2,3 @@
 execute if score @s aj.shrinkray.animation_id matches 1 run function aj:shrinkray/animations/self_shrink/play_exclusive
 execute if score @s aj.shrinkray.animation_id matches 2 run function aj:shrinkray/animations/self_grow/play_exclusive
 execute if score @s aj.shrinkray.animation_id matches 3 run function aj:shrinkray/animations/shoot/play_exclusive
-execute if score @s aj.shrinkray.animation_id matches 4 run function aj:shrinkray/animations/test/play_exclusive

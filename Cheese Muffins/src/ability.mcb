@@ -1212,16 +1212,10 @@ dir the_world {
 
                     execute store result storage minecraft:ability the_world.knife_throw.id int 1 run scoreboard players get @s universalAbility.ID
                     execute unless entity @s[tag=customTheWorld.StoppingTime] run {
-                        data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
-                        data modify storage minecraft:universal vfx.arguments.animation set value "knife"
-                        data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/default_throw/setup with storage minecraft:ability the_world.knife_throw"
-                        function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+                        function universal:vfx/initialize {arguments:{branch:"the_world",animation:"knife",output:"function ability:the_world/moves/2/default_throw/setup with storage minecraft:ability the_world.knife_throw"}}
                     }
                     execute if entity @s[tag=customTheWorld.StoppingTime] run {
-                        data modify storage minecraft:universal vfx.arguments.branch set value "the_world"
-                        data modify storage minecraft:universal vfx.arguments.animation set value "knife"
-                        data modify storage minecraft:universal vfx.arguments.output set value "function ability:the_world/moves/2/timestop_throw/setup with storage minecraft:ability the_world.knife_throw"
-                        function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+                        function universal:vfx/initialize {arguments:{branch:"the_world",animation:"knife",output:"function ability:the_world/moves/2/timestop_throw/setup with storage minecraft:ability the_world.knife_throw"}}
                     }
 
                     $execute positioned ^$(spread) ^ ^ unless score .count abilityTheWorld.KnifeThrowSpread matches $(count).. run function ability:the_world/moves/2/logic/create with storage minecraft:ability the_world.knife_throw
@@ -1514,23 +1508,23 @@ dir the_world {
         }
 
         function meter {
-            $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B9"
-            $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B8"
-            $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B7"
-            $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B6"
-            $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B5"
-            $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B4"
-            $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B3"
-            $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B2"
-            $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B1"
-            $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02B0"
-            $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A9"
-            $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A8"
-            $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A7"
-            $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A6"
-            $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A5"
+            $execute if score @s universalAbility.AwakeningDuration matches $(15a)..$(16) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03B4"
+            $execute if score @s universalAbility.AwakeningDuration matches $(14a)..$(15b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03B5"
+            $execute if score @s universalAbility.AwakeningDuration matches $(13a)..$(14b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03B6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(12a)..$(13b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03B7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(11a)..$(12b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03B8"
+            $execute if score @s universalAbility.AwakeningDuration matches $(10a)..$(11b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03B9"
+            $execute if score @s universalAbility.AwakeningDuration matches $(9a)..$(10b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C0"
+            $execute if score @s universalAbility.AwakeningDuration matches $(8a)..$(9b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C1"
+            $execute if score @s universalAbility.AwakeningDuration matches $(7a)..$(8b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C2"
+            $execute if score @s universalAbility.AwakeningDuration matches $(6a)..$(7b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C3"
+            $execute if score @s universalAbility.AwakeningDuration matches $(5a)..$(6b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C4"
+            $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C5"
+            $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C6"
+            $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C7"
+            $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C8"
             execute unless score @s universalAbility.AwakeningDuration matches 1.. run {
-                data modify storage minecraft:ability the_world.hotbar.awakening set value "u02A4"
+                data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C9"
                 tag @s remove abilityTheWorld.RageMode
             }
         }
@@ -1650,11 +1644,13 @@ dir shrinkray {
 
     dir moves {
         function setup {
-            $execute rotated ~ 0 run function aj:shrinkray/summon {args:{animation: '$(animation)', start_animation: true}}
+            execute rotated ~ 0 run function aj:shrinkray/summon {args:{}}
                 
-            execute store result storage minecraft:ability shrinkray.id int 1 run scoreboard players get @s universalAbility.ID
-            execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability shrinkray
+            $data merge storage minecraft:ability {shrinkray:{setup:{rig:"$(rig)",animation:'$(animation)'}}}
+            execute store result storage minecraft:ability shrinkray.setup.id int 1 run scoreboard players get @s universalAbility.ID
+            execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability shrinkray.setup
                 $scoreboard players set @s universalAbility.ID $(id)
+                $function universal:ability/play/animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
             }
 
             visibility disable @s @a ignore_perspective render_passengers

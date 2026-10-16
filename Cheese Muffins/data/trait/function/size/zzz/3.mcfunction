@@ -7,7 +7,10 @@ execute if score .currentSize traitShrinkray.Size matches 0 run function trait:s
 execute if score .currentSize traitShrinkray.Size matches 1 run function trait:size/calculate/small
 execute if score .currentSize traitShrinkray.Size matches 2 run function trait:size/calculate/large
 execute store result storage minecraft:trait size.frame int 1 run scoreboard players get @s traitShrinkray.Frame
+$function aj:$(path)/animations/get_name_by_id
+data modify storage minecraft:trait size.animation set from storage animated_java:runtime animation.name
+function trait:size/zzz/4 with storage minecraft:trait size
 $execute unless score @s traitShrinkray.Size matches 1.. run function aj:$(path)/animations/play_by_id
 $execute if score @s traitShrinkray.Size matches 1 run function aj:$(path)/animations/shrink_by_id
 $execute if score @s traitShrinkray.Size matches 2 run function aj:$(path)/animations/grow_by_id
-function trait:size/zzz/4 with storage minecraft:trait size
+function trait:size/zzz/7 with storage minecraft:trait size

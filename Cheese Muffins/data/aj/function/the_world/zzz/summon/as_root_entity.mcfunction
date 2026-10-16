@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:the_world"
-data modify storage animated_java:temp entry.data.rig_hash set value "7f78135885cee5f0344cbfbb2483eb40d1dddfd9daf340bd85d1711ad9f5f322"
+data modify storage animated_java:temp entry.data.rig_hash set value "ce279e166b33552f2dbd99d2723f517d08d48896ba44606443f92cd8c8313a66"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0.2313 ^1.3297 ^-0.1734 {Tags:["aj.global.bone.dio.decendant","aj.global.bone.dio.decendant.locator","aj.global.bone.dio.tree","aj.global.bone.size.decendant","aj.global.bone.size.decendant.locator","aj.global.bone.size.tree","aj.global.bone.upper_body1.child","aj.global.bone.upper_body1.child.locator","aj.global.bone.upper_body1.decendant","aj.global.bone.upper_body1.decendant.locator","aj.global.bone.upper_body1.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.dio_shoulder","aj.new","aj.the_world.bone.dio.decendant","aj.the_world.bone.dio.decendant.locator","aj.the_world.bone.dio.tree","aj.the_world.bone.size.decendant","aj.the_world.bone.size.decendant.locator","aj.the_world.bone.size.tree","aj.the_world.bone.upper_body1.child","aj.the_world.bone.upper_body1.child.locator","aj.the_world.bone.upper_body1.decendant","aj.the_world.bone.upper_body1.decendant.locator","aj.the_world.bone.upper_body1.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.dio_shoulder","aj.the_world.node","aj.the_world.node.dio_shoulder"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.dio_shoulder, tag=aj.new, distance=..3 ] run function aj:the_world/zzz/summon/as_locator/dio_shoulder
@@ -81,12 +81,12 @@ data modify storage animated_java:temp entry.data.uuids_by_name.lower_right_leg_
 execute on passengers if entity @s[tag=aj.the_world.node.lower_right_leg] run function aj:the_world/zzz/summon/as_node/lower_right_leg
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.lower_right_leg set from storage animated_java:gu out
-execute on passengers if entity @s[tag=aj.the_world.node.chestplate_body] run function aj:the_world/zzz/summon/as_node/chestplate_body
-data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
-data modify storage animated_java:temp entry.data.uuids_by_name.chestplate_body set from storage animated_java:gu out
 execute on passengers if entity @s[tag=aj.the_world.node.leggings_pants] run function aj:the_world/zzz/summon/as_node/leggings_pants
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.leggings_pants set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.the_world.node.chestplate_body] run function aj:the_world/zzz/summon/as_node/chestplate_body
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.chestplate_body set from storage animated_java:gu out
 execute on passengers if entity @s[tag=aj.the_world.node.waist_group] run function aj:the_world/zzz/summon/as_node/waist_group
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.waist_group set from storage animated_java:gu out

@@ -265,8 +265,7 @@ dir ability {
                 }
 
                 function skin {
-                    $function aj:$(branch)/variants/player_model/apply
-                    
+                    $execute as @n[tag=aj.$(branch).root] run function aj:$(branch)/variants/player_model/apply
                     $loot replace entity @n[tag=aj.$(branch).bone.head] hotbar.0 loot minecraft:player/head
                     $loot replace entity @n[tag=aj.$(branch).bone.right_arm] hotbar.0 loot minecraft:player/right_arm
                     $loot replace entity @n[tag=aj.$(branch).bone.right_forearm] hotbar.0 loot minecraft:player/right_forearm
@@ -425,18 +424,44 @@ dir ability {
                     execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:amethyst"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "amethyst"
                     execute if data entity @s {"equipment":{"feet":{"components":{"minecraft:trim":{"material":"minecraft:resin"}}}}} run data modify storage minecraft:universal stable_player_display.feet_material set value "resin"
 
+                    # Mirror enchantment glint per slot, including explicit overrides.
+                    data modify storage minecraft:universal stable_player_display.head_glint set value "false"
+                    data modify storage minecraft:universal stable_player_display.head_enchant_count set value 0
+                    execute store result storage minecraft:universal stable_player_display.head_enchant_count int 1 run data get entity @s equipment.head.components."minecraft:enchantments"
+                    execute unless data storage minecraft:universal {stable_player_display:{head_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.head_glint set value "true"
+                    execute if items entity @s armor.head *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.head_glint set value "true"
+                    execute if items entity @s armor.head *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.head_glint set value "false"
+                    data modify storage minecraft:universal stable_player_display.chest_glint set value "false"
+                    data modify storage minecraft:universal stable_player_display.chest_enchant_count set value 0
+                    execute store result storage minecraft:universal stable_player_display.chest_enchant_count int 1 run data get entity @s equipment.chest.components."minecraft:enchantments"
+                    execute unless data storage minecraft:universal {stable_player_display:{chest_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.chest_glint set value "true"
+                    execute if items entity @s armor.chest *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.chest_glint set value "true"
+                    execute if items entity @s armor.chest *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.chest_glint set value "false"
+                    data modify storage minecraft:universal stable_player_display.legs_glint set value "false"
+                    data modify storage minecraft:universal stable_player_display.legs_enchant_count set value 0
+                    execute store result storage minecraft:universal stable_player_display.legs_enchant_count int 1 run data get entity @s equipment.legs.components."minecraft:enchantments"
+                    execute unless data storage minecraft:universal {stable_player_display:{legs_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.legs_glint set value "true"
+                    execute if items entity @s armor.legs *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.legs_glint set value "true"
+                    execute if items entity @s armor.legs *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.legs_glint set value "false"
+                    data modify storage minecraft:universal stable_player_display.feet_glint set value "false"
+                    data modify storage minecraft:universal stable_player_display.feet_enchant_count set value 0
+                    execute store result storage minecraft:universal stable_player_display.feet_enchant_count int 1 run data get entity @s equipment.feet.components."minecraft:enchantments"
+                    execute unless data storage minecraft:universal {stable_player_display:{feet_enchant_count:0}} run data modify storage minecraft:universal stable_player_display.feet_glint set value "true"
+                    execute if items entity @s armor.feet *[minecraft:enchantment_glint_override=true] run data modify storage minecraft:universal stable_player_display.feet_glint set value "true"
+                    execute if items entity @s armor.feet *[minecraft:enchantment_glint_override=false] run data modify storage minecraft:universal stable_player_display.feet_glint set value "false"
+
                     block { with storage minecraft:universal stable_player_display
-                        $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)","minecraft:custom_model_data":{strings:["$(head_base)","$(head_pattern)","$(head_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms_flipped)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)","minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper_flipped)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower_flipped)","minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)","minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
-                        $execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots_flipped)","minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)","minecraft:enchantment_glint_override":$(head_glint),"minecraft:custom_model_data":{strings:["$(head_base)","$(head_pattern)","$(head_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)","minecraft:enchantment_glint_override":$(chest_glint),"minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms_flipped)","minecraft:enchantment_glint_override":$(chest_glint),"minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)","minecraft:enchantment_glint_override":$(chest_glint),"minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper_flipped)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower_flipped)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)","minecraft:enchantment_glint_override":$(feet_glint),"minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
+                        $execute as @n[tag=aj.$(branch).item_display.boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots_flipped)","minecraft:enchantment_glint_override":$(feet_glint),"minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
                     }
                 }
             }
@@ -566,7 +591,6 @@ dir ability {
                 $execute if score .fetchSize traitShrinkray.Size matches 2 run function aj:$(rig)/animations/grow_$(animation)/$(style)
             }
             # playing animation WITH tweening
-            # playing animation WITH tweening
             execute if data storage minecraft:universal ability.play.animation{style:"tween"} run {
                 block { with storage minecraft:universal ability.play.animation
                     $scoreboard players set .tweenFrame traitShrinkray.Frame $(tweened_frame)
@@ -592,6 +616,16 @@ dir ability {
 
                 scoreboard players reset .tweenFrame traitShrinkray.Frame
             }
+
+            # check for viewmodel
+            execute unless entity @s[tag=aj.viewmodel.root] run block { with storage minecraft:universal ability.play.animation
+                $function aj:viewmodel/animations/$(rig)_$(animation)/check
+                execute if score .isViewModel traitShrinkray.Size matches 1 run block { with storage minecraft:universal ability.play.animation
+                    $execute as @p[scores={universalAbility.ID=$(id)}] run function universal:ability/play/viewmodel {arguments:{animation:"$(rig)_$(animation)"}}
+                    scoreboard players reset .isViewModel traitShrinkray.Size
+                }
+            }
+
             data remove storage minecraft:universal ability.play.animation
             scoreboard players reset .fetchSize traitShrinkray.Size
         }
@@ -613,6 +647,23 @@ dir ability {
             $execute unless score .fetchSize traitShrinkray.Size matches 1.. at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.00
             $execute if score .fetchSize traitShrinkray.Size matches 1 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 1.50
             $execute if score .fetchSize traitShrinkray.Size matches 2 at @s run playsound $(sfx) player $(selector) ~ ~ ~ $(volume) 0.75
+        }
+
+        function viewmodel {
+            # function universal:ability/play/viewmodel {arguments:{animation:"shrinkray_shoot"}}
+            function aj:viewmodel/summon {args:{}}
+
+            $data modify storage minecraft:universal ability.play.viewmodel merge value $(arguments)
+            execute store result storage minecraft:universal ability.play.viewmodel.id int 1 run scoreboard players get @s universalAbility.ID
+            block { with storage minecraft:universal ability.play.viewmodel
+                execute as @e[type=minecraft:item_display,tag=aj.viewmodel.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:universal ability.play.viewmodel
+                    $scoreboard players set @s universalAbility.ID $(id)
+                    scoreboard players display name @s universalAbility.ID {"color":"light_purple","text":"Viewport"}
+                    $function universal:ability/play/animation {arguments:{rig:"viewmodel",animation:"$(animation)",objective:"universalAbility.ID",style:"play"}}
+                }
+                $viewmodel @n[type=minecraft:item_display,tag=aj.viewmodel.root,scores={universalAbility.ID=$(id)}]
+                function universal:ability/rig/stable_player_display/main {branch:"viewmodel",split:""}
+            }
         }
     }
 

@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @p[scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+$execute as @p[scores={universalAbility.ID=$(id)}] run function universal:ability/play/viewmodel {arguments:{animation:"$(rig)_$(animation)"}}
+scoreboard players reset .isViewModel traitShrinkray.Size
