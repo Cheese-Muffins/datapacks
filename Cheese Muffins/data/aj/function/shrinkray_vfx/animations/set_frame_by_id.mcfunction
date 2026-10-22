@@ -29,4 +29,10 @@ $execute if score @s aj.shrinkray_vfx.animation_id matches 9 if entity @s[tag=aj
 $execute if score @s aj.shrinkray_vfx.animation_id matches 10 if entity @s[tag=aj.shrinkray_vfx.animation.beam_0.playing] run return run function aj:shrinkray_vfx/animations/beam_0/set_frame {frame: $(frame)}
 $execute if score @s aj.shrinkray_vfx.animation_id matches 10 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_beam_0.playing] run return run function aj:shrinkray_vfx/animations/shrink_beam_0/set_frame {frame: $(frame)}
 $execute if score @s aj.shrinkray_vfx.animation_id matches 10 if entity @s[tag=aj.shrinkray_vfx.animation.grow_beam_0.playing] run return run function aj:shrinkray_vfx/animations/grow_beam_0/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray_vfx.animation_id matches 11 if entity @s[tag=aj.shrinkray_vfx.animation.transform.playing] run return run function aj:shrinkray_vfx/animations/transform/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray_vfx.animation_id matches 11 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_transform.playing] run return run function aj:shrinkray_vfx/animations/shrink_transform/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray_vfx.animation_id matches 11 if entity @s[tag=aj.shrinkray_vfx.animation.grow_transform.playing] run return run function aj:shrinkray_vfx/animations/grow_transform/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray_vfx.animation_id matches 12 if entity @s[tag=aj.shrinkray_vfx.animation.emit.playing] run return run function aj:shrinkray_vfx/animations/emit/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray_vfx.animation_id matches 12 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_emit.playing] run return run function aj:shrinkray_vfx/animations/shrink_emit/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray_vfx.animation_id matches 12 if entity @s[tag=aj.shrinkray_vfx.animation.grow_emit.playing] run return run function aj:shrinkray_vfx/animations/grow_emit/set_frame {frame: $(frame)}
 return 0

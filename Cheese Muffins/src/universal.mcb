@@ -43,7 +43,6 @@ dir tick {
             function cassette:tick/main
 
             # scenario ticks
-            execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
             execute if score @s universalAbility.ToggleTrigger matches 1.. run function universal:ability/toggle
             execute if score @s universalDisconnect.Check matches 1.. run function universal:disconnect
             execute if score @s universalDamage.DeathCount matches 1.. run function universal:ability/death
@@ -51,6 +50,7 @@ dir tick {
 
         execute as @e[type=!#universal:misc_mob] at @s run {
             execute as @s[type=minecraft:chest_minecart,tag=ui] run function ui:logic/minecart/tick
+            execute if entity @s[tag=scenarioTick.Enable] run function universal:tick/scenario/main
         }
     }
 
@@ -83,7 +83,6 @@ dir tick {
 function disconnect {
     # ability disconnection
     execute if score @s universalAbility.ToggleState matches 1 run {
-        say rtun
         execute store result storage minecraft:universal disconnect.equipped_id int 1 run scoreboard players get @s universalAbility.EquippedID
         block { with storage minecraft:universal disconnect
             $data modify storage minecraft:universal disconnect.path set from storage minecraft:ability index.$(equipped_id).path
@@ -160,20 +159,27 @@ dir vfx {
         #   --   Mode: 0 - 1  --    # 
 
         # Arguments default as follows #
-            # Mode:      | Defaults to 0
-            # Count:     | Defaults to 1
-            # Speed:     | Does not run
-            # Duration:  | Does not run
-            # Branch:    | REQUIRED to run
-            # Animation: | REQUIRED to run
-            # Output:    | Does not run
+            # mode:                  - Defaults to 0
+            #                         - 0: Completely controlled by the rig itself.
+            #                         - 1: Uses the rig, but the spawning location is randomized based upon rX rY rZ values.
+            #                          - rx:""          - Randomly set the X position (REQUIRED)
+            #                          - ry:""          - Randomly set the Y position (REQUIRED)
+            #                          - rz:""          - Randomly set the Z position (REQUIRED)
+            #                          - rx_rotation:1b - Randomly set rotation for the X axis
+            #                          - ry_rotation:1b - Randomly set rotation for the Y axis
+            # count:                 - Defaults to 1
+            # speed:                 - Does not run
+            # duration:              - Does not run
+            # branch:""              - REQUIRED to run
+            # animation:""           - REQUIRED to run
+            # output:""              - Does not run
+            # objective_override:1b  - Remove the hinge on obj: universalAbility.ID
+            # ride_executor:1b       - VFX mounts the executing entity
         
-        # EXAMPLE #
-            # data modify storage minecraft:universal vfx.arguments.branch set value "billy"
-            # data modify storage minecraft:universal vfx.arguments.animation set value "appear"
-            # data modify storage minecraft:universal vfx.arguments.output set value "appear"
-
-            # function universal:vfx/spawn with storage minecraft:universal vfx.arguments
+        # EXAMPLE 1 #
+            # function universal:vfx/initialize {arguments:{branch:"billy",animation:"appear",output:"ride @s mount @n[type=minecraft:item_display,tag=aj.billy.locator.position]"}}
+        # EXAMPLE 2 #
+            # execute rotated ~ 0 run function universal:vfx/initialize {arguments:{mode:1,branch:"shrinkray",animation:"emit",rx:1.50,ry:0.00,rz:1.50}}
 
         # Modes
             # 0: NO Offset / Speed to be applied. As basic as it comes!
@@ -203,6 +209,33 @@ dir vfx {
 
     function create {
         execute unless score .Mode universalVFX.Conditions matches 1.. run function universal:vfx/mode/0 with storage minecraft:universal vfx
+        execute if score .Mode universalVFX.Conditions matches 1 run function universal:vfx/mode/1 with storage minecraft:universal vfx
+
+        block { with storage minecraft:universal vfx
+            execute store result storage minecraft:universal vfx.id int 1 run scoreboard players get @s universalAbility.ID
+            execute if data storage minecraft:universal vfx{objective_override:1b} run {
+                scoreboard players add .globalOverride universalVFX.ID 1
+                scoreboard players operation @s universalVFX.ID = .globalOverride universalVFX.ID
+                execute store result storage minecraft:universal vfx.id int 1 run scoreboard players get @s universalVFX.ID
+            }
+
+
+            $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
+                $scoreboard players set @s universalVFX.ID $(id)
+                $function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
+
+                execute if data storage minecraft:universal vfx{ride_executor:1b} run block { with storage minecraft:universal vfx
+                    $execute unless data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[type=!minecraft:item_display,scores={universalAbility.ID=$(id)}]
+                    $execute if data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[type=!minecraft:item_display,scores={universalVFX.ID=$(id)}]
+                }
+
+                # if an output argument is present
+                execute if data storage minecraft:universal vfx.output run block { with storage minecraft:universal vfx
+                    $$(output)
+                }
+            }
+            execute if data storage minecraft:universal vfx.objective_override run scoreboard players reset @s universalVFX.ID
+        }
 
         scoreboard players remove .Count universalVFX.Conditions 1
         execute if score .Count universalVFX.Conditions matches 1.. run function universal:vfx/create
@@ -211,15 +244,31 @@ dir vfx {
     dir mode {
         function 0 {
             $function aj:$(branch)_vfx/summon {args:{}}
-            
-            execute store result storage minecraft:universal vfx.id int 1 run scoreboard players get @s universalAbility.ID
-            $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
-                $scoreboard players set @s universalVFX.ID $(id)
-                $function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
+        }
 
-                # if an output argument is present
-                execute if data storage minecraft:universal vfx.output run block { with storage minecraft:universal vfx
-                    $$(output)
+        function 1 {
+            execute store result storage minecraft:universal vfx.rx float 1 run data get storage minecraft:universal vfx.rx 1000
+            execute store result storage minecraft:universal vfx.ry float 1 run data get storage minecraft:universal vfx.ry 1000
+            execute store result storage minecraft:universal vfx.rz float 1 run data get storage minecraft:universal vfx.rz 1000
+
+            execute if score @s traitShrinkray.Size matches 1 run {
+                execute store result storage minecraft:universal vfx.rx float 1 run data get storage minecraft:universal vfx.rx 0.25
+                execute store result storage minecraft:universal vfx.ry float 1 run data get storage minecraft:universal vfx.ry 0.25
+                execute store result storage minecraft:universal vfx.rz float 1 run data get storage minecraft:universal vfx.rz 0.25
+            }
+            execute if score @s traitShrinkray.Size matches 2 run {
+                execute store result storage minecraft:universal vfx.rx float 1 run data get storage minecraft:universal vfx.rx 1.50
+                execute store result storage minecraft:universal vfx.ry float 1 run data get storage minecraft:universal vfx.ry 1.50
+                execute store result storage minecraft:universal vfx.rz float 1 run data get storage minecraft:universal vfx.rz 1.50
+            }
+
+            block { with storage minecraft:universal vfx
+                $execute store result storage minecraft:universal vfx.rx float 0.001 run random value -$(rx)..$(rx)
+                $execute store result storage minecraft:universal vfx.ry float 0.001 run random value -$(ry)..$(ry)
+                $execute store result storage minecraft:universal vfx.rz float 0.001 run random value -$(rz)..$(rz)
+                block { with storage minecraft:universal vfx
+                    # $say ~$(rx) ~$(ry) ~$(rz)
+                    $execute positioned ~$(rx) ~$(ry) ~$(rz) run function aj:$(branch)_vfx/summon {args:{}}
                 }
             }
         }
@@ -574,12 +623,15 @@ dir ability {
             # function universal:ability/play/animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"play"}}
             # or
             # function universal:ability/play/animation {arguments:{rig:"the_world",animation:"knife_throw_default",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:5}}
+            # EXTRA ARGS
+            # interrupt_viewmodel:1b
 
             $data modify storage minecraft:universal ability.play.animation merge value $(arguments)
+
             execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.play.animation
                 $execute store result storage minecraft:universal ability.play.animation.id int 1 run scoreboard players get @s $(objective)
                 block { with storage minecraft:universal ability.play.animation
-                    $execute as @p[scores={universalAbility.ID=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+                    $execute as @n[type=!minecraft:item_display,scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
                 }
             }
             execute if entity @s[type=minecraft:player] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
@@ -621,7 +673,14 @@ dir ability {
             execute unless entity @s[tag=aj.viewmodel.root] run block { with storage minecraft:universal ability.play.animation
                 $function aj:viewmodel/animations/$(rig)_$(animation)/check
                 execute if score .isViewModel traitShrinkray.Size matches 1 run block { with storage minecraft:universal ability.play.animation
-                    $execute as @p[scores={universalAbility.ID=$(id)}] run function universal:ability/play/viewmodel {arguments:{animation:"$(rig)_$(animation)"}}
+                    $execute as @p[scores={universalAbility.ID=$(id)}] unless entity @s[tag=abilitySettings.ViewmodelDisabled] run block { with storage minecraft:universal ability.play.animation
+                        $execute unless data storage minecraft:universal ability.play.animation{interrupt_viewmodel:1b} run function universal:ability/play/viewmodel {arguments:{animation:"$(rig)_$(animation)",rig:"$(rig)"}}
+                        execute if data storage minecraft:universal ability.play.animation{interrupt_viewmodel:1b} run block { with storage minecraft:universal ability.play.animation
+                            $execute as @n[type=minecraft:item_display,tag=aj.viewmodel.root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal ability.play.animation
+                                $function universal:ability/play/animation {arguments:{rig:"viewmodel",animation:"$(rig)_$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjusted_frame),tween_duration:$(tween_duration)}}
+                            }
+                        }
+                    }
                     scoreboard players reset .isViewModel traitShrinkray.Size
                 }
             }
@@ -655,9 +714,12 @@ dir ability {
 
             $data modify storage minecraft:universal ability.play.viewmodel merge value $(arguments)
             execute store result storage minecraft:universal ability.play.viewmodel.id int 1 run scoreboard players get @s universalAbility.ID
+            execute store result storage minecraft:universal ability.play.viewmodel.skin_id int 1 run scoreboard players get @s universalAbility.EquippedSkinID
             block { with storage minecraft:universal ability.play.viewmodel
                 execute as @e[type=minecraft:item_display,tag=aj.viewmodel.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:universal ability.play.viewmodel
                     $scoreboard players set @s universalAbility.ID $(id)
+                    $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
+                    $function ability:$(rig)/skin_index {rig:"viewmodel"}
                     scoreboard players display name @s universalAbility.ID {"color":"light_purple","text":"Viewport"}
                     $function universal:ability/play/animation {arguments:{rig:"viewmodel",animation:"$(animation)",objective:"universalAbility.ID",style:"play"}}
                 }
@@ -827,6 +889,30 @@ dir ability {
         }
         scoreboard players reset @s universalDamage.DeathCount
     }
+
+    function award_interaction {
+        # function universal:ability/award_interaction {ability_id:4,interaction_number:1}
+        data remove storage minecraft:universal secret_interaction
+        $data modify storage minecraft:universal secret_interaction.ability_id set value $(ability_id)
+        $data modify storage minecraft:universal secret_interaction.interaction_number set value $(interaction_number)
+        block { with storage minecraft:universal secret_interaction
+            $data modify storage minecraft:universal secret_interaction.required_tag set from storage minecraft:ability index.$(ability_id).secret.interaction$(interaction_number).required_tag
+            $data modify storage minecraft:universal secret_interaction.advancement set from storage minecraft:ability index.$(ability_id).secret.interaction$(interaction_number).advancement
+            block { with storage minecraft:universal secret_interaction
+                $execute unless entity @s[tag=$(required_tag)] run block { with storage minecraft:universal secret_interaction
+                    $tag @s add $(required_tag)
+                    $function ability:generate/secret_interaction {ability_id:$(ability_id),interaction_number:$(interaction_number)}
+                    block { with storage minecraft:universal secret_interaction
+                        $tellraw @a[tag=$(required_tag)] ["",{"selector":"@s"},{"text":" has discovered a "},{"text":"[Secret Interaction]","color":"light_purple","hover_event":{"action":"show_text","value":$(interaction_hover_unlocked)}}]
+
+                        $tellraw @a[tag=!$(required_tag)] ["",{"selector":"@s"},{"text":" has discovered a "},{"text":"[Secret Interaction]","color":"light_purple","hover_event":{"action":"show_text","value":$(interaction_hover_locked)}}]
+                    }
+                    playsound minecraft:universal.ability.discover_interaction player @a ~ ~ ~ 1
+                    $advancement grant @s only $(advancement)
+                }
+            }
+        }
+    }
 }
 
 function scenario_setup {
@@ -880,6 +966,13 @@ dir error_messages {
         scoreboard players set @s universalError.FailReturn 1
     }
 
+    function clear {
+        REPEAT (1,102) as i {
+            tag @s remove universalError.<%i%>
+        }
+        scoreboard players reset @s universalError.FailReturn
+    }
+
     function cooldown {
         $scoreboard players operation .cooldownTicks universalError.Math = @s universalAbility.MoveCooldown$(move)
 
@@ -925,8 +1018,6 @@ dir error_messages {
             tellraw @s ""
             $tellraw @s ["",{"text":"[","color":"gray"},{"text":"!","color":"#F6FF2A"},{"text":"] ","color":"gray"},{"text":"$(name) ","color":"gold"},{"text":"[","color":"gray"},{"text":"!","color":"#F6FF2A"},{"text":"]","color":"gray"}]
 
-            # $execute if entity @s[tag=universalError.1] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" On cooldown for","color":"gray"},{"text":" $(cooldown)","color":"red"},{"text":"s","color":"red"}]
-
             # very universal errors
             execute if entity @s[tag=universalError.1] run block { with storage minecraft:universal error
                 $function universal:error_messages/cooldown {move:$(move)}
@@ -935,6 +1026,9 @@ dir error_messages {
                 }
             }
             execute if entity @s[tag=universalError.2] run tellraw @s ["",{"text":"> ","color":"#5c5c5c"},{"text":"Finish your ","color":"gray"},{"text":"current move","color":"#40DBF0"},{"text":" before ","color":"gray"},{"text":"casting another!","color":"#BA65FF"}]
+
+            # Shrinkray
+            execute if entity @s[tag=universalError.3] run tellraw @s ["",{"text":"> ","color":"#5C5C5C"},{"text":"You need ","color":"gray"},{"text":"ammo","color":"#E2A3FF"},{"text":" to fire the ","color":"gray"},{"text":"Shrinkray!","color":"#0FFF12"}]
 
 
             # execute if entity @s[tag=universalError.3] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" This move is ","color":"gray"},{"text":"BANNED ","color":"red"},{"text":"in the ","color":"gray"},{"text":"Pocket Dimension","color":"red"}]

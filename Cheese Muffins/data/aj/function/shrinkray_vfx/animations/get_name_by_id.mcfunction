@@ -10,4 +10,6 @@ execute if score @s aj.shrinkray_vfx.animation_id matches 7 run return run data 
 execute if score @s aj.shrinkray_vfx.animation_id matches 8 run return run data modify storage animated_java:runtime animation set value {"id":8,"rig":"shrinkray_vfx","name":"beam_2","combined":"shrinkray_vfx_beam_2"}
 execute if score @s aj.shrinkray_vfx.animation_id matches 9 run return run data modify storage animated_java:runtime animation set value {"id":9,"rig":"shrinkray_vfx","name":"beam_1","combined":"shrinkray_vfx_beam_1"}
 execute if score @s aj.shrinkray_vfx.animation_id matches 10 run return run data modify storage animated_java:runtime animation set value {"id":10,"rig":"shrinkray_vfx","name":"beam_0","combined":"shrinkray_vfx_beam_0"}
+execute if score @s aj.shrinkray_vfx.animation_id matches 11 run return run data modify storage animated_java:runtime animation set value {"id":11,"rig":"shrinkray_vfx","name":"transform","combined":"shrinkray_vfx_transform"}
+execute if score @s aj.shrinkray_vfx.animation_id matches 12 run return run data modify storage animated_java:runtime animation set value {"id":12,"rig":"shrinkray_vfx","name":"emit","combined":"shrinkray_vfx_emit"}
 return 0

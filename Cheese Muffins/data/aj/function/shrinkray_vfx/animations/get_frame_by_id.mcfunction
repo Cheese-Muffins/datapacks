@@ -29,4 +29,10 @@ execute if score @s aj.shrinkray_vfx.animation_id matches 9 if entity @s[tag=aj.
 execute if score @s aj.shrinkray_vfx.animation_id matches 10 if entity @s[tag=aj.shrinkray_vfx.animation.beam_0.playing] run return run scoreboard players get @s aj.shrinkray_vfx.beam_0.frame
 execute if score @s aj.shrinkray_vfx.animation_id matches 10 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_beam_0.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_beam_0.frame
 execute if score @s aj.shrinkray_vfx.animation_id matches 10 if entity @s[tag=aj.shrinkray_vfx.animation.grow_beam_0.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_beam_0.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 11 if entity @s[tag=aj.shrinkray_vfx.animation.transform.playing] run return run scoreboard players get @s aj.shrinkray_vfx.transform.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 11 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_transform.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_transform.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 11 if entity @s[tag=aj.shrinkray_vfx.animation.grow_transform.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_transform.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 12 if entity @s[tag=aj.shrinkray_vfx.animation.emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 12 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 12 if entity @s[tag=aj.shrinkray_vfx.animation.grow_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_emit.frame
 return 0

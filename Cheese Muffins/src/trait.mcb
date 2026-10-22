@@ -38,6 +38,23 @@ function apply {
 			tag @s add scenarioTick.Trait
 			$tag @s add scenarioTick.Trait$(proper)
 		}
+		# clear for inf
+		$execute if data storage minecraft:trait args{duration:"infinite"} if score @s trait$(proper).Duration matches 1.. run block { with storage minecraft:trait args
+			$scoreboard players reset @s trait$(proper).Duration
+			$tag @s remove scenarioTick.Trait$(proper)
+		}
+	}
+}
+
+function clear {
+	# function trait:clear {args:{type:"shrink",proper:"Shrinkray"}}
+	$data modify storage minecraft:trait args merge value $(args)
+	block { with storage minecraft:trait args
+		$function trait:index/$(type)/reset with storage minecraft:trait args
+
+		execute if data storage minecraft:trait args{proper:"Shrinkray"} run {
+			function trait:size/change
+		}
 	}
 }
 
@@ -150,6 +167,8 @@ dir size {
 				}
 			}
 		}
+		execute rotated 0 0 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"transform",objective_override:1b,ride_executor:1b}}
+		execute if entity @s[type=minecraft:player] run shader enable @s shrinkray
 	}
 
 	dir calculate {

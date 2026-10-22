@@ -6,3 +6,6 @@ function universal:attribute/revoke {type:"minecraft:jump_strength",path:"abilit
 function universal:ability/revoke/cancelable {player:"abilityShrinkray.User"}
 tag @s remove universalAbility.Animating
 tag @s remove abilityShrinkray.ShrinkBeam
+tag @s remove abilityShrinkray.GrowBeam
+tag @s remove abilityShrinkray.RepeatBeam
+tag @s remove abilityShrinkray.ToggleLimit

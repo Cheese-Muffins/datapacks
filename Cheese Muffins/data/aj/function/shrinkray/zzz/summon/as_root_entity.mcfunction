@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:shrinkray"
-data modify storage animated_java:temp entry.data.rig_hash set value "fd63504d96719d4acbb3e3f9068e912287fcd326fd5d355956c9120deeacbfa7"
+data modify storage animated_java:temp entry.data.rig_hash set value "eda5f82d88042f9e741e6a64c4bce695f2cc9dc6db77674f1599773976a64893"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^-0.3469 ^0.925 ^0.5955 {Tags:["aj.global.bone.gun.child","aj.global.bone.gun.child.locator","aj.global.bone.gun.decendant","aj.global.bone.gun.decendant.locator","aj.global.bone.gun.tree","aj.global.bone.player.decendant","aj.global.bone.player.decendant.locator","aj.global.bone.player.tree","aj.global.bone.right_arm.decendant","aj.global.bone.right_arm.decendant.locator","aj.global.bone.right_arm.tree","aj.global.bone.right_forearm.decendant","aj.global.bone.right_forearm.decendant.locator","aj.global.bone.right_forearm.tree","aj.global.bone.size.decendant","aj.global.bone.size.decendant.locator","aj.global.bone.size.tree","aj.global.bone.upper_body.decendant","aj.global.bone.upper_body.decendant.locator","aj.global.bone.upper_body.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.beam_position","aj.new","aj.shrinkray.bone.gun.child","aj.shrinkray.bone.gun.child.locator","aj.shrinkray.bone.gun.decendant","aj.shrinkray.bone.gun.decendant.locator","aj.shrinkray.bone.gun.tree","aj.shrinkray.bone.player.decendant","aj.shrinkray.bone.player.decendant.locator","aj.shrinkray.bone.player.tree","aj.shrinkray.bone.right_arm.decendant","aj.shrinkray.bone.right_arm.decendant.locator","aj.shrinkray.bone.right_arm.tree","aj.shrinkray.bone.right_forearm.decendant","aj.shrinkray.bone.right_forearm.decendant.locator","aj.shrinkray.bone.right_forearm.tree","aj.shrinkray.bone.size.decendant","aj.shrinkray.bone.size.decendant.locator","aj.shrinkray.bone.size.tree","aj.shrinkray.bone.upper_body.decendant","aj.shrinkray.bone.upper_body.decendant.locator","aj.shrinkray.bone.upper_body.tree","aj.shrinkray.entity","aj.shrinkray.locator","aj.shrinkray.locator.beam_position","aj.shrinkray.node","aj.shrinkray.node.beam_position"]}
 execute as @n[ type=minecraft:item_display, tag=aj.shrinkray.locator.beam_position, tag=aj.new, distance=..4 ] run function aj:shrinkray/zzz/summon/as_locator/beam_position
@@ -88,7 +88,7 @@ data modify storage animated_java:temp entry.data.uuids_by_name.lower_left_leg s
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
 function aj:shrinkray/zzz/set_default_pose
-execute if data storage animated_java:temp args.variant run function aj:shrinkray/zzz/summon/zzz/variant_arg/no_variants_warning
+execute if data storage animated_java:temp args.variant run function aj:shrinkray/zzz/summon/variant_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
 execute if data storage animated_java:temp args.animation run function aj:shrinkray/zzz/summon/animation_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail

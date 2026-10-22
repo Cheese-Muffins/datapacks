@@ -12,11 +12,17 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:shrinkray_vfx"
-data modify storage animated_java:temp entry.data.rig_hash set value "2b1a0feca7b30bb4f47c94ee86104a008ea666a1fee3e1503ee0ef6301d9b3a2"
+data modify storage animated_java:temp entry.data.rig_hash set value "c41d77f03dad16c2b6401255f91b94e92d11b6d35bdc04c778222babed8750c1"
 tp @s ~ ~ ~ ~ ~
 execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.beam] run function aj:shrinkray_vfx/zzz/summon/as_node/beam
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.beam set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.transform] run function aj:shrinkray_vfx/zzz/summon/as_node/transform
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.transform set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.emit] run function aj:shrinkray_vfx/zzz/summon/as_node/emit
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.emit set from storage animated_java:gu out
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
 function aj:shrinkray_vfx/zzz/set_default_pose
@@ -27,5 +33,6 @@ execute if score #success aj.i matches 0 run return fail
 execute on passengers run rotate @s ~ ~
 data modify entity @s teleport_duration set value 1
 execute on passengers run data modify entity @s teleport_duration set value 1
+execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.emit] run function aj:shrinkray_vfx/zzz/summon/on_summon/bone_emit
 tag @s remove aj.new
 execute on passengers run tag @s remove aj.new

@@ -1,0 +1,27 @@
+{
+  "parent": "server:ability/shrinkray/obtain",
+  "display": {
+    "icon": {
+      "id": "minecraft:phantom_membrane",
+      "components": {
+        "minecraft:item_model": "minecraft:creeper_head"
+      }
+    },
+    "title": "Short Fuse",
+    "description": "All hiss, no boom.",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
+}

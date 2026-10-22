@@ -29,4 +29,10 @@ tag @s remove aj.shrinkray_vfx.animation.grow_beam_1.playing
 tag @s remove aj.shrinkray_vfx.animation.beam_0.playing
 tag @s remove aj.shrinkray_vfx.animation.shrink_beam_0.playing
 tag @s remove aj.shrinkray_vfx.animation.grow_beam_0.playing
+tag @s remove aj.shrinkray_vfx.animation.transform.playing
+tag @s remove aj.shrinkray_vfx.animation.shrink_transform.playing
+tag @s remove aj.shrinkray_vfx.animation.grow_transform.playing
+tag @s remove aj.shrinkray_vfx.animation.emit.playing
+tag @s remove aj.shrinkray_vfx.animation.shrink_emit.playing
+tag @s remove aj.shrinkray_vfx.animation.grow_emit.playing
 tag @s remove aj.pause_after_tween

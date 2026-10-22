@@ -2305,7 +2305,7 @@ dir purchase {
             block { with storage minecraft:ui generate.purchase
                 $execute as @n[type=minecraft:item_display,tag=aj.global.root,scores={universalAbility.ID=$(ability_id)}] run block { with storage minecraft:ui generate.purchase
                     $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
-                    $function ability:$(path)/skin_index
+                    $function ability:$(path)/skin_index {rig:"$(path)"}
                 }
             }
         }

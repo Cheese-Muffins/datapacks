@@ -9,3 +9,5 @@ execute if score @s aj.shrinkray_vfx.animation_id matches 7 run function aj:shri
 execute if score @s aj.shrinkray_vfx.animation_id matches 8 run function aj:shrinkray_vfx/animations/shrink_beam_2/play_exclusive
 execute if score @s aj.shrinkray_vfx.animation_id matches 9 run function aj:shrinkray_vfx/animations/shrink_beam_1/play_exclusive
 execute if score @s aj.shrinkray_vfx.animation_id matches 10 run function aj:shrinkray_vfx/animations/shrink_beam_0/play_exclusive
+execute if score @s aj.shrinkray_vfx.animation_id matches 11 run function aj:shrinkray_vfx/animations/shrink_transform/play_exclusive
+execute if score @s aj.shrinkray_vfx.animation_id matches 12 run function aj:shrinkray_vfx/animations/shrink_emit/play_exclusive

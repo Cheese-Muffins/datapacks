@@ -1,0 +1,27 @@
+{
+  "parent": "server:ability_tome",
+  "display": {
+    "icon": {
+      "id": "minecraft:phantom_membrane",
+      "components": {
+        "minecraft:item_model": "minecraft:interactables/ability/shrinkray/skin_default"
+      }
+    },
+    "title": "Bigger Than Life",
+    "description": "Rewrite the rules of proportion by obtaining the Shrinkray",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
+}

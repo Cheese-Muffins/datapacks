@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:viewmodel"
-data modify storage animated_java:temp entry.data.rig_hash set value "eb7a9a616a581674f43913ffe926adc3bb88e42f3bcacaa6863f4a474a5f424e"
+data modify storage animated_java:temp entry.data.rig_hash set value "df4efbeecf2c60363b38a50bc6fd6914719ec45cf5870db6ca81595f8d751555"
 tp @s ~ ~ ~ ~ ~
 execute on passengers if entity @s[tag=aj.viewmodel.node.right_arm] run function aj:viewmodel/zzz/summon/as_node/right_arm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
@@ -32,7 +32,7 @@ data modify storage animated_java:temp entry.data.uuids_by_name.left_forearm set
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
 function aj:viewmodel/zzz/set_default_pose
-execute if data storage animated_java:temp args.variant run function aj:viewmodel/zzz/summon/zzz/variant_arg/no_variants_warning
+execute if data storage animated_java:temp args.variant run function aj:viewmodel/zzz/summon/variant_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
 execute if data storage animated_java:temp args.animation run function aj:viewmodel/zzz/summon/animation_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
