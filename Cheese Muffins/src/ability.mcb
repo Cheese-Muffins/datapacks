@@ -1635,6 +1635,7 @@ dir shrinkray {
         scoreboard objectives add abilityShrinkray.PassiveAmmoReload dummy
         scoreboard objectives add abilityShrinkray.Beam dummy
         scoreboard objectives add abilityShrinkray.BeamID dummy
+        scoreboard objectives add abilityShrinkray.BeamMode dummy
 
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Shoot",storage:"shrinkray",path:"1a",move:1,cooldown:1}
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Self",storage:"shrinkray",path:"1b",move:1,cooldown:3}
@@ -1675,6 +1676,7 @@ dir shrinkray {
                 function ability:shrinkray/skin_index {rig:"shrinkray"}
                 $function universal:ability/play/animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
             }
+            data remove storage minecraft:ability shrinkray.setup
 
             visibility disable @s @a ignore_perspective render_passengers
             function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
@@ -1700,7 +1702,7 @@ dir shrinkray {
             function check {
                 $execute if score @s universalAbility.MoveCooldown$(move) matches 1.. run function universal:error_messages/setup {id:1}
                 execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
-                execute if entity @s[tag=abilityShrinkray.RepeatBeam] run function universal:error_messages/clear
+                execute if entity @s[tag=abilityShrinkray.BypassErrors] run function universal:error_messages/clear
 
                 execute unless score @s abilityShrinkray.PassiveAmmoValue matches 1.. run function universal:error_messages/setup {id:3}
                 function universal:error_messages/constant
@@ -1712,7 +1714,8 @@ dir shrinkray {
 
             function pass {
                 $data modify storage minecraft:ability shrinkray.beam.args merge value $(arguments)
-                execute unless entity @s[tag=abilityShrinkray.RepeatBeam] run block { with storage minecraft:ability shrinkray.beam.args
+                execute if entity @s[tag=abilityShrinkray.ChangeableBeam] run function ability:shrinkray/moves/beam/change_mode with storage minecraft:ability shrinkray.beam.args
+                execute unless entity @s[tag=abilityShrinkray.BypassErrors] run block { with storage minecraft:ability shrinkray.beam.args
                     # setup
                     function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
 
@@ -1723,24 +1726,37 @@ dir shrinkray {
                     tag @s add universalAbility.Animating
 
                     # specific
-                    $tag @s add abilityShrinkray.$(name)Beam
+                    $scoreboard players set @s abilityShrinkray.BeamMode $(move)
+                    tag @s add abilityShrinkray.BypassErrors
+                    tag @s add abilityShrinkray.ChangeableBeam
                     function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                     function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                 }
-                execute if entity @s[tag=abilityShrinkray.RepeatBeam] run block { with storage minecraft:ability shrinkray.beam.args
-                    $tag @s add abilityShrinkray.$(name)Beam
+
+                execute if entity @s[tag=abilityShrinkray.RefireBeam] run block { with storage minecraft:ability shrinkray.beam.args
+                    function ability:shrinkray/moves/beam/change_mode with storage minecraft:ability shrinkray.beam.args
                     execute store result storage minecraft:ability shrinkray.beam.id int 1 run scoreboard players get @s universalAbility.ID
                     block { with storage minecraft:ability shrinkray.beam
-                        $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"shoot",objective:"universalAbility.ID",style:"tween",tweened_frame:11,tween_duration:1,interrupt_viewmodel:1b}}
+                        $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"shoot",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:1,interrupt_viewmodel:1b}}
                     }
-                    tag @s remove abilityShrinkray.RepeatBeam
+                    tag @s remove abilityShrinkray.RefireBeam
+                }
+                data remove storage minecraft:ability shrinkray.beam.args
+            }
+
+            function change_mode {
+                scoreboard players operation .currentMode abilityShrinkray.BeamMode = @s abilityShrinkray.BeamMode
+                $scoreboard players set @s abilityShrinkray.BeamMode $(move)
+                execute unless score .currentMode abilityShrinkray.BeamMode = @s abilityShrinkray.BeamMode run {
+                    playsound minecraft:ability.shrinkray.shoot.change_mode player @s ~ ~ ~
                 }
             }
 
             function create {
                 function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
-                execute if entity @s[tag=abilityShrinkray.ShrinkBeam] run data merge storage minecraft:ability {shrinkray:{beam:{type:"shrink",check_size:1}}}
-                execute if entity @s[tag=abilityShrinkray.GrowBeam] run data merge storage minecraft:ability {shrinkray:{beam:{type:"grow",check_size:2}}}
+                execute if score @s abilityShrinkray.BeamMode matches 1 run data merge storage minecraft:ability {shrinkray:{beam:{type:"shrink",check_size:1}}}
+                execute if score @s abilityShrinkray.BeamMode matches 2 run data merge storage minecraft:ability {shrinkray:{beam:{type:"grow",check_size:2}}}
+                tag @s remove abilityShrinkray.ChangeableBeam
 
                 execute store result storage minecraft:ability shrinkray.beam.id int 1 run scoreboard players get @s universalAbility.ID
                 scoreboard players remove @s abilityShrinkray.PassiveAmmoValue 1
@@ -1761,8 +1777,7 @@ dir shrinkray {
                         }
                     }
                 }
-                tag @s remove abilityShrinkray.ShrinkBeam
-                tag @s remove abilityShrinkray.GrowBeam
+                data remove storage minecraft:ability shrinkray.beam
             }
 
             function distance {
@@ -1782,8 +1797,8 @@ dir shrinkray {
                 execute if entity @s[type=minecraft:creeper,scores={traitShrinkray.Size=1}] run function ability:shrinkray/secret_interactions/harmless_creeper with storage minecraft:ability shrinkray.beam
             }
 
-            function reenable {
-                tag @s add abilityShrinkray.RepeatBeam
+            function refire {
+                tag @s add abilityShrinkray.RefireBeam
                 scoreboard players set @s universalAbility.MoveDelay 0
             }
         }
@@ -1811,16 +1826,17 @@ dir shrinkray {
                 tag @s add universalAbility.Animating
 
                 # specific
-                $tag @s add abilityShrinkray.$(name)Beam
+                $scoreboard players set @s abilityShrinkray.BeamMode $(move)
                 function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                 function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
             }
 
             function change {
                 execute unless entity @s[tag=abilityShrinkray.ToggleLimit] run {
-                    execute if entity @s[tag=abilityShrinkray.ShrinkBeam] run data merge storage minecraft:ability {shrinkray:{toggle:{type:"shrink",check_size:1}}}
-                    execute if entity @s[tag=abilityShrinkray.GrowBeam] run data merge storage minecraft:ability {shrinkray:{toggle:{type:"grow",check_size:2}}}
+                    execute if score @s abilityShrinkray.BeamMode matches 1 run data merge storage minecraft:ability {shrinkray:{toggle:{type:"shrink",check_size:1}}}
+                    execute if score @s abilityShrinkray.BeamMode matches 2 run data merge storage minecraft:ability {shrinkray:{toggle:{type:"grow",check_size:2}}}
                     function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                    scoreboard players remove @s abilityShrinkray.PassiveAmmoValue 1
                     block { with storage minecraft:ability shrinkray.toggle
                         $execute unless score @s traitShrinkray.Size matches $(check_size) run block { with storage minecraft:ability shrinkray.toggle
                             $function trait:apply {args:{type:"$(type)",proper:"Shrinkray",duration:"infinite"}}
@@ -1831,6 +1847,7 @@ dir shrinkray {
                         }
                         tag @s remove temp
                     }
+                    data remove storage minecraft:ability shrinkray.toggle
                 }
                 tag @s add abilityShrinkray.ToggleLimit
             }
@@ -1852,9 +1869,14 @@ dir shrinkray {
                 function universal:attribute/revoke {type:"minecraft:jump_strength",path:"ability:generic"}
                 function universal:ability/revoke/cancelable {player:"abilityShrinkray.User"}
                 tag @s remove universalAbility.Animating
-                tag @s remove abilityShrinkray.ShrinkBeam
-                tag @s remove abilityShrinkray.GrowBeam
-                tag @s remove abilityShrinkray.RepeatBeam
+                tag @s remove abilityShrinkray.BypassErrors
+                tag @s remove abilityShrinkray.ChangeableBeam
+                tag @s remove abilityShrinkray.RefireBeam
+                scoreboard players reset @s abilityShrinkray.BeamMode
+
+
+
+                
                 tag @s remove abilityShrinkray.ToggleLimit
             }
         }
