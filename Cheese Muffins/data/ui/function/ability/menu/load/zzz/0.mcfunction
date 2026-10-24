@@ -1,4 +1,5 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:ui ability.menu.fetch merge from storage minecraft:ability index.$(ability_id)
-function ui:ability/menu/load/zzz/1 with storage minecraft:ui ability.menu.fetch
+function ui:ability/menu/mask/default with storage minecraft:ui ability.menu
+data modify storage ui current set from storage ui mask
+execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/menu/mask/default"
