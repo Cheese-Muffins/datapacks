@@ -474,7 +474,7 @@ data\ui\function\logic\player\check_swap.mcfunction:865e69b20d5f76852a05250fcc9c
 data\ui\function\logic\player\return.mcfunction:b814a56357b97930de58f7896a2972cefa1975f4
 data\ui\function\logic\player\close.mcfunction:80a4e384a805ac496e216a622aefe470c5f6c250
 data\ui\function\logic\minecart\tick.mcfunction:cf3b6351194940ec83cc12a924a73c054ed79d16
-data\ui\function\logic\minecart\enhanced_button.mcfunction:c956516091c628d1a1378aa2e52d7d9ec7c8431c
+data\ui\function\logic\minecart\enhanced_button.mcfunction:da111086adc29b1f275fde1d58ded0f8814a37cf
 data\ui\function\logic\minecart\zzz\0.mcfunction:d8e0c65a609fc1acd2739ca13dd8f82a4a40ea4a
 data\ui\function\logic\minecart\zzz\1.mcfunction:a03a1ee6df985b1e537509e13325d1f5be5ee7f1
 data\ui\function\logic\minecart\on_change.mcfunction:afffe916761f7a4214391f265f311b4e01dbfd2f
@@ -489,8 +489,8 @@ data\ui\function\logic\load\on_click.mcfunction:ae7a407f3a23c3467cbec352db14ae30
 data\ui\function\logic\load\on_input.mcfunction:461ee5ece6a4890865803fadac86989067e5bdce
 data\ui\function\logic\load\refresh.mcfunction:7c71c756fd36be11052a6829a99b8fefab6f40e0
 data\ui\function\ability\give.mcfunction:ec16519cb08c2226132c39111520afbc80df1535
-data\ui\function\ability\menu\mask\default.mcfunction:5d4e5b2f372733f18706b85abaa308998bbb52da
-data\ui\function\ability\menu\mask\ability.mcfunction:49dfdc72c38a21295bb17ea92a3952781c305dfd
+data\ui\function\ability\menu\mask\default.mcfunction:bc040b53fb2e8d45ddf130c81306e5622d208fc8
+data\ui\function\ability\menu\mask\ability.mcfunction:76321896f3f12d95dda75c8b9626a392d91f295b
 data\ui\function\ability\menu\open.mcfunction:05b6292e7383bf06c643bca8bd7ba7c7dbdac360
 data\ui\function\ability\menu\player.mcfunction:cf0f6a3b72d2924a1e8864295edf168b4a21b66e
 data\ui\function\ability\menu\load\zzz\0.mcfunction:0e6ee7812d9a4002d82d39ec876840ffa606210f
@@ -503,6 +503,16 @@ data\ui\function\ability\menu\shortcut.mcfunction:ec0942f7702ec408340eb9f0e0ea38
 data\ui\function\ability\menu\same.mcfunction:e677bee1a778bb6b3e331d84531e0fd8aa100a64
 data\ui\function\ability\menu\flip.mcfunction:2088f320c56afb1985484ad8ff416b571d0b48c7
 data\ui\function\ability\menu\selected.mcfunction:abffb6cc262049b00f044e0ac51770d91ed5618d
+data\ui\function\ability\settings\default\mask.mcfunction:956ebf8aeebe52b55ddc0b4c5db32b49c8475205
+data\ui\function\ability\settings\default\open.mcfunction:9af27d21302d0c472c595b457b2cb1589c96113a
+data\ui\function\ability\settings\default\player.mcfunction:2acfb79bf0aa9d204ac47aadb4e798dde426014a
+data\ui\function\ability\settings\default\zzz\1.mcfunction:c640e105a444199e376e5149a44dd0cfe54f074c
+data\ui\function\ability\settings\default\zzz\0.mcfunction:2bb64d5925074ae54ed14aa7c0ac1e020b95006a
+data\ui\function\ability\settings\default\player_model.mcfunction:87d03002cd09434b3c7ba61af7f25d2f37ae868c
+data\ui\function\ability\settings\default\zzz\3.mcfunction:8911dc643d4368abc5bf2247ac859928b3bd9482
+data\ui\function\ability\settings\default\zzz\2.mcfunction:e20d4a3efb8e3532db1291d67cb917794d93efcb
+data\ui\function\ability\settings\default\viewmodel.mcfunction:2b5356ac03808f54a82c20afc25bffb7365db166
+data\ui\function\ability\settings\default\flip.mcfunction:88507cd03b805d6f2cb48a8923f0e0e3b348b8ca
 data\ui\function\ability\selection\mask.mcfunction:1e72f12c654c757e34efcfc0db9ebf3b43902f18
 data\ui\function\ability\selection\open.mcfunction:d5f1eb8f3976ae75cc29844275f865e77453f5ff
 data\ui\function\ability\selection\player.mcfunction:b61cea64a72efcf88967dfc60edf9032468e07a6
