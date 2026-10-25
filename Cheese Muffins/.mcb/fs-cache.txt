@@ -466,7 +466,7 @@ data\ui\function\on_load.mcfunction:64bb0810204705a0cbd417b59076493a403cc590
 data\ui\function\administrator_access.mcfunction:718240e3fa7c843c8d94638356d728f97a9c1c64
 data\ui\function\logic\player\tick.mcfunction:060c3d6d323daf3f99efffc503d89db457efe6f7
 data\ui\function\logic\player\teleport.mcfunction:cd43edba3c6dce9a0882ae0c204194ae85906522
-data\ui\function\logic\player\zzz\0.mcfunction:d002d906c4739f565dee46ee5a37b33bdb090090
+data\ui\function\logic\player\zzz\0.mcfunction:22fe47fd57fcd611e99a63a1c74e870ca35d8b13
 data\ui\function\logic\player\ability_open.mcfunction:d9c4f06d516f06d2ad69c76866dd0d0c8344e9fa
 data\ui\function\logic\player\zzz\1.mcfunction:3c652b7ab63e6b045797c5e1952c55d523795a28
 data\ui\function\logic\player\cassette_open.mcfunction:82dab6cbe922a5d5f70997682ac01c148791a86b
@@ -491,9 +491,8 @@ data\ui\function\logic\load\refresh.mcfunction:7c71c756fd36be11052a6829a99b8fefa
 data\ui\function\ability\give.mcfunction:ec16519cb08c2226132c39111520afbc80df1535
 data\ui\function\ability\menu\mask\default.mcfunction:5d4e5b2f372733f18706b85abaa308998bbb52da
 data\ui\function\ability\menu\mask\ability.mcfunction:49dfdc72c38a21295bb17ea92a3952781c305dfd
-data\ui\function\ability\menu\open.mcfunction:992e8da7089a8937ae60624fc0b4a8c090282bde
-data\ui\function\ability\menu\zzz\0.mcfunction:d1a71c8789412d6fa6ac05e41beaedfae1efacc2
-data\ui\function\ability\menu\player.mcfunction:05566116f5c4b008f865487df661276b374aaa1e
+data\ui\function\ability\menu\open.mcfunction:05b6292e7383bf06c643bca8bd7ba7c7dbdac360
+data\ui\function\ability\menu\player.mcfunction:cf0f6a3b72d2924a1e8864295edf168b4a21b66e
 data\ui\function\ability\menu\load\zzz\0.mcfunction:0e6ee7812d9a4002d82d39ec876840ffa606210f
 data\ui\function\ability\menu\load\default.mcfunction:190f6e6428b756bee37f2f92d6de6c024d45fb63
 data\ui\function\ability\menu\load\zzz\2.mcfunction:5f401eb5468d930999490622f7b945f29be4cd8c

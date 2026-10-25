@@ -64,7 +64,7 @@ dir logic {
 
             scoreboard players set .type uiLogic.Broad 1
             execute as @e[type=minecraft:chest_minecart,tag=new] run {
-                gui enable
+                # gui enable
                 function ui:ability/menu/open
                 function ui:logic/minecart/load_page
             }
@@ -320,31 +320,14 @@ dir ability {
         }
 
         function open {
-            gui block {26b}
+            # gui block {26b}
             execute at @s as @p run function ui:ability/menu/player
         }
 
         function player {
             execute unless entity @s[tag=universalAbility.User] run function ui:ability/menu/load/default
             execute if entity @s[tag=universalAbility.User] run function ui:ability/menu/load/ability
-
-
             scoreboard players reset @s uiPurchase.Confirm
-            block {
-
-
-                # data merge storage minecraft:ui {ability:{menu:{name:"No Ability"}}}
-                # data merge storage minecraft:ui {ability:{menu:{selection_lore:[[{"text":"Select","italic":false,"color":"gray"}]]}}}
-                # data merge storage minecraft:ui {ability:{menu:{model:"minecraft:empty"}}}
-                # data merge storage minecraft:ui {ability:{menu:{ability_selection_page:"function custom:ui/menu/pages/abilities/menu/same"}}}
-                # data merge storage minecraft:ui {ability:{menu:{ability_moveset_page:"function custom:ui/menu/pages/abilities/menu/same"}}}
-                # data merge storage minecraft:ui {ability:{menu:{ability_skin_page:"function custom:ui/menu/pages/abilities/menu/same"}}}
-            }
-
-
-
-            # ts needs to be fixed
-            
         }
 
         dir load {
