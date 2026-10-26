@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute at @n[type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position,scores={universalAbility.ID=$(id)}] rotated ~ $(y_rotation) run function ability:shrinkray/moves/beam/zzz/5
+$execute at @a[scores={universalAbility.ID=$(id)},limit=1] rotated as @a[scores={universalAbility.ID=$(id)},limit=1] anchored eyes positioned ^ ^ ^ anchored feet run function ability:shrinkray/moves/beam/distance with storage minecraft:ability shrinkray.beam
+$execute if entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] at @n[type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position,scores={universalAbility.ID=$(id)}] anchored feet facing entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] feet run function ability:shrinkray/moves/beam/zzz/5

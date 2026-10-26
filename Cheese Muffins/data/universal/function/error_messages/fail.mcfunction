@@ -105,5 +105,5 @@ tag @s remove universalError.100
 tag @s remove universalError.101
 tag @s remove universalError.102
 tag @s remove universalError.Hide
-scoreboard players set @s universalAbility.MoveDelay 10
+scoreboard players set @s universalAbility.MoveDelay 4
 scoreboard players set @s universalError.FailReturn 0

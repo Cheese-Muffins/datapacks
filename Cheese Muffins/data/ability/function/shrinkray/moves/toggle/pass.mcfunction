@@ -2,7 +2,7 @@
 
 function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'toggle'}
 function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-$function universal:ability/restraint/cooldown {name:"Shrinkray",move:$(move)}
+$function universal:ability/restraint/cooldown {arguments:{ability_name:"Shrinkray",split_name:"Self",split_path:2,move:$(move)}}
 $function universal:ability/restraint/cancelable {move:$(move)}
 tag @s add universalAbility.Animating
 $scoreboard players set @s abilityShrinkray.BeamMode $(move)

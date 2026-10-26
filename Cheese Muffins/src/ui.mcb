@@ -1,8 +1,11 @@
 function on_load minecraft:load{
+    setblock 0 -64 0 minecraft:shulker_box
+    setblock 0 -63 0 minecraft:yellow_shulker_box
     scoreboard objectives add uiLogic.Broad dummy
     scoreboard objectives add uiLogic.ID dummy
     scoreboard objectives add uiLogic.CurrentHotbar dummy
     scoreboard objectives add uiLogic.PreviousHotbar dummy
+    scoreboard objectives add uiLogic.CheckAdministrator dummy
 
     # Collection #
     scoreboard objectives add uiCassette.CollectionSort dummy
@@ -51,11 +54,16 @@ dir logic {
             execute if items entity @s weapon.* *[minecraft:custom_data~{cassette_player:1b}] unless score @s uiLogic.ID matches 0.. run function ui:logic/player/cassette_open
 
             scoreboard players operation #search uiLogic.ID = @s uiLogic.ID
-            execute at @s as @e[type=minecraft:item_display,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run tp @s ~ ~1 ~
+            execute at @s run {
+                execute unless score @s traitShrinkray.Size matches 1.. as @e[type=minecraft:item_display,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run tp @s ~ ~1 ~
+                execute if score @s traitShrinkray.Size matches 1 as @e[type=minecraft:item_display,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run tp @s ~ ~0.25 ~
+                execute if score @s traitShrinkray.Size matches 2 as @e[type=minecraft:item_display,tag=ui] if score @s uiLogic.ID = #search uiLogic.ID run tp @s ~ ~2 ~
+            }
         }
 
         function ability_open {
             summon minecraft:item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+
             execute as @n[type=minecraft:item_display,tag=new] run visibility disable @s @a
 
             scoreboard players add .global uiLogic.ID 1
@@ -63,16 +71,23 @@ dir logic {
             scoreboard players operation @e[tag=new] uiLogic.ID = .global uiLogic.ID
 
             scoreboard players set .type uiLogic.Broad 1
+
+            data remove storage ui current
+            data remove storage ui previous
+            data remove storage ui mask
+
             execute as @e[type=minecraft:chest_minecart,tag=new] run {
-                # gui enable
+                gui enable
                 function ui:ability/menu/open
                 function ui:logic/minecart/load_page
             }
+
             tag @e remove new
         }
 
         function cassette_open {
-            summon item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+            summon minecraft:item_display ~ ~ ~ {view_range:0f,width:0f,height:0f,teleport_duration:0,Tags:["ui","new"],Passengers:[{id:"minecraft:chest_minecart",Invulnerable:1b,Tags:["ui","new"],CustomDisplayTile:1b,DisplayState:{Name:"minecraft:air"},Passengers:[{id:"minecraft:marker",Tags:["ui","new"]}]}]}
+
             execute as @n[type=minecraft:item_display,tag=new] run visibility disable @s @a
 
             scoreboard players add .global uiLogic.ID 1
@@ -80,11 +95,17 @@ dir logic {
             scoreboard players operation @e[tag=new] uiLogic.ID = .global uiLogic.ID
 
             scoreboard players set .type uiLogic.Broad 1
+
+            data remove storage ui current
+            data remove storage ui previous
+            data remove storage ui mask
+
             execute as @e[type=minecraft:chest_minecart,tag=new] run {
                 gui enable
                 function ui:cassette/menu/open
                 function ui:logic/minecart/load_page
             }
+
             tag @e remove new
         }
 
@@ -137,7 +158,7 @@ dir logic {
 
             # ability settings #
             execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:ability/settings/default/flip
-            execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:ability/settings/administrator/flip
+            execute if items entity @s container.* minecraft:arrow[minecraft:custom_data~{ui_item:{settings_button:1b}}] run function ui:ability/settings/administrator/check_permissions
 
             # ability selections #
             execute if items entity @s player.cursor minecraft:arrow[minecraft:custom_data~{ui_item:{selection_entry:1b}}] run function ui:ability/selection/expand
@@ -241,6 +262,8 @@ dir logic {
         }
 
         function load_page {
+            execute unless data storage ui current[0] run return fail
+
             data modify entity @s Items set from storage ui current
 
             data modify storage ui current set from entity @s Items
@@ -272,7 +295,7 @@ dir logic {
         function on_click {
             function ui:logic/load/run_cmd with storage ui in[0].components."minecraft:custom_data".ui_item
 
-            execute if score .type ui matches 1 run function ui:logic/minecart/load_page
+            execute if score .type uiLogic.Broad matches 1 run function ui:logic/minecart/load_page
         }
 
         function on_input {
@@ -283,10 +306,11 @@ dir logic {
 
         function refresh {
             data modify storage ui mask set from storage ui current
+
             execute on passengers run function ui:logic/load/get_mask with entity @s data.page
             data modify storage ui current set from storage ui mask
 
-            execute if score .type ui matches 1 run function ui:logic/minecart/load_page
+            execute if score .type uiLogic.Broad matches 1 run function ui:logic/minecart/load_page
         }
     }
 }
@@ -324,7 +348,7 @@ dir ability {
         }
 
         function open {
-            # gui block {26b}
+            gui block {26b}
             execute at @s as @p run function ui:ability/menu/player
         }
 
@@ -332,6 +356,8 @@ dir ability {
             execute unless entity @s[tag=universalAbility.User] run function ui:ability/menu/load/default
             execute if entity @s[tag=universalAbility.User] run function ui:ability/menu/load/ability
             scoreboard players reset @s uiPurchase.Confirm
+            tag @s remove uiAbility.OverviewShortcut
+            tag @s remove uiAbility.InfoShortcut
         }
 
         dir load {
@@ -370,9 +396,18 @@ dir ability {
             execute in minecraft:overworld run item replace block 0 -64 0 container.0 from entity @s player.cursor
             execute in minecraft:overworld run data modify storage minecraft:ui ability.menu.destination set from block 0 -64 0 Items[0].components."minecraft:custom_data".ui_item.destination
             
-            execute if data storage minecraft:ui ability.menu{destination:"overview"} run function ui:ability/selection/choice/flip
-            execute if data storage minecraft:ui ability.menu{destination:"moveset"} run function ui:ability/selection/choice/moveset/flip
-            execute if data storage minecraft:ui ability.menu{destination:"skin"} run function ui:ability/selection/choice/skin/flip
+            execute if data storage minecraft:ui ability.menu{destination:"overview"} run {
+                function ui:ability/selection/choice/flip
+                tag @s add uiAbility.OverviewShortcut
+            }
+            execute if data storage minecraft:ui ability.menu{destination:"moveset"} run {
+                function ui:ability/selection/choice/moveset/flip
+                tag @s add uiAbility.InfoShortcut
+            }
+            execute if data storage minecraft:ui ability.menu{destination:"skin"} run {
+                function ui:ability/selection/choice/skin/flip
+                tag @s add uiAbility.InfoShortcut
+            }
         }
 
         function same {
@@ -395,8 +430,9 @@ dir ability {
         dir default {
             function mask {
                 $data modify storage ui mask set value [\
-                {Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#a3ffd0"},{"text":"l","italic":false,"color":"#a4fdd3"},{"text":"a","italic":false,"color":"#a5fcd6"},{"text":"y","italic":false,"color":"#a6fad8"},{"text":"e","italic":false,"color":"#a7f9db"},{"text":"r","italic":false,"color":"#a8f7de"},{"text":" ","italic":false,"color":"#a8f6e1"},{"text":"M","italic":false,"color":"#a9f4e4"},{"text":"o","italic":false,"color":"#aaf3e7"},{"text":"d","italic":false,"color":"#abf1e9"},{"text":"e","italic":false,"color":"#acf0ec"},{"text":"l","italic":false,"color":"#adeeef"}],"minecraft:lore":[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"appearance","italic":false,"color":"#d89eff"},{"text":" of the ","italic":false,"color":"gray"},{"text":"humanoid","italic":false,"color":"#ffb042"}],["",{"text":"model","italic":false,"color":"#ffb042"},{"text":" by determining if your ","italic":false,"color":"gray"},{"text":"skin","italic":false,"color":"#8ad8ff"},{"text":" should","italic":false,"color":"gray"}],[{"text":"be applied instead.","italic":false,"color":"gray"}],"",["",{"text":"Appearance:","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"$(spd_name)","italic":false,"color":"#$(spd_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/settings/default/player_model"}}}},\
-                {Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"V","italic":false,"color":"#ff6666"},{"text":"i","italic":false,"color":"#ff6b73"},{"text":"e","italic":false,"color":"#ff6f80"},{"text":"w","italic":false,"color":"#ff748d"},{"text":"m","italic":false,"color":"#ff789a"},{"text":"o","italic":false,"color":"#ff7da7"},{"text":"d","italic":false,"color":"#ff81b4"},{"text":"e","italic":false,"color":"#ff86c1"},{"text":"l","italic":false,"color":"#ff8ace"}],"minecraft:lore":[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"appearance","italic":false,"color":"#d89eff"},{"text":" of the ","italic":false,"color":"gray"},{"text":"first","italic":false,"color":"#85d0ff"}],["",{"text":"person","italic":false,"color":"#85d0ff"},{"text":" ","italic":false,"color":"gray"},{"text":"exclusive","italic":false,"underlined":true,"color":"#dcffa8"},{"text":" animation for","italic":false,"color":"gray"}],["",{"text":"specifically the ","italic":false,"color":"gray"},{"text":"executing entity.","italic":false,"color":"#08f78f"}],"",["",{"text":"Viewmodel: ","italic":false,"color":"gray"},{"text":"$(viewmodel_state)","italic":false,"color":"#$(viewmodel_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/settings/default/viewmodel"}}}},\
+                {Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"M","italic":false,"color":"#ff4d4d"},{"text":"a","italic":false,"color":"#ff594e"},{"text":"i","italic":false,"color":"#ff654e"},{"text":"n","italic":false,"color":"#ff714f"},{"text":" ","italic":false,"color":"#ff7e50"},{"text":"M","italic":false,"color":"#ff8a50"},{"text":"e","italic":false,"color":"#ff9651"},{"text":"n","italic":false,"color":"#ffa251"},{"text":"u","italic":false,"color":"#ffae52"}],"minecraft:lore":[[{"text":"The ","italic":false,"color":"gray"},{"text":"homepage","italic":false,"color":"#f2f2f2"},{"text":" of all ","italic":false,"color":"gray"},{"text":"features","italic":false,"color":"#8ae2ff"}],[{"text":"for ","italic":false,"color":"gray"},{"text":"abilities","italic":false,"color":"#e629ff"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/menu/flip"}}}},\
+                {Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"P","italic":false,"color":"#a3ffd0"},{"text":"l","italic":false,"color":"#a4fdd3"},{"text":"a","italic":false,"color":"#a5fcd6"},{"text":"y","italic":false,"color":"#a6fad8"},{"text":"e","italic":false,"color":"#a7f9db"},{"text":"r","italic":false,"color":"#a8f7de"},{"text":" ","italic":false,"color":"#a8f6e1"},{"text":"M","italic":false,"color":"#a9f4e4"},{"text":"o","italic":false,"color":"#aaf3e7"},{"text":"d","italic":false,"color":"#abf1e9"},{"text":"e","italic":false,"color":"#acf0ec"},{"text":"l","italic":false,"color":"#adeeef"}],"minecraft:lore":[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"appearance","italic":false,"color":"#d89eff"},{"text":" of the ","italic":false,"color":"gray"},{"text":"humanoid","italic":false,"color":"#ffb042"}],["",{"text":"model","italic":false,"color":"#ffb042"},{"text":" by determining if your ","italic":false,"color":"gray"},{"text":"skin","italic":false,"color":"#8ad8ff"},{"text":" should","italic":false,"color":"gray"}],[{"text":"be applied instead","italic":false,"color":"gray"}],"",["",{"text":"Appearance:","italic":false,"color":"gray"},{"text":" ","italic":false,"color":"gray"},{"text":"$(spd_name)","italic":false,"color":"#$(spd_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/settings/default/player_model"}}}},\
+                {Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"V","italic":false,"color":"#ff6666"},{"text":"i","italic":false,"color":"#ff6b73"},{"text":"e","italic":false,"color":"#ff6f80"},{"text":"w","italic":false,"color":"#ff748d"},{"text":"m","italic":false,"color":"#ff789a"},{"text":"o","italic":false,"color":"#ff7da7"},{"text":"d","italic":false,"color":"#ff81b4"},{"text":"e","italic":false,"color":"#ff86c1"},{"text":"l","italic":false,"color":"#ff8ace"}],"minecraft:lore":[["",{"text":"Control the ","italic":false,"color":"gray"},{"text":"appearance","italic":false,"color":"#d89eff"},{"text":" of the ","italic":false,"color":"gray"},{"text":"first","italic":false,"color":"#85d0ff"}],["",{"text":"person","italic":false,"color":"#85d0ff"},{"text":" ","italic":false,"color":"gray"},{"text":"exclusive","italic":false,"underlined":true,"color":"#dcffa8"},{"text":" animation for","italic":false,"color":"gray"}],["",{"text":"specifically the ","italic":false,"color":"gray"},{"text":"executing entity","italic":false,"color":"#08f78f"}],"",["",{"text":"Viewmodel: ","italic":false,"color":"gray"},{"text":"$(viewmodel_state)","italic":false,"color":"#$(viewmodel_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/settings/default/viewmodel"}}}},\
                 {Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/default_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}}\
                 ]
             }
@@ -414,11 +450,11 @@ dir ability {
                     spd_name:"Rig",\
                     spd_color:"FFFFF0",\
                     viewmodel_state:"Enabled",\
-                    viewmodel_color:"96FF94"\
+                    viewmodel_color:"3cdd31"\
                 }}}
 
                 execute if entity @s[tag=abilitySettings.EnabledSPD] run data merge storage minecraft:ui {ability:{settings:{spd_name:"Player",spd_color:"E27AFF"}}}
-                execute if entity @s[tag=abilitySettings.ViewmodelDisabled] run data merge storage minecraft:ui {ability:{settings:{viewmodel_state:"Disabled",viewmodel_color:"FFFF00"}}}
+                execute if entity @s[tag=abilitySettings.ViewmodelDisabled] run data merge storage minecraft:ui {ability:{settings:{viewmodel_state:"Disabled",viewmodel_color:"EC3232"}}}
             }
 
             function player_model {
@@ -451,8 +487,72 @@ dir ability {
             }
         }
 
-        dir admin {
+        dir administrator {
+            function mask {
+                $data modify storage ui mask set value [\
+                {Slot:4b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"M","italic":false,"color":"#ff4d4d"},{"text":"a","italic":false,"color":"#ff594e"},{"text":"i","italic":false,"color":"#ff654e"},{"text":"n","italic":false,"color":"#ff714f"},{"text":" ","italic":false,"color":"#ff7e50"},{"text":"M","italic":false,"color":"#ff8a50"},{"text":"e","italic":false,"color":"#ff9651"},{"text":"n","italic":false,"color":"#ffa251"},{"text":"u","italic":false,"color":"#ffae52"}],"minecraft:lore":[[{"text":"The ","italic":false,"color":"gray"},{"text":"homepage","italic":false,"color":"#f2f2f2"},{"text":" of all ","italic":false,"color":"gray"},{"text":"features","italic":false,"color":"#8ae2ff"}],[{"text":"for ","italic":false,"color":"gray"},{"text":"abilities","italic":false,"color":"#e629ff"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/menu/flip"}}}},\
+                {Slot:10b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"A","italic":false,"color":"#ff7547"},{"text":"b","italic":false,"color":"#ff7b47"},{"text":"i","italic":false,"color":"#ff8147"},{"text":"l","italic":false,"color":"#ff8747"},{"text":"i","italic":false,"color":"#ff8d47"},{"text":"t","italic":false,"color":"#ff9347"},{"text":"y","italic":false,"color":"#ff9947"},{"text":" ","italic":false,"color":"#ff9f47"},{"text":"C","italic":false,"color":"#ffa447"},{"text":"o","italic":false,"color":"#ffaa47"},{"text":"o","italic":false,"color":"#ffb047"},{"text":"l","italic":false,"color":"#ffb647"},{"text":"d","italic":false,"color":"#ffbc47"},{"text":"o","italic":false,"color":"#ffc247"},{"text":"w","italic":false,"color":"#ffc847"},{"text":"n","italic":false,"color":"#ffce47"}],"minecraft:lore":[["",{"text":"Modify whether ","italic":false,"color":"gray"},{"text":"casting abilities","italic":false,"color":"#96ff66"},{"text":" will","italic":false,"color":"gray"}],["",{"text":"apply the ","italic":false,"color":"gray"},{"text":"cooldown","italic":false,"color":"#ffca57"},{"text":" restraint","italic":false,"color":"gray"}],"",["",{"text":"Cooldown: ","italic":false,"color":"gray"},{"text":"$(cooldown_state)","italic":false,"color":"#$(cooldown_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/settings/administrator/cooldown"}}}},\
+                {Slot:11b,id:"minecraft:arrow",count:1,components:{"minecraft:item_model":"minecraft:empty","minecraft:item_name":[{"text":"R","italic":false,"color":"#a347ff"},{"text":"e","italic":false,"color":"#a947ff"},{"text":"s","italic":false,"color":"#af47ff"},{"text":"i","italic":false,"color":"#b447ff"},{"text":"s","italic":false,"color":"#ba47ff"},{"text":"t","italic":false,"color":"#c047ff"},{"text":"a","italic":false,"color":"#c647ff"},{"text":"n","italic":false,"color":"#cb47ff"},{"text":"c","italic":false,"color":"#d147ff"},{"text":"e","italic":false,"color":"#d747ff"}],"minecraft:lore":[["",{"text":"Control if being ","italic":false,"color":"gray"},{"text":"struck","italic":false,"color":"#b08fff"},{"text":" by other","italic":false,"color":"gray"}],["",{"text":"abilities","italic":false,"color":"#e629ff"},{"text":" is possible","italic":false,"color":"gray"}],"",["",{"text":"Resistance: ","italic":false,"color":"gray"},{"text":"$(resistance_state)","italic":false,"color":"#$(resistance_color)"}]],"minecraft:custom_data":{ui_item:{cmd:"function ui:ability/settings/administrator/resistance"}}}},\
+                {Slot:26b,id:"minecraft:arrow","components":{"minecraft:item_model":"minecraft:ui/ability/administrator_settings","minecraft:tooltip_display":{hide_tooltip:true},"minecraft:custom_data":{ui_item:{cmd:"function custom:ui/menu/pages/abilities/menu/same"}}}}\
+                ]
+            }
 
+            function open {
+                execute at @s as @p run function ui:ability/settings/administrator/player
+
+                function ui:ability/settings/administrator/mask with storage minecraft:ui ability.settings
+                data modify storage ui current set from storage ui mask
+                execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/settings/administrator/mask"
+            }
+
+            function player {
+                data merge storage minecraft:ui {ability:{settings:{\
+                    cooldown_state:"Enabled",\
+                    cooldown_color:"EC3232",\
+                    resistance_state:"Disabled",\
+                    resistance_color:"EC3232"\
+                }}}
+
+                execute if entity @s[tag=abilitySettings.DisabledCooldowns] run data merge storage minecraft:ui {ability:{settings:{cooldown_state:"Disabled",cooldown_color:"3cdd31"}}}
+                execute if entity @s[tag=abilitySettings.EnabledResistance] run data merge storage minecraft:ui {ability:{settings:{resistance_state:"Enabled",resistance_color:"3cdd31"}}}
+            }
+
+            function cooldown {
+                execute at @s as @p run {
+                    execute unless entity @s[tag=abilitySettings.DisabledCooldowns] run {
+                        tag @s add abilitySettings.DisabledCooldowns
+                        tag @s add temp
+                    }
+                    execute if entity @s[tag=abilitySettings.DisabledCooldowns] unless entity @s[tag=temp] run tag @s remove abilitySettings.DisabledCooldowns
+                    tag @s remove temp
+                }
+                function ui:ability/settings/administrator/open
+            }
+
+            function resistance {
+                execute at @s as @p run {
+                    execute unless entity @s[tag=abilitySettings.EnabledResistance] run {
+                        tag @s add abilitySettings.EnabledResistance
+                        tag @s add temp
+                    }
+                    execute if entity @s[tag=abilitySettings.EnabledResistance] unless entity @s[tag=temp] run tag @s remove abilitySettings.EnabledResistance
+                    tag @s remove temp
+                }
+                function ui:ability/settings/administrator/open
+            }
+
+            function check_permissions {
+                execute if operator @s as @n[type=minecraft:chest_minecart,tag=ui] run {
+                    function ui:ability/settings/administrator/flip
+                } else run {
+                    function ui:ability/menu/same
+                }
+            }
+
+            function flip {
+                execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                function ui:ability/settings/administrator/open
+            }
         }
     }
 
@@ -528,8 +628,15 @@ dir ability {
         }
 
         function flip {
-            execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
-            function ui:ability/selection/open
+            execute at @s as @p run {
+                playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+
+                execute unless entity @s[tag=uiAbility.OverviewShortcut] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:ability/selection/open
+                execute if entity @s[tag=uiAbility.OverviewShortcut] run {
+                    execute as @n[type=minecraft:chest_minecart,tag=ui] run function ui:ability/menu/open
+                    tag @s remove uiAbility.OverviewShortcut
+                }
+            }
         }
 
         dir choice {
@@ -582,8 +689,17 @@ dir ability {
             }
 
             function flip {
-                execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
-                function ui:ability/selection/choice/open
+                execute at @s as @p run {
+                    playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                    scoreboard players reset @s uiAbility.SecretInteraction
+                    scoreboard players reset @s uiPurchase.Confirm
+
+                    execute unless entity @s[tag=uiAbility.InfoShortcut] as @n[type=minecraft:chest_minecart,tag=ui] run function ui:ability/selection/choice/open
+                    execute if entity @s[tag=uiAbility.InfoShortcut] run {
+                        execute as @n[type=minecraft:chest_minecart,tag=ui] run function ui:ability/menu/open
+                        tag @s remove uiAbility.InfoShortcut
+                    }
+                }
             }
 
             function same {
@@ -618,7 +734,6 @@ dir ability {
                         data modify storage minecraft:ui ability.choice.slot<%i%>_pos set value "0b"
                         data modify storage minecraft:ui ability.choice.slot<%i%>_visibility set value "true"
 
-                        execute unless score @s uiAbility.MovesetCycle<%i%> matches 1.. run scoreboard players set @s uiAbility.MovesetCycle<%i%> 1
                         execute store result storage minecraft:ui ability.choice.slot_cycle int 1 run scoreboard players get @s uiAbility.MovesetCycle<%i%>
                         block { with storage minecraft:ui ability.choice
                             $execute if data storage minecraft:ability index.$(ability_id).moveset.slot<%i%> run block { with storage minecraft:ui ability.choice
@@ -660,7 +775,12 @@ dir ability {
                 }
 
                 function flip {
-                    execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                    execute at @s as @p run {
+                        playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
+                        REPEAT (1,4) as i {
+                            scoreboard players set @s uiAbility.MovesetCycle<%i%> 1
+                        }
+                    }
                     function ui:ability/selection/choice/moveset/open
                 }
 
@@ -676,13 +796,13 @@ dir ability {
                 }
 
                 function open {
-                    gui priority {10b}
                     gui highlight {4b,5b,6b}
                     execute at @s as @p run function ui:ability/selection/choice/skin/player
 
                     function ui:ability/selection/choice/skin/mask with storage minecraft:ui ability.choice
                     data modify storage ui current set from storage ui mask
                     execute on passengers run data modify entity @s data.page.mask set value "function ui:ability/selection/choice/skin/mask"
+                    gui priority {10b}
                 }
 
                 function player {
@@ -2281,12 +2401,6 @@ dir purchase {
                     $execute if entity @s[tag=$(ownership_tag)] run function ui:purchase/equip/main with storage minecraft:ui generate.purchase
 
                     $execute unless entity @s[tag=$(ownership_tag)] run {
-                        tag @s remove uiPurchase.Gathered
-                        tag @s remove uiPurchase.CostFound
-                        tag @s remove uiPurchase.ItemCheck
-                        tag @s remove uiPurchase.AdvancementCheck
-                        scoreboard players reset .bypassCheck uiPurchase.Broad
-
                         function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
                         function ui:purchase/requirement/advancements with storage minecraft:ui generate.purchase
                         function ui:purchase/requirement/bypass with storage minecraft:ui generate.purchase
@@ -2442,12 +2556,6 @@ dir purchase {
             $execute unless entity @s[tag=$(ownership_tag)] run block { with storage minecraft:ui generate.purchase
                 data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Ability Price","italic":false,"color":"gold"}]
 
-                # reset requirement state before checking THIS product
-                tag @s remove uiPurchase.CostFound
-                tag @s remove uiPurchase.ItemCheck
-                tag @s remove uiPurchase.AdvancementCheck
-                scoreboard players reset .bypassCheck uiPurchase.Broad
-
                 # generate requirements
                 tag @s add uiPurchase.GenerateLore
                 function ui:purchase/requirement/items with storage minecraft:ui generate.purchase
@@ -2528,6 +2636,11 @@ dir purchase {
                     $data modify storage minecraft:ui generate.purchase.price_lore append value ["",{"text":"Equipped: ","italic":false,"color":"gray"},{"text":"$(equip_text)","italic":false,"color":"#$(equip_color)"}]
                 }
             }
+
+            tag @s remove uiPurchase.CostFound
+            tag @s remove uiPurchase.ItemCheck
+            tag @s remove uiPurchase.AdvancementCheck
+            scoreboard players reset .bypassCheck uiPurchase.Broad
         }
 
         # if it attempts to generate an index that does not exist

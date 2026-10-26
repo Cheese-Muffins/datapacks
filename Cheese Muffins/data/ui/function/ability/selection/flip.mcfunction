@@ -1,4 +1,3 @@
 # Generated with MC-Build
 
-execute at @s as @p run playsound minecraft:entity.villager.work_librarian player @s ~ ~ ~ 0.5
-function ui:ability/selection/open
+execute at @s as @p run function ui:ability/selection/zzz/1

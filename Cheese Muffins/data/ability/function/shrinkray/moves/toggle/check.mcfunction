@@ -4,6 +4,6 @@ $execute if score @s universalAbility.MoveCooldown$(move) matches 1.. run functi
 execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
 execute unless score @s abilityShrinkray.PassiveAmmoValue matches 1.. run function universal:error_messages/setup {id:3}
 function universal:error_messages/constant
-scoreboard players set @s universalAbility.HotbarSlot 1
+$scoreboard players set @s universalAbility.HotbarSlot $(move)
 $execute unless score @s universalError.FailReturn matches 1 run function ability:shrinkray/moves/toggle/pass {move:$(move),name:"$(name)"}
 $execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:$(move),name:"Self $(name)"}

@@ -1,9 +1,12 @@
 # Generated with MC-Build
 
+setblock 0 -64 0 minecraft:shulker_box
+setblock 0 -63 0 minecraft:yellow_shulker_box
 scoreboard objectives add uiLogic.Broad dummy
 scoreboard objectives add uiLogic.ID dummy
 scoreboard objectives add uiLogic.CurrentHotbar dummy
 scoreboard objectives add uiLogic.PreviousHotbar dummy
+scoreboard objectives add uiLogic.CheckAdministrator dummy
 scoreboard objectives add uiCassette.CollectionSort dummy
 scoreboard objectives add uiCassette.CollectionBroad dummy
 scoreboard objectives add uiCassette.CollectionMaximumPage dummy

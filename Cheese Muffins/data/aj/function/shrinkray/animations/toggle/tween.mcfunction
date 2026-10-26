@@ -4,7 +4,7 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
 function aj:shrinkray/animations/pause_all
-scoreboard players set @s aj.shrinkray.animation_id 1
+scoreboard players set @s aj.shrinkray.animation_id 2
 tag @s add aj.shrinkray.animation.toggle.playing
 $scoreboard players set @s aj.tween_duration $(duration)
 $scoreboard players set @s aj.shrinkray.toggle.frame $(to_frame)

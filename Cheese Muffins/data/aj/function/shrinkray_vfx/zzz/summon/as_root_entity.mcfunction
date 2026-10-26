@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:shrinkray_vfx"
-data modify storage animated_java:temp entry.data.rig_hash set value "c41d77f03dad16c2b6401255f91b94e92d11b6d35bdc04c778222babed8750c1"
+data modify storage animated_java:temp entry.data.rig_hash set value "6e45ef6745140ea4ea56c070c4e85ad8a78df73b38ee3659622ca0a5cb902851"
 tp @s ~ ~ ~ ~ ~
 execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.beam] run function aj:shrinkray_vfx/zzz/summon/as_node/beam
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out

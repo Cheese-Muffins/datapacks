@@ -6,8 +6,11 @@ execute if score @s abilityShrinkray.BeamMode matches 2 run data merge storage m
 tag @s remove abilityShrinkray.ChangeableBeam
 execute store result storage minecraft:ability shrinkray.beam.id int 1 run scoreboard players get @s universalAbility.ID
 scoreboard players remove @s abilityShrinkray.PassiveAmmoValue 1
-execute store result score .yRotation abilityShrinkray.Beam run data get entity @s Rotation[1] 10
-scoreboard players remove .yRotation abilityShrinkray.Beam 30
-execute store result storage minecraft:ability shrinkray.beam.y_rotation float 0.1 run scoreboard players get .yRotation abilityShrinkray.Beam
+execute store result score .maxDistance abilityShrinkray.Beam run data get storage minecraft:ability shrinkray.variables.shoot.range 10
+data modify storage minecraft:ability shrinkray.beam.struck_duration set from storage minecraft:ability shrinkray.variables.shoot.struck_duration
+scoreboard players set .distance abilityShrinkray.Beam 0
+tag @s remove temp
 function ability:shrinkray/moves/beam/zzz/4 with storage minecraft:ability shrinkray.beam
+kill @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint]
+tag @s remove temp
 data remove storage minecraft:ability shrinkray.beam

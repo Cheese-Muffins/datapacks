@@ -6,5 +6,8 @@ scoreboard players add .global uiLogic.ID 1
 scoreboard players operation @s uiLogic.ID = .global uiLogic.ID
 scoreboard players operation @e[tag=new] uiLogic.ID = .global uiLogic.ID
 scoreboard players set .type uiLogic.Broad 1
-execute as @e[type=minecraft:chest_minecart,tag=new] run function ui:logic/player/zzz/0
+data remove storage ui current
+data remove storage ui previous
+data remove storage ui mask
+execute as @e[type=minecraft:chest_minecart,tag=new] run function ui:logic/player/zzz/1
 tag @e remove new

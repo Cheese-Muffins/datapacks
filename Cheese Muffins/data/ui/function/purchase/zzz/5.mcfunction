@@ -7,3 +7,7 @@ $execute if data storage minecraft:ability index.$(ability_id).product.$(product
 data modify storage minecraft:ui generate.purchase.price_lore append value ""
 $execute unless entity @s[tag=$(ownership_tag)] run function ui:purchase/zzz/8 with storage minecraft:ui generate.purchase
 $execute if entity @s[tag=$(ownership_tag)] run function ui:purchase/zzz/18 with storage minecraft:ui generate.purchase
+tag @s remove uiPurchase.CostFound
+tag @s remove uiPurchase.ItemCheck
+tag @s remove uiPurchase.AdvancementCheck
+scoreboard players reset .bypassCheck uiPurchase.Broad

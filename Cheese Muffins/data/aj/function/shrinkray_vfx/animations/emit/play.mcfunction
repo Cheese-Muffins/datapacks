@@ -4,7 +4,7 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 # Data Manager: Read
 function animated_java:global/data_manager/read with storage animated_java:temp args
 tag @s remove aj.pause_after_tween
-scoreboard players set @s aj.shrinkray_vfx.animation_id 12
+scoreboard players set @s aj.shrinkray_vfx.animation_id 3
 tag @s add aj.shrinkray_vfx.animation.emit.playing
 scoreboard players set @s aj.shrinkray_vfx.emit.frame 0
 tag @s add aj.transforms_only
