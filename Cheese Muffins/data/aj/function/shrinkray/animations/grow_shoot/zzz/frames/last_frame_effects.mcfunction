@@ -2,4 +2,5 @@
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/45_locator_commands
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/45_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/45_locator_sfx
-$execute as $(beam_position) positioned ^-0.5203 ^1.3875 ^0.8932 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/45_locator_beam_position
+$execute as $(default_beam_position) positioned ^-0.5203 ^1.3875 ^0.8932 rotated ~0 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/45_locator_default_beam_position
+$execute as $(gabi_beam_position) positioned ^-0.4968 ^1.3706 ^2.7537 rotated ~180 ~0 run function aj:shrinkray/animations/grow_shoot/zzz/frames/45_locator_gabi_beam_position

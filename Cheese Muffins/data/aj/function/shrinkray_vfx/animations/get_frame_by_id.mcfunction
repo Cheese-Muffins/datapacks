@@ -2,10 +2,16 @@
 execute if score @s aj.shrinkray_vfx.animation_id matches 1 if entity @s[tag=aj.shrinkray_vfx.animation.beam.playing] run return run scoreboard players get @s aj.shrinkray_vfx.beam.frame
 execute if score @s aj.shrinkray_vfx.animation_id matches 1 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_beam.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_beam.frame
 execute if score @s aj.shrinkray_vfx.animation_id matches 1 if entity @s[tag=aj.shrinkray_vfx.animation.grow_beam.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_beam.frame
-execute if score @s aj.shrinkray_vfx.animation_id matches 2 if entity @s[tag=aj.shrinkray_vfx.animation.transform.playing] run return run scoreboard players get @s aj.shrinkray_vfx.transform.frame
-execute if score @s aj.shrinkray_vfx.animation_id matches 2 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_transform.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_transform.frame
-execute if score @s aj.shrinkray_vfx.animation_id matches 2 if entity @s[tag=aj.shrinkray_vfx.animation.grow_transform.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_transform.frame
-execute if score @s aj.shrinkray_vfx.animation_id matches 3 if entity @s[tag=aj.shrinkray_vfx.animation.emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.emit.frame
-execute if score @s aj.shrinkray_vfx.animation_id matches 3 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_emit.frame
-execute if score @s aj.shrinkray_vfx.animation_id matches 3 if entity @s[tag=aj.shrinkray_vfx.animation.grow_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 2 if entity @s[tag=aj.shrinkray_vfx.animation.default_sigil.playing] run return run scoreboard players get @s aj.shrinkray_vfx.default_sigil.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 2 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_default_sigil.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_default_sigil.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 2 if entity @s[tag=aj.shrinkray_vfx.animation.grow_default_sigil.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_default_sigil.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 3 if entity @s[tag=aj.shrinkray_vfx.animation.default_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.default_emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 3 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_default_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_default_emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 3 if entity @s[tag=aj.shrinkray_vfx.animation.grow_default_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_default_emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 4 if entity @s[tag=aj.shrinkray_vfx.animation.gabi_sigil.playing] run return run scoreboard players get @s aj.shrinkray_vfx.gabi_sigil.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 4 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_gabi_sigil.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_gabi_sigil.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 4 if entity @s[tag=aj.shrinkray_vfx.animation.grow_gabi_sigil.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_gabi_sigil.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 5 if entity @s[tag=aj.shrinkray_vfx.animation.gabi_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.gabi_emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 5 if entity @s[tag=aj.shrinkray_vfx.animation.shrink_gabi_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.shrink_gabi_emit.frame
+execute if score @s aj.shrinkray_vfx.animation_id matches 5 if entity @s[tag=aj.shrinkray_vfx.animation.grow_gabi_emit.playing] run return run scoreboard players get @s aj.shrinkray_vfx.grow_gabi_emit.frame
 return 0

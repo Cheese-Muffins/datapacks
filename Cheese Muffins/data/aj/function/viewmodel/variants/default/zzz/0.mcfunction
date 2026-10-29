@@ -2,5 +2,7 @@
 $execute as $(right_arm) run function aj:viewmodel/variants/default/zzz/apply_to_node_right_arm
 $execute as $(right_forearm) run function aj:viewmodel/variants/default/zzz/apply_to_node_right_forearm
 $execute as $(gun) run function aj:viewmodel/variants/default/zzz/apply_to_node_gun
+$execute as $(ptrd_41) run function aj:viewmodel/variants/default/zzz/apply_to_node_ptrd_41
+$execute as $(gabi_muzzle) run function aj:viewmodel/variants/default/zzz/apply_to_node_gabi_muzzle
 $execute as $(left_arm) run function aj:viewmodel/variants/default/zzz/apply_to_node_left_arm
 $execute as $(left_forearm) run function aj:viewmodel/variants/default/zzz/apply_to_node_left_forearm

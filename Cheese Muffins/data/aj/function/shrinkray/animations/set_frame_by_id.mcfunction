@@ -2,7 +2,10 @@
 $execute if score @s aj.shrinkray.animation_id matches 1 if entity @s[tag=aj.shrinkray.animation.shoot.playing] run return run function aj:shrinkray/animations/shoot/set_frame {frame: $(frame)}
 $execute if score @s aj.shrinkray.animation_id matches 1 if entity @s[tag=aj.shrinkray.animation.shrink_shoot.playing] run return run function aj:shrinkray/animations/shrink_shoot/set_frame {frame: $(frame)}
 $execute if score @s aj.shrinkray.animation_id matches 1 if entity @s[tag=aj.shrinkray.animation.grow_shoot.playing] run return run function aj:shrinkray/animations/grow_shoot/set_frame {frame: $(frame)}
-$execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.toggle.playing] run return run function aj:shrinkray/animations/toggle/set_frame {frame: $(frame)}
-$execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.shrink_toggle.playing] run return run function aj:shrinkray/animations/shrink_toggle/set_frame {frame: $(frame)}
-$execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.grow_toggle.playing] run return run function aj:shrinkray/animations/grow_toggle/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.shoot_gabi.playing] run return run function aj:shrinkray/animations/shoot_gabi/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.shrink_shoot_gabi.playing] run return run function aj:shrinkray/animations/shrink_shoot_gabi/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.grow_shoot_gabi.playing] run return run function aj:shrinkray/animations/grow_shoot_gabi/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.toggle.playing] run return run function aj:shrinkray/animations/toggle/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.shrink_toggle.playing] run return run function aj:shrinkray/animations/shrink_toggle/set_frame {frame: $(frame)}
+$execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.grow_toggle.playing] run return run function aj:shrinkray/animations/grow_toggle/set_frame {frame: $(frame)}
 return 0

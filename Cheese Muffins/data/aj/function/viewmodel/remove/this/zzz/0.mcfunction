@@ -2,5 +2,7 @@
 $kill $(right_arm)
 $kill $(right_forearm)
 $kill $(gun)
+$kill $(ptrd_41)
+$kill $(gabi_muzzle)
 $kill $(left_arm)
 $kill $(left_forearm)

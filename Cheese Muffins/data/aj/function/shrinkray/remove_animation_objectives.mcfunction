@@ -3,6 +3,9 @@ scoreboard objectives remove aj.shrinkray.animation_id
 scoreboard objectives remove aj.shrinkray.shoot.frame
 scoreboard objectives remove aj.shrinkray.shrink_shoot.frame
 scoreboard objectives remove aj.shrinkray.grow_shoot.frame
+scoreboard objectives remove aj.shrinkray.shoot_gabi.frame
+scoreboard objectives remove aj.shrinkray.shrink_shoot_gabi.frame
+scoreboard objectives remove aj.shrinkray.grow_shoot_gabi.frame
 scoreboard objectives remove aj.shrinkray.toggle.frame
 scoreboard objectives remove aj.shrinkray.shrink_toggle.frame
 scoreboard objectives remove aj.shrinkray.grow_toggle.frame

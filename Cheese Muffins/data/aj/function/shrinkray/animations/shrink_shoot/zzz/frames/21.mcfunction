@@ -7,11 +7,13 @@ $data merge entity $(head) {transformation: [-0.25f,0f,0f,0f,0f,0.25f,0f,0.3396f
 $data merge entity $(chestplate_arm_r) {transformation: [0f,0f,0.2875f,-0.0867f,0f,0.2875f,0f,0.4634f,-0.2875f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(right_arm) {transformation: [-0.25f,0f,0f,-0.0867f,0f,0.25f,0f,-1023.682f,0f,0f,-0.25f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(right_forearm) {transformation: [-0.25f,0f,0f,-0.0867f,0f,0.25f,0f,-6143.7471f,0f,0f,-0.25f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(gun) {transformation: [-0.25f,0f,0f,-0.0869f,0f,0.25f,0f,0.2292f,0f,0f,-0.25f,0.0289f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(gun) {transformation: [-0.25f,0f,0f,-0.0869f,0f,0.25f,0f,0.2136f,0f,0f,-0.25f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(ptrd_41) {transformation: [0.3671f,0f,0f,-0.0828f,0f,0.3671f,0f,0.2109f,0f,0f,0.3671f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(gabi_muzzle) {transformation: [0f,0f,0.25f,-0.0719f,0f,0.25f,0f,0.2282f,-0.25f,0f,0f,0.4578f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(chestplate_arm_l) {transformation: [0f,0f,-0.2875f,0.0867f,0f,0.2875f,0f,0.4634f,0.2875f,0f,0f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_arm) {transformation: [-0.25f,0f,0f,0.0867f,0f,0.25f,0f,-2047.682f,0f,0f,-0.25f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_forearm) {transformation: [-0.25f,0f,0f,0.0867f,0f,0.25f,0f,-7167.7471f,0f,0f,-0.25f,0f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify storage animated_java:temp entry.data merge value {"locators":{"beam_position":{"px":-0.0867,"py":0.2313,"pz":0.1489,"ry":0,"rx":0}}}
+data modify storage animated_java:temp entry.data merge value {"locators":{"default_beam_position":{"px":-0.0867,"py":0.2313,"pz":0.1489,"ry":0,"rx":0},"gabi_beam_position":{"px":-0.0828,"py":0.2284,"pz":0.4589,"ry":180,"rx":0}}}
 # Data Manager: Prepare for Read / Write
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Write

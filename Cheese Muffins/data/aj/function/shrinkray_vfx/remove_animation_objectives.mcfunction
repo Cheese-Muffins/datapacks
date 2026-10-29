@@ -3,10 +3,16 @@ scoreboard objectives remove aj.shrinkray_vfx.animation_id
 scoreboard objectives remove aj.shrinkray_vfx.beam.frame
 scoreboard objectives remove aj.shrinkray_vfx.shrink_beam.frame
 scoreboard objectives remove aj.shrinkray_vfx.grow_beam.frame
-scoreboard objectives remove aj.shrinkray_vfx.transform.frame
-scoreboard objectives remove aj.shrinkray_vfx.shrink_transform.frame
-scoreboard objectives remove aj.shrinkray_vfx.grow_transform.frame
-scoreboard objectives remove aj.shrinkray_vfx.emit.frame
-scoreboard objectives remove aj.shrinkray_vfx.shrink_emit.frame
-scoreboard objectives remove aj.shrinkray_vfx.grow_emit.frame
+scoreboard objectives remove aj.shrinkray_vfx.default_sigil.frame
+scoreboard objectives remove aj.shrinkray_vfx.shrink_default_sigil.frame
+scoreboard objectives remove aj.shrinkray_vfx.grow_default_sigil.frame
+scoreboard objectives remove aj.shrinkray_vfx.default_emit.frame
+scoreboard objectives remove aj.shrinkray_vfx.shrink_default_emit.frame
+scoreboard objectives remove aj.shrinkray_vfx.grow_default_emit.frame
+scoreboard objectives remove aj.shrinkray_vfx.gabi_sigil.frame
+scoreboard objectives remove aj.shrinkray_vfx.shrink_gabi_sigil.frame
+scoreboard objectives remove aj.shrinkray_vfx.grow_gabi_sigil.frame
+scoreboard objectives remove aj.shrinkray_vfx.gabi_emit.frame
+scoreboard objectives remove aj.shrinkray_vfx.shrink_gabi_emit.frame
+scoreboard objectives remove aj.shrinkray_vfx.grow_gabi_emit.frame
 tellraw @a [[{color:gray,text:'\n '},{color:'#00aced',text:'ᴀɴɪᴍᴀᴛᴇᴅ ᴊᴀᴠᴀ'},{color:dark_gray,italic:true,text:'\n (aj:shrinkray_vfx)'},'\n → '],[{text:'Successfully uninstalled ',color:green},{text:'aj:shrinkray_vfx',color:yellow},{text:'!'},{text:'\n If you have exported multiple times, you may have to remove objectives from previous exports manually, as Animated Java only knows about the objectives from the most recent export.',color:gray,italic:true}],'\n']

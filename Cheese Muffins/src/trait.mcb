@@ -20,6 +20,8 @@ dir tick {
 				tag @s remove scenarioTick.TraitShrinkray
 
 				function trait:size/change
+				scoreboard players reset @s abilityShrinkray.BeamSkinType
+				scoreboard players reset @s traitShrinkray.Duration
 			}
 		}
 	}
@@ -167,7 +169,10 @@ dir size {
 				}
 			}
 		}
-		execute rotated 0 0 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"transform",objective_override:1b,ride_executor:1b}}
+		execute rotated 0 0 run {
+			execute unless score @s abilityShrinkray.BeamSkinType matches 2 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"default_sigil",objective_override:1b,ride_executor:1b}}
+			execute if score @s abilityShrinkray.BeamSkinType matches 2 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"gabi_sigil",objective_override:1b,ride_executor:1b}}
+		}
 		execute if entity @s[type=minecraft:player] run shader enable @s shrinkray
 	}
 

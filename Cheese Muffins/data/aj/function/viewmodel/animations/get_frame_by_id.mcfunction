@@ -5,4 +5,7 @@ execute if score @s aj.viewmodel.animation_id matches 1 if entity @s[tag=aj.view
 execute if score @s aj.viewmodel.animation_id matches 2 if entity @s[tag=aj.viewmodel.animation.shrinkray_shoot.playing] run return run scoreboard players get @s aj.viewmodel.shrinkray_shoot.frame
 execute if score @s aj.viewmodel.animation_id matches 2 if entity @s[tag=aj.viewmodel.animation.shrink_shrinkray_shoot.playing] run return run scoreboard players get @s aj.viewmodel.shrink_shrinkray_shoot.frame
 execute if score @s aj.viewmodel.animation_id matches 2 if entity @s[tag=aj.viewmodel.animation.grow_shrinkray_shoot.playing] run return run scoreboard players get @s aj.viewmodel.grow_shrinkray_shoot.frame
+execute if score @s aj.viewmodel.animation_id matches 3 if entity @s[tag=aj.viewmodel.animation.shrinkray_shoot_gabi.playing] run return run scoreboard players get @s aj.viewmodel.shrinkray_shoot_gabi.frame
+execute if score @s aj.viewmodel.animation_id matches 3 if entity @s[tag=aj.viewmodel.animation.shrink_shrinkray_shoot_gabi.playing] run return run scoreboard players get @s aj.viewmodel.shrink_shrinkray_shoot_gabi.frame
+execute if score @s aj.viewmodel.animation_id matches 3 if entity @s[tag=aj.viewmodel.animation.grow_shrinkray_shoot_gabi.playing] run return run scoreboard players get @s aj.viewmodel.grow_shrinkray_shoot_gabi.frame
 return 0

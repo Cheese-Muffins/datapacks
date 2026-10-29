@@ -2,6 +2,7 @@
 data modify storage animated_java:temp entry.data.locators.commands merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
 data modify storage animated_java:temp entry.data.locators.constant merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
 data modify storage animated_java:temp entry.data.locators.sfx merge value { px: 0, py: 0, pz: 0, ry: 0, rx: 0 }
-execute at @s run function aj:shrinkray/zzz/set_default_pose/as_locator_beam_position with storage animated_java:temp entry.data.locators.beam_position
+execute at @s run function aj:shrinkray/zzz/set_default_pose/as_locator_default_beam_position with storage animated_java:temp entry.data.locators.default_beam_position
+execute at @s run function aj:shrinkray/zzz/set_default_pose/as_locator_gabi_beam_position with storage animated_java:temp entry.data.locators.gabi_beam_position
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args

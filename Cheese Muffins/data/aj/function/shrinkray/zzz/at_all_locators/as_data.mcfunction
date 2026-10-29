@@ -5,5 +5,7 @@ data modify storage animated_java:temp args merge from storage animated_java:tem
 function aj:shrinkray/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
 data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.sfx
 function aj:shrinkray/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
-data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.beam_position
+data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.default_beam_position
+function aj:shrinkray/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args
+data modify storage animated_java:temp args merge from storage animated_java:temp entry.data.locators.gabi_beam_position
 function aj:shrinkray/zzz/at_all_locators/execute_at_transform with storage animated_java:temp args

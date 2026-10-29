@@ -2,3 +2,4 @@
 $data merge entity $(beam) { transformation: [-1f,0f,0f,0f,0f,1f,0f,0f,0f,0f,-1f,0.5f,0f,0f,0f,1f], start_interpolation: 0 }
 $data merge entity $(transform) { transformation: [-1.375f,0f,0f,0.0063f,0f,1.375f,0f,0.0031f,0f,0f,-1.375f,-0.0062f,0f,0f,0f,1f], start_interpolation: 0 }
 $data merge entity $(emit) { transformation: [-1f,0f,0f,0.0016f,0f,1f,0f,0f,0f,0f,-1f,-0.0234f,0f,0f,0f,1f], start_interpolation: 0 }
+$data merge entity $(gabi_muzzle) { transformation: [0f,0f,-1f,0.0016f,0f,1f,0f,0.0016f,1f,0f,0f,0f,0f,0f,0f,1f], start_interpolation: 0 }

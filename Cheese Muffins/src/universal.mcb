@@ -10,6 +10,7 @@ function on_load minecraft:load{
     scoreboard objectives add universalText.ID dummy
     scoreboard objectives add universalVFX.ID dummy
     scoreboard objectives add universalVFX.Conditions dummy
+    scoreboard objectives add universalFetch.VariableScale dummy
     scoreboard objectives add universalDisconnect.Check minecraft.custom:minecraft.leave_game
     
 
@@ -221,13 +222,14 @@ dir vfx {
             }
 
 
+            tag @s add temp
             $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
                 $scoreboard players set @s universalVFX.ID $(id)
                 $function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
 
                 execute if data storage minecraft:universal vfx{ride_executor:1b} run block { with storage minecraft:universal vfx
-                    $execute unless data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[type=!minecraft:item_display,scores={universalAbility.ID=$(id)}]
-                    $execute if data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[type=!minecraft:item_display,scores={universalVFX.ID=$(id)}]
+                    $execute unless data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[tag=temp,scores={universalAbility.ID=$(id)}]
+                    $execute if data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[tag=temp,scores={universalVFX.ID=$(id)}]
                 }
 
                 # if an output argument is present
@@ -235,6 +237,7 @@ dir vfx {
                     $$(output)
                 }
             }
+            tag @s remove temp
             execute if data storage minecraft:universal vfx.objective_override run scoreboard players reset @s universalVFX.ID
         }
 
@@ -570,7 +573,7 @@ dir ability {
 
         function visibility {
             # function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
+            execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s universalAbility.ID
             $data merge storage minecraft:universal {ability:{rig:{objective:"$(objective)",target:"$(target)",state:"$(state)",perspective:"$(perspective)",mounted:"$(mounted)"}}}
             block { with storage minecraft:universal ability.rig
                 $visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
@@ -1179,5 +1182,63 @@ dir fetch {
         loot insert 0 -63 0 mine ~ ~ ~ minecraft:stick[tool={can_destroy_blocks_in_creative:true,default_mining_speed:90,damage_per_block:90,rules:[]},enchantments={"minecraft:silk_touch":1}]
         $data modify storage $(storage) $(path) set string block 0 -63 0 Items[0].id
         item replace block 0 -63 0 container.0 with minecraft:air
+    }
+
+    dir variable {
+        function main {
+            # SCORE IMPLEMENTATION #
+                # function universal:fetch/variable/main {arguments:{ability:"shrinkray",move:"shoot",name:"range",write_score:1b,objective:"abilityShrinkray.Beam",target:".maxDistance",scale:10}}
+
+            # STORAGE IMPLEMENTATION #
+                # function universal:fetch/variable/main {arguments:{ability:"shrinkray",move:"shoot",name:"scale_duration",storage_path:"minecraft:ability shrinkray.beam.scale_duration",data_type:"int"}}
+
+            data remove storage minecraft:universal fetch.variable
+            $data modify storage minecraft:universal fetch.variable merge value $(arguments)
+
+            # Defaults
+            execute unless data storage minecraft:universal fetch.variable.data_type run data modify storage minecraft:universal fetch.variable.data_type set value "double"
+
+            function universal:fetch/variable/scaling with storage minecraft:universal fetch.variable
+
+            execute if data storage minecraft:universal fetch.variable{write_score:1b} run block { with storage minecraft:universal fetch.variable
+                $execute store result score $(target) $(objective) run data get storage minecraft:ability $(ability).variables.$(move).$(name) $(scale)
+            }
+            execute unless data storage minecraft:universal fetch.variable{write_score:1b} run block { with storage minecraft:universal fetch.variable
+                $execute store result storage $(storage_path) $(data_type) 0.001 run data get storage minecraft:ability $(ability).variables.$(move).$(name) $(storage_scale)
+            }
+        }
+
+        function scaling {
+            execute unless data storage minecraft:universal fetch.variable.scale run data modify storage minecraft:universal fetch.variable.scale set value 1.0d
+
+            data modify storage minecraft:universal fetch.variable.default_scale set from storage minecraft:universal fetch.variable.scale
+            data modify storage minecraft:universal fetch.variable.shrinkray_scale set value 1.0d
+
+            # list of applicable scales
+            execute if data storage minecraft:universal fetch.variable{name:"max_range"} run {
+                execute if score @s traitShrinkray.Size matches 1 run data modify storage minecraft:universal fetch.variable.shrinkray_scale set value 0.5d
+                execute if score @s traitShrinkray.Size matches 2 run data modify storage minecraft:universal fetch.variable.shrinkray_scale set value 1.5d
+            }
+            execute if data storage minecraft:universal fetch.variable{name:"hitbox_size"} run {
+                execute if score @s traitShrinkray.Size matches 1 run data modify storage minecraft:universal fetch.variable.shrinkray_scale set value 0.5d
+                execute if score @s traitShrinkray.Size matches 2 run data modify storage minecraft:universal fetch.variable.shrinkray_scale set value 1.5d
+            }
+            execute if data storage minecraft:universal fetch.variable{name:"scale_duration"} run {
+                execute if score @s traitShrinkray.Size matches 1 run data modify storage minecraft:universal fetch.variable.shrinkray_scale set value 0.80d
+                execute if score @s traitShrinkray.Size matches 2 run data modify storage minecraft:universal fetch.variable.shrinkray_scale set value 2.00d
+            }
+
+            # apply
+            execute store result score .defaultScaling universalFetch.VariableScale run data get storage minecraft:universal fetch.variable.default_scale 100
+            execute store result score .shrinkrayScaling universalFetch.VariableScale run data get storage minecraft:universal fetch.variable.shrinkray_scale 100
+            scoreboard players operation .resultScale universalFetch.VariableScale = .defaultScaling universalFetch.VariableScale
+            scoreboard players operation .resultScale universalFetch.VariableScale *= .shrinkrayScaling universalFetch.VariableScale
+            function universal:math/divide {value:100,score:".resultScale",objective:"universalFetch.VariableScale"}
+
+            # write
+            $execute store result storage minecraft:universal fetch.variable.scale $(data_type) 0.01 run scoreboard players get .resultScale universalFetch.VariableScale
+            function universal:math/multiply {value:1000,score:".resultScale",objective:"universalFetch.VariableScale"}
+            $execute store result storage minecraft:universal fetch.variable.storage_scale $(data_type) 0.01 run scoreboard players get .resultScale universalFetch.VariableScale
+        }
     }
 }

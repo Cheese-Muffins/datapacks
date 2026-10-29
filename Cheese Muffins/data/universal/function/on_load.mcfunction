@@ -8,6 +8,7 @@ scoreboard objectives add universalError.Math dummy
 scoreboard objectives add universalText.ID dummy
 scoreboard objectives add universalVFX.ID dummy
 scoreboard objectives add universalVFX.Conditions dummy
+scoreboard objectives add universalFetch.VariableScale dummy
 scoreboard objectives add universalDisconnect.Check minecraft.custom:minecraft.leave_game
 scoreboard objectives add universalAbility.MoveCooldown1 dummy
 scoreboard objectives add universalAbility.MoveSplit1 dummy

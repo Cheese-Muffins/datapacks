@@ -5,4 +5,7 @@ tag @s remove aj.viewmodel.animation.grow_shrinkray_toggle.playing
 tag @s remove aj.viewmodel.animation.shrinkray_shoot.playing
 tag @s remove aj.viewmodel.animation.shrink_shrinkray_shoot.playing
 tag @s remove aj.viewmodel.animation.grow_shrinkray_shoot.playing
+tag @s remove aj.viewmodel.animation.shrinkray_shoot_gabi.playing
+tag @s remove aj.viewmodel.animation.shrink_shrinkray_shoot_gabi.playing
+tag @s remove aj.viewmodel.animation.grow_shrinkray_shoot_gabi.playing
 tag @s remove aj.pause_after_tween

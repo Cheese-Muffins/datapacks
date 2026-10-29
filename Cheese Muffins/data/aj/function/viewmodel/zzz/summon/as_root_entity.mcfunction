@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:viewmodel"
-data modify storage animated_java:temp entry.data.rig_hash set value "df4efbeecf2c60363b38a50bc6fd6914719ec45cf5870db6ca81595f8d751555"
+data modify storage animated_java:temp entry.data.rig_hash set value "f637b2d4d5840ef2e38886a86f25927286832e8090cd87b677fdd1f1fab15ba6"
 tp @s ~ ~ ~ ~ ~
 execute on passengers if entity @s[tag=aj.viewmodel.node.right_arm] run function aj:viewmodel/zzz/summon/as_node/right_arm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
@@ -23,6 +23,12 @@ data modify storage animated_java:temp entry.data.uuids_by_name.right_forearm se
 execute on passengers if entity @s[tag=aj.viewmodel.node.gun] run function aj:viewmodel/zzz/summon/as_node/gun
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.gun set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.viewmodel.node.ptrd_41] run function aj:viewmodel/zzz/summon/as_node/ptrd_41
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.ptrd_41 set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.viewmodel.node.gabi_muzzle] run function aj:viewmodel/zzz/summon/as_node/gabi_muzzle
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.gabi_muzzle set from storage animated_java:gu out
 execute on passengers if entity @s[tag=aj.viewmodel.node.left_arm] run function aj:viewmodel/zzz/summon/as_node/left_arm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.left_arm set from storage animated_java:gu out

@@ -7,11 +7,13 @@ $data merge entity $(head) {transformation: [-1.441f,0.2181f,0.3549f,-0.0062f,-0
 $data merge entity $(chestplate_arm_r) {transformation: [-1.103f,0.9229f,0.9526f,-0.051f,0.2365f,1.3559f,-1.0398f,2.593f,-1.305f,-0.5342f,-0.9935f,-0.33f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(right_arm) {transformation: [-0.8283f,0.8025f,-0.9591f,-0.5178f,0.9042f,1.1791f,0.2057f,-1022.0927f,0.8639f,-0.4645f,-1.1348f,-0.0598f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(right_forearm) {transformation: [-0.8283f,-0.3853f,-1.1897f,-0.7266f,0.9042f,0.8013f,-0.889f,-6142.3995f,0.8639f,-1.2081f,-0.2102f,0.0611f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(gun) {transformation: [0.9227f,-0.8325f,-0.8399f,-0.6897f,-0.2503f,0.9037f,-1.1707f,1.5829f,1.1558f,0.8603f,0.417f,0.4595f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(gun) {transformation: [0.9227f,-0.8325f,-0.8399f,-0.8031f,-0.2503f,0.9037f,-1.1707f,1.43f,1.1558f,0.8603f,0.417f,0.5107f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(ptrd_41) {transformation: [1.2164f,-0.5659f,1.7471f,-0.6489f,-1.3278f,1.1768f,1.3056f,1.4518f,-1.2687f,-1.7741f,0.3087f,0.2505f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(gabi_muzzle) {transformation: [-1.1897f,-0.3853f,0.8283f,1.5394f,-0.889f,0.8013f,-0.9042f,3.0957f,-0.2102f,-1.2081f,-0.8639f,0.5142f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(chestplate_arm_l) {transformation: [-1.1036f,1.3256f,-0.0238f,1.1775f,0.9372f,0.758f,-1.234f,2.2906f,-0.9378f,-0.8024f,-1.2051f,-0.2849f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_arm) {transformation: [-0.0207f,1.1527f,0.9596f,0.507f,-1.073f,0.6592f,-0.8149f,-2046.0927f,-1.0479f,-0.6977f,0.8155f,0.1209f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_forearm) {transformation: [-0.0207f,1.4547f,-0.3652f,0.2071f,-1.073f,-0.2695f,-1.0129f,-7166.2642f,-1.0479f,0.2473f,1.0444f,0.3025f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify storage animated_java:temp entry.data merge value {"locators":{"beam_position":{"px":-0.2939,"py":2.1521,"pz":0.2657,"ry":243.5952,"rx":-51.3055}}}
+data modify storage animated_java:temp entry.data merge value {"locators":{"default_beam_position":{"px":-0.3623,"py":2.1911,"pz":0.3225,"ry":243.5952,"rx":-51.3055},"gabi_beam_position":{"px":1.5082,"py":3.1399,"pz":0.5518,"ry":100.0206,"rx":36.3488}}}
 # Data Manager: Prepare for Read / Write
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Write

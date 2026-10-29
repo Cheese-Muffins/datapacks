@@ -6,4 +6,7 @@ scoreboard objectives remove aj.viewmodel.grow_shrinkray_toggle.frame
 scoreboard objectives remove aj.viewmodel.shrinkray_shoot.frame
 scoreboard objectives remove aj.viewmodel.shrink_shrinkray_shoot.frame
 scoreboard objectives remove aj.viewmodel.grow_shrinkray_shoot.frame
+scoreboard objectives remove aj.viewmodel.shrinkray_shoot_gabi.frame
+scoreboard objectives remove aj.viewmodel.shrink_shrinkray_shoot_gabi.frame
+scoreboard objectives remove aj.viewmodel.grow_shrinkray_shoot_gabi.frame
 tellraw @a [[{color:gray,text:'\n '},{color:'#00aced',text:'ᴀɴɪᴍᴀᴛᴇᴅ ᴊᴀᴠᴀ'},{color:dark_gray,italic:true,text:'\n (aj:viewmodel)'},'\n → '],[{text:'Successfully uninstalled ',color:green},{text:'aj:viewmodel',color:yellow},{text:'!'},{text:'\n If you have exported multiple times, you may have to remove objectives from previous exports manually, as Animated Java only knows about the objectives from the most recent export.',color:gray,italic:true}],'\n']

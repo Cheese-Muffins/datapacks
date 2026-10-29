@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:shrinkray_vfx"
-data modify storage animated_java:temp entry.data.rig_hash set value "6e45ef6745140ea4ea56c070c4e85ad8a78df73b38ee3659622ca0a5cb902851"
+data modify storage animated_java:temp entry.data.rig_hash set value "c638398b3dcf3a55707820748d70362abe945da6aa8ebc74a9bb5cc7abb334c0"
 tp @s ~ ~ ~ ~ ~
 execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.beam] run function aj:shrinkray_vfx/zzz/summon/as_node/beam
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
@@ -23,16 +23,19 @@ data modify storage animated_java:temp entry.data.uuids_by_name.transform set fr
 execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.emit] run function aj:shrinkray_vfx/zzz/summon/as_node/emit
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.emit set from storage animated_java:gu out
+execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.gabi_muzzle] run function aj:shrinkray_vfx/zzz/summon/as_node/gabi_muzzle
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.gabi_muzzle set from storage animated_java:gu out
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
 function aj:shrinkray_vfx/zzz/set_default_pose
-execute if data storage animated_java:temp args.variant run function aj:shrinkray_vfx/zzz/summon/variant_arg/process with storage animated_java:temp args
+execute if data storage animated_java:temp args.variant run function aj:shrinkray_vfx/zzz/summon/zzz/variant_arg/no_variants_warning
 execute if score #success aj.i matches 0 run return fail
 execute if data storage animated_java:temp args.animation run function aj:shrinkray_vfx/zzz/summon/animation_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
 execute on passengers run rotate @s ~ ~
-data modify entity @s teleport_duration set value 1
-execute on passengers run data modify entity @s teleport_duration set value 1
+data modify entity @s teleport_duration set value 0
+execute on passengers run data modify entity @s teleport_duration set value 0
 execute on passengers if entity @s[tag=aj.shrinkray_vfx.node.emit] run function aj:shrinkray_vfx/zzz/summon/on_summon/bone_emit
 tag @s remove aj.new
 execute on passengers run tag @s remove aj.new

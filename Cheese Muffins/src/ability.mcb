@@ -1636,10 +1636,11 @@ dir shrinkray {
         scoreboard objectives add abilityShrinkray.Beam dummy
         scoreboard objectives add abilityShrinkray.BeamID dummy
         scoreboard objectives add abilityShrinkray.BeamMode dummy
+        scoreboard objectives add abilityShrinkray.BeamSkinType dummy
 
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Shoot",storage:"shrinkray",path:"1a",move:1,cooldown:1}
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Shoot",storage:"shrinkray",path:"2a",move:2,cooldown:1}
-        function universal:ability/setup/variables {ability:"shrinkray",name:"shoot",variables:{range:20.0,struck_duration:3}}
+        function universal:ability/setup/variables {ability:"shrinkray",name:"shoot",variables:{max_range:20.0,hitbox_size:1.75,scale_duration:45}}
 
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Self",storage:"shrinkray",path:"1b",move:1,cooldown:3}
         function universal:ability/setup/cooldown/10x {name:"Shrinkray_Self",storage:"shrinkray",path:"2b",move:2,cooldown:3}
@@ -1716,10 +1717,12 @@ dir shrinkray {
                 execute if entity @s[tag=abilityShrinkray.ChangeableBeam] run function ability:shrinkray/moves/beam/change_mode with storage minecraft:ability shrinkray.beam.args
                 execute unless entity @s[tag=abilityShrinkray.BypassErrors] run block { with storage minecraft:ability shrinkray.beam.args
                     # setup
-                    function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
+                    execute unless score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
+                    execute if score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot_gabi'}
                     
                     # restraints
-                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.default_beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.gabi_beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
                     $function universal:ability/restraint/cooldown {arguments:{ability_name:"Shrinkray",split_name:"Shoot",split_path:1,move:$(move)}}
                     $function universal:ability/restraint/cancelable {move:$(move)}
                     tag @s add universalAbility.Animating
@@ -1734,9 +1737,14 @@ dir shrinkray {
                 execute if entity @s[tag=abilityShrinkray.RefireBeam] run block { with storage minecraft:ability shrinkray.beam.args
                     function ability:shrinkray/moves/beam/change_mode with storage minecraft:ability shrinkray.beam.args
                     execute store result storage minecraft:ability shrinkray.beam.id int 1 run scoreboard players get @s universalAbility.ID
+
+                    data modify storage minecraft:ability shrinkray.beam.animation set value "shoot"
+                    execute if score @s universalAbility.EquippedSkinID matches 2 run data modify storage minecraft:ability shrinkray.beam.animation set value "shoot_gabi"
+
                     block { with storage minecraft:ability shrinkray.beam
-                        $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"shoot",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:1,interrupt_viewmodel:1b}}
+                        $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:1,interrupt_viewmodel:1b}}
                     }
+
                     tag @s remove abilityShrinkray.RefireBeam
                 }
                 data remove storage minecraft:ability shrinkray.beam.args
@@ -1751,27 +1759,39 @@ dir shrinkray {
             }
 
             function create {
-                function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                # skin voiceline?
+                execute unless score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                execute if score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
+
                 execute if score @s abilityShrinkray.BeamMode matches 1 run data merge storage minecraft:ability {shrinkray:{beam:{type:"shrink",check_size:1}}}
                 execute if score @s abilityShrinkray.BeamMode matches 2 run data merge storage minecraft:ability {shrinkray:{beam:{type:"grow",check_size:2}}}
                 tag @s remove abilityShrinkray.ChangeableBeam
                 execute store result storage minecraft:ability shrinkray.beam.id int 1 run scoreboard players get @s universalAbility.ID
                 scoreboard players remove @s abilityShrinkray.PassiveAmmoValue 1
-                execute store result score .maxDistance abilityShrinkray.Beam run data get storage minecraft:ability shrinkray.variables.shoot.range 10
-                data modify storage minecraft:ability shrinkray.beam.struck_duration set from storage minecraft:ability shrinkray.variables.shoot.struck_duration
+
+                # variable fetch
+                function universal:fetch/variable/main {arguments:{ability:"shrinkray",move:"shoot",name:"max_range",write_score:1b,objective:"abilityShrinkray.Beam",target:".maxDistance",scale:10}}
+                function universal:fetch/variable/main {arguments:{ability:"shrinkray",move:"shoot",name:"scale_duration",storage_path:"minecraft:ability shrinkray.beam.scale_duration",data_type:"int"}}
+                function universal:fetch/variable/main {arguments:{ability:"shrinkray",move:"shoot",name:"hitbox_size",storage_path:"minecraft:ability shrinkray.beam.hitbox_size"}}
+
+                data modify storage minecraft:ability shrinkray.beam.spawn_locator set value "default_beam_position"
+                execute if score @s universalAbility.EquippedSkinID matches 2 run data modify storage minecraft:ability shrinkray.beam.spawn_locator set value "gabi_beam_position"
+
                 scoreboard players set .distance abilityShrinkray.Beam 0
                 tag @s remove temp
+
+                execute store result storage minecraft:ability shrinkray.beam.skin_type int 1 run scoreboard players get @s universalAbility.EquippedSkinID
                 block { with storage minecraft:ability shrinkray.beam
                     $execute at @a[scores={universalAbility.ID=$(id)},limit=1] rotated as @a[scores={universalAbility.ID=$(id)},limit=1] anchored eyes positioned ^ ^ ^ anchored feet run function ability:shrinkray/moves/beam/distance with storage minecraft:ability shrinkray.beam
 
-                    $execute if entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] at @n[type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position,scores={universalAbility.ID=$(id)}] anchored feet facing entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] feet run {
+                    $execute if entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] at @n[type=minecraft:item_display,tag=aj.shrinkray.locator.$(spawn_locator),scores={universalAbility.ID=$(id)}] anchored feet facing entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] feet run {
                         scoreboard players set .visualDistance abilityShrinkray.Beam 0
                         scoreboard players operation .visualLimit abilityShrinkray.Beam = .maxDistance abilityShrinkray.Beam
                         scoreboard players set .ten abilityShrinkray.Beam 10
                         scoreboard players operation .visualLimit abilityShrinkray.Beam *= .ten abilityShrinkray.Beam
                         scoreboard players add .visualLimit abilityShrinkray.Beam 1000
                         function ability:shrinkray/moves/beam/measure_visual
-                        function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"beam",output:"function ability:shrinkray/moves/beam/store_distance"}}
+                        execute unless score @s universalAbility.EquippedSkinID matches 2 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"beam",output:"function ability:shrinkray/moves/beam/store_distance"}}
                     }
                 }
                 kill @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint]
@@ -1781,34 +1801,41 @@ dir shrinkray {
 
             function store_distance {
                 execute on passengers if entity @s[tag=aj.shrinkray_vfx.bone.beam] run scoreboard players operation @s abilityShrinkray.Beam = .visualDistance abilityShrinkray.Beam
-                function ability:shrinkray/moves/beam/apply_distance
-            }
-
-            function apply_distance {
                 execute on passengers if entity @s[tag=aj.shrinkray_vfx.bone.beam] store result entity @s transformation.scale[2] float 0.01 run scoreboard players get @s abilityShrinkray.Beam
             }
 
             function measure_visual {
                 execute if entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,distance=..0.01,limit=1] run return 0
                 execute if score .visualDistance abilityShrinkray.Beam >= .visualLimit abilityShrinkray.Beam run return 0
+
+                # Smoke every 0.1 blocks, only for Gabi.
+                scoreboard players operation .smokeStep abilityShrinkray.Beam = .visualDistance abilityShrinkray.Beam
+                scoreboard players operation .smokeStep abilityShrinkray.Beam %= .ten abilityShrinkray.Beam
+                execute if score @s universalAbility.EquippedSkinID matches 2 if score .smokeStep abilityShrinkray.Beam matches 0 run {
+                    particle minecraft:smoke ~ ~ ~ 0 0 0 0 1 force @a
+                    execute if predicate universal:chance/0.10 run particle minecraft:flame ~ ~ ~ 0 0 0 0.05 1 force @a
+                }
+
                 scoreboard players add .visualDistance abilityShrinkray.Beam 1
                 execute positioned ^ ^ ^0.01 run function ability:shrinkray/moves/beam/measure_visual
             }
 
             function distance {
-                $execute as @e[type=!#universal:not_mob,distance=..1.5] at @s unless score @s traitShrinkray.Size matches $(check_size) unless score @s universalAbility.ID matches $(id) run function ability:shrinkray/moves/beam/hit with storage minecraft:ability shrinkray.beam
+                $execute as @e[type=!#universal:not_mob,distance=..$(hitbox_size)] at @s unless score @s traitShrinkray.Size matches $(check_size) unless score @s universalAbility.ID matches $(id) run function ability:shrinkray/moves/beam/hit with storage minecraft:ability shrinkray.beam
+
                 execute unless block ~ ~ ~ #ability:shrinkray/beam run tag @s add temp
 
-                execute unless entity @s[tag=temp] if score .distance abilityShrinkray.Beam < .maxDistance abilityShrinkray.Beam run return run function ability:shrinkray/moves/beam/advance_camera
+                execute unless entity @s[tag=temp] if score .distance abilityShrinkray.Beam < .maxDistance abilityShrinkray.Beam run return run {
+                    scoreboard players add .distance abilityShrinkray.Beam 1
+                    execute positioned ^ ^ ^0.1 run function ability:shrinkray/moves/beam/distance with storage minecraft:ability shrinkray.beam
+                }
 
                 summon minecraft:marker ~ ~ ~ {Tags:["abilityShrinkray.BeamEndpoint"]}
             }
-            function advance_camera {
-                scoreboard players add .distance abilityShrinkray.Beam 1
-                execute positioned ^ ^ ^0.1 run function ability:shrinkray/moves/beam/distance with storage minecraft:ability shrinkray.beam
-            }
+
             function hit {
-                $function trait:apply {args:{type:"$(type)",proper:"Shrinkray",duration:$(struck_duration)}}
+                $scoreboard players set @s abilityShrinkray.BeamSkinType $(skin_type)
+                $function trait:apply {args:{type:"$(type)",proper:"Shrinkray",duration:$(scale_duration)}}
                 execute if entity @s[type=minecraft:creeper,scores={traitShrinkray.Size=1}] run function ability:shrinkray/secret_interactions/harmless_creeper with storage minecraft:ability shrinkray.beam
             }
 
@@ -2571,6 +2598,18 @@ dir generate {
                     rarity:2,\
                     ownership_tag:"skinShrinkrayKiller.Ownership",\
                     equipped_tag:"skinShrinkrayKiller.User",\
+                    advancements:{\
+                        request1:{path:"minecraft:nether/get_wither_skull",name:"Spooky Scary Skeleton",line:"[-1]"}\
+                    }\
+                },\
+                skin2:{\
+                    type:"skin",\
+                    name:[{"text":"PTRD-41","italic":false,"color":"#e4a572"}],\
+                    subtext:"On this island… there were just people...",\
+                    model:"minecraft:interactables/ability/shrinkray/skin_gabi",\
+                    rarity:5,\
+                    ownership_tag:"skinShrinkrayGabi.Ownership",\
+                    equipped_tag:"skinShrinkrayGabi.User",\
                     advancements:{\
                         request1:{path:"minecraft:nether/get_wither_skull",name:"Spooky Scary Skeleton",line:"[-1]"}\
                     }\

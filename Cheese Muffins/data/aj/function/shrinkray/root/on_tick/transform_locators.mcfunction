@@ -2,4 +2,5 @@
 function aj:shrinkray/root/on_tick/select_locator_commands with storage animated_java:temp entry.data.locators.commands
 function aj:shrinkray/root/on_tick/select_locator_constant with storage animated_java:temp entry.data.locators.constant
 function aj:shrinkray/root/on_tick/select_locator_sfx with storage animated_java:temp entry.data.locators.sfx
-function aj:shrinkray/root/on_tick/select_locator_beam_position with storage animated_java:temp entry.data.locators.beam_position
+function aj:shrinkray/root/on_tick/select_locator_default_beam_position with storage animated_java:temp entry.data.locators.default_beam_position
+function aj:shrinkray/root/on_tick/select_locator_gabi_beam_position with storage animated_java:temp entry.data.locators.gabi_beam_position

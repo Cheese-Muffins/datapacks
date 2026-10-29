@@ -5,4 +5,7 @@ $execute if score @s aj.viewmodel.animation_id matches 1 if entity @s[tag=aj.vie
 $execute if score @s aj.viewmodel.animation_id matches 2 if entity @s[tag=aj.viewmodel.animation.shrinkray_shoot.playing] run return run function aj:viewmodel/animations/shrinkray_shoot/set_frame {frame: $(frame)}
 $execute if score @s aj.viewmodel.animation_id matches 2 if entity @s[tag=aj.viewmodel.animation.shrink_shrinkray_shoot.playing] run return run function aj:viewmodel/animations/shrink_shrinkray_shoot/set_frame {frame: $(frame)}
 $execute if score @s aj.viewmodel.animation_id matches 2 if entity @s[tag=aj.viewmodel.animation.grow_shrinkray_shoot.playing] run return run function aj:viewmodel/animations/grow_shrinkray_shoot/set_frame {frame: $(frame)}
+$execute if score @s aj.viewmodel.animation_id matches 3 if entity @s[tag=aj.viewmodel.animation.shrinkray_shoot_gabi.playing] run return run function aj:viewmodel/animations/shrinkray_shoot_gabi/set_frame {frame: $(frame)}
+$execute if score @s aj.viewmodel.animation_id matches 3 if entity @s[tag=aj.viewmodel.animation.shrink_shrinkray_shoot_gabi.playing] run return run function aj:viewmodel/animations/shrink_shrinkray_shoot_gabi/set_frame {frame: $(frame)}
+$execute if score @s aj.viewmodel.animation_id matches 3 if entity @s[tag=aj.viewmodel.animation.grow_shrinkray_shoot_gabi.playing] run return run function aj:viewmodel/animations/grow_shrinkray_shoot_gabi/set_frame {frame: $(frame)}
 return 0

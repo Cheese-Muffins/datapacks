@@ -2,4 +2,5 @@
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/shoot/zzz/frames/34_locator_commands
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/shoot/zzz/frames/34_locator_constant
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:shrinkray/animations/shoot/zzz/frames/34_locator_sfx
-$execute as $(beam_position) positioned ^-0.3469 ^0.925 ^0.5955 rotated ~0 ~0 run function aj:shrinkray/animations/shoot/zzz/frames/34_locator_beam_position
+$execute as $(default_beam_position) positioned ^-0.3469 ^0.925 ^0.5955 rotated ~0 ~0 run function aj:shrinkray/animations/shoot/zzz/frames/34_locator_default_beam_position
+$execute as $(gabi_beam_position) positioned ^-0.3312 ^0.9137 ^1.8358 rotated ~180 ~0 run function aj:shrinkray/animations/shoot/zzz/frames/34_locator_gabi_beam_position

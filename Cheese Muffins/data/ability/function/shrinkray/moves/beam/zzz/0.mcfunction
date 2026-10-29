@@ -1,7 +1,9 @@
 # Generated with MC-Build
 
-function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
-function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+execute unless score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
+execute if score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot_gabi'}
+function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.default_beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.gabi_beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
 $function universal:ability/restraint/cooldown {arguments:{ability_name:"Shrinkray",split_name:"Shoot",split_path:1,move:$(move)}}
 $function universal:ability/restraint/cancelable {move:$(move)}
 tag @s add universalAbility.Animating

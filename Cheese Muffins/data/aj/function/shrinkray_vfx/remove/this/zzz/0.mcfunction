@@ -2,3 +2,4 @@
 $kill $(beam)
 $kill $(transform)
 $kill $(emit)
+$kill $(gabi_muzzle)
