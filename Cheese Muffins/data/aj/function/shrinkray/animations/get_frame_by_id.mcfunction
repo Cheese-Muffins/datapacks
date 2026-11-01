@@ -2,10 +2,13 @@
 execute if score @s aj.shrinkray.animation_id matches 1 if entity @s[tag=aj.shrinkray.animation.shoot.playing] run return run scoreboard players get @s aj.shrinkray.shoot.frame
 execute if score @s aj.shrinkray.animation_id matches 1 if entity @s[tag=aj.shrinkray.animation.shrink_shoot.playing] run return run scoreboard players get @s aj.shrinkray.shrink_shoot.frame
 execute if score @s aj.shrinkray.animation_id matches 1 if entity @s[tag=aj.shrinkray.animation.grow_shoot.playing] run return run scoreboard players get @s aj.shrinkray.grow_shoot.frame
-execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.shoot_gabi.playing] run return run scoreboard players get @s aj.shrinkray.shoot_gabi.frame
-execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.shrink_shoot_gabi.playing] run return run scoreboard players get @s aj.shrinkray.shrink_shoot_gabi.frame
-execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.grow_shoot_gabi.playing] run return run scoreboard players get @s aj.shrinkray.grow_shoot_gabi.frame
-execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.toggle.playing] run return run scoreboard players get @s aj.shrinkray.toggle.frame
-execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.shrink_toggle.playing] run return run scoreboard players get @s aj.shrinkray.shrink_toggle.frame
-execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.grow_toggle.playing] run return run scoreboard players get @s aj.shrinkray.grow_toggle.frame
+execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.toggle.playing] run return run scoreboard players get @s aj.shrinkray.toggle.frame
+execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.shrink_toggle.playing] run return run scoreboard players get @s aj.shrinkray.shrink_toggle.frame
+execute if score @s aj.shrinkray.animation_id matches 2 if entity @s[tag=aj.shrinkray.animation.grow_toggle.playing] run return run scoreboard players get @s aj.shrinkray.grow_toggle.frame
+execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.shoot_gabi.playing] run return run scoreboard players get @s aj.shrinkray.shoot_gabi.frame
+execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.shrink_shoot_gabi.playing] run return run scoreboard players get @s aj.shrinkray.shrink_shoot_gabi.frame
+execute if score @s aj.shrinkray.animation_id matches 3 if entity @s[tag=aj.shrinkray.animation.grow_shoot_gabi.playing] run return run scoreboard players get @s aj.shrinkray.grow_shoot_gabi.frame
+execute if score @s aj.shrinkray.animation_id matches 4 if entity @s[tag=aj.shrinkray.animation.toggle_gabi.playing] run return run scoreboard players get @s aj.shrinkray.toggle_gabi.frame
+execute if score @s aj.shrinkray.animation_id matches 4 if entity @s[tag=aj.shrinkray.animation.shrink_toggle_gabi.playing] run return run scoreboard players get @s aj.shrinkray.shrink_toggle_gabi.frame
+execute if score @s aj.shrinkray.animation_id matches 4 if entity @s[tag=aj.shrinkray.animation.grow_toggle_gabi.playing] run return run scoreboard players get @s aj.shrinkray.grow_toggle_gabi.frame
 return 0

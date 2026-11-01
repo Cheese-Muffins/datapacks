@@ -5,4 +5,4 @@ execute if score @s universalAbility.MoveCooldown2 matches 1.. run scoreboard pl
 execute if score @s universalAbility.MoveCooldown3 matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown3 1
 execute if score @s abilityBilly.ToggleOnText matches 1.. run function ability:billy/tick/zzz/4
 execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
-execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+execute if score @s universalAbility.ErrorLogDelay matches 1.. run scoreboard players remove @s universalAbility.ErrorLogDelay 1

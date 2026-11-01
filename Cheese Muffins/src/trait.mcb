@@ -173,7 +173,10 @@ dir size {
 			execute unless score @s abilityShrinkray.BeamSkinType matches 2 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"default_sigil",objective_override:1b,ride_executor:1b}}
 			execute if score @s abilityShrinkray.BeamSkinType matches 2 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"gabi_sigil",objective_override:1b,ride_executor:1b}}
 		}
-		execute if entity @s[type=minecraft:player] run shader enable @s shrinkray
+		execute if entity @s[type=minecraft:player] run {
+			execute unless score @s abilityShrinkray.BeamSkinType matches 2 run shader enable @s minecraft:shrinkray
+			execute if score @s abilityShrinkray.BeamSkinType matches 2 run shader enable @s minecraft:shrinkray_gabi
+		}
 	}
 
 	dir calculate {

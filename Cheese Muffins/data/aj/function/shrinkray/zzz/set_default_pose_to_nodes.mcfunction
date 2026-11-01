@@ -9,7 +9,7 @@ $data merge entity $(right_arm) { transformation: [-1f,0f,0f,-0.3469f,0f,1f,0f,-
 $data merge entity $(right_forearm) { transformation: [-1f,0f,0f,-0.3469f,0f,1f,0f,-6142.9883f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 $data merge entity $(gun) { transformation: [-1f,0f,0f,-0.3475f,0f,1f,0f,0.8544f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 $data merge entity $(ptrd_41) { transformation: [1.4686f,0f,0f,-0.3312f,0f,1.4686f,0f,0.8438f,0f,0f,1.4686f,0f,0f,0f,0f,1f], start_interpolation: -1 }
-$data merge entity $(gabi_muzzle) { transformation: [0f,0f,1f,-0.2875f,0f,1f,0f,0.9128f,-1f,0f,0f,1.8312f,0f,0f,0f,1f], start_interpolation: -1 }
+$data merge entity $(gabi_muzzle) { transformation: [0f,0f,1f,-0.2875f,0f,1f,0f,0.9128f,-1f,0f,0f,1.8313f,0f,0f,0f,1f], start_interpolation: -1 }
 $data merge entity $(chestplate_arm_l) { transformation: [0f,0f,-1.15f,0.3469f,0f,1.15f,0f,1.8535f,1.15f,0f,0f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 $data merge entity $(left_arm) { transformation: [-1f,0f,0f,0.3469f,0f,1f,0f,-2046.7281f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }
 $data merge entity $(left_forearm) { transformation: [-1f,0f,0f,0.3469f,0f,1f,0f,-7166.9883f,0f,0f,-1f,0f,0f,0f,0f,1f], start_interpolation: -1 }

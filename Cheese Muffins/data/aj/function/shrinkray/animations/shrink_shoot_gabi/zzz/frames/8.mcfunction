@@ -2,14 +2,14 @@
 $data merge entity $(chestplate_body) {transformation: [0.281f,0.0003f,0.061f,0.0002f,0f,0.2875f,-0.0013f,0.3122f,-0.061f,0.0012f,0.281f,-0.0615f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(leggings_pants) {transformation: [-0.2687f,0.0003f,-0.0583f,0.0002f,0f,0.275f,0.0012f,0.2485f,0.0583f,0.0012f,-0.2687f,-0.0618f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(waist) {transformation: [-0.2443f,0.0003f,-0.053f,0f,0f,0.25f,0.0011f,-8191.9188f,0.053f,0.0011f,-0.2443f,-0.0625f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(helmet) {transformation: [0.1468f,-0.069f,0.0105f,-0.026f,0.0693f,0.1411f,-0.0411f,0.301f,0.0083f,0.0416f,0.1569f,-0.046f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(head) {transformation: [-0.2258f,-0.1061f,-0.0162f,0.0002f,-0.1066f,0.2171f,0.0632f,0.2475f,-0.0128f,0.064f,-0.2413f,-0.0618f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(chestplate_arm_r) {transformation: [-0.1839f,-0.0095f,0.2208f,-0.0894f,-0.0822f,0.2696f,-0.0569f,0.3621f,-0.2051f,-0.0995f,-0.1751f,-0.0938f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(right_arm) {transformation: [-0.192f,-0.0082f,-0.1599f,-0.0846f,0.0495f,0.2344f,-0.0715f,-1023.7742f,0.1523f,-0.0865f,-0.1784f,-0.0435f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(right_forearm) {transformation: [-0.192f,-0.1601f,0.0045f,-0.0725f,0.0495f,-0.0659f,-0.236f,-6143.8307f,0.1523f,-0.1804f,0.0823f,-0.0098f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(gun) {transformation: [-0.192f,-0.1601f,0.0045f,-0.0474f,0.0495f,-0.0659f,-0.236f,0.1797f,0.1523f,-0.1804f,0.0823f,0.0186f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(ptrd_41) {transformation: [0.3669f,0.0139f,0.0025f,-0.0058f,-0.0139f,0.3669f,0.0002f,0.1901f,-0.0025f,-0.0003f,0.3671f,-0.0011f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(gabi_muzzle) {transformation: [-0.0017f,0.0094f,0.2498f,0.0089f,-0.0001f,0.2498f,-0.0094f,0.2072f,-0.25f,-0.0002f,-0.0017f,0.4567f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(helmet) {transformation: [0.1491f,0.0576f,0.0291f,0.022f,-0.0105f,0.0938f,-0.1323f,0.283f,-0.0637f,0.1195f,0.0898f,-0.0165f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(head) {transformation: [-0.2294f,0.0887f,-0.0447f,0.0002f,0.0161f,0.1443f,0.2035f,0.2475f,0.098f,0.1839f,-0.1381f,-0.0618f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(chestplate_arm_r) {transformation: [-0.2236f,0.0223f,0.1793f,-0.0733f,-0.0248f,0.2788f,-0.0656f,0.3668f,-0.179f,-0.0665f,-0.2149f,-0.0771f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(right_arm) {transformation: [-0.1559f,0.0194f,-0.1944f,-0.0846f,0.0571f,0.2424f,-0.0216f,-1023.7742f,0.1869f,-0.0579f,-0.1556f,-0.0435f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(right_forearm) {transformation: [-0.1559f,-0.1779f,-0.0809f,-0.0775f,0.0571f,0.0575f,-0.2365f,-6143.8359f,0.1869f,-0.166f,0.0048f,-0.0187f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(gun) {transformation: [-0.1559f,-0.1779f,-0.0809f,-0.0496f,0.0571f,0.0575f,-0.2365f,0.1551f,0.1869f,-0.166f,0.0048f,0.0075f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(ptrd_41) {transformation: [0.3356f,0.1485f,0.0123f,-0.0076f,-0.1358f,0.3174f,-0.1249f,0.1568f,-0.0611f,0.1096f,0.345f,-0.014f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(gabi_muzzle) {transformation: [-0.0084f,0.1011f,0.2285f,0.0247f,0.085f,0.2161f,-0.0925f,0.0119f,-0.2349f,0.0746f,-0.0416f,0.4196f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(chestplate_arm_l) {transformation: [-0.1086f,0.19f,-0.1864f,0.181f,0.2662f,0.0787f,-0.0749f,0.2656f,0.0015f,-0.2009f,-0.2057f,-0.1819f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_arm) {transformation: [-0.1621f,0.1652f,0.0944f,0.0849f,-0.0651f,0.0684f,-0.2315f,-2047.7742f,-0.1788f,-0.1747f,-0.0013f,-0.0803f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_forearm) {transformation: [-0.1621f,0.1791f,0.0643f,0.0419f,-0.0651f,0.0272f,-0.2398f,-7167.792f,-0.1788f,-0.1723f,0.029f,-0.0348f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
@@ -23,7 +23,7 @@ $data merge entity $(left_leg) {transformation: [-0.2476f,-0.033f,0.0095f,0.0289
 $data merge entity $(leggings_lower_r) {transformation: [0.2724f,-0.0243f,0.0289f,0.0302f,0.0023f,0.2207f,0.164f,0.1771f,-0.0377f,-0.1622f,0.2188f,-0.0467f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(boots_r) {transformation: [0.2972f,-0.0266f,0.0316f,0.0357f,0.0025f,0.2408f,0.1789f,0.1686f,-0.0412f,-0.177f,0.2387f,-0.041f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(lower_left_leg) {transformation: [-0.2476f,-0.0221f,-0.0263f,0.0404f,-0.0021f,0.2006f,-0.1491f,-10239.9154f,0.0343f,-0.1475f,-0.1989f,0.0213f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify storage animated_java:temp entry.data merge value {"locators":{"default_beam_position":{"px":-0.0612,"py":0.3155,"pz":-0.0432,"ry":176.8969,"rx":-70.7455},"gabi_beam_position":{"px":-0.002,"py":0.2079,"pz":0.4579,"ry":179.6032,"rx":0.0312}}}
+data modify storage animated_java:temp entry.data merge value {"locators":{"default_beam_position":{"px":-0.0139,"py":0.2999,"pz":-0.0071,"ry":266.6287,"rx":-71.0927},"gabi_beam_position":{"px":0.0148,"py":0.0158,"pz":0.4225,"ry":177.9565,"rx":-19.8876}}}
 # Data Manager: Prepare for Read / Write
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Write

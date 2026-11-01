@@ -3,4 +3,5 @@ data remove storage animated_java:runtime animation
 execute if score @s aj.viewmodel.animation_id matches 1 run return run data modify storage animated_java:runtime animation set value {"id":1,"rig":"viewmodel","name":"shrinkray_toggle","combined":"viewmodel_shrinkray_toggle"}
 execute if score @s aj.viewmodel.animation_id matches 2 run return run data modify storage animated_java:runtime animation set value {"id":2,"rig":"viewmodel","name":"shrinkray_shoot","combined":"viewmodel_shrinkray_shoot"}
 execute if score @s aj.viewmodel.animation_id matches 3 run return run data modify storage animated_java:runtime animation set value {"id":3,"rig":"viewmodel","name":"shrinkray_shoot_gabi","combined":"viewmodel_shrinkray_shoot_gabi"}
+execute if score @s aj.viewmodel.animation_id matches 4 run return run data modify storage animated_java:runtime animation set value {"id":4,"rig":"viewmodel","name":"shrinkray_toggle_gabi","combined":"viewmodel_shrinkray_toggle_gabi"}
 return 0

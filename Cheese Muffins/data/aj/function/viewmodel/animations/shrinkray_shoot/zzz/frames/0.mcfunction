@@ -3,7 +3,7 @@ $data merge entity $(right_arm) {transformation: [-1f,0f,0f,-0.375f,0f,1f,0f,-10
 $data merge entity $(right_forearm) {transformation: [-1f,0f,0f,-0.375f,0f,1f,0f,-6144.4687f,0f,0f,-1f,0.1875f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(gun) {transformation: [-1f,0f,0f,-0.375f,0f,1f,0f,-0.5712f,0f,0f,-1f,0.3125f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(ptrd_41) {transformation: [1.4686f,0f,0f,-0.375f,0f,1.4686f,0f,-0.5712f,0f,0f,1.4686f,0.1875f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-$data merge entity $(gabi_muzzle) {transformation: [0f,0f,1f,-0.375f,0f,1f,0f,-0.5872f,-1f,0f,0f,2.0187f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+$data merge entity $(gabi_muzzle) {transformation: [0f,0f,1f,-0.375f,0f,1f,0f,-0.5872f,-1f,0f,0f,2.0188f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_arm) {transformation: [-1f,0f,0f,0.375f,0f,1f,0f,-2048.1875f,0f,0f,-1f,0.1875f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_forearm) {transformation: [-1f,0f,0f,0.375f,0f,1f,0f,-7168.4687f,0f,0f,-1f,0.1875f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 data modify storage animated_java:temp entry.data merge value {"locators":{"commands":{"px":0,"py":0,"pz":0,"ry":0,"rx":0}}}

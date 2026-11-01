@@ -41,11 +41,11 @@ dir billy {
             REPEAT (1,3) as i {
                 execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
                     scoreboard players reset @s universalAbility.MoveTrigger<%i%>
-                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:billy/moves/<%i%>/core
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. run function ability:billy/moves/<%i%>/core
                 }
             }
 
-            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0,abilityBilly.ToggleOnText=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.ErrorLogDelay=0,universalAbility.ToggleDelay=0,abilityBilly.ToggleOnText=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
                 REPEAT (1,3) as i {
                     execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
                 }
@@ -57,7 +57,7 @@ dir billy {
                 }
 
                 execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
-                execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+                execute if score @s universalAbility.ErrorLogDelay matches 1.. run scoreboard players remove @s universalAbility.ErrorLogDelay 1
             }
         }
 
@@ -409,17 +409,17 @@ dir yuji {
             REPEAT (1,3) as i {
                 execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
                     scoreboard players reset @s universalAbility.MoveTrigger<%i%>
-                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:yuji/moves/<%i%>/variation
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. run function ability:yuji/moves/<%i%>/variation
                 }
             }
 
-            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.ErrorLogDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run {
                 REPEAT (1,3) as i {
                     execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run scoreboard players remove @s universalAbility.MoveCooldown<%i%> 1
                 }
 
                 execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
-                execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+                execute if score @s universalAbility.ErrorLogDelay matches 1.. run scoreboard players remove @s universalAbility.ErrorLogDelay 1
             }
         }
 
@@ -940,11 +940,11 @@ dir the_world {
             REPEAT (1,3) as i {
                 execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
                     scoreboard players reset @s universalAbility.MoveTrigger<%i%>
-                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:the_world/moves/<%i%>/core
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. run function ability:the_world/moves/<%i%>/core
                 }
             }
 
-            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run function ability:the_world/tick/scores
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveCooldown3=0,universalAbility.ErrorLogDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run function ability:the_world/tick/scores
         }
 
         function scores {
@@ -953,7 +953,7 @@ dir the_world {
             }
 
             execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
-            execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+            execute if score @s universalAbility.ErrorLogDelay matches 1.. run scoreboard players remove @s universalAbility.ErrorLogDelay 1
 
             execute unless entity @s[tag=abilitySettings.AwakeningDrainDisabled] if score @s universalAbility.AwakeningDuration matches 1.. run {
                 scoreboard players remove @s universalAbility.AwakeningDuration 1
@@ -1605,11 +1605,11 @@ dir shrinkray {
             REPEAT (1,2) as i {
                 execute at @s if score @s universalAbility.MoveTrigger<%i%> matches 1.. run {
                     scoreboard players reset @s universalAbility.MoveTrigger<%i%>
-                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. unless score @s universalAbility.MoveDelay matches 1.. run function ability:shrinkray/moves/<%i%>/root
+                    execute if score @s universalAbility.ToggleState matches 1 unless score @s universalAbility.ToggleDelay matches 1.. run function ability:shrinkray/moves/<%i%>/root
                 }
             }
 
-            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.MoveDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run function ability:shrinkray/tick/scores
+            execute unless entity @s[scores={universalAbility.MoveCooldown1=0,universalAbility.MoveCooldown2=0,universalAbility.ErrorLogDelay=0,universalAbility.ToggleDelay=0}] unless entity @s[tag=traitIndex.TimeLocked] run function ability:shrinkray/tick/scores
         }
 
         function scores {
@@ -1618,7 +1618,7 @@ dir shrinkray {
             }
 
             execute if score @s universalAbility.ToggleDelay matches 1.. run scoreboard players remove @s universalAbility.ToggleDelay 1
-            execute if score @s universalAbility.MoveDelay matches 1.. run scoreboard players remove @s universalAbility.MoveDelay 1
+            execute if score @s universalAbility.ErrorLogDelay matches 1.. run scoreboard players remove @s universalAbility.ErrorLogDelay 1
         }
 
         dir scenario {
@@ -1718,7 +1718,10 @@ dir shrinkray {
                 execute unless entity @s[tag=abilityShrinkray.BypassErrors] run block { with storage minecraft:ability shrinkray.beam.args
                     # setup
                     execute unless score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot'}
-                    execute if score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot_gabi'}
+                    execute if score @s universalAbility.EquippedSkinID matches 2 run {
+                        function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'shoot_gabi'}
+                        function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.windup",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                    }
                     
                     # restraints
                     function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.default_beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
@@ -1741,21 +1744,19 @@ dir shrinkray {
                     data modify storage minecraft:ability shrinkray.beam.animation set value "shoot"
                     execute if score @s universalAbility.EquippedSkinID matches 2 run data modify storage minecraft:ability shrinkray.beam.animation set value "shoot_gabi"
 
+                    execute if score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.chain",selector:"@a",volume:1,objective:"universalAbility.ID"}
                     block { with storage minecraft:ability shrinkray.beam
-                        $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:10,tween_duration:1,interrupt_viewmodel:1b}}
+                        $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:7,tween_duration:1,interrupt_viewmodel:1b}}
                     }
 
                     tag @s remove abilityShrinkray.RefireBeam
+                    $function universal:ability/restraint/cancelable {move:$(move)}
                 }
                 data remove storage minecraft:ability shrinkray.beam.args
             }
             
             function change_mode {
-                scoreboard players operation .currentMode abilityShrinkray.BeamMode = @s abilityShrinkray.BeamMode
                 $scoreboard players set @s abilityShrinkray.BeamMode $(move)
-                execute unless score .currentMode abilityShrinkray.BeamMode = @s abilityShrinkray.BeamMode run {
-                    playsound minecraft:ability.shrinkray.shoot.change_mode player @s ~ ~ ~
-                }
             }
 
             function create {
@@ -1801,6 +1802,10 @@ dir shrinkray {
 
             function store_distance {
                 execute on passengers if entity @s[tag=aj.shrinkray_vfx.bone.beam] run scoreboard players operation @s abilityShrinkray.Beam = .visualDistance abilityShrinkray.Beam
+                function ability:shrinkray/moves/beam/apply_distance
+            }
+
+            function apply_distance {
                 execute on passengers if entity @s[tag=aj.shrinkray_vfx.bone.beam] store result entity @s transformation.scale[2] float 0.01 run scoreboard players get @s abilityShrinkray.Beam
             }
 
@@ -1841,7 +1846,7 @@ dir shrinkray {
 
             function refire {
                 tag @s add abilityShrinkray.RefireBeam
-                scoreboard players set @s universalAbility.MoveDelay 0
+                scoreboard players set @s universalAbility.ErrorLogDelay 0
             }
 
             function cutoff {
@@ -1865,7 +1870,8 @@ dir shrinkray {
 
             function pass {
                 # setup
-                function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'toggle'}
+                execute unless score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'toggle'}
+                execute if score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'toggle_gabi'}
 
                 # restraints
                 function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
@@ -1885,7 +1891,10 @@ dir shrinkray {
                     execute if score @s abilityShrinkray.BeamMode matches 2 run data merge storage minecraft:ability {shrinkray:{toggle:{type:"grow",check_size:2}}}
                     function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
                     scoreboard players remove @s abilityShrinkray.PassiveAmmoValue 1
+
+                    execute store result storage minecraft:ability shrinkray.toggle.skin_type int 1 run scoreboard players get @s universalAbility.EquippedSkinID
                     block { with storage minecraft:ability shrinkray.toggle
+                        $scoreboard players set @s abilityShrinkray.BeamSkinType $(skin_type)
                         $execute unless score @s traitShrinkray.Size matches $(check_size) run block { with storage minecraft:ability shrinkray.toggle
                             $function trait:apply {args:{type:"$(type)",proper:"Shrinkray",duration:"infinite"}}
                             tag @s add temp

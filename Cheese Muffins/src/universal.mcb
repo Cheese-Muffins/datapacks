@@ -26,7 +26,7 @@ function on_load minecraft:load{
     scoreboard objectives add universalAbility.EquippedID dummy
     scoreboard objectives add universalAbility.EquippedSkinID dummy
     scoreboard objectives add universalAbility.MoveCooldownMath dummy
-    scoreboard objectives add universalAbility.MoveDelay dummy
+    scoreboard objectives add universalAbility.ErrorLogDelay dummy
     scoreboard objectives add universalAbility.MovePrevious dummy
     scoreboard objectives add universalAbility.ToggleTrigger dummy
     scoreboard objectives add universalAbility.ToggleState dummy
@@ -993,54 +993,27 @@ dir error_messages {
         scoreboard players reset @s universalError.FailReturn
     }
 
-    function cooldown {
-        $scoreboard players operation .cooldownTicks universalError.Math = @s universalAbility.MoveCooldown$(move)
-
-        scoreboard players operation .cooldownMinutes universalError.Math = .cooldownTicks universalError.Math
-        scoreboard players operation .cooldownSeconds universalError.Math = .cooldownTicks universalError.Math
-
-        scoreboard players set .ticksPerMinute universalError.Math 1200
-        scoreboard players set .ticksPerSecond universalError.Math 20
-        scoreboard players set .ticksPerDecimal universalError.Math 2
-
-        scoreboard players operation .cooldownMinutes universalError.Math /= .ticksPerMinute universalError.Math
-        scoreboard players operation .cooldownSeconds universalError.Math %= .ticksPerMinute universalError.Math
-        scoreboard players operation .cooldownSeconds universalError.Math /= .ticksPerDecimal universalError.Math
-
-        scoreboard players operation .cooldownDecimal universalError.Math = .cooldownSeconds universalError.Math
-        scoreboard players set .decimalBase universalError.Math 10
-
-        scoreboard players operation .cooldownSeconds universalError.Math /= .decimalBase universalError.Math
-        scoreboard players operation .cooldownDecimal universalError.Math %= .decimalBase universalError.Math
-
-        execute store result storage minecraft:universal error.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes universalError.Math
-        execute store result storage minecraft:universal error.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds universalError.Math
-        execute store result storage minecraft:universal error.cooldown_decimal int 1 run scoreboard players get .cooldownDecimal universalError.Math
-
-        data modify storage minecraft:universal error.cooldown_display set value []
-
-        execute if score .cooldownMinutes universalError.Math matches 1.. run block { with storage minecraft:universal error
-            $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_minutes)m ","color":"#ffca0a"}
+    function fail {
+        $data merge storage minecraft:universal {error:{name:"$(name)",move:$(move)}}
+        execute unless score @s uiAbility.SettingsErrorLog matches 3.. unless score @s universalAbility.ErrorLogDelay matches 1.. run {
+            execute unless entity @s[tag=universalError.Hide] run function universal:error_messages/display/list with storage minecraft:universal error
+            scoreboard players set @s universalAbility.ErrorLogDelay 10
         }
 
-        execute if score .cooldownMinutes universalError.Math matches 0 run block { with storage minecraft:universal error
-            $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_seconds).$(cooldown_decimal)s","color":"#ffca0a"}
-        }
-
-        execute if score .cooldownMinutes universalError.Math matches 1.. run block { with storage minecraft:universal error
-            $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_seconds)s","color":"#ffca0a"}
+        tag @s remove universalError.Hide
+        scoreboard players set @s universalError.FailReturn 0
+        REPEAT (1,102) as i {
+            tag @s remove universalError.<%i%>
         }
     }
 
-    function fail {
-        $data merge storage minecraft:universal {error:{name:"$(name)",move:$(move)}}
-        execute unless entity @s[tag=universalError.Hide] run block { with storage minecraft:universal error
-            tellraw @s ""
+    dir display {
+        function list {
             $tellraw @s ["",{"text":"[","color":"gray"},{"text":"!","color":"#F6FF2A"},{"text":"] ","color":"gray"},{"text":"$(name) ","color":"gold"},{"text":"[","color":"gray"},{"text":"!","color":"#F6FF2A"},{"text":"]","color":"gray"}]
 
             # very universal errors
             execute if entity @s[tag=universalError.1] run block { with storage minecraft:universal error
-                $function universal:error_messages/cooldown {move:$(move)}
+                $function universal:error_messages/display/cooldown {move:$(move)}
                 block { with storage minecraft:universal error
                     $tellraw @s ["",{"text":"> ","color":"#5c5c5c"},{"text":"Cooldown: ","color":"gray"},{"text":"","extra":$(cooldown_display)}]
                 }
@@ -1078,18 +1051,48 @@ dir error_messages {
             # execute if entity @s[tag=universalError.101] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"CAN'T ","color":"red"},{"text":"use moves when in ","color":"gray"},{"text":"Domain Expansion ","color":"dark_purple"},{"text":"-","color":"gray"},{"text":" Infinite Void!","color":"light_purple"}]
             # execute if entity @s[tag=universalError.102] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You can't use moves when ","color":"gray"},{"text":"frozen ","color":"red"},{"text":"in ","color":"gray"},{"text":"time!","color":"aqua"}]
             # execute if entity @s[tag=universalError.103] run tellraw @s ["",{"text":"\uF806\u25cf\uF819","color":"gray"},{"text":" You ","color":"gray"},{"text":"can't","color":"red"},{"text":" cast moves whilst being ","color":"gray"},{"text":"barraged!","color":"aqua"}]
-            playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5
+            execute unless score @s uiAbility.SettingsErrorLog matches 2.. run playsound minecraft:entity.villager.no player @s ~ ~ ~ 0.5
             tellraw @s ""
         }
 
-        REPEAT (1,102) as i {
-            tag @s remove universalError.<%i%>
-        }
+        function cooldown {
+            $scoreboard players operation .cooldownTicks universalError.Math = @s universalAbility.MoveCooldown$(move)
 
-        tag @s remove universalError.Hide
-        
-        scoreboard players set @s universalAbility.MoveDelay 4
-        scoreboard players set @s universalError.FailReturn 0
+            scoreboard players operation .cooldownMinutes universalError.Math = .cooldownTicks universalError.Math
+            scoreboard players operation .cooldownSeconds universalError.Math = .cooldownTicks universalError.Math
+
+            scoreboard players set .ticksPerMinute universalError.Math 1200
+            scoreboard players set .ticksPerSecond universalError.Math 20
+            scoreboard players set .ticksPerDecimal universalError.Math 2
+
+            scoreboard players operation .cooldownMinutes universalError.Math /= .ticksPerMinute universalError.Math
+            scoreboard players operation .cooldownSeconds universalError.Math %= .ticksPerMinute universalError.Math
+            scoreboard players operation .cooldownSeconds universalError.Math /= .ticksPerDecimal universalError.Math
+
+            scoreboard players operation .cooldownDecimal universalError.Math = .cooldownSeconds universalError.Math
+            scoreboard players set .decimalBase universalError.Math 10
+
+            scoreboard players operation .cooldownSeconds universalError.Math /= .decimalBase universalError.Math
+            scoreboard players operation .cooldownDecimal universalError.Math %= .decimalBase universalError.Math
+
+            execute store result storage minecraft:universal error.cooldown_minutes int 1 run scoreboard players get .cooldownMinutes universalError.Math
+            execute store result storage minecraft:universal error.cooldown_seconds int 1 run scoreboard players get .cooldownSeconds universalError.Math
+            execute store result storage minecraft:universal error.cooldown_decimal int 1 run scoreboard players get .cooldownDecimal universalError.Math
+
+            data modify storage minecraft:universal error.cooldown_display set value []
+
+            execute if score .cooldownMinutes universalError.Math matches 1.. run block { with storage minecraft:universal error
+                $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_minutes)m ","color":"#ffca0a"}
+            }
+
+            execute if score .cooldownMinutes universalError.Math matches 0 run block { with storage minecraft:universal error
+                $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_seconds).$(cooldown_decimal)s","color":"#ffca0a"}
+            }
+
+            execute if score .cooldownMinutes universalError.Math matches 1.. run block { with storage minecraft:universal error
+                $data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_seconds)s","color":"#ffca0a"}
+            }
+        }
     }
 }
 

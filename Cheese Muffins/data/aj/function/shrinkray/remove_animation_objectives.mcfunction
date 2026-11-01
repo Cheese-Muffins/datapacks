@@ -3,10 +3,13 @@ scoreboard objectives remove aj.shrinkray.animation_id
 scoreboard objectives remove aj.shrinkray.shoot.frame
 scoreboard objectives remove aj.shrinkray.shrink_shoot.frame
 scoreboard objectives remove aj.shrinkray.grow_shoot.frame
-scoreboard objectives remove aj.shrinkray.shoot_gabi.frame
-scoreboard objectives remove aj.shrinkray.shrink_shoot_gabi.frame
-scoreboard objectives remove aj.shrinkray.grow_shoot_gabi.frame
 scoreboard objectives remove aj.shrinkray.toggle.frame
 scoreboard objectives remove aj.shrinkray.shrink_toggle.frame
 scoreboard objectives remove aj.shrinkray.grow_toggle.frame
+scoreboard objectives remove aj.shrinkray.shoot_gabi.frame
+scoreboard objectives remove aj.shrinkray.shrink_shoot_gabi.frame
+scoreboard objectives remove aj.shrinkray.grow_shoot_gabi.frame
+scoreboard objectives remove aj.shrinkray.toggle_gabi.frame
+scoreboard objectives remove aj.shrinkray.shrink_toggle_gabi.frame
+scoreboard objectives remove aj.shrinkray.grow_toggle_gabi.frame
 tellraw @a [[{color:gray,text:'\n '},{color:'#00aced',text:'ᴀɴɪᴍᴀᴛᴇᴅ ᴊᴀᴠᴀ'},{color:dark_gray,italic:true,text:'\n (aj:shrinkray)'},'\n → '],[{text:'Successfully uninstalled ',color:green},{text:'aj:shrinkray',color:yellow},{text:'!'},{text:'\n If you have exported multiple times, you may have to remove objectives from previous exports manually, as Animated Java only knows about the objectives from the most recent export.',color:gray,italic:true}],'\n']

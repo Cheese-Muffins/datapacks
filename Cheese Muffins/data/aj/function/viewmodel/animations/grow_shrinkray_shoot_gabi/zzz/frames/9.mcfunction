@@ -6,3 +6,4 @@ $data merge entity $(ptrd_41) {transformation: [2.198f,0.0722f,0.1273f,-0.2422f,
 $data merge entity $(gabi_muzzle) {transformation: [-0.0867f,0.0492f,1.4967f,-0.0843f,-0.012f,1.4991f,-0.0499f,-0.6342f,-1.4974f,-0.0149f,-0.0862f,3.3318f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_arm) {transformation: [-0.7228f,1.116f,0.6943f,0.5625f,-0.3961f,0.5706f,-1.3295f,-2048.375f,-1.2532f,-0.824f,0.0198f,0.2936f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_forearm) {transformation: [-0.7228f,1.2792f,0.3019f,0.2486f,-0.3961f,0.1165f,-1.4421f,-7168.5355f,-1.2532f,-0.7746f,0.2817f,0.5254f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
+execute unless entity @s[tag=aj.transforms_only] run function aj:viewmodel/animations/grow_shrinkray_shoot_gabi/zzz/frame_effects/9

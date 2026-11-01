@@ -2,3 +2,4 @@
 execute if score @s aj.viewmodel.animation_id matches 1 run function aj:viewmodel/animations/shrink_shrinkray_toggle/play_exclusive
 execute if score @s aj.viewmodel.animation_id matches 2 run function aj:viewmodel/animations/shrink_shrinkray_shoot/play_exclusive
 execute if score @s aj.viewmodel.animation_id matches 3 run function aj:viewmodel/animations/shrink_shrinkray_shoot_gabi/play_exclusive
+execute if score @s aj.viewmodel.animation_id matches 4 run function aj:viewmodel/animations/shrink_shrinkray_toggle_gabi/play_exclusive

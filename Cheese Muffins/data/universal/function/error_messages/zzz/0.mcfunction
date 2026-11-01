@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$data modify storage minecraft:universal error.cooldown_display append value {"text":"$(cooldown_minutes)m ","color":"#ffca0a"}
+execute unless entity @s[tag=universalError.Hide] run function universal:error_messages/display/list with storage minecraft:universal error
+scoreboard players set @s universalAbility.ErrorLogDelay 10

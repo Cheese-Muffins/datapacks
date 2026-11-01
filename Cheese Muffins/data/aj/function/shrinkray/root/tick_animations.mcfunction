@@ -2,9 +2,12 @@
 execute if entity @s[tag=aj.shrinkray.animation.shoot.playing] run function aj:shrinkray/animations/shoot/zzz/on_tick
 execute if entity @s[tag=aj.shrinkray.animation.shrink_shoot.playing] run function aj:shrinkray/animations/shrink_shoot/zzz/on_tick
 execute if entity @s[tag=aj.shrinkray.animation.grow_shoot.playing] run function aj:shrinkray/animations/grow_shoot/zzz/on_tick
-execute if entity @s[tag=aj.shrinkray.animation.shoot_gabi.playing] run function aj:shrinkray/animations/shoot_gabi/zzz/on_tick
-execute if entity @s[tag=aj.shrinkray.animation.shrink_shoot_gabi.playing] run function aj:shrinkray/animations/shrink_shoot_gabi/zzz/on_tick
-execute if entity @s[tag=aj.shrinkray.animation.grow_shoot_gabi.playing] run function aj:shrinkray/animations/grow_shoot_gabi/zzz/on_tick
 execute if entity @s[tag=aj.shrinkray.animation.toggle.playing] run function aj:shrinkray/animations/toggle/zzz/on_tick
 execute if entity @s[tag=aj.shrinkray.animation.shrink_toggle.playing] run function aj:shrinkray/animations/shrink_toggle/zzz/on_tick
 execute if entity @s[tag=aj.shrinkray.animation.grow_toggle.playing] run function aj:shrinkray/animations/grow_toggle/zzz/on_tick
+execute if entity @s[tag=aj.shrinkray.animation.shoot_gabi.playing] run function aj:shrinkray/animations/shoot_gabi/zzz/on_tick
+execute if entity @s[tag=aj.shrinkray.animation.shrink_shoot_gabi.playing] run function aj:shrinkray/animations/shrink_shoot_gabi/zzz/on_tick
+execute if entity @s[tag=aj.shrinkray.animation.grow_shoot_gabi.playing] run function aj:shrinkray/animations/grow_shoot_gabi/zzz/on_tick
+execute if entity @s[tag=aj.shrinkray.animation.toggle_gabi.playing] run function aj:shrinkray/animations/toggle_gabi/zzz/on_tick
+execute if entity @s[tag=aj.shrinkray.animation.shrink_toggle_gabi.playing] run function aj:shrinkray/animations/shrink_toggle_gabi/zzz/on_tick
+execute if entity @s[tag=aj.shrinkray.animation.grow_toggle_gabi.playing] run function aj:shrinkray/animations/grow_toggle_gabi/zzz/on_tick

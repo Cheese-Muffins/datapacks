@@ -39,7 +39,7 @@ scoreboard objectives add universalAbility.ID dummy
 scoreboard objectives add universalAbility.EquippedID dummy
 scoreboard objectives add universalAbility.EquippedSkinID dummy
 scoreboard objectives add universalAbility.MoveCooldownMath dummy
-scoreboard objectives add universalAbility.MoveDelay dummy
+scoreboard objectives add universalAbility.ErrorLogDelay dummy
 scoreboard objectives add universalAbility.MovePrevious dummy
 scoreboard objectives add universalAbility.ToggleTrigger dummy
 scoreboard objectives add universalAbility.ToggleState dummy

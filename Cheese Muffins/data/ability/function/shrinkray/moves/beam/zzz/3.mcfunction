@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-playsound minecraft:ability.shrinkray.shoot.change_mode player @s ~ ~ ~
+$execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:7,tween_duration:1,interrupt_viewmodel:1b}}

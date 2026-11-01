@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:viewmodel"
-data modify storage animated_java:temp entry.data.rig_hash set value "f637b2d4d5840ef2e38886a86f25927286832e8090cd87b677fdd1f1fab15ba6"
+data modify storage animated_java:temp entry.data.rig_hash set value "4c55f05d4084b904f6e759dd50f75fe85fcc8b787c163ae25d320d9197aefdef"
 tp @s ~ ~ ~ ~ ~
 execute on passengers if entity @s[tag=aj.viewmodel.node.right_arm] run function aj:viewmodel/zzz/summon/as_node/right_arm
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out

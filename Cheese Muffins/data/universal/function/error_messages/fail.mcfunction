@@ -1,7 +1,9 @@
 # Generated with MC-Build
 
 $data merge storage minecraft:universal {error:{name:"$(name)",move:$(move)}}
-execute unless entity @s[tag=universalError.Hide] run function universal:error_messages/zzz/3 with storage minecraft:universal error
+execute unless score @s uiAbility.SettingsErrorLog matches 3.. unless score @s universalAbility.ErrorLogDelay matches 1.. run function universal:error_messages/zzz/0
+tag @s remove universalError.Hide
+scoreboard players set @s universalError.FailReturn 0
 tag @s remove universalError.1
 tag @s remove universalError.2
 tag @s remove universalError.3
@@ -104,6 +106,3 @@ tag @s remove universalError.99
 tag @s remove universalError.100
 tag @s remove universalError.101
 tag @s remove universalError.102
-tag @s remove universalError.Hide
-scoreboard players set @s universalAbility.MoveDelay 4
-scoreboard players set @s universalError.FailReturn 0

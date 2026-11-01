@@ -8,3 +8,6 @@ execute if entity @s[tag=aj.viewmodel.animation.grow_shrinkray_shoot.playing] ru
 execute if entity @s[tag=aj.viewmodel.animation.shrinkray_shoot_gabi.playing] run function aj:viewmodel/animations/shrinkray_shoot_gabi/zzz/on_tick
 execute if entity @s[tag=aj.viewmodel.animation.shrink_shrinkray_shoot_gabi.playing] run function aj:viewmodel/animations/shrink_shrinkray_shoot_gabi/zzz/on_tick
 execute if entity @s[tag=aj.viewmodel.animation.grow_shrinkray_shoot_gabi.playing] run function aj:viewmodel/animations/grow_shrinkray_shoot_gabi/zzz/on_tick
+execute if entity @s[tag=aj.viewmodel.animation.shrinkray_toggle_gabi.playing] run function aj:viewmodel/animations/shrinkray_toggle_gabi/zzz/on_tick
+execute if entity @s[tag=aj.viewmodel.animation.shrink_shrinkray_toggle_gabi.playing] run function aj:viewmodel/animations/shrink_shrinkray_toggle_gabi/zzz/on_tick
+execute if entity @s[tag=aj.viewmodel.animation.grow_shrinkray_toggle_gabi.playing] run function aj:viewmodel/animations/grow_shrinkray_toggle_gabi/zzz/on_tick
