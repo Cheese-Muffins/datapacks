@@ -221,11 +221,14 @@ dir vfx {
                 execute store result storage minecraft:universal vfx.id int 1 run scoreboard players get @s universalVFX.ID
             }
 
-
             tag @s add temp
             $execute as @e[type=minecraft:item_display,tag=aj.$(branch)_vfx.root] unless score @s universalVFX.ID matches 1.. run block { with storage minecraft:universal vfx
                 $scoreboard players set @s universalVFX.ID $(id)
-                $function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
+                execute unless data storage minecraft:universal vfx{objective_override:1b} run block { with storage minecraft:universal vfx
+                    $scoreboard players set @s universalAbility.ID $(id)
+                    $function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
+                }
+                $execute if data storage minecraft:universal vfx{objective_override:1b} run function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalVFX.ID"}}
 
                 execute if data storage minecraft:universal vfx{ride_executor:1b} run block { with storage minecraft:universal vfx
                     $execute unless data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[tag=temp,scores={universalAbility.ID=$(id)}]
@@ -635,7 +638,7 @@ dir ability {
             execute if entity @s[type=minecraft:item_display] run block { with storage minecraft:universal ability.play.animation
                 $execute store result storage minecraft:universal ability.play.animation.id int 1 run scoreboard players get @s $(objective)
                 block { with storage minecraft:universal ability.play.animation
-                    $execute as @n[type=!minecraft:item_display,scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+                    $execute as @n[type=minecraft:player,scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
                 }
             }
             execute if entity @s[type=minecraft:player] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
@@ -675,13 +678,13 @@ dir ability {
 
             # check for viewmodel
             execute unless entity @s[tag=aj.viewmodel.root] run block { with storage minecraft:universal ability.play.animation
-                $function aj:viewmodel/animations/$(rig)_$(animation)/check
+                $function aj:$(rig)_viewmodel/animations/$(animation)/check
                 execute if score .isViewModel traitShrinkray.Size matches 1 run block { with storage minecraft:universal ability.play.animation
                     $execute as @p[scores={universalAbility.ID=$(id)}] unless entity @s[tag=abilitySettings.ViewmodelDisabled] run block { with storage minecraft:universal ability.play.animation
-                        $execute unless data storage minecraft:universal ability.play.animation{interrupt_viewmodel:1b} run function universal:ability/play/viewmodel {arguments:{animation:"$(rig)_$(animation)",rig:"$(rig)"}}
+                        $execute unless data storage minecraft:universal ability.play.animation{interrupt_viewmodel:1b} run function universal:ability/play/viewmodel {arguments:{animation:"$(animation)",rig:"$(rig)"}}
                         execute if data storage minecraft:universal ability.play.animation{interrupt_viewmodel:1b} run block { with storage minecraft:universal ability.play.animation
-                            $execute as @n[type=minecraft:item_display,tag=aj.viewmodel.root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal ability.play.animation
-                                $function universal:ability/play/animation {arguments:{rig:"viewmodel",animation:"$(rig)_$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjusted_frame),tween_duration:$(tween_duration)}}
+                            $execute as @n[type=minecraft:item_display,tag=aj.$(rig)_viewmodel.root,scores={universalAbility.ID=$(id)}] at @s run block { with storage minecraft:universal ability.play.animation
+                                $function universal:ability/play/animation {arguments:{rig:"$(rig)_viewmodel",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjusted_frame),tween_duration:$(tween_duration)}}
                             }
                         }
                     }
@@ -713,22 +716,22 @@ dir ability {
         }
 
         function viewmodel {
-            # function universal:ability/play/viewmodel {arguments:{animation:"shrinkray_shoot"}}
-            function aj:viewmodel/summon {args:{}}
+            # function universal:ability/play/viewmodel {arguments:{animation:"shoot"}}
 
             $data modify storage minecraft:universal ability.play.viewmodel merge value $(arguments)
             execute store result storage minecraft:universal ability.play.viewmodel.id int 1 run scoreboard players get @s universalAbility.ID
             execute store result storage minecraft:universal ability.play.viewmodel.skin_id int 1 run scoreboard players get @s universalAbility.EquippedSkinID
             block { with storage minecraft:universal ability.play.viewmodel
-                execute as @e[type=minecraft:item_display,tag=aj.viewmodel.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:universal ability.play.viewmodel
+                $function aj:$(rig)_viewmodel/summon {args:{}}
+                $execute as @e[type=minecraft:item_display,tag=aj.$(rig)_viewmodel.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:universal ability.play.viewmodel
                     $scoreboard players set @s universalAbility.ID $(id)
                     $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
-                    $function ability:$(rig)/skin_index {rig:"viewmodel"}
+                    $function ability:$(rig)/skin_index {rig:"$(rig)_viewmodel"}
                     scoreboard players display name @s universalAbility.ID {"color":"light_purple","text":"Viewport"}
-                    $function universal:ability/play/animation {arguments:{rig:"viewmodel",animation:"$(animation)",objective:"universalAbility.ID",style:"play"}}
+                    $function universal:ability/play/animation {arguments:{rig:"$(rig)_viewmodel",animation:"$(animation)",objective:"universalAbility.ID",style:"play"}}
                 }
-                $viewmodel @n[type=minecraft:item_display,tag=aj.viewmodel.root,scores={universalAbility.ID=$(id)}]
-                function universal:ability/rig/stable_player_display/main {branch:"viewmodel",split:""}
+                $viewmodel @n[type=minecraft:item_display,tag=aj.$(rig)_viewmodel.root,scores={universalAbility.ID=$(id)}]
+                $function universal:ability/rig/stable_player_display/main {branch:"$(rig)_viewmodel",split:""}
             }
         }
     }

@@ -9,7 +9,7 @@ tag @s remove aj.the_world.animation.default_knife_throw.playing
 tag @s remove aj.the_world.animation.shrink_default_knife_throw.playing
 tag @s remove aj.the_world.animation.grow_default_knife_throw.playing
 tag @s remove aj.the_world.animation.timestop_knife_throw.playing
-tag @s remove aj.the_world.animation.barrage.playing
+tag @s remove aj.the_world.animation.kick_barrage_windup.playing
 tag @s remove aj.the_world.animation.flurry.playing
 tag @s remove aj.the_world.animation.rage_mode.playing
 tag @s remove aj.the_world.animation.hide_dio.playing

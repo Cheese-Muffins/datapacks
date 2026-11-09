@@ -15,7 +15,7 @@ execute if score @s universalAbility.EquippedSkinID matches 2 run data modify st
 scoreboard players set .distance abilityShrinkray.Beam 0
 tag @s remove temp
 execute store result storage minecraft:ability shrinkray.beam.skin_type int 1 run scoreboard players get @s universalAbility.EquippedSkinID
-function ability:shrinkray/moves/beam/zzz/4 with storage minecraft:ability shrinkray.beam
+function ability:shrinkray/moves/beam/zzz/5 with storage minecraft:ability shrinkray.beam
 kill @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint]
 tag @s remove temp
 data remove storage minecraft:ability shrinkray.beam

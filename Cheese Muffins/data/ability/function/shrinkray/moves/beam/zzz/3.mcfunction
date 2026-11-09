@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:7,tween_duration:1,interrupt_viewmodel:1b}}
+data modify storage minecraft:ability shrinkray.beam.animation set value "shoot_gabi"
+function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.chain",selector:"@a",volume:1,objective:"universalAbility.ID"}

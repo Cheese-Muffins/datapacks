@@ -1,9 +1,4 @@
 # Generated with MC-Build
 
-scoreboard players set .visualDistance abilityShrinkray.Beam 0
-scoreboard players operation .visualLimit abilityShrinkray.Beam = .maxDistance abilityShrinkray.Beam
-scoreboard players set .ten abilityShrinkray.Beam 10
-scoreboard players operation .visualLimit abilityShrinkray.Beam *= .ten abilityShrinkray.Beam
-scoreboard players add .visualLimit abilityShrinkray.Beam 1000
-function ability:shrinkray/moves/beam/measure_visual
-execute unless score @s universalAbility.EquippedSkinID matches 2 run function universal:vfx/initialize {arguments:{branch:"shrinkray",animation:"beam",output:"function ability:shrinkray/moves/beam/store_distance"}}
+$execute at @a[scores={universalAbility.ID=$(id)},limit=1] rotated as @a[scores={universalAbility.ID=$(id)},limit=1] anchored eyes positioned ^ ^ ^ anchored feet run function ability:shrinkray/moves/beam/distance with storage minecraft:ability shrinkray.beam
+$execute if entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] at @n[type=minecraft:item_display,tag=aj.shrinkray.locator.$(spawn_locator),scores={universalAbility.ID=$(id)}] anchored feet facing entity @e[type=minecraft:marker,tag=abilityShrinkray.BeamEndpoint,limit=1] feet run function ability:shrinkray/moves/beam/zzz/6

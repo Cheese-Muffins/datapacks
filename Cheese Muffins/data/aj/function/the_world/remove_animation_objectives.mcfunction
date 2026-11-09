@@ -10,7 +10,7 @@ scoreboard objectives remove aj.the_world.default_knife_throw.frame
 scoreboard objectives remove aj.the_world.shrink_default_knife_throw.frame
 scoreboard objectives remove aj.the_world.grow_default_knife_throw.frame
 scoreboard objectives remove aj.the_world.timestop_knife_throw.frame
-scoreboard objectives remove aj.the_world.barrage.frame
+scoreboard objectives remove aj.the_world.kick_barrage_windup.frame
 scoreboard objectives remove aj.the_world.flurry.frame
 scoreboard objectives remove aj.the_world.rage_mode.frame
 scoreboard objectives remove aj.the_world.hide_dio.frame

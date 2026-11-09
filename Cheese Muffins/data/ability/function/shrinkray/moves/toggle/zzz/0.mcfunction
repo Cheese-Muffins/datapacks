@@ -2,8 +2,9 @@
 
 execute if score @s abilityShrinkray.BeamMode matches 1 run data merge storage minecraft:ability {shrinkray:{toggle:{type:"shrink",check_size:1}}}
 execute if score @s abilityShrinkray.BeamMode matches 2 run data merge storage minecraft:ability {shrinkray:{toggle:{type:"grow",check_size:2}}}
-function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
 scoreboard players remove @s abilityShrinkray.PassiveAmmoValue 1
 execute store result storage minecraft:ability shrinkray.toggle.skin_type int 1 run scoreboard players get @s universalAbility.EquippedSkinID
 function ability:shrinkray/moves/toggle/zzz/1 with storage minecraft:ability shrinkray.toggle
+execute unless score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
+execute if score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
 data remove storage minecraft:ability shrinkray.toggle

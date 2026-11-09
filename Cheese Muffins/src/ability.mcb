@@ -1423,6 +1423,49 @@ dir the_world {
             } 
         }
 
+        dir 3 {
+            function core {
+                execute if score @s universalAbility.MoveCooldown3 matches 1.. run function universal:error_messages/setup {id:1}
+                execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                function universal:error_messages/constant
+
+                scoreboard players set @s universalAbility.HotbarSlot 1
+                execute unless score @s universalError.FailReturn matches 1 run function ability:the_world/moves/3/pass
+                execute if score @s universalError.FailReturn matches 1 run function universal:error_messages/fail {move:3,name:"Kick Barrage"}
+            }
+
+            function pass {
+                # setup
+                function ability:the_world/moves/setup {rig:"the_world",animation:'kick_barrage_windup'}
+                visibility disable @s @a ignore_perspective render_passengers
+
+                # restraints
+                function universal:ability/restraint/cooldown {name:"TheWorld",move:2}
+                function universal:ability/restraint/cancelable {move:2}
+                tag @s add universalAbility.Animating
+
+                function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
+                function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
+            }
+
+            dir leap {
+                function main {
+                    scoreboard players set @s abilityTheWorld.LeapSteps 0
+                    execute at @s anchored feet rotated ~ 0 run function ability:the_world/moves/3/leap/step
+                }
+
+                function step {
+                    execute if score @s abilityTheWorld.LeapSteps matches ..12 positioned ^ ^0.1 ^0.35 if block ~ ~ ~ #ability:the_world/kick_barrage_leap positioned ~ ~0.9 ~ if block ~ ~ ~ #ability:the_world/kick_barrage_leap run function ability:the_world/moves/3/leap/move
+                }
+
+                function move {
+                    execute at @s anchored feet rotated ~ 0 run tp @s ^ ^ ^0.05
+                    scoreboard players add @s abilityTheWorld.LeapSteps 1
+                    execute at @s anchored feet rotated ~ 0 run function ability:the_world/moves/3/leap/step
+                }
+            }
+        }
+
         dir reset {
             function all {
                 function universal:ability/rig/as_player {player:"abilityTheWorld.User",objective:"universalAbility.ID",output:"function ability:the_world/moves/reset/player"}
@@ -1570,19 +1613,19 @@ dir the_world {
 
     function skin_index {
         # default skin
-        execute if score @s universalAbility.EquippedSkinID matches 0 run function aj:the_world/variants/default/apply
+        $execute if score @s universalAbility.EquippedSkinID matches 0 run function aj:$(rig)/variants/default/apply
 
         # inverted skin
-        execute if score @s universalAbility.EquippedSkinID matches 1 run function aj:the_world/variants/inverted_the_world/apply
+        $execute if score @s universalAbility.EquippedSkinID matches 1 run function aj:$(rig)/variants/inverted_the_world/apply
 
         # vampire skin
-        execute if score @s universalAbility.EquippedSkinID matches 2 run function aj:the_world/variants/vampire_the_world/apply
+        $execute if score @s universalAbility.EquippedSkinID matches 2 run function aj:$(rig)/variants/vampire_the_world/apply
         
         # retro skin
-        execute if score @s universalAbility.EquippedSkinID matches 3 run function aj:the_world/variants/retro_the_world/apply
+        $execute if score @s universalAbility.EquippedSkinID matches 3 run function aj:$(rig)/variants/retro_the_world/apply
 
         # shadow skin
-        execute if score @s universalAbility.EquippedSkinID matches 4 run function aj:the_world/variants/shadow_the_world/apply
+        $execute if score @s universalAbility.EquippedSkinID matches 4 run function aj:$(rig)/variants/shadow_the_world/apply
     }
 
     function disconnected {
@@ -1742,9 +1785,10 @@ dir shrinkray {
                     execute store result storage minecraft:ability shrinkray.beam.id int 1 run scoreboard players get @s universalAbility.ID
 
                     data modify storage minecraft:ability shrinkray.beam.animation set value "shoot"
-                    execute if score @s universalAbility.EquippedSkinID matches 2 run data modify storage minecraft:ability shrinkray.beam.animation set value "shoot_gabi"
-
-                    execute if score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.chain",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                    execute if score @s universalAbility.EquippedSkinID matches 2 run {
+                        data modify storage minecraft:ability shrinkray.beam.animation set value "shoot_gabi"
+                        function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.chain",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                    }
                     block { with storage minecraft:ability shrinkray.beam
                         $execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/animation {arguments:{rig:"shrinkray",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:7,tween_duration:1,interrupt_viewmodel:1b}}
                     }
@@ -1889,7 +1933,6 @@ dir shrinkray {
                 execute unless entity @s[tag=abilityShrinkray.ToggleLimit] run {
                     execute if score @s abilityShrinkray.BeamMode matches 1 run data merge storage minecraft:ability {shrinkray:{toggle:{type:"shrink",check_size:1}}}
                     execute if score @s abilityShrinkray.BeamMode matches 2 run data merge storage minecraft:ability {shrinkray:{toggle:{type:"grow",check_size:2}}}
-                    function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
                     scoreboard players remove @s abilityShrinkray.PassiveAmmoValue 1
 
                     execute store result storage minecraft:ability shrinkray.toggle.skin_type int 1 run scoreboard players get @s universalAbility.EquippedSkinID
@@ -1904,6 +1947,8 @@ dir shrinkray {
                         }
                         tag @s remove temp
                     }
+                    execute unless score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
+                    execute if score @s universalAbility.EquippedSkinID matches 2 run function universal:ability/play/sfx {sfx:"minecraft:ability.shrinkray.shoot.gabi.fire",selector:"@a",volume:1,objective:"universalAbility.ID"}
                     data remove storage minecraft:ability shrinkray.toggle
                 }
                 tag @s add abilityShrinkray.ToggleLimit

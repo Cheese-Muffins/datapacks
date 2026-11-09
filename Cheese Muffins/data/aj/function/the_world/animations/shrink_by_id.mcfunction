@@ -3,7 +3,7 @@ execute if score @s aj.the_world.animation_id matches 1 run function aj:the_worl
 execute if score @s aj.the_world.animation_id matches 2 run function aj:the_world/animations/shrink_idle/play_exclusive
 execute if score @s aj.the_world.animation_id matches 3 run function aj:the_world/animations/shrink_default_knife_throw/play_exclusive
 execute if score @s aj.the_world.animation_id matches 4 run function aj:the_world/animations/timestop_knife_throw/play_exclusive
-execute if score @s aj.the_world.animation_id matches 5 run function aj:the_world/animations/barrage/play_exclusive
+execute if score @s aj.the_world.animation_id matches 5 run function aj:the_world/animations/kick_barrage_windup/play_exclusive
 execute if score @s aj.the_world.animation_id matches 6 run function aj:the_world/animations/flurry/play_exclusive
 execute if score @s aj.the_world.animation_id matches 7 run function aj:the_world/animations/rage_mode/play_exclusive
 execute if score @s aj.the_world.animation_id matches 8 run function aj:the_world/animations/hide_dio/play_exclusive

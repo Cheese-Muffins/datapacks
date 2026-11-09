@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$execute unless data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[tag=temp,scores={universalAbility.ID=$(id)}]
-$execute if data storage minecraft:universal vfx{objective_override:1b} run ride @s mount @n[tag=temp,scores={universalVFX.ID=$(id)}]
+$scoreboard players set @s universalAbility.ID $(id)
+$function universal:ability/play/animation {arguments:{rig:"$(branch)_vfx",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
