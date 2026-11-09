@@ -523,17 +523,6 @@ dir ability {
             }
         }
 
-        dir mount {
-            function player {
-                # function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-                $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-                $data merge storage minecraft:universal {ability:{rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
-                block { with storage minecraft:universal ability.rig
-                    $ride @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] mount @p[tag=$(user),scores={$(objective)=$(id)}]
-                }
-            }
-        }
-
         function dismount {
             # function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
             $execute store result storage minecraft:universal ability.dismount.id int 1 run scoreboard players get @s $(objective)
@@ -732,6 +721,53 @@ dir ability {
                 }
                 $viewmodel @n[type=minecraft:item_display,tag=aj.$(rig)_viewmodel.root,scores={universalAbility.ID=$(id)}]
                 $function universal:ability/rig/stable_player_display/main {branch:"$(rig)_viewmodel",split:""}
+            }
+        }
+    }
+
+    dir control {
+        dir mount {
+            # function player {
+            #     # function universal:ability/control/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+            #     $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
+            #     $data merge storage minecraft:universal {ability:{rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
+            #     block { with storage minecraft:universal ability.rig
+            #         $ride @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] mount @p[tag=$(user),scores={$(objective)=$(id)}]
+            #     }
+            # }
+
+            function player {
+                # function universal:ability/control/mount/player {arguments:{mount_tag:"aj.billy.root",user_tag:"abilityBilly.User"}}
+
+                data remove storage minecraft:universal ability.rig.mount
+                $data modify storage minecraft:universal ability.rig.mount merge value $(arguments)
+                execute unless data storage minecraft:universal ability.rig.mount.objective run data modify storage minecraft:universal ability.rig.mount.objective set value "universalAbility.ID"
+                block { with storage minecraft:universal ability.rig.mount
+                    $execute store result storage minecraft:universal ability.rig.mount.id int 1 run scoreboard players get @s $(objective)
+                    # player ran
+                    execute if entity @s[type=minecraft:player] run block { with storage minecraft:universal ability.rig.mount
+                        $execute on vehicle if entity @s[type=minecraft:item_display,scores={$(objective)=$(id)}] run block { with storage minecraft:universal ability.rig.mount
+                            $ride @p[tag=$(user_tag),scores={$(objective)=$(id)}] dismount
+                            $execute unless entity @s[tag=aj.global.root] run function aj:the_world/as_root {command:"tp @p[tag=$(user_tag),scores={$(objective)=$(id)}] ~ ~0.06 ~"}
+                        }
+                        $ride @n[type=minecraft:item_display,tag=$(mount_tag),scores={$(objective)=$(id)}] mount @p[tag=$(user_tag),scores={$(objective)=$(id)}]
+                    }
+                }
+            }
+
+            function rig {
+                data remove storage minecraft:universal ability.rig.mount
+                $data modify storage minecraft:universal ability.rig.mount merge value $(arguments)
+                execute unless data storage minecraft:universal ability.rig.mount.objective run data modify storage minecraft:universal ability.rig.mount.objective set value "universalAbility.ID"
+                block { with storage minecraft:universal ability.rig.mount
+                    $execute store result storage minecraft:universal ability.rig.mount.id int 1 run scoreboard players get @s $(objective)
+                    # player ran
+                    execute if entity @s[type=minecraft:player] run block { with storage minecraft:universal ability.rig.mount
+                        # function universal:ability/rig/mount/rig {arguments:{mount_tag:"aj.the_world.locator.mount"}}
+                        $execute as @n[type=minecraft:item_display,tag=$(mount_tag),scores={$(objective)=$(id)}] unless entity @s[tag=aj.global.root] run function aj:the_world/as_root {command:"ride @s dismount"}
+                        $ride @s mount @n[type=minecraft:item_display,tag=$(mount_tag),scores={$(objective)=$(id)}]
+                    }
+                }
             }
         }
     }

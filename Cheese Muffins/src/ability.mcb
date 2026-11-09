@@ -260,7 +260,7 @@ dir billy {
                 function universal:ability/play/animation {arguments:{rig:"billy",animation:"summon",style:"play",objective:"universalAbility.ID"}}
             }
 
-            function universal:ability/rig/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
+            function universal:ability/control/mount/player {arguments:{mount_tag:"aj.billy.root",user_tag:"abilityBilly.User"}}
             function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
             function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
             function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
@@ -479,7 +479,7 @@ dir yuji {
 
             visibility disable @s @a ignore_perspective render_passengers
             function universal:ability/rig/stable_player_display/main {branch:"yuji",}
-            function universal:ability/rig/mount/player {user:"abilityYuji.User",rig:"yuji",objective:"universalAbility.ID"}
+            function universal:ability/control/mount/player {arguments:{mount_tag:"aj.yuji.root",user_tag:"abilityYuji.User"}}
             function universal:ability/rig/visibility {target:"aj.yuji.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
             function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.yuji.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
         }
@@ -1060,7 +1060,7 @@ dir the_world {
             block { with storage minecraft:ability the_world.awakening
                 $execute at @n[type=minecraft:item_display,tag=aj.the_world.root,scores={universalAbility.ID=$(id)}] rotated ~ 0 run tp @s ~ ~ ~ ~ ~
             }
-            function universal:ability/rig/mount/player {user:"abilityTheWorld.User",rig:"the_world",objective:"universalAbility.ID"}
+            function universal:ability/control/mount/player {arguments:{mount_tag:"aj.the_world.root",user_tag:"abilityTheWorld.User"}}
 
             execute unless entity @s[tag=customSettings.DisabledAwakeningMusic] run playsound minecraft:ability.the_world.rage_mode.ost player @s ~ ~ ~ 100000000
             tag @s add abilityTheWorld.RageMode
@@ -1449,6 +1449,10 @@ dir the_world {
             }
 
             dir leap {
+                function start {
+                    function universal:ability/control/mount/rig {arguments:{mount_tag:"aj.the_world.locator.mount"}}
+                }
+
                 function main {
                     scoreboard players set @s abilityTheWorld.LeapSteps 0
                     execute at @s anchored feet rotated ~ 0 run function ability:the_world/moves/3/leap/step
@@ -1462,6 +1466,10 @@ dir the_world {
                     execute at @s anchored feet rotated ~ 0 run tp @s ^ ^ ^0.05
                     scoreboard players add @s abilityTheWorld.LeapSteps 1
                     execute at @s anchored feet rotated ~ 0 run function ability:the_world/moves/3/leap/step
+                }
+
+                function expire {
+                    function universal:ability/control/mount/player {arguments:{mount_tag:"aj.the_world.root",user_tag:"abilityTheWorld.User"}}
                 }
             }
         }
@@ -1591,9 +1599,10 @@ dir the_world {
                 $execute if score @s universalDisconnect.Check matches 1.. as @n[type=minecraft:item_display,tag=aj.the_world.root] if score @s universalAbility.ID matches $(id) run function aj:the_world/animations/idle/play
             }
 
-            function universal:ability/rig/mount/player {user:"abilityTheWorld.User",rig:"the_world",objective:"universalAbility.ID"}
+            function universal:ability/control/mount/player {arguments:{mount_tag:"aj.the_world.root",user_tag:"abilityTheWorld.User"}}
             function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
             function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.mount",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
 
             scoreboard players set @s universalAbility.ToggleDelay 20
         }
@@ -1725,7 +1734,7 @@ dir shrinkray {
 
             visibility disable @s @a ignore_perspective render_passengers
             function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
-            function universal:ability/rig/mount/player {user:"abilityShrinkray.User",rig:"shrinkray",objective:"universalAbility.ID"}
+            function universal:ability/control/mount/player {arguments:{mount_tag:"aj.shrinkray.root",user_tag:"abilityShrinkray.User"}}
             function universal:ability/rig/visibility {target:"aj.shrinkray.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
         }
 

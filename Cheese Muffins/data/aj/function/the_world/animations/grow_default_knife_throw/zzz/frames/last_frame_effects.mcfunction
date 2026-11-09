@@ -5,6 +5,7 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/g
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_default_knife_throw/zzz/frames/40_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_default_knife_throw/zzz/frames/40_locator_sfx
 $execute as $(dio_shoulder) positioned ^0.3469 ^1.9945 ^-0.2602 rotated ~0 ~0 run function aj:the_world/animations/grow_default_knife_throw/zzz/frames/40_locator_dio_shoulder
+$execute as $(mount) positioned ^0 ^1.0313 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_default_knife_throw/zzz/frames/40_locator_mount
 $execute as $(barrage_anchor) positioned ^0 ^1.6875 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_default_knife_throw/zzz/frames/40_locator_barrage_anchor
 $execute as $(right_hand_world) positioned ^-0.5625 ^1.2188 ^0 rotated ~180 ~0 run function aj:the_world/animations/grow_default_knife_throw/zzz/frames/40_locator_right_hand_world
 $execute as $(hitbox) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_default_knife_throw/zzz/frames/40_locator_hitbox

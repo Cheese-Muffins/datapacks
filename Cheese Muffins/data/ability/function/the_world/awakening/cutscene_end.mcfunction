@@ -5,7 +5,7 @@ shader disable @s minecraft:cinematic_bars false
 shader disable @s minecraft:the_world_rage
 execute store result storage minecraft:ability the_world.awakening.id int 1 run scoreboard players get @s universalAbility.ID
 function ability:the_world/awakening/zzz/2 with storage minecraft:ability the_world.awakening
-function universal:ability/rig/mount/player {user:"abilityTheWorld.User",rig:"the_world",objective:"universalAbility.ID"}
+function universal:ability/control/mount/player {arguments:{mount_tag:"aj.the_world.root",user_tag:"abilityTheWorld.User"}}
 execute unless entity @s[tag=customSettings.DisabledAwakeningMusic] run playsound minecraft:ability.the_world.rage_mode.ost player @s ~ ~ ~ 100000000
 tag @s add abilityTheWorld.RageMode
 scoreboard players set @s universalAbility.AwakeningDuration 2900

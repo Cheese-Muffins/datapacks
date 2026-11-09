@@ -51,7 +51,7 @@ data\ability\function\billy\hotbar\zzz\5.mcfunction:cf72de360b07ba321ad4f4c5b7e5
 data\ability\function\billy\hotbar\main.mcfunction:b95a2e85784a79fa5ca93a1c743f1f08395de16d
 data\ability\function\billy\hotbar\progress.mcfunction:5c6dc7f30f4c9bbbac51ea4973b8c4eb0ae4bed0
 data\ability\function\billy\toggle\zzz\0.mcfunction:12ae2154380ac35bd29ffe2f76beaf3955f464ca
-data\ability\function\billy\toggle\on.mcfunction:2fcb0aa3289b7185b17180a58decd8ae64242d22
+data\ability\function\billy\toggle\on.mcfunction:4c15ebdc9c51c46c7cb6084d74b88b957adc9aec
 data\ability\function\billy\toggle\zzz\1.mcfunction:9a6adf7aa12e05c16d2ada4f49048d19fa38fd3c
 data\ability\function\billy\toggle\land.mcfunction:5a88141cb98ff8eac8666d4395b982a25439aa80
 data\ability\function\billy\toggle\zzz\2.mcfunction:a242dbfcd7663edb46212877bebe165358f2e0c1
@@ -87,7 +87,7 @@ data\ability\function\yuji\tick\scenario\natural_talent.mcfunction:5016ac55ed42e
 data\ability\function\yuji\install.mcfunction:fd2a40c4b5bc307a93328fec3817440b01d7a389
 data\ability\function\yuji\active.mcfunction:de46cb723e76b9424d797f108667e8e97cc6d6bf
 data\ability\function\yuji\moves\zzz\0.mcfunction:2b5b99ef810cbd65dd0fd1960c293618cd0dcf49
-data\ability\function\yuji\moves\setup.mcfunction:54900803d95178dae0c2a03698e4ad7de71b7793
+data\ability\function\yuji\moves\setup.mcfunction:39b0fba5202bea158efb935febf12913b2ca642c
 data\ability\function\yuji\moves\1\variation.mcfunction:f4022d233a60a200a261ad34d8448855ef0b545e
 data\ability\function\yuji\moves\1\natural_talent\core.mcfunction:14c24349e5c967511e6bd15c789eb97dd06acb4d
 data\ability\function\yuji\moves\1\natural_talent\pass.mcfunction:a1fd8fe35f0a5194b315753671f003220ab6f35b
@@ -172,7 +172,7 @@ data\ability\function\the_world\awakening\zzz\0.mcfunction:9b530de6985b893eafc51
 data\ability\function\the_world\awakening\trigger.mcfunction:3e97e8aaf8c662a340336d38aa7dad645cd3423a
 data\ability\function\the_world\awakening\ring.mcfunction:0328111fee3fc8a394638977944d60cb5cbe82fc
 data\ability\function\the_world\awakening\zzz\2.mcfunction:5de810136a4c055120d726cc286de856f49897a2
-data\ability\function\the_world\awakening\cutscene_end.mcfunction:319c5a5b4a1ae413ced0119c7f3a8a07c3769364
+data\ability\function\the_world\awakening\cutscene_end.mcfunction:31a5dc7d27cc7178c211b33705102a0325d0bbda
 data\ability\function\the_world\moves\zzz\1.mcfunction:98b308b578c60b7900c63cbd84edc993b8a59e3a
 data\ability\function\the_world\moves\zzz\0.mcfunction:a023edb11c142d9ce0c1980b5ecd5ff5a8db8998
 data\ability\function\the_world\moves\setup.mcfunction:d51c0fc50d763f25fafb3696bef7bfcef3423068
@@ -217,9 +217,11 @@ data\ability\function\the_world\moves\2\default_throw\voiceline.mcfunction:e49fb
 data\ability\function\the_world\moves\2\default_throw\setup.mcfunction:c3ee1d4f34504e07fe72ed952eb73b793d34a638
 data\ability\function\the_world\moves\3\core.mcfunction:478aaed7a07d6b3978d9950ab145c893becc1c8a
 data\ability\function\the_world\moves\3\pass.mcfunction:bf890dea4d9cfeb72e1fe952ad9674e454c9347b
+data\ability\function\the_world\moves\3\leap\start.mcfunction:27abe1189937704fea9e6319ee237c79cdbe110d
 data\ability\function\the_world\moves\3\leap\main.mcfunction:cf74f811a622f1656bbee200f90f668d8b28261e
 data\ability\function\the_world\moves\3\leap\step.mcfunction:bf8125b92046fb075590c3a54f09d3d1953811e6
 data\ability\function\the_world\moves\3\leap\move.mcfunction:620355edba068b602df50b8a2538078351777806
+data\ability\function\the_world\moves\3\leap\expire.mcfunction:092493ddf90fe0311fe5444be6224a0a75c46ebd
 data\ability\function\the_world\moves\reset\all.mcfunction:5f0bb3c5b0a37e166d91a8af822768438747911f
 data\ability\function\the_world\moves\reset\rig.mcfunction:97c797fb7b08eb644b4da43a629bf867999b5616
 data\ability\function\the_world\moves\reset\player.mcfunction:da59c180b092574966dd71fec6d7d8b8b2fdc244
@@ -236,7 +238,7 @@ data\ability\function\the_world\hotbar\zzz\6.mcfunction:b3b837cc3560e888a1ad042f
 data\ability\function\the_world\hotbar\meter.mcfunction:000d200f1e6de86de9602337952530cb31f0b550
 data\ability\function\the_world\toggle\zzz\1.mcfunction:e523a07940b72e51a73bed46f19150cd5af8baa7
 data\ability\function\the_world\toggle\zzz\0.mcfunction:db6b174817d155755d4bc37543b813857f49e2d6
-data\ability\function\the_world\toggle\on.mcfunction:5c3338835bdcc7c2c1db572b996b2e31bd7cbb40
+data\ability\function\the_world\toggle\on.mcfunction:b54416bf478214b23de46493266983b2ed646860
 data\ability\function\the_world\toggle\zzz\3.mcfunction:75cbc9b8356a90b44b77954ca7388ca7f231be1a
 data\ability\function\the_world\toggle\zzz\2.mcfunction:fa8c49d717fee69e08270d4ef2525754f742a9a3
 data\ability\function\the_world\toggle\off.mcfunction:411a8fbcf9fb6afe86b1d553c88506c3e242f84c
@@ -254,7 +256,7 @@ data\ability\function\shrinkray\passives\root.mcfunction:35cbadd20baaa39fa2837dc
 data\ability\function\shrinkray\passives\zzz\0.mcfunction:2f79f60f57c2ff8fdafa15c600cd2e855a5d0f56
 data\ability\function\shrinkray\passives\ammo.mcfunction:7fe58ba541c8feca35fba0a90b92dc24965b3367
 data\ability\function\shrinkray\moves\zzz\0.mcfunction:3755fb5f2f2e42e619cb8018943399ea3be49c0d
-data\ability\function\shrinkray\moves\setup.mcfunction:7c7c765cb50fe0d4611e374819a91658c301c540
+data\ability\function\shrinkray\moves\setup.mcfunction:c30424567f74adb926fa4c29bba5e922f5818e24
 data\ability\function\shrinkray\moves\1\root.mcfunction:af795274cae4d02245c6d58dacf61453b16ade8b
 data\ability\function\shrinkray\moves\2\root.mcfunction:4b6e0796db1e81e128369f33127a2da6463b7c4b
 data\ability\function\shrinkray\moves\beam\check.mcfunction:8689dba63e5a65376df4964cae5556f6c048eeb7
@@ -1143,8 +1145,6 @@ data\universal\function\ability\rig\stable_player_display\state\zzz\0.mcfunction
 data\universal\function\ability\rig\stable_player_display\state\model.mcfunction:d750dcd1958e8e13dd1eed4f9823c58d1c8b63aa
 data\universal\function\ability\rig\stable_player_display\state\zzz\1.mcfunction:953f7cf4ecb03cf4b4cfc61b9efeac9077627399
 data\universal\function\ability\rig\stable_player_display\state\skin.mcfunction:875f0a79946112162601b5cc6923e3c8c0522eeb
-data\universal\function\ability\rig\mount\zzz\0.mcfunction:b58b20f6eaf4b97a901f195d543fd6cf7d54244e
-data\universal\function\ability\rig\mount\player.mcfunction:cfae0c38dd588517ada796b77bc415ad4679a318
 data\universal\function\ability\rig\zzz\0.mcfunction:a6f378cd88de49c80aa4bd193a8b75e417246e3a
 data\universal\function\ability\rig\dismount.mcfunction:b7096441ae027864cc2e8d0fddbae65c1aec1b00
 data\universal\function\ability\rig\zzz\2.mcfunction:fb5b125b1321edfb9eaf662dd32f32da097edbc6
@@ -1182,6 +1182,13 @@ data\universal\function\ability\play\sfx.mcfunction:1d5a7764347c263c4e0db067de52
 data\universal\function\ability\play\zzz\16.mcfunction:aa208408ea15dc91f5293fd97d6c382f748a1ed6
 data\universal\function\ability\play\zzz\15.mcfunction:8b5e968d4d402b7b0e3d3398b3930570e3a3a760
 data\universal\function\ability\play\viewmodel.mcfunction:d05545289c5511ad75ac9a95c77c8350eb69c2ea
+data\universal\function\ability\control\mount\zzz\2.mcfunction:944ef1c68f496bb4369b82c03c15409d36125b1e
+data\universal\function\ability\control\mount\zzz\1.mcfunction:71a364b34560b36c5a337d21aa1ecc30cfde6fda
+data\universal\function\ability\control\mount\zzz\0.mcfunction:8958cd21381eb8e6897bf6f8841f59c0da76a482
+data\universal\function\ability\control\mount\player.mcfunction:5156d3c92a019f9ce57e2b5df282e5dae4cf5cb4
+data\universal\function\ability\control\mount\zzz\4.mcfunction:e9672dd0677f94765cd5b7d909481a8dca8ad865
+data\universal\function\ability\control\mount\zzz\3.mcfunction:7b5bdb5229cccc1bec83917a3e56920039ecfeb7
+data\universal\function\ability\control\mount\rig.mcfunction:ce5018b393f951b29484e5829c2ef41e3b3eead6
 data\universal\function\ability\setup\cooldown\8x.mcfunction:36811a2a99cdabf92e8bf83aafd50a4cd8f5813d
 data\universal\function\ability\setup\cooldown\10x.mcfunction:2c101eeeb6aa7797d029ebaa2b411791abd84998
 data\universal\function\ability\setup\meter.mcfunction:3d202d5bf3326393ff89f6b6c93645132147aba4

@@ -8,5 +8,5 @@ execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root] unless score @s
 data remove storage minecraft:ability shrinkray.setup
 visibility disable @s @a ignore_perspective render_passengers
 function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
-function universal:ability/rig/mount/player {user:"abilityShrinkray.User",rig:"shrinkray",objective:"universalAbility.ID"}
+function universal:ability/control/mount/player {arguments:{mount_tag:"aj.shrinkray.root",user_tag:"abilityShrinkray.User"}}
 function universal:ability/rig/visibility {target:"aj.shrinkray.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}

@@ -12,13 +12,18 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:the_world"
-data modify storage animated_java:temp entry.data.rig_hash set value "b3885f6a13c32662e5d4bd03ea631d72662e7721ccf816ae0004a6b1e1c978f4"
+data modify storage animated_java:temp entry.data.rig_hash set value "1d7b357a139daf57ef3be345257b8aa8d3d2f2f9b81e1ea20f55ddef626a8ec1"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0.2313 ^1.3297 ^-0.1734 {Tags:["aj.global.bone.dio.decendant","aj.global.bone.dio.decendant.locator","aj.global.bone.dio.tree","aj.global.bone.size.decendant","aj.global.bone.size.decendant.locator","aj.global.bone.size.tree","aj.global.bone.upper_body1.child","aj.global.bone.upper_body1.child.locator","aj.global.bone.upper_body1.decendant","aj.global.bone.upper_body1.decendant.locator","aj.global.bone.upper_body1.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.dio_shoulder","aj.new","aj.the_world.bone.dio.decendant","aj.the_world.bone.dio.decendant.locator","aj.the_world.bone.dio.tree","aj.the_world.bone.size.decendant","aj.the_world.bone.size.decendant.locator","aj.the_world.bone.size.tree","aj.the_world.bone.upper_body1.child","aj.the_world.bone.upper_body1.child.locator","aj.the_world.bone.upper_body1.decendant","aj.the_world.bone.upper_body1.decendant.locator","aj.the_world.bone.upper_body1.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.dio_shoulder","aj.the_world.node","aj.the_world.node.dio_shoulder"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.dio_shoulder, tag=aj.new, distance=..3 ] run function aj:the_world/zzz/summon/as_locator/dio_shoulder
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.uuids_by_name.dio_shoulder set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.locators.dio_shoulder.uuid set from storage animated_java:gu out
+summon minecraft:item_display ^0 ^0.6875 ^0 {Tags:["aj.global.bone.dio.decendant","aj.global.bone.dio.decendant.locator","aj.global.bone.dio.tree","aj.global.bone.size.decendant","aj.global.bone.size.decendant.locator","aj.global.bone.size.tree","aj.global.bone.upper_body1.child","aj.global.bone.upper_body1.child.locator","aj.global.bone.upper_body1.decendant","aj.global.bone.upper_body1.decendant.locator","aj.global.bone.upper_body1.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.mount","aj.new","aj.the_world.bone.dio.decendant","aj.the_world.bone.dio.decendant.locator","aj.the_world.bone.dio.tree","aj.the_world.bone.size.decendant","aj.the_world.bone.size.decendant.locator","aj.the_world.bone.size.tree","aj.the_world.bone.upper_body1.child","aj.the_world.bone.upper_body1.child.locator","aj.the_world.bone.upper_body1.decendant","aj.the_world.bone.upper_body1.decendant.locator","aj.the_world.bone.upper_body1.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.mount","aj.the_world.node","aj.the_world.node.mount"]}
+execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.mount, tag=aj.new, distance=..2 ] run function aj:the_world/zzz/summon/as_locator/mount
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.uuids_by_name.mount set from storage animated_java:gu out
+data modify storage animated_java:temp entry.data.locators.mount.uuid set from storage animated_java:gu out
 summon minecraft:item_display ^0 ^1.125 ^0 {Tags:["aj.global.bone.size.decendant","aj.global.bone.size.decendant.locator","aj.global.bone.size.tree","aj.global.bone.the_world.child","aj.global.bone.the_world.child.locator","aj.global.bone.the_world.decendant","aj.global.bone.the_world.decendant.locator","aj.global.bone.the_world.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.barrage_anchor","aj.new","aj.the_world.bone.size.decendant","aj.the_world.bone.size.decendant.locator","aj.the_world.bone.size.tree","aj.the_world.bone.the_world.child","aj.the_world.bone.the_world.child.locator","aj.the_world.bone.the_world.decendant","aj.the_world.bone.the_world.decendant.locator","aj.the_world.bone.the_world.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.barrage_anchor","aj.the_world.node","aj.the_world.node.barrage_anchor"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.barrage_anchor, tag=aj.new, distance=..4 ] run function aj:the_world/zzz/summon/as_locator/barrage_anchor
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
@@ -204,7 +209,7 @@ data modify storage animated_java:temp entry.data.uuids_by_name.gear3 set from s
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
 function aj:the_world/zzz/set_default_pose
-execute if data storage animated_java:temp args.variant run function aj:the_world/zzz/summon/variant_arg/process with storage animated_java:temp args
+execute if data storage animated_java:temp args.variant run function aj:the_world/zzz/summon/zzz/variant_arg/no_variants_warning
 execute if score #success aj.i matches 0 run return fail
 execute if data storage animated_java:temp args.animation run function aj:the_world/zzz/summon/animation_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
@@ -218,14 +223,15 @@ execute store result storage animated_java:temp args.id int 1 run scoreboard pla
 function animated_java:global/data_manager/read with storage animated_java:temp args
 function aj:the_world/zzz/summon/zzz/1 with storage animated_java:temp entry.data.locators.dio_shoulder
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
-function aj:the_world/zzz/summon/zzz/2 with storage animated_java:temp entry.data.locators.barrage_anchor
+function aj:the_world/zzz/summon/zzz/2 with storage animated_java:temp entry.data.locators.mount
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
-function aj:the_world/zzz/summon/zzz/3 with storage animated_java:temp entry.data.locators.right_hand_world
+function aj:the_world/zzz/summon/zzz/3 with storage animated_java:temp entry.data.locators.barrage_anchor
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
-function aj:the_world/zzz/summon/zzz/4 with storage animated_java:temp entry.data.locators.hitbox
+function aj:the_world/zzz/summon/zzz/4 with storage animated_java:temp entry.data.locators.right_hand_world
+data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
+function aj:the_world/zzz/summon/zzz/5 with storage animated_java:temp entry.data.locators.hitbox
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:temp uuids
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
-execute at @s run function aj:the_world/zzz/summon/on_summon/rig
 tag @s remove aj.new
 execute on passengers run tag @s remove aj.new
