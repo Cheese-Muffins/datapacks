@@ -4,8 +4,8 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/i
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_global
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_sfx
-$execute as $(dio_shoulder) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_dio_shoulder
 $execute as $(mount) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_mount
+$execute as $(dio_shoulder) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_dio_shoulder
 $execute as $(barrage_anchor) positioned ^0.625 ^1.5 ^-0.5625 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_barrage_anchor
 $execute as $(right_hand_world) positioned ^0.1373 ^1.7112 ^-0.4123 rotated ~71.833 ~45.5195 run function aj:the_world/animations/idle/zzz/frames/61_locator_right_hand_world
 $execute as $(hitbox) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/idle/zzz/frames/61_locator_hitbox

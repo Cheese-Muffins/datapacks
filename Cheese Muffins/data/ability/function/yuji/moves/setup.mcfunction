@@ -6,5 +6,5 @@ execute as @n[type=minecraft:item_display,tag=aj.yuji.root] unless score @s univ
 visibility disable @s @a ignore_perspective render_passengers
 function universal:ability/rig/stable_player_display/main {branch:"yuji",}
 function universal:ability/control/mount/player {arguments:{mount_tag:"aj.yuji.root",user_tag:"abilityYuji.User"}}
-function universal:ability/rig/visibility {target:"aj.yuji.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.yuji.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+function universal:ability/control/visibility {arguments:{target_tag:"aj.yuji.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.yuji.camera"}}

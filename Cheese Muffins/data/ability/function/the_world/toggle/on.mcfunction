@@ -7,7 +7,7 @@ execute store result storage minecraft:ability the_world.toggle.id int 1 run sco
 execute store result storage minecraft:ability the_world.toggle.skin_id int 1 run scoreboard players get @s universalAbility.EquippedSkinID
 function ability:the_world/toggle/zzz/0 with storage minecraft:ability the_world.toggle
 function universal:ability/control/mount/player {arguments:{mount_tag:"aj.the_world.root",user_tag:"abilityTheWorld.User"}}
-function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.mount",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+function universal:ability/control/visibility {arguments:{target_tag:"aj.the_world.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.the_world.camera"}}
+function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.the_world.locator.mount"}}
 scoreboard players set @s universalAbility.ToggleDelay 20

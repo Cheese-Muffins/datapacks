@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-function universal:ability/rig/as_player {player:"abilityShrinkray.User",objective:"universalAbility.ID",output:"function ability:shrinkray/moves/reset/player"}
+function universal:ability/control/as_player {arguments:{user_tag:"abilityShrinkray.User",output:"function ability:shrinkray/moves/reset/player"}}
 function ability:shrinkray/moves/reset/rig

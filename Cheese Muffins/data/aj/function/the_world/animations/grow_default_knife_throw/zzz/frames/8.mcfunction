@@ -34,7 +34,7 @@ $data merge entity $(left_arm) {transformation: [-0.6975f,0.4573f,-1.2468f,0.560
 $data merge entity $(left_forearm_group) {transformation: [-0.6975f,-0.0709f,-1.3261f,0.4417f,-0.8372f,1.1862f,0.3769f,1.5265f,1.0309f,0.9154f,-0.5911f,-0.6088f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(left_forearm) {transformation: [-0.6975f,-0.0709f,-1.3261f,0.4396f,-0.8372f,1.1862f,0.3769f,1.5608f,1.0309f,0.9154f,-0.5911f,-0.5823f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
 $data merge entity $(knife4) {transformation: [0f,0f,0f,0.458f,0f,0f,0f,1.254f,0f,0f,0f,-0.8222f,0f,0f,0f,1f],start_interpolation: 0,interpolation_duration: 1}
-data modify storage animated_java:temp entry.data merge value {"locators":{"dio_shoulder":{"px":0.3281,"py":1.975,"pz":-0.2303,"ry":286.878,"rx":24.2004},"mount":{"px":0.0632,"py":1.0321,"pz":0.1656,"ry":286.878,"rx":24.2004}}}
+data modify storage animated_java:temp entry.data merge value {"locators":{"mount":{"px":0.0672,"py":0.9,"pz":0.1657,"ry":293.8194,"rx":0},"dio_shoulder":{"px":0.3281,"py":1.975,"pz":-0.2303,"ry":286.878,"rx":24.2004}}}
 # Data Manager: Prepare for Read / Write
 execute store result storage animated_java:temp args.id int 1 run scoreboard players get @s aj.id
 # Data Manager: Write

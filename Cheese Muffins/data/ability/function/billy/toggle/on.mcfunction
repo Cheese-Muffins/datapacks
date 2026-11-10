@@ -4,8 +4,8 @@ execute rotated ~ 0 run function aj:billy/summon {args:{}}
 execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
 execute as @n[type=minecraft:item_display,tag=aj.billy.root] unless score @s universalAbility.ID matches 1.. run function ability:billy/toggle/zzz/0 with storage minecraft:ability billy
 function universal:ability/control/mount/player {arguments:{mount_tag:"aj.billy.root",user_tag:"abilityBilly.User"}}
-function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+function universal:ability/control/visibility {arguments:{target_tag:"aj.billy.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.billy.locator.text_location"}}
+function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.billy.camera"}}
 tag @s add universalAbility.HideUI
 scoreboard players set @s universalAbility.ToggleDelay 40

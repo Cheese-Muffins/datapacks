@@ -1,3 +1,5 @@
 # Generated with MC-Build
 
-$data modify entity @s Rotation[0] set value $(rotation)
+$scoreboard players set @s universalText.ID $(id)
+tag @s add universalText.IDAssigned
+execute if data storage minecraft:universal ability.rig.text.arguments.output run function universal:ability/rig/zzz/3 with storage minecraft:universal ability.rig.text.arguments

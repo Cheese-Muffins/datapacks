@@ -4,8 +4,8 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/d
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_global
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_sfx
+$execute as $(mount) positioned ^0 ^0.6 ^0 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_mount
 $execute as $(dio_shoulder) positioned ^0.2313 ^1.3297 ^-0.1734 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_dio_shoulder
-$execute as $(mount) positioned ^0 ^0.6875 ^0 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_mount
 $execute as $(barrage_anchor) positioned ^0 ^1.125 ^0 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_barrage_anchor
 $execute as $(right_hand_world) positioned ^-0.375 ^0.8125 ^0 rotated ~180 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_right_hand_world
 $execute as $(hitbox) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/default_knife_throw/zzz/frames/30_locator_hitbox

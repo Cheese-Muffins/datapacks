@@ -532,46 +532,6 @@ dir ability {
             }
         }
 
-        function rotate {
-            # function universal:ability/rig/rotate {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-            $data merge storage minecraft:universal {ability:{rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
-            block { with storage minecraft:universal ability.rig
-                $execute as @a[tag=$(user),scores={$(objective)=$(id)}] store result storage minecraft:universal ability.rig.rotation float 0.1 run data get entity @s Rotation[0] 10
-                block { with storage minecraft:universal ability.rig
-                    $data modify entity @s Rotation[0] set value $(rotation)
-                }
-                $execute unless entity @a[tag=$(user),scores={$(objective)=$(id)}] run function ability:$(rig)/toggle/off
-            }
-        }
-
-        function as_player {
-            # function universal:ability/rig/as_player {player:"abilityBilly.User",objective:"universalAbility.ID",output:"tag @s remove universalAbility.HideUI"}
-            $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-            $data merge storage minecraft:universal {ability:{rig:{player:"$(player)",objective:"$(objective)",output:"$(output)"}}}
-            block { with storage minecraft:universal ability.rig
-                $execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run $(output)
-            }
-        }
-
-        function spectate_camera {
-            # function universal:ability/rig/spectate_camera {player:"abilityBilly.User",camera:"aj.billy.camera",objective:"universalAbility.ID"}
-            $execute store result storage minecraft:universal ability.camera.id int 1 run scoreboard players get @s $(objective)
-            $data merge storage minecraft:universal {ability:{camera:{player:"$(player)",camera:"$(camera)",objective:"$(objective)"}}}
-            block { with storage minecraft:universal ability.camera
-                $execute as @p[tag=$(player),scores={$(objective)=$(id)}] at @s run spectate @n[type=minecraft:item_display,tag=$(camera),scores={$(objective)=$(id)}] @s
-            }
-        }
-
-        function visibility {
-            # function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s universalAbility.ID
-            $data merge storage minecraft:universal {ability:{rig:{objective:"$(objective)",target:"$(target)",state:"$(state)",perspective:"$(perspective)",mounted:"$(mounted)"}}}
-            block { with storage minecraft:universal ability.rig
-                $visibility $(state) @n[type=minecraft:item_display,tag=$(target),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
-            }
-        }
-
         function text {
             # EXAMPLE #
                 # data modify storage minecraft:universal ability.rig.text.arguments.animation set value "billy"
@@ -603,14 +563,6 @@ dir ability {
                 }
             }
             data remove storage minecraft:universal ability.rig.text.arguments
-        }
-
-        function pair {
-            # function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.root",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-            $data merge storage minecraft:universal {ability:{rig:{target:"$(target)",objective_before:"$(objective_before)",objective_target:"$(objective_target)"}}}
-            block { with storage minecraft:universal ability.rig
-                $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
-            }
         }
     }
 
@@ -727,15 +679,6 @@ dir ability {
 
     dir control {
         dir mount {
-            # function player {
-            #     # function universal:ability/control/mount/player {user:"abilityBilly.User",rig:"billy",objective:"universalAbility.ID"}
-            #     $execute store result storage minecraft:universal ability.rig.id int 1 run scoreboard players get @s $(objective)
-            #     $data merge storage minecraft:universal {ability:{rig:{user:"$(user)",objective:"$(objective)",rig:"$(rig)"}}}
-            #     block { with storage minecraft:universal ability.rig
-            #         $ride @n[type=minecraft:item_display,tag=aj.$(rig).root,scores={$(objective)=$(id)}] mount @p[tag=$(user),scores={$(objective)=$(id)}]
-            #     }
-            # }
-
             function player {
                 # function universal:ability/control/mount/player {arguments:{mount_tag:"aj.billy.root",user_tag:"abilityBilly.User"}}
 
@@ -748,7 +691,9 @@ dir ability {
                     execute if entity @s[type=minecraft:player] run block { with storage minecraft:universal ability.rig.mount
                         $execute on vehicle if entity @s[type=minecraft:item_display,scores={$(objective)=$(id)}] run block { with storage minecraft:universal ability.rig.mount
                             $ride @p[tag=$(user_tag),scores={$(objective)=$(id)}] dismount
-                            $execute unless entity @s[tag=aj.global.root] run function aj:the_world/as_root {command:"tp @p[tag=$(user_tag),scores={$(objective)=$(id)}] ~ ~0.06 ~"}
+                            $execute unless entity @s[tag=aj.global.root] as @n[tag=aj.global.root,scores={$(objective)=$(id)}] at @s align y run block { with storage minecraft:universal ability.rig.mount
+                                $tp @p[tag=$(user_tag),scores={$(objective)=$(id)}] ~ ~ ~
+                            }
                         }
                         $ride @n[type=minecraft:item_display,tag=$(mount_tag),scores={$(objective)=$(id)}] mount @p[tag=$(user_tag),scores={$(objective)=$(id)}]
                     }
@@ -768,6 +713,78 @@ dir ability {
                         $ride @s mount @n[type=minecraft:item_display,tag=$(mount_tag),scores={$(objective)=$(id)}]
                     }
                 }
+            }
+        }
+
+        function rotate {
+            # function universal:ability/control/rotate {arguments:{user_tag:"abilityBilly.User",toggle_path:"billy"}}
+            data remove storage minecraft:universal ability.rig.rotate
+            $data modify storage minecraft:universal ability.rig.rotate merge value $(arguments)
+            execute unless data storage minecraft:universal ability.rig.rotate.objective run data modify storage minecraft:universal ability.rig.rotate.objective set value "universalAbility.ID"
+
+            block { with storage minecraft:universal ability.rig.rotate
+                $execute store result storage minecraft:universal ability.rig.rotate.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.rig.rotate
+                    $execute as @a[tag=$(user_tag),scores={$(objective)=$(id)}] store result storage minecraft:universal ability.rig.rotate.rotation float 0.1 run data get entity @s Rotation[0] 10
+                    block { with storage minecraft:universal ability.rig.rotate
+                        $data modify entity @s Rotation[0] set value $(rotation)
+                    }
+                    $execute unless entity @a[tag=$(user_tag),scores={$(objective)=$(id)}] run function ability:$(toggle_path)/toggle/off
+                }
+            }
+        }
+
+        function as_player {
+            # function universal:ability/control/as_player {arguments:{user_tag:"abilityBilly.User",output:"tag @s remove universalAbility.HideUI"}}
+            data remove storage minecraft:universal ability.control.as_player
+            $data modify storage minecraft:universal ability.control.as_player merge value $(arguments)
+            execute unless data storage minecraft:universal ability.control.as_player.objective run data modify storage minecraft:universal ability.control.as_player.objective set value "universalAbility.ID"
+
+            block { with storage minecraft:universal ability.control.as_player
+                $execute store result storage minecraft:universal ability.control.as_player.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.control.as_player
+                    $execute as @p[tag=$(user_tag),scores={$(objective)=$(id)}] at @s run $(output)
+                }
+            }
+        }
+
+        function spectate_camera {
+            # function universal:ability/control/spectate_camera {arguments:{user_tag:"abilityBilly.User",camera_tag:"aj.billy.camera"}}
+            data remove storage minecraft:universal ability.control.spectate_camera
+            $data modify storage minecraft:universal ability.control.spectate_camera merge value $(arguments)
+            execute unless data storage minecraft:universal ability.control.spectate_camera.objective run data modify storage minecraft:universal ability.control.spectate_camera.objective set value "universalAbility.ID"
+
+            block { with storage minecraft:universal ability.control.spectate_camera
+                $execute store result storage minecraft:universal ability.control.spectate_camera.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.control.spectate_camera
+                    $execute as @p[tag=$(user_tag),scores={$(objective)=$(id)}] at @s run spectate @n[type=minecraft:item_display,tag=$(camera_tag),scores={$(objective)=$(id)}] @s
+                }
+            }
+        }
+
+        function visibility {
+            # function universal:ability/control/visibility {arguments:{target_tag:"aj.billy.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+            data remove storage minecraft:universal ability.control.visibility
+            $data modify storage minecraft:universal ability.control.visibility merge value $(arguments)
+            execute unless data storage minecraft:universal ability.control.visibility.objective run data modify storage minecraft:universal ability.control.visibility.objective set value "universalAbility.ID"
+
+            block { with storage minecraft:universal ability.control.visibility
+                $execute store result storage minecraft:universal ability.control.visibility.id int 1 run scoreboard players get @s $(objective)
+                block { with storage minecraft:universal ability.control.visibility
+                    $visibility $(state) @n[type=minecraft:item_display,tag=$(target_tag),scores={$(objective)=$(id)}] @s $(perspective) $(mounted)
+                }
+            }
+        }
+
+        function pair {
+            # function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.billy.root"}}
+            data remove storage minecraft:universal ability.control.pair
+            $data modify storage minecraft:universal ability.control.pair merge value $(arguments)
+            execute unless data storage minecraft:universal ability.control.pair.objective_before run data modify storage minecraft:universal ability.control.pair.objective_before set value "universalAbility.ID"
+            execute unless data storage minecraft:universal ability.control.pair.objective_target run data modify storage minecraft:universal ability.control.pair.objective_target set value "universalAbility.ID"
+
+            block { with storage minecraft:universal ability.control.pair
+                $scoreboard players operation @n[$(target)] $(objective_target) = @s $(objective_before)
             }
         }
     }

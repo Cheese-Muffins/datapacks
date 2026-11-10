@@ -4,8 +4,8 @@ execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/g
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_global
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_skins
 execute positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_sfx
-$execute as $(dio_shoulder) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_dio_shoulder
 $execute as $(mount) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_mount
+$execute as $(dio_shoulder) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_dio_shoulder
 $execute as $(barrage_anchor) positioned ^0.9375 ^2.25 ^-0.8437 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_barrage_anchor
 $execute as $(right_hand_world) positioned ^0.206 ^2.5668 ^-0.6185 rotated ~71.833 ~45.5195 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_right_hand_world
 $execute as $(hitbox) positioned ^0 ^0 ^0 rotated ~0 ~0 run function aj:the_world/animations/grow_idle/zzz/frames/81_locator_hitbox

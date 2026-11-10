@@ -183,7 +183,7 @@ dir billy {
 
                 gamemode spectator @s
                 function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
-                function universal:ability/rig/spectate_camera {camera:"aj.billy.camera",objective:"universalAbility.ID"}
+                function universal:ability/control/spectate_camera {arguments:{user_tag:"abilityBilly.User",camera_tag:"aj.billy.camera"}}
             }
         }
 
@@ -195,7 +195,7 @@ dir billy {
 
         dir reset {
             function all {
-                function universal:ability/rig/as_player {player:"abilityBilly.User",objective:"universalAbility.ID",output:"function ability:billy/moves/reset/player"}
+                function universal:ability/control/as_player {arguments:{user_tag:"abilityBilly.User",output:"function ability:billy/moves/reset/player"}}
                 function ability:billy/moves/reset/rig
             }
 
@@ -261,10 +261,9 @@ dir billy {
             }
 
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.billy.root",user_tag:"abilityBilly.User"}}
-            function universal:ability/rig/visibility {target:"aj.billy.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.locator.text_location",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.billy.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-
+            function universal:ability/control/visibility {arguments:{target_tag:"aj.billy.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+            function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.billy.locator.text_location"}}
+            function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.billy.camera"}}
             tag @s add universalAbility.HideUI
             scoreboard players set @s universalAbility.ToggleDelay 40
         }
@@ -480,8 +479,8 @@ dir yuji {
             visibility disable @s @a ignore_perspective render_passengers
             function universal:ability/rig/stable_player_display/main {branch:"yuji",}
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.yuji.root",user_tag:"abilityYuji.User"}}
-            function universal:ability/rig/visibility {target:"aj.yuji.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.yuji.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/control/visibility {arguments:{target_tag:"aj.yuji.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+            function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.yuji.camera"}}
         }
 
         dir 1 {
@@ -547,7 +546,7 @@ dir yuji {
                     tag @s add universalAbility.Animating
 
                     # specific
-                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.yuji.locator.mount",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+                    function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.yuji.locator.mount"}}
                     function universal:attribute/grant {type:"minecraft:movement_speed",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                     function universal:attribute/grant {type:"minecraft:jump_strength",path:"ability:generic",strength:-1,operation:"add_multiplied_base"}
                 }
@@ -714,7 +713,7 @@ dir yuji {
 
         dir reset {
             function all {
-                function universal:ability/rig/as_player {player:"abilityYuji.User",objective:"universalAbility.ID",output:"function ability:yuji/moves/reset/player"}
+                function universal:ability/control/as_player {arguments:{user_tag:"abilityYuji.User",output:"function ability:yuji/moves/reset/player"}}
                 function ability:yuji/moves/reset/rig
             }
 
@@ -1082,8 +1081,8 @@ dir the_world {
             }
 
             function universal:ability/rig/stable_player_display/main {branch:"the_world",split:""}
-            function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/control/visibility {arguments:{target_tag:"aj.the_world.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+            function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.the_world.camera"}}
         }
 
         dir 1 {
@@ -1476,7 +1475,7 @@ dir the_world {
 
         dir reset {
             function all {
-                function universal:ability/rig/as_player {player:"abilityTheWorld.User",objective:"universalAbility.ID",output:"function ability:the_world/moves/reset/player"}
+                function universal:ability/control/as_player {arguments:{user_tag:"abilityTheWorld.User",output:"function ability:the_world/moves/reset/player"}}
                 function ability:the_world/moves/reset/rig
             }
 
@@ -1490,7 +1489,7 @@ dir the_world {
 
             function player {
                 visibility enable @s @a
-                function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+                function universal:ability/control/visibility {arguments:{target_tag:"aj.the_world.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
                 function universal:ability/revoke/cancelable {player:"abilityTheWorld.User"}
                 tag @s remove universalAbility.Animating
 
@@ -1600,9 +1599,9 @@ dir the_world {
             }
 
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.the_world.root",user_tag:"abilityTheWorld.User"}}
-            function universal:ability/rig/visibility {target:"aj.the_world.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.camera",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-            function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.the_world.locator.mount",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+            function universal:ability/control/visibility {arguments:{target_tag:"aj.the_world.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
+            function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.the_world.camera"}}
+            function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.the_world.locator.mount"}}
 
             scoreboard players set @s universalAbility.ToggleDelay 20
         }
@@ -1735,7 +1734,7 @@ dir shrinkray {
             visibility disable @s @a ignore_perspective render_passengers
             function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.shrinkray.root",user_tag:"abilityShrinkray.User"}}
-            function universal:ability/rig/visibility {target:"aj.shrinkray.root",objective:"universalAbility.ID",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}
+            function universal:ability/control/visibility {arguments:{target_tag:"aj.shrinkray.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
         }
 
         dir 1 {
@@ -1776,8 +1775,8 @@ dir shrinkray {
                     }
                     
                     # restraints
-                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.default_beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
-                    function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.gabi_beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+                    function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.shrinkray.locator.default_beam_position"}}
+                    function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.shrinkray.locator.gabi_beam_position"}}
                     $function universal:ability/restraint/cooldown {arguments:{ability_name:"Shrinkray",split_name:"Shoot",split_path:1,move:$(move)}}
                     $function universal:ability/restraint/cancelable {move:$(move)}
                     tag @s add universalAbility.Animating
@@ -1927,7 +1926,7 @@ dir shrinkray {
                 execute if score @s universalAbility.EquippedSkinID matches 2 run function ability:shrinkray/moves/setup {rig:"shrinkray",animation:'toggle_gabi'}
 
                 # restraints
-                function universal:ability/rig/pair {target:"type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position",objective_before:"universalAbility.ID",objective_target:"universalAbility.ID"}
+                function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.shrinkray.locator.beam_position"}}
                 $function universal:ability/restraint/cooldown {arguments:{ability_name:"Shrinkray",split_name:"Self",split_path:2,move:$(move)}}
                 $function universal:ability/restraint/cancelable {move:$(move)}
                 tag @s add universalAbility.Animating
@@ -1966,7 +1965,7 @@ dir shrinkray {
 
         dir reset {
             function all {
-                function universal:ability/rig/as_player {player:"abilityShrinkray.User",objective:"universalAbility.ID",output:"function ability:shrinkray/moves/reset/player"}
+                function universal:ability/control/as_player {arguments:{user_tag:"abilityShrinkray.User",output:"function ability:shrinkray/moves/reset/player"}}
                 function ability:shrinkray/moves/reset/rig
             }
 
