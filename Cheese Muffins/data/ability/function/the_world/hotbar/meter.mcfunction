@@ -15,4 +15,4 @@ $execute if score @s universalAbility.AwakeningDuration matches $(4a)..$(5b) run
 $execute if score @s universalAbility.AwakeningDuration matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C6"
 $execute if score @s universalAbility.AwakeningDuration matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C7"
 $execute if score @s universalAbility.AwakeningDuration matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.awakening set value "u03C8"
-execute unless score @s universalAbility.AwakeningDuration matches 1.. run function ability:the_world/hotbar/zzz/6
+execute unless score @s universalAbility.AwakeningDuration matches 1.. run function ability:the_world/hotbar/zzz/10

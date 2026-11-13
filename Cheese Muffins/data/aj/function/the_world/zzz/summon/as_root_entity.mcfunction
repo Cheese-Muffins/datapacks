@@ -12,7 +12,7 @@ function animated_java:global/data_manager/read with storage animated_java:temp 
 data modify storage animated_java:temp entry.data.uuids append from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.root_uuid set from storage animated_java:gu out
 data modify storage animated_java:temp entry.data.blueprint_id set value "aj:the_world"
-data modify storage animated_java:temp entry.data.rig_hash set value "740b19de40d5c19a246d4c4a9ca5e99965429b4eb6dbcabde268562bdab77751"
+data modify storage animated_java:temp entry.data.rig_hash set value "3e82b65a36d9ce25a0f09a76ee6e975d3b0f65725fca5c7e36a78991f75d74cd"
 tp @s ~ ~ ~ ~ ~
 summon minecraft:item_display ^0 ^0.6 ^0 {Tags:["aj.global.bone.dio.child","aj.global.bone.dio.child.locator","aj.global.bone.dio.decendant","aj.global.bone.dio.decendant.locator","aj.global.bone.dio.tree","aj.global.bone.size.decendant","aj.global.bone.size.decendant.locator","aj.global.bone.size.tree","aj.global.entity","aj.global.locator","aj.global.node","aj.global.node.mount","aj.new","aj.the_world.bone.dio.child","aj.the_world.bone.dio.child.locator","aj.the_world.bone.dio.decendant","aj.the_world.bone.dio.decendant.locator","aj.the_world.bone.dio.tree","aj.the_world.bone.size.decendant","aj.the_world.bone.size.decendant.locator","aj.the_world.bone.size.tree","aj.the_world.entity","aj.the_world.locator","aj.the_world.locator.mount","aj.the_world.node","aj.the_world.node.mount"]}
 execute as @n[ type=minecraft:item_display, tag=aj.the_world.locator.mount, tag=aj.new, distance=..2 ] run function aj:the_world/zzz/summon/as_locator/mount
@@ -209,7 +209,7 @@ data modify storage animated_java:temp entry.data.uuids_by_name.gear3 set from s
 # Data Manager: Write
 function animated_java:global/data_manager/write with storage animated_java:temp args
 function aj:the_world/zzz/set_default_pose
-execute if data storage animated_java:temp args.variant run function aj:the_world/zzz/summon/zzz/variant_arg/no_variants_warning
+execute if data storage animated_java:temp args.variant run function aj:the_world/zzz/summon/variant_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail
 execute if data storage animated_java:temp args.animation run function aj:the_world/zzz/summon/animation_arg/process with storage animated_java:temp args
 execute if score #success aj.i matches 0 run return fail

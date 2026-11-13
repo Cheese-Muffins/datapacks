@@ -10,4 +10,3 @@ $execute if score @s universalAbility.MoveCooldown$(slot) matches $(4a)..$(5b) r
 $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B0"
 $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B1"
 $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B2"
-$execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B3"

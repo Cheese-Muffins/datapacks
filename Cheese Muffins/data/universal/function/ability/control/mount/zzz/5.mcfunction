@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=$(mount_tag),scores={$(objective)=$(id)}] unless entity @s[tag=aj.global.root] run function aj:the_world/as_root {command:"ride @s dismount"}
-$ride @s mount @n[type=minecraft:item_display,tag=$(mount_tag),scores={$(objective)=$(id)}]
+$execute store result storage minecraft:universal ability.rig.mount.id int 1 run scoreboard players get @s $(objective)
+execute if entity @s[type=minecraft:player] run function universal:ability/control/mount/zzz/6 with storage minecraft:universal ability.rig.mount

@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$data merge storage minecraft:ability {the_world:{hotbar:{rage:"$(whole).$(frac)"}}}
+function universal:hotbar/time {ability:"the_world",slot:2}

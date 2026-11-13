@@ -182,7 +182,8 @@ dir billy {
 
 
                 gamemode spectator @s
-                function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
+                # function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
+                # REMOVED CONTEXT. RESTORATION NEEDED.
                 function universal:ability/control/spectate_camera {arguments:{user_tag:"abilityBilly.User",camera_tag:"aj.billy.camera"}}
             }
         }
@@ -477,7 +478,7 @@ dir yuji {
             }
 
             visibility disable @s @a ignore_perspective render_passengers
-            function universal:ability/rig/stable_player_display/main {branch:"yuji",}
+            function universal:ability/stable_player_display/apply {arguments:{branch:"yuji"}}
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.yuji.root",user_tag:"abilityYuji.User"}}
             function universal:ability/control/visibility {arguments:{target_tag:"aj.yuji.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
             function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.yuji.camera"}}
@@ -987,6 +988,8 @@ dir the_world {
         scoreboard objectives add abilityTheWorld.KnifeVelocityZ dummy
         scoreboard objectives add abilityTheWorld.KnifePosition dummy
         scoreboard objectives add abilityTheWorld.KnifeThrowMovement dummy
+        scoreboard objectives add abilityTheWorld.LeapVerticalTicks dummy
+        scoreboard objectives add abilityTheWorld.LeapVerticalDirection dummy
         scoreboard players set .knifeDrag abilityTheWorld.Constants 990
 
         # Move 1 #
@@ -998,14 +1001,16 @@ dir the_world {
             function universal:ability/setup/variables {ability:"the_world",name:"timestop",variables:{range:40.0,duration:9.0,tick_damage:3}}
 
         # Move 2 #
-            # Knife Throw #
-            function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"2a",move:2,cooldown:17}
+            # Default Knife Throw #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld_DefaultKnife",storage:"the_world",path:"2a",move:2,cooldown:17}
             function universal:ability/setup/variables {ability:"the_world",name:"knife_throw",variables:{speed:0.25,gravity:0.075,drag:99.0,collision_offset:0.25,hitbox:2.5,damage:6}}
+            # Timestop Knife Throw #
+            function universal:ability/setup/cooldown/10x {name:"TheWorld_TimestopKnife",storage:"the_world",path:"2b",move:2,cooldown:1}
 
         # Move 3 #
-            # Barrage #
+            # Kick Barrage #
             function universal:ability/setup/cooldown/10x {name:"TheWorld",storage:"the_world",path:"3a",move:3,cooldown:23}
-            function universal:ability/setup/variables {ability:"the_world",name:"barrage",variables:{hitbox_size:2.5,damage:3}}
+            function universal:ability/setup/variables {ability:"the_world",name:"kick_barrage",variables:{movement:0.85}}
         
         # Move 4 #
             # Flurry #
@@ -1039,7 +1044,7 @@ dir the_world {
 
             gamemode spectator @s
             shader enable @s minecraft:cinematic_bars false
-            function universal:ability/rig/stable_player_display/main {branch:"the_world",split:""}
+            function universal:ability/stable_player_display/apply {arguments:{branch:"the_world"}}
         }
 
         function ring {
@@ -1079,8 +1084,7 @@ dir the_world {
                     $function universal:ability/play/animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
                 }
             }
-
-            function universal:ability/rig/stable_player_display/main {branch:"the_world",split:""}
+            function universal:ability/stable_player_display/apply {arguments:{branch:"the_world"}}
             function universal:ability/control/visibility {arguments:{target_tag:"aj.the_world.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
             function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.the_world.camera"}}
         }
@@ -1103,7 +1107,7 @@ dir the_world {
 
                 function pass {
                     function ability:the_world/moves/setup {rig:"the_world",animation:'phase'}
-                    function universal:ability/restraint/cooldown {move:1,name:"TheWorld_Timeskip"}
+                    function universal:ability/restraint/cooldown {arguments:{ability_name:"TheWorld",split_name:"Timeskip",split_path:1,move:1}}
 
                     function ability:the_world/moves/1/timeskip/recursive/start
                 }
@@ -1399,6 +1403,7 @@ dir the_world {
 
                     # restraints
                     function universal:ability/restraint/cooldown {name:"TheWorld",move:2}
+                    function universal:ability/restraint/cooldown {arguments:{ability_name:"TheWorld",split_name:"DefaultKnife",split_path:1,move:2}}
                     function universal:ability/restraint/cancelable {move:2}
                     tag @s add universalAbility.Animating
 
@@ -1426,6 +1431,7 @@ dir the_world {
             function core {
                 execute if score @s universalAbility.MoveCooldown3 matches 1.. run function universal:error_messages/setup {id:1}
                 execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
+                execute unless predicate universal:flags/grounded run function universal:error_messages/setup {id:3}
                 function universal:error_messages/constant
 
                 scoreboard players set @s universalAbility.HotbarSlot 1
@@ -1439,7 +1445,7 @@ dir the_world {
                 visibility disable @s @a ignore_perspective render_passengers
 
                 # restraints
-                function universal:ability/restraint/cooldown {name:"TheWorld",move:2}
+                function universal:ability/restraint/cooldown {arguments:{ability_name:"TheWorld",move:3}}
                 function universal:ability/restraint/cancelable {move:2}
                 tag @s add universalAbility.Animating
 
@@ -1449,20 +1455,71 @@ dir the_world {
 
             dir leap {
                 function start {
+                    tag @s remove universalAbility.ModifierCancelable
+                    scoreboard players reset @s universalAbility.MovePrevious
                     function universal:ability/control/mount/rig {arguments:{mount_tag:"aj.the_world.locator.mount"}}
                 }
 
                 function main {
+                    # fetch movement variable
+                    function universal:fetch/variable/main {arguments:{ability:"the_world",move:"kick_barrage",name:"movement",write_score:1b,objective:"abilityTheWorld.LeapSteps",target:".movement",scale:1000}}
+
+                    # calculate distance per step
+                    scoreboard players set .divisor abilityTheWorld.LeapSteps 10
+                    scoreboard players operation .movement abilityTheWorld.LeapSteps /= .divisor abilityTheWorld.LeapSteps
+
+                    execute store result storage minecraft:ability the_world.kick_barrage.leap.step_distance double 0.001 run scoreboard players get .movement abilityTheWorld.LeapSteps
+
+                    # begin leap
                     scoreboard players set @s abilityTheWorld.LeapSteps 0
                     execute at @s anchored feet rotated ~ 0 run function ability:the_world/moves/3/leap/step
                 }
 
                 function step {
-                    execute if score @s abilityTheWorld.LeapSteps matches ..12 positioned ^ ^0.1 ^0.35 if block ~ ~ ~ #ability:the_world/kick_barrage_leap positioned ~ ~0.9 ~ if block ~ ~ ~ #ability:the_world/kick_barrage_leap run function ability:the_world/moves/3/leap/move
+                    execute if score @s abilityTheWorld.LeapSteps matches ..9 run {
+                        # scan ahead for hazards
+                        execute at @s anchored feet rotated ~ 0 positioned ^ ^0.1 ^0.5 unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard positioned ~ ~0.9 ~ unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard positioned ~ ~-1.1 ~ unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard run {
+                            # horizontal movement
+                            execute at @s anchored feet rotated ~ 0 positioned ^ ^0.1 ^0.35 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~0.9 ~ if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision run {
+                                # continue while supported
+                                execute at @s anchored feet rotated ~ 0 positioned ^ ^-0.1 ^0.05 unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision run {
+                                    data modify storage minecraft:ability the_world.kick_barrage.leap.y set value 0.0d
+                                    function ability:the_world/moves/3/leap/teleport with storage minecraft:ability the_world.kick_barrage.leap
+                                }
+
+                                # descend when ground is missing
+                                execute at @s anchored feet rotated ~ 0 positioned ^ ^-0.1 ^0.05 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision run {
+                                    # one-block drop
+                                    execute at @s anchored feet rotated ~ 0 positioned ^ ^-0.9 ^0.05 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.2 ~ unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard run {
+                                        data modify storage minecraft:ability the_world.kick_barrage.leap.y set value -1.0d
+                                        function ability:the_world/moves/3/leap/teleport with storage minecraft:ability the_world.kick_barrage.leap
+                                    }
+
+                                    # two-block drop
+                                    execute at @s anchored feet rotated ~ 0 positioned ^ ^-0.9 ^0.05 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.2 ~ if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.8 ~ if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.2 ~ unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard run {
+                                        data modify storage minecraft:ability the_world.kick_barrage.leap.y set value -2.0d
+                                        function ability:the_world/moves/3/leap/teleport with storage minecraft:ability the_world.kick_barrage.leap
+                                    }
+                                }
+                            }
+
+                            # climb one block
+                            execute at @s anchored feet rotated ~ 0 positioned ^ ^0.1 ^0.35 unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard run {
+                                # check space above the obstacle
+                                execute at @s anchored feet rotated ~ 0 positioned ^ ^1.1 ^0.35 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~1 ~ if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision run {
+                                    # check space above the rig
+                                    execute at @s anchored feet rotated ~ 0 positioned ^ ^1.1 ^0.05 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~1 ~ if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision run {
+                                        data modify storage minecraft:ability the_world.kick_barrage.leap.y set value 1.0d
+                                        function ability:the_world/moves/3/leap/teleport with storage minecraft:ability the_world.kick_barrage.leap
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
-                function move {
-                    execute at @s anchored feet rotated ~ 0 run tp @s ^ ^ ^0.05
+                function teleport {
+                    $execute at @s anchored feet rotated ~ 0 run tp @s ^ ^$(y) ^$(step_distance)
                     scoreboard players add @s abilityTheWorld.LeapSteps 1
                     execute at @s anchored feet rotated ~ 0 run function ability:the_world/moves/3/leap/step
                 }
@@ -1503,11 +1560,13 @@ dir the_world {
         function main {
             function ability:the_world/hotbar/meter with storage minecraft:ability the_world.awakening
 
-            execute unless entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1a
-            execute if entity @s[tag=abilityTheWorld.RageMode] run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move1b
-            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move2a
-            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move3a
-            function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move4a
+            REPEAT (1,4) as i {
+                execute if score @s universalAbility.MoveCooldown<%i%> matches 1.. run {
+                    execute unless score @s universalAbility.MoveSplit<%i%> matches 2 run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move<%i%>a
+                    execute if score @s universalAbility.MoveSplit<%i%> matches 2 run function ability:the_world/hotbar/progress with storage minecraft:ability the_world.cooldown.move<%i%>b
+                }
+                execute unless score @s universalAbility.MoveCooldown<%i%> matches 1.. run data modify storage minecraft:ability the_world.hotbar.move<%i%> set value "u03B3"
+            }
 
             function ability:the_world/hotbar/rage
             REPEAT (1,4) as i {
@@ -1554,7 +1613,6 @@ dir the_world {
             $execute if score @s universalAbility.MoveCooldown$(slot) matches $(3a)..$(4b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B0"
             $execute if score @s universalAbility.MoveCooldown$(slot) matches $(2a)..$(3b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B1"
             $execute if score @s universalAbility.MoveCooldown$(slot) matches $(1)..$(2b) run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B2"
-            $execute unless score @s universalAbility.MoveCooldown$(slot) matches 1.. run data modify storage minecraft:ability the_world.hotbar.move$(slot) set value "u03B3"
         }
 
         function meter {
@@ -1592,7 +1650,7 @@ dir the_world {
                 execute as @n[type=minecraft:item_display,tag=aj.the_world.root] unless score @s universalAbility.ID matches 1.. run block { with storage minecraft:ability the_world.toggle
                     $scoreboard players set @s universalAbility.ID $(id)
                     $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
-                    function ability:the_world/skin_index
+                    function ability:the_world/skin_index {rig:"the_world"}
                     function universal:ability/play/animation {arguments:{rig:"the_world",animation:"summon",style:"play",objective:"universalAbility.ID"}}
                 }
                 $execute if score @s universalDisconnect.Check matches 1.. as @n[type=minecraft:item_display,tag=aj.the_world.root] if score @s universalAbility.ID matches $(id) run function aj:the_world/animations/idle/play
@@ -1732,7 +1790,7 @@ dir shrinkray {
             data remove storage minecraft:ability shrinkray.setup
 
             visibility disable @s @a ignore_perspective render_passengers
-            function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
+            function universal:ability/stable_player_display/apply {arguments:{branch:"shrinkray",force_skin:1b}}
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.shrinkray.root",user_tag:"abilityShrinkray.User"}}
             function universal:ability/control/visibility {arguments:{target_tag:"aj.shrinkray.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
         }
@@ -1756,7 +1814,7 @@ dir shrinkray {
                 $execute if score @s universalAbility.MoveCooldown$(move) matches 1.. run function universal:error_messages/setup {id:1}
                 execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
                 execute if entity @s[tag=abilityShrinkray.BypassErrors] run function universal:error_messages/clear
-                execute unless score @s abilityShrinkray.PassiveAmmoValue matches 1.. run function universal:error_messages/setup {id:3}
+                execute unless score @s abilityShrinkray.PassiveAmmoValue matches 1.. run function universal:error_messages/setup {id:11}
                 function universal:error_messages/constant
                 $scoreboard players set @s universalAbility.HotbarSlot $(move)
                 $execute unless score @s universalError.FailReturn matches 1 run function ability:shrinkray/moves/beam/pass {arguments:{move:$(move),name:"$(name)"}}
@@ -1912,7 +1970,7 @@ dir shrinkray {
             function check {
                 $execute if score @s universalAbility.MoveCooldown$(move) matches 1.. run function universal:error_messages/setup {id:1}
                 execute if entity @s[tag=universalAbility.Animating] run function universal:error_messages/setup {id:2}
-                execute unless score @s abilityShrinkray.PassiveAmmoValue matches 1.. run function universal:error_messages/setup {id:3}
+                execute unless score @s abilityShrinkray.PassiveAmmoValue matches 1.. run function universal:error_messages/setup {id:11}
                 function universal:error_messages/constant
 
                 $scoreboard players set @s universalAbility.HotbarSlot $(move)
@@ -2007,7 +2065,6 @@ dir shrinkray {
                     execute unless score @s universalAbility.MoveSplit<%i%> matches 2 run function ability:shrinkray/hotbar/progress with storage minecraft:ability shrinkray.cooldown.move<%i%>a
                     execute if score @s universalAbility.MoveSplit<%i%> matches 2 run function ability:shrinkray/hotbar/progress with storage minecraft:ability shrinkray.cooldown.move<%i%>b
                 }
-
                 execute unless score @s universalAbility.MoveCooldown<%i%> matches 1.. run data modify storage minecraft:ability shrinkray.hotbar.move<%i%> set value "u09B3"
             }
             

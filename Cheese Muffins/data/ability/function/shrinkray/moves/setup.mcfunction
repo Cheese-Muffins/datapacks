@@ -7,6 +7,6 @@ execute store result storage minecraft:ability shrinkray.setup.skin_id int 1 run
 execute as @n[type=minecraft:item_display,tag=aj.shrinkray.root] unless score @s universalAbility.ID matches 1.. run function ability:shrinkray/moves/zzz/0 with storage minecraft:ability shrinkray.setup
 data remove storage minecraft:ability shrinkray.setup
 visibility disable @s @a ignore_perspective render_passengers
-function universal:ability/rig/stable_player_display/main {branch:"shrinkray",split:""}
+function universal:ability/stable_player_display/apply {arguments:{branch:"shrinkray",force_skin:1b}}
 function universal:ability/control/mount/player {arguments:{mount_tag:"aj.shrinkray.root",user_tag:"abilityShrinkray.User"}}
 function universal:ability/control/visibility {arguments:{target_tag:"aj.shrinkray.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}

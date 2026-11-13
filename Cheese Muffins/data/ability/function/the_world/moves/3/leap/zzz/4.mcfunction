@@ -1,0 +1,4 @@
+# Generated with MC-Build
+
+execute at @s anchored feet rotated ~ 0 positioned ^ ^-0.9 ^0.05 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.2 ~ unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard run function ability:the_world/moves/3/leap/zzz/5
+execute at @s anchored feet rotated ~ 0 positioned ^ ^-0.9 ^0.05 if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.2 ~ if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.8 ~ if block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision positioned ~ ~-0.2 ~ unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_collision unless block ~ ~ ~ #ability:the_world/kick_barrage/leap_hazard run function ability:the_world/moves/3/leap/zzz/6

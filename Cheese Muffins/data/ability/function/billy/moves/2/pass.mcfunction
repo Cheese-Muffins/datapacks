@@ -9,5 +9,4 @@ execute store result score @s abilityBilly.PhaseDisconnectZ run data get entity 
 execute store result storage minecraft:ability billy.id int 1 run scoreboard players get @s universalAbility.ID
 function ability:billy/moves/2/zzz/0 with storage minecraft:ability billy
 gamemode spectator @s
-function universal:ability/rig/dismount {rig:"billy",objective:"universalAbility.ID"}
 function universal:ability/control/spectate_camera {arguments:{user_tag:"abilityBilly.User",camera_tag:"aj.billy.camera"}}

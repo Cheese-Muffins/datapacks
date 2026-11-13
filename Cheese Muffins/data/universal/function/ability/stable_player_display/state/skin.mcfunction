@@ -1,0 +1,23 @@
+# Generated with MC-Build
+
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)head] hotbar.0 loot minecraft:player/head
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)right_arm] hotbar.0 loot minecraft:player/right_arm
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)right_forearm] hotbar.0 loot minecraft:player/right_forearm
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)left_arm] hotbar.0 loot minecraft:player/left_arm
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)left_forearm] hotbar.0 loot minecraft:player/left_forearm
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)waist] hotbar.0 loot minecraft:player/waist
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)right_leg] hotbar.0 loot minecraft:player/right_leg
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)lower_right_leg] hotbar.0 loot minecraft:player/lower_right_leg
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)left_leg] hotbar.0 loot minecraft:player/left_leg
+$loot replace entity @n[tag=aj.$(branch).bone.$(prefix)lower_left_leg] hotbar.0 loot minecraft:player/lower_left_leg
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)helmet] run data merge entity @s {item:{components:{"minecraft:item_model":"$(helmet)","minecraft:enchantment_glint_override":$(head_glint),"minecraft:custom_model_data":{strings:["$(head_base)","$(head_pattern)","$(head_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)chestplate_body] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_body)","minecraft:enchantment_glint_override":$(chest_glint),"minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)chestplate_arm_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms_flipped)","minecraft:enchantment_glint_override":$(chest_glint),"minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)chestplate_arm_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(chestplate_arms)","minecraft:enchantment_glint_override":$(chest_glint),"minecraft:custom_model_data":{strings:["$(chest_base)","$(chest_pattern)","$(chest_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)leggings_pants] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_pants)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)leggings_upper_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)leggings_lower_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)leggings_upper_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_upper_flipped)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)leggings_lower_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(leggings_lower_flipped)","minecraft:enchantment_glint_override":$(legs_glint),"minecraft:custom_model_data":{strings:["$(legs_base)","$(legs_pattern)","$(legs_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)boots_l] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots)","minecraft:enchantment_glint_override":$(feet_glint),"minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
+$execute as @n[tag=aj.$(branch).item_display.$(prefix)boots_r] run data merge entity @s {item:{components:{"minecraft:item_model":"$(boots_flipped)","minecraft:enchantment_glint_override":$(feet_glint),"minecraft:custom_model_data":{strings:["$(feet_base)","$(feet_pattern)","$(feet_material)"]}}}}
