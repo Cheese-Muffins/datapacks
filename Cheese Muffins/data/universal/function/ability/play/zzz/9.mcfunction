@@ -1,4 +1,4 @@
 # Generated with MC-Build
 
-$execute as @p[scores={universalAbility.ID=$(id)}] unless entity @s[tag=abilitySettings.ViewmodelDisabled] run function universal:ability/play/zzz/10 with storage minecraft:universal ability.play.animation
-scoreboard players reset .isViewModel traitShrinkray.Size
+$execute unless data storage minecraft:universal ability.play.animation{force_skin:1b} run function universal:ability/stable_player_display/apply {arguments:{branch:"$(rig)"}}
+$execute if data storage minecraft:universal ability.play.animation{force_skin:1b} run function universal:ability/stable_player_display/apply {arguments:{branch:"$(rig)",force_skin:1b}}

@@ -7,4 +7,3 @@ tag @s add universalAbility.HideUI
 title @s actionbar ""
 gamemode spectator @s
 shader enable @s minecraft:cinematic_bars false
-function universal:ability/stable_player_display/apply {arguments:{branch:"the_world"}}

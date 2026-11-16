@@ -1,3 +1,3 @@
 # Generated with MC-Build
 
-$execute as @p[scores={$(objective)=$(id)}] run scoreboard players operation .fetchSize traitShrinkray.Size = @s traitShrinkray.Size
+$execute as @n[type=minecraft:item_display,tag=aj.$(rig)_viewmodel.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/zzz/15 with storage minecraft:universal ability.play.animation

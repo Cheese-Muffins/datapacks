@@ -478,7 +478,6 @@ dir yuji {
             }
 
             visibility disable @s @a ignore_perspective render_passengers
-            function universal:ability/stable_player_display/apply {arguments:{branch:"yuji"}}
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.yuji.root",user_tag:"abilityYuji.User"}}
             function universal:ability/control/visibility {arguments:{target_tag:"aj.yuji.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
             function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.yuji.camera"}}
@@ -1044,7 +1043,6 @@ dir the_world {
 
             gamemode spectator @s
             shader enable @s minecraft:cinematic_bars false
-            function universal:ability/stable_player_display/apply {arguments:{branch:"the_world"}}
         }
 
         function ring {
@@ -1084,7 +1082,6 @@ dir the_world {
                     $function universal:ability/play/animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
                 }
             }
-            function universal:ability/stable_player_display/apply {arguments:{branch:"the_world"}}
             function universal:ability/control/visibility {arguments:{target_tag:"aj.the_world.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
             function universal:ability/control/pair {arguments:{target:"type=minecraft:item_display,tag=aj.the_world.camera"}}
         }
@@ -1785,12 +1782,11 @@ dir shrinkray {
                 $scoreboard players set @s universalAbility.ID $(id)
                 $scoreboard players set @s universalAbility.EquippedSkinID $(skin_id)
                 function ability:shrinkray/skin_index {rig:"shrinkray"}
-                $function universal:ability/play/animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID"}}
+                $function universal:ability/play/animation {arguments:{rig:"$(rig)",animation:"$(animation)",style:"play",objective:"universalAbility.ID",force_skin:1b}}
             }
             data remove storage minecraft:ability shrinkray.setup
 
             visibility disable @s @a ignore_perspective render_passengers
-            function universal:ability/stable_player_display/apply {arguments:{branch:"shrinkray",force_skin:1b}}
             function universal:ability/control/mount/player {arguments:{mount_tag:"aj.shrinkray.root",user_tag:"abilityShrinkray.User"}}
             function universal:ability/control/visibility {arguments:{target_tag:"aj.shrinkray.root",state:"disable",perspective:"inline_perspective",mounted:"hide_passengers"}}
         }

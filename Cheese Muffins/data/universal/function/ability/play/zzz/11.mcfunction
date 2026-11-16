@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$execute as @n[type=minecraft:item_display,tag=aj.$(rig)_viewmodel.root,scores={universalAbility.ID=$(id)}] at @s run function universal:ability/play/zzz/12 with storage minecraft:universal ability.play.animation
+$execute as @p[scores={universalAbility.ID=$(id)}] unless entity @s[tag=abilitySettings.ViewmodelDisabled] run function universal:ability/play/zzz/12
+scoreboard players reset .isViewModel traitShrinkray.Size

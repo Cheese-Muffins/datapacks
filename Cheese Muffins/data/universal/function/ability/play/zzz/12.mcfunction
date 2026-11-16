@@ -1,3 +1,4 @@
 # Generated with MC-Build
 
-$function universal:ability/play/animation {arguments:{rig:"$(rig)_viewmodel",animation:"$(animation)",objective:"universalAbility.ID",style:"tween",tweened_frame:$(adjusted_frame),tween_duration:$(tween_duration)}}
+execute unless data storage minecraft:universal ability.play.animation{interrupt_viewmodel:1b} run function universal:ability/play/zzz/13 with storage minecraft:universal ability.play.animation
+execute if data storage minecraft:universal ability.play.animation{interrupt_viewmodel:1b} run function universal:ability/play/zzz/14 with storage minecraft:universal ability.play.animation

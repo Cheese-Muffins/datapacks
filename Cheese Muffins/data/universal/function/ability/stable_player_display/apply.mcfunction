@@ -1,12 +1,8 @@
 # Generated with MC-Build
 
-data modify storage minecraft:universal stable_player_display set value {pending:[""],prefix:"",mode:"model"}
-$data modify storage minecraft:universal stable_player_display.arguments set value $(arguments)
-execute unless data storage minecraft:universal stable_player_display.arguments.branch run return 0
-data modify storage minecraft:universal stable_player_display.branch set from storage minecraft:universal stable_player_display.arguments.branch
-execute if data storage minecraft:universal stable_player_display.arguments{split:[]} run return 0
-execute if data storage minecraft:universal stable_player_display.arguments.split[] run data modify storage minecraft:universal stable_player_display.pending set from storage minecraft:universal stable_player_display.arguments.split
-execute if data storage minecraft:universal stable_player_display.arguments.split unless data storage minecraft:universal stable_player_display.arguments.split[] run data modify storage minecraft:universal stable_player_display.pending[0] set from storage minecraft:universal stable_player_display.arguments.split
-execute if entity @s[tag=abilitySettings.EnabledSPD] run data modify storage minecraft:universal stable_player_display.mode set value "skin"
-execute if data storage minecraft:universal stable_player_display.arguments{force_skin:1b} run data modify storage minecraft:universal stable_player_display.mode set value "skin"
-function universal:ability/stable_player_display/next_split
+$execute if entity @s[type=minecraft:player] run return run function universal:ability/stable_player_display/apply_for_player {arguments:$(arguments)}
+execute unless entity @s[type=minecraft:item_display,tag=aj.global.root] run return 0
+execute unless score @s universalAbility.ID = @s universalAbility.ID run return 0
+$data modify storage minecraft:universal stable_player_display set value {arguments:$(arguments)}
+execute store result storage minecraft:universal stable_player_display.owner_id int 1 run scoreboard players get @s universalAbility.ID
+execute at @s run function universal:ability/stable_player_display/resolve_owner with storage minecraft:universal stable_player_display
